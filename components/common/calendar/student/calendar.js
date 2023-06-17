@@ -1,6 +1,7 @@
+//verified 1 by Raviraj Kumar
 import { useEffect, useState } from "react";
 import MonthSelector from "../common/monthselector";
-// import DateWithDay from "./DateWithDay";
+// import DateWithDay from "./DateWithDay"; //this was commented in the prev fol structure as well
 const months = [
   "January",
   "February",

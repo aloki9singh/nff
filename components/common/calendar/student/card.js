@@ -1,3 +1,4 @@
+//verified 1 by Raviraj Kumar
 let Card = ({ cardData }) => {
     return (
       <div className="border-l-8  rounded-lg ">
@@ -13,5 +14,5 @@ let Card = ({ cardData }) => {
     );
   };
   
-  export default studentcard;
+  export default studentcalendarcard;
   

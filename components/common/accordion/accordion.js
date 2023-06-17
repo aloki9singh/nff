@@ -1,5 +1,6 @@
+//verified 1 by Raviraj Kumar
 import React, { useState, useEffect, useRef } from 'react';
-import styles from '../../styles/Accordion.module.css';
+import styles from '../../../styles/componentsstyling/accordion/accordion.module.css';
 import { AiOutlineDown } from 'react-icons/ai';
 import Link from 'next/link';
 

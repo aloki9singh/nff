@@ -1,3 +1,4 @@
+//need rechecking
 import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
@@ -212,7 +213,7 @@ let Dates = ({
         <Image
           className="justify-self-center place-self-center col-span-1"
           onClick={dateShifLeft}
-          src="componentsgraphics/common/calendar/datelist/caretcircleleft.svg"
+          src="./componentsgraphics/common/calendar/datelist/caretcircleleft.svg"
           alt="back"
           width={30}
           height={30}
@@ -239,7 +240,7 @@ let Dates = ({
         <Image
           className="place-self-center justify-self-center col-span-1"
           onClick={dateShifRight}
-          src="componentsgraphics/common/calendar/datelist/caretcircleright.svg"
+          src="./componentsgraphics/common/calendar/datelist/caretcircleright.svg"
           alt="next"
           width={30}
           height={30}

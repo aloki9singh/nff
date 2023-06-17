@@ -1,4 +1,4 @@
-import Image from "next/image";
+//verified 1 by Raviraj Kumar
 import { useEffect } from "react";
 
 let Months = ({ selectedMonth, currentMonth }) => {

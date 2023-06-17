@@ -1,3 +1,4 @@
+//verified 1 by Raviraj Kumar
 let CardMentor = ({ cardData }) => {
 
     return (
@@ -17,5 +18,5 @@ let CardMentor = ({ cardData }) => {
     );
   };
   
-  export default mentorcard;
+  export default mentorcalendarcard;
   

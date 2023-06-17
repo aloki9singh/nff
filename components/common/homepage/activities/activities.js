@@ -1,3 +1,4 @@
+//verified 1 by Raviraj Kumar
 import Image from "next/image";
 export default function homepageactivities() {
    const cards = [

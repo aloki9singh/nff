@@ -1,9 +1,10 @@
+//need rechecking
 import React, { useState, useEffect } from "react";
 import { MdSearch } from 'react-icons/md'
-import img from "../../public/profile.webp";
+import Image from "next/image"
 import { dummyUsers } from "./data";
 import Link from "next/link";
-import Avatar from "../chats/Avatar";
+import Avatar from "./avatar";
 
 const messageDetails = {
   lastMessage: "Sir have you checked my assignment?",
@@ -36,7 +37,7 @@ const SideBarCard = ({
       }
       onClick={(e) => setCurrReciever(chat)}
     >
-      <Avatar alt="Profile-Picture" src={img} />
+      <Avatar alt="Profile-Picture" src="./componentsgraphics/common/chatting/sidebar/navbar/profile.webp" />
       <div className="flex flex-col flex-1 items-start">
         <h1>{recieverName}</h1>
         <p className='text-sm'>{chat.lastMessage}</p>
