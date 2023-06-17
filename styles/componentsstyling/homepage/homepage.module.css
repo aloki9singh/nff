@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap");
+
+.mainHomeContainer {
+  position: relative;
+  top: 80px;
+  left: 40px;
+  width: 82%;
+  height: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.rightSec {
+  height: auto;
+  width: 50%;
+}
+
+.leftSection {
+  width: 50%;
+}
+
+.learn {
+  overflow: hidden;
+  content: "";
+  position: absolute;
+  width: 216px;
+  height: 17px;
+  top: 6rem;
+  left: 13rem;
+  transform: skew(-12deg);
+  background: #e1348b;
+  z-index: -1;
+}
+.learnunderline {
+  text-decoration: underline #e1348b;
+}
+
+.leftSectionh1 {
+  color: #ffffff;
+  font-family: Raleway, sans-serif;
+  font-size: 86px;
+  font-weight: 600;
+  line-height: 100px;
+  letter-spacing: -2px;
+  word-break: break-all;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 4%;
+  width: 28rem;
+}
+
+.paraSec {
+  width: 504px;
+  color: #ffffff;
+}
+
+.paraSec p {
+  font-family: Raleway, sans-serif;
+  margin-left: 10px;
+  margin-top: 50px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.homeBtn .btn1 {
+  text-align: center;
+}
+
+.homeBtn .btn1:hover {
+  background-color: #e1348b;
+}
+
+.homeBtn .btn1 button {
+  color: #ffffff;
+  font-style: normal;
+  font-family: Raleway, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid;
+}
+
+.homeBtn .btn2 {
+  background-color: #e1348b;
+  text-align: center;
+}
+
+.homeBtn .btn2 button {
+  color: #ffffff;
+  font-family: Raleway, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid;
+}
+
+.rightSec .arrGrifiti {
+  width: fit-content;
+  margin-top: -10%;
+}
+
+.rightSec .mainDesign {
+  margin-top: 5rem;
+  position: relative;
+  left: 20%;
+  margin-top: -2%;
+}
+
+.mainDesign .upperDes :nth-child(1) {
+  position: absolute;
+  top: 18%;
+  left: -4.2%;
+}
+
+.mainDesign .upperDes :nth-child(2) {
+  position: absolute;
+  top: 35%;
+  font-family: Raleway;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #ffffff;
+  transform: matrix(1, 0.14, -0.1, 0.99, 0, 0);
+}
+
+.mainDesign .upperDes :nth-child(4) {
+  position: absolute;
+  top: 8%;
+  right: 4%;
+}
+
+.mainDesign .upperDes {
+  position: absolute;
+  top: 20%;
+}
+
+.mainDesign .lowerDes {
+  position: absolute;
+  height: auto;
+  top: 18rem;
+  left: 70px;
+}
+
+.mainDesign .lowerDes .vectImg7 {
+  position: absolute;
+  top: 40px;
+  left: 16.11rem;
+}
+
+.mainDesign .lowerDes :nth-child(2) {
+  position: absolute;
+  top: 20.5%;
+  left: 32.9%;
+}
+
+.mainDesign .lowerDes :nth-child(3) {
+  position: absolute;
+  top: 1.5rem;
+  left: -0.6rem;
+}
+
+.star1 {
+  position: absolute;
+  top: -7%;
+  right: -8%;
+}
+
+.star2 {
+  position: absolute;
+  top: 48%;
+  left: 62%;
+}
+
+.star3 {
+  position: absolute;
+  top: 38rem;
+  left: 85%;
+}
+
+
+
+@media screen and (max-width: 767px) {
+  .mainHomeContainer {
+    position: relative;
+    top: 10rem;
+    left: 40px;
+    width: 10%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .rightSec {
+    height: auto;
+    width: 40%;
+  }
+
+  .leftSection {
+    /* background-color: #e1348b; */
+    width: 40rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .leftSection h1 {
+    color: #ffffff;
+    font-family: Raleway;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 55px;
+    letter-spacing: -2px;
+    text-align: center;
+    /* background-color: #e1348b; */
+    width: 26rem;
+    margin-left: 6rem;
+  }
+
+  .leftSection h1 span:before {
+    overflow: hidden;
+    content: "";
+    position: absolute;
+    width: 138px;
+    height: 12px;
+    top: 4.1rem;
+    left: 12.5rem;
+    transform: skew(12deg);
+    background: #e1348b;
+    z-index: -1;
+  }
+
+  .rightSec .arrGrifiti {
+    width: fit-content;
+    position: absolute;
+    top: -4rem;
+    left: 18rem;
+  }
+
+  .paraSec {
+    width: 24rem;
+    color: #ffffff;
+    /* background-color: #e1348b; */
+    text-align: center;
+    position: absolute;
+    left: 6rem;
+  }
+
+  .paraSec p {
+    font-family: Raleway, sans-serif;
+    margin-left: 10px;
+    margin-top: 50px;
+    text-align: left;
+    font-family: Raleway;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .homeBtn {
+    width: 504px;
+    margin-top: 10rem;
+    margin-left: 2rem;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+
+  .rightSec {
+    height: auto;
+    width: 40%;
+  }
+
+  .rightSec .mainDesign {
+    margin-top: 5rem;
+    position: relative;
+    left: 50%;
+    transform: scale(0.5);
+  }
+
+  .star1 {
+    position: absolute;
+    top: 28rem;
+    left: 28rem;
+  }
+
+  .star2 {
+    position: absolute;
+    top: 26rem;
+    left: 62%;
+  }
+
+  .star3 {
+    position: absolute;
+    top: 62rem;
+    left: 20rem;
+  }
+}

@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+body {
+  @apply leading-[normal] m-0;
+}
+
+*,
+::before,
+::after {
+  border-width: 0;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  display: list-item;
+}
+
+/* * ::-webkit-scrollbar {
+  display: none;
+} */
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: #15161b;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+.acrylic{
+  background: linear-gradient(103.67deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.2) 100%);
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: "#ffffff";
+  opacity: 1;
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: "#ffffff";
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: "#ffffff";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  background-color: crimson;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-box .skill-per {
+  position: relative;
+  display: block;
+  height: 100%;
+  width: 95%;
+  border-radius: 6px;
+  background: crimson;
+  animation: progress 0.4s ease-in-out forwards;
+  opacity: 0;
+}
+
+.skill-per.css {
+  width: 80%;
+  animation-delay: 0.1s;
+}
+
+.skill-per.javascript {
+  width: 60%;
+  animation-delay: 0.2s;
+}
+
+.skill-per.nodejs {
+  width: 40%;
+  animation-delay: 0.3s;
+}
+
+.skill-per.reactjs {
+  width: 70%;
+  animation-delay: 0.3s;
+}
+
+.skill-per.expressjs {
+  width: 75%;
+  animation-delay: 0.3s;
+}
+
+@keyframes progress {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.skill-per .tooltip {
+  position: absolute;
+  right: -14px;
+  top: -28px;
+  font-size: 9px;
+  font-weight: 500;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: crimson;
+  z-index: 1;
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  height: 10px;
+  width: 10px;
+  z-index: -1;
+  background-color: crimson;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.AddMentorInput {
+  border: none;
+  background: none;
+}
+
+.AddMentorInput:focus {
+  outline: none;
+}
+
+.whyCardBgPinkToRed {
+  background: linear-gradient(
+    112.85deg,
+    #e1348b -1.25%,
+    rgba(243, 65, 78, 0.95) 99.07%
+  );
+}
+/* .AddMentorInput::placeholder{
+   color: #fff;
+} */
+.container-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+  gap: 1rem;
+}
+
+.icons-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: 1.5s all ease-in-out;
+}
+.active {
+  border: 2px solid rgb(149, 15, 89);
+  border-radius: 10px;
+}
+
+.active-user {
+  background-color: #717378;
+}
+.icons-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: 1.5s all ease-in-out;
+}
+
+.hide {
+  display: none;
+  background-color: none;
+  transform: translateY(8rem);
+}
+
+.show {
+  display: flex;
+  transform: translateY(0rem);
+}
+
+@media screen and (min-width: 1200px) {
+  #fontfix {
+    z-index: 1000;
+    font-size: 30px;
+    color: yellow;
+  }
+}

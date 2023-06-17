@@ -1,0 +1,113 @@
+.Page4MainContainer {
+    @apply relative;
+  }
+  
+  .Page4MainContainer .backImages :nth-child(1) {
+    @apply absolute -z-20 top-[23rem];
+  }
+  .Page4MainContainer .backImages :nth-child(2) {
+    @apply absolute -z-20 right-[0%];
+  }
+  .page4Content {
+    @apply absolute w-full flex justify-between top-40;
+  }
+  .page4Content .page4LeftContainer {
+    @apply ml-[4.5rem];
+  }
+  .page4Content .page4LeftContainer :nth-child(2) {
+    @apply absolute left-48 top-8;
+  }
+  .page4Content .page4RightContainer {
+    @apply relative text-white w-3/5 text-center;
+  }
+  .page4Content .page4RightContainer h1 {
+    @apply text-4xl font-medium leading-[42px] tracking-normal text-center;
+    font-family: Raleway;
+  }
+  .page4Content .page4RightContainer p {
+    @apply text-xl font-extralight leading-6 tracking-normal text-left mt-8 pl-52;
+    font-family: Raleway;
+  }
+  .page4Content .page4RightContainer ul {
+    @apply list-item text-left pl-[17rem] pt-[1em];
+  }
+  .page4Content .page4RightContainer li {
+    @apply list-item mt-8;
+  }
+  .page4Content .page4RightContainer li span {
+    @apply font-normal;
+  }
+  .page4Content .page4RightContainer h3 {
+    @apply text-xl font-semibold leading-[23px] tracking-normal text-left;
+    font-family: Raleway;
+  }
+  .bullets {
+    @apply flex justify-around ml-[-9rem] w-3/5;
+    /* background-color: #e1348b; */
+  }
+  .bullets h3 {
+    @apply w-72 ml-2;
+    /* background-color: aliceblue; */
+  }
+  .page4Btn button {
+    @apply h-[77px] w-[292px] absolute bg-[black] text-2xl font-medium leading-7 tracking-normal text-center p-[24.5px] rounded-[5px] border-2 border-solid border-[#e1348b] left-52 top-[32rem];
+    font-family: Raleway;
+  }
+  .page4Btn :hover {
+    @apply bg-[#e1348b];
+  }
+  @media screen and (max-width: 767px) {
+    .Page4MainContainer .backImages :nth-child(1) {
+      @apply absolute -z-20 top-[63rem];
+    }
+    .Page4MainContainer .backImages :nth-child(2) {
+      @apply absolute -z-20 hidden right-0;
+    }
+    .page4Content {
+      @apply absolute flex flex-col justify-between top-[43rem];
+      /* left: -5rem; */
+      /* width: 100%; */
+    }
+    .page4Content .page4LeftContainer {
+      @apply absolute top-[-27rem] ml-6 scale-[0.8] left-12;
+    }
+    .page4Content .page4LeftContainer :nth-child(2) {
+      @apply absolute left-16 top-12;
+    }
+    .page4Content .page4RightContainer {
+      @apply relative text-white;
+    }
+    .page4Content .page4RightContainer h1 {
+      @apply text-4xl font-medium leading-[31px] tracking-normal text-center absolute top-[-38rem] w-80 left-48;
+      font-family: Raleway;
+    }
+    .page4Content .page4RightContainer p {
+      @apply text-xl text-center font-normal leading-[120.9%] tracking-normal w-[33rem] absolute top-[-34rem] left-[-1rem] overflow-hidden text-[rgba(255,255,255,0.76)];
+      font-family: Raleway;
+    }
+    .page4Content .page4RightContainer ul {
+      @apply list-item text-left w-[30rem] ml-24 pl-32 pt-[1em];
+    }
+    .page4Content .page4RightContainer li {
+      @apply list-item mt-8;
+    }
+    .page4Content .page4RightContainer li span {
+      @apply font-normal text-[rgba(255,255,255,0.76)];
+    }
+    .page4Content .page4RightContainer h3 {
+      @apply text-[15px] font-normal leading-3 tracking-normal text-left w-80 ml-4;
+      font-family: Raleway;
+      /* background-color: #e1348b; */
+    }
+    .bullets {
+      @apply flex w-fit;
+      /* justify-content: space-around; */
+      /* margin-left: -5rem; */
+      /* background-color: #ffffff; */
+    }
+    .page4Btn button {
+      @apply h-14 w-[209px] absolute bg-[black] text-xl font-medium leading-7 tracking-normal text-center pt-3 pb-[24.5px] px-[24.5px] rounded-[5px] border-2 border-solid border-[#e1348b] left-[14.5rem] top-[22rem];
+      font-family: Raleway;
+    }
+  }
+  

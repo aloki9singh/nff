@@ -1,0 +1,92 @@
+.cardMain {
+    width: 343px;
+    /* width: 100vh; */
+    height: 289px;
+    background: #141518;
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cardMain .cardHeader {
+    display: flex;
+    margin: 21px 0px 0px 22px;
+    justify-content: space-between;
+  }
+  
+  .cardMain .cardHeader .spanLabel {
+    margin-right: 25px;
+    margin-top: 15px;
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #e1348b;
+  }
+  
+  .cardMain .cardTitle {
+    margin: 0px 85px 0px 28px;
+  }
+  
+  .cardMain .cardTitle span {
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff8c;
+  }
+  
+  .cardMain .cardTitle h3 {
+    font-family: Raleway;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+    width: 35vh;
+  }
+  
+  .cardMain .cardDesc {
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 288px;
+    height: 56px;
+    color: #bebebfb8;
+    margin: 12px 57px 0px 28px;
+  }
+  
+  .cardMain .cardButton button {
+    width: 90px;
+    height: 28px;
+    padding: 5px 20px;
+    gap: 10px;
+    border: 1px solid #e1348b;
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+    margin-left: 13rem;
+  }
+  
+  .cardMain .cardButton :hover {
+    background-color: #e1348b;
+  }
+  
+  .secMain .cardsList {
+    margin: 40px 26px 45px 26px;
+    margin-top: 40px;
+  }
+  

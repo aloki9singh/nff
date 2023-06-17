@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap");
+
+.fOverView {
+  width: 348px;
+  height: 99vh;
+  font-family: "Raleway";
+}
+
+.fOverView .fNavClose {
+  margin: 6px 15px 0px 286px;
+}
+
+.fOverView .fNavClose button {
+  width: 25px;
+  height: 25px;
+  background-color: #535355;
+  border-radius: 99px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.fOverView .fNavHeader {
+  color: #ffffff;
+  display: flex;
+  margin-top: 10px;
+  margin-left: 29px;
+  justify-content: space-around;
+
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.fOverView .fNavHeader button {
+  color: rgba(255, 255, 255, 0.56);
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.fOverView .skillsSec {
+  margin-top: 3px;
+}
+
+.fOverView .skillsSec h3 {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  margin-left: 29px;
+  color: rgba(255, 255, 255, 0.73);
+}
+
+.fOverView .skillsSec .skillsOptions {
+  width: 317px;
+  height: 255px;
+  border: 1px solid #728095;
+  border-radius: 20px;
+  margin: 2px 15px 0px 25px;
+  color: #ffffff;
+  padding: 22px 0px 17px 13px;
+  overflow: hidden;
+}
+
+.fOverView .skillsSec .skillsOptions input[type="checkbox"] {
+  width: 21px;
+  height: 21px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 2px;
+  accent-color: #a145cd;
+  opacity: 0.8;
+}
+
+.fOverView .skillsSec .skillsOptions .options label {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 21px;
+
+  color: #ffffff;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.fOverView .skillsSec .skillsOptions .options {
+  margin: -5px 0px 24px 0px;
+}
+
+.fOverView .skillsSec .skillUpper {
+  width: 285px;
+  height: 302px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.fOverView .skillsSec ::-webkit-scrollbar {
+  background-color: #535355;
+  width: 7px;
+
+  border-radius: 5px;
+}
+
+.fOverView .skillsSec ::-webkit-scrollbar-thumb {
+  background: #a145cd;
+  border-radius: 5px;
+}
+
+.fOverView .diffCheck {
+  margin: 21px 158px 0px 29px;
+}
+
+.fOverView .diffCheck h3 {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+
+  color: rgba(255, 255, 255, 0.73);
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.fOverView .diffCheck :nth-child(1) {
+  margin-top: 11px;
+}
+
+.fOverView .diffCheck input[type="checkbox"] {
+  width: 21px;
+  height: 21px;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 2px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  accent-color: #a145cd;
+  opacity: 0.8;
+}
+
+.fOverView .diffCheck label {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #ffffff;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin-top: 14px;
+}
+
+.sortSec {
+  margin: 15px 140px 0px 29px;
+  height: 10rem;
+  color: #ffffff;
+}
+
+.sortSec h3 {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: rgba(255, 255, 255, 0.73);
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.sortSec .sortOption {
+  margin: 2px;
+}
+
+.sortSec .sortOption input[type="radio"] {
+  border: 0px;
+  width: 21px;
+  height: 21px;
+  border: solid #a145cd !important;
+  accent-color: #a145cd;
+  opacity: 0.8;
+}
+
+.sortSec .sortOption label {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  color: #ffffff;
+}
+
+.submitButton button {
+  margin: -35px 11px 0px 26px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 105px;
+  gap: 10px;
+  width: 311px;
+  height: 39px;
+  background: #a145cd;
+  border-radius: 15px;
+  color: #ffffff;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 21px;
+}

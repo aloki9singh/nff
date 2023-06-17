@@ -1,0 +1,230 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
+
+.signLeftSec {
+  background-color: aliceblue;
+  width: 49%;
+  position: relative;
+}
+
+.signLogo .signLogoImg1 {
+  position: absolute;
+  top: 10.67676767676768vh;
+  left: 35.342171717171716vh;
+}
+
+.signLogo .signLogoImg2 {
+  position: absolute;
+  top: 25.67676767676768vh;
+  left: 21.342171717171716vh;
+}
+
+.Effect {
+  /* width: 450.09px; */
+  /* height: 50vh; */
+  z-index: 1;
+  opacity: 0.5;
+  position: absolute;
+  top: 28.67676767676768vh;
+  left: 21.342171717171716vh;
+  -webkit-box-shadow: -35px -12px 175px 19px rgba(225, 52, 139, 0.84);
+  -moz-box-shadow: -35px -12px 175px 19px rgba(225, 52, 139, 0.84);
+  box-shadow: -35px -12px 175px 19px rgba(225, 52, 139, 0.84);
+  background-color: rgba(225, 52, 138, 0.402);
+  filter: blur(8px);
+  -webkit-filter: blur(10px);
+}
+
+.leftSecFooter {
+  position: absolute;
+  width: 254.46px;
+  height: 30.68px;
+  left: 36.583333333333336vh;
+  top: 90.19065656565657vh;
+}
+
+.leftSecFooter h3 {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18.047px;
+  line-height: 22px;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.signRightSec {
+  float: right;
+  background-color: #ffffff;
+  position: relative;
+  width: 100vh;
+}
+
+.signRightSec .authMainSec {
+  position: absolute;
+  width: 493px;
+  height: 87.22302158273381vh;
+  top: 10.388489208633093vh;
+  right: 127px;
+  border-radius: 38.8274px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.signRightSec .authMainSec h3 {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 36px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 60px;
+}
+
+.signRightSec .authMainSec p {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+
+  color: #ffffff;
+
+  margin-top: 8px;
+}
+
+.authMainSec .googleAccessBtn button {
+  width: 50.25252525252525vh;
+  height: 6.0606060606060606vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.525252525252525vh;
+  line-height: 2.904040404040404vh;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 0.8650012626262626vh;
+  margin-top: 5.130050505050505vh;
+  /* margin-left: 7.934343434343434vh; */
+  margin-left: 13.5%;
+}
+
+.authMainSec .googleAccessBtn button :nth-child(1) {
+  margin-right: 1.2626262626262625vh;
+}
+
+.orSection h5 {
+  display: flex;
+  flex-direction: row;
+  color: #ffffff;
+}
+
+.orSection {
+  margin-top: 3vh;
+}
+
+.orSection h5:before,
+.orSection h5:after {
+  content: "";
+  border-bottom: 1px solid;
+  margin: auto;
+  width: 198px;
+  color: #ffffff63;
+}
+
+.authInputSec {
+  align-items: center;
+  margin-left: 10%;
+}
+
+.authInputSec .inputSec {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3vh;
+}
+
+.authInputSec .inputSec span {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.authInputSec .inputSec .inputIN {
+  all: unset;
+  width: 397.85px;
+  height: 43.05px;
+  background: linear-gradient(177.81deg,
+      rgba(255, 255, 255, 0.11) 1.84%,
+      rgba(255, 255, 255, 0) 123.81%);
+  border-radius: 10.8005px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.authInputSec .inputSec .inputIN input {
+  all: unset;
+}
+
+.authInputSec .inputSec input ::placeholder {
+  color: #ffffff;
+}
+
+.authMeBtn button {
+  width: 392.64px;
+  height: 56.88px;
+  background: #e1348b;
+  border-radius: 7.90026px;
+  padding: 15.0105px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 23px;
+  text-align: center;
+
+  color: #ffffff;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
+.authInputSec .agreeSec {
+  margin-left: -3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.authInputSec .agreeSec h5 {
+  width: 50vh;
+  height: 35.75px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+
+  color: rgba(255, 255, 255, 0.53);
+}
+

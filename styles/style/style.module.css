@@ -1,0 +1,29 @@
+
+.input {
+    background: linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%);
+  }
+  
+  .input:focus {
+    background: linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%);
+  }
+  /* Chrome, Edge, and Safari */
+  .input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 3px #333333 inset;
+    background-color: #333333 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Firefox */
+  .input:-moz-autofill {
+    -moz-box-shadow: 0 0 0 3px #333333 inset;
+    background-color: #333333 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Firefox with older versions */
+  .input:-moz-autofill {
+    box-shadow: 0 0 0 3px #333333 inset;
+    background-color: #333333 !important;
+    color: #ffffff !important;
+  }
+  

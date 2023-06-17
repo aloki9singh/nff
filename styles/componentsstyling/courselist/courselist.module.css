@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap");
+
+.mainCList {
+  background-color: #414348;
+  border-radius: 50px 50px 0px 0px;
+  width: 166vh;
+}
+
+.mainCList .listHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainCList .listHeader h1 {
+  font-family: Raleway;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ffffff;
+  margin-left: 34px;
+
+  margin-top: 37px;
+}
+
+.mainCList .listHeader button {
+  width: 115.15px;
+  height: 45px;
+  background-color: #a145cd;
+  border-radius: 13.2353px;
+  padding: 10.59px 12.22px 11.41px 15.22px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19.8529px;
+  line-height: 23px;
+  color: #ffffff;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+
+  margin-top: 37px;
+}
+.mainCList .courseCardsSec {
+  height: 80vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  margin-left: 1vh;
+}
+
+.mainCList ::-webkit-scrollbar {
+  /* visibility: hidden; */
+  width: 0px;
+}
+
+.FNavMain {
+  position: fixed;
+  top: 1px;
+  float: right;
+  right: 0px;
+  background-color: #141518;
+  border-radius: 30px 0px 0px 30px;
+  width: 0vh;
+  transition: 0.5s;
+}

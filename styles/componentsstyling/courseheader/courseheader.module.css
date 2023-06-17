@@ -1,0 +1,168 @@
+.headerMain {
+    color: #ffffff;
+    width: 100%;
+  }
+  
+  .headerMain .headerNav {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .headerMain .headerNav h3 {
+    margin: 2rem 2rem 2rem 2rem;
+    font-family: Raleway;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .headerMain .coursesAct {
+    /* background-color: #c2c7cf; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .headerMain .coursesAct .searchIn {
+    width: 298px;
+    height: 47px;
+    border-radius: 10px;
+    padding: 2px 2px 2px 3.4rem;
+    border: 1px solid #728095;
+    background-color: transparent;
+    margin: 30px 30rem 20px 585px;
+    margin-left: 18rem;
+    background: url("../public/courses/MagnifyingGlass.svg") no-repeat;
+    background-size: 20px;
+    background-position-y: 14px;
+    background-position-x: 20px;
+  }
+  
+  .headerMain .coursesAct .searchIn::placeholder {
+    color: white;
+  }
+  
+  .headerMain .coursesAct .searchIn::-webkit-search-cancel-button {
+    all: unset;
+  }
+  
+  .headerMain .coursesAct .logsButton {
+    position: absolute;
+    right: 10rem;
+    display: flex;
+    margin-left: -15rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .headerMain .coursesAct .logsButton button {
+    width: 87px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+  }
+  
+  .headerMain .coursesAct .logsButton :nth-child(1) {
+    background: #5b5c61;
+  }
+  
+  .headerMain .coursesAct .logsButton :nth-child(2) {
+    background: #e1348b;
+  }
+  
+  .headerMain .coursesAct .userImg {
+    /* background-color: #5b5c61; */
+    position: absolute;
+    right: 10rem;
+    margin-left: -15rem;
+    top: 30px;
+  }
+  
+  .headerMain .coursesAct .userImg :nth-child(1) {
+    border-radius: 999px;
+    width: 51px;
+    height: 51px;
+  }
+  /* 
+  .headerMain .headerSubMain {
+    background-color: #616576;
+  } */
+  
+  .headerMain .headerSubMain .quoteMain {
+    width: 697px;
+    height: 307px;
+    margin: 49px 265px 0px 264px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    position: relative;
+  }
+  
+  .headerMain .headerSubMain .quoteMain h2 {
+    width: 609px;
+    height: 95px;
+    font-family: Inter;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: 0.035em;
+    text-align: center;
+  }
+  
+  .headerMain .headerSubMain .quoteMain p {
+    width: 389px;
+    height: 72px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0.035em;
+    text-align: center;
+  }
+  
+  .headerMain .headerSubMain .quoteMain button {
+    width: 195px;
+    height: 48px;
+    background: #a145cd;
+    border-radius: 15px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+  
+    color: #ffffff;
+  }
+  
+  .headerMain .headerSubMain .quoteMain .quoteRandom :nth-child(1) {
+    position: absolute;
+    right: 1rem;
+    top: 12rem;
+  }
+  
+  .headerMain .headerSubMain .quoteMain .quoteRandom :nth-child(2) {
+    position: absolute;
+    left: 3rem;
+    top: 12rem;
+  }
+  
+  .headerMain .headerSubMain .quoteMain .quoteRandom :nth-child(3) {
+    position: absolute;
+    right: 1rem;
+    top: 4rem;
+  }
+  
+  .headerMain .headerSubMain .quoteMain .quoteRandom :nth-child(4) {
+    position: absolute;
+    left: 1rem;
+    top: 4rem;
+  }
+  

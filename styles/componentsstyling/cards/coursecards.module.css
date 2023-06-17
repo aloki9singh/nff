@@ -1,0 +1,56 @@
+.secMain {
+    margin-top: 50px;
+    width: fit-content;
+    margin-left: 33.5px;
+    font-family: "Raleway";
+  }
+  
+  .secMain .secHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    margin-bottom: 40px;
+  }
+  
+  .secMain .secHead p {
+    font-family: Raleway;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  
+  .secMain .secHead button {
+    width: 112px;
+    height: 35px;
+    padding: 5px 5px 5px 5px;
+    border: 1px solid #ffffff;
+    font-family: Raleway;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+  }
+  
+  .secMain .mainList {
+    display: -webkit-inline-flex;
+    gap: 1vh;
+    /* padding: 1rem; */
+    /* width: 156vh; */
+    width: fit-content;
+    /* height: 100vh; */
+    /* margin-left: 2vh; */
+    /* display: grid; */
+  
+    flex-wrap: wrap;
+    flex: 0 0 33.333333%;
+    margin-bottom: 1rem;
+  }
+  
+  @media  (max-width: 630px){
+    .secMain .secHead p {
+         font-size: 18px;
+    }
+  }
