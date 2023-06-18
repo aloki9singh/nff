@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import styles from "../../styles/Auth/auth.module.css";
+import styles from "@/styles/componentsstyling/auth/auth.module.css";
 
 import NeatS from "../../public/Neatskills.svg";
 import neatSvg from "../../public/Auth/Group 2.svg";
@@ -22,7 +22,7 @@ import { callEmailApi, callVerificationEmailApi } from "../../lib/api";
 import { signUp } from "../../lib/exportableFunctions";
 // import { adminAuth } from '../config/firebaseAdminConfig';
 
-function SignComp() {
+function SignUp() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -185,7 +185,7 @@ function SignComp() {
 
               <div className="text-white xl:text-[15px] lg:text-[13px] md:text-[12px] sd:text-[10px]">
                 <h5>
-                  By signing up, I agree to Neat Skill’s Terms of Service &
+                  By signing up, I agree to Neat Skill's Terms of Service &
                   Privacy Policy.
                 </h5>
               </div>
@@ -197,4 +197,4 @@ function SignComp() {
   );
 }
 
-export default SignComp;
+export default SignUp;

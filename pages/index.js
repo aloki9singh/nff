@@ -1,15 +1,13 @@
-import HomePage from '../components/School/HomePage';
-import Why from '../components/School/Why';
-import ExploreCourses from '../components/School/ExploreCourses';
-import Navbar from '../components/Navbar/navbar';
-import Activities from '../components/Activity/Activities';
-import Courses from '../components/Courses/Courses';
-import Mentor from '../components/Mentor/Mentor';
-import HomeSignupComp from '../components/School/HomeSignupComp';
-import Footer from '../components/Footer/Footer';
+import Navbar from "@/components/common/navbar/navbar";
 import { db } from "../config/firebaseconfig"
 import { collection, getDocs, addDoc } from 'firebase/firestore';
-import Join from '../components/School/Join';
+import HomePage from "@/components/common/homepage/part1/home";
+import Courses from "@/components/student/courses/courses";
+import Why from "@/components/common/homepage/why/why";
+import Join from "@/components/common/homepage/join/join";
+import Mentor from "@/components/common/homepage/mentor/mentor";
+import ExploreCourses from "@/components/student/explorecourses/explorecourses";
+import Footer from "@/components/common/footer/footer";
 
 export default function Home({ coursesData }) {
   return (
@@ -20,9 +18,9 @@ export default function Home({ coursesData }) {
       <Why /> {/* Done */}
       <Join /> {/* Done */}
       <Mentor /> {/* Done */}
-      <Activities /> {/* Done */}
+      {/* <Activities />  */} {/* Didnt found this component */}
       <ExploreCourses /> {/* Done */}
-      <HomeSignupComp /> {/* Done */}
+      {/* <SignUp />  */} {/* Cant find any image */}
       <Footer /> {/* Done */}
     </div>
   );

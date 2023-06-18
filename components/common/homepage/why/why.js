@@ -1,12 +1,3 @@
-import React, { useRef } from "react";
-import styles from "../../styles/page3.module.css";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-
-import Image from "next/image";
-
-import mainImg from "../../public/Page3/Component 1.svg";
-import { useIsMedium } from "../../hooks/screenSize";
 
 const Why = () => {
    return (
