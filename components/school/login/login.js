@@ -1,4 +1,4 @@
-//verifed 1 by Shreyas Sahoo
+//verifed by Shreyas Sahoo
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -1,3 +1,4 @@
+//verifed by Shreyas Sahoo
 import Link from "next/link";
 import { FaDiscord } from "react-icons/fa";
 import {

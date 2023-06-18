@@ -1,3 +1,4 @@
+//verified by Shreyas Sahoo
 import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
 import {
