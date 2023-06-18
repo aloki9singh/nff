@@ -1,12 +1,12 @@
+//verifed 1 by Shreyas Sahoo
 import React from 'react';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
-import styles from '../../styles/Auth/auth.module.css';
+import styles from '../../../styles/componentsstyling/auth/auth.module.css';
 
-import NeatS from '../../public/Neatskills.svg';
-import neatSvg from '../../public/Auth/Group 2.svg';
+import NeatS from '../../../public/componentsgraphics/schools/login/neatskillslogosample.svg';
+import neatSvg from '../../../public/componentsgraphics/schools/login/Group 2.svg';//space in name
 
 import { AiOutlineMail } from 'react-icons/ai';
 import { FaLock } from 'react-icons/fa';
@@ -14,9 +14,9 @@ import { FaLock } from 'react-icons/fa';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import { auth } from '../../config/firebaseConfig';
+import { auth } from '../../../config/firebaseconfig';
 import { useRouter } from 'next/router';
-import { callEmailApi, callVerificationEmailApi } from '../../lib/api';
+import { callEmailApi, callVerificationEmailApi } from '../../../lib/api';
 // import { adminAuth } from '../config/firebaseAdminConfig';
 
 function SchoolLoginComp() {

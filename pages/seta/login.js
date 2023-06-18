@@ -1,5 +1,6 @@
+//verifed 1 by Shreyas Sahoo
 import React from 'react';
-import SchoolLoginComp from '../components/School/schLoginComp';
+import SchoolLoginComp from '../../components/school/login/login';
 
 function schoolLogin() {
     return (
