@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { timestampfunc } from "../common/timestampfun";
+import { timestampfunc } from "../../calendar/common/timestampfun";
 import { useContext } from "react";
 import { selectSch } from "../../../../lib/context/contextprovider";
 import { useEffect } from "react";

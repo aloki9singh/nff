@@ -7,8 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import {
   callScheduleGetApiMentor,
   callSchedulePostApiMentor,
-} from "../../../../lib/mentorapi";
-import { getMonthName, timestampfunc } from "../common/timestampfun";
+} from "../../lib/mentorApi";
+import { getMonthName, timestampfunc } from "./timestampfunc";
 
 const SideBodyClassSchedule = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
@@ -42,7 +42,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
         ...prevUserData,
         [name]: value,
       }));
-
+      
     }
   };
 

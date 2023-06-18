@@ -1,21 +1,16 @@
-// Reviewed by Anurag Asawa
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle, BsPlusLg } from "react-icons/bs";
 import { useState } from "react";
+import MentorTopbar from "../components/Navbar/MentorTopbar";
 
-import MentorTopbar from "../../components/common/navbar/mentortopbar";
-
-import Mainbodymentor from "../../components/common/calendar/mentor/mainbody";
-
-import SideBodyClassSchedule from "../../components/common/calendar/mentor/classschedulesidebody";
-
-import SideBodyDelete from "../../components/common/calendar/mentor/sidebodydelete";
-
-import SideBody from "../../components/common/calendar/common/sidebody";
+import Mainbodymentor from "../components/CalenderParts/Mainbodymentor";
+import SideBodyClassSchedule from "../components/CalenderParts/SideBodyClassScheduleAdd";
+import SideBodyDelete from "../components/CalenderParts/SideBodyDelete";
+import SideBody from "../components/CalenderParts/SideBody";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { auth } from "../../config/firebaseconfig";
-import MentorSidebar from "../../components/common/sidebar/mentor";
+import MentorSidebar from "../components/Sidebar/MentorSidebar";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 function Schedule() {
   const [count, setCount] = useState(1);

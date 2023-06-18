@@ -1,9 +1,8 @@
-// Nedd to rechecking Monthcard is missing
-
-// import MonthCard from "../../calendar/common/monthlist";
-import ClassesContainer from "../../../mentor/other/classescontainer";
+// Need rechecking for monthcard
+import MonthCard from "./monthcard";
+import ClassesContainer from "../../../../components/mentor/other/classescontainer";
 import MonthSelector from "../../calendar/common/monthselector";
-import Months from "../../calendar/common/monthlist";
+import Months from "../../../../components/common/calendar/common/monthlist";
 
 const Calender = () => {
   return (

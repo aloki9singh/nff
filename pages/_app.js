@@ -1,9 +1,8 @@
-import "../styles/style/style.module.css";
+import "../styles/globals.css";
 import { Provider } from "react-redux";
 
-import ContextProvider from "../pages/_app";
-
-import { store } from "../redux/store/store";
+import ContextProvider from "../lib/context/contextprovider";
+import { store } from "../redux/store";
 
 function MyApp({ Component, pageProps }) {
   // const store = useStore(pageProps.initialReduxState);
