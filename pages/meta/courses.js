@@ -1,13 +1,12 @@
-import React from 'react';
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MentorSidebar from "../../components/mentor/sidebar/sidebar";
-import MentorTopbar from "../../components/common/navbar/mentortopbar";
+import MentorSidebar from "../components/Sidebar/MentorSidebar";
+import MentorTopbar from "../components/Navbar/MentorTopbar";
 import { useRouter } from "next/router";
-import { studentsArr } from "../../lib/arraytomap";
+import { studentsArr } from "../lib/arraysToMap";
 import { useSelector } from "react-redux";
-import boxProfile from "../../public/componentsgraphics/common/settings/profile/Female.png";
+import boxProfile from "../public/mentorCourses/profile.svg";
 
 function mentorStudent() {
     const [count, setCount] = useState(1);
