@@ -1,5 +1,6 @@
+// Verified by Pradhumn
 import React, { useState, useEffect } from 'react';
-import { storage } from '../../config/firebaseConfig';
+import { storage } from '../../../config/firebaseconfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 export default function UploadVid() {

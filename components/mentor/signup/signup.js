@@ -1,15 +1,15 @@
+// Needs rechecking Image not found mentorsign.png
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import styles from '../../styles/Auth/auth.module.css';
 
 import { sendPasswordResetEmail } from "firebase/auth";
 
 import { AiOutlineMail } from "react-icons/ai";
 import { FaLock } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../../redux/actions/mentor.action";
-import { auth } from "../config/firebaseConfig";
+import { signUp } from "../../../redux/actions/mentor.action";
+import { auth } from "../../../config/firebaseconfig";
 import e from "cors";
 const MentorSignupcomp = () => {
   const router = useRouter();
@@ -72,7 +72,7 @@ const MentorSignupcomp = () => {
 
           <div className="flex justify-center md:pt-0  pt-[20px]  ">
            <div className="m-auto h-full ">
-           <Image alt="Icon" src="Neatskills.svg" width={200} height={200} className="xl:w-[270px] lg:w-[220px] md:w-[180px] sd:w-[200px]"/>
+           <Image alt="Icon" src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg" width={200} height={200} className="xl:w-[270px] lg:w-[220px] md:w-[180px] sd:w-[200px]"/>
            </div>
           </div>
           
