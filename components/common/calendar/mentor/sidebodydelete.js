@@ -7,11 +7,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { timestampfunc } from "./timestampfunc";
+import { timestampfunc } from "../common/timestampfun";
 import { useContext } from "react";
-import { selectSch } from "../../lib/Context/ContextProvider";
+import { selectSch } from "../../../../lib/context/contextprovider";
 import { useEffect } from "react";
-import { db } from "../config/firebaseConfig";
+import { db } from "../../../../config/firebaseconfig";
 
 const SideBodyDelete = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
@@ -24,7 +24,7 @@ const SideBodyDelete = ({ count, setCount }) => {
     addBatch: "",
     description: "",
     defaultRadio: "#8642AA",
-    date:timestampfunc(Date.now()),
+    date: timestampfunc(Date.now()),
   });
 
   const handleDateChange = (date) => {
@@ -92,11 +92,11 @@ const SideBodyDelete = ({ count, setCount }) => {
 
   useEffect(() => {
     if (scheduleSelect) {
-      userData.date=scheduleSelect.e.year+"-"+scheduleSelect.e.month+"-"+scheduleSelect.e.day
+      userData.date = scheduleSelect.e.year + "-" + scheduleSelect.e.month + "-" + scheduleSelect.e.day
       setUserData(scheduleSelect.e);
-     
+
     }
-  }, [scheduleSelect,userData]);
+  }, [scheduleSelect, userData]);
 
   return (
     <div className="h-full">

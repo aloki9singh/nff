@@ -1,13 +1,14 @@
 //verified 1 by Raviraj Kumar
+// Need to recheck carduserpopup component is missing
 import Datecard from "../common/datecard";
 import Dates2 from "../common/datelist.js";
 import { useState, useEffect } from "react";
 import Months from "../common/monthlist.js";
-import CardUserPop from "../student/cardpopup.js";
-import { callScheduleGetApiMentor } from "../../lib/mentorApi.js";
+// import CardUserPop from "../student/cardpopup.js";
+import { callScheduleGetApiMentor } from "../../../../lib/mentorapi";
 import CardMentor from "./card.js";
 import { useContext } from "react";
-import { adddate } from "../../lib/Context/ContextProvider.js";
+import { adddate } from "../../../../lib/context/contextprovider";
 
 const months = [
   "January",
@@ -184,9 +185,9 @@ const Mainbodymentor = () => {
                   return (
                     <div key={indexof}>
                       {combined.dateData == valueof.date.day &&
-                      combined.mainMonth == valueof.date.month &&
-                      combined.currentYear == valueof.date.year &&
-                      val[0] + val[1] ==
+                        combined.mainMonth == valueof.date.month &&
+                        combined.currentYear == valueof.date.year &&
+                        val[0] + val[1] ==
                         valueof.startTime[0] + valueof.startTime[1] ? (
                         <div
                           className={`absolute bottom-1 left-2/4 `}
