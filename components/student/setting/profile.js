@@ -1,3 +1,5 @@
+// Verified by Satyabrat Ojha
+
 import Image from "next/image";
 
 function Profile() {
