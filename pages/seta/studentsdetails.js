@@ -1,9 +1,9 @@
-import BottomNav from "../components/Footer/BottomNav";
+// import BottomNav from "../components/Footer/BottomNav";
 import Link from "next/link";
 import Image from "next/image";
-import Schoolsidebarfixed from "../components/Sidebar/Schoolsidebarfixed";
-import SchoolTopbar from "../components/Navbar/SchoolTopbar";
-import { studentsArr } from "../lib/arraysToMap";
+import Schoolsidebar from "@/components/common/sidebar/school";
+import SchoolTopbar from "@/components/common/navbar/schooltopbar";
+
 import { AiOutlineSearch } from "react-icons/ai";
 
 export default function studentdetails() {
@@ -12,11 +12,15 @@ export default function studentdetails() {
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
 
   return (
-    <div className="flex h-full bg-[#2D2E35] overflow-x-hidden ">
-      <Schoolsidebarfixed />
-      <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4 mt-1">
-        <SchoolTopbar heading={"Student"} />
-        <div className="text-white grow flex flex-col items-center justify-center h-fit pt-12 ml-[-15px]">
+    <div className="flex h-screen bg-[#2D2E35]  ">
+      
+      <div className="lg:col-span-1 hidden lg:grid">
+        <Schoolsidebar />
+      </div>
+      <div className="w-full h-fit   bg-[#2D2E35] space-y-4 mt-1 ">
+        <SchoolTopbar heading={"Student Details"} />
+        {/* text */}
+        <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-12 ">
           {/* text */}
 
           <div
@@ -377,8 +381,8 @@ export default function studentdetails() {
             </div>
           </div>
         </div>
-        {/* <BottomNav /> */}
       </div>
     </div>
+   
   );
 }

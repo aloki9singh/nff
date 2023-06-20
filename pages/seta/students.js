@@ -1,21 +1,23 @@
-import BottomNav from "../components/Footer/BottomNav";
+// import BottomNav from "../components/Footer/BottomNav";
 import Link from "next/link";
 import Image from "next/image";
-import Schoolsidebarfixed from "../components/Sidebar/Schoolsidebarfixed";
-import SchoolTopbar from "../components/Navbar/SchoolTopbar";
-import { studentsArr } from "../lib/arraysToMap";
-
+import Schoolsidebar from "@/components/common/sidebar/school";
+import SchoolTopbar from "@/components/common/navbar/schooltopbar";
+import { studentsArr } from "@/lib/arraytomap";
 export default function UnderProgress() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
 
   return (
-    <div className="flex h-full bg-[#2D2E35] ">
-      <Schoolsidebarfixed />
-      <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4 ">
+    <div className="flex h-full bg-[#2D2E35]  ">
+      <div className="lg:col-span-1 hidden lg:grid">
+        <Schoolsidebar />
+      </div>
+      <div className="w-full h-fit   bg-[#2D2E35] space-y-4 mt-1 ">
         <SchoolTopbar heading={"Students"} />
-        <div className="text-white grow flex flex-col items-center justify-center h-fit pt-12 ">
+        {/* text */}
+        <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-12 ">
           {/* text */}
           <div className="w-[88%]">
             <h1 className="font-medium md:text-2xl pt-5">
@@ -140,7 +142,7 @@ export default function UnderProgress() {
                         <td className="md:block hidden">{e.Active}</td>
                         <td className="md:block hidden">{e.Courses}</td>
                         <td className=" text-[#E1348B]">
-                          <Link href="">View Profile</Link>
+                          <Link href="/seta/studentsdetails">View Profile</Link>
                         </td>
                       </tr>
                     ))}
@@ -187,7 +189,6 @@ export default function UnderProgress() {
             </div>
           </div>
         </div>
-        {/* <BottomNav /> */}
       </div>
     </div>
   );

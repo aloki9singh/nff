@@ -1,10 +1,11 @@
-import Schoolsidebarfixed from "../components/Sidebar/Schoolsidebarfixed";
-import SchoolTopbar from "../components/Navbar/SchoolTopbar";
+import Schoolsidebar from "@/components/common/sidebar/school";
+import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 
 import { useEffect, useState } from "react";
-import MonthSelector from "../components/Mentor/MonthSelector";
-import DateWithDay from "../components/CalenderParts/DateWithDay";
-import DonutInProfile from "../components/School/DonutInProfile";
+import MonthSelector from "../../components/common/calendar/common/monthselector";
+import Datelist from "@/components/common/calendar/common/datelist";
+import DonutInProfile from "@/components/school/dashboard/circularpfp";
+
 const months = [
   "January",
   "February",
@@ -127,16 +128,16 @@ export default function studentdetails() {
   }, [currentMonth]);
 
   return (
-
-    <div className="flex h-screen bg-[#2D2E35]  ">
-      .
-      <Schoolsidebarfixed />
-      <div className="w-full h-fit flex  bg-[#2D2E35] space-y-4 mt-1 ">
-
+    <div className="flex h-full bg-[#2D2E35]  ">
+      
+      <div className="lg:col-span-1 hidden lg:grid">
+        <Schoolsidebar />
+      </div>
+      <div className="w-full h-fit   bg-[#2D2E35] space-y-4 mt-1 ">
         <SchoolTopbar heading={"School Dashboard"} />
         {/* text */}
-        <div className="bg-[#2D2E35] text-white  h-full md:grid grid-cols-2 w-full gap-10  md:m-5   ml-[-10px] space-y-10 md:pt-11 p-5 md:mx-10  pt-20">
-          <div className="space-y-10 mt-10">
+        <div className="bg-[#2D2E35] text-white  h-full md:grid grid-cols-2 w-full gap-10     space-y-10  px-5 md:pt-0  pt-20 pb-5">
+          <div className="space-y-10 ">
             <div className="grid grid-cols-2 text-center rounded-2xl bg-[#373A41] p-5 mt-[-30px] md:mt-[0] items-center">
               <div className="space-y-7">
                 <div className="ml-[-10px]">Active Learners</div>
@@ -156,16 +157,12 @@ export default function studentdetails() {
                 {/* //datecard */}
                 <div className=" flex top-5 flex-col text-xl  md:space-y-2">
                   {/* <div className="p-2 text-lg  lg:block ml-7">
-          <span className="p-1">
-            {seletedMonth ? seletedMonth : currentMonth}
-          </span>
-          <span className="p-1">{currentYear}</span>
-        </div> */}
+          
                   <div className="text-sm">
                     <MonthSelector />
                   </div>
                   {/* Date and day */}
-                  <DateWithDay
+                  <Datelist
                     currentDate={currentDate}
                     monthData={monthData}
                     currentMonth={currentMonth}
@@ -204,11 +201,11 @@ export default function studentdetails() {
             </div>
           </div>
           <div className="bg-[#2D2E35]">
-            <div className=" px-5 pb-5 pt-3  rounded-2xl bg-[#373A41] text-white py-5">
+            <div className=" px-5    rounded-2xl bg-[#373A41] text-white py-5 md:mt-[-40px]">
               <div className="flex justify-between   pb-4 items-center pt-4">
                 <h1 className="text-l">Leaderboard</h1>
               </div>
-              <div className="space-y-5">
+              <div className="space-y-5 pb-7">
                 {Leaderboard &&
                   Leaderboard.map((item) => (
                     <div
