@@ -1,54 +1,57 @@
-import DashBoardCard from './DashBoardCard';
+// needs rechecking and checked by Satyabrat Ojha
+// import DasboardCard from components/student/dashboard/card changed
+
+import DashBoardCard from "../dashboard/card";
 
 const Viewedclass = ({ ti }) => {
   const suggestedCourses = [
     {
       id: 1,
       lessons: 25,
-      level: 'Beginner',
-      title: 'Introduction to C++',
-      desc: 'Learn the basics of C++ and how to write your first code.',
-      textSize: 'text-lg',
+      level: "Beginner",
+      title: "Introduction to C++",
+      desc: "Learn the basics of C++ and how to write your first code.",
+      textSize: "text-lg",
     },
     {
       id: 2,
       lessons: 30,
-      level: 'Beginner',
-      title: 'Introduction to C++',
-      desc: 'Learn the basics of C++ and how to write your first code.',
-      textSize: 'text-lg',
+      level: "Beginner",
+      title: "Introduction to C++",
+      desc: "Learn the basics of C++ and how to write your first code.",
+      textSize: "text-lg",
     },
     {
       id: 3,
       lessons: 25,
-      level: 'Beginner',
-      title: 'Introduction to Java',
-      desc: 'Learn the basics of C++ and how to write your first code.',
-      textSize: 'text-lg',
+      level: "Beginner",
+      title: "Introduction to Java",
+      desc: "Learn the basics of C++ and how to write your first code.",
+      textSize: "text-lg",
     },
     {
       id: 4,
       lessons: 20,
-      level: 'Internmediate',
-      title: 'Introduction to C++',
-      desc: 'Learn the basics of C++ and how to write your first code.',
-      textSize: 'text-lg',
+      level: "Internmediate",
+      title: "Introduction to C++",
+      desc: "Learn the basics of C++ and how to write your first code.",
+      textSize: "text-lg",
     },
     {
       id: 5,
       lessons: 25,
-      level: 'Advanced',
-      title: 'Introduction to Java',
-      desc: 'Learn the basics of C++ and how to write your first code.',
-      textSize: 'text-lg',
+      level: "Advanced",
+      title: "Introduction to Java",
+      desc: "Learn the basics of C++ and how to write your first code.",
+      textSize: "text-lg",
     },
     {
       id: 6,
       lessons: 25,
-      level: 'Beginner',
-      title: 'Introduction to Java',
-      desc: 'Learn the basics of C++ and how to write your first code.',
-      textSize: 'text-lg',
+      level: "Beginner",
+      title: "Introduction to Java",
+      desc: "Learn the basics of C++ and how to write your first code.",
+      textSize: "text-lg",
     },
   ];
 

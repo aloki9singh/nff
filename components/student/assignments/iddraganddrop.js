@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { TbFileUpload } from 'react-icons/tb';
-import { storage } from '../config/firebaseConfig';
+import { storage } from '@/config/firebaseconfig'
 import { uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage';
 
 export let fileURL = '';

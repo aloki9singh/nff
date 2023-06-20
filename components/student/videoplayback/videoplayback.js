@@ -1,13 +1,15 @@
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
-import { useEffect, useRef } from 'react';
+// Verified by Satyabrat Ojha
+
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
+import { useEffect, useRef } from "react";
 
 export default function VideoPlayer() {
   const videoRef = useRef(null);
-  let videoURL = '';
+  let videoURL = "";
   useEffect(() => {
     const fetchVideo = async () => {
-      await fetch('/api/courseVideos')
+      await fetch("/api/coursevideos")
         .then((res) => res.json())
         .then((data) => {
           videoURL = data.courses[0].url;
@@ -16,7 +18,7 @@ export default function VideoPlayer() {
         sources: [
           {
             src: videoURL,
-            type: 'video/mp4',
+            type: "video/mp4",
           },
         ],
         controls: true,
@@ -36,8 +38,8 @@ export default function VideoPlayer() {
       <video
         ref={videoRef}
         id="my-player"
-        width={'100%'}
-        height={'520px'}
+        width={"100%"}
+        height={"520px"}
         className="video-js vjs-big-play-centered w-full rounded-2xl "
         controls
         preload="auto"

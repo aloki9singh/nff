@@ -6,8 +6,8 @@ import {
   import {
     callMentorGetApiMentor,
     callMentorPostApiMentor,
-  } from "../../lib/mentorapi";
-  import { callVerificationEmailApiMentor } from "../../lib/api";
+  } from "@/lib/mentorapi";
+  import { callVerificationEmailApiMentor } from "@/lib/api";
   import {
     AUTH_SIGN_IN_ERROR,
     AUTH_SIGN_IN_LOADING,
