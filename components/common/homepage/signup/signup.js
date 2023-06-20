@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 import styles from "@/styles/componentsstyling/auth/auth.module.css";
 
-import NeatS from "../../public/Neatskills.svg";
-import neatSvg from "../../public/Auth/Group 2.svg";
-import Google from "../../public/Auth/_Google.svg";
+import NeatS from '/public/componentsgraphics/schools/login/neatskillslogosample.svg'
+import neatSvg from '/public/componentsgraphics/schools/login/Group 2.svg';//
+import Google from "/public/pagesgraphics/admin/login/_Google.svg";
 
 import { AiOutlineMail } from "react-icons/ai";
 import { FaLock } from "react-icons/fa";
@@ -14,12 +14,13 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { auth } from "../config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { callEmailApi, callVerificationEmailApi } from "../../lib/api";
-import { signUp } from "../../lib/exportableFunctions";
+import { callEmailApi } from "@/lib/api";
+import { signUp } from "@/lib/exportablefunctions";
+
 // import { adminAuth } from '../config/firebaseAdminConfig';
 
 function SignComp() {

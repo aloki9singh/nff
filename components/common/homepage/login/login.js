@@ -1,15 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../../styles/Auth/auth.module.css";
-import NeatS from "../../public/Neatskills.svg";
-import neatSvg from "../../public/Auth/Group 2.svg";
-import Google from "../../public/Auth/_Google.svg";
+import styles from "@/styles/componentsstyling/auth/auth.module.css";
+import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
+import neatSvg from "/public/componentsgraphics/schools/login/Group 2.svg";
+import Google from "/public/pagesgraphics/admin/login/_Google.svg";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaLock } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { createWithGoogle, handleResetPassword, login } from "../../lib/exportableFunctions";
+import {
+  createWithGoogle,
+  handleResetPassword,
+  login,
+} from "@/lib/exportablefunctions";
 
 function LoginComp() {
   const router = useRouter();
@@ -27,7 +31,7 @@ function LoginComp() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password,router);
+      await login(email, password, router);
     } catch (error) {
       console.log(error);
     }
@@ -36,10 +40,15 @@ function LoginComp() {
   return (
     <>
       <div className="md:w-1/2 md:h-full sd:w-full sd:h-1/3 bg-inherit  ">
-
-        <div className='h-full w-full py-8 md:py-20 flex flex-col items-center justify-center md:gap-8 sd:gap-2 relative  '>
-          <Image className="xl:w-[270px] lg:w-[220px] md:w-[180px] sd:w-[130px]" src={NeatS}  alt="" />
-          <div className={`${styles.Effect} hidden md:block  xl:w-[60%] xl:h-[50%] lg:w-[50%] lg:h-[50%] md:w-[45%]  md:h-[40%] sd:w-[35%]  sd:h-[30%]  top-[10px] lg:left-[29px]  `}></div>
+        <div className="h-full w-full py-8 md:py-20 flex flex-col items-center justify-center md:gap-8 sd:gap-2 relative  ">
+          <Image
+            className="xl:w-[270px] lg:w-[220px] md:w-[180px] sd:w-[130px]"
+            src={NeatS}
+            alt=""
+          />
+          <div
+            className={`${styles.Effect} hidden md:block  xl:w-[60%] xl:h-[50%] lg:w-[50%] lg:h-[50%] md:w-[45%]  md:h-[40%] sd:w-[35%]  sd:h-[30%]  top-[10px] lg:left-[29px]  `}
+          ></div>
 
           <div className=" md:w-[55%] sd:w-[30%]">
             <Image src={neatSvg} className="w-full" alt="" />
@@ -63,7 +72,7 @@ function LoginComp() {
           </p>
 
           <button
-            onClick={()=>createWithGoogle(router)}
+            onClick={() => createWithGoogle(router)}
             className="flex xl:w-[90%] sd:w-[90%] xl:text-[15px] lg:text-[12px] md:text-[10px] sd:text-[10px] text-white items-center justify-center gap-2 xl:p-[2px] lg:p-1.5px xl:mt-8 lg:mt-6 md:mt-6 sd:mt-4 xl:border-2 sd:border-[1px] border-white rounded-lg"
           >
             <Image

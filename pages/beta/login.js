@@ -1,4 +1,4 @@
-import LoginComp from "../components/Student/LoginComp";
+import LoginComp from "@/components/common/homepage/login/login";
 
 function login() {
   return (

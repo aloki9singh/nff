@@ -1,11 +1,11 @@
-import CourseMain from "../components/CoursesPage";
+
 import { collection, getDocs, addDoc } from "firebase/firestore";
-import { db } from "../config/firebaseConfig";
+import CoursesMain from "@/components/student/courses";
 
 export default function CourseOverview({ coursesData }) {
   return (
     <div className="">
-      <CourseMain coursesData={coursesData} />
+      <CoursesMain coursesData={coursesData} />
     </div>
   );
 }
