@@ -1,6 +1,6 @@
 //verified 1 by Raviraj Kumar
 import Image from "next/image";
-export default function homepageactivities() {
+export default function HomepageActivities() {
    const cards = [
       {
          id: "1",

@@ -34,7 +34,7 @@ export default function ExploreCourses() {
                   relative md:ml-[70px] lg:ml-[110px]">
                      Explore Courses
                      <Image
-                        src="/componentsgraphics/common/homepage/explorecourses/2.png"
+                        src="/componentsgraphics/common/homepage/explorecourses/arrow.png"
                         alt="/"
                         width={66}
                         height={45}
