@@ -1,4 +1,4 @@
-import HomePage from '../components/School/HomePage';
+import HomePage from '../components/common/homepage/part1/home';
 import Why from '../components/School/Why';
 import ExploreCourses from '../components/School/ExploreCourses';
 import Navbar from '../components/Navbar/navbar';

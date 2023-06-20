@@ -1,3 +1,4 @@
+//verified by Anurag Asawa
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -26,19 +27,19 @@ const MonthSelector = () => {
 
   return (
 
-<div className="cursor-pointer  flex  flex-row items-end justify-between text-white hover:text-gray-300 text">
-  <button className=" w-8 h-8" onClick={handlePrevClick}>
-    <Image src="componentsgraphics/mentor/monthselector/caretcircleleft.svg" alt="Previous" className="w-full h-full" width={15} height={15}/>
-  </button>
-  
-  <div className="inline-block  h-[30px] shrink-0 text-center">
-    <span className="text-xl ">{currentMonth}{" "} {currentYear}</span>
-  </div>
+    <div className="cursor-pointer  flex  flex-row items-end justify-between text-white hover:text-gray-300 text">
+      <button className=" w-8 h-8" onClick={handlePrevClick}>
+        <Image src="componentsgraphics/mentor/monthselector/caretcircleleft.svg" alt="Previous" className="w-full h-full" width={15} height={15} />
+      </button>
 
-  <button className="  w-10 h-8" onClick={handleNextClick}>
-    <Image src="componentsgraphics/mentor/monthselector/caretcircleright.svg" alt="Next" className="w-full h-full" width={15} height={15}/>
-  </button>
-</div>
+      <div className="inline-block  h-[30px] shrink-0 text-center">
+        <span className="text-xl ">{currentMonth}{" "} {currentYear}</span>
+      </div>
+
+      <button className="  w-10 h-8" onClick={handleNextClick}>
+        <Image src="componentsgraphics/mentor/monthselector/caretcircleright.svg" alt="Next" className="w-full h-full" width={15} height={15} />
+      </button>
+    </div>
 
   );
 };

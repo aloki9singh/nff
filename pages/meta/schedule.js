@@ -9,7 +9,7 @@ import SideBodyDelete from "../components/CalenderParts/SideBodyDelete";
 import SideBody from "../components/CalenderParts/SideBody";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { auth } from "../config/firebaseConfig";
+import { auth } from "../../config/firebaseconfig";
 import MentorSidebar from "../components/Sidebar/MentorSidebar";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 function Schedule() {
