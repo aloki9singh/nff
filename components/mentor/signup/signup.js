@@ -81,7 +81,7 @@ const MentorSignupcomp = () => {
             <div className="m-auto w-full  ">
               <Image
                 alt="Icon"
-                src="/mentorsign.png"
+                src="/componentsgraphics/mentor/signup/teachingsample.png"
                 width={200}
                 height={200}
                 className=" md:p-10 md:w-[70%]    m-auto "

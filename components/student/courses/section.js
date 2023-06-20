@@ -1,7 +1,7 @@
 import React from "react";
 
-import styles from "../../styles/courseCards.module.css";
-import CourseCards from "./CourseCards";
+import styles from "@/styles/componentsstyling/cards/coursecards.module.css";
+import CourseCard from "./CourseCard";
 
 function CourseSec({ courses, category, FilterUsed, coursesAfterFilter }) {
   // const cardInfo = [
@@ -31,7 +31,7 @@ function CourseSec({ courses, category, FilterUsed, coursesAfterFilter }) {
         </div>
         <div className={styles.mainList}>
           {cardInfo.map((info, i) => (
-            <CourseCards coursedata={info} category={category} key={i} />
+            <CourseCard coursedata={info} category={category} key={i} />
           ))}
         </div>
       </div>

@@ -1,7 +1,6 @@
 // import Carousel from "../Mentor/Carousel";
 import CarouselComp from "../../carousel/carousel";
 import MentorCard from "./MentorCard";
-
 const breakPoints = [
 	{ width: 1, itemsToShow: 1 },
 	{ width: 550, itemsToShow: 2 },

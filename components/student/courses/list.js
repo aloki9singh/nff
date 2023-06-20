@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
-
-import styles from '../../styles/courseList.module.css';
-import CourseSec from '../Courses/courseSec';
-
-import chartIcon from '../../public/courses/ChartBar.svg';
-import FilterNav from './FilterNav';
+import styles from '@/styles/componentsstyling/courselist/courselist.module.css';
+import CourseSec from './section';
+import chartIcon from '@/public/componentsgraphics/student/courses/list/chartbaricon.svg';
+import FilterNav from './filernav';
 
 function CourseList() {
   // const [navState, setNavState] = useState("46vh");

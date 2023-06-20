@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { auth } from "../config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { BiLogIn } from "react-icons/bi";
 import { useRouter } from "next/router";

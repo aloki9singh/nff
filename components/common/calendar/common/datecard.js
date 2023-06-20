@@ -45,4 +45,4 @@ const MonthSelector = ({
   );
 };
 
-export default datecardselector;
+export default MonthSelector;
