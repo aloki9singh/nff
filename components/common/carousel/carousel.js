@@ -8,10 +8,8 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-
+//needs rechecking MentorItem absent
 import MentorItem from "./Mentor/MentorItem";
-
 
 const CarouselComp = () => {
    const mentors = [

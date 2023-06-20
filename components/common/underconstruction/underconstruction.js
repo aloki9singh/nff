@@ -1,13 +1,14 @@
-import Sidebar from '../Sidebar/sidebar';
-import Dashboardnav from '../Navbar/Dashboardnav';
-import BottomNav from '../Footer/BottomNav';
+//verifed by Shreyas Sahoo
+import Sidebar from '../../common/sidebar/sidebar';
+import Dashboardnav from '../../common/navbar/dashboardnav';
+import BottomNav from '../../common/footer/bottomnav';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 // import dots from '../../public/under/dots.png';
-import oval from '../../public/under/semi.png';
-import brown from '../../public/under/brown.png';
-import purple from '../../public/under/purple.png';
-import imac from '../../public/under/imac.png';
+import oval from '../../../public/componentsgraphics/common/underprogress/semicircle.png';
+import brown from '../../../public/componentsgraphics/common/underprogress/brownfilledcircle.png';
+import purple from '../../../public/componentsgraphics/common/underprogress/purplefilledcircle.png';
+import imac from '../../../public/componentsgraphics/common/underprogress/manstandingwithlaptop.png';
 import Link from 'next/link';
 import { BsInstagram } from 'react-icons/bs';
 import { FaFacebook, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
