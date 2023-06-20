@@ -27,11 +27,11 @@ export default function SchoolTopbar({ sendSideBarState, heading }) {
   });
 
   return (
-    <nav className="bg-[#2D2E35]  px-2 py-2 w-full  fixed top-0 right-0 left-0 space-y-4 ">
+    <nav className="bg-[#2D2E35]  px-2 py-2 w-full md:static  fixed top-0 right-0 left-0 space-y-4 ">
 
-      <div className=" flex  gap-y-6  justify-between md:px-10 ">
+      <div className=" flex  gap-y-6  justify-between">
         <div className="flex justify-between   items-center">
-          <p className="text-white font-Inter text-2xl flex justify-start md:ml-[200px] ml-5">
+          <p className="text-white font-Inter text-2xl flex justify-start  ml-5">
             {heading}
           </p>
         </div>
