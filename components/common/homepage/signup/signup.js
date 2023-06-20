@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import styles from "../../styles/Auth/auth.module.css";
+import styles from "@/styles/componentsstyling/auth/auth.module.css";
 
 import NeatS from "../../public/Neatskills.svg";
 import neatSvg from "../../public/Auth/Group 2.svg";

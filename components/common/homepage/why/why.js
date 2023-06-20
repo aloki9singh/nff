@@ -1,12 +1,4 @@
 import React, { useRef } from "react";
-import styles from "../../styles/page3.module.css";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-
-import Image from "next/image";
-
-import mainImg from "../../public/Page3/Component 1.svg";
-import { useIsMedium } from "../../hooks/screenSize";
 
 const Why = () => {
    return (
@@ -32,7 +24,7 @@ const Why = () => {
             <div className="flex flex-col md:flex-row justify-evenly items-center mt-5 lg:mt-10">
                <div className="mx-[84px] sm:mx-24 md:ml-10 md:mr-10 lg:mr-16 ">
                   <img
-                     src="/why.svg"
+                     src="/componentsgraphics/common/homepage/why/why.svg"
                      alt="Why"
                      className="w-full object-contain"
                   />

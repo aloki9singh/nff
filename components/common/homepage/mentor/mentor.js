@@ -1,6 +1,5 @@
-import Carousel from "../Mentor/Carousel";
+import CarouselComp from "../../carousel/carousel";
 import MentorCard from "./MentorCard";
-
 const breakPoints = [
 	{ width: 1, itemsToShow: 1 },
 	{ width: 550, itemsToShow: 2 },
@@ -48,7 +47,7 @@ export default function Mentor() {
 				</div>
 				<div>
 					<div className='flex items-center justify-center mt-10 p-2'>
-						<Carousel />
+						<CarouselComp />
 					</div>
 				</div>
 			</div>

@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 
-import styles from "../../../../styles/style/style.module.css";
+import styles from "@/styles/componentsstyling/homepage/homepage.module.css";
 
 // import mainDesign1 from "/public/Group_1915.png";
-import mainDesign1 from "../../../../public/componentsgraphics/";
+import mainDesign1 from "@/public/componentsgraphics/common/homepage/home/Group174.svg";
 
 export default function HomePage() {
    const transition = {
@@ -31,7 +31,7 @@ export default function HomePage() {
                         <span className={`${styles.learnunderline} relative `}>
                            Learn{" "}
                            <Image
-                              src="/vector-12.svg"
+                              src="/componentsgraphics/common/homepage/home/vector-12.svg"
                               width={50}
                               height={24}
                               className="sm:w-20 md:w-24 lg:w-32 absolute top-0 sm:top-4 left-[55%] md:left-auto md:right-6 lg:-right-12 md:translate-x-full -translate-y-full"
