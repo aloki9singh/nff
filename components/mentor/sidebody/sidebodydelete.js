@@ -1,19 +1,21 @@
 //verified 1 by Raviraj Kumar
 import { AiOutlineClockCircle, AiOutlineCalendar } from "react-icons/ai";
 import { HiUserGroup } from "react-icons/hi";
-import { CiTextAlignLeft } from "react-icons/ci";
+import { CiTextAlignLeft, CiEdit } from "react-icons/ci";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  callScheduleGetApiMentor,
-  callSchedulePostApiMentor,
-} from "../../lib/mentorApi";
-import { getMonthName, timestampfunc } from "./timestampfunc";
+import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
-const SideBodyClassSchedule = ({ count, setCount }) => {
+import { timestampfunc } from "../../common/calendar/common/timestampfun";
+import { useContext } from "react";
+import { selectSch } from "../../../lib/context/contextprovider";
+import { useEffect } from "react";
+import { db } from "../../../config/firebaseconfig";
+
+const SideBodyDelete = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
-
-  const val = date.getYear() + date.getMonth() + date.getDate();
+  const { scheduleSelect } = useContext(selectSch);
 
   const [userData, setUserData] = useState({
     addTitle: "",
@@ -22,31 +24,30 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
     addBatch: "",
     description: "",
     defaultRadio: "#8642AA",
-    date: "",
+    date: timestampfunc(Date.now()),
   });
+
+  const handleDateChange = (date) => {
+    setDate(date);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "date") {
-      const [year, month, day] = value.split("-");
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-        date: {
-          month: getMonthName(parseInt(month)),
-          day: parseInt(day),
-          year: parseInt(year),
-        },
-      }));
-    } else {
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-        [name]: value,
-      }));
-      
+    setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
+  };
+
+  const handleDeleteData = async () => {
+    try {
+      await deleteDoc(doc(db, "mentorsSchedule", userData.id));
+      setCount(1);
+      alert("Schedule is Deleted");
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong!");
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleEditData = async (event) => {
     event.preventDefault();
 
     const {
@@ -59,39 +60,43 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
       date,
     } = userData;
 
-    const requiredFields = [
-      addTitle,
-      startTime,
-      endTime,
-      defaultRadio,
-      addBatch,
-      description,
-      date,
-    ];
-    console.log(requiredFields);
-    if (requiredFields.every((field) => field !== "")) {
-      callSchedulePostApiMentor(userData)
-        .then(() => {
-          setUserData({
-            addTitle: "",
-            startTime: "",
-            endTime: "",
-            addBatch: "",
-            description: "",
-            defaultRadio: "#8642AA",
-            date: "",
-          });
+    if (
+      addTitle &&
+      startTime &&
+      endTime &&
+      defaultRadio &&
+      addBatch &&
+      description &&
+      date
+    ) {
+      try {
+        const docRef = doc(db, "mentorsSchedule", userData.id);
+
+        // Get the existing document data
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          await updateDoc(docRef, userData);
           setCount(1);
-          alert("New Class is Scheduled");
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("Something went wrong!");
-        });
+          alert("Schedule is updated successfully");
+        } else {
+          alert("Document does not exist");
+        }
+      } catch (error) {
+        console.error("Error updating document:", error);
+        alert("Something went wrong!");
+      }
     } else {
       alert("Please fill in all the data");
     }
   };
+
+  useEffect(() => {
+    if (scheduleSelect) {
+      userData.date = scheduleSelect.e.year + "-" + scheduleSelect.e.month + "-" + scheduleSelect.e.day
+      setUserData(scheduleSelect.e);
+
+    }
+  }, [scheduleSelect, userData]);
 
   return (
     <div className="h-full">
@@ -108,7 +113,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
             name="addTitle"
             id="AddTitle"
             // className="bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
-            className="w-auto bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
+            className="w-[90vw] bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
             placeholder="Add title"
             required
             value={userData.addTitle}
@@ -131,12 +136,12 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
               className="bg-transparent outline-none "
             />
 
-            <div className="text-sm mt-3 flex w-auto">
+            <div className="text-sm mt-3 flex w-[60vw]">
               <input
                 type="time"
                 name="startTime"
                 id="StartTime"
-                className="bg-transparent    border-none border-gray-300 text-slate-200 mr-4 outline-none"
+                className="bg-transparent    border-none border-gray-300 text-slate-200 mr-4 outline-none "
                 placeholder="Start 00:00:00"
                 required
                 value={userData.startTime || "00:00"}
@@ -165,7 +170,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
               type="text"
               name="addBatch"
               id="AddBatch"
-              className="bg-transparent text-[16px]  md:w-full  w-[7vw]  border-none border-gray-300 text-slate-200  outline-none "
+              className="bg-transparent text-[16px]  md:w-full  w-[70vw]  border-none border-gray-300 text-slate-200  outline-none "
               placeholder="Add Batch"
               required
               value={userData.addBatch}
@@ -201,6 +206,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
         <div className=" flex mt-12 mb-10 rounded-2xl justify-evenly">
           <div className="bg-[#2E3036] rounded-[30px] h-[50%] m-[auto]">
             <input
+              id="defaultRadio"
               type="radio"
               value={"#2E3036" ? "#2E3036" : userData.defaultRadio}
               onChange={handleChange}
@@ -211,6 +217,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
           </div>
           <div className="bg-[#E1348B] rounded-[30px] h-[50%] m-[auto]">
             <input
+              id="defaultRadio"
               name="defaultRadio"
               type="radio"
               value={"#E1348B" ? "#E1348B" : userData.defaultRadio}
@@ -221,6 +228,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
           </div>
           <div className="bg-[#8642AA] rounded-[30px] h-[50%] m-[auto]">
             <input
+              id="defaultradio"
               name="defaultradio"
               type="radio"
               value={"#8642AA" ? "#8642AA" : userData.defaultRadio}
@@ -231,14 +239,24 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
           </div>
         </div>
       </div>
-      <div
-        className="rounded-xl text-white px-3 py-3 text-center m-2"
-        style={{ background: "#A145CD" }}
-      >
-        <button onClick={handleSubmit}>Schedule new class</button>
+      <div className="flex justify-evenly">
+        <div
+          className="rounded-xl text-white px-5 py-3 text-center m-2  flex space-x-2"
+          style={{ background: "#A145CD" }}
+        >
+          <CiEdit className="mt-1" />
+          <button onClick={handleEditData}>Edit</button>
+        </div>
+        <div
+          className="rounded-xl text-white px-3 py-3 text-center m-2 flex space-x-2"
+          style={{ background: "#A145CD" }}
+        >
+          <RiDeleteBin6Line className="mt-1" />
+          <button onClick={handleDeleteData}>Delete</button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default classschedulesidebody;
+export default SideBodyDelete;

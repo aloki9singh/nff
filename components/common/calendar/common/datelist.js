@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
-let Dates = ({
+const  datelist = ({
   currentDate,
   monthData,
   currentMonth,

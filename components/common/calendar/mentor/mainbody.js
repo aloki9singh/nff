@@ -3,11 +3,11 @@ import Datecard from "../common/datecard";
 import Dates2 from "../common/datelist.js";
 import { useState, useEffect } from "react";
 import Months from "../common/monthlist.js";
-import CardUserPop from "../student/cardpopup.js";
-import { callScheduleGetApiMentor } from "../../lib/mentorApi.js";
+import CardUserPop from "./CardUserPop";
+import { callScheduleGetApiMentor } from "@/lib/mentorapi";
 import CardMentor from "./card.js";
 import { useContext } from "react";
-import { adddate } from "../../lib/Context/ContextProvider.js";
+import { adddate } from "@/lib/context/contextprovider";
 
 const months = [
   "January",
@@ -213,4 +213,4 @@ const Mainbodymentor = () => {
   );
 };
 
-export default mentorcalendarmainbody;
+export default Mainbodymentor;

@@ -1,21 +1,19 @@
 //verified 1 by Raviraj Kumar
 import { AiOutlineClockCircle, AiOutlineCalendar } from "react-icons/ai";
 import { HiUserGroup } from "react-icons/hi";
-import { CiTextAlignLeft, CiEdit } from "react-icons/ci";
+import { CiTextAlignLeft } from "react-icons/ci";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import {
+  callScheduleGetApiMentor,
+  callSchedulePostApiMentor,
+} from "@/lib/mentorApi";
+import { getMonthName } from "@/components/common/calendar/common/timestampfun";
 
-import { timestampfunc } from "../../calendar/common/timestampfun";
-import { useContext } from "react";
-import { selectSch } from "../../../../lib/context/contextprovider";
-import { useEffect } from "react";
-import { db } from "../../../../config/firebaseconfig";
-
-const SideBodyDelete = ({ count, setCount }) => {
+const SideBodyClassSchedule = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
-  const { scheduleSelect } = useContext(selectSch);
+
+  const val = date.getYear() + date.getMonth() + date.getDate();
 
   const [userData, setUserData] = useState({
     addTitle: "",
@@ -24,30 +22,31 @@ const SideBodyDelete = ({ count, setCount }) => {
     addBatch: "",
     description: "",
     defaultRadio: "#8642AA",
-    date: timestampfunc(Date.now()),
+    date: "",
   });
-
-  const handleDateChange = (date) => {
-    setDate(date);
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
-  };
-
-  const handleDeleteData = async () => {
-    try {
-      await deleteDoc(doc(db, "mentorsSchedule", userData.id));
-      setCount(1);
-      alert("Schedule is Deleted");
-    } catch (error) {
-      console.log(error);
-      alert("Something went wrong!");
+    if (name === "date") {
+      const [year, month, day] = value.split("-");
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        date: {
+          month: getMonthName(parseInt(month)),
+          day: parseInt(day),
+          year: parseInt(year),
+        },
+      }));
+    } else {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        [name]: value,
+      }));
+      
     }
   };
 
-  const handleEditData = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const {
@@ -60,43 +59,39 @@ const SideBodyDelete = ({ count, setCount }) => {
       date,
     } = userData;
 
-    if (
-      addTitle &&
-      startTime &&
-      endTime &&
-      defaultRadio &&
-      addBatch &&
-      description &&
-      date
-    ) {
-      try {
-        const docRef = doc(db, "mentorsSchedule", userData.id);
-
-        // Get the existing document data
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          await updateDoc(docRef, userData);
+    const requiredFields = [
+      addTitle,
+      startTime,
+      endTime,
+      defaultRadio,
+      addBatch,
+      description,
+      date,
+    ];
+    console.log(requiredFields);
+    if (requiredFields.every((field) => field !== "")) {
+      callSchedulePostApiMentor(userData)
+        .then(() => {
+          setUserData({
+            addTitle: "",
+            startTime: "",
+            endTime: "",
+            addBatch: "",
+            description: "",
+            defaultRadio: "#8642AA",
+            date: "",
+          });
           setCount(1);
-          alert("Schedule is updated successfully");
-        } else {
-          alert("Document does not exist");
-        }
-      } catch (error) {
-        console.error("Error updating document:", error);
-        alert("Something went wrong!");
-      }
+          alert("New Class is Scheduled");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Something went wrong!");
+        });
     } else {
       alert("Please fill in all the data");
     }
   };
-
-  useEffect(() => {
-    if (scheduleSelect) {
-      userData.date = scheduleSelect.e.year + "-" + scheduleSelect.e.month + "-" + scheduleSelect.e.day
-      setUserData(scheduleSelect.e);
-
-    }
-  }, [scheduleSelect, userData]);
 
   return (
     <div className="h-full">
@@ -113,7 +108,7 @@ const SideBodyDelete = ({ count, setCount }) => {
             name="addTitle"
             id="AddTitle"
             // className="bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
-            className="w-[90vw] bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
+            className="w-auto bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
             placeholder="Add title"
             required
             value={userData.addTitle}
@@ -136,12 +131,12 @@ const SideBodyDelete = ({ count, setCount }) => {
               className="bg-transparent outline-none "
             />
 
-            <div className="text-sm mt-3 flex w-[60vw]">
+            <div className="text-sm mt-3 flex w-auto">
               <input
                 type="time"
                 name="startTime"
                 id="StartTime"
-                className="bg-transparent    border-none border-gray-300 text-slate-200 mr-4 outline-none "
+                className="bg-transparent    border-none border-gray-300 text-slate-200 mr-4 outline-none"
                 placeholder="Start 00:00:00"
                 required
                 value={userData.startTime || "00:00"}
@@ -170,7 +165,7 @@ const SideBodyDelete = ({ count, setCount }) => {
               type="text"
               name="addBatch"
               id="AddBatch"
-              className="bg-transparent text-[16px]  md:w-full  w-[70vw]  border-none border-gray-300 text-slate-200  outline-none "
+              className="bg-transparent text-[16px]  md:w-full  w-[7vw]  border-none border-gray-300 text-slate-200  outline-none "
               placeholder="Add Batch"
               required
               value={userData.addBatch}
@@ -206,7 +201,6 @@ const SideBodyDelete = ({ count, setCount }) => {
         <div className=" flex mt-12 mb-10 rounded-2xl justify-evenly">
           <div className="bg-[#2E3036] rounded-[30px] h-[50%] m-[auto]">
             <input
-              id="defaultRadio"
               type="radio"
               value={"#2E3036" ? "#2E3036" : userData.defaultRadio}
               onChange={handleChange}
@@ -217,7 +211,6 @@ const SideBodyDelete = ({ count, setCount }) => {
           </div>
           <div className="bg-[#E1348B] rounded-[30px] h-[50%] m-[auto]">
             <input
-              id="defaultRadio"
               name="defaultRadio"
               type="radio"
               value={"#E1348B" ? "#E1348B" : userData.defaultRadio}
@@ -228,7 +221,6 @@ const SideBodyDelete = ({ count, setCount }) => {
           </div>
           <div className="bg-[#8642AA] rounded-[30px] h-[50%] m-[auto]">
             <input
-              id="defaultradio"
               name="defaultradio"
               type="radio"
               value={"#8642AA" ? "#8642AA" : userData.defaultRadio}
@@ -239,24 +231,14 @@ const SideBodyDelete = ({ count, setCount }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-evenly">
-        <div
-          className="rounded-xl text-white px-5 py-3 text-center m-2  flex space-x-2"
-          style={{ background: "#A145CD" }}
-        >
-          <CiEdit className="mt-1" />
-          <button onClick={handleEditData}>Edit</button>
-        </div>
-        <div
-          className="rounded-xl text-white px-3 py-3 text-center m-2 flex space-x-2"
-          style={{ background: "#A145CD" }}
-        >
-          <RiDeleteBin6Line className="mt-1" />
-          <button onClick={handleDeleteData}>Delete</button>
-        </div>
+      <div
+        className="rounded-xl text-white px-3 py-3 text-center m-2"
+        style={{ background: "#A145CD" }}
+      >
+        <button onClick={handleSubmit}>Schedule new class</button>
       </div>
     </div>
   );
 };
 
-export default calendarsidebodydelete;
+export default SideBodyClassSchedule;

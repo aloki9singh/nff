@@ -2,8 +2,8 @@
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { adddate, selectSch } from "../../../../lib/context/contextprovider";
-import { callScheduleGetApiMentor } from "../../../../lib/mentorapi";
+import { adddate, selectSch } from "@/lib/context/contextprovider";
+import { callScheduleGetApiMentor } from "@/lib/mentorapi";
 import Image from "next/image";
 let SideBody = ({ count, setCount }) => {
   const [schedules, setSchedules] = useState([]);
@@ -95,4 +95,4 @@ let SideBody = ({ count, setCount }) => {
   );
 };
 
-export default calendarsidebody;
+export default SideBody;
