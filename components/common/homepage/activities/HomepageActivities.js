@@ -1,6 +1,6 @@
 //verified 1 by Raviraj Kumar
 import Image from "next/image";
-export default function homepageactivities() {
+export default function HomepageActivities() {
    const cards = [
       {
          id: "1",
@@ -49,7 +49,7 @@ export default function homepageactivities() {
             </div>
             <div className="w-full px-5 sm:px-14 md:px-28 lg:px-48">
                <Image
-                  src={"/activities.png"}
+                  src={"/componentsgraphics/common/homepage/activities/activities.png"}
                   className="w-full object-contain"
                   width={1000}
                   height={1000}

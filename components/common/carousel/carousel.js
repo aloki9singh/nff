@@ -1,17 +1,13 @@
+import MentorCard from "../homepage/mentor/MentorCard";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/swiper-bundle.css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import MentorCard from "../homepage/mentor/MentorCard";
-
-
-
 
 const CarouselComp = () => {
    const mentors = [
@@ -49,7 +45,37 @@ const CarouselComp = () => {
       >
          <SwiperSlide>
             <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"}/>
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
             </div>
          </SwiperSlide>
       </Swiper>

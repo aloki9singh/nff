@@ -30,7 +30,7 @@ export default function HomePage() {
 								<span className={`${styles.learnunderline} relative `}>
 									Learn{" "}
 									<Image
-										src="/vector-12.svg"
+										src="/componentsgraphics/common/homepage/home/Vector-12.svg"
 										width={50}
 										height={24}
 										className="sm:w-20 md:w-24 lg:w-32 absolute top-0 sm:top-4 left-[55%] md:left-auto md:right-6 lg:-right-12 md:translate-x-full -translate-y-full"

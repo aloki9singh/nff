@@ -1,6 +1,6 @@
-// import CourseCard from "./CourseCard";
 import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
+// import CourseCard from "./CourseCard";g
 // import { db } from '../config/firebaseConfig';
 // import { collection, getDocs, addDoc } from 'firebase/firestore';
 
@@ -11,42 +11,42 @@ export default function Courses({ coursesData }) {
 			title: "Introduction to C++",
 			desc: "Learn the basics of C++ programming language.",
 			level: "Beginner",
-			icon: "/ProgrammingIcon.png",
+			icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
 		},
 		{
 			lessons: 12,
 			title: "Responsive Web Design",
 			desc: "Master the art of creating responsive web layouts.",
 			level: "Intermediate",
-			icon: "/ProgrammingIcon.png",
+			icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
 		},
 		{
 			lessons: 10,
 			title: "Python for Data Analysis",
 			desc: "Explore data manipulation and analysis using Python.",
 			level: "Intermediate",
-			icon: "/ProgrammingIcon.png",
+			icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
 		},
 		{
 			lessons: 18,
 			title: "Full-Stack Web Dev",
 			desc: "Become proficient in front-end and back-end web development.",
 			level: "Expert",
-			icon: "/ProgrammingIcon.png",
+			icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
 		},
 		{
 			lessons: 6,
 			title: "Introduction to AI",
 			desc: "Discover the basics of Artificial Intelligence and its applications.",
 			level: "Intermediate",
-			icon: "/ProgrammingIcon.png",
+			icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
 		},
 		{
 			lessons: 15,
 			title: "Database Management",
 			desc: "Learn the essentials of designing and managing databases.",
 			level: "Intermediate",
-			icon: "/ProgrammingIcon.png",
+			icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
 		},
 	];
 

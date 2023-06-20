@@ -75,7 +75,7 @@ export default function Footer() {
             <div className="w-full px-2 md:w-auto flex justify-between mb-[50px]">
                <Link href="/" className="">
                   <Image
-                     src="/Neatskills-cropped.png"
+                     src="/componentsgraphics/common/homepage/footer/neatskillslogosample.png"
                      alt="logo"
                      className="object-contain w-[116px] md:w-48 lg:w-64 flex-shrink-0 
                   "

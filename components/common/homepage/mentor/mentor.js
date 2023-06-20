@@ -41,7 +41,7 @@ export default function Mentor() {
 						<h1>Meet Our</h1>
 						<h1>Mentors</h1>
 					</div>
-					<div className='text-sm md:text-base md:w-1/2 pt-4 md:pt-12 px-4 md:pl-8'>
+					<div className='text-sm md:text-base md:w-1/2 pt-4 px-4 md:pl-8'>
 						Neat Skills offers the world&rsquo;s best classes from the
 						world&rsquo;s best practitioners. It&rsquo;s like having a mentor at
 						your fingertips - no matter where you are

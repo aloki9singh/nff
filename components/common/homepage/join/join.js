@@ -1,7 +1,7 @@
 import Image from "next/image";
-// import studyGirl from "../../public/Page4/Frame 2200.svg";
+import studyGirl from "@/public/componentsgraphics/common/homepage/join/Studygirl.svg";
 // import curve2 from "../../public/curve2.png";
-// import bullet from "../../public/Page4/Rectangle 1552 (1).svg";
+import bullet from "@/public/componentsgraphics/common/homepage/join/Bullet.svg";
 import Link from "next/link";
 
 export default function Join() {
@@ -11,14 +11,16 @@ export default function Join() {
 				<div className=" bg-bs absolute top-0 left-0 w-full h-full -z-20 " />
 				<Image
 					width={400}
+					height={400}
 					alt="main"
-					src={"/public/omponentsgraphics/common/homepage/join/curve1.png"}
+					src={"/componentsgraphics/common/homepage/join/curve1.png"}
 					className="absolute top-12 right-0 w-1/2 z-10 lg:w-1/5"
 				/>
 				<Image
 					width={400}
+					height={400}
 					alt="main"
-					src={"/public/omponentsgraphics/common/homepage/join/curve2.png"}
+					src={"/componentsgraphics/common/homepage/join/curve2.png"}
 					className="absolute bottom-24 scale-110 -rotate-[15deg] -translate-x-[40%]
         left-0 w-1/2 z-10 lg:w-1/5"
 				/>
