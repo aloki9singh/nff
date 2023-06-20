@@ -1,5 +1,5 @@
+import MentorSignupcomp from '@/components/mentor/signup/signup';
 import React from 'react';
-import MentorSignupcomp from '../components/Mentor/MentorSignupcomp'
 
 function signup() {
   

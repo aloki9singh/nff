@@ -78,7 +78,7 @@ import {
             // Log in successful
             const user = userCredential.user;
             callMentorGetApiMentor(user.uid).then(async(res) => {
-            
+              // console.log(res)
               if (res.success == false) {
                 const val1 = await callVerificationEmailApiMentor(datah); 
                 alert("Verification email sent!!");

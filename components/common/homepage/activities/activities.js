@@ -49,7 +49,7 @@ export default function homepageactivities() {
             </div>
             <div className="w-full px-5 sm:px-14 md:px-28 lg:px-48">
                <Image
-                  src={"/activities.png"}
+                  src={"/componentsgraphics/common/homepage/activities/activities.png"}
                   className="w-full object-contain"
                   width={1000}
                   height={1000}

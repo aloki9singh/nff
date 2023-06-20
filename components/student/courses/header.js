@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/image";
 
-import styles from "../../styles/courseHeader.module.css";
+import styles from "@/styles/componentsstyling/courseheader/courseheader.module.css";
 
-import user from "../../public/courses/photo-1633332755192-727a05c4013d.jpeg";
-import books from "../../public/courses/headerVectors/Group 8.svg";
-import search from "../../public/courses/headerVectors/Search.svg";
-import desktop from "../../public/courses/headerVectors/Group 11.svg";
-import laptop from "../../public/courses/headerVectors/Group 10.svg";
+import user from "@/public/componentsgraphics/student/courses/header/pfpsample.jpeg";
+import books from "@/public/componentsgraphics/student/courses/header/booksicon.svg";
+import search from "@/public/componentsgraphics/student/courses/header/searchicon.svg";
+import desktop from "@/public/componentsgraphics/student/courses/header/desktopicon.svg";
+import laptop from "@/public/componentsgraphics/student/courses/header/laptopicon.svg";
 
 function CourseHeader() {
   return (
@@ -53,4 +53,4 @@ function CourseHeader() {
   );
 }
 
-export default courseheader;
+export default CourseHeader;

@@ -1,8 +1,8 @@
 import Image from "next/image";
-import studyGirl from "../../public/Page4/Frame 2200.svg";
-import curve1 from "../../public/curve1.png";
-import curve2 from "../../public/curve2.png";
-import bullet from "../../public/Page4/Rectangle 1552 (1).svg";
+import studyGirl from "/public/componentsgraphics/common/homepage/join/Frame 2200.svg";
+import curve1 from "/public/componentsgraphics/common/homepage/join/curve1.png";
+import curve2 from "/public/componentsgraphics/common/homepage/join/curve2.png";
+import bullet from "/public/componentsgraphics/common/homepage/join/Rectangle 1552 (1).svg";
 import Link from "next/link";
 
 export default function Join() {

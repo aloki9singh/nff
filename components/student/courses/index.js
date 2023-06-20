@@ -1,11 +1,10 @@
-import CourseList from "./CourseList";
-import DashboardNav from "../Navbar/Dashboardnav";
-import CourseHeader from "./CourseHeader";
-import Courseoverviewsidebar from "../Sidebar/Courseoverviewsidebar";
+import CourseList from "./list";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import CourseHeader from "./header";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import BottomNav from "../Footer/BottomNav";
-
+// import BottomNav from "../Footer/BottomNav";
 export default function CoursesMain({ coursesData }) {
   const router = useRouter();
   const [courses] = useState(coursesData);
@@ -13,13 +12,13 @@ export default function CoursesMain({ coursesData }) {
   return (
     <div className="flex">
       <div className="hidden lg:block">
-        <Courseoverviewsidebar pathname={router.pathname} />
+        <CourseoverviewSidebar pathname={router.pathname} />
       </div>
       <div className="rounded-tl-[50px] w-full bg-[#2e3036]">
-        <DashboardNav heading="Courses" />
+        <Dashboardnav heading="Courses" />
         <CourseHeader />
         <CourseList courses={courses} />
-        <BottomNav />
+        {/* <BottomNav /> */}
       </div>
     </div>
   );

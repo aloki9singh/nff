@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/filterNav.module.css";
+import styles from "@/styles/componentsstyling/filternav/filternav.module.css";
 
 function FilterNav({ nNavState }) {
   const skills = [

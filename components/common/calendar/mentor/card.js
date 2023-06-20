@@ -1,5 +1,5 @@
 //verified 1 by Raviraj Kumar
-let CardMentor = ({ cardData }) => {
+let mentorcalendarcard = ({ cardData }) => {
 
     return (
       <div className="border-l-8  rounded-lg ">

@@ -39,7 +39,7 @@ export default function Navbar() {
                   className="uppercase hover:border-b w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
                >
                   <Image
-                     src="/Neatskills-cropped.png"
+                     src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.png"
                      alt="logo"
                      className="w-full h-full object-contain
                            "
@@ -49,17 +49,17 @@ export default function Navbar() {
                </Link>
                <div className="hidden md:flex justify-center  w-full items-center text-white text-xs  lg:text-base mx-10 lg:mx-12">
                   <ul className="max-w-[407px] w-full flex justify-between">
-                     <Link href="/course-overview">
+                     <Link href="/beta/courseoverview">
                         <li className="text-md uppercase hover:border-b ">
                            Courses
                         </li>
                      </Link>
-                     <Link href="/aboutUs">
+                     <Link href="/beta/aboutUs">
                         <li className="text-md uppercase hover:border-b ">
                            About Us
                         </li>
                      </Link>
-                     <Link href="/contact-us">
+                     <Link href="/beta/contactus">
                         <li className="text-md uppercase hover:border-b ">
                            Contact
                         </li>
@@ -67,7 +67,7 @@ export default function Navbar() {
                   </ul>
                </div>
                <div className="hidden md:flex items-center">
-                  <Link href={"/signup"}>
+                  <Link href={"/beta/signup"}>
                      <button
                         type="button"
                         //Ye pehle tha by someone
@@ -83,7 +83,7 @@ export default function Navbar() {
                         Sign up
                      </button>
                   </Link>
-                  <Link href={"/login"}>
+                  <Link href={"/beta/login"}>
                      <button
                         type="button"
                         // className="inline-block justify-start items-start px-[20px] ml-6 mr-3 py-2.5 bg-pin text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -98,7 +98,7 @@ export default function Navbar() {
                   </Link>
                </div>
                <div className="flex items-center gap-4 md:hidden">
-                  <Link href={"/signup"}>
+                  <Link href={"/beta/signup"}>
                      <button
                         type="button"
                         className="bg-pink text-white text-[10px]  w-[72px] h-[27px] rounded-10 border border-white
@@ -154,7 +154,7 @@ export default function Navbar() {
                               Why Neatskills ?
                            </div>
                         </Link>
-                        <Link href="/course-overview">
+                        <Link href="/beta/courseoverview">
                            <div
                               onClick={() => setNav(false)}
                               className="py-4 text-sm hover:scale-110"
@@ -162,7 +162,7 @@ export default function Navbar() {
                               Our Courses
                            </div>
                         </Link>
-                        <Link href="/aboutUs">
+                        <Link href="/beta/aboutUs">
                            <div
                               onClick={() => setNav(false)}
                               className="py-4 text-sm hover:scale-110"
@@ -170,7 +170,7 @@ export default function Navbar() {
                               AboutUs
                            </div>
                         </Link>
-                        <Link href="/login">
+                        <Link href="/beta/login">
                            <div
                               onClick={() => setNav(false)}
                               className="py-4 text-sm hover:scale-110"
@@ -178,7 +178,7 @@ export default function Navbar() {
                               Login
                            </div>
                         </Link>
-                        <Link href="/signup">
+                        <Link href="/beta/signup">
                            <div
                               onClick={() => setNav(false)}
                               className="py-4 text-sm hover:scale-110"
@@ -186,7 +186,7 @@ export default function Navbar() {
                               Signup
                            </div>
                         </Link>
-                        <Link href="/contact-us">
+                        <Link href="/beta/contactus">
                            <div
                               onClick={() => setNav(false)}
                               className="py-4 text-sm hover:scale-110"

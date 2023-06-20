@@ -34,7 +34,7 @@ export default function ExploreCourses() {
                   relative md:ml-[70px] lg:ml-[110px]">
                      Explore Courses
                      <Image
-                        src="/2.png"
+                        src="/componentsgraphics/common/homepage/explorecourses/2.png"
                         alt="/"
                         width={66}
                         height={45}
@@ -67,7 +67,7 @@ export default function ExploreCourses() {
             </div>
             <div className="mb-9 md:mb-0 px-9  md:p-0 xl:pr-11 md:w-1/2">
                <Image
-                  src="/Home/Certificate.svg"
+                  src="/componentsgraphics/common/homepage/explorecourses/Certificate.svg"
                   alt="/"
                   width={1000}
                   height={1000}

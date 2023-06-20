@@ -1,8 +1,6 @@
 
+import SignComp from '@/components/common/homepage/signup/signup';
 import React from 'react';
-import SignComp from '../components/Student/SignComp';
-
-import styles from '../styles/Auth/authMain.module.css';
 
 function signup() {
   return (
