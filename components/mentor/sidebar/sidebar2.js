@@ -1,3 +1,4 @@
+// Verified by Pradhumn
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,7 +11,7 @@ const MentorSidebar = ({ pathname }) => {
         <div className="">
           <div className="">
             <Image
-              src="/Neatskills.svg"
+              src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg"
               width={500}
               height={500}
               alt="logo"

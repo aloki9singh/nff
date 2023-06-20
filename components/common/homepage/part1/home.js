@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "../../../../styles/style/style.module.css";
 
 // import mainDesign1 from "/public/Group_1915.png";
-import mainDesign1 from "/public/Group174.svg";
+import mainDesign1 from "../../../../public/componentsgraphics/";
 
 export default function HomePage() {
    const transition = {

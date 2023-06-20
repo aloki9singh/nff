@@ -1,3 +1,4 @@
+// Verified by Pradhumn
 import { useEffect, useRef } from 'react'
 
 const useClickOutside = (handler) => {

@@ -1,3 +1,4 @@
+// Verified by Pradhumn
 export default function BasicDetails() {
     return (
       <div className="">
