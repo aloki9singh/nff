@@ -1,3 +1,4 @@
+// Verified by Pradhumn
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,11 +7,11 @@ import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 const MentorSidebar = ({ pathname }) => {
   return (
     <>
-      <aside className="h-screen w-50 p-6 top-0 -left-96  bg-black p-10 ">
+      <aside className="h-screen w-50 top-0 -left-96  bg-black p-10 ">
         <div className="flex flex-col justify-start items-center">
           <div className="">
             <Image
-              src="/Neatskills.svg"
+              src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg"
               width= {169}
 height= {38}
               alt="logo"
@@ -22,7 +23,7 @@ height= {38}
               <li className="">
                 <Link
                   href="/mentor-dashboard"
-                  className="flex items-center p-2 text-base font-normal text-white text-sm rounded-lg  hover:bg-pin"
+                  className="flex items-center p-2 font-normal text-white text-sm rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
                     <input
@@ -35,7 +36,7 @@ height= {38}
                 </Link>
                 <Link
                   href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin text-sm"
+                  className="flex items-center p-2  font-normal text-white rounded-lg  hover:bg-pin text-sm"
                 >
                   <label className="inline-flex items-center ">
                     <input
@@ -48,7 +49,7 @@ height= {38}
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center ">
                     <input
@@ -62,7 +63,7 @@ height= {38}
                 <hr className="h-px my-8 bg-gray-200 border-0 "></hr>
                 <Link
                   href="/Schedule"
-                  className="text-sm flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center ">
                     <input
@@ -81,7 +82,7 @@ height= {38}
                 </Link>
                 <Link
                   href="#"
-                  className=" text-sm flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  className=" text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   {/* checkbox */}
                   <label className="inline-flex items-center">
@@ -95,7 +96,7 @@ height= {38}
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
                     <input
@@ -108,7 +109,7 @@ height= {38}
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg    hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
                     <input
@@ -122,7 +123,7 @@ height= {38}
                 <hr className="h-px my-8 bg-gray-200 border-0 "></hr>
                 <Link
                   href="#"
-                  className=" text-sm flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
+                  className=" text-sm flex items-center p-2 font-normal text-white rounded-lg   hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
                     <input
@@ -136,7 +137,7 @@ height= {38}
 
                 <Link
                   href="#"
-                  className="text-sm flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg   hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
                     <input
