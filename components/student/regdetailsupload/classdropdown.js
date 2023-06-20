@@ -1,14 +1,10 @@
+// Verified by Satyabrat Ojha
+
 import React, { useState } from "react";
 export let optionSelected = "";
 const ClassDropdown = ({ title }) => {
   const [selectedOption, setSelectedOption] = useState(0);
-  const options = [
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-  ];
+  const options = ["8", "9", "10", "11", "12"];
   const [isOpen, setIsOpen] = useState(false);
   const toggling = () => setIsOpen(!isOpen);
 

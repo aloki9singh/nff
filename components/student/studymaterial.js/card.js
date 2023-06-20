@@ -1,8 +1,13 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { db } from '../../config/firebaseConfig';
-import { collection, getDocs, query } from 'firebase/firestore';
+// needs rechecking and checked by Satyabrat Ojha
+// can't find the file its used and can't verify images used
+// import db fixed
+
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+// import { db } from '../../config/firebaseConfig';
+import { db } from "../../../config/firebaseconfig";
+import { collection, getDocs, query } from "firebase/firestore";
 
 export default function StudyMaterialCard() {
   const [material, setMaterial] = useState([]);
@@ -10,7 +15,7 @@ export default function StudyMaterialCard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(db, 'studyMaterial'));
+      const q = query(collection(db, "studyMaterial"));
       const materialSnapshot = await getDocs(q);
       const materialData = materialSnapshot.docs.map((doc) => ({
         id: doc.id,
