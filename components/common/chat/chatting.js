@@ -8,13 +8,9 @@ import {
   MdAttachFile,
   MdOutlineInsertDriveFile,
 } from "react-icons/md";
-import img from "../../public/profile.webp";
-import img2 from "../../public/Img2.png";
-import Avatar from "../chats/Avatar";
+import Avatar from "./avatar";
 import Image from "next/image";
-import { adddata } from "../../lib/Context/ContextProvider";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { db } from "../config/firebaseConfig";
+
 import {
   collection,
   doc,
@@ -22,6 +18,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { auth, db } from "../../../config/firebaseconfig";
 
 function formatTimePassed(messageTimestamp) {
   if (!messageTimestamp) return "";
@@ -53,7 +50,7 @@ const RecievedMessage = ({ message }) => {
   return (
     <div className="flex gap-2 ">
       <div>
-        <Avatar alt="Profile-Picture" src={img} />
+        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.webp'} />
       </div>
       <div
         className="p-2 py-3 max-w-[80%] rounded-[10px] flex flex-col"
@@ -81,7 +78,7 @@ const SendMessage = ({ message }) => {
         </span>
       </div>
       <div>
-        <Avatar alt="Profile-Picture" src={img} />
+        <Avatar alt="Profile-Picture" src={message.sender?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.webp'} />
       </div>
     </div>
   );
@@ -94,7 +91,7 @@ const ImageMessage = ({ img, userIcon }) => {
         className="flex items-center justify-center ml-auto"
         style={{ width: "150px" }}
       >
-        <Image src={img2} alt="" />
+        <Image src={'Img2.png'} alt="" />
       </div>
       <Avatar alt="Profile-Picture" src={userIcon} />
     </div>
@@ -116,21 +113,10 @@ const Chat = ({
     if (elem.classList.contains("hide")) elem.classList.toggle("show");
     else elem.classList.toggle("hide");
   };
-  const [user, setUser] = useState(null);
+  const user = auth.currentUser;
+
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        setUser(user);
-      } else {
-        // User is signed out
-        // ...
-        setUser(null);
-      }
-    });
-  }, []);
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -171,7 +157,9 @@ const Chat = ({
 
   const displayReciever = () => {
     setShowUser(true);
-    // setCurrReciever(dummyReciever);
+    // setCurrReciever(
+    //   currReciever
+    // );
   };
 
   return (
@@ -179,13 +167,12 @@ const Chat = ({
       className="flex flex-1 flex-col justify-between w-full relative"
       style={{ color: "white" }}
     >
-      <div className="flex flex-col gap-2">
-        <div
-          className="flex items-center gap-2 p-4"
+      <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">
+        <div className="flex  items-center gap-2 p-4 md:rounded-2xl"
           style={{ backgroundColor: "#505057", color: "white" }}
         >
           <div
-            className="flex flex-1 items-center gap-4"
+            className="flex flex-1 items-center gap-4 "
             onClick={() => {
               displayReciever();
             }}
@@ -193,7 +180,7 @@ const Chat = ({
             <Avatar
               className="cursor-pointer"
               alt="Profile-Picture"
-              src={img}
+              src={currReciever?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.webp'}
             />
             <div className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>
@@ -222,16 +209,15 @@ const Chat = ({
           </div>
         </div>
 
-        <div className="flex flex-col mt-4 gap-4 w-full">
+        <div className="flex flex-col mt-4 gap-4 w-full no-srollbar  overflow-y-auto flex-5">
           {messages.map((message, i) => {
             {
-              return message.senderId === user.uid ? (
-                <SendMessage key={i} message={message} />
+              return message.senderId === user?.uid ? (
+                <SendMessage key={message.messageId} message={message} />
               ) : (
                 <RecievedMessage
-                  key={message.content}
+                  key={message.messageId}
                   message={message}
-                  time="13:10"
                 />
               );
             }
@@ -241,9 +227,9 @@ const Chat = ({
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2  relative bottom-0 ">
         <div
-          className="flex flex-col gap-2 p-2 rounded-[5px] absolute bottom-0 "
+          className="flex flex-col gap-2 p-2 rounded-[5px] absolute left-0 bottom-0"
           style={{ backgroundColor: "#373A41" }}
         >
           <div className="hide icons-toggle z-[-0]">
@@ -276,7 +262,7 @@ const Chat = ({
         </div>
         <form
           onSubmit={submitHandler}
-          className="flex-1 flex items-center rounded-[10px] ml-14"
+          className="flex-1 flex items-center rounded-[10px] ml-14 self-end"
           style={{ border: "1px solid grey" }}
         >
           <div
@@ -324,4 +310,4 @@ const Chat = ({
   );
 };
 
-export default chatting;
+export default Chat;

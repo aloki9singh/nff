@@ -1,10 +1,11 @@
 //need rechecking
 import React, { useState, useEffect } from "react";
-import { MdSearch } from 'react-icons/md'
-import Image from "next/image"
+import { MdSearch } from "react-icons/md";
 import { dummyUsers } from "./data";
 import Link from "next/link";
 import Avatar from "./avatar";
+import { auth, db } from "../../../config/firebaseconfig";
+import { doc, getDoc } from "firebase/firestore";
 
 const messageDetails = {
   lastMessage: "Sir have you checked my assignment?",
@@ -12,14 +13,12 @@ const messageDetails = {
   time: "10:00pm",
 };
 
-const SideBarCard = ({
-  currReciever,
-  setCurrReciever,
-  recieverName,
-  noOfMessages,
-  time,
-  chat
-}) => {
+async function getUser(uid) {
+  const user = await getDoc(doc(db, "profileDetails", uid));
+  return user.data();
+}
+
+const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat }) => {
   // fetch details of user from backend using id or username;
 
   // const reciever = {
@@ -28,19 +27,41 @@ const SideBarCard = ({
   //   number: number,
   // };
 
+  const [name, setName] = useState(chat.name);
+  const [photoURL, setPhotoURL] = useState(chat.photoURL);
+  const time = chat.lastMessageTimestamp
+    ?.toDate()
+    .toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+
+  useEffect(() => {
+    if (!name && !chat.isGroup) {
+      const friendUid = chat.members.find(
+        (uid) => uid !== auth.currentUser.uid
+      );
+      getUser(friendUid).then((friend) => {
+        setName(friend.name.first + " " + friend.name.last);
+        setPhotoURL(friend.photoURL);
+      });
+    }
+  }, [chat, name]);
+
   return (
     <div
       className={
-        currReciever?.name === recieverName
+        currReciever?.groupId === chat?.groupId
           ? "flex active-user items-center gap-2 cursor-pointer p-2"
           : "flex items-center gap-2 cursor-pointer p-2"
       }
       onClick={(e) => setCurrReciever(chat)}
     >
-      <Avatar alt="Profile-Picture" src="./componentsgraphics/common/chatting/sidebar/navbar/profile.webp" />
+      <Avatar alt="Profile-Picture" src={photoURL || '/componentsgraphics/common/chatting/user/profile.webp'} />
       <div className="flex flex-col flex-1 items-start">
-        <h1>{recieverName}</h1>
-        <p className='text-sm'>{chat.lastMessage}</p>
+        <h1>{name}</h1>
+        <p className="text-sm">{chat.lastMessage}</p>
       </div>
       <div className="flex flex-col justify-end items-center">
         <span className="text-[10px]">{time}</span>
@@ -56,10 +77,9 @@ const SideBarCard = ({
 };
 
 const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
-  const [activeLink, setActiveLink] = useState("students");
+  const [activeLink, setActiveLink] = useState("all");
   const [searchUser, setSearchUser] = useState("");
   const [users, setUsers] = useState(chats);
-
   useEffect(() => {
     setUsers(chats);
   }, [chats]);
@@ -99,8 +119,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
         <div className=" ">
           <ul className="flex mb-6 justify-evenly">
             <li>
-              <Link
-                href="/"
+              <button
                 className={
                   activeLink === "all"
                     ? "active cursor-pointer px-2 py-1"
@@ -109,14 +128,14 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveLink("all");
+                  setUsers(chats);
                 }}
               >
                 All
-              </Link>
+              </button>
             </li>
             <li>
-              <Link
-                href="/"
+              <button
                 className={
                   activeLink === "students"
                     ? "active cursor-pointer px-2 py-1"
@@ -125,14 +144,14 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveLink("students");
+                  setUsers(chats.filter((chat) => !chat.isGroup));
                 }}
               >
                 Students
-              </Link>
+              </button>
             </li>
             <li>
-              <Link
-                href="/"
+              <button
                 className={
                   activeLink === "groups"
                     ? "active cursor-pointer px-2 py-1"
@@ -141,11 +160,12 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveLink("groups");
+                  setUsers(chats.filter((chat) => chat.isGroup));
                 }}
               >
                 {" "}
                 Groups
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -154,13 +174,9 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
           {/* using map dynamically populate this */}
           {users.map((user, i) => (
             <SideBarCard
-              key={user.name + i}
-              index={i}
+              key={user.groupId}
               noOfMessages={messageDetails.noOfMessages}
-              time={user.lastMessageTimestamp?.toDate().
-                toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
               chat={user}
-              recieverName={user.name}
               currReciever={currReciever}
               setCurrReciever={setCurrReciever}
             />
@@ -171,4 +187,4 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
   );
 };
 
-export default chatsidebar;
+export default Sidebar;

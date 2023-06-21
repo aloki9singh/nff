@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar/sidebar";
-import Navbar from "../components/chats/Navbar";
-import ChatSidebar from "../components/chats/ChatSidebar";
-import Chatpart from "../components/chats/Chatpart";
-import User from "../components/chats/User";
+import Sidebar from "../../components/common/sidebar/sidebar";
+import Navbar from "../../components/common/chat/navbar";
+import ChatSidebar from "../../components/common/chat/chatsidebar";
+import Chatpart from "../../components/common/chat/chatting";
+import User from "../../components/common/chat/user";
 import {
   collection,
   query,
@@ -12,14 +12,21 @@ import {
   onSnapshot,
   getDoc,
   doc,
+  where,
 } from "firebase/firestore";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../config/firebaseConfig";
+// import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../config/firebaseconfig";
+import GroupDetails from "../../components/common/chat/Group";
+import { useRouter } from "next/router";
+import { onAuthStateChanged } from "firebase/auth";
 
-
+const userCache = {};
 async function getUser(uid) {
-  const user = await getDoc(doc(db, "users", uid));
+  if (userCache[uid]) return userCache[uid];
+
+  const user = await getDoc(doc(db, "profileDetails", uid));
+  userCache[uid] = user.data();
   return user.data();
 }
 
@@ -28,59 +35,87 @@ const Chat = () => {
   const [chats, setChats] = useState([]);
   const [showUser, setShowUser] = useState(false);
   const [messages, setMessages] = useState([]);
+  const router = useRouter();
 
+  // const user = auth.currentUser;
   const [user, setUser] = useState(null);
-  useEffect(() => {
 
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
         setUser(user);
       } else {
-        // User is signed out
-        // ...
-        setUser(null);
+        router.push("/login");
       }
-    });
-  }, []);
+    }
+    )
+  }, [router])
 
   useEffect(() => {
+    console.log("user", user)
+    if (!user) return;
+
     const q = query(
       collection(db, "chatGroups"),
-      orderBy("lastMessageTimestamp", "desc")
+      where("members", "array-contains", user.uid),
+      // orderBy("lastMessageTimestamp", "desc")
     );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let arr = [];
       querySnapshot.forEach(async (doc) => {
         let chat = doc.data();
-        if (!chat.isGroup && user) {
-          const uid = chat.members[0] === user.uid ? chat.members[1] : chat.members[0];
-          console.log("uid", uid)
-          if (!uid) return;
-          const user2 = await getUser(uid);
-          console.log("user2", user2)
-          chat.name = user2.displayName;
-        }
+        console.log("chat", chat);
+
         arr.push(chat);
       });
-      console.log("arr", arr);
       setChats(arr);
       // if (!currReciever)
       //   setCurrReciever(arr[0]);
     });
 
     return unsub;
-
   }, [user]);
 
+  console.log("chats", chats);
+
   useEffect(() => {
-    if (!currReciever)
-      setCurrReciever(chats[0]);
-  }, [currReciever, chats])
+    if (!currReciever) setCurrReciever(chats[0]);
+    const getMembers = async () => {
+      const newReceiver = JSON.parse(JSON.stringify(currReciever));
+
+      if (newReceiver.members === undefined) return;
+      if (!Array.isArray(newReceiver.members)) return;
+
+      const members = {};
+      for (const member of newReceiver.members) {
+        const user2 = await getUser(member);
+        user2.uid = member;
+        members[member] = user2;
+      }
+      newReceiver.members = members;
+
+      if (
+        newReceiver.isGroup !== undefined &&
+        !newReceiver.isGroup &&
+        auth.currentUser
+      ) {
+        const friendUid = Object.keys(newReceiver.members).find(
+          (uid) => uid !== auth.currentUser.uid
+        );
+        const friend = newReceiver.members[friendUid];
+        newReceiver.name = friend.name.first + " " + friend.name.last;
+        newReceiver.photoURL = friend.photoURL;
+        newReceiver.username = friend.username;
+        newReceiver.studentPhoneNo = friend.studentPhoneNo;
+      }
+      setCurrReciever(newReceiver);
+    };
+
+    if (currReciever) getMembers();
+  }, [currReciever, chats]);
 
   useEffect(() => {
     if (!currReciever) return;
-    console.log("currReciever", currReciever)
     const q = query(
       collection(db, "chatGroups", currReciever.groupId, "messages"),
       limit(25),
@@ -89,7 +124,9 @@ const Chat = () => {
     const unsub = onSnapshot(q, (querySnapshot) => {
       const messages = [];
       querySnapshot.forEach((doc) => {
-        messages.push(doc.data());
+        const message = doc.data();
+        message.sender = currReciever.members[message.senderId];
+        messages.push(message);
       });
       setMessages(messages);
     });
@@ -103,8 +140,8 @@ const Chat = () => {
         <Sidebar />
         <div className="w-full h-full">
           <div>
-          <Navbar />
-          <hr className="hidden lg:block opacity-50 mt-3 "/>
+            <Navbar />
+            <hr className="hidden lg:block opacity-50 mt-3 " />
           </div>
           <div
             className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
@@ -121,9 +158,17 @@ const Chat = () => {
               setShowUser={setShowUser}
               status="online"
               messages={messages}
-              user={user}
             />
-            {showUser && <User {...currReciever} setShowUser={setShowUser} />}
+            {showUser &&
+              (currReciever.isGroup ? (
+                <GroupDetails
+                  currReciever={currReciever}
+                  setShowUser={setShowUser}
+                  setCurrReciever={setCurrReciever}
+                />
+              ) : (
+                <User currReciever={currReciever} setShowUser={setShowUser} />
+              ))}
           </div>
         </div>
       </div>
