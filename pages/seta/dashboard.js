@@ -1,6 +1,5 @@
 import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
-
 import { useEffect, useState } from "react";
 import MonthSelector from "../../components/common/calendar/common/monthselector";
 import Datelist from "@/components/common/calendar/common/datelist";
@@ -20,7 +19,7 @@ const months = [
   "November",
   "December",
 ];
-export default function studentdetails() {
+export default function Studentdetails() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
