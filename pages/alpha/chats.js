@@ -1,9 +1,14 @@
+//////main body CSS and nav bar needed to be fixed with responsiveness
+// chat section working or not needed to be checked
+
 import React, { useState, useEffect } from "react";
+
 import Sidebar from "../../components/common/sidebar/sidebar";
 import Navbar from "../../components/common/chat/navbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
+
 import {
   collection,
   query,
@@ -15,11 +20,13 @@ import {
   where,
 } from "firebase/firestore";
 
+
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../config/firebaseconfig";
 import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
+
 
 const userCache = {};
 async function getUser(uid) {
@@ -64,7 +71,9 @@ const Chat = () => {
       let arr = [];
       querySnapshot.forEach(async (doc) => {
         let chat = doc.data();
+
         console.log("chat", chat);
+
 
         arr.push(chat);
       });
@@ -80,6 +89,7 @@ const Chat = () => {
 
   useEffect(() => {
     if (!currReciever) setCurrReciever(chats[0]);
+
     const getMembers = async () => {
       const newReceiver = JSON.parse(JSON.stringify(currReciever));
 
@@ -112,10 +122,13 @@ const Chat = () => {
     };
 
     if (currReciever) getMembers();
+
   }, [currReciever, chats]);
 
   useEffect(() => {
     if (!currReciever) return;
+
+
     const q = query(
       collection(db, "chatGroups", currReciever.groupId, "messages"),
       limit(25),
@@ -137,7 +150,9 @@ const Chat = () => {
   return (
     <>
       <div className="flex overflow-y-hidden">
-        <Sidebar />
+        <div className="lg:col-span-1 hidden lg:grid">
+          <Sidebar />
+        </div>
         <div className="w-full h-full">
           <div>
             <Navbar />

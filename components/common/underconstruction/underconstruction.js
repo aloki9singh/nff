@@ -65,7 +65,9 @@ export default function UnderProgress() {
 
   return (
     <div className="flex h-screen">
-      <Sidebar />
+      <div className="lg:col-span-1 hidden lg:grid">
+        <Sidebar />
+      </div>
       <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
         <Dashboardnav heading="" />
         <div className="text-white grow flex items-center justify-center h-fit">

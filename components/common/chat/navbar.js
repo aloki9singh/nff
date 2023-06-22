@@ -1,6 +1,8 @@
 import React from "react";
 import { MdSearch, MdNotifications } from 'react-icons/md'
+
 import Avatar from "./avatar";
+
 
 const Navbar = () => {
   return (

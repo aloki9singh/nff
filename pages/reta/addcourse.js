@@ -1,9 +1,14 @@
+// Page not found in given figma , CSS needed to be rechecked.
+// backend needed to be rechecked implementing appwrite
+
+
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
 import { collection, addDoc, serverTimestamp, setDoc, doc } from 'firebase/firestore';
-import { db } from '../config/firebaseConfig';
+import { db } from '@/config/firebaseConfig';
 import Link from 'next/link';
 import Image from 'next/image';
+import NeatS from '/public/componentsgraphics/schools/login/neatskillslogosample.svg'
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ['Dinesh Saini', 'Rahul', 'Raj', 'Ravi'];
@@ -199,19 +204,20 @@ const CreateCourse = () => {
   }
 
   return (
-    <div className="text-white flex flex-col justify-center items-center">
+    <div className="text-white flex flex-col justify-center items-center px-5">
       {/* nav bar */}
       <div className="w-screen border-b-2 border-grey text-center">
         <div className=" flex justify-center gap-x-96 items-center">
           <Link href="/">
             <ul>
-              <li className="ml-2 md:ml-10 text-2xl uppercase hover:border-b text-white text-center">
+            
+              <li className="ml-2   text-2xl uppercase hover:border-b text-white text-center h-[50px] md:h-[60px]">
                 <Image
-                  src="/Neatskills.svg"
+                  src={NeatS}
                   alt="logo"
-                  className="w-[112px] h-[43px] md:w-[186px] md:h-[71px]"
-                  width={100}
-                  height={100}
+                  className=" h-full"
+                  width={200}
+                  height={200}
                 />
               </li>
             </ul>
@@ -242,7 +248,7 @@ const CreateCourse = () => {
         <hr className="border-x-2 border-gray-500 mb-4" />
 
         {/* course name */}
-        <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+        <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
           <label htmlFor="">Course Name:</label>
           <input
             type="text"
@@ -255,7 +261,7 @@ const CreateCourse = () => {
         </div>
 
         {/* course desc */}
-        <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+        <div className="w-full  flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
           <label htmlFor="">Course Subtitle:</label>
           <input
             type="text"
@@ -268,7 +274,7 @@ const CreateCourse = () => {
         </div>
 
         {/* course details */}
-        <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+        <div className="w-full  flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
           <label htmlFor="">Course Description:</label>
           <textarea
             type="text"

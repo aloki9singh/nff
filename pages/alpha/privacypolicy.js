@@ -1,13 +1,18 @@
-import Sidebar from '../components/Sidebar/sidebar';
-import Dashboardnav from '../components/Navbar/Dashboardnav';
-import BottomNav from '../components/Footer/BottomNav';
-import Footer from '../components/Footer/Footer';
-import Link from 'next/link';
+////main body CSS and nav bar needed to be fixed with responsiveness
+//bottom nav is missing
+
+import Sidebar from "@/components/common/sidebar/sidebar";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+ import BottomNav from "@/components/common/footer/BottomNav";
+import Footer from "@/components/common/footer/footer";
+import Link from "next/link";
 
 export default function Privacy() {
   return (
     <div className="flex">
-      <Sidebar />
+      <div className="lg:col-span-1 hidden lg:grid">
+        <Sidebar />
+      </div>
       <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
         <Dashboardnav heading="Privacy policy" />
         <div className="flex justify-start items-center text-center text-white md:m-6 m-3">

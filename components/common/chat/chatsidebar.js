@@ -58,7 +58,9 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat }) => {
       }
       onClick={(e) => setCurrReciever(chat)}
     >
+
       <Avatar alt="Profile-Picture" src={photoURL || '/componentsgraphics/common/chatting/user/profile.webp'} />
+
       <div className="flex flex-col flex-1 items-start">
         <h1>{name}</h1>
         <p className="text-sm">{chat.lastMessage}</p>

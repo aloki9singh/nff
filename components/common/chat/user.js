@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { MdClose, MdInfoOutline, MdNotificationsNone } from 'react-icons/md'
+
 import Avatar from "./avatar";
+
 import { Switch } from "@headlessui/react";
 import Image from "next/image";
 
