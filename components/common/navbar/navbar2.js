@@ -1,8 +1,9 @@
 const NavbarSecond = ({ title, buttonVis, titleVis }) => {
-    return (
-      <>
-        <nav className="rounded-tl-[40px] border-b-2 border-[#728095] px-0 sm:px-0 py-6 bg-[#2D2E35]">
-          <div className="container flex flex-wrap items-end justify-between mx-auto">
+  return (
+    <>
+      <nav className="md:rounded-tl-[40px] border-b-2 border-[#728095]  py-5 bg-[#2D2E35] ">
+        <div className="w-full">
+          <div className="container flex flex-wrap items-end justify-between  ">
             <button
               type="button"
               className={`${buttonVis} inline-block justify-start items-start ml-12 px-[20px] py-2.5 bg-[#404147] text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out`}
@@ -10,7 +11,7 @@ const NavbarSecond = ({ title, buttonVis, titleVis }) => {
               Back
             </button>
             <h1 className={`${titleVis} text-white ml-12 text-xl`}>{title}</h1>
-            <div className="flex md:order-second">
+            <div className="flex md:order-second ">
               <button
                 type="button"
                 data-collapse-toggle="navbar-search"
@@ -121,10 +122,10 @@ const NavbarSecond = ({ title, buttonVis, titleVis }) => {
               </button>
             </div>
           </div>
-        </nav>
-      </>
-    );
-  };
-  
-  export default NavbarSecond;
-  
+        </div>
+      </nav>
+    </>
+  );
+};
+
+export default NavbarSecond;

@@ -52,10 +52,10 @@ export default function Navbar() {
 							<Link href="/course-overview">
 								<li className="text-md uppercase hover:border-b ">Courses</li>
 							</Link>
-							<Link href="/aboutUs">
+							<Link href="/alpha/aboutUs">
 								<li className="text-md uppercase hover:border-b ">About Us</li>
 							</Link>
-							<Link href="/contact-us">
+							<Link href="/alpha/contactus">
 								<li className="text-md uppercase hover:border-b ">Contact</li>
 							</Link>
 						</ul>
