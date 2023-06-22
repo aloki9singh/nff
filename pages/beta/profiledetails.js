@@ -1,10 +1,10 @@
-import IDdraganddrop from "../components/Student/IDdraganddrop";
+import IDdraganddrop from "../../components/student/assignments/iddraganddrop";
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
-import { auth, db, storage } from "../config/firebaseConfig";
+import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -108,6 +108,7 @@ export default function ProfileDetails() {
       parentAltPhoneNo: data.parentAltPhoneNo,
       photoURL: user.photoURL,
       aadhaarCard: "",
+      uid: user.uid,
     };
 
     await setDoc(doc(db, "profileDetails", user.uid), profile);

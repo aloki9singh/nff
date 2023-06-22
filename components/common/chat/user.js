@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { MdClose, MdInfoOutline, MdNotificationsNone } from 'react-icons/md'
-import img from "@/public/componentsgraphics/common/chatting/chattingarea/profile.webp";
-import img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.png";
-// import Switch from "@mui/material/Switch";
-import Avatar from "@/components/common/chat/avatar";
-import { Switch } from "@headlessui/react";
 
-const User = ({ name, number, username, setShowUser }) => {
+import Avatar from "./avatar";
+
+import { Switch } from "@headlessui/react";
+import Image from "next/image";
+
+const User = ({ currReciever, setShowUser }) => {
   const [checked, setChecked] = useState(true);
 
 
@@ -38,10 +38,10 @@ const User = ({ name, number, username, setShowUser }) => {
       >
         <Avatar
           alt="Profile-Picture"
-          src={img}
+          src={'/componentsgraphics/common/chatting/user/profile.webp'}
           sx={{ height: 76, width: 76 }}
         />
-        {name}
+        {currReciever.name}
       </div>
 
       <div
@@ -51,12 +51,12 @@ const User = ({ name, number, username, setShowUser }) => {
         <div className="flex">
           <MdInfoOutline />
           <div>
-            <p className="text-[14px]">+{number}</p>
+            <p className="text-[14px]">+{currReciever.studentPhoneNo}</p>
             <p className="text-[10px]">Mobile</p>
           </div>
         </div>
         <div className="flex flex-col">
-          <p className="text-[14px]">{username}</p>
+          <p className="text-[14px]">@{currReciever.username}</p>
           <p className="text-[10px]">Username</p>
         </div>
       </div>
@@ -67,9 +67,9 @@ const User = ({ name, number, username, setShowUser }) => {
       >
         <h1>Media Link and Docs</h1>
         <div className="flex gap-6 p-2" style={{ backgroundColor: "#505357" }}>
-          <img src={img2} alt="" height={60} width={60} />
-          <img src={img2} alt="" height={60} width={60} />
-          <img src={img2} alt="" height={60} width={60} />
+          <Image src={'Img2.png'} alt="" height={60} width={60} />
+          <Image src={'Img2.png'} alt="" height={60} width={60} />
+          <Image src={'Img2.png'} alt="" height={60} width={60} />
         </div>
       </div>
 
@@ -92,10 +92,10 @@ const User = ({ name, number, username, setShowUser }) => {
       </div>
 
       <div
-        className="flex px-6 py-4 justify-between"
+        className="flex px-6 py-4 justify-center gap-8"
         style={{ borderBottom: "1px solid grey" }}
       >
-        <p>Exit Group</p>
+        {/* <p>Exit Group</p> */}
         <p>Block</p>
         <p>Report</p>
       </div>

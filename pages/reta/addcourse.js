@@ -91,6 +91,10 @@ const CreateCourse = () => {
         groupId: docRef.id,
         members: [],
         name: title,
+        isGroup: true,
+        lastMessage: '',
+        lastMessageTimestamp: serverTimestamp(),
+        createdAt: serverTimestamp(),
       })
 
       console.log('Document written with ID: ', docRef.id);
