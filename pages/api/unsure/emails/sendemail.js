@@ -1,4 +1,4 @@
-import { transporter } from "../../components/config/nodeMailer";
+import { transporter } from "@/config/nodemailer";
 
 export default async function sendEmail(req, res) {
   const data = req.body;
