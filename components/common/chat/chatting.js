@@ -8,13 +8,13 @@ import {
   MdAttachFile,
   MdOutlineInsertDriveFile,
 } from "react-icons/md";
-import img from "../../public/profile.webp";
-import img2 from "../../public/Img2.png";
-import Avatar from "../chats/Avatar";
+import img from "@/public/componentsgraphics/common/chatting/chattingarea/profile.webp";
+import img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.png";
+import Avatar from "@/components/common/chat/avatar";
 import Image from "next/image";
-import { adddata } from "../../lib/Context/ContextProvider";
+import { adddata } from "@/lib/Context/ContextProvider";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { db } from "../config/firebaseConfig";
+import { db ,auth} from "@/config/firebaseConfig";
 import {
   collection,
   doc,
@@ -119,7 +119,7 @@ const Chat = ({
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
   useEffect(() => {
-    const auth = getAuth();
+    // const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
@@ -324,4 +324,4 @@ const Chat = ({
   );
 };
 
-export default chatting;
+export default Chat;

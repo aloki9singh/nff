@@ -1,7 +1,7 @@
 import React from "react";
 import { MdSearch, MdNotifications } from 'react-icons/md'
-import img from "../../public/profile.webp";
-import Avatar from "../chats/Avatar";
+import img from "@/public/componentsgraphics/common/chatting/sidebar/navbar/profile.webp";
+import Avatar from "@/components/common/chat/avatar";
 
 const Navbar = () => {
   return (

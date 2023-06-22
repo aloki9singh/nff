@@ -14,4 +14,4 @@ function Avatar({ src, alt }) {
   );
 }
 
-export default chatavatar;
+export default Avatar;

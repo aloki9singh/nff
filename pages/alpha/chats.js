@@ -1,9 +1,10 @@
+//////main body CSS and nav bar needed to be fixed with responsiveness
+// chat section working or not needed to be checked
+
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar/sidebar";
-import Navbar from "../components/chats/Navbar";
-import ChatSidebar from "../components/chats/ChatSidebar";
-import Chatpart from "../components/chats/Chatpart";
-import User from "../components/chats/User";
+import ChatSidebar from "@/components/common/chat/chatsidebar";
+import Chatpart from "@/components/common/chat/chatting";
+import User from "@/components/common/chat/User";
 import {
   collection,
   query,
@@ -15,8 +16,9 @@ import {
 } from "firebase/firestore";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../config/firebaseConfig";
-
+import { auth, db } from "@/config/firebaseConfig";
+import Sidebar from "@/components/common/sidebar/sidebar";
+import Navbar from "@/components/common/chat/navbar";
 
 async function getUser(uid) {
   const user = await getDoc(doc(db, "users", uid));
@@ -31,7 +33,6 @@ const Chat = () => {
 
   const [user, setUser] = useState(null);
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
@@ -54,11 +55,12 @@ const Chat = () => {
       querySnapshot.forEach(async (doc) => {
         let chat = doc.data();
         if (!chat.isGroup && user) {
-          const uid = chat.members[0] === user.uid ? chat.members[1] : chat.members[0];
-          console.log("uid", uid)
+          const uid =
+            chat.members[0] === user.uid ? chat.members[1] : chat.members[0];
+          console.log("uid", uid);
           if (!uid) return;
           const user2 = await getUser(uid);
-          console.log("user2", user2)
+          console.log("user2", user2);
           chat.name = user2.displayName;
         }
         arr.push(chat);
@@ -70,17 +72,15 @@ const Chat = () => {
     });
 
     return unsub;
-
   }, [user]);
 
   useEffect(() => {
-    if (!currReciever)
-      setCurrReciever(chats[0]);
-  }, [currReciever, chats])
+    if (!currReciever) setCurrReciever(chats[0]);
+  }, [currReciever, chats]);
 
   useEffect(() => {
     if (!currReciever) return;
-    console.log("currReciever", currReciever)
+    console.log("currReciever", currReciever);
     const q = query(
       collection(db, "chatGroups", currReciever.groupId, "messages"),
       limit(25),
@@ -100,11 +100,13 @@ const Chat = () => {
   return (
     <>
       <div className="flex overflow-y-hidden">
-        <Sidebar />
+        <div className="lg:col-span-1 hidden lg:grid">
+          <Sidebar />
+        </div>
         <div className="w-full h-full">
           <div>
-          <Navbar />
-          <hr className="hidden lg:block opacity-50 mt-3 "/>
+            <Navbar />
+            <hr className="hidden lg:block opacity-50 mt-3 " />
           </div>
           <div
             className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { MdClose, MdInfoOutline, MdNotificationsNone } from 'react-icons/md'
-import img from "../../public/profile.webp";
-import img2 from "../../public/Img2.png";
+import img from "@/public/componentsgraphics/common/chatting/chattingarea/profile.webp";
+import img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.png";
 // import Switch from "@mui/material/Switch";
-import Avatar from "../chats/Avatar";
+import Avatar from "@/components/common/chat/avatar";
 import { Switch } from "@headlessui/react";
 
 const User = ({ name, number, username, setShowUser }) => {

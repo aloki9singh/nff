@@ -1,4 +1,5 @@
-///This page CSS Need to be fixed not responsive
+/////main body CSS and nav bar needed to be fixed with responsiveness
+// needed to connect form with backend  to receive mail
 
 import NavbarSecond from "@/components/common/navbar/navbar2";
 import Sidebar from "@/components/common/sidebar/sidebar";

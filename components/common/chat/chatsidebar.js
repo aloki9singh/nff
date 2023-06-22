@@ -37,7 +37,7 @@ const SideBarCard = ({
       }
       onClick={(e) => setCurrReciever(chat)}
     >
-      <Avatar alt="Profile-Picture" src="./componentsgraphics/common/chatting/sidebar/navbar/profile.webp" />
+      <Avatar alt="Profile-Picture" src="/componentsgraphics/common/chatting/sidebar/navbar/profile.webp" />
       <div className="flex flex-col flex-1 items-start">
         <h1>{recieverName}</h1>
         <p className='text-sm'>{chat.lastMessage}</p>
@@ -171,4 +171,4 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
   );
 };
 
-export default chatsidebar;
+export default Sidebar;
