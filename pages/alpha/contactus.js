@@ -1,4 +1,3 @@
-
 ///This page CSS Need to be fixed not responsive
 
 import NavbarSecond from "@/components/common/navbar/navbar2";
@@ -9,7 +8,9 @@ const contact = () => {
   return (
     <>
       <div className="flex h-screen">
-        <Sidebar />
+        <div className="lg:col-span-1 hidden lg:grid">
+          <Sidebar />
+        </div>
         <div className="w-full h-full flex flex-col">
           <NavbarSecond buttonVis="hidden" title="Contact Us" />
           <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
@@ -48,14 +49,15 @@ const contact = () => {
                       <p className="text-[#AFB0B3] text-sm">
                         (Not available right now)
                       </p>
-                     
                     </div>
                   </div>
                 </div>
               </div>
               {/* RIGHT */}
               <div className="flex-[2_2_0%] px-20">
-                <h1 className="text-3xl my-4">Submit a request (not linked with server right now)</h1>
+                <h1 className="text-3xl my-4">
+                  Submit a request (not linked with server right now)
+                </h1>
                 <div className="">
                   <form>
                     <div className="mb-6">
