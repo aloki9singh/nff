@@ -1,6 +1,10 @@
+// Page not Provided in figma CSS need to be fixed
+//Backend needed to be implemented with appwrite  
+// it is admin login page 
+
 import { useState } from 'react';
-import NeatS from '../public/Neatskills.svg';
-import Woman from '../public/Adminlogingraphic.png';
+import NeatS from '/public/componentsgraphics/schools/login/neatskillslogosample.svg'
+import Woman from '@/public/pagesgraphics/admin/login/Adminlogingraphic.png';
 import { AiOutlineMail } from 'react-icons/ai';
 import Image from 'next/image';
 import { FaLock } from 'react-icons/fa';

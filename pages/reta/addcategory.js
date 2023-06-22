@@ -1,24 +1,30 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import NeatS from '../public/Neatskills.svg';
+//Check this page where it is used , Unable to see this page in figma
+// if in use then backend needed to  be implemented with appwrite
+
+import { useState } from "react";
+import Image from "next/image";
+import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
 
 const Createcategory = () => {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState("");
 
   function handleLogin(e) {
     e.preventDefault();
     console.log(category);
     //reset the form
-    setCategory('');
+    setCategory("");
   }
   return (
-    <div className="w-screen h-screen flex ">
+    <div className="w-screen h-screen flex p-5">
       <div
-        className="w-3/4 h-3/4 m-auto rounded-2xl"
-        style={{ background: 'rgba(255, 255, 255, 0.02)' }}
+        className="md:w-3/4 h-3/4 m-auto rounded-2xl w-full p-5 "
+        style={{ background: "rgba(255, 255, 255, 0.02)" }}
       >
-        <Image src={NeatS} alt="Logo" />
-        <div className="w-2/4 h-2/4 m-auto flex flex-col justify-center items-center text-center gap-y-6 text-white">
+       
+          {" "}
+          <Image src={NeatS} alt="Logo" />
+       
+        <div className=" h-full  flex flex-col justify-center items-center text-center md:gap-y-9 gap-y-6 text-white mt-[-20px]">
           <label htmlFor="category" className="text-3xl md:text-5xl">
             Create Category
           </label>
@@ -32,7 +38,7 @@ const Createcategory = () => {
             className="w-64 md:w-1/2 h-10 border-none focus:outline-none bg-inherit placeholder:text-white rounded-lg px-4 mb-4  md:mb-0"
             style={{
               background:
-                'linear-gradient(178deg, rgba(255, 255, 255, 0.11) 1.69%, rgba(255, 255, 255, 0) 135.33%)',
+                "linear-gradient(178deg, rgba(255, 255, 255, 0.11) 1.69%, rgba(255, 255, 255, 0) 135.33%)",
             }}
           />
           <button
