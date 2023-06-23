@@ -8,6 +8,9 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
+import appwriteClient, { databaseId, schoolsCollectionId } from "@/libs/appwrite/appwrite";
+import { Databases } from "appwrite";
+import { generate } from "shortid";
 
 function MentorProfile() {
   const router = useRouter();
@@ -31,9 +34,40 @@ function MentorProfile() {
   const [insta, setInsta] = useState("");
   const [facebook, setFacebook] = useState("");
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    pushdata();
+    const schoolProfile = {
+      schoolName,
+      udiseId: udisecode,
+      authCode,
+      principalName,
+      numberOfStudents: noOfStudent,
+      primaryEmail: priMail,
+      secondaryEmail: secMail,
+      adminName: admin,
+      primaryPhoneNumber: priCall,
+      secondaryPhoneNumber: secCall,
+      schoolAddress: building,
+      city,
+      postalCode,
+      country,
+      schoolWebsite: schWebsite,
+      instagramLink: insta,
+      facebookLink: facebook,
+    };
+
+    // upload to appwrite
+    const databases = new Databases(appwriteClient);
+    const promise = databases.createDocument(databaseId, schoolsCollectionId, generate(), schoolProfile);
+
+    promise.then(function (response) {
+      console.log(response); // Success
+    }, function (error) {
+      console.log(error); // Failure
+    });
+
+    
+
   };
 
   return (
