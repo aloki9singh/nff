@@ -8,9 +8,6 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import appwriteClient, { databaseId, schoolsCollectionId } from "@/libs/appwrite/appwrite";
-import { Databases } from "appwrite";
-import { generate } from "shortid";
 
 function MentorProfile() {
   const router = useRouter();
@@ -55,18 +52,7 @@ function MentorProfile() {
       instagramLink: insta,
       facebookLink: facebook,
     };
-
-    // upload to appwrite
-    const databases = new Databases(appwriteClient);
-    const promise = databases.createDocument(databaseId, schoolsCollectionId, generate(), schoolProfile);
-
-    promise.then(function (response) {
-      console.log(response); // Success
-    }, function (error) {
-      console.log(error); // Failure
-    });
-
-    
+    console.log("schoolProfile", schoolProfile);    
 
   };
 

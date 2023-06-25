@@ -12,12 +12,11 @@ import { AiOutlineMail } from 'react-icons/ai';
 import { FaLock } from 'react-icons/fa';
 
 import { useState } from 'react';
-import appwriteClient from '@/libs/appwrite';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
 import { callEmailApi, callVerificationEmailApi } from '@/lib/api';
-import { Account } from 'appwrite';
 // import { adminAuth } from '../config/firebaseAdminConfig';
 
 function SchoolLoginComp() {
@@ -28,11 +27,17 @@ function SchoolLoginComp() {
 
     const login = async (email, password, schooluniqueID) => {
         try {
-            const account = new Account(appwriteClient);
-            const userCredential = await account.createEmailSession(email, password);
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password,
+                schooluniqueID
+            );
             // await sendEmailVerification(userCredential.user);
             const displayName = email;
             const data = { displayName, email };
+            const user = userCredential.user;
+            console.log(user);
             await callVerificationEmailApi(data);
             alert('verification email sent!!');
 
