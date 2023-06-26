@@ -1,4 +1,5 @@
-import { mentorsCollection } from "../../../config/firebaseConfig";
+// import { usersCollection } from "@/config/firebaseconfig";
+import { usersCollection } from "@/config/firebaseconfig";
 import {
   getDocs,
   addDoc,
@@ -10,11 +11,11 @@ import {
 } from "firebase/firestore";
 
 async function handler(req, res) {
-  const { method } = req;    
+  const { method } = req;
   try {
     switch (method) {
       case "GET":
-        const querySnapshot = await getDocs(mentorsCollection);
+        const querySnapshot = await getDocs(usersCollection);
         const users = querySnapshot.docs.map((doc) => ({
           ...doc.data(),
         }));
@@ -23,7 +24,7 @@ async function handler(req, res) {
       case "POST":
         const data = req.body;
         const uid = data.uid; // this is added for user reference if user exists
-        const userRef = doc(mentorsCollection, uid); // searching if user exists or not
+        const userRef = doc(usersCollection, uid); // searching if user exists or not
         const docSnap = await getDoc(userRef);
 
         if (docSnap.exists()) {
@@ -33,7 +34,6 @@ async function handler(req, res) {
           await setDoc(userRef, {
             ...data,
             verified: false,
-            roles: [],
             details: "",
             createdAt: serverTimestamp(),
           });

@@ -1,4 +1,5 @@
-import { mentorsCollection } from '../../../../config/firebaseConfig';
+
+import { usersCollection } from '@/config/firebaseconfig';
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export default async function handler(req, res) {
@@ -8,12 +9,12 @@ export default async function handler(req, res) {
         switch (req.method) {
             case 'PATCH':
                 const data = req.body;
-                const userRef = doc(mentorsCollection, uid);
+                const userRef = doc(usersCollection, uid);
                 await updateDoc(userRef, data);
                 return res.status(200).json({ success: true, msg: 'Updated' });
 
             case 'GET':
-                const docRef = doc(mentorsCollection, uid);
+                const docRef = doc(usersCollection, uid);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
                 }
 
             case 'DELETE':
-                await deleteDoc(doc(mentorsCollection, uid));
+                await deleteDoc(doc(usersCollection, uid));
 
                 return res.status(200).json({ success: true, msg: 'Deleted' });
 
