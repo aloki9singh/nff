@@ -8,14 +8,9 @@ import Woman from "@/public/pagesgraphics/admin/login/Adminlogingraphic.svg";
 import { AiOutlineMail } from "react-icons/ai";
 import Image from "next/image";
 import { FaLock } from "react-icons/fa";
-import { callSignupApi, setRoleWithId } from "@/lib/auth";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth, db } from "@/config/firebaseconfig";
-import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
+import { sendOTP } from "@/lib/auth";
+
 // import { adminAuth } from "@/config/firebaseadminconfig";
 
 function Adminlogin() {
@@ -68,7 +63,17 @@ function Adminlogin() {
       });
       const data = await response.json();
       if (response.ok) {
-        router.push("/reta/otpverification");
+        const phoneNumber = "8318739431"; // Replace with the user's phone number
+
+        sendOTP(phoneNumber)
+          .then((verificationId) => {
+            console.log("Verification ID:", verificationId);
+            // You can store the verification ID and use it for OTP verification
+          })
+          .catch((error) => {
+            console.error("Error sending OTP:", error);
+          });
+        // router.push("/reta/otpverification");
         console.log("Login Successful");
       } else {
         if (data.error.includes("Firebase: Error (auth/wrong-password)")) {
