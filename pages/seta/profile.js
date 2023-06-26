@@ -8,6 +8,9 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
+import { generate } from "shortid";
 
 function MentorProfile() {
   const router = useRouter();
@@ -33,6 +36,12 @@ function MentorProfile() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    if (!udisecode || !authCode) {
+      alert("Please fill all the required fields");
+      return;
+    }
+
     const schoolProfile = {
       schoolName,
       udiseId: udisecode,
@@ -52,8 +61,19 @@ function MentorProfile() {
       instagramLink: insta,
       facebookLink: facebook,
     };
-    console.log("schoolProfile", schoolProfile);    
+    console.log("schoolProfile", schoolProfile);
 
+    // store to firestore
+    try {
+      const docRef = await setDoc(
+        doc(db, "schoolProfiles", udisecode),
+        schoolProfile
+      );
+      console.log("Document written with ID: ", docRef.id);
+      alert("Profile Updated");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

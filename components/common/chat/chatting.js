@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   MdOutlineCall,
   MdVideoCall,
@@ -80,7 +80,7 @@ const SendMessage = ({ message }) => {
         </span>
       </div>
       <div>
-        <Avatar alt="Profile-Picture" src={message.sender?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.webp'} />
+        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.webp'} />
       </div>
     </div>
   );
@@ -182,7 +182,7 @@ const Chat = ({
             <Avatar
               className="cursor-pointer"
               alt="Profile-Picture"
-              src={currReciever?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.webp'}
+              src={currReciever?.photoURL || '/componentsgraphics/common/chatting/user/profile.webp'}
             />
             <div className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>

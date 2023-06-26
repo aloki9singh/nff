@@ -31,7 +31,6 @@ function SchoolLoginComp() {
                 auth,
                 email,
                 password,
-                schooluniqueID
             );
             // await sendEmailVerification(userCredential.user);
             const displayName = email;
