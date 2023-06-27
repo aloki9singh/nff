@@ -94,7 +94,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
       >
         <Avatar
           alt="Profile-Picture"
-          src={'/componentsgraphics/common/chatting/user/profile.webp'}
+          src={'/componentsgraphics/common/chatting/user/profile.svg'}
           // sx={{ height: 87, width: 86 }}
           height={87}
           width={86}

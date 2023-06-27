@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 
 async function handler(req, res) {
-  const { method } = req;
+  const { method } = req;    
   try {
     switch (method) {
       case "GET":

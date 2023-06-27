@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import styles from "@/styles/componentsstyling/courseheader/courseheader.module.css";
 
-import user from "@/public/componentsgraphics/student/courses/header/pfpsample.jpeg";
+import user from "@/public/componentsgraphics/student/courses/header/pfpsample.svg";
 import books from "@/public/componentsgraphics/student/courses/header/booksicon.svg";
 import search from "@/public/componentsgraphics/student/courses/header/searchicon.svg";
 import desktop from "@/public/componentsgraphics/student/courses/header/desktopicon.svg";

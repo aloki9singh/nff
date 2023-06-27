@@ -2,28 +2,103 @@
 //Backend needed to be implemented with appwrite
 // it is admin login page
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
-import Woman from "@/public/pagesgraphics/admin/login/Adminlogingraphic.png";
+import Woman from "@/public/pagesgraphics/admin/login/Adminlogingraphic.svg";
 import { AiOutlineMail } from "react-icons/ai";
 import Image from "next/image";
 import { FaLock } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { sendOTP } from "@/lib/auth";
+
+// import { adminAuth } from "@/config/firebaseadminconfig";
 
 function Adminlogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authCode, setAuthCode] = useState("");
-
-  function handleLogin(e) {
+  const [blinkingIndex, setBlinkingIndex] = useState(0);
+  const router = useRouter();
+  async function handleLogin(e) {
     e.preventDefault();
-    console.log(email, password, authCode);
-    //reset the form
-    setEmail("");
-    setPassword("");
-    setAuthCode("");
+    // ----------------------------------------------------------------------
+    // this section will Signup user as admin comment login section trycatch  and uncomment this trycatch and vice-versa
+    //  signup trycatch
+    // try {
+    //   const userCredential = await createUserWithEmailAndPassword(
+    //     auth,
+    //     email,
+    //     password
+    //   );
+    //   const { user } = userCredential;
+    //   const data = {
+    //     uid: user.uid,
+    //     displayName: user.email,
+    //     email: user.email,
+    //     photoURL: user.photoURL,
+    //     authCode: authCode,
+    //     role: "admin",
+    //   };
+
+    //   await callSignupApi(data);
+    //   console.log("Success");
+    // } catch (error) {
+    //   if (error.message == "Firebase: Error (auth/email-already-in-use).") {
+    //     signInWithEmailAndPassword(auth, email, password);
+    //     console.log("Success Logged");
+    //   } else {
+    //     console.log(error);
+    //   }
+    // }
+    //  ------------------------------------------------------------------------------------
+    // login  trycatch
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, authCode }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        const phoneNumber = "8318739431"; // Replace with the user's phone number
+
+        sendOTP(phoneNumber)
+          .then((verificationId) => {
+            console.log("Verification ID:", verificationId);
+            // You can store the verification ID and use it for OTP verification
+          })
+          .catch((error) => {
+            console.error("Error sending OTP:", error);
+          });
+        // router.push("/reta/otpverification");
+        console.log("Login Successful");
+      } else {
+        if (data.error.includes("Firebase: Error (auth/wrong-password)")) {
+          alert("Please check Your Credentials.");
+        } else if (data.error.includes("Internal server error")) {
+          alert("Please check Your Credentials.");
+        } else {
+          alert("lease check Your Credentials.");
+          console.log("Error logging in:", data.error);
+        }
+      }
+    } catch (error) {
+      alert("Unauthorised User");
+      console.log("Error logging in:", error.message);
+    }
   }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBlinkingIndex((prevIndex) => (prevIndex + 1) % 3);
+    }, 500);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
   return (
-    
     <main className="max-w-full md:h-screen   grid justify-center md:grid-cols-2 text-center text-white md:overflow-hidden">
       <div className=" m-auto w-full   ">
         <div className="flex justify-center md:pt-0  pt-[20px]  ">
@@ -38,42 +113,54 @@ function Adminlogin() {
           </div>
         </div>
 
-        <div className="w-full flex justify-center mt-5">
-          <div className="m-auto w-full  ">
+        <div className="w-full flex justify-center mt-5 py-5">
+          <div className="m-auto w-full relative">
+            <div className="absolute inset-0 rounded-[100%] filter blur-3xl bg-[#A145CD]  opacity-75 w-[50%] m-auto"></div>
             <Image
               alt="Icon"
               src={Woman}
-              width={200}
-              height={200}
-              className=" md:p-10 md:w-[70%] m-auto "
+              width={150}
+              height={150}
+              className="md:p-10 md:w-[50%] m-auto relative z-10"
             />
           </div>
         </div>
-        <p className="hidden md:block text-normal text-lg">
-          Start learning the right away!
-        </p>
+
+        <div>
+          <p className="hidden md:block text-normal text-sm  pb-[20px]">
+            Control everthing, from one place
+          </p>
+          <div className="  hidden  md:flex justify-center gap-2 ">
+            <div
+              className={`w-[50px] h-[7px] rounded ${
+                blinkingIndex === 0 ? "bg-white" : "bg-gray-500"
+              }`}
+            ></div>
+            <div
+              className={`w-[50px] h-[7px] rounded ${
+                blinkingIndex === 1 ? "bg-white" : "bg-gray-500"
+              }`}
+            ></div>
+            <div
+              className={`w-[50px] h-[7px] rounded ${
+                blinkingIndex === 2 ? "bg-white" : "bg-gray-500"
+              }`}
+            ></div>
+          </div>
+        </div>
       </div>
-      <div className="m-auto md:mt-auto mt-[-20px] ">
-        <div className="rounded-[25px] p-4 w-full   bg-[#15161B] md:bg-[#ffffff05] md:px-20 ">
-          <h1 className="md:mt-[30px] md:text-3xl">Admin Login</h1>
+      <div className="m-auto md:mt-auto  ">
+        <div className="rounded-[25px] p-4 w-full   bg-[#15161B] md:bg-[#ffffff05] px-5  ">
+          <h1 className="md:mt-[30px] md:text-2xl">Admin Control</h1>
 
-          <hr
-            style={{ border: "0.5px solid rgba(255, 255, 255, 0.32)" }}
-            className="mt-5  m-auto"
-          />
-
-          <div className="">
-            <form
-              method="post"
-              action="#"
-              //  onSubmit={}
-            >
+          <div className=" md:pb-5 md:px-10 ">
+            <form method="post" action="#" onSubmit={(e) => handleLogin(e)}>
               <div
                 style={{
                   "background-image":
                     "linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)",
                 }}
-                className="flex rounded-[15px] md:mt-10 mt-5 bg-[#ffffff05] items-center "
+                className="  flex rounded-[15px] md:mt-10 mt-5 bg-[#ffffff05] items-center "
               >
                 <AiOutlineMail
                   size={"2.5vh"}
@@ -90,7 +177,7 @@ function Adminlogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="input p-3 cursor-pointer  focus:border-transparent focus:outline-none    rounded-lg  bg-transparent  w-[100%] text-sm "
+                  className="input  p-3 pr-10 cursor-pointer  focus:border-transparent focus:outline-none    rounded-lg  bg-transparent  w-[100%] text-sm "
                 />
               </div>
 
@@ -99,7 +186,7 @@ function Adminlogin() {
                   "background-image":
                     "linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)",
                 }}
-                className=" flex rounded-[15px]   my-8 bg-[#ffffff05] items-center "
+                className="   flex rounded-[15px]   my-8 bg-[#ffffff05] items-center "
               >
                 <FaLock
                   size={"2.5vh"}
@@ -116,7 +203,7 @@ function Adminlogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="input p-3 cursor-pointer focus:border-transparent focus:outline-none  rounded-lg  bg-transparent  w-[100%] text-sm"
+                  className="input  p-3 pr-10 cursor-pointer focus:border-transparent focus:outline-none  rounded-lg  bg-transparent  w-[100%] text-sm"
                 />
               </div>
               <div
@@ -124,7 +211,7 @@ function Adminlogin() {
                   "background-image":
                     "linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)",
                 }}
-                className=" flex rounded-[15px]   my-8 bg-[#ffffff05] items-center "
+                className="   flex rounded-[15px]   my-8 bg-[#ffffff05] items-center "
               >
                 <FaLock
                   size={"2.5vh"}
@@ -140,22 +227,19 @@ function Adminlogin() {
                   type="password"
                   value={authCode}
                   onChange={(e) => setAuthCode(e.target.value)}
-                  placeholder="Unique Auth Code"
-                  className="input p-3 cursor-pointer focus:border-transparent focus:outline-none  rounded-lg  bg-transparent  w-[100%] text-sm"
+                  placeholder="Enter your unique id"
+                  className="input  p-3 pr-10 cursor-pointer focus:border-transparent focus:outline-none  rounded-lg  bg-transparent  w-[100%] text-sm"
                 />
               </div>
 
               <br />
-              <p
-                onClick={handleLogin}
-                className=" cursor-pointer text-xs font-light mb-5 md:mt-[-30px] mt-[-40px]"
-              >
+              <p className=" cursor-pointer text-xs font-light mb-5 md:mt-[-30px] mt-[-40px]">
                 Forgot Password ?
               </p>
 
               <button
                 type="submit"
-                className="bg-[#E1348B] w-[100%]  p-2 rounded-[10px]"
+                className="bg-[#E1348B] md:w-[100%] w-[50%] p-2 py-3  rounded-[10px]"
               >
                 {false ? (
                   <span className="text-base">Logging In ...</span>
@@ -163,107 +247,11 @@ function Adminlogin() {
                   "Login"
                 )}
               </button>
-
-              <p className="text-xs font-light  text-gray-500 mt-5 ">
-                Let’s make some awesome changes
-              </p>
             </form>
           </div>
         </div>
       </div>
     </main>
-    // <main className="mx-auto my-12 flex-1 flex flex-col md:flex-row justify-center items-center text-white gap-x-20 mb-0 md:mb-4">
-    //   {/* left */}
-    //   <div className="w-full md:w-1/2 md:pb-12 flex flex-col justify-center mt-16 md:mb-0">
-    //     <Image src={NeatS} alt="Neat Skills" className="hidden md:block" />
-    //     <div className="flex flex-col justify-center items-center">
-    //       <Image src={Woman} alt="Women connecting laptop to server" />
-    //       <p className="hidden md:block text-normal text-lg">
-    //         Start learning the right away!
-    //       </p>
-    //     </div>
-    //   </div>
-    //   {/* right */}
-    //   <div
-    //     className="w-screen rounded-t-[60px] border-2 border-black md:border-0 md:rounded-none md:w-[593px] md:pt-24 h-[615px] md:h-[700px] flex flex-col items-center gap-y-4 md:gap-y-6 mb-0 md:px-0"
-    //     style={{
-    //       background: 'rgba(255, 255, 255, 0.02)',
-    //       //background: 'green',
-    //     }}
-    //   >
-    //     <Image src={NeatS} alt="Neat Skills" className="md:hidden sm:block" />
-    //     <div className="w-screen flex flex-col justify-center text-center">
-    //       <h1 className="text-2xl md:text-5xl text-left px-10 pt-8 md:text-center">
-    //         Admin
-    //       </h1>
-    //       <p className="text-xl md:text-3xl text-left px-10 md:text-center">
-    //         Login
-    //       </p>
-    //     </div>
-    //     <hr
-    //       className="hidden md:block w-3/4 h-0.5 border-none"
-    //       style={{ background: 'rgba(255, 255, 255, 0.32)' }}
-    //     />
-    //     <form className="sm-w-full md:w-5/6 h-72 flex flex-col gap-y-4 py-2">
-    //       <div
-    //         className="w-96 h-14 px-4 flex justify-start items-center gap-x-4 text-white rounded-xl mb-4 mx-auto"
-    //         style={{
-    //           background:
-    //             'linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)',
-    //         }}
-    //       >
-    //         <AiOutlineMail color="green" />
-    //         <input
-    //           type="text"
-    //           value={email}
-    //           onChange={(e) => setEmail(e.target.value)}
-    //           placeholder="Enter your email"
-    //           className="border-none focus:outline-none bg-inherit placeholder:text-white"
-    //         />
-    //       </div>
-    //       <div
-    //         className="w-96 h-14 px-4 flex justify-start items-center gap-x-4  text-white rounded-xl mb-4 mx-auto"
-    //         style={{
-    //           background:
-    //             'linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)',
-    //         }}
-    //       >
-    //         <FaLock color="blue" />
-    //         <input
-    //           type="password"
-    //           value={password}
-    //           onChange={(e) => setPassword(e.target.value)}
-    //           placeholder="Enter your password"
-    //           className="border-none focus:outline-none bg-inherit placeholder:text-white"
-    //         />
-    //       </div>
-    //       <div
-    //         className="w-96 h-14 px-4 flex justify-start items-center gap-x-4  text-white rounded-xl mx-auto"
-    //         style={{
-    //           background:
-    //             'linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)',
-    //         }}
-    //       >
-    //         <FaLock color="blue" />
-    //         <input
-    //           type="password"
-    //           value={authCode}
-    //           onChange={(e) => setAuthCode(e.target.value)}
-    //           placeholder="Unique Auth Code"
-    //           className="border-none focus:outline-none bg-inherit placeholder:text-white"
-    //         />
-    //       </div>
-    //     </form>
-    //     <p className="text-center mt-[-30px]">Forgot Password?</p>
-    //     <button
-    //       className="w-96 h-14 bg-[#E1348B] rounded-2xl"
-    //       onClick={handleLogin}
-    //     >
-    //       Login
-    //     </button>
-    //     <p>{`Let's make some awesome changes`}</p>
-    //   </div>
-    // </main>
   );
 }
 

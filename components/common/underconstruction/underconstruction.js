@@ -5,11 +5,11 @@ import BottomNav from '../../common/footer/bottomnav';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 // import dots from '../../public/under/dots.png';
-import oval from '../../../public/componentsgraphics/common/underprogress/semicircle.png';
-import brown from '../../../public/componentsgraphics/common/underprogress/brownfilledcircle.png';
-import purple from '../../../public/componentsgraphics/common/underprogress/purplefilledcircle.png';
-import imac from '../../../public/componentsgraphics/common/underprogress/manstandingwithlaptop.png';
-import Link from 'next/link';
+import oval from '../../../public/componentsgraphics/common/underprogress/semicircle.svg';
+import brown from '../../../public/componentsgraphics/common/underprogress/brownfilledcircle.svg';
+import purple from '../../../public/componentsgraphics/common/underprogress/purplefilledcircle.svg';
+import imac from '../../../public/componentsgraphics/common/underprogress/manstandingwithlaptop.svg';
+import Link from 'next/link'; 
 import { BsInstagram } from 'react-icons/bs';
 import { FaFacebook, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 

@@ -5,14 +5,15 @@ import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
-  authDomain: 'neatskill.firebaseapp.com',
-  databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
-  projectId: 'neatskill',
-  storageBucket: 'neatskill.appspot.com',
-  messagingSenderId: '745615461354',
-  appId: '1:745615461354:web:8be587f1d7e23229694093',
-  measurementId: 'G-9ZEE56FQQF',
+  apiKey: "AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw",
+  authDomain: "neatskill.firebaseapp.com",
+  databaseURL:
+    "https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "neatskill",
+  storageBucket: "neatskill.appspot.com",
+  messagingSenderId: "745615461354",
+  appId: "1:745615461354:web:8be587f1d7e23229694093",
+  measurementId: "G-9ZEE56FQQF",
 };
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCCQYP1zEjLAuGU9g_P2fATrAx-VtlIlYc",
@@ -24,7 +25,7 @@ const firebaseConfig = {
 //   measurementId: "G-K0EGT2Y6RZ"
 // };
 // latest config
-// 
+//
 // =======
 // const firebaseConfig = {
 //   apiKey: "AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw",
@@ -36,8 +37,7 @@ const firebaseConfig = {
 //   appId: "1:745615461354:web:8be587f1d7e23229694093",
 //   measurementId: "G-9ZEE56FQQF"
 // };
-// 
-
+//
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
@@ -70,9 +70,12 @@ const firebaseConfig = {
 // };
 
 // Initialize Firebase
+const app = initializeApp(firebaseConfig, "baseApp");
+
 //  const app = initializeApp(firebaseConfig, 'neatskills-1c31c');
 //  const app = initializeApp(firebaseConfig, 'neatskills9');
 //  const app = initializeApp(firebaseConfig, 'neat-60028');
+
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
@@ -87,4 +90,5 @@ export const courseAssignmentCollection = collection(db, "course_assignments");
 export const profileDetailscollection = collection(db, "users");
 export const mentorsdetailCollection = collection(db, "mentorsdetail");
 export const mentorsCollection = collection(db, "mentors");
+export const usersCollection = collection(db, "allusers");
 export const mentorsSchedduleCollection = collection(db, "mentorsSchedule");
