@@ -8,8 +8,8 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import appwriteClient, { databaseId, schoolsCollectionId } from "@/libs/appwrite/appwrite";
-import { Databases } from "appwrite";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
 
 function MentorProfile() {
@@ -36,6 +36,12 @@ function MentorProfile() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    if (!udisecode || !authCode) {
+      alert("Please fill all the required fields");
+      return;
+    }
+
     const schoolProfile = {
       schoolName,
       udiseId: udisecode,
@@ -55,19 +61,19 @@ function MentorProfile() {
       instagramLink: insta,
       facebookLink: facebook,
     };
+    console.log("schoolProfile", schoolProfile);
 
-    // upload to appwrite
-    const databases = new Databases(appwriteClient);
-    const promise = databases.createDocument(databaseId, schoolsCollectionId, generate(), schoolProfile);
-
-    promise.then(function (response) {
-      console.log(response); // Success
-    }, function (error) {
-      console.log(error); // Failure
-    });
-
-    
-
+    // store to firestore
+    try {
+      const docRef = await setDoc(
+        doc(db, "schoolProfiles", udisecode),
+        schoolProfile
+      );
+      console.log("Document written with ID: ", docRef.id);
+      alert("Profile Updated");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

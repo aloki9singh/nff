@@ -26,6 +26,7 @@ import { auth, db } from "../../config/firebaseconfig";
 import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 
 const userCache = {};
@@ -45,27 +46,21 @@ const Chat = () => {
   const router = useRouter();
 
   // const user = auth.currentUser;
-  const [user, setUser] = useState(null);
+  const { user, loading } = useAuthContext();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        router.push("/login");
+    if (!user) {
+      if (!loading) {
+        router.push("/beta/login");
+        return;
       }
+      return;
     }
-    )
-  }, [router])
-
-  useEffect(() => {
-    console.log("user", user)
-    if (!user) return;
 
     const q = query(
       collection(db, "chatGroups"),
       where("members", "array-contains", user.uid),
-      // orderBy("lastMessageTimestamp", "desc")
+      orderBy("lastMessageTimestamp", "desc")
     );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let arr = [];
@@ -83,7 +78,7 @@ const Chat = () => {
     });
 
     return unsub;
-  }, [user]);
+  }, [user, router, loading]);
 
   console.log("chats", chats);
 
