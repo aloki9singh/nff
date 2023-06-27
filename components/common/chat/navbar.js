@@ -30,7 +30,7 @@ const Navbar = () => {
             <MdNotifications style={{ color: "white", fontSize: 28 }} />
             <span className="flex items-center justify-center rounded-full text-[10px] h-4 w-4 absolute top-0 right-0 bg-pink text-white " >1</span>
           </div>
-          <Avatar alt="Profile-Picture" src={'/componentsgraphics/common/chatting/user/profile.webp'} />
+          <Avatar alt="Profile-Picture" src={'/componentsgraphics/common/chatting/user/profile.svg'} />
         </div>
       </div>
     </div>

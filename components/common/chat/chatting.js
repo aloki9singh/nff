@@ -52,7 +52,7 @@ const RecievedMessage = ({ message }) => {
   return (
     <div className="flex gap-2 ">
       <div>
-        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.webp'} />
+        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
       </div>
       <div
         className="p-2 py-3 max-w-[80%] rounded-[10px] flex flex-col"
@@ -80,7 +80,7 @@ const SendMessage = ({ message }) => {
         </span>
       </div>
       <div>
-        <Avatar alt="Profile-Picture" src={message.sender?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.webp'} />
+        <Avatar alt="Profile-Picture" src={message.sender?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.svg'} />
       </div>
     </div>
   );
@@ -182,7 +182,7 @@ const Chat = ({
             <Avatar
               className="cursor-pointer"
               alt="Profile-Picture"
-              src={currReciever?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.webp'}
+              src={currReciever?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.svg'}
             />
             <div className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>

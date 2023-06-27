@@ -91,7 +91,7 @@ function MentorProfile() {
                 <div>
                   <div className="flex items-center">
                     <Image
-                      src={"/pagesgraphics/school/profile/ProfileGirlimg.png"}
+                      src={"/pagesgraphics/school/profile/ProfileGirlimg.svg"}
                       alt="proImg"
                       height={100}
                       width={100}

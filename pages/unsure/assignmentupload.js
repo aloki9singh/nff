@@ -123,14 +123,14 @@ const assignmentupload = () => {
                         <div className="">
                             <div className="flex space-x-5 relative">
                                 <Image
-                                    src={"/folderpink.png"}
+                                    src={"/pagesgraphics/student/assignmentupload/folderpink.png"}
                                     width="100"
                                     height="100"
                                     alt=""
                                     className="w-[60px]"
                                 />
                                 <Image
-                                    src={"/folderpink2.png"}
+                                    src={"/pagesgraphics/student/assignmentupload/folderpinkarrow.png"}
                                     width="100"
                                     height="100"
                                     alt=""

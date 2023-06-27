@@ -65,7 +65,7 @@ let SideBody = ({ count, setCount }) => {
                   <Image
                     width={100}
                     height={100}
-                    src="./componentsgraphics/commo/calendar/sidebody/videoplayericon.png"
+                    src="./componentsgraphics/commo/calendar/sidebody/videoplayericon.svg"
                     alt="player"
                     className="w-7px h-3 m-auto"
                   />

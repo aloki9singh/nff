@@ -39,7 +39,7 @@ export default function Navbar() {
 						className="uppercase hover:border-b w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
 					>
 						<Image
-							src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.png"
+							src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
 							alt="logo"
 							className="w-full h-full object-contain
                            "
