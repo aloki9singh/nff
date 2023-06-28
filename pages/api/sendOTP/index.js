@@ -1,21 +1,19 @@
-import {  signInWithPhoneNumber } from "firebase/auth";
+import { transporter } from "@/config/nodemailer";
 
-import { auth } from "@/config/firebaseconfig";
-
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    const { phoneNumber } = req.body;
-
-    try {
-      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber);
-      const verificationId = confirmationResult.verificationId;
-      res.status(200).json({ verificationId });
-      console.log("Done");
-    } catch (error) {
-      console.error("Failed to send OTP:", error);
-      res.status(500).json({ error: "Failed to send OTP. Please try again." });
-    }
-  } else {
-    res.status(405).json({ error: `${req.method} method not allowed` });
+export default async function sendOTP(req, res) {
+  const data = req.body;
+  console.log("0",data);
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: data.email,
+      subject: "OTP Verification",
+      text: `Your OTP is: ${data.otp}`,
+    });
+    console.log("OTP sent:");
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log("Error sending OTP:", error);
+    res.status(500).json({ success: false });
   }
 }

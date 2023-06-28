@@ -1,8 +1,24 @@
+import { userLogger } from "@/lib/context/contextprovider";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 // #DD4A94 #B26ED3
 // #A145CD
 const signupsuccess = () => {
+    // code to check if verified to visit this page or not 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("isAdmin");
+    setIsAdmin(isAdmin);
+    if (!isAdmin) {
+      router.push("/");
+    }
+  }, []);
+
+  if (!isAdmin) {
+    return null;
+  }
   return (
     <div>
       <div className="w-full  justify-center h-screen">
