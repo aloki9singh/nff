@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MdOutlineCall,
   MdVideoCall,
@@ -80,7 +80,7 @@ const SendMessage = ({ message }) => {
         </span>
       </div>
       <div>
-        <Avatar alt="Profile-Picture" src={message.sender?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.svg'} />
+        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
 
       </div>
     </div>
@@ -119,6 +119,11 @@ const Chat = ({
   const user = auth.currentUser;
 
   const [message, setMessage] = useState("");
+  const lastDiv = React.useRef();
+
+  useEffect(() => {
+    lastDiv.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
 
   const submitHandler = async (e) => {
@@ -183,7 +188,7 @@ const Chat = ({
             <Avatar
               className="cursor-pointer"
               alt="Profile-Picture"
-              src={currReciever?.photoURL ||  '/componentsgraphics/common/chatting/user/profile.svg'}
+              src={currReciever?.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'}
 
             />
             <div className="flex flex-col items-start cursor-pointer">
@@ -226,6 +231,7 @@ const Chat = ({
               );
             }
           })}
+          <div ref={lastDiv} />
           {/* <SendMessage time="16:10" />
           <ImageMessage img={img2} userIcon={img} /> */}
         </div>

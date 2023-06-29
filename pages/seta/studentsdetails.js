@@ -1,3 +1,5 @@
+// currently using dummy data for showing student details
+
 // import BottomNav from "../components/Footer/BottomNav";
 import Link from "next/link";
 import Image from "next/image";
@@ -5,15 +7,22 @@ import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 
 import { AiOutlineSearch } from "react-icons/ai";
+import { useContext } from "react";
+import { AuthContext } from "@/lib/context/AuthContext";
 
-export default function studentdetails() {
+
+
+export default function Studentdetails() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
 
+
+  const { userProfile } = useContext(AuthContext);
+
+  if (!userProfile) return (<div>Loading...</div>);
   return (
     <div className="flex h-screen bg-[#2D2E35]  ">
-      
       <div className="lg:col-span-1 hidden lg:grid">
         <Schoolsidebar />
       </div>
@@ -30,7 +39,7 @@ export default function studentdetails() {
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundImage:
-                "url('https://s3-alpha-sig.figma.com/img/daa4/251b/92066aa939438750f09dbf2245375499?Expires=1686528000&Signature=VrYk1KgWARS7KC0qoLJdRL9BUOulH4bvvAYelgZWBSjgeiIpUyj7DXjWBErzs-5BVtxCQmX8QUr82lgMlbWNfNHTiftUlWhvmjNsbbhydjyeXacg2HuZCvmtg-ghkbE0M9qre6-lW4fowS-PWj0D3C71mirv3WKKy3AeqyrHsuuLgI7TTJK1-pIufqoxsQZoByvxbae4eSGMragwhg3vfvK3jQ9-lTBgsXkCGN0JqQVIonifqQLP6afOkeNP6F0WPoCaAsasjRJ4-9tSeDv2icVVJbGF54l9Ae7hpqXEy2~SwFsrc4WHgzyTJefYPJGbGFEWo5lX2MaHu28YRe7nEQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4')",
+                "url('https://images.unsplash.com/photo-1548263594-a71ea65a8598?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60')",
             }}
           ></div>
 
@@ -41,23 +50,23 @@ export default function studentdetails() {
                 <div className="flex">
                   {" "}
                   <Image
-                    src={"/ProfileGirlimg.png"}
+                    src={userProfile.photoURL}
                     alt="proImg"
                     height={100}
                     width={100}
                     className="rounded-full w-[110px] object-contain mt-[-65px]"
                   />
                   <div className="ml-1">
-                    Aashna Mital
+                    {userProfile.name.first}
                     <br />
-                    <span className="mt-[-5px]">Roll no-xxxxxxxxxx</span>
+                    <span className="mt-[-5px]">Roll no-{userProfile.rollNo}</span>
                   </div>
                 </div>
                 <div className="bg-[#141518] rounded-[30px] w-full h-full mt-5 pt-2 text-sm">
                   <div className="flex justify-between px-6 py-3 border-b border-gray-500 ">
                     {" "}
                     <span>Class: </span>
-                    <span className="mr-12 text-[#E1348B] ">10</span>
+                    <span className="mr-12 text-[#E1348B] ">{userProfile.class}</span>
                   </div>
                   <div className="flex justify-between px-6 py-3 border-b border-gray-500 ">
                     {" "}
@@ -103,30 +112,30 @@ export default function studentdetails() {
                     <span className="mr-12 text-[#E1348B] ">Python</span>
                   </div>
                 </div>
-                  <div className="flex justify-center mt-6">
-                    <div className="text-right bg-[#E1348B]  p-2  rounded flex space-x-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-4 h-4 "
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                        />
-                      </svg>
-                      <button
-                        type="button"
-                        className="bg-[#E1348B] text-right "
-                      >
-                        Download Progress report
-                      </button>
-                    </div>
+                <div className="flex justify-center mt-6">
+                  <div className="text-right bg-[#E1348B]  p-2  rounded flex space-x-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-4 h-4 "
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                      />
+                    </svg>
+                    <button
+                      type="button"
+                      className="bg-[#E1348B] text-right "
+                    >
+                      Download Progress report
+                    </button>
                   </div>
+                </div>
               </div>
             </div>
             <div className="w-full h-full md:bg-[#2D2E35]    md:text-base text-sm md:mt-0 mt-5 ">
@@ -383,6 +392,6 @@ export default function studentdetails() {
         </div>
       </div>
     </div>
-   
+
   );
 }
