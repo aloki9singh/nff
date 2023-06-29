@@ -1,5 +1,5 @@
-
-
+// need to implement backend logic including sidebar and navbar
+// side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from "@/components/common/navbar/admintopbar";
 import Sidebar from "@/components/common/sidebar/admin";
 import Image from "next/image";
