@@ -1,3 +1,8 @@
+// currently using dummy data for the school students
+// using the array studentsArr to map the students
+// need to get the students of the school from the firestore
+// page structure could be /schools/[schoolId]/students
+
 // import BottomNav from "../components/Footer/BottomNav";
 import Link from "next/link";
 import Image from "next/image";
