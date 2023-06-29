@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { callEmailApiMentor } from "../lib/api";
+import { callEmailApiMentor } from "@/lib/api";
 import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { auth } from "../config/firebaseConfig";
+import { auth } from "@/config/firebaseConfig";
 const detailadd = async (id) => {
-  const res = await fetch(`/api/mentorsdetail/${id}`, {
+  const res = await fetch(`/api/signup/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ roles: ["mentor"], verified: true }),
+    body: JSON.stringify({ verified: true }),
   });
   const data = await res.json();
 
@@ -29,16 +29,15 @@ const MentorSignupSuccess = () => {
   const displayName = router.query.email;
   const email = router.query.email;
   let arr = { displayName, email };
-  const { data } = useSelector((state) => state.authManagerMentor);
+  // const { data } = useSelector((state) => state.authManagerMentor);
   useEffect(() => {
-
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
-        data.email = user.email
-        data.role = "mentor"
-        data.uid = user.uid
-        data.verified = true
+        // data.email = user.email;
+        // data.role = "mentor";
+        // data.uid = user.uid;
+        // data.verified = true;
         await detailadd(user.uid);
       }
     });
