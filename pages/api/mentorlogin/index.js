@@ -17,14 +17,12 @@ async function handleLogin(req, res) {
     const userDoc = await getDoc(doc(db, "allusers", user.uid));
     const userData = userDoc.data();
 
-    if (userData.authCode !== authCode) {
-      return res.status(400).json({ error: "Invalid authentication code" });
-    }
-
+  
     // Check if the user has the required role
-    if (userData.role !== "admin") {
+    if (userData.role !== "mentor") {
       return res.status(400).json({ error: "Unauthorized User" });
     }
+
     // Successful login
     return res.status(200).json({ success: true });
   } catch (error) {

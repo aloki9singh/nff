@@ -11,11 +11,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../redux/actions/mentor.action";
 import { auth } from "../../../config/firebaseconfig";
 import e from "cors";
-const MentorSignupcomp = () => {
-  const router = useRouter();
+import { signUpMentor } from "@/lib/exportablefunctions";
+import { useContext } from "react";
+import { Loading } from "@/lib/context/contextprovider";
+import { HashLoader } from "react-spinners";
 
-  const dispatch = useDispatch();
-  const { loading, data } = useSelector((state) => state.authManagerMentor);
+const MentorSignupcomp = () => {
+  var { loading, setLoading } = useContext(Loading);
+  const router = useRouter();
   const [mentorLogData, setMentorLogData] = useState({
     email: "",
     pass: "",
@@ -41,7 +44,9 @@ const MentorSignupcomp = () => {
       return;
     }
     try {
-      dispatch(signUp(mentorLogData, router));
+      setLoading(true);
+      signUpMentor(mentorLogData, router);
+      setLoading(false);
     } catch (error) {
       alert(error.message);
       console.error(error);
@@ -66,18 +71,29 @@ const MentorSignupcomp = () => {
   };
 
   return (
-    <div>
+    <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
+      {loading && (
+        <div style={{ pointerEvents: "none", zIndex: 1 }}>
+          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+            <HashLoader color="#E1348B" size={80} />
+          </div>
+        </div>
+      )}
       <main className="max-w-full md:h-screen   grid justify-center md:grid-cols-2 text-center text-white md:overflow-hidden">
         <div className=" m-auto w-full   ">
-
           <div className="flex justify-center md:pt-0  pt-[20px]  ">
-           <div className="m-auto h-full ">
-           <Image alt="Icon" src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg" width={200} height={200} className="xl:w-[270px] lg:w-[220px] md:w-[180px] sd:w-[200px]"/>
-           </div>
+            <div className="m-auto h-full ">
+              <Image
+                alt="Icon"
+                src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg"
+                width={200}
+                height={200}
+                className="xl:w-[270px] lg:w-[220px] md:w-[180px] sd:w-[200px]"
+              />
+            </div>
           </div>
-          
+
           <div className="w-full flex justify-center mt-5">
-            
             <div className="m-auto w-full  ">
               <Image
                 alt="Icon"
