@@ -77,7 +77,7 @@ const firebaseConfig = {
 //  const app = initializeApp(firebaseConfig, 'neat-60028');
 
 
-// const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 export default app;
 

@@ -3,7 +3,7 @@
 
 import Sidebar from "@/components/common/sidebar/sidebar";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
- import BottomNav from "@/components/common/footer/BottomNav";
+ import BottomNav from "@/components/common/footer/bottomnav";
 import Footer from "@/components/common/footer/footer";
 import Link from "next/link";
 
