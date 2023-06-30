@@ -1,8 +1,8 @@
 // Need rechecking for monthcard
-import MonthCard from "./monthcard";
+// import MonthCard from "./monthcard";
 import ClassesContainer from "../../../../components/mentor/other/classescontainer";
 import MonthSelector from "../../calendar/common/monthselector";
-import Months from "../../../../components/common/calendar/common/monthlist";
+import Months from "@/components/common/calendar/common/monthlist";
 
 const Calender = () => {
   return (

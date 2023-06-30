@@ -8,7 +8,8 @@ import {
   import { mentorAuthReducer } from "./reducers/mentor.reducer";
   import thunk from "redux-thunk";
   import { composeWithDevTools } from 'redux-devtools-extension';
-  const rootReducer = combineReducers({ authManagerMentor: mentorAuthReducer});
+  const rootReducer = combineReducers({ authManagerMentor: "mentorAuthReducer"});
+  // const rootReducer = combineReducers({ authManagerMentor: mentorAuthReducer});
   
   
   export const store = legacy_createStore(

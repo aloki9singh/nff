@@ -1,36 +1,52 @@
-import TaskList from "../components/TaskList/ TaskList";
-import Calender from "../components/Mentor/Calender";
-import MentorChatWidget from "../components/Mentor/MentorChatWidget";
-import BasicDetails from "../components/Mentor/BasicDetails";
+import TaskList from "@/components/mentor/dashboard/tasklist";
+import Calender from "@/components/common/calendar/mentor/calendar";
+import MentorChatWidget from "@/components/mentor/chat/widget";
+import BasicDetails from "@/components/mentor/other/basicdetails";
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle, BsPlusLg } from "react-icons/bs";
 import { useState } from "react";
-import MentorSidebar from "../components/Sidebar/MentorSidebar";
-import MentorTopbar from "../components/Navbar/MentorTopbar";
+import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { auth } from "../config/firebaseConfig";
-import LeaderBoardMentor from "../components/Mentor/LeaderBoardMentor";
-import CirProgress from "../components/Mentor/CirProgress";
+import { auth } from "@/config/firebaseConfig";
+import LeaderBoardMentor from "@/components/mentor/dashboard/leaderboard";
+import CirProgress from "@/components/mentor/other/circularprogressbar";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import { useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { callUserById } from "@/lib/exportablefunctions";
 function MentorDashboard() {
   const [count, setCount] = useState(1);
-  const { data } = useSelector((state) => state.authManagerMentor);
+  const [verified, setVerified] = useState(false);
   let [searchstate, setsearchstate] = useState("");
   const router = useRouter();
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
 
-  // useEffect(() => {
-  //   if (!data.verified) {
-  //     router.push("/mentorSignup");
-  //   } 
-  // }, [count]);
-  // if (!data.verified) {
-  //   return null
-  // } 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log(user);
+         user.emailVerified = true;
+        const value = await callUserById(user.uid);
+        setVerified(value.user.verified);
+       console.log("value",value.user.verified)
+      }
+    });
+  //  setTimeout(()=>{
+  //   if (!verified) {
+  //     router.push("/meta/signup");
+  //   }
+  //  },1000)
+    return () => unsubscribe(); // Cleanup the listener
+  }, []);
+  
+  if (!verified) {
+    return null;
+  }
+  
   return (
     <>
       <div className="h-screen text-base bg-[#2E3036] ">
@@ -132,7 +148,9 @@ function MentorDashboard() {
                 </div>
               </div>
               <div className=" md:mt-0 mt-[-20px] ">
-                <Calender />
+                <div className="md:w-[30vw]">
+                  <Calender />
+                </div>
                 <div className="bg-[#373A41] rounded-[20px] md:pb-5 mt-[-20px] md:[mt-0] ">
                   <TaskList />
                 </div>
@@ -140,9 +158,7 @@ function MentorDashboard() {
             </div>
           </div>
         </div>
-        <div className=" ">
-          {/* <MobileNav></MobileNav> */}
-        </div>
+        <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
     </>
   );

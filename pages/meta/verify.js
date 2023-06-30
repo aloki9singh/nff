@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { callVerificationEmailApiMentor } from "../lib/api";
+import { callVerificationEmailApiMentor } from "@/lib/api";
 import { updateProfile } from "firebase/auth";
 import { useSelector } from "react-redux";
-import { auth } from "../config/firebaseConfig";
+import { auth } from "@/config/firebaseConfig";
+import { useContext } from "react";
+import { Loading } from "@/lib/context/contextprovider";
+import { HashLoader } from "react-spinners";
 const MentorVerify = () => {
   const [email, setEMail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { data } = useSelector((state) => state.authManagerMentor);
+  const { loading, setLoading } = useContext(Loading);
   const router = useRouter();
   var datas = { displayName: email, email };
   const user = auth.currentUser;
-  const { verified } = data;
+
   const resendMail = async () => {
     setLoading(true);
     try {
@@ -39,7 +41,14 @@ const MentorVerify = () => {
     return null; // Don't render the user if not verified
   }
   return (
-    <>
+    <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
+      {loading && (
+        <div style={{ pointerEvents: "none", zIndex: 1 }}>
+          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+            <HashLoader color="#E1348B" size={80} />
+          </div>
+        </div>
+      )}
       <div className="md:h-[100vh] h-[90vh] flex align-middle m-auto flex-col justify-center align-center max-w-sm sm:max-w-xl text-white text-center space-x-2">
         <div>
           <p className="text-center text-3xl">Verify your email</p>
@@ -49,20 +58,20 @@ const MentorVerify = () => {
         </div>
         <div className="flex justify-center m-10 relative">
           <Image
-            src="/mentorverify/freepik--paper-planes--inject-41.png"
+            src="/pagesgraphics/mentor/verification/freepik--paper-planes--inject-41.svg"
             alt="Icon"
             width={250}
             height={130}
           />
           <Image
-            src="/mentorverify/Group 1997.png"
+            src="/pagesgraphics/mentor/verification/Group 1997.svg"
             alt="Icon"
             width={90}
             height={90}
             className="absolute bottom-[40%] right-[25%]"
           />
           <Image
-            src="/mentorverify/freepik--speech-bubble--inject-41.png"
+            src="/pagesgraphics/mentor/verification/freepik--speech-bubble--inject-41.svg"
             alt="Icon"
             width={60}
             height={90}
@@ -89,7 +98,7 @@ const MentorVerify = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

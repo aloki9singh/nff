@@ -10,7 +10,7 @@ import { FaLock } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../redux/actions/mentor.action";
 import { auth } from "../../../config/firebaseconfig";
-import e from "cors";
+
 import { signUpMentor } from "@/lib/exportablefunctions";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
@@ -44,9 +44,9 @@ const MentorSignupcomp = () => {
       return;
     }
     try {
-      setLoading(true);
-      signUpMentor(mentorLogData, router);
-      setLoading(false);
+     
+      signUpMentor(mentorLogData, router, setLoading);
+      
     } catch (error) {
       alert(error.message);
       console.error(error);
@@ -54,12 +54,14 @@ const MentorSignupcomp = () => {
   };
   const handleResetPassword = async () => {
     try {
+      setLoading(true);
       if (!email) {
         alert("Please enter your email !");
       } else {
         await sendPasswordResetEmail(auth, email);
         alert("Password reset email sent. Please check your inbox/spam.");
       }
+      setLoading(false);
     } catch (error) {
       if (error == "FirebaseError: Firebase: Error (auth/user-not-found).") {
         alert("User not Found!");
@@ -69,7 +71,7 @@ const MentorSignupcomp = () => {
       }
     }
   };
-
+  // console.log(loading)
   return (
     <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
       {loading && (
