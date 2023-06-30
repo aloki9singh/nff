@@ -11,7 +11,7 @@ import Mentor from "@/components/common/homepage/mentor/mentor";
 import ExploreCourses from "@/components/student/explorecourses/explorecourses";
 import Footer from "@/components/common/footer/footer";
 import HomepageActivities from "@/components/common/homepage/activities/HomepageActivities";
-import SignUp from "@/components/common/homepage/signup/SignUp";
+import SignUp from "@/components/common/homepage/signup/signup";
 
 export default function Home({ coursesData }) {
 	return (
