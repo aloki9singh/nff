@@ -1,12 +1,13 @@
 // Verified by Pradhumn
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../config/firebaseconfig";
+import { HashLoader } from "react-spinners";
+import { Loading } from "@/lib/context/contextprovider";
 
-const MentorFinal = ({setRegStepCount,regStepCount}) => {
-
+const MentorFinal = ({ setRegStepCount, regStepCount }) => {
+  const { loading, setLoading } = useContext(Loading);
   const [id, setId] = useState("");
   const [mentor, setMentor] = useState();
   const [input, setInput] = useState({
@@ -48,7 +49,8 @@ const MentorFinal = ({setRegStepCount,regStepCount}) => {
   // detail added to  Render
 
   const detailadd = async () => {
-    const res = await fetch(`/api/mentorsdetail/${id}`, {
+    setLoading(true);
+    const res = await fetch(`/api/signup/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -63,8 +65,9 @@ const MentorFinal = ({setRegStepCount,regStepCount}) => {
       console.log("Error!");
     } else {
       console.log("Data Added Successfully");
-      setRegStepCount(5)
+      setRegStepCount(5);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -87,7 +90,14 @@ const MentorFinal = ({setRegStepCount,regStepCount}) => {
   }, []);
 
   return (
-    <>
+    <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
+      {loading && (
+        <div style={{ pointerEvents: "none", zIndex: 1 }}>
+          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+            <HashLoader color="#E1348B" size={80} />
+          </div>
+        </div>
+      )}
       <div className="text-white md:m-10 rounded-[25px] p-10 bg-[#222222]  ">
         <div className="">
           <div className=" flex justify-between text-xl md:mx-20 ">
@@ -457,7 +467,7 @@ const MentorFinal = ({setRegStepCount,regStepCount}) => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

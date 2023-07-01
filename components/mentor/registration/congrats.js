@@ -6,19 +6,19 @@ import { useRouter } from "next/router";
 const Congratulations = () => {
   const router = useRouter();
   setTimeout(() => {
-    router.push("/mentorSignup");
+    router.push("/meta/signup");
   }, 3000);
   return (
     <div className=" md:mx-20 text-center text-white bg-[#222222] ">
       <div>
         <div
           className="h-screen bg-cover bg-center rounded-[30px] bg-[#222222] md:my-0 my-[-60px] "
-          style={{ backgroundImage: 'url("/transparent sparkle.svg")' }}
+          style={{ backgroundImage: 'url("/pagesgraphics/mentor/congratulations/transparent sparkle.svg")' }}
         >
           <div className="flex items-center justify-center h-screen ">
             <div
               style={{
-                backgroundImage: 'url("/Blur effect.svg")',
+                backgroundImage: 'url("/pagesgraphics/mentor/congratulations/Blur effect.svg")',
                 backdropFilter: "blur(8.5px)",
               }}
               className=" flex flex-col align-middle  gap-y-4  rounded-[30px] p-10 md:p-20  m-5 "
