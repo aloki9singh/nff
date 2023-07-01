@@ -3,11 +3,11 @@
 
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "../../components/common/sidebar/sidebar";
-import Navbar from "../../components/common/chat/navbar";
-import ChatSidebar from "../../components/common/chat/chatsidebar";
-import Chatpart from "../../components/common/chat/chatting";
-import User from "../../components/common/chat/user";
+import Sidebar from "../../../components/common/sidebar/sidebar";
+import Navbar from "../../../components/common/chat/navbar";
+import ChatSidebar from "../../../components/common/chat/chatsidebar";
+import Chatpart from "../../../components/common/chat/chatting";
+import User from "../../../components/common/chat/user";
 
 import {
   collection,
@@ -22,8 +22,8 @@ import {
 
 
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../config/firebaseconfig";
-import GroupDetails from "../../components/common/chat/Group";
+import { auth, db } from "../../../config/firebaseconfig";
+import GroupDetails from "../../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuthContext } from "@/lib/context/AuthContext";
