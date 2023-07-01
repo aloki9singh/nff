@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 const ProfileCongratulation = () => {
   const router = useRouter()
   setTimeout(() => {
-    router.push("/studentdashboard");
+    router.push("dashboard");
   }, 2000)
   return (
     <div className="flex  ">
@@ -16,7 +16,7 @@ const ProfileCongratulation = () => {
         <div
           className="uppercase  w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0  " >
           <Image
-            src="/Neatskills-cropped.png"
+            src="/pagesgraphics/student/profilecontinue/Neatskills.svg"
             alt="logo"
             className="w-full h-full object-contain md:ml-10 ml-7 mt-5"
             width={100}
@@ -36,15 +36,14 @@ const ProfileCongratulation = () => {
 
 
           {/* add profile lines  */}
-          <div className="flex flex-col items-center  mt-3 text-center md:space-x-5 md:p-0 p-5 space-y-5 ">
-            <div className=" flex  justify-center w-full   sm:mx-0 sm:mb-4 sm:w-350px  ">
-              <h1 className=" sm:px-20 h-8 mt-40 sm:h-20 not-italic font-semibold text-2xl sm:text-6xl text-white">
+          <div className="flex flex-col items-center w-fit m-auto text-center md:space-x-5 md:p-0 translate-y-[-10%]">
+            <div className="flex  justify-center w-full sm:mx-0 sm:mb-4 sm:w-350px">
+              <h1 className="sm:px-20 sm:h-20 not-italic font-semibold text-2xl sm:text-6xl text-white">
                 Welcome <span>Gaurav</span>
               </h1>
-
             </div>
             <div className="">
-              <h2 className="flex justify-center  text-white  sm:mt-2">You have successfully completed your profile</h2>
+              <h2 className="flex justify-center  text-white ">You have successfully completed your profile</h2>
             </div>
 
           </div>

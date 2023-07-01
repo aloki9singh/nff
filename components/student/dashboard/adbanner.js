@@ -1,6 +1,6 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
-import { db } from "../config/firebaseConfig";
+import { db } from "@/config/firebaseconfig";
 import { collection, getDocs, query } from "firebase/firestore";
 
 export default function Advertisement() {
@@ -68,7 +68,7 @@ export default function Advertisement() {
 
   return (
     <div className="w-full rounded-3xl flex  my-5 text-white pl-8 py-4 bg-gradient-to-r  from-[#E1348B] to-[#CD8BED]">
-      <div className="w-full flex">
+      <div className="w-full flex justify-between">
         <div>
           <div className="text-xs border w-fit md:px-5 px-2 rounded-sm mb-2 bg-gradient-to-r from-[#DBDBDB59] to-[#DBDBDB7A]">
             <div className="flex gap-2">
@@ -94,12 +94,12 @@ export default function Advertisement() {
           </div>
           <div className=" flex flex-row items-center justify-start  text-left text-[36px] font-inter">
             <div className="flex flex-col items-start justify-start md:space-y-2">
-              <div className="inline-block   md:text-[30px] text-sm shrink-0">
+              <div className="inline-block md:text-[2rem] py-3 whitespace-nowrap text-sm shrink-0">
                 <b>{`10% `}</b>
-                <b className="font-raleway">off on Annual Subscription</b>
+                <b className="font-raleway ">off on Annual Subscription</b>
               </div>
-              <div className=" md:text-base  text-sm shrink-0 font-raleway">
-                <span >
+              <div className=" md:text-base text-sm shrink-0 font-raleway">
+                <span className="whitespace-normal ">
                   Get unlimited access to all materials just from
                 </span>
                 <span className="font-medium font-inter">{` ₹400/mo `}</span>
@@ -107,12 +107,12 @@ export default function Advertisement() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center md:w-[100px] w-[100px] m-auto">
+        <div className="my-auto pl-2 pr-[30px] mr-[10px]">
           {/* {timer.map((item) => (
             <div className="mb-2" key={item.id}></div>
           ))} */}
-          <div className=" border rounded-md bg-[#DBDBDB] lg:flex justify-center items-center text-black text-2xl  h-10" >
-            <button className=" p-2">
+          <div className="border rounded-md bg-[#DBDBDB] lg:flex items-center text-black text-2xl h-10" >
+            <button className="p-2">
               <AiOutlineArrowRight />
             </button>
           </div>

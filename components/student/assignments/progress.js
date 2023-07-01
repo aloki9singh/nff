@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import CircularProgress from './CircularProgress';
+import CircularProgress from '../dashboard/circularprogress';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { db } from '../config/firebaseConfig';
+import { db } from '@/config/firebaseconfig';
 
 const HomeworkProgress = () => {
   const [assignments, setAssignments] = useState([]);

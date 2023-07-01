@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { auth } from '../config/firebaseConfig';
+import { auth } from '@/config/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Progress({ percentage }) {
@@ -16,8 +16,8 @@ export default function Progress({ percentage }) {
   });
 
   return (
-    <div className="w-[100%] mx-auto">
-      <div className="text-white w-[90%] p-2">
+    <div className="w-full mx-auto">
+      <div className="text-white  p-2">
         <div className="flex justify-between items-end m-1">
           {user?.displayName ? (
             <h1 className="lg:text-2xl font-semibold">

@@ -16,7 +16,7 @@ const months = [
   "November",
   "December",
 ];
-const Calender = () => {
+const StudentCalender = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [classes, setClasses] = useState([]);
 
@@ -106,4 +106,4 @@ const Calender = () => {
   );
 };
 
-export default studentcalendar;
+export default StudentCalender;
