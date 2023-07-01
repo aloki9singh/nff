@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { auth } from '../config/firebaseConfig';
+import { auth } from '@/config/firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Progress({ percentage }) {

@@ -20,7 +20,7 @@ const InActiveComp = () => {
                 width={100}
                 height={100}
                 alt={"img"}
-                src="/Programmer coding on laptop.png"
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
@@ -43,7 +43,7 @@ const InActiveComp = () => {
                 width={100}
                 height={100}
                 alt={"img"}
-                src="/Programmer coding on laptop.png"
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
@@ -66,7 +66,7 @@ const InActiveComp = () => {
                 width={100}
                 height={100}
                 alt={"img"}
-                src="/Programmer coding on laptop.png"
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
@@ -103,7 +103,7 @@ const InActiveComp = () => {
                 width={100}
                 height={100}
                 alt={"img"}
-                src="/Programmer coding on laptop.png"
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
@@ -126,7 +126,7 @@ const InActiveComp = () => {
                 width={100}
                 height={100}
                 alt={"img"}
-                src="/Programmer coding on laptop.png"
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
@@ -149,7 +149,7 @@ const InActiveComp = () => {
                 width={100}
                 height={100}
                 alt={"img"}
-                src="/Programmer coding on laptop.png"
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>

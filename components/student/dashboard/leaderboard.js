@@ -25,15 +25,15 @@ const LeaderBoard = () => {
     ];
   
     return (
-      <div className="absolute right-[35px] top-[695px] mb-36 w-[371px] h-[358px] mt-10 rounded-2xl bg-[#373A41] text-white">
-        <div className="flex justify-between w-[90%] mx-auto mt-10 items-center">
+      <div className="  mt-7 rounded-2xl bg-[#373A41] text-white pt-5 pb-1">
+        <div className="flex justify-between px-5  items-center">
           <h1 className="text-xl">Leaderboard</h1>
           <button>
             <h1 className="text-[#728095] text-xs">View All</h1>
           </button>
         </div>
         {Leaderboard.map((item) => (
-          <div key={item.id} className="text-white flex my-7 items-center p-2">
+          <div key={item.id} className="text-white flex my-5 items-center p-2 md:text-sm">
             <h1 className="flex-1 flex justify-center">{item.rank}</h1>
             <div className="flex-1 flex justify-center">
               <div className="border rounded-full h-10 w-10 flex justify-center"></div>

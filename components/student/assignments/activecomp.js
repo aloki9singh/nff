@@ -1,6 +1,6 @@
 import React from "react";
-import HomeworkProgress from "./HomeworkProgress";
-import MyCourses from "../Courses/MyCourses";
+import MyCourses from "../courses/mycourses";
+import HomeworkProgress from "./progress";
 
 const ActiveComp = () => {
   return (

@@ -1,6 +1,6 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
-import { db } from "../config/firebaseConfig";
+import { db } from "@/config/firebaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
 
 export default function Advertisement() {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CircularProgress from './CircularProgress';
+
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { db } from '../config/firebaseConfig';
+import { db } from '@/config/firebaseConfig';
+import CircularProgress from '../dashboard/circularprogress';
 
 const HomeworkProgress = () => {
   const [assignments, setAssignments] = useState([]);
@@ -58,9 +59,9 @@ const HomeworkProgress = () => {
             <h1 className="flex-1 flex justify-center items-center text-sm  font-medium">
               {assignment.status}
             </h1>
-            {/* <div className="flex-1 flex justify-c       </h1>enter">
+            <div className="flex-1 flex justify-c       </h1>enter">
               <CircularProgress percentage={assignment.per} circleWidth="45" />
-            </div> */}
+            </div>
           </div>
         ))}
       </div>
