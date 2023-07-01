@@ -1,7 +1,5 @@
 import React from "react";
 import { useState } from "react";
-// import navbar from "@/components/common/navbar/navbar";
-// import Navbar from "@/components/common/navbar/navbar";
 import NavbarSecond from "@/components/common/navbar/navbar2";
 
 const addTeam = () => {
@@ -24,7 +22,7 @@ const addTeam = () => {
           <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
             <div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
               <img
-                src="/pagesgraphics/AddTeam/amico.svg"
+                src="/pagesgraphics/admin/AddTeam/amico.svg"
                 alt=""
                 className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128"
               />
@@ -60,7 +58,6 @@ const addTeam = () => {
                     {/* #E1348B */}
                   </select>
                 </div>
-                {/* horizontal line for seperation */}
 
                 {val.map((da, i) => {
                   return (
