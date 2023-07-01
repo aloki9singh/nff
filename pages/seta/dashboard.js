@@ -1,7 +1,7 @@
 import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 import { useEffect, useState } from "react";
-import MonthSelector from "../../../components/common/calendar/common/monthselector";
+import MonthSelector from "../../components/common/calendar/common/monthselector";
 import Datelist from "@/components/common/calendar/common/datelist";
 import DonutInProfile from "@/components/school/dashboard/circularpfp";
 

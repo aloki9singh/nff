@@ -1,10 +1,11 @@
 // Page not found in given figma , CSS needed to be rechecked.
+// backend needed to be rechecked implementing appwrite
 
 
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
 import { collection, addDoc, serverTimestamp, setDoc, doc } from 'firebase/firestore';
-import { db } from '@/config/firebaseconfig';
+import { db } from '@/config/firebaseConfig';
 import Link from 'next/link';
 import Image from 'next/image';
 import NeatS from '/public/componentsgraphics/schools/login/neatskillslogosample.svg'
@@ -510,7 +511,7 @@ const CreateCourse = () => {
             </button>
           </div>
         </div>
-            
+
         <div className="flex justify-end">
           <button
             onClick={handleSubmit}

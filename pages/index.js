@@ -14,7 +14,6 @@ import HomepageActivities from "@/components/common/homepage/activities/Homepage
 import SignUp from "@/components/common/homepage/signup/signup";
 
 export default function Home({ coursesData }) {
-	console.log("course Data", coursesData)
 	return (
 		<div>
 			<Navbar />
