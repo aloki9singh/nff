@@ -1,12 +1,11 @@
-import Image from "next/image";
-import Accordion from "../components/Accordion/Accordion";
+// import img from "next/img";
+import Accordion from "@/components/common/accordion/accordion";
 import Link from "next/link";
-// import Card from '../components/Card';
-import SideBar from "../components/Sidebar/sidebar";
-import Dashboardnav_AfterLog from "../components/Navbar/Dashboardnav_AfterLog";
+import SideBar from "@/components/common/sidebar/sidebar";
+import Dashboardnav_AfterLog from "@/components/common/navbar/dashboardnavloggedin";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { db } from "../components/config/firebaseConfig";
+import { db } from "@/config/firebaseconfig";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 
 const Afterlogin = () => {
@@ -16,11 +15,12 @@ const Afterlogin = () => {
 
   const fetchCourseData = async () => {
     try {
-      const courseRef = collection(db, "courses");
-      const q = query(courseRef, where("title", "==", "Introduction to C++"));
+      console.log("fetching data is on ")
+      const courseRef = collection(db, "allUsers");
+      const q = query(courseRef, where("title", "==", "Basics of C++"));
       const courseDocs = await getDocs(q);
       if (courseDocs.empty) {
-        setCourse(null);
+        setCourse("asdfjjf");
       } else {
         const courseDoc = await getDoc(courseDocs.docs[0].ref);
         const courseData = courseDoc.data();
@@ -37,8 +37,8 @@ const Afterlogin = () => {
 
   useEffect(() => {
     if (title) {
-    console.log(title);
-    fetchCourseData();
+      console.log(title);
+      fetchCourseData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title]);
@@ -48,10 +48,10 @@ const Afterlogin = () => {
   return (
     <>
       <div className="flex bg-[#2D2E35] ">
-        <div className="md:block flex">
+        <div className="lg:col-span-1 hidden lg:grid">
           <SideBar />
         </div>
-       
+
         <div className="rounded-tl-[50px] w-full bg-[#2D2E35] ">
           <Dashboardnav_AfterLog heading="Afterlog" />
 
@@ -76,8 +76,8 @@ const Afterlogin = () => {
                     </Link>
                   </div>
                   <div className="flex-1 justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">
-                    <Image
-                      src="/laptop.svg"
+                    <img
+                      src="/pagesgraphics/student/coursedescription/laptop.svg"
                       width={250}
                       height={250}
                       alt="laptop"
@@ -97,8 +97,8 @@ const Afterlogin = () => {
                           {course.learn.map((learn) => (
                             <li key={course.id}>
                               <p className="flex my-6 text-sm">
-                                <Image
-                                  src="/tick.svg"
+                                <img
+                                  src="/pagesgraphics/student/coursedescription/tick.svg"
                                   alt="tick"
                                   width={30}
                                   height={30}
@@ -151,8 +151,8 @@ const Afterlogin = () => {
                         <h2 className="text-base pt-8 pb-6">COURSE DETAILS</h2>
                         <p className="flex my-3 font-medium">
                           <span>
-                            <Image
-                              src="/clock.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/clock.svg"
                               width={22}
                               height={22}
                               alt="clock"
@@ -163,8 +163,8 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <Image
-                              src="/Lap.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/Lap.svg"
                               width={22}
                               height={22}
                               alt="laptop"
@@ -175,8 +175,8 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <Image
-                              src="/ChartBar.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/ChartBar.svg"
                               width={22}
                               height={22}
                               alt="chart"
@@ -187,8 +187,8 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <Image
-                              src="/Globe.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/Globe.svg"
                               width={22}
                               height={22}
                               alt="globe"
@@ -199,8 +199,8 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <Image
-                              src="/Smiley.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/Smiley.svg"
                               width={22}
                               height={22}
                               alt="smiley"
@@ -211,8 +211,8 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <Image
-                              src="/Group 30.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/Group_30.svg"
                               width={22}
                               height={22}
                               alt="group"
@@ -224,8 +224,8 @@ const Afterlogin = () => {
                         <div>
                           <h2 className="text-base pt-10">OUR EXPERT</h2>
                           <div className="flex my-7">
-                            <Image
-                              src="/Ellipse 1.svg"
+                            <img
+                              src="/pagesgraphics/student/coursedescription/Ellipse_1.svg"
                               width={40}
                               height={40}
                               alt="f"
@@ -256,8 +256,8 @@ const Afterlogin = () => {
                       </div>
                       <div>
                         <div className="flex pt-2">
-                          <Image
-                            src="/Male.svg"
+                          <img
+                            src="/pagesgraphics/student/coursedescription/Male.svg"
                             width={40}
                             height={40}
                             alt="f"
@@ -281,19 +281,19 @@ const Afterlogin = () => {
               <p className="text-center m-5">Loading...</p>
             )}
 
-            <div className="text-xl md:text-2xl bg-[#373A41] pb-5 ml-[-14px]">
+            <div className="text-xl md:text-2xl bg-[#373A41] pb-5 ml-[6px]">
               <div className="flex justify-center items-center pt-20">
                 Explore Similar Courses
               </div>
               <div>
-                <div className="md:flex gap-5  rounded-[30px] md:space-y-0 space-y-5  mt-10 md:mx-10 mx-6 ">
+                <div className="md:flex gap-5  rounded-[30px] md:space-y-0 space-y-5  mt-10 md:mx-[0.5rem] mx-6 ">
                   <div className="border bg-black rounded-[30px] p-5   ">
                     <div className="flex justify-between">
-                      <Image
+                      <img
                         width={100}
                         height={100}
                         alt={"img"}
-                        src="/Programmer coding on laptop.png"
+                        src="/pagesgraphics/student/coursedescription/lap.svg"
                         className="w-12"
                       />
                       <div className="text-sm  text-[#E1348B] m-auto">
@@ -316,11 +316,11 @@ const Afterlogin = () => {
                   </div>
                   <div className="border bg-black rounded-[30px] p-5  ">
                     <div className="flex justify-between">
-                      <Image
+                      <img
                         width={100}
                         height={100}
                         alt={"img"}
-                        src="/Programmer coding on laptop.png"
+                        src="/pagesgraphics/student/coursedescription/laptop.svg"
                         className="w-12"
                       />
                       <div className="text-sm  text-[#E1348B] m-auto">
@@ -343,11 +343,11 @@ const Afterlogin = () => {
                   </div>
                   <div className="border bg-black rounded-[30px] p-5  ">
                     <div className="flex justify-between">
-                      <Image
+                      <img
                         width={100}
                         height={100}
                         alt={"img"}
-                        src="/Programmer coding on laptop.png"
+                        src="/pagesgraphics/student/coursedescription/laptop.svg"
                         className="w-12"
                       />
                       <div className="text-sm  text-[#E1348B] m-auto">
@@ -358,7 +358,7 @@ const Afterlogin = () => {
                       </div>
                     </div>
                     <div className="text-[10px] text-gray-600">COURSE</div>
-                    <h1 className="text-sm">Introduction to C++</h1>
+                    <h1 className="text-sm">Introtion to C++</h1>
                     <p className="text-[13px] leading-4 text-gray-500">
                       Learn the basics of C++ and how to write your first code.{" "}
                     </p>

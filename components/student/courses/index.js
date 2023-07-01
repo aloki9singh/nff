@@ -5,6 +5,11 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useState } from "react";
 import { useRouter } from "next/router";
 // import BottomNav from "../Footer/BottomNav";
+
+
+// creating changes for courseOverview
+
+
 export default function CoursesMain({ coursesData }) {
   const router = useRouter();
   const [courses] = useState(coursesData);

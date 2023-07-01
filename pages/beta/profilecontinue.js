@@ -6,16 +6,17 @@ const ProfileContinuepage = () => {
   const router = useRouter();
 
   function handleContinueClick() {
-    router.push("/profileDetails");
+    router.push("profiledetails");
   }
+  
   return (
-    <div className="flex md:h-screen  ">
+    <div className="flex md:h-screen">
       {/* <Sidebar /> */}
-      <div className="w-full h-full flex flex-col">
+      <div className="w-full flex flex-col">
         {/* <NavBarSecond buttonVis="hidden" title="Contact Us" /> */}
-        <div className="uppercase  w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0">
+        <div className="uppercase  w-[112px] md:w-[186px] md:h-[71px] flex-shrink-0">
           <Image
-            src="/Neatskills-cropped.png"
+            src="/pagesgraphics/student/profilecontinue/Neatskills.svg"
             alt="logo"
             className="w-full h-full object-contain md:ml-10 ml-7 mt-5"
             width={100}
@@ -45,9 +46,9 @@ const ProfileContinuepage = () => {
           </div>
 
           {/* add profile lines  */}
-          <div className="flex flex-col items-center md:space-y-0 space-y-5 md:p-0 p-5">
-            <div className=" flex  justify-center w-full   sm:mx-0 sm:mb-4 sm:w-350px  ">
-              <h1 className=" sm:px-20  mt-20   sm:h-20 not-italic font-semibold text-2xl sm:text-6xl text-white text-center">
+          <div className="relative flex flex-col items-center md:space-y-0 space-y-5 md:p-0 p-5 w-fit m-auto translate-y-[-5%]">
+            <div className=" flex  justify-center w-full sm:mx-0 sm:mb-4 sm:w-350px  ">
+              <h1 className=" sm:px-20  mt-20 sm:h-20 not-italic font-bold text-3xl sm:text-6xl text-white text-center">
                 Add <span className="text-[#A145CD]"> Profile Details</span>
               </h1>
             </div>
@@ -57,9 +58,9 @@ const ProfileContinuepage = () => {
               </h2>
             </div>
             {/* image section */}
-            <div className=" flex justify-center mb-8 ">
+            <div className="flex justify-center mb-8 p-8">
               <Image
-                src="/profiledetails.png"
+                src="/pagesgraphics/student/profilecontinue/businessexplaintowomen.svg"
                 alt="My Image"
                 width={400}
                 height={400}
@@ -71,7 +72,7 @@ const ProfileContinuepage = () => {
               <button
                 type="button"
                 onClick={handleContinueClick}
-                className="px-6 py-3 bg-purple-600 text-gray-800 rounded-full shadow-md hover:bg-gray-200 "
+                className="px-6 py-3 bg-[#A145CD] text-gray-800 rounded-lg text-white shadow-md hover:bg-gray-200 hover:text-black "
               >
                 <div className="flex gap-2">
                   <span> Continue</span>

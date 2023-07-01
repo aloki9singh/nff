@@ -1,4 +1,5 @@
 const LeaderBoard = () => {
+
     const Leaderboard = [
       //Dummy Data for LeaderBoard
       {
@@ -41,10 +42,22 @@ const LeaderBoard = () => {
             <h1 className="flex-[2_2_0%] flex justify-center">{item.name}</h1>
             <h1 className="flex-1 flex justify-center">{item.percentage}</h1>
           </div>
-        ))}
+))}
+
+
       </div>
-    );
-  };
-  
-  export default LeaderBoard;
-  
+      {Leaderboard.map((item) => (
+        <div key={item.id} className="text-white flex justify-between my-2 items-center">
+          <h1 className="flex-1 flex justify-center">{item.rank}</h1>
+          <div className="flex-1 flex justify-center">
+            <div className="border rounded-full h-10 w-10 flex justify-center"></div>
+          </div>
+          <h1 className="flex-[2_2_0%] flex justify-center">{item.name}</h1>
+          <h1 className="flex-1 flex justify-center">{item.percentage}</h1>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default LeaderBoard;

@@ -51,4 +51,4 @@ const Accordion = ({ title, desc, course }) => {
   );
 };
 
-export default accordion;
+export default Accordion;

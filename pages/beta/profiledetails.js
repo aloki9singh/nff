@@ -52,7 +52,7 @@ export default function ProfileDetails() {
 
   const [user, setUser] = useState(null);
   useEffect(() => {
- 
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -134,8 +134,8 @@ export default function ProfileDetails() {
   return (
     <div className="w-full text-white flex flex-col space-y-8 overflow-x-hidden">
       {/* text */}
-      <div className="w-full px-16 pt-16">
-        <h1 className="w-full font-semibold text-4xl text-[#A145CD] ">
+      <div className="w-[92%] mx-auto pt-16">
+        <h1 className="w-full font-semibold text-4xl text-[#A145CD]">
           Profile Details
         </h1>
       </div>
@@ -144,7 +144,7 @@ export default function ProfileDetails() {
         {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* student name */}
-          <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">Student Name *</label>
             <div className="flex flex-col">
               <input
@@ -160,13 +160,15 @@ export default function ProfileDetails() {
                 </p>
               )}
             </div>
-            <input
-              type="text"
-              placeholder="Middle"
-              className="w-full md:w-52 h-10 rounded-lg px-2 placeholder:pl-2 focus:outline-none"
-              style={{ background: "#333333" }}
-              {...register("studentMiddleName")}
-            />
+            <div className="flex flex-col">
+              <input
+                type="text"
+                placeholder="Middle"
+                className="w-full md:w-52 h-10 rounded-lg px-2 placeholder:pl-2 focus:outline-none"
+                style={{ background: "#333333" }}
+                {...register("studentMiddleName")}
+              />
+            </div>
             <div className="flex flex-col">
               <input
                 type="text"
@@ -220,7 +222,7 @@ export default function ProfileDetails() {
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">Class</label>
             <select
-              className="border  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               {...register("class")}
             >
               {options.map((option) => (
@@ -274,59 +276,62 @@ export default function ProfileDetails() {
           </div>
 
           {/* contact number */}
-          <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
-            <label htmlFor="">Student mobile number</label>
-            <div className="flex flex-col">
-              <input
-                type="tel"
-                // pattern="[0-9]*"
-                placeholder="Type Here"
-                className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
-                style={{ background: "#333333" }}
-                {...register("studentPhoneNo", {
-                  required: true,
-                  minLength: 10,
-                  maxLength: 10,
-                  pattern: {
-                    value: /^[0-9]*$/,
-                    message: "Only numbers are allowed",
-                  },
-                })}
-              />
-              {errors.studentPhoneNo?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">Phone no is required</p>
-              )}
-              {errors.studentPhoneNo?.type === "minLength" && (
-                <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
-              )}
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+            <div className="flex md:items-center gap-x-4 flex-col md:flex-row">
+              <label htmlFor="">Student mobile number:</label>
+              <div className="flex flex-col">
+                <input
+                  type="tel"
+                  // pattern="[0-9]*"
+                  placeholder="Type Here"
+                  className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
+                  style={{ background: "#333333" }}
+                  {...register("studentPhoneNo", {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 10,
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Only numbers are allowed",
+                    },
+                  })}
+                />
+                {errors.studentPhoneNo?.type === "required" && (
+                  <p className="text-red-400 text-xs" role="alert">Phone no is required</p>
+                )}
+                {errors.studentPhoneNo?.type === "minLength" && (
+                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                )}
+              </div>
             </div>
-
-            <label className="block text-sm font-medium text-white">
-              Alternate Phone Number
-            </label>
-            <div className="flex flex-col">
-              <input
-                type="text"
-                placeholder="Type Here"
-                className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
-                style={{ background: "#333333" }}
-                {...register("studentAltPhoneNo", {
-                  minLength: 10,
-                  maxLength: 10,
-                  pattern: {
-                    value: /^[0-9]*$/,
-                    message: "Only numbers are allowed",
-                  },
-                })}
-              />
-              {errors.studentAltPhoneNo?.type === "minLength" && (
-                <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
-              )}
+            <div className="flex md:items-center gap-x-4 md:gap-x-2 flex-col md:flex-row">
+              <label className="block text-white">
+                Alternate Phone Number:
+              </label>
+              <div className="flex flex-col">
+                <input
+                  type="text"
+                  placeholder="Type Here"
+                  className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
+                  style={{ background: "#333333" }}
+                  {...register("studentAltPhoneNo", {
+                    minLength: 10,
+                    maxLength: 10,
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Only numbers are allowed",
+                    },
+                  })}
+                />
+                {errors.studentAltPhoneNo?.type === "minLength" && (
+                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                )}
+              </div>
             </div>
           </div>
 
           {/* father's details */}
-          <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">{`Father's`} Name</label>
             <div className="flex flex-col">
               <input
@@ -340,13 +345,15 @@ export default function ProfileDetails() {
                 <p className="text-red-400 text-xs" role="alert">First name is required</p>
               )}
             </div>
-            <input
-              type="text"
-              placeholder="Middle"
-              className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
-              style={{ background: "#333333" }}
-              {...register("fatherMiddleName")}
-            />
+            <div className="flex flex-col">
+              <input
+                type="text"
+                placeholder="Middle"
+                className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
+                style={{ background: "#333333" }}
+                {...register("fatherMiddleName")}
+              />
+            </div>
             <div className="flex flex-col">
               <input
                 type="text"
@@ -362,7 +369,7 @@ export default function ProfileDetails() {
           </div>
 
           {/* mother's details */}
-          <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">{`Mother's`} Name</label>
             <div className="flex flex-col">
               <input
@@ -376,13 +383,15 @@ export default function ProfileDetails() {
                 <p className="text-red-400 text-xs" role="alert">First name is required</p>
               )}
             </div>
-            <input
-              type="text"
-              placeholder="Middle"
-              className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
-              style={{ background: "#333333" }}
-              {...register("motherMiddleName")}
-            />
+            <div className="flex flex-col">
+              <input
+                type="text"
+                placeholder="Middle"
+                className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
+                style={{ background: "#333333" }}
+                {...register("motherMiddleName")}
+              />
+            </div>
             <div className="flex flex-col">
               <input
                 type="text"
@@ -396,10 +405,11 @@ export default function ProfileDetails() {
               )}
             </div>
           </div>
-
+        
           {/* parent's contact number */}
-          <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
-            <label htmlFor="">{`Parent's`} mobile number</label>
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="flex md:items-center gap-x-4 flex-col md:flex-row">
+            <label htmlFor="">{`Parent's`} mobile number:</label>
             <div className="flex flex-col">
               <input
                 type="tel"
@@ -423,6 +433,8 @@ export default function ProfileDetails() {
                 <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
               )}
             </div>
+            </div>
+            <div className="flex md:items-center gap-x-4 md:gap-x-2 flex-col md:flex-row">
             <label className="block  text-white">Alternate Phone Number:</label>
             <div className="flex flex-col">
               <input
@@ -442,6 +454,7 @@ export default function ProfileDetails() {
               {errors.parentAltPhoneNo?.type === "minLength" && (
                 <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
               )}
+            </div>
             </div>
           </div>
 

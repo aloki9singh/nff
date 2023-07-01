@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+
 import { db } from '@/config/firebaseConfig';
+
 import { collection, getDocs, query } from 'firebase/firestore';
 
 const MyCourses = () => {

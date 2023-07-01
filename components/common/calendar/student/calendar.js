@@ -16,7 +16,9 @@ const months = [
   "November",
   "December",
 ];
+
 const Calendar = () => {
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [classes, setClasses] = useState([]);
 
@@ -107,3 +109,4 @@ const Calendar = () => {
 };
 
 export default Calendar;
+
