@@ -53,7 +53,6 @@ export default function HomepageActivities() {
                   className="w-full object-contain"
                   width={1000}
                   height={1000}
-                  alt="activities"
                />
             </div>
          </div>
