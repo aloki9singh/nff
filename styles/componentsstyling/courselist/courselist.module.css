@@ -3,7 +3,7 @@
 .mainCList {
   background-color: #414348;
   border-radius: 50px 50px 0px 0px;
-  width: 166vh;
+  /* width: 166vh; */
 }
 
 .mainCList .listHeader {

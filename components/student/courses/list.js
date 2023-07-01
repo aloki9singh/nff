@@ -6,6 +6,8 @@ import chartIcon from '@/public/componentsgraphics/student/courses/list/chartbar
 import FilterNav from './filernav';
 
 function CourseList() {
+
+  // changes for course overview
   // const [navState, setNavState] = useState("46vh");
   // console.log(navState);
   const openFilter = () => {

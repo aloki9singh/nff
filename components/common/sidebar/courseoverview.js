@@ -31,11 +31,11 @@ const CourseoverviewSidebar = ({ pathname }) => {
           <div className="">
             <div className="relative">
               <Image
-                src="/Neatskills.svg"
+                src="/pagesgraphics/common/createcategory/Neatskills.svg"
                 width={150}
                 height={100}
                 alt="logo"
-                className="pt-5"
+                className="pt-5 mb-5"
               />
             </div>
             <div className="flex flex-col h-full   justify-around ">

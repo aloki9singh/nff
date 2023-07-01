@@ -38,7 +38,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
         </div>
         <div className="flex items-center gap-x-4">
           <div
-            className="flex items-center gap-x-2 py-1 md:mr-1 sm:mr-5 sm:py-2 rounded-lg"
+            className="flex items-center gap-x-2 py-1 md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden md:block"
             style={{ border: "1px solid #728095" }}
           >
             <AiOutlineSearch className="text-white text-2xl ml-4" />

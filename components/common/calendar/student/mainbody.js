@@ -200,4 +200,4 @@ let Mainbody = () => {
   );
 };
 
-export default studentcalendarmainbody;
+export default Mainbody;

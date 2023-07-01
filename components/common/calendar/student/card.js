@@ -14,5 +14,5 @@ let Card = ({ cardData }) => {
     );
   };
   
-  export default studentcalendarcard;
+  export default Card;
   
