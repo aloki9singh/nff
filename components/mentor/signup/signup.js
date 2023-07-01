@@ -18,6 +18,7 @@ import { HashLoader } from "react-spinners";
 
 const MentorSignupcomp = () => {
   var { loading, setLoading } = useContext(Loading);
+  const [role, setRole] = useState("mentor");
   const router = useRouter();
   const [mentorLogData, setMentorLogData] = useState({
     email: "",
@@ -44,9 +45,7 @@ const MentorSignupcomp = () => {
       return;
     }
     try {
-     
-      signUpMentor(mentorLogData, router, setLoading);
-      
+      signUpMentor(mentorLogData, router, setLoading, role, setRole);
     } catch (error) {
       alert(error.message);
       console.error(error);
