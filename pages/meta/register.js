@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "@/styles/style/style.module.css";
-import MentorRegFormStep1 from "@/components/Mentor/MentorRegComponents/MentorRegFormStep1";
-import MentorStep2 from "@/components/Mentor/MentorRegComponents/MentorStep2";
-import MentorStep3 from "@/components/Mentor/MentorRegComponents/MentorStep3";
-import MentorFinal from "@/components/Mentor/MentorRegComponents/MentorFinal";
-import Congratulations from "@/components/Mentor/MentorRegComponents/congratulations";
+import "../styles/style.module.css";
+import MentorRegFormStep1 from "../components/Mentor/MentorRegComponents/MentorRegFormStep1";
+import MentorStep2 from "../components/Mentor/MentorRegComponents/MentorStep2";
+import MentorStep3 from "../components/Mentor/MentorRegComponents/MentorStep3";
+import MentorFinal from "../components/Mentor/MentorRegComponents/MentorFinal";
+import Congratulations from "../components/Mentor/MentorRegComponents/congratulations";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 const MentorRegForm = () => {
