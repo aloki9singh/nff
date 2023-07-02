@@ -110,24 +110,24 @@ export default function ProfileDetails() {
       aadhaarCard: "",
       uid: user.uid,
     };
-
-    await setDoc(doc(db, "profileDetails", user.uid), profile);
+   console.log(profile);
+    await setDoc(doc(db, "allusers", user.uid), profile);
 
     if (data.profilePhoto)
       uploadToFirebase(data.profilePhoto, (url) => {
-        updateDoc(doc(db, "profileDetails", user.uid), {
+        updateDoc(doc(db, "allusers", user.uid), {
           photoURL: url,
         });
       });
 
     if (data.aadhaarCard)
       uploadToFirebase(data.aadhaarCard, (url) => {
-        updateDoc(doc(db, "profileDetails", user.uid), {
+        updateDoc(doc(db, "allusers", user.uid), {
           aadhaarCard: url,
         });
       });
 
-    router.push("/profileCongratulation");
+    router.push("/beta/profilecongrats");
   };
 
   console.log("errors", errors);

@@ -11,7 +11,7 @@ export default async function sendEmailMentor(req, res) {
   const verificationKey = uuidv4();
 
   // Check if document with email as document ID already exists
-  const docRef = doc(db, 'mentors', data.email);
+  const docRef = doc(db, 'allusers', data.email);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {

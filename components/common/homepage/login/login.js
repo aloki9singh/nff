@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/componentsstyling/auth/auth.module.css";
@@ -10,16 +10,97 @@ import { FaLock } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
+  callSignupApi,
+  callUserById,
   createWithGoogle,
   handleResetPassword,
   login,
 } from "@/lib/exportablefunctions";
+import { callEmailApi, callVerificationEmailApi } from "@/lib/api";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
+import { HashLoader } from "react-spinners";
+import { Loading } from "@/lib/context/contextprovider";
 
 function LoginComp() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [blinkingIndex, setBlinkingIndex] = useState(0);
+  const [role, setRole] = useState("student");
+  const { loading, setLoading } = useContext(Loading);
+  const login = async (email, pass) => {
+    setLoading(true);
+    signInWithEmailAndPassword(auth, email, pass)
+      .then((userCredential) => {
+        // Log in successful
+        const user = userCredential.user;
+
+        const displayName = email.substring(0, 5);
+        console.log(displayName);
+        const datah = { displayName, email };
+
+        callUserById(user.uid).then(async (res) => {
+          // console.log("user", user);
+          const value = await callUserById(user.uid);
+          setRole(value.user.role);
+
+          // console.log("value", value.user.role);
+          if (role == "admin" || role == "mentor" || role == "school") {
+            alert(`You are logged as different type of user.`);
+          } else {
+            if (res.success == false) {
+              const val1 = await callVerificationEmailApi(datah);
+              alert("Verification email sent!!");
+              const mentorData = {
+                uid: user.uid,
+                displayName: user.email.substring(0, 5),
+                email: user.email,
+                role: "student",
+                photoURL: user.photoURL,
+              };
+              callSignupApi(mentorData);
+              // data sent  to  user id
+              router.push("/beta/profilecontinue");
+            } else if (res.user && res.user.verified == true) {
+              router.push("/beta/dashboard");
+            } else {
+              //if user back  without verifying and tries to login
+              alert(
+                "Please Verify email! An email verification has been sent to your inbox."
+              );
+              //in this case email verification message sent again
+              callVerificationEmailApi({ displayName: email, email });
+            }
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Either email / password is wrong!");
+      });
+    setLoading(false);
+  };
+
+  const handleLogin = async (e) => {
+    setLoading(true);
+    if (!email) {
+      alert("Please enter your email");
+      return;
+    }
+    if (!password) {
+      alert("Please enter your Password");
+      return;
+    }
+    e.preventDefault();
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     const isEmailVerified =
       new URLSearchParams(window.location.search).get("mode") === "verifyEmail";
@@ -34,17 +115,16 @@ function LoginComp() {
       clearInterval(interval);
     };
   }, []);
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password, router);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
-    <>
+    <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
+      {loading && (
+        <div style={{ pointerEvents: "none", zIndex: 1 }}>
+          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+            <HashLoader color="#E1348B" size={80} />
+          </div>
+        </div>
+      )}
       <main
         className={`max-w-full md:h-screen   grid justify-center md:grid-cols-2 text-center text-white md:overflow-hidden `}
       >
@@ -76,7 +156,7 @@ function LoginComp() {
 
           <div>
             <p className="hidden md:block text-normal text-sm  pb-[20px]">
-            Start learning right away !
+              Start learning right away !
             </p>
             <div className="  hidden  md:flex justify-center gap-2 ">
               <div
@@ -180,8 +260,6 @@ function LoginComp() {
                   />
                 </div>
 
-           
-
                 <button
                   type="submit"
                   className="bg-[#E1348B] md:w-[100%] w-[50%] p-2   rounded-[10px]"
@@ -203,7 +281,7 @@ function LoginComp() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
