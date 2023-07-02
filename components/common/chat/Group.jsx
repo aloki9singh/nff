@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { MdClose, MdInfoOutline, MdNotificationsNone } from "react-icons/md";
+import { MdClose, MdNotificationsNone } from "react-icons/md";
 import Avatar from "./avatar";
 import { Switch } from "@headlessui/react";
 import Image from "next/image";
 import { auth, db } from "../../../config/firebaseconfig";
-import { addDoc, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import profileImage from "@/public/componentsgraphics/common/chatting/user/profile.svg";
+import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.svg";
 
 const DescIcon = (props) => (
   <svg
@@ -40,7 +42,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
   const memberClickHandler = async (member) => {
     console.log(member);
 
-    if(member.uid === user.uid) return;
+    if (member.uid === user.uid) return;
 
     const id =
       user.uid < member.uid ? user.uid + member.uid : member.uid + user.uid;
@@ -94,7 +96,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
       >
         <Avatar
           alt="Profile-Picture"
-          src={'/componentsgraphics/common/chatting/user/profile.svg'}
+          src={profileImage}
           // sx={{ height: 87, width: 86 }}
           height={87}
           width={86}
@@ -121,9 +123,9 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
       >
         <p className="text-xs">Media Link and Docs</p>
         <div className="flex gap-6 p-2" style={{ backgroundColor: "#505357" }}>
-          <Image src={'Img2.png'} alt="" height={60} width={60} />
-          <Image src={'Img2.png'} alt="" height={60} width={60} />
-          <Image src={'Img2.png'} alt="" height={60} width={60} />
+          <Image src={Img2} alt="" height={60} width={60} />
+          <Image src={Img2} alt="" height={60} width={60} />
+          <Image src={Img2} alt="" height={60} width={60} />
         </div>
       </div>
 

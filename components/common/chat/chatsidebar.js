@@ -18,17 +18,7 @@ async function getUser(uid) {
   return user.data();
 }
 
-const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat }) => {
-  // fetch details of user from backend using id or username;
-
-  // const reciever = {
-  //   name: recieverName,
-  //   username: username,
-  //   number: number,
-  // };
-
-  const [name, setName] = useState(chat.name);
-  const [photoURL, setPhotoURL] = useState(chat.photoURL);
+const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setChats }) => {
   const time = chat.lastMessageTimestamp
     ?.toDate()
     .toLocaleTimeString([], {
@@ -38,16 +28,32 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat }) => {
     });
 
   useEffect(() => {
-    if (!name && !chat.isGroup) {
+
+    if (chat.isGroup || chat.isGroup === undefined) {
+      return;
+    }
+
+    if (chat.isGroup === false) {
       const friendUid = chat.members.find(
         (uid) => uid !== auth.currentUser.uid
       );
       getUser(friendUid).then((friend) => {
-        setName(friend.name.first + " " + friend.name.last);
-        setPhotoURL(friend.photoURL);
+        setChats(prev => prev.map((chat) => {
+          if (chat.isGroup) return chat;
+
+          const fuid = chat.members.find(
+            (uid) => uid !== auth.currentUser.uid
+          );
+
+          if (fuid === friendUid) {
+            chat.name = friend.name.first + " " + friend.name.middle + " " + friend.name.last;
+            chat.photoURL = friend.photoURL;
+          }
+          return chat;
+        }))
       });
     }
-  }, [chat, name]);
+  }, [chat, setChats]);
 
   return (
     <div
@@ -59,10 +65,10 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat }) => {
       onClick={(e) => setCurrReciever(chat)}
     >
 
-      <Avatar alt="Profile-Picture" src={photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
+      <Avatar alt="Profile-Picture" src={chat.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
 
       <div className="flex flex-col flex-1 items-start">
-        <h1>{name}</h1>
+        <h1>{chat.name}</h1>
         <p className="text-sm">{chat.lastMessage}</p>
       </div>
       <div className="flex flex-col justify-end items-center">
@@ -78,7 +84,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat }) => {
   );
 };
 
-const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
+const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
   const [activeLink, setActiveLink] = useState("all");
   const [searchUser, setSearchUser] = useState("");
   const [users, setUsers] = useState(chats);
@@ -86,14 +92,17 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
     setUsers(chats);
   }, [chats]);
 
+
   const handleChange = (e) => {
     const val = e.target.value;
     setSearchUser(val);
-    const filteredUsers = dummyUsers.filter((user) =>
-      user.name.toLowerCase().startsWith(val.toLowerCase())
+    const filteredUsers = chats.filter((user) =>
+      user.name?.toLowerCase().startsWith(val.toLowerCase())
     );
-    if (val.length === 0) setUsers(dummyUsers);
+    if (val.length === 0) setUsers(chats);
+
     else setUsers(filteredUsers);
+
   };
 
   return (
@@ -181,6 +190,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats }) => {
               chat={user}
               currReciever={currReciever}
               setCurrReciever={setCurrReciever}
+              setChats={setChats}
             />
           ))}
         </div>

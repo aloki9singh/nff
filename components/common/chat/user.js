@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdClose, MdInfoOutline, MdNotificationsNone } from 'react-icons/md'
 
 import Avatar from "./avatar";
-
+import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.svg";
 import { Switch } from "@headlessui/react";
 import Image from "next/image";
 
@@ -67,9 +67,9 @@ const User = ({ currReciever, setShowUser }) => {
       >
         <h1>Media Link and Docs</h1>
         <div className="flex gap-6 p-2" style={{ backgroundColor: "#505357" }}>
-          <Image src={'Img2.png'} alt="" height={60} width={60} />
-          <Image src={'Img2.png'} alt="" height={60} width={60} />
-          <Image src={'Img2.png'} alt="" height={60} width={60} />
+          <Image src={Img2} alt="" height={60} width={60} />
+          <Image src={Img2} alt="" height={60} width={60} />
+          <Image src={Img2} alt="" height={60} width={60} />
         </div>
       </div>
 
