@@ -20,7 +20,10 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-                src="/componentsgraphics/student/dashboard/dashboardcard/laptop.svg"
+
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
+                className="w-12"
+
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
               <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
@@ -42,7 +45,10 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-                src="/componentsgraphics/student/dashboard/dashboardcard/laptop.svg"
+
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
+                className="w-12"
+
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
               <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
@@ -64,7 +70,10 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-                src="/componentsgraphics/student/dashboard/dashboardcard/laptop.svg"
+
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
+                className="w-12"
+
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
               <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
@@ -100,7 +109,10 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-                src="/componentsgraphics/student/dashboard/dashboardcard/laptop.svg"
+
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
+                className="w-12"
+
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
               <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
@@ -122,7 +134,10 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-                src="/componentsgraphics/student/dashboard/dashboardcard/laptop.svg"
+
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
+                className="w-12"
+
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
               <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
@@ -144,7 +159,10 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-                src="/componentsgraphics/student/dashboard/dashboardcard/laptop.svg"
+
+                src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
+                className="w-12"
+
               />
               <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
               <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
