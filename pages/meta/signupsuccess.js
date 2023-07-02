@@ -4,7 +4,7 @@ import { callEmailApiMentor } from "@/lib/api";
 import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { auth } from "@/config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 const detailadd = async (id) => {

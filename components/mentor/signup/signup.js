@@ -46,7 +46,8 @@ const MentorSignupcomp = () => {
     }
     try {
       signUpMentor(mentorLogData, router, setLoading, role, setRole);
-    } catch (error) {
+    } 
+    catch (error) {
       alert(error.message);
       console.error(error);
     }

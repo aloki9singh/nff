@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {
   callScheduleGetApiMentor,
   callSchedulePostApiMentor,
-} from "@/lib/mentorApi";
+} from "@/lib/mentorapi";
 import { getMonthName } from "@/components/common/calendar/common/timestampfun";
 
 const SideBodyClassSchedule = ({ count, setCount }) => {

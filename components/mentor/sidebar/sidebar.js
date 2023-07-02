@@ -22,7 +22,7 @@ height= {38}
             <ul className="flex flex-col justify-between gap-y-5 ">
               <li className="">
                 <Link
-                  href="/mentor-dashboard"
+                  href="/meta/dashboard"
                   className="flex items-center p-2 font-normal text-white text-sm rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
@@ -35,7 +35,7 @@ height= {38}
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="/meta/courses"
                   className="flex items-center p-2  font-normal text-white rounded-lg  hover:bg-pin text-sm"
                 >
                   <label className="inline-flex items-center ">
@@ -48,7 +48,7 @@ height= {38}
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="/meta/students"
                   className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center ">
@@ -60,9 +60,9 @@ height= {38}
                     <span className="ml-3">Students</span>
                   </label>
                 </Link>
-                <hr className="h-px my-8 bg-gray-200 border-0 "></hr>
+                <hr className="h-px my-8  bg-gray-200 border-0 "></hr>
                 <Link
-                  href="/Schedule"
+                  href="/meta/schedule"
                   className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center ">
@@ -73,7 +73,7 @@ height= {38}
                     />{" "}
                     <span
                       className={`ml-3 text-[${
-                        pathname == "/Schedule" ? "#E1348B" : ""
+                        pathname == "/meta/schedule" ? "#E1348B" : ""
                       }]`}
                     >
                       Schedule
@@ -81,7 +81,7 @@ height= {38}
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="liveclass"
                   className=" text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   {/* checkbox */}
@@ -95,7 +95,7 @@ height= {38}
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="/meta/studymaterial"
                   className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
@@ -108,7 +108,7 @@ height= {38}
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="/meta/homework"
                   className="text-sm flex items-center p-2 font-normal text-white rounded-lg    hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
@@ -122,7 +122,7 @@ height= {38}
                 </Link>
                 <hr className="h-px my-8 bg-gray-200 border-0 "></hr>
                 <Link
-                  href="#"
+                  href="/meta/chats"
                   className=" text-sm flex items-center p-2 font-normal text-white rounded-lg   hover:bg-pin"
                 >
                   <label className="inline-flex items-center">
@@ -136,7 +136,7 @@ height= {38}
                 </Link>
 
                 <Link
-                  href="#"
+                  href="/meta/profile"
                   className="text-sm flex items-center p-2 font-normal text-white rounded-lg   hover:bg-pin"
                 >
                   <label className="inline-flex items-center">

@@ -9,8 +9,8 @@ const MentorTopbar = ({ heading }) => {
   };
   return (
     <>
-      <div className="flex justify-between lg:flex  md:static static md:w-[95%]  md:ml-5   mt-4   w-full p-2 md:p-0">
-        <h1 className="text-white my-auto ml-5 md:ml-10 md:text-2xl text-[19px]">
+      <div className="flex justify-between lg:flex  md:static static md:w-[95%] md:ml-5   mt-4   w-full p-2 md:p-0">
+        <h1 className="text-white my-auto ml-5 md:ml-10 font-600 md:text-2xl text-[19px]">
           {heading}
         </h1>
         <div className="mr-12 flex">

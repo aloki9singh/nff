@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { db, storage } from '../components/config/firebaseConfig';
+import { db, storage } from '@/config/firebaseconfig';
 import { collection, getDocs, where, query, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import Link from 'next/link';
@@ -109,9 +109,9 @@ export default function Uploadvideo() {
             <ul>
               <li className="ml-2 md:ml-10 text-2xl uppercase hover:border-b text-white text-center">
                 <Image
-                  src="/Neatskills.svg"
+                  src="/pagesgraphics/common/createcourse/Neatskills.svg"
                   alt="logo"
-                  className="w-[112px] h-[43px] md:w-[186px] md:h-[71px]"
+                  className="w-[100px] h-[43px] md:w-[186px] md:h-[71px]"
                   width={100}
                   height={100}
                 />

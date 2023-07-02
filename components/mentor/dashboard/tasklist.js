@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Todo from './todo';
-import { db } from '@/config/firebaseConfig';
+import { db } from '@/config/firebaseconfig';
 import {
   collection,
   query,
@@ -88,9 +88,9 @@ export default function TaskList() {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute items-center right-36 -mt-4 z-10">
-              <div className="h-48 w-36 text-center p-3">
-                <div className="relative bg-[#373A41] text-black rounded-tl-lg rounded-b-lg">
+            <Popover.Panel className="absolute items-center right-[1rem] -mt-4 z-10">
+              <div className="h-48 w-[20rem] md:w-[24rem] text-center p-3">
+                <div className="relative bg-[#373A41] text-black rounded-tl-lg rounded-b-lg ">
                   <form
                     onSubmit={createTask}
                     className="flex gap-3 items-center"

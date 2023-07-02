@@ -2,23 +2,22 @@ import TaskList from "@/components/mentor/dashboard/tasklist";
 import Calender from "@/components/common/calendar/mentor/calendar";
 import MentorChatWidget from "@/components/mentor/chat/widget";
 import BasicDetails from "@/components/mentor/other/basicdetails";
-import { BiBell } from "react-icons/bi";
-import { BsPersonCircle, BsPlusLg } from "react-icons/bs";
 import { useState } from "react";
 import MentorSidebar from "@/components/mentor/sidebar/sidebar";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { auth } from "@/config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 import LeaderBoardMentor from "@/components/mentor/dashboard/leaderboard";
 import CirProgress from "@/components/mentor/other/circularprogressbar";
-// import MobileNav from "../components/CalenderParts/MobileNav";
 import { useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
+
+
 function MentorDashboard() {
   const [count, setCount] = useState(1);
-  const [verified, setVerified] = useState(false);
+  const [verified, setVerified] = useState(true);
   let [searchstate, setsearchstate] = useState("");
   const router = useRouter();
   let searchfun = (e) => {
@@ -31,8 +30,8 @@ function MentorDashboard() {
         console.log(user);
          user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user.verified);
-       console.log("value",value.user.verified)
+        // setVerified(value.user.verified);
+      //  console.log("value",value.user.verified)
       }
     });
   //  setTimeout(()=>{

@@ -1,18 +1,18 @@
 import { useState } from "react";
 // import MentorSidebar from "../components/Schedule/MentorSidebar2";
-import CourseCardSmall from "../components/Courses/CourseCardSmall";
+import CourseCardSmall from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import MentorTopbar from "../components/Navbar/MentorTopbar";
+import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
-import MentorChart from "../components/Mentor/MentorChart";
+import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
-import MentorSidebar from "../components/Sidebar/MentorSidebar";
 function MentorProfile() {
   const router = useRouter();
-  const { data } = useSelector((state) => state.authManagerMentor);
+  // const { data } = useSelector((state) => state.authManagerMentor);
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
 
   //uncomment below code for verifying  !mentor
@@ -171,7 +171,7 @@ function MentorProfile() {
                       {" "}
                       <span>
                         <Image
-                          src={"/mentorProfile/degree_icon.png"}
+                          src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
                           width={100}
                           height={100}
                           alt="img"
@@ -194,7 +194,7 @@ function MentorProfile() {
                       {" "}
                       <span>
                         <Image
-                          src={"/mentorProfile/location_icon.png"}
+                          src={"/pagesgraphics/mentor/profile/location_icon.svg"}
                           width={100}
                           height={100}
                           alt="img"
@@ -215,7 +215,7 @@ function MentorProfile() {
                       {" "}
                       <span>
                         <Image
-                          src={"/mentorProfile/globe_icon.png"}
+                          src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
                           width={100}
                           height={100}
                           alt="img"
