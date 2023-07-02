@@ -38,7 +38,7 @@ let SideBody = ({ count, setCount }) => {
   }, [date]);
 
   return (
-    <div className=" h-full  overflow-scroll-y  ">
+    <div className="w-full h-full  overflow-scroll-y  ">
       <div
         className="rounded-xl p-4 px-6 text-white m-5 h-[400px] overflow-scroll scrollbar-hide "
         style={{ background: "#33353B" }}
@@ -88,7 +88,7 @@ let SideBody = ({ count, setCount }) => {
           className="rounded-xl text-white px-5 py-3 text-center m-2  flex space-x-2"
           style={{ background: "#A145CD" }}
         >
-          <button onClick={submitData}>Add new class</button>
+          <button onClick={submitData} className="cursor-pointer">Add new class</button>
         </div>
       </div>
     </div>

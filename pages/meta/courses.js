@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+
+import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
+import MentorChart from "@/components/mentor/other/chart";
 import { useRouter } from "next/router";
 import { studentsArr } from "@/lib/arraytomap";
 import { useSelector } from "react-redux";
-// import boxProfile from "../public/mentorCourses/profile.svg";
 
 function mentorStudent() {
     const [count, setCount] = useState(1);
@@ -20,101 +21,82 @@ function mentorStudent() {
     const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
     const tabClass = "w-10 h-10 rounded-xl";
 
-
     return (
         <>
-            <div className="h-screen text-base bg-[#2E3036] ">
-                <div className="flex max-w-full">
+            <div className="h-screen text-base">
+                <div className="flex">
                     <div className="lg:col-span-1 hidden lg:grid w-[261px]">
                         {" "}
                         <MentorSidebar pathname={router.pathname} />
                     </div>
-                    <div
-                        style={{ background: "#2E3036" }}
-                        className="col-span-5 lg:col-span-4 md:rounded-l-3xl pt-2 w-screen overflow-y-scroll scrollbar-hide text-white"
-                    >
-
+                    <div className="col-span-5 bg-[#2E3036] lg:col-span-4 md:rounded-l-3xl w-full overflow-x-hidden overflow-y-scroll scrollbar-hide text-white rounded-s-lg">
                         <MentorTopbar heading={"My Courses"} />
-
                         <hr className="hidden lg:block opacity-50 m-3"></hr>
-
-
                         {/* Dropdown bar */}
-                        <div className="md:flex gap-5 m-5 md:mt-0 mt-20">
-                            <div className="md:flex justify-end w-[100%] m-5 space-y-2">
-
-                                <div className=" flex justify-end pr-4">
-                                    <button
-                                        className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center"
-                                    >
-                                        + Add New Course
+                        <div className="flex  gap-5 m-5 md:mt-0 mt-8">
+                            <div className="md:flex justify-end w-[100%] m-3 space-y-2">
+                                <div className=" flex justify-end">
+                                    <button className="bg-[#E1348B] px-4 py-2 rounded-md text-lg flex items-center justify-center">
+                                    <span className="text-2xl mr-2">
+                                        +
+                                    </span>
+                                     Add New Course
                                     </button>
                                 </div>
                             </div>
-
-
                         </div>
 
-
-
-                        <div className="w-[90%] h-full  rounded-[30px]  md:text-base text-xs mx-auto flex mb-4">
-                            <div className="w-[40%] h-full  md:text-base text-xs mx-auto  mb-4">
-
+                        <div className="flex flex-wrap w-[95%] justify-center rounded-[30px]  md:text-base text-sm mx-auto flex">
+                            <div className="w-[45%] max-[700px]:w-full h-fit md:text-base text-lg mx-auto  mb-4">
                                 <div
                                     style={{
                                         "background-image":
                                             "linear-gradient(90deg, #E1348B 0%, #CD8BED 100%)",
                                     }}
-                                    className="w-[95%] h-[20%] rounded-xl md:text-base text-xs mx-auto  mb-4">
-
-                                    <div className="text-white py-4 px-3">
+                                    className="w-[95%] h-[20%] rounded-xl md:text-base text-lg mx-auto pb-6">
+                                    <div className="text-white py-4 px-3 text-lg font-bold">
                                         Today 2 new students enrolled in your course.
                                     </div>
-
-                                    <div className="flex justify-end w-[90%] mx-auto">
-                                        <button
-                                            className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center"
-                                        >
+                                    <div className="flex justify-end mx-8">
+                                        <button className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center">
                                             See Details
                                         </button>
                                     </div>
-
                                 </div>
 
-                                <div className="w-[95%] h-[20%]  md:text-base text-xs flex justify-between mx-auto  mb-4">
-                                    <div className="w-[44%] h-[95%] text-xs bg-[#373A41] rounded-lg py-2 px-2 flex flex-col justify-around align-center text-center">
+                                <div className="w-[95%] h-[20%]  md:text-base text-xs flex justify-between mx-auto my-8  mb-4">
+                                    <div className="w-[44%] h-[95%] text-xs bg-[#373A41] rounded-lg py-2 px-2 flex flex-col justify-around align-center text-center py-2.5">
                                         <div className="rounded-full w-[60px] h-[60px]  mx-auto bg-[#E1348B] flex align-center justify-center">
                                             <Image
-                                                src="/mentorCourses/profile.svg"
+                                                src="/pagesgraphics/mentor/profile/degree_icon.svg"
                                                 width={30}
                                                 height={30}
-                                                alt="f"
-                                            ></Image>
+                                                alt="Enrollments"
+                                            />
                                         </div>
-                                        <p className="font-semibold text-sm">105</p>
+                                        <p className="font-semibold text-lg py-1">105</p>
                                         <p>Total Enrolments</p>
                                     </div>
-                                    <div className="w-[44%] h-[95%] text-xs bg-[#373A41] rounded-lg py-2 px-2 flex flex-col justify-around align-center text-center">
+                                    <div className="w-[44%] h-[95%] text-xs bg-[#373A41] rounded-lg py-2 px-2 flex flex-col justify-around align-center text-center py-2.5">
                                         <div className="rounded-full w-[60px] h-[60px]  mx-auto bg-[#E1348B] flex align-center justify-center">
                                             <Image
-                                                src="/mentorCourses/book.svg"
+                                                src="/componentsgraphics/common/homepage/activities/Book.svg"
                                                 width={30}
                                                 height={30}
-                                                alt="f"
-                                            ></Image>
+                                                alt="Courses"
+                                            />
                                         </div>
-                                        <p className="font-semibold text-sm">3</p>
+                                        <p className="font-semibold text-lg py-1">3</p>
                                         <p>Total Courses</p>
                                     </div>
                                 </div>
 
                                 <div className="w-[95%] h-[40%]  md:text-base text-xs flex mx-auto  mb-4">
-
                                     <div className="w-[100%] h-[100%]  bg-[#373A41] rounded-lg py-2 flex flex-col align-center ">
-                                        <div className="w-[95%] mx-auto text-bold py-4 flex">
-                                            <h1 className="my-2 p-2 w-[60%]">Enrollment Activity</h1>
-                                            <div className="flex space-x-4 my-2 justify-end">
-                                                <select className=" p-2 text-sm rounded-md focus:outline-none bg-[#373A41] text-white cursor-pointer">
+                                        <div className="flex items-center justify-between w-[95%] mx-auto text-bold flex">
+                                            <h1 className="my-2 ">Enrollment Activity</h1>
+                                            <div className="flex my-2 justify-end">
+                                                <select className=" text-sm rounded-md focus:outline-none bg-[#373A41] text-white cursor-pointer p-2 my-2">
                                                     <option selected hidden>
                                                         Time
                                                     </option>
@@ -126,25 +108,15 @@ function mentorStudent() {
                                             </div>
                                         </div>
                                         <div className="w-full py-4 flex justify-center ">
-                                            <Image
-                                                src="/mentorCourses/chart.svg"
-                                                width={300}
-                                                height={90}
-                                                alt="f"
-                                            ></Image>
-
+                                           <MentorChart/>
                                         </div>
 
                                     </div>
                                 </div>
-
-
-
                             </div>
 
-
                             {/* table */}
-                            <div className="w-[55%] h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
+                            <div className="w-[55%] max-[700px]:w-full h-fit bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
                                 <div className="">
                                     <table className="w-full  ">
                                         <thead className="  items-center  border-b  ">
@@ -222,9 +194,7 @@ function mentorStudent() {
                                     </button>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>

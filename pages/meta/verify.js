@@ -8,6 +8,7 @@ import { auth } from "@/config/firebaseconfig";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+
 const MentorVerify = () => {
   const [email, setEMail] = useState("");
   const { loading, setLoading } = useContext(Loading);

@@ -1,5 +1,4 @@
-// Page not Provided in figma CSS need to be fixed  // currently frontend of this page is fixed  without figma
-//Backend needed to be implemented with appwrite
+
 // it is admin login page
 
 import { useContext, useEffect, useState } from "react";

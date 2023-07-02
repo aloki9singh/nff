@@ -1,15 +1,18 @@
 import { useState } from "react";
 // import MentorSidebar from "../components/Schedule/MentorSidebar2";
+
 import CourseCardSmall from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
+
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
@@ -116,7 +119,7 @@ function MentorProfile() {
                   </div>
                   <div className="flex overflow-x-scroll scrollbar-hide gap-4">
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
@@ -126,7 +129,7 @@ function MentorProfile() {
                       />
                     </div>
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
@@ -136,7 +139,7 @@ function MentorProfile() {
                       />
                     </div>
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
@@ -146,7 +149,7 @@ function MentorProfile() {
                       />
                     </div>
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
