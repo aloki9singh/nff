@@ -33,7 +33,7 @@ const LeaderBoard = () => {
             <h1 className="text-[#728095] text-xs">View All</h1>
           </button>
         </div>
-        {Leaderboard.map((item) => (
+        {/* {Leaderboard.map((item) => (
           <div key={item.id} className="text-white flex my-5 items-center p-2 md:text-sm">
             <h1 className="flex-1 flex justify-center">{item.rank}</h1>
             <div className="flex-1 flex justify-center">
@@ -45,7 +45,7 @@ const LeaderBoard = () => {
 ))}
 
 
-      </div>
+      </div> */}
       {Leaderboard.map((item) => (
         <div key={item.id} className="text-white flex justify-between my-2 items-center">
           <h1 className="flex-1 flex justify-center">{item.rank}</h1>

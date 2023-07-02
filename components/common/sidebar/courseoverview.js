@@ -56,7 +56,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                   </Link>
                   <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                   <Link
-                    href="/course-overview"
+                    href="/beta/courseoverview"
                     className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                   >
                     <label className="inline-flex items-center space-x-3">
@@ -67,7 +67,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                       />{" "}
                       <span
                         className={`ml-3 text-[${
-                          pathname == "/course-overview" ? "#E1348B" : ""
+                          pathname == "/beta/courseoverview" ? "#E1348B" : ""
                         }]`}
                       >
                         Courses

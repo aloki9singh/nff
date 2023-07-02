@@ -10,13 +10,13 @@ function MyApp({ Component, pageProps }) {
   // const store = useStore(pageProps.initialReduxState);
 
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <ContextProvider>
         <AuthContextProvider>
           <Component {...pageProps} />
         </AuthContextProvider>
       </ContextProvider>
-    </Provider>
+    // </Provider>
   );
 }
 

@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
+import { detailadd } from "@/lib/exportablefunctions";
+import { callEmailApi } from "@/lib/api";
+
 const ProfileContinuepage = () => {
   const router = useRouter();
+  const data = { verified: true };
 
   function handleContinueClick() {
-    router.push("profiledetails");
+    router.push("/beta/profiledetails");
   }
-  
+  useEffect(() => {
+    const isEmailVerified =
+      new URLSearchParams(window.location.search).get("mode") === "verifyEmail";
+    if (isEmailVerified) {
+      // Display a message to inform the user that their email has been verified
+      alert("Your email has been verified. You can now log in.");
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        user.emailVerified = true;
+        await detailadd(user.uid, data);
+        await callEmailApi({
+          displayName: user.email.substring(0, 5),
+          email: user.email,
+        });
+      }
+    });
+    return () => unsubscribe(); // Cleanup the listener
+  }, []);
+
   return (
     <div className="flex md:h-screen">
       {/* <Sidebar /> */}
@@ -72,7 +98,7 @@ const ProfileContinuepage = () => {
               <button
                 type="button"
                 onClick={handleContinueClick}
-                className="px-6 py-3 bg-[#A145CD] text-gray-800 rounded-lg text-white shadow-md hover:bg-gray-200 hover:text-black "
+                className="px-6 py-3 bg-[#A145CD]  rounded-lg text-white shadow-md hover:bg-gray-200 hover:text-black "
               >
                 <div className="flex gap-2">
                   <span> Continue</span>

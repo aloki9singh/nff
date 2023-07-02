@@ -1,4 +1,4 @@
-import { transporter } from "../../config/nodeMailer";
+import { transporter } from "@/config/nodeMailer";
 
 export default async function sendEmailMentor(req, res) {
     const data = req.body;

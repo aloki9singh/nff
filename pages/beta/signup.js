@@ -5,7 +5,7 @@ import React from 'react';
 function signup() {
   return (
     <div>
-      <SignUp />
+      <SignUp/>
     </div>
   );
 }
