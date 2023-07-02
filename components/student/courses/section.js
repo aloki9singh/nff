@@ -33,10 +33,12 @@ function CourseSec({ courses, category, FilterUsed, coursesAfterFilter }) {
           </button>
         </div>
         <div className={styles.mainList}>
+
           {cardInfo &&
             cardInfo.map((info, i) => (
               <CourseCard coursedata={info} category={category} key={i} />
             ))}
+=
         </div>
       </div>
     </>

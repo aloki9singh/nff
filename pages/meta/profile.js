@@ -1,18 +1,19 @@
 import { useState } from "react";
 // import MentorSidebar from "../components/Schedule/MentorSidebar2";
-import CourseCardSmall from "../components/Courses/CourseCardSmall";
+// import CourseCard from "../components/Courses/CourseCard";
+import CourseCard from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import MentorTopbar from "../components/Navbar/MentorTopbar";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
-import MentorChart from "../components/Mentor/MentorChart";
+import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
-import MentorSidebar from "../components/Sidebar/MentorSidebar";
+import MentorSidebar from "@/components/common/sidebar/mentor";
 function MentorProfile() {
   const router = useRouter();
-  const { data } = useSelector((state) => state.authManagerMentor);
+  // const { data } = useSelector((state) => state.authManagerMentor);
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
 
   //uncomment below code for verifying  !mentor
@@ -116,7 +117,7 @@ function MentorProfile() {
                   </div>
                   <div className="flex overflow-x-scroll scrollbar-hide gap-4">
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
@@ -126,7 +127,7 @@ function MentorProfile() {
                       />
                     </div>
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
@@ -136,7 +137,7 @@ function MentorProfile() {
                       />
                     </div>
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"
@@ -146,7 +147,7 @@ function MentorProfile() {
                       />
                     </div>
                     <div>
-                      <CourseCardSmall
+                      <CourseCard
                         key="1"
                         lessons="8"
                         title="Introduction to C++"

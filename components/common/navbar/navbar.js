@@ -49,7 +49,7 @@ export default function Navbar() {
 					</Link>
 					<div className="hidden md:flex justify-center  w-full items-center text-white text-xs  lg:text-base mx-10 lg:mx-12">
 						<ul className="max-w-[407px] w-full flex justify-between">
-							<Link href="/course-overview">
+							<Link href="/beta/courseoverview">
 								<li className="text-md uppercase hover:border-b ">Courses</li>
 							</Link>
 							<Link href="/alpha/aboutUs">
