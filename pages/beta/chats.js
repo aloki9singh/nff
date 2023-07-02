@@ -67,9 +67,6 @@ const Chat = () => {
       querySnapshot.forEach(async (doc) => {
         let chat = doc.data();
 
-        console.log("chat", chat);
-
-
         arr.push(chat);
       });
       setChats(arr);
@@ -80,7 +77,6 @@ const Chat = () => {
     return unsub;
   }, [user, router, loading]);
 
-  console.log("chats", chats);
 
   useEffect(() => {
     if (!currReciever) setCurrReciever(chats[0]);
@@ -161,6 +157,7 @@ const Chat = () => {
               currReciever={currReciever}
               setCurrReciever={setCurrReciever}
               chats={chats}
+              setChats={setChats}
             />
             <Chatpart
               setCurrReciever={setCurrReciever}
