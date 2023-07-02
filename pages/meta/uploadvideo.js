@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { db, storage } from '../components/config/firebaseConfig';
+import { db, storage } from '@/config/firebaseconfig';
 import { collection, getDocs, where, query, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import Link from 'next/link';
