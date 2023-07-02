@@ -97,6 +97,10 @@ const MentorChart = ({ data }) => {
     });
   }, []);
 
+  if(!data){
+    return <h1 className="text-white">Data absent</h1>
+  }
+
   return (
     <>
       <div className="md:w-[460px] md:h-[204px] md:col-span-2 p-3 rounded-[20px] bg-[#373A41] ">
