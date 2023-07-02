@@ -1,7 +1,7 @@
 // Verified by Pradhumn
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import useClickOutside from "../other/useClickOutside";
+import useClickOutside from "../other/useclickoutside";
 
 const MentorStep2 = ({setRegStepCount,regStepCount}) => {
   // this state is  for qualification array data

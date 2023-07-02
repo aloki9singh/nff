@@ -16,7 +16,9 @@ const months = [
   "November",
   "December",
 ];
-const StudentCalender = () => {
+
+const Calendar = () => {
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [classes, setClasses] = useState([]);
 
@@ -78,7 +80,7 @@ const StudentCalender = () => {
 
         <div className=" p-3 w-full shrink-0 text-xl text-gray-200">
           <div className=" ml-3 mb-2 ">Upcoming Classes</div>
-          <div className="flex flex-col h-[15vh] items-start justify-between text-base text-white overflow-scroll scrollbar-hide ">
+          <div className="flex flex-col h-[18vh] items-start justify-between text-base text-white overflow-scroll scrollbar-hide ">
             {classes.length == 0 && (
               <div className="text-gray-500 text-xs text-center my-10 w-full">
                 No upcoming classes ☹️
@@ -106,4 +108,5 @@ const StudentCalender = () => {
   );
 };
 
-export default StudentCalender;
+export default Calendar;
+

@@ -4,7 +4,7 @@ import { callEmailApiMentor } from "@/lib/api";
 import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { auth } from "@/config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 const detailadd = async (id) => {
@@ -55,6 +55,10 @@ const MentorSignupSuccess = () => {
   //   return null; // Don't render the user if not verified
   // }
   return (
+    <>
+    <div className="m-7">
+    <Image alt="Icon" src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg" width={150} height={150} />
+  </div>
     <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -63,25 +67,23 @@ const MentorSignupSuccess = () => {
           </div>
         </div>
       )}
-      <div className="text-white text-center">
-        <div className="md:w-[80%] md:m-auto">
-          <div className="flex justify-start m-7">
-            <Image alt="Icon" src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg" width={150} height={150} />
-          </div>
-          <div className="m-auto flex-col justify-center p-10 w-full rounded-[25px] sm:bg-[#ffffff03] h-auto">
+    <div className="flex justify-center items-center h-[85vh]">
+      <div className="text-white text-center bg-[#FFFFFF05] w-fit rounded-3xl p-8 max-[780px]:m-8">
+        <div className="md:m-auto">
+          <div className="m-auto flex-col justify-center p-8 w-fit h-auto">
             <div>
-              <p className="text-center text-2xl">
+              <p className="text-center text-4xl">
                 You have successfully Signed up
               </p>
-              <p className="mt-4 text-[#FFFFFF] text-sm">
+              <p className="mt-4 text-[#FFFFFF] text-m">
                 Please click on proceed to start your registration
               </p>
             </div>
             <div className="flex justify-center m-10">
               <Image
                 src="/pagesgraphics/mentor/signupsuccess/signupsuccess.svg"
-                width={300}
-                height={200}
+                width={400}
+                height={400}
                 alt="businesswomen"
               />
             </div>
@@ -90,7 +92,7 @@ const MentorSignupSuccess = () => {
                 <Link href="/meta/register">
                   <button
                     onClick={sentWelcomeMail}
-                    className="p-2 border rounded-lg pr-5 pl-5 bg-[#A145CD] w-[100%] md:m-auto md:w-[20%]"
+                    className="p-2 font-semibold border rounded-lg bg-[#E1348B] w-[100%] md:m-auto w-fit px-12"
                   >
                     Proceed
                   </button>
@@ -100,7 +102,9 @@ const MentorSignupSuccess = () => {
           </div>
         </div>
       </div>
+      </div>   
     </div>
+    </>
   );
 };
 

@@ -9,13 +9,14 @@ import MentorSidebar from "@/components/mentor/sidebar/sidebar";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { auth } from "@/config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 import LeaderBoardMentor from "@/components/mentor/dashboard/leaderboard";
 import CirProgress from "@/components/mentor/other/circularprogressbar";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import { useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
+
 function MentorDashboard() {
   const [count, setCount] = useState(1);
   const [verified, setVerified] = useState(false);
