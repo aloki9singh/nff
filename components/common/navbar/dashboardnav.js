@@ -6,7 +6,10 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { auth } from "../../../config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";\
+
+//hardcoded
+
 
 export default function Dashboardnav({ heading, sendSideBarState }) {
   const [user, setUser] = useState({});
