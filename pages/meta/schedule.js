@@ -2,6 +2,9 @@ import { BiBell } from "react-icons/bi";
 import { BsPersonCircle, BsPlusLg } from "react-icons/bs";
 import { useState } from "react";
 
+
+import withAuth from "@/lib/context/mentorcontext"
+
 import Mainbodymentor from "@/components/common/calendar/mentor/mainbody";
 import SideBodyClassSchedule from "@/components/mentor/sidebody/classschedulesidebody";
 import SideBodyDelete from "@/components/mentor/sidebody/sidebodydelete";
@@ -107,4 +110,4 @@ function Schedule() {
     </>
   );
 }
-export default Schedule;
+export default withAuth(Schedule, "/meta/signup");

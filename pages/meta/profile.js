@@ -4,6 +4,8 @@ import { useState } from "react";
 import CourseCard from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+import withAuth from "@/lib/context/mentorcontext"
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
 
@@ -243,4 +245,4 @@ function MentorProfile() {
     </>
   );
 }
-export default MentorProfile;
+export default withAuth(MentorProfile, "/meta/signup");

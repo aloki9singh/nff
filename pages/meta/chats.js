@@ -9,6 +9,8 @@ import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
 
+import withAuth from "@/lib/context/mentorcontext"
+
 import {
   collection,
   query,
@@ -184,4 +186,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default withAuth(Chat, "/meta/signup");

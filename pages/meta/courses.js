@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
+import withAuth from "@/lib/context/mentorcontext"
 import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import MentorChart from "@/components/mentor/other/chart";
@@ -201,4 +201,4 @@ function mentorStudent() {
         </>
     );
 }
-export default mentorStudent;
+export default withAuth(mentorStudent, "/meta/signup");
