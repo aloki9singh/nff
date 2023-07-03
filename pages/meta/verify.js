@@ -42,7 +42,7 @@ const MentorVerify = () => {
     return null; // Don't render the user if not verified
   }
   return (
-    <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
+    <div className={`${loading ? "pointer-events-none z-1" : "mx-3 "}`}>
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
           <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
@@ -80,20 +80,20 @@ const MentorVerify = () => {
           />
         </div>
         <div>
-          <p className="text-xs mx-2">
+          <p className="text-xs font-light mx-2">
             An email has been sent to {email} with a link to verify your
             account.If you have not received the email after a few minutes
             ,please check your spam folder.
           </p>
-          <div className="flex justify-around mt-10">
+          <div className="flex justify-around mt-10 text-sm md:text-base">
             {" "}
             <button
               onClick={resendMail}
-              className="p-2 m-3 border rounded-lg pr-5 pl-5 bg-[#E1348B]"
+              className="p-2 m-3   rounded-lg pr-5 pl-5 bg-[#E1348B] hover:bg-transparent border border-[#E1348B] hover:text-[#E1348B] transition-all duration-200  "
             >
               {loading ? "Sending..." : "Resend Email"}
             </button>
-            <button className="p-2 m-3 border rounded-lg pr-5 pl-5 text-[#E1348B] border-[#E1348B]">
+            <button className="p-2 m-3 border rounded-lg pr-5 pl-5 text-[#E1348B] border-[#E1348B] hover:bg-[#E1348B] hover:text-white transition-all duration-200 ">
               Contact Support
             </button>
           </div>
