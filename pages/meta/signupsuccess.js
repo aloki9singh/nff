@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/config/firebaseconfig";
 import { useContext } from "react";
-import { HashLoader } from "react-spinners";
+import withAuth from "@/lib/context/mentorcontext"
 import { Loading } from "@/lib/context/contextprovider";
 
 const detailadd = async (id) => {
@@ -110,4 +110,4 @@ const MentorSignupSuccess = () => {
   );
 };
 
-export default MentorSignupSuccess;
+export default withAuth(MentorSignupSuccess, "/meta/signup");

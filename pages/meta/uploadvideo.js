@@ -5,7 +5,9 @@ import { collection, getDocs, where, query, doc, updateDoc, arrayUnion } from "f
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import Link from 'next/link';
 
-export default function Uploadvideo() {
+import withAuth from "@/lib/context/mentorcontext"
+
+function Uploadvideo() {
   const [leadMentor, setLeadMentor] = useState('');
   const [course, setCourse] = useState('');
   const [courseModule, setCourseModule] = useState('');
@@ -258,3 +260,6 @@ export default function Uploadvideo() {
     </div>
   );
 }
+
+
+export default withAuth(Uploadvideo, "/meta/signup");

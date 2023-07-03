@@ -3,11 +3,13 @@
 
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "../../components/common/sidebar/sidebar";
+import Sidebar from "@/components/mentor/sidebar/sidebar2";
 import Navbar from "../../components/common/chat/navbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
+
+import withAuth from "@/lib/context/mentorcontext"
 
 import {
   collection,
@@ -26,17 +28,17 @@ import { auth, db } from "../../config/firebaseconfig";
 import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
-import { useAuthContext } from "@/lib/context/AuthContext";
+import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
 
 
-const userCache = {};
-async function getUser(uid) {
-  if (userCache[uid]) return userCache[uid];
+// const userCache = {};
+// async function getUser(uid) {
+//   if (userCache[uid]) return userCache[uid];
 
-  const user = await getDoc(doc(db, "profileDetails", uid));
-  userCache[uid] = user.data();
-  return user.data();
-}
+//   const user = await getDoc(doc(db, "allusers", uid));
+//   userCache[uid] = user.data();
+//   return user.data();
+// }
 
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
@@ -90,7 +92,7 @@ const Chat = () => {
 
       const members = {};
       for (const member of newReceiver.members) {
-        const user2 = await getUser(member);
+        const user2 = await getUserProfile(member);
         user2.uid = member;
         members[member] = user2;
       }
@@ -184,4 +186,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default withAuth(Chat, "/meta/signup");
