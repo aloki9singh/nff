@@ -4,18 +4,39 @@
 // page structure could be /schools/[schoolId]/students
 
 // import BottomNav from "../components/Footer/BottomNav";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebaseconfig"; 
 import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 import { studentsArr } from "@/lib/arraytomap";
+
 export default function UnderProgress() {
   const tabClass = "w-10 h-10 rounded-xl";
-
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    // Fetch student details from Firebase Firestore
+    fetchStudentDetails()
+      .then((data) => setStudents(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  const fetchStudentDetails = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "students"));
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      return data;
+    } catch (error) {
+      throw new Error("Failed to fetch student details");
+    }
+  };
 
   return (
-    <div className="flex h-full bg-[#2D2E35]  ">
+    <div className="flex h-full bg-[#2D2E35]">
       <div className="lg:col-span-1 hidden lg:grid">
         <Schoolsidebar />
       </div>
@@ -111,50 +132,51 @@ export default function UnderProgress() {
             </div>
           </div>
 
-          {/* table */}
-          <div className="w-[90%]  h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs  mb-4">
-            <div className="">
-              <table className="w-full  ">
-                <thead className="  items-center  border-b  ">
-                  <tr className=" flex font-semibold  justify-around p-5 space-x-2">
-                    <th className=" inline">Student Name</th>
-                    <th className="">Id</th>
-                    <th className="">Class</th>
-                    <th className="md:block hidden">Active</th>
-                    <th className="md:block hidden">Courses</th>
-                    <th className="">Action</th>
+      {/* table */}
+      <div className="w-[90%] h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs mb-4">
+        <div className="">
+          <table className="w-full">
+            <thead className="items-center border-b">
+              <tr className="flex font-semibold justify-around p-5 space-x-2">
+                <th className="inline">Student Name</th>
+                <th className="">Id</th>
+                <th className="">Class</th>
+                <th className="md:block hidden">Active</th>
+                <th className="md:block hidden">Courses</th>
+                <th className="">Action</th>
+              </tr>
+            </thead>
+            {/* Table body */}
+            <tbody className="flex justify-center flex-col items-center mt-4 space-y-6 p-2">
+              {students &&
+                students.map((student) => (
+                  <tr
+                    className="flex space-x-4 items-center w-full font-medium text-xs text-center justify-around"
+                    key={student.id}
+                  >
+                    <td className="flex items-center gap-2">
+                      <Image
+                        src={student.image}
+                        alt="img"
+                        height={25}
+                        width={25}
+                        className="rounded-full h-8 object-contain inline"
+                      />
+                      {student.name}
+                    </td>
+                    <td className="">ID : {student.id}</td>
+                    <td className="">{student.class}</td>
+                    <td className="md:block hidden">{student.active}</td>
+                    <td className="md:block hidden">{student.courses}</td>
+                    <td className="text-[#E1348B]">
+                      <Link href={`/students/${student.id}`}>View Profile</Link>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="flex justify-center flex-col items-center mt-4 space-y-6 p-2">
-                  {studentsArr &&
-                    studentsArr.map((e, i) => (
-                      <tr
-                        className="flex space-x-4 items-center w-full font-medium text-xs text-center justify-around "
-                        key={i}
-                      >
-                        <td className="flex items-center gap-2">
-                          <Image
-                            src={e.image}
-                            alt="img"
-                            height={25}
-                            width={25}
-                            className="rounded-full h-8  object-contain inline"
-                          />
-                          Rachit Rajput
-                        </td>
-                        <td className="">ID : {e.ID}</td>
-                        <td className="">{e.Class}</td>
-                        <td className="md:block hidden">{e.Active}</td>
-                        <td className="md:block hidden">{e.Courses}</td>
-                        <td className=" text-[#E1348B]">
-                          <Link href="/seta/studentsdetails">View Profile</Link>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-            {/* pagination */}
+                ))}
+            </tbody>
+          </table>
+        </div>
+        {/* pagination */}
             <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
               <button className="w-6 h-5 border flex justify-center items-center">
                 <svg
