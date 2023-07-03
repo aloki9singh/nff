@@ -3,11 +3,13 @@
 
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "../../components/common/sidebar/sidebar";
+import Sidebar from "@/components/mentor/sidebar/sidebar2";
 import Navbar from "../../components/common/chat/navbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
+
+import withAuth from "@/lib/context/mentorcontext"
 
 import {
   collection,
@@ -184,4 +186,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default withAuth(Chat, "/meta/signup");

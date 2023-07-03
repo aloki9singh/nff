@@ -7,6 +7,8 @@ import MentorStep2 from "@/components/mentor/registration/step2";
 import MentorStep3 from "@/components/mentor/registration/step3";
 import MentorFinal from "@/components/mentor/registration/final";
 import Congratulations from "@/components/mentor/registration/congrats";
+
+import withAuth from "@/lib/context/mentorcontext"
 import { useRouter } from "next/router";
 
 const MentorRegForm = () => {
@@ -52,4 +54,4 @@ const MentorRegForm = () => {
   );
 };
 
-export default MentorRegForm;
+export default withAuth(MentorRegForm, "/meta/signup");

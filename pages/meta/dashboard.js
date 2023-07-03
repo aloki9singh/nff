@@ -3,7 +3,7 @@ import Calender from "@/components/common/calendar/mentor/calendar";
 import MentorChatWidget from "@/components/mentor/chat/widget";
 import BasicDetails from "@/components/mentor/other/basicdetails";
 import { useState } from "react";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -14,10 +14,12 @@ import { useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
 
+import withAuth from "@/lib/context/mentorcontext"
+
 
 function MentorDashboard() {
   const [count, setCount] = useState(1);
-  const [verified, setVerified] = useState(true);
+  const [verified, setVerified] = useState();
   let [searchstate, setsearchstate] = useState("");
   const router = useRouter();
   let searchfun = (e) => {
@@ -30,10 +32,11 @@ function MentorDashboard() {
         console.log(user);
          user.emailVerified = true;
         const value = await callUserById(user.uid);
-        // setVerified(value.user.verified);
-      //  console.log("value",value.user.verified)
+        setVerified(value.user.verified);
+       console.log("value",verified)
       }
     });
+
   //  setTimeout(()=>{
   //   if (!verified) {
   //     router.push("/meta/signup");
@@ -45,6 +48,7 @@ function MentorDashboard() {
   if (!verified) {
     return null;
   }
+
   
   return (
     <>
@@ -162,4 +166,4 @@ function MentorDashboard() {
     </>
   );
 }
-export default MentorDashboard;
+export default withAuth(MentorDashboard, "/meta/signup");

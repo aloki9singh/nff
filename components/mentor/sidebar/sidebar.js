@@ -7,8 +7,8 @@ import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 const MentorSidebar = ({ pathname }) => {
   return (
     <>
-      <aside className="h-screen w-50 top-0 -left-96  bg-black p-10 ">
-        <div className="flex flex-col justify-start items-center">
+      <aside className="h-screen w-50 top-0 -left-96 bg-[#141518] p-10 ">
+        <div className="flex flex-col justify-start bg-[#141518] items-center">
           <div className="">
             <Image
               src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg"

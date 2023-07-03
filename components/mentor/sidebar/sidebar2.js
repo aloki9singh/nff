@@ -7,7 +7,7 @@ import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 const MentorSidebar = ({ pathname }) => {
   return (
     <>
-      <aside className="h-full left-0 top-0  bg-[#15161B]  flex flex-col w-full px-2 pb-4 ">
+      <aside className="h-full left-0 top-0  bg-[#141518]  flex flex-col w-full px-2 pb-4 ">
         <div className="">
           <div className="">
             <Image
@@ -22,50 +22,50 @@ const MentorSidebar = ({ pathname }) => {
             <ul>
               <li className="space-y-[14px]">
                 <Link
-                  href="/mentor-dashboard"
-                  className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
+                  href="/meta/dashboard"
+                  className="flex items-center p-2 font-normal text-white text-sm rounded-lg  hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Home</span>
+                    <span className="ml-3 ">Home</span>
                   </label>
                 </Link>
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  href="/meta/courses"
+                  className="flex items-center p-2  font-normal text-white rounded-lg  hover:bg-pin text-sm"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center ">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Course</span>
+                    <span className="ml-3">Course</span>
                   </label>
                 </Link>
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  href="/meta/students"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center ">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Students</span>
+                    <span className="ml-3">Students</span>
                   </label>
                 </Link>
-                <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+                <hr className="h-px my-8  bg-gray-200 border-0 "></hr>
                 <Link
-                  href="/Schedule"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  href="/meta/schedule"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center ">
                     <input
                       id="default-checkbox"
                       type="checkbox"
@@ -73,7 +73,7 @@ const MentorSidebar = ({ pathname }) => {
                     />{" "}
                     <span
                       className={`ml-3 text-[${
-                        pathname == "/Schedule" ? "#E1348B" : ""
+                        pathname == "/meta/schedule" ? "#E1348B" : ""
                       }]`}
                     >
                       Schedule
@@ -81,71 +81,71 @@ const MentorSidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  href="liveclass"
+                  className=" text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   {/* checkbox */}
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Live Class</span>
+                    <span className="ml-3">Live Class</span>
                   </label>
                 </Link>
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                  href="/meta/studymaterial"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg  hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Study Material</span>
+                    <span className="ml-3">Study Material</span>
                   </label>
                 </Link>
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
+                  href="/meta/homework"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg    hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Homework</span>
+                    <span className="ml-3">Homework</span>
                   </label>
                 </Link>
-                <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+                <hr className="h-px my-8 bg-gray-200 border-0 "></hr>
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
+                  href="/meta/chats"
+                  className=" text-sm flex items-center p-2 font-normal text-white rounded-lg   hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Chats</span>
+                    <span className="ml-3">Chats</span>
                   </label>
                 </Link>
 
                 <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
+                  href="/meta/profile"
+                  className="text-sm flex items-center p-2 font-normal text-white rounded-lg   hover:bg-pin"
                 >
-                  <label className="inline-flex items-center space-x-3">
+                  <label className="inline-flex items-center">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span >Profile</span>
+                    <span className="ml-3">Profile</span>
                   </label>
                 </Link>
                 <div className="  font-semibold text-white bg-[#373A41] flex flex-col mt-9 rounded-xl">
