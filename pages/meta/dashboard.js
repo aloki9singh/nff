@@ -3,7 +3,7 @@ import Calender from "@/components/common/calendar/mentor/calendar";
 import MentorChatWidget from "@/components/mentor/chat/widget";
 import BasicDetails from "@/components/mentor/other/basicdetails";
 import { useState } from "react";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

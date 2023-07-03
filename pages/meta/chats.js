@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "../../components/common/sidebar/sidebar";
+import Sidebar from "@/components/mentor/sidebar/sidebar2";
 import Navbar from "../../components/common/chat/navbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
