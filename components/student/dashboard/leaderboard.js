@@ -26,7 +26,7 @@ const LeaderBoard = () => {
     ];
   
     return (
-      <div className="  mt-7 rounded-2xl bg-[#373A41] text-white pt-5 pb-1">
+      <div className="  rounded-2xl bg-[#373A41] text-white pt-5 pb-1">
         <div className="flex justify-between px-5  items-center">
           <h1 className="text-xl">Leaderboard</h1>
           <button>
@@ -46,7 +46,8 @@ const LeaderBoard = () => {
 
 
       </div> */}
-      {Leaderboard.map((item) => (
+     <div className="flex flex-col gap-4">
+     {Leaderboard.map((item) => (
         <div key={item.id} className="text-white flex justify-between my-2 items-center">
           <h1 className="flex-1 flex justify-center">{item.rank}</h1>
           <div className="flex-1 flex justify-center">
@@ -56,6 +57,7 @@ const LeaderBoard = () => {
           <h1 className="flex-1 flex justify-center">{item.percentage}</h1>
         </div>
       ))}
+     </div>
     </div>
   );
 };

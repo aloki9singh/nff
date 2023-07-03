@@ -74,7 +74,7 @@ export default function DashboardNav({ heading, sendSideBarState }) {
                   </svg>
                 </div>
                 <div
-                  className="flex items-center gap-x-2 py-1 md:mr-1 py-2 rounded-lg"
+                  className="flex items-center gap-x-2  md:mr-1 py-2 rounded-lg"
                   style={{ border: "1px solid #728095" }}
                 >
                   <AiOutlineSearch className="text-white text-xl ml-4" />
@@ -89,7 +89,7 @@ export default function DashboardNav({ heading, sendSideBarState }) {
           </div>
           <div className="flex items-center gap-x-4">
             <div
-              className="flex items-center gap-x-2 py-1 md:mr-1 py-2 rounded-lg hidden md:block"
+              className="md:flex items-center gap-x-2  md:mr-1 py-2 rounded-lg hidden "
               style={{ border: "1px solid #728095" }}
             >
               <AiOutlineSearch className="text-white text-xl ml-4" />

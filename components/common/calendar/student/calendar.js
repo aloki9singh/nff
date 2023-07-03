@@ -1,5 +1,6 @@
 //verified 1 by Raviraj Kumar
 import { useEffect, useState } from "react";
+import Datelist from "../common/datelist";
 import MonthSelector from "../common/monthselector";
 // import DateWithDay from "./DateWithDay"; //this was commented in the prev fol structure as well
 const months = [
@@ -18,7 +19,6 @@ const months = [
 ];
 
 const Calendar = () => {
-
   const [currentDate, setCurrentDate] = useState(new Date());
   const [classes, setClasses] = useState([]);
 
@@ -30,15 +30,12 @@ const Calendar = () => {
   const [currentYear, setCurrentYear] = useState(
     currentDate.getFullYear().toString()
   );
-  
 
   let selectedDate = (M) => {
     setdateData(M);
-
   };
   let selectedMonth = (M) => {
     setMonthData(M);
-
   };
   let monthclick = (e) => {
     let months = document.querySelectorAll(".month");
@@ -54,7 +51,6 @@ const Calendar = () => {
     for (let i = 0; i < months.length; i++) {
       if (currentMonth == months[i].innerText) months[i].style = "opacity:1";
     }
-   
   }, [currentMonth]);
 
   return (
@@ -67,16 +63,19 @@ const Calendar = () => {
           </span>
           <span className="p-1">{currentYear}</span>
         </div> */}
-        <div className="text-sm"><MonthSelector/></div>
+        <div className="text-sm">
+          <MonthSelector />
+        </div>
         {/* Date and day */}
         {/* //Some one Deleted this  datewith day comp*/}
-        {/* <DateWithDay
-          currentDate={currentDate}
-          currentMonth={currentMonth}
-          currentYear={currentYear}
-          selectedDate={selectedDate}
-          
-        /> */}
+        <div className="md:w-[25vw] m-auto">
+          <Datelist
+            currentDate={currentDate}
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            selectedDate={selectedDate}
+          />
+        </div>
 
         <div className=" p-3 w-full shrink-0 text-xl text-gray-200">
           <div className=" ml-3 mb-2 ">Upcoming Classes</div>
@@ -109,4 +108,3 @@ const Calendar = () => {
 };
 
 export default Calendar;
-

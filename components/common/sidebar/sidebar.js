@@ -8,7 +8,7 @@ const Sidebar = ({ pathname }) => {
     <>
       <aside className="  left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-5 ">
         <div className="">
-          <div className="">
+          <Link href={"/"} className="">
             <Image
               src="/componentsgraphics/common/sidebar/schoolsidebar/Neatskills.svg"
               width={500}
@@ -16,12 +16,12 @@ const Sidebar = ({ pathname }) => {
               alt="logo"
               className="pt-5"
             />
-          </div>
+          </Link>
           <div className="flex flex-col h-full   justify-around ">
             <ul>
               <li className="space-y-[14px]">
                 <Link
-                  href="/mentor-dashboard"
+                  href="/beta/dashboard"
                   className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -33,35 +33,23 @@ const Sidebar = ({ pathname }) => {
                     <span>Home</span>
                   </label>
                 </Link>
-                <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
-                    />{" "}
-                    <span>Course</span>
-                  </label>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
-                    />{" "}
-                    <span>Students</span>
-                  </label>
-                </Link>
+             
                 <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                 <Link
-                  href="/Schedule"
+                  href="/beta/courseoverview"
+                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                >
+                  <label className="inline-flex items-center space-x-3">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 text-gray-600"
+                    />{" "}
+                    <span>Courses</span>
+                  </label>
+                </Link>
+                <Link
+                  href="/beta/checkclass"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -72,7 +60,7 @@ const Sidebar = ({ pathname }) => {
                     />{" "}
                     <span
                       className={`ml-3 text-[${
-                        pathname == "/Schedule" ? "#E1348B" : ""
+                        pathname == "/beta/checkclass" ? "#E1348B" : ""
                       }]`}
                     >
                       Schedule
@@ -80,7 +68,7 @@ const Sidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="/beta/studymaterial"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                 >
                   {/* checkbox */}
@@ -90,24 +78,12 @@ const Sidebar = ({ pathname }) => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span>Live Class</span>
-                  </label>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
-                    />{" "}
                     <span>Study Material</span>
                   </label>
                 </Link>
+    
                 <Link
-                  href="#"
+                  href="/beta/homework"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -121,7 +97,7 @@ const Sidebar = ({ pathname }) => {
                 </Link>
                 <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                 <Link
-                  href="#"
+                  href="/beta/chats"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -135,7 +111,7 @@ const Sidebar = ({ pathname }) => {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="/beta/profile"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3">

@@ -6,10 +6,10 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { auth } from "../../../config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";\
+import { onAuthStateChanged } from "firebase/auth";
+import { logout } from "@/lib/exportablefunctions";
 
 //hardcoded
-
 
 export default function Dashboardnav({ heading, sendSideBarState }) {
   const [user, setUser] = useState({});
@@ -31,8 +31,8 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
   });
 
   return (
-    <nav className="bg-[#2D2E35] border-b-2 border-[#728095] px-0 py-6">
-      <div className="container flex flex-col md:flex-row gap-y-6 mx-auto justify-between px-10">
+    <nav className="bg-[#2D2E35] border-b-[1px] border-[#728095] px-0 py-3">
+      <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
           <p className="text-white font-Inter text-2xl flex justify-start">
             {`${heading}`}
@@ -41,7 +41,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
         </div>
         <div className="flex items-center gap-x-4">
           <div
-            className="flex items-center gap-x-2 py-1 md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden md:block"
+            className="md:flex items-center gap-x-2 py-1 md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
             style={{ border: "1px solid #728095" }}
           >
             <AiOutlineSearch className="text-white text-2xl ml-4" />
@@ -77,7 +77,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                     <Popover.Panel className="absolute mt-10 top-4 right-12 z-10 transform">
                       <div className="h-48 w-36 text-center p-3">
                         <div className="relative bg-[#373A41] text-white rounded-tl-lg rounded-b-lg divide-y border border-white">
-                          <Link href="/profile">
+                          <Link href="/beta/profile">
                             <p className="p-2">
                               {user.photoURL ? (
                                 <div className="flex gap-1 items-center">
@@ -134,9 +134,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                             </Link>
                           </div>
                           <div className="text-[10px] p-2">
-                            <Link href="/logout">
-                              <p>Logout</p>
-                            </Link>
+                            <p onClick={()=>logout()}>Logout</p>
                           </div>
                         </div>
                       </div>
@@ -148,7 +146,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
           )}
           {!user && (
             <div className="hidden md:block ml-6">
-              <Link href={"/signup"}>
+              <Link href={"/beta/signup"}>
                 <button
                   type="button"
                   className="inline-block justify-start items-start px-[20px] py-2.5 bg-[#404147] text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -156,7 +154,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                   Signup
                 </button>
               </Link>
-              <Link href={"/login"}>
+              <Link href={"/beta/login"}>
                 <button
                   type="button"
                   className="inline-block justify-start items-start px-[20px] ml-6 mr-3 py-2.5 bg-pin text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
-const  datelist = ({
+const  Datelist = ({
   currentDate,
   monthData,
   currentMonth,
@@ -218,7 +218,7 @@ const  datelist = ({
           width={30}
           height={30}
         ></Image>
-        <div className=" flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide">
+        <div className=" flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide text-[17px]">
           {finalArr.map((val, index) => {
             return (
               <div
@@ -250,4 +250,4 @@ const  datelist = ({
   );
 };
 
-export default datelist;
+export default Datelist;
