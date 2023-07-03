@@ -112,7 +112,7 @@ export default function UnderProgress() {
           </div>
 
           {/* table */}
-          <div className="w-[90%] h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs  mb-4">
+          <div className="w-[90%]  h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs  mb-4">
             <div className="">
               <table className="w-full  ">
                 <thead className="  items-center  border-b  ">
