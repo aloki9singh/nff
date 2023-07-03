@@ -1,8 +1,8 @@
-// import { transporter } from '@/config/nodeMailer';
+
 import { transporter } from '@/config/nodemailer';
 
 import { v4 as uuidv4 } from 'uuid'; // Import uuid library
-import { db } from '@/config/firebaseConfig';
+import { db } from '@/config/firebaseconfig';
 
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 

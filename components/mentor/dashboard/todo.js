@@ -5,7 +5,7 @@ export default function Todo({ todo, toggleComplete, deleteTodo }) {
         <input
           onChange={() => toggleComplete(todo)}
           type="checkbox"
-          className="cursor-pointer"
+          className="cursor-pointer checked:bg-green"
           checked={todo.completed ? 'checked' : ''}
         />
         <p

@@ -109,9 +109,9 @@ export default function Uploadvideo() {
             <ul>
               <li className="ml-2 md:ml-10 text-2xl uppercase hover:border-b text-white text-center">
                 <Image
-                  src="/Neatskills.svg"
+                  src="/pagesgraphics/common/createcourse/Neatskills.svg"
                   alt="logo"
-                  className="w-[112px] h-[43px] md:w-[186px] md:h-[71px]"
+                  className="w-[100px] h-[43px] md:w-[186px] md:h-[71px]"
                   width={100}
                   height={100}
                 />

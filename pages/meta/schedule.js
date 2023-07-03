@@ -8,8 +8,8 @@ import SideBodyDelete from "@/components/mentor/sidebody/sidebodydelete";
 import SideBody from "@/components/mentor/sidebody/sidebody";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { auth } from "../../config/firebaseconfig";
-import MentorSidebar from "@/components/common/sidebar/mentor";
+// import { auth } from "../../config/firebaseconfig";
+import MentorSidebar from "@/components/mentor/sidebar/sidebar"
 
 // import MobileNav from "../components/CalenderParts/MobileNav";
 function Schedule() {
