@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "@/components/mentor/sidebar/sidebar2";
+import MentorSidebar from "@/components/common/sidebar/mentor";
 import Navbar from "../../components/common/chat/navbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
@@ -144,8 +144,8 @@ const Chat = () => {
   return (
     <>
       <div className="flex overflow-y-hidden">
-        <div className="lg:col-span-1 hidden lg:grid">
-          <Sidebar />
+        <div className="lg:col-span-1 hidden lg:grid w-[250px]">
+          <MentorSidebar />
         </div>
         <div className="w-full h-full">
           <div>

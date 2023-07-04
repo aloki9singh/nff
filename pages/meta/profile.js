@@ -7,13 +7,13 @@ import { useEffect } from "react";
 
 import withAuth from "@/lib/context/mentorcontext"
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
-
+import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
+import CourseCard from "@/components/student/courses/CourseCard";
 
 function MentorProfile() {
   const router = useRouter();
@@ -33,27 +33,23 @@ function MentorProfile() {
     <>
       <div className="md:h-screen h-full  text-base bg-[#15161B]">
         <div className="flex">
-          <div className="lg:col-span-1 hidden lg:grid w-[261px] ">
+          <div className="lg:col-span-5 hidden lg:grid ">
             {" "}
             <MentorSidebar pathname={router.pathname} />
           </div>
-          <div
-            style={{ background: "#2E3036" }}
-            className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
-          >
+          <div className="md:rounded-l-[50px] pt-2 w-full bg-[#2E3036] ml-[3%]">
             <MentorTopbar heading={"Profile"} />
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
               {/* text */}
 
-              <div className="   h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "></div>
-
+              <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "></div>
               <div className="w-full h-full   md:text-base text-sm  ">
                 <div className=" md:mx-10 mx-5">
                   <div className="flex">
                     {" "}
                     <Image
-                      src={"/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
+                      src="/pagesgraphics/mentor/profile/ProfileGirlimg.svg"
                       alt="proImg"
                       height={100}
                       width={100}
@@ -73,8 +69,8 @@ function MentorProfile() {
               </div>
             </div>
             {/* /// */}
-            <div className="lg:grid lg:grid-cols-7   m-5  md:mt-0 text-white justify-between">
-              <div className="lg:col-span-5 lg:pr-4">
+            <div className="flex max-[963px]:flex-wrap max-[963px]:justify-start  justify-center mx-auto w-[95%] m-5  md:mt-0 text-white ">
+              <div className="lg:pr-4 w-[70%] max-[963px]:w-[98%] ">
                 <div className="lg:flex gap-3 justify-around mt-10 mb-5">
                   <div className=" lg:w-1/4">
                     <div>
@@ -163,9 +159,8 @@ function MentorProfile() {
                   </div>
                 </div>
               </div>
-              <div className="lg:col-span-2">
-                <div className="flex justify-end">
-                  <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 md:w-[290px] mt-5 flex flex-col">
+              <div className="">
+                  <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
                     <div className=" text-center text-lg font-bold text-gray-500">
                       Educator highlights
                     </div>
@@ -232,7 +227,6 @@ function MentorProfile() {
                         Knows Hinglish, Hindi and English
                       </span>
                     </div>
-                  </div>
                 </div>
               </div>
             </div>

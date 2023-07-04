@@ -3,7 +3,7 @@ import Calender from "@/components/common/calendar/mentor/calendar";
 import MentorChatWidget from "@/components/mentor/chat/widget";
 import BasicDetails from "@/components/mentor/other/basicdetails";
 import { useState } from "react";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
+import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -29,11 +29,10 @@ function MentorDashboard() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user);
          user.emailVerified = true;
         const value = await callUserById(user.uid);
         setVerified(value.user.verified);
-       console.log("value",verified)
+       console.log("value",value.user.verified)
       }
     });
 

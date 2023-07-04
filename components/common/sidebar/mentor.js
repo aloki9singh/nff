@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
+
 const MentorSidebar = ({ pathname }) => {
   return (
     <>
@@ -23,7 +24,7 @@ const MentorSidebar = ({ pathname }) => {
             <ul>
               <li>
                 <Link
-                  href="/mentor-dashboard"
+                  href="dashboard"
                   className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3 ">
@@ -36,7 +37,7 @@ const MentorSidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="courses"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin mt-2"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -49,7 +50,7 @@ const MentorSidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="student"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin mt-2"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -63,7 +64,7 @@ const MentorSidebar = ({ pathname }) => {
                 </Link>
                 <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                 <Link
-                  href="/Schedule"
+                  href="schedule"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin mt-2"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -82,8 +83,9 @@ const MentorSidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="/"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin mt-2"
+                  replace
                 >
                   {/* checkbox */}
                   <label className="inline-flex items-center space-x-3">
@@ -96,8 +98,9 @@ const MentorSidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="#"
+                  href="studymaterial"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin mt-2"
+                  replace
                 >
                   <label className="inline-flex items-center space-x-3">
                     <input
@@ -111,6 +114,7 @@ const MentorSidebar = ({ pathname }) => {
                 <Link
                   href="#"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin mt-2"
+                  replace
                 >
                   <label className="inline-flex items-center space-x-3">
                     <input
@@ -123,7 +127,7 @@ const MentorSidebar = ({ pathname }) => {
                 </Link>
                 <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                 <Link
-                  href="#"
+                  href="chats"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin mt-2"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -137,7 +141,7 @@ const MentorSidebar = ({ pathname }) => {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="profile"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin mt-2"
                 >
                   <label className="inline-flex items-center space-x-3">
