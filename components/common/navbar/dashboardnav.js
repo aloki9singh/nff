@@ -7,7 +7,9 @@ import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { auth } from "../../../config/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
+
 import { logout } from "@/lib/exportablefunctions";
+
 
 //hardcoded
 

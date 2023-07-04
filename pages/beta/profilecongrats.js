@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
+import { getUserName, useAuthContext } from '@/lib/context/AuthContext';
 
 const ProfileCongratulation = () => {
   const router = useRouter()
-  setTimeout(() => {
-    router.push("dashboard");
-  }, 2000)
+
+  useEffect(() => {
+    const interval = setTimeout(() => {
+      router.push('/beta/dashboard')
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [router]);
+
+  const { userProfile } = useAuthContext();
+
   return (
     <div className="flex  ">
       {/* <Sidebar /> */}
@@ -24,7 +33,7 @@ const ProfileCongratulation = () => {
           />
         </div>
         <div className="md:px-30 px-5 text-white  flex justify-center  relative w-1440px h-[calc(100%-43px)] ">
-                  
+
           {/* Ellipses */}
 
           <div className="absolute z-0 inset-0 flex items-center justify-center ">
@@ -39,7 +48,9 @@ const ProfileCongratulation = () => {
           <div className="flex flex-col items-center w-fit m-auto text-center md:space-x-5 md:p-0 translate-y-[-10%]">
             <div className="flex  justify-center w-full sm:mx-0 sm:mb-4 sm:w-350px">
               <h1 className="sm:px-20 sm:h-20 not-italic font-semibold text-2xl sm:text-6xl text-white">
-                Welcome <span>Gaurav</span>
+                Welcome <span>
+                  {getUserName(userProfile)}
+                </span>
               </h1>
             </div>
             <div className="">

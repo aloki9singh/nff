@@ -1,11 +1,10 @@
 //need rechecking
 import React, { useState, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
-import { dummyUsers } from "./data";
-import Link from "next/link";
 import Avatar from "./avatar";
 import { auth, db } from "../../../config/firebaseconfig";
 import { doc, getDoc } from "firebase/firestore";
+import { getUserProfile } from "@/lib/context/AuthContext";
 
 const messageDetails = {
   lastMessage: "Sir have you checked my assignment?",
@@ -13,10 +12,6 @@ const messageDetails = {
   time: "10:00pm",
 };
 
-async function getUser(uid) {
-  const user = await getDoc(doc(db, "profileDetails", uid));
-  return user.data();
-}
 
 const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setChats }) => {
   const time = chat.lastMessageTimestamp
@@ -37,9 +32,11 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
       const friendUid = chat.members.find(
         (uid) => uid !== auth.currentUser.uid
       );
-      getUser(friendUid).then((friend) => {
+      getUserProfile(friendUid).then((friend) => {
         setChats(prev => prev.map((chat) => {
           if (chat.isGroup) return chat;
+
+          if(!friend) return chat;
 
           const fuid = chat.members.find(
             (uid) => uid !== auth.currentUser.uid

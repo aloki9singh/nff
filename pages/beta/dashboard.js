@@ -16,6 +16,7 @@ import { auth } from "@/config/firebaseconfig";
 
 
 const Studentdashboard = () => {
+
   const [active,setActive]=useState(false)
   var [user, setUser] = useState({});
   var percentage = "0%";
@@ -24,6 +25,7 @@ const Studentdashboard = () => {
     "Learning that is spread out over time drastically increases knowledge retention.";
   // var user = "Guest";
   active ? (user = "Rahul") : "Guest";
+
   const router = useRouter();
   useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -43,9 +45,11 @@ const Studentdashboard = () => {
         <div className="flex">
           <div className="lg:col-span-1 hidden lg:grid">
             {" "}
+
             
           {/* <Sidebar pathname={router.pathname}/> */}
           <CourseoverviewSidebar pathname={router.pathname} />
+
           </div>
           <div
             style={{ background: "#2E3036" }}
@@ -61,34 +65,36 @@ const Studentdashboard = () => {
                 <Advertisement />
                 {/* //welcomebar */}
                 <Progress percentage={percentage} user={user.displayName} />
+
                  {active?<ActiveComp/>: <InActiveComp/>}
               </div>  
                 <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4">
                   <div>
 
-                    <Calendar/>
 
-                  </div>
-                  {/* //Daily tip section open */}
-                  <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
-                    <div>
-                      <div className="text-white  border border-black w-20 text-center  bg-[#A145CD] py-1 mb-1 text-xs">
-                        Daily Tip
-                      </div>
-                      <p className=" text-sm font-semibold text-[#000000]">
-                        Learning that is spread out over time drastically
-                        increases knowledge retention.
-                      </p>
-                    </div>
-                  </div>
-                  {/* //Daily tip section close */}
+                  <Calendar />
+
+                </div>
+                {/* //Daily tip section open */}
+                <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
                   <div>
-                    {" "}
-
-                    <LeaderBoardMentor/>
-
+                    <div className="text-white  border border-black w-20 text-center  bg-[#A145CD] py-1 mb-1 text-xs">
+                      Daily Tip
+                    </div>
+                    <p className=" text-sm font-semibold text-[#000000]">
+                      Learning that is spread out over time drastically
+                      increases knowledge retention.
+                    </p>
                   </div>
                 </div>
+                {/* //Daily tip section close */}
+                <div>
+                  {" "}
+
+                  <LeaderBoardMentor />
+
+                </div>
+              </div>
             </div>
           </div>
         </div>

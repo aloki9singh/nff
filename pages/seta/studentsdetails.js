@@ -9,18 +9,50 @@ import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useContext } from "react";
 import { AuthContext } from "@/lib/context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../config/firebaseconfig";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 
 
 export default function Studentdetails() {
+  const router = useRouter();
+  const { studentId } = router.query;
+  const [student, setStudent] = useState(null);
+
+  useEffect(() => {
+    if (studentId) {
+      fetchStudentDetails(studentId)
+        .then((data) => setStudent(data))
+        .catch((error) => console.error(error));
+    }
+  }, [studentId]);
+
+  const fetchStudentDetails = async (studentId) => {
+    try {
+      const docRef = doc(db, "students", studentId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        throw new Error("Student not found");
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch student details");
+    }
+  };
+
+
   const tabClass = "w-10 h-10 rounded-xl";
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
 
 
   const { userProfile } = useContext(AuthContext);
+  if (!student) return (<div>Loading...</div>);
 
-  if (!userProfile) return (<div>Loading...</div>);
+  //if (!userProfile) return (<div>Loading...</div>);
   return (
     <div className="flex h-screen bg-[#2D2E35]  ">
       <div className="lg:col-span-1 hidden lg:grid">
@@ -50,23 +82,23 @@ export default function Studentdetails() {
                 <div className="flex">
                   {" "}
                   <Image
-                    src={userProfile.photoURL}
+                    src={students.photoURL}
                     alt="proImg"
                     height={100}
                     width={100}
                     className="rounded-full w-[110px] object-contain mt-[-65px]"
                   />
                   <div className="ml-1">
-                    {userProfile.name.first}
+                    {students.name.first}
                     <br />
-                    <span className="mt-[-5px]">Roll no-{userProfile.rollNo}</span>
+                    <span className="mt-[-5px]">Roll no-{sr.rollNo}</span>
                   </div>
                 </div>
                 <div className="bg-[#141518] rounded-[30px] w-full h-full mt-5 pt-2 text-sm">
                   <div className="flex justify-between px-6 py-3 border-b border-gray-500 ">
                     {" "}
                     <span>Class: </span>
-                    <span className="mr-12 text-[#E1348B] ">{userProfile.class}</span>
+                    <span className="mr-12 text-[#E1348B] ">{students.class}</span>
                   </div>
                   <div className="flex justify-between px-6 py-3 border-b border-gray-500 ">
                     {" "}

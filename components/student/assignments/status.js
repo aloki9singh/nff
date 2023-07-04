@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { auth } from '@/config/firebaseConfig';
+import { auth } from '@/config/firebaseconfig';
 
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -24,30 +24,33 @@ export default function Progress({ percentage }) {
           {user?.displayName ? (
             <h1 className="lg:text-2xl font-semibold">
               Welcome, {user.displayName}👋
-              
+
             </h1>
           ) : (
             <h1 className="text-2xl font-semibold">Welcome, Guest👋</h1>
-            
+
           )
           }
           {user?.displayName ? (
             <h1 className="font-semibold">{`${percentage}`}</h1>
-          ):(
-          <h1 className="font-semibold">0%</h1>
+          ) : (
+            <h1 className="font-semibold">0%</h1>
           )}
-          
+
         </div>
         <div className="h-2.5 w-full rounded-md my-2 bg-[#0d0e14] flex">
-        {user?.displayName ? (
-          <div
-            className={`h-2.5 w-[${percentage}] rounded-md bg-[#E1348B]`}
-          ></div>
-        ):(
-          <div
-            className={`h-2.5 w-[0] rounded-md bg-[#E1348B]`}
-          ></div>
-        )}
+          {user?.displayName ? (
+            <div
+              style={{
+                width: `${percentage}`,
+              }}
+              className={`h-2.5  rounded-md bg-[#E1348B]`}
+            ></div>
+          ) : (
+            <div
+              className={`h-2.5 w-[0] rounded-md bg-[#E1348B]`}
+            ></div>
+          )}
         </div>
         <h1 className="text-xs pl-2">Work Progress</h1>
       </div>
