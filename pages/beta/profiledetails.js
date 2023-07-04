@@ -116,7 +116,11 @@ export default function ProfileDetails() {
       uid: user.uid,
     };
     console.log(profile);
-    await detailadd(user.uid, { details: profile });
+    await detailadd(user.uid, {
+      details: profile,
+      displayName: data.studentFirstName,
+      photoURL: data.profilePhoto,
+    });
     console.log(data);
     if (data.profilePhoto)
       uploadToFirebase(data.profilePhoto, (url) => {
