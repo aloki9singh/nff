@@ -64,7 +64,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                       alt="proImg"
                       height={10}
                       width={10}
-                      className="rounded-full h-12 w-12 object-contain"
+                      className="rounded-full h-13 w-12 object-contain"
                     />
                   </Popover.Button>
                   <Transition

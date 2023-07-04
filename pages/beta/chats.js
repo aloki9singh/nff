@@ -27,6 +27,8 @@ import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
 
 
 // const userCache = {};
@@ -145,12 +147,13 @@ const Chat = () => {
     <>
       <div className="flex overflow-y-hidden">
         <div className="lg:col-span-1 hidden lg:grid">
-          <Sidebar />
+        <CourseoverviewSidebar pathname={router.pathname} />
         </div>
         <div className="w-full h-full">
           <div>
-            <Navbar />
-            <hr className="hidden lg:block opacity-50 mt-3 " />
+            {/* <Navbar /> */}
+            <Dashboardnav heading="Chats" />
+            {/* <hr className="hidden lg:block opacity-50 mt-3 " /> */}
           </div>
           <div
             className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
