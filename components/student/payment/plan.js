@@ -1,4 +1,4 @@
-import Plan from "../School/Plan";
+import Plan from "./plan-dy";
 
 const ChoosePlan = ({updatePage}) => {
     const plan = [

@@ -1,7 +1,6 @@
-import Sidebar from '../components/Sidebar/sidebar';
-import Dashboardnav from '../components/Navbar/Dashboardnav';
+// import Sidebar from '../components/Sidebar/sidebar';
 import Image from 'next/image';
-import laptop from '../public/courses/headerVectors/Group 11.svg';
+import laptop from '@/public/pagesgraphics/student/videoplayback/Group 11.svg';
 import { IoIosArrowForward } from 'react-icons/io';
 import { AiFillLock } from 'react-icons/ai';
 import {
@@ -10,11 +9,13 @@ import {
   buildStyles,
 } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import CourseVideoPlayer from '../components/Courses/CourseVideoPlayer';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { db } from '../components/config/firebaseConfig';
+import { db } from '@/config/firebaseconfig';
 import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
+import Sidebar from '@/components/common/sidebar/sidebar';
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import CourseVideoPlayer from '@/components/student/courses/videoplayer';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -69,7 +70,7 @@ export default function Videos() {
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
       <Sidebar />
-      
+
       <div className="w-full  min-h-screen md:h-[100vh] md:rounded-l-3xl bg-[#2D2E35]">
         <Dashboardnav heading="My Course" />
         <div className="flex  bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
@@ -113,7 +114,7 @@ export default function Videos() {
         <div className="flex mx-4 md:mx-8 my-6 ">
           <div className="grid  grid-cols-7 md:gap-10 w-full">
             <div className="md:col-span-5 col-span-7">
-              <CourseVideoPlayer />
+              <CourseVideoPlayer url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
               <div
                 className=""
                 style={{
