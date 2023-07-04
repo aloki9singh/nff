@@ -1,11 +1,13 @@
 import { useState } from "react";
 // import MentorSidebar from "../components/Schedule/MentorSidebar2";
 
-import CourseCardSmall from "@/components/student/courses/CourseCard";
+import CourseCard from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+import withAuth from "@/lib/context/mentorcontext"
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar";
+import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
 
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
@@ -18,7 +20,7 @@ function MentorProfile() {
   // const { data } = useSelector((state) => state.authManagerMentor);
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
 
-  //uncomment below code for verifying  !mentor
+  // uncomment below code for verifying  !mentor
   // useEffect(() => {
   //   if (!data.verified) {
   //     router.push("/");
@@ -51,7 +53,7 @@ function MentorProfile() {
                   <div className="flex">
                     {" "}
                     <Image
-                      src={"/ProfileGirlimg.png"}
+                      src={"/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
                       alt="proImg"
                       height={100}
                       width={100}
@@ -125,7 +127,7 @@ function MentorProfile() {
                         title="Introduction to C++"
                         desc="Learn the basics of C++ programming language."
                         level="Beginner"
-                        icon="/ProgrammingIcon.png"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
                       />
                     </div>
                     <div>
@@ -135,7 +137,7 @@ function MentorProfile() {
                         title="Introduction to C++"
                         desc="Learn the basics of C++ programming language."
                         level="Beginner"
-                        icon="/ProgrammingIcon.png"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
                       />
                     </div>
                     <div>
@@ -145,7 +147,7 @@ function MentorProfile() {
                         title="Introduction to C++"
                         desc="Learn the basics of C++ programming language."
                         level="Beginner"
-                        icon="/ProgrammingIcon.png"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
                       />
                     </div>
                     <div>
@@ -155,7 +157,7 @@ function MentorProfile() {
                         title="Introduction to C++"
                         desc="Learn the basics of C++ programming language."
                         level="Beginner"
-                        icon="/ProgrammingIcon.png"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
                       />
                     </div>
                   </div>
@@ -243,4 +245,4 @@ function MentorProfile() {
     </>
   );
 }
-export default MentorProfile;
+export default withAuth(MentorProfile, "/meta/signup");

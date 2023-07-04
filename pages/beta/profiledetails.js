@@ -73,7 +73,7 @@ export default function ProfileDetails() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log("data", data);
 
     if (!user) {
       return;
@@ -110,7 +110,7 @@ export default function ProfileDetails() {
       aadhaarCard: "",
       uid: user.uid,
     };
-   console.log(profile);
+    console.log(profile);
     await setDoc(doc(db, "allusers", user.uid), profile);
 
     if (data.profilePhoto)
@@ -175,7 +175,7 @@ export default function ProfileDetails() {
                 placeholder="Last"
                 className="w-full md:w-52 h-10 rounded-lg px-2 placeholder:pl-2 focus:outline-none"
                 style={{ background: "#333333" }}
-                {...register("studentLastName", { required: true })}
+                {...register("studentLastName",)}
               />
               {errors.studentLastName?.type === "required" && (
                 <p className="text-red-400 text-xs" role="alert">
@@ -360,7 +360,7 @@ export default function ProfileDetails() {
                 placeholder="Last"
                 className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                 style={{ background: "#333333" }}
-                {...register("fatherLastName", { required: true })}
+                {...register("fatherLastName",)}
               />
               {errors.fatherLastName?.type === "required" && (
                 <p className="text-red-400 text-xs" role="alert">Last name is required</p>
@@ -398,63 +398,63 @@ export default function ProfileDetails() {
                 placeholder="Last"
                 className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                 style={{ background: "#333333" }}
-                {...register("motherLastName", { required: true })}
+                {...register("motherLastName",)}
               />
               {errors.motherLastName?.type === "required" && (
                 <p className="text-red-400 text-xs" role="alert">Last name is required</p>
               )}
             </div>
           </div>
-        
+
           {/* parent's contact number */}
           <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
-          <div className="flex md:items-center gap-x-4 flex-col md:flex-row">
-            <label htmlFor="">{`Parent's`} mobile number:</label>
-            <div className="flex flex-col">
-              <input
-                type="tel"
-                placeholder="Type Here"
-                className="w-full md:w-[319px] h-10 rounded-lg px-2 my-2 md:my-0 focus:outline-none placeholder:pl-2"
-                style={{ background: "#333333" }}
-                {...register("parentPhoneNo", {
-                  required: true,
-                  minLength: 10,
-                  maxLength: 10,
-                  pattern: {
-                    value: /^[0-9]*$/,
-                    message: "Only numbers are allowed",
-                  },
-                })}
-              />
-              {errors.parentPhoneNo?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">Phone no is required</p>
-              )}
-              {errors.parentPhoneNo?.type === "minLength" && (
-                <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
-              )}
-            </div>
+            <div className="flex md:items-center gap-x-4 flex-col md:flex-row">
+              <label htmlFor="">{`Parent's`} mobile number:</label>
+              <div className="flex flex-col">
+                <input
+                  type="tel"
+                  placeholder="Type Here"
+                  className="w-full md:w-[319px] h-10 rounded-lg px-2 my-2 md:my-0 focus:outline-none placeholder:pl-2"
+                  style={{ background: "#333333" }}
+                  {...register("parentPhoneNo", {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 10,
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Only numbers are allowed",
+                    },
+                  })}
+                />
+                {errors.parentPhoneNo?.type === "required" && (
+                  <p className="text-red-400 text-xs" role="alert">Phone no is required</p>
+                )}
+                {errors.parentPhoneNo?.type === "minLength" && (
+                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                )}
+              </div>
             </div>
             <div className="flex md:items-center gap-x-4 md:gap-x-2 flex-col md:flex-row">
-            <label className="block  text-white">Alternate Phone Number:</label>
-            <div className="flex flex-col">
-              <input
-                type="text"
-                placeholder="Type Here"
-                className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
-                style={{ background: "#333333" }}
-                {...register("parentAltPhoneNo", {
-                  minLength: 10,
-                  maxLength: 10,
-                  pattern: {
-                    value: /^[0-9]*$/,
-                    message: "Only numbers are allowed",
-                  },
-                })}
-              />
-              {errors.parentAltPhoneNo?.type === "minLength" && (
-                <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
-              )}
-            </div>
+              <label className="block  text-white">Alternate Phone Number:</label>
+              <div className="flex flex-col">
+                <input
+                  type="text"
+                  placeholder="Type Here"
+                  className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
+                  style={{ background: "#333333" }}
+                  {...register("parentAltPhoneNo", {
+                    minLength: 10,
+                    maxLength: 10,
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Only numbers are allowed",
+                    },
+                  })}
+                />
+                {errors.parentAltPhoneNo?.type === "minLength" && (
+                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -467,9 +467,6 @@ export default function ProfileDetails() {
             <Controller
               control={control}
               name="profilePhoto"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
               render={({ field: { onChange, onBlur } }) => (
                 <IDdraganddrop
                   setValue={setValue}

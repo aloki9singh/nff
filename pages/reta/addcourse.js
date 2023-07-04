@@ -5,7 +5,7 @@
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
 import { collection, addDoc, serverTimestamp, setDoc, doc } from 'firebase/firestore';
-import { db } from '@/config/firebaseConfig';
+import { db } from '@/config/firebaseconfig';
 import Link from 'next/link';
 import Image from 'next/image';
 import NeatS from '/public/componentsgraphics/schools/login/neatskillslogosample.svg'
@@ -210,7 +210,6 @@ const CreateCourse = () => {
         <div className=" flex justify-center gap-x-96 items-center">
           <Link href="/">
             <ul>
-            
               <li className="ml-2   text-2xl uppercase hover:border-b text-white text-center h-[50px] md:h-[60px]">
                 <Image
                   src={NeatS}
