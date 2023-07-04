@@ -90,6 +90,9 @@ const Chat = () => {
       const members = {};
       for (const member of newReceiver.members) {
         const user2 = await getUserProfile(member);
+
+        if (!user2) continue;
+
         user2.uid = member;
         members[member] = user2;
       }

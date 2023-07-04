@@ -1,5 +1,5 @@
 // Page not found in given figma , CSS needed to be rechecked.
-// backend needed to be rechecked implementing appwrite
+// This page ui is different from the figma design.
 
 
 import { IoClose } from 'react-icons/io5';
