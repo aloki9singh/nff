@@ -7,8 +7,7 @@ import { useEffect } from "react";
 
 import withAuth from "@/lib/context/mentorcontext"
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import MentorSidebar from "@/components/mentor/sidebar/sidebar2";
-
+import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
@@ -33,27 +32,22 @@ function MentorProfile() {
     <>
       <div className="md:h-screen h-full  text-base bg-[#15161B]">
         <div className="flex">
-          <div className="lg:col-span-1 hidden lg:grid w-[261px] ">
+          <div className="lg:col-span-5 hidden lg:grid ">
             {" "}
             <MentorSidebar pathname={router.pathname} />
           </div>
-          <div
-            style={{ background: "#2E3036" }}
-            className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
-          >
+          <div className="md:rounded-l-[50px] pt-2 w-[90%] bg-[#2E3036] ">
             <MentorTopbar heading={"Profile"} />
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
               {/* text */}
-
-              <div className="   h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "></div>
-
-              <div className="w-full h-full   md:text-base text-sm  ">
+              <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "/>
+              <div className="w-[90%] h-full   md:text-base text-sm  ">
                 <div className=" md:mx-10 mx-5">
                   <div className="flex">
                     {" "}
                     <Image
-                      src={"/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
+                      src="/pagesgraphics/mentor/profile/ProfileGirlimg.svg"
                       alt="proImg"
                       height={100}
                       width={100}
@@ -73,8 +67,8 @@ function MentorProfile() {
               </div>
             </div>
             {/* /// */}
-            <div className="lg:grid lg:grid-cols-7   m-5  md:mt-0 text-white justify-between">
-              <div className="lg:col-span-5 lg:pr-4">
+            <div className="flex max-[963px]:flex-wrap max-[963px]:justify-start  justify-center mx-auto w-[95%] m-5  md:mt-0 text-white ">
+              <div className="lg:pr-4 w-[70%] max-[963px]:w-[98%] ">
                 <div className="lg:flex gap-3 justify-around mt-10 mb-5">
                   <div className=" lg:w-1/4">
                     <div>
@@ -163,75 +157,73 @@ function MentorProfile() {
                   </div>
                 </div>
               </div>
-              <div className="lg:col-span-2">
-                <div className="flex justify-end">
-                  <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 md:w-[290px] mt-5 flex flex-col">
-                    <div className=" text-center text-lg font-bold text-gray-500">
-                      Educator highlights
-                    </div>
-                    <div className="text-center pt-2 pb-4 font-extralight">
-                      Worked at Neatskills
-                    </div>
-                    <div className="flex gap-2 text-sm font-medium">
-                      {" "}
-                      <span>
-                        <Image
-                          src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
-                          width={100}
-                          height={100}
-                          alt="img"
-                          className="w-5"
-                        />{" "}
-                      </span>{" "}
-                      Studied at{" "}
-                      <span className="text-[#E1348B] font-black">
-                        xxxxx(B.Tech.)
-                      </span>
-                    </div>
-                    <p className="ml-7  font-extralight text-sm opacity-75">
-                      Latest Result: Ashwin - 100%ile Thrice in Maths in JEE
-                      Main 2021 , AIR 409 (JEE Advanced) through my Evolve
-                      Batch. Many Students Scoring more than 99.5%ile in Maths.
-                      Producing IITians every year.
-                    </p>
+              <div className="">
+                <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
+                  <div className=" text-center text-lg font-bold text-gray-500">
+                    Educator highlights
+                  </div>
+                  <div className="text-center pt-2 pb-4 font-extralight">
+                    Worked at Neatskills
+                  </div>
+                  <div className="flex gap-2 text-sm font-medium">
+                    {" "}
+                    <span>
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-5"
+                      />{" "}
+                    </span>{" "}
+                    Studied at{" "}
+                    <span className="text-[#E1348B] font-black">
+                      xxxxx(B.Tech.)
+                    </span>
+                  </div>
+                  <p className="ml-7  font-extralight text-sm opacity-75">
+                    Latest Result: Ashwin - 100%ile Thrice in Maths in JEE
+                    Main 2021 , AIR 409 (JEE Advanced) through my Evolve
+                    Batch. Many Students Scoring more than 99.5%ile in Maths.
+                    Producing IITians every year.
+                  </p>
 
-                    <div className="flex gap-2 text-sm font-medium">
+                  <div className="flex gap-2 text-sm font-medium">
+                    {" "}
+                    <span>
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/location_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-4"
+                      />{" "}
+                    </span>{" "}
+                    Lives in{" "}
+                    <span className="text-[#E1348B] font-black">
                       {" "}
-                      <span>
-                        <Image
-                          src={"/pagesgraphics/mentor/profile/location_icon.svg"}
-                          width={100}
-                          height={100}
-                          alt="img"
-                          className="w-4"
-                        />{" "}
-                      </span>{" "}
-                      Lives in{" "}
-                      <span className="text-[#E1348B] font-black">
-                        {" "}
-                        Kota, Rajasthan, India
-                      </span>
-                    </div>
-                    <p className="ml-7  font-extralight text-sm opacity-75">
-                      Unacademy Educator since 10th March, 2022
-                    </p>
+                      Kota, Rajasthan, India
+                    </span>
+                  </div>
+                  <p className="ml-7  font-extralight text-sm opacity-75">
+                    Unacademy Educator since 10th March, 2022
+                  </p>
 
-                    <div className="flex gap-2">
+                  <div className="flex gap-2">
+                    {" "}
+                    <span>
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-5"
+                      />{" "}
+                    </span>{" "}
+                    <span className="text-sm font-medium">
                       {" "}
-                      <span>
-                        <Image
-                          src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
-                          width={100}
-                          height={100}
-                          alt="img"
-                          className="w-5"
-                        />{" "}
-                      </span>{" "}
-                      <span className="text-sm font-medium">
-                        {" "}
-                        Knows Hinglish, Hindi and English
-                      </span>
-                    </div>
+                      Knows Hinglish, Hindi and English
+                    </span>
                   </div>
                 </div>
               </div>

@@ -33,14 +33,14 @@ export default function StudyMaterialCard() {
     : material;
 
   return (
-    <>
-      <div>
+    <div className="bg-[#2E3036] rounded-3xl h-[98%]">
+      <div className="w-fit mx-auto p-8">
         <select onChange={(e) => setSelectedOption(e.target.value)}>
           <option disabled selected hidden>
             Select an option
           </option>
           {menuItems.map((item) => (
-            <option key={item} value={item}>
+            <option className="p-4" key={item} value={item}>
               {item}
             </option>
           ))}
@@ -49,22 +49,22 @@ export default function StudyMaterialCard() {
 
       <div className="flex justify-center flex-wrap gap-x-20 gap-y-10 m-5 ">
         {filteredMaterial.map((study) => (
-          <Link key={study.id} href="/studyMaterial">
-            <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] md:w-64 max-w-sm md:gap-6">
+          <Link key={study.id} href="studyMaterial">
+            <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-[400px] max-[420px]:w-fit md:gap-6">
               <div className="flex justify-between items-center">
-                <div className="m-3 border rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
+                <div className="m-3 w-[182px] w-fit mx-auto rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
                   <Image
-                    src="/laptop.svg"
-                    width={60}
-                    height={60}
-                    alt="f"
-                    className="lg:ml-6 ml-9"
+                    src="/pagesgraphics/student/coursedescription/laptop.svg"
+                    width={90}
+                    height={90}
+                    alt="course"
+                    className="mx-auto"
                   />
-                  <h1 className="text-white text-base font-medium text-center">
+                  <h1 className="text-white w-full text-base font-medium text-center">
                     {study.title}
                   </h1>
                 </div>
-                <div className="text-sm text-white pr-2 space-y-6">
+                <div className="text-sm text-white mr-8 space-y-6">
                   <p className="mr-2 text-xs flex items-center gap-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -121,6 +121,6 @@ export default function StudyMaterialCard() {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 }

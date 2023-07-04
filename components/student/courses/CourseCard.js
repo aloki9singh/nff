@@ -32,7 +32,7 @@ const CourseCard = ({ title, desc, level, lessons, icon }) => {
 				<div className="flex justify-end">
 					<button
 						type="button"
-						className="w-[72px] h-[28px] md:w-[111px] md:h-[39px] flex items-center justify-center text-white border border-pink text-xs md:text-sm"
+						className="md:w-[111px] md:h-[39px] max-[768px]:mt-[-13px] text-white border border-pink text-xs md:text-sm"
 					>
 						Explore
 					</button>

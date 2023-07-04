@@ -1,16 +1,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MentorSidebar from "../components/Sidebar/MentorSidebar";
-import MentorTopbar from "../components/Navbar/MentorTopbar";
+import MentorSidebar from "@/components/common/sidebar/mentor";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
-import { studentsArr } from "../lib/arraysToMap";
+import { studentsArr } from "@/lib/arraytomap";
 import { useSelector } from "react-redux";
-import chartIcon from "../public/courses/ChartBar.svg";
 
 function mentorStudent() {
     const [count, setCount] = useState(1);
-    const { data } = useSelector((state) => state.authManagerMentor);
+    // const { data } = useSelector((state) => state.authManagerMentor);
     let [searchstate, setsearchstate] = useState("");
     const router = useRouter();
     let searchfun = (e) => {
@@ -29,22 +28,15 @@ function mentorStudent() {
                         {" "}
                         <MentorSidebar pathname={router.pathname} />
                     </div>
-                    <div
-                        style={{ background: "#2E3036" }}
-                        className="col-span-5 lg:col-span-4 md:rounded-l-3xl pt-2 w-screen overflow-y-scroll scrollbar-hide text-white"
-                    >
-
+                    <div className="col-span-5 lg:col-span-4 bg-[#2E3036] md:rounded-l-3xl pt-2 w-screen overflow-y-scroll scrollbar-hide text-white">
                         <MentorTopbar heading={"My Progress"} />
-
-                        <hr className="hidden lg:block opacity-50 m-3"></hr>
-
-
+                        <hr className="hidden lg:block opacity-50 mt-4"></hr>
                         {/* Dropdown bar */}
-                        <div className="md:flex gap-5 m-5 md:mt-0 mt-20">
-                            <div className="md:flex justify-between w-[100%] m-5 space-y-2">
+                        <div className="gap-5 mx-8 max-[700px]:mx-4 md:mt-0 mt-20">
+                            <div className="flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2">
                                 <div className="md:flex items-center rounded-lg gap-4 justify-around ">
-                                    <div className="flex justify-evenly min-w-[200px] space-x-4">
-                                        <select className="block w-full   p-2 text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
+                                    <div className="flex  min-w-[200px] space-x-4">
+                                        <select className="block w-fit p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
                                             <option selected hidden>
                                                 Select Course
                                             </option>
@@ -54,15 +46,14 @@ function mentorStudent() {
                                             <option className="cursor-pointer">Course-4</option>
                                         </select>
                                     </div>
-
                                 </div>
-                                <div className=" xl:w-[35rem] flex justify-between">
+                                <div className="flex justify-between">
                                     <form className=" items-center hidden md:block ">
                                         <label htmlFor="voice-search" className="sr-only">
                                             Search
                                         </label>
-                                        <div className="relative w-[100%]">
-                                            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                        <div className="relative">
+                                            <div className="flex absolute inset-y-0 right-[10px]  items-center pointer-events-none">
                                                 <svg
                                                     className="w-5 h-5 text-white dark:text-white"
                                                     fill="currentColor"
@@ -88,16 +79,17 @@ function mentorStudent() {
                                         </div>
                                     </form>
                                     <button
-                                        className="bg-[#414348] px-4 py-1 rounded-xl  flex items-center justify-center"
+                                        className="bg-[#414348] w-fit h-fit flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl"
                                     >
-                                        Filter
                                         <span>
-                                            <Image src={chartIcon} alt="chart icon" className="ml-1" />
+                                            <Image src="/componentsgraphics/student/courses/list/chartbaricon.svg"
+                                                width={20}
+                                                height={20}
+                                                alt="chart icon" className="ml-1" />
                                         </span>
+                                        Filter
                                     </button>
-                                    <button
-                                        className="bg-[#414348] px-4 py-1 rounded-xl  flex items-center justify-center"
-                                    >
+                                    <button className="bg-[#414348] rounded-xl w-fit h-fit flex px-8 py-2.5 ">
                                         Remove a Student
                                     </button>
                                 </div>
@@ -155,7 +147,7 @@ function mentorStudent() {
 
 
                         {/* table */}
-                        <div className="w-[90%] h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
+                        <div className="ms-[2%] me-[2%] h-fit bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
                             <div className="">
                                 <table className="w-full  ">
                                     <thead className="  items-center  border-b  ">

@@ -2,66 +2,72 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import withAuth from '@/lib/context/mentorcontext';
-import MentorSidebar from '@/components/mentor/sidebar/sidebar2';
-import MentorTopbar from '@/components/common/navbar/mentortopbar';
-import MentorChart from '@/components/mentor/other/chart';
-import { useRouter } from 'next/router';
-import { studentsArr } from '@/lib/arraytomap';
-import { useSelector } from 'react-redux';
+import MentorSidebar from "@/components/common/sidebar/mentor";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
+import MentorChart from "@/components/mentor/other/chart";
+import { useRouter } from "next/router";
+import { studentsArr } from "@/lib/arraytomap";
+import { useSelector } from "react-redux";
 
 function MentorStudent() {
-  const [count, setCount] = useState(1);
-  // const { data } = useSelector((state) => state.authManagerMentor);
-  let [searchstate, setsearchstate] = useState('');
-  const router = useRouter();
-  let searchfun = (e) => {
-    setsearchstate(e.target.value);
-  };
+    const [count, setCount] = useState(1);
+    // const { data } = useSelector((state) => state.authManagerMentor);
+    const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12];
+    let [searchstate, setsearchstate] = useState("");
+    const router = useRouter();
+    let searchfun = (e) => {
+        setsearchstate(e.target.value);
+    };
 
   const activeTabClass = 'w-10 h-10 bg-[#A145CD] rounded-xl';
   const tabClass = 'w-10 h-10 rounded-xl';
 
-  return (
-    <>
-      <div className="h-screen text-base">
-        <div className="flex">
-          <div className="lg:col-span-1 hidden lg:grid w-[261px]">
-            {' '}
-            <MentorSidebar pathname={router.pathname} />
-          </div>
-          <div className="col-span-5 bg-[#2E3036] lg:col-span-4 md:rounded-l-3xl w-full overflow-x-hidden overflow-y-scroll scrollbar-hide text-white rounded-s-lg">
-            <MentorTopbar heading={'My Courses'} />
-            <hr className="hidden lg:block opacity-50 m-3"></hr>
-            {/* Dropdown bar */}
-            <div className="flex  gap-5 m-5 md:mt-0 mt-8">
-              <div className="md:flex justify-end w-[100%] m-3 space-y-2">
-                <div className=" flex justify-end">
-                  <button className="bg-[#E1348B] px-4 py-2 rounded-md text-lg flex items-center justify-center">
-                    <span className="text-2xl mr-2">+</span>
-                    Add New Course
-                  </button>
-                </div>
-              </div>
-            </div>
+    return (
+        <>
+            <div className="h-screen text-base">
+                <div className="flex">
+                    <div className="lg:col-span-1 hidden lg:grid w-[261px]">
+                        {" "}
+                        <MentorSidebar pathname={router.pathname} />
+                    </div>
+                    <div className="col-span-5 bg-[#2E3036] lg:col-span-4 md:rounded-l-3xl w-full overflow-x-hidden overflow-y-scroll scrollbar-hide text-white rounded-s-lg">
+                        <MentorTopbar heading={"My Courses"} />
+                        <hr className="hidden lg:block opacity-50 m-3"></hr>
+                        {/* Dropdown bar */}
+                        <div className="flex  gap-5 m-5 md:mt-0 mt-8">
+                            <div className="md:flex justify-end w-[100%] m-3 space-y-2">
+                                <div className=" flex justify-end">
+                                    <button className="bg-[#E1348B] px-4 py-2 rounded-md text-lg flex items-center justify-center">
+                                    <Link href="/reta/addcourse">
+                                    <span className="text-2xl mr-2">
+                                        +
+                                    </span>
+                                     Add New Course
+                                    </Link>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
-            <div className="flex flex-wrap w-[95%] justify-center rounded-[30px]  md:text-base text-sm mx-auto flex">
-              <div className="w-[45%] max-[700px]:w-full h-fit md:text-base text-lg mx-auto  mb-4">
-                <div
-                  style={{
-                    'background-image':
-                      'linear-gradient(90deg, #E1348B 0%, #CD8BED 100%)',
-                  }}
-                  className="w-[95%] h-[20%] rounded-xl md:text-base text-lg mx-auto pb-6"
-                >
-                  <div className="text-white py-4 px-3 text-lg font-bold">
-                    Today 2 new students enrolled in your course.
-                  </div>
-                  <div className="flex justify-end mx-8">
-                    <button className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center">
-                      See Details
-                    </button>
-                  </div>
-                </div>
+                        <div className="flex flex-wrap w-[95%] justify-center rounded-[30px]  md:text-base text-sm mx-auto flex">
+                            <div className="w-[45%] max-[700px]:w-full h-fit md:text-base text-lg mx-auto  mb-4">
+                                <div
+                                    style={{
+                                        "background-image":
+                                            "linear-gradient(90deg, #E1348B 0%, #CD8BED 100%)",
+                                    }}
+                                    className="w-[95%] h-[20%] rounded-xl md:text-base text-lg mx-auto pb-6">
+                                    <div className="text-white py-4 px-3 text-lg font-bold">
+                                        Today 2 new students enrolled in your course.
+                                    </div>
+                                    <div className="flex justify-end mx-8">
+                                        <button className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center">
+                                        <Link href="student">
+                                            See Details
+                                        </Link>
+                                        </button>
+                                    </div>
+                                </div>
 
                 <div className="w-[95%] h-[20%]  md:text-base text-xs flex justify-between mx-auto my-8  mb-4">
                   <div className="w-[44%] h-[95%] text-xs bg-[#373A41] rounded-lg py-2 px-2 flex flex-col justify-around align-center text-center py-2.5">
@@ -112,8 +118,8 @@ function MentorStudent() {
                         </select>
                       </div>
                     </div>
-                    <div className="w-full py-4 flex justify-center ">
-                      <MentorChart />
+                    <div className="w-full max-h-[217px] py-4 flex justify-center ">
+                      <MentorChart  data={chartData}/>
                     </div>
                   </div>
                 </div>
