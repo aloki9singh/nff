@@ -36,6 +36,8 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
         setChats(prev => prev.map((chat) => {
           if (chat.isGroup) return chat;
 
+          if(!friend) return chat;
+
           const fuid = chat.members.find(
             (uid) => uid !== auth.currentUser.uid
           );

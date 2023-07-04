@@ -16,7 +16,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
-import { callEmailApi, callVerificationEmailApi } from '@/lib/api';
+import { callEmailApi, callVerificationEmailApiforseta } from '@/lib/api';
 // import { adminAuth } from '../config/firebaseAdminConfig';
 
 function SchoolLoginComp() {
@@ -37,7 +37,7 @@ function SchoolLoginComp() {
             const data = { displayName, email };
             const user = userCredential.user;
             console.log(user);
-            await callVerificationEmailApi(data);
+            await callVerificationEmailApiforseta(data);
             alert('verification email sent!!');
 
             await callEmailApi(data);
