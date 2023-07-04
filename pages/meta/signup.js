@@ -1,7 +1,7 @@
 import MentorSignupcomp from '@/components/mentor/signup/signup';
 import React from 'react';
 
-function signup() {
+function Signup() {
   
   return (
     <div  >
@@ -10,4 +10,4 @@ function signup() {
   );
 }
 
-export default signup;
+export default Signup;

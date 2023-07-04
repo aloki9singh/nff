@@ -50,7 +50,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
             <input
               type="text"
               placeholder="Search"
-              className="focus:outline-none bg-inherit text-white"
+              className="focus:outline-none focus:border-none border-none bg-inherit text-white"
             />
           </div>
           {user && (
@@ -120,7 +120,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                           </Link>
 
                           <div className="text-[10px] p-2">
-                            <Link href="/profile">
+                            <Link href="/beta/profile">
                               <p className="mb-2">Profile</p>
                             </Link>
                             <Link href="/invite">
@@ -128,10 +128,10 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                             </Link>
                           </div>
                           <div className="text-[10px] p-2">
-                            <Link href="/contactUs">
+                            <Link href="/alpha/contactUs">
                               <p className="mb-2">Neat Skills Help Centre</p>
                             </Link>
-                            <Link href="/termsAndCondition">
+                            <Link href="/alpha/termsAndCondition">
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>

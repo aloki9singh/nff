@@ -6,13 +6,13 @@ import { useEffect, useRef } from "react";
 
 export default function VideoPlayer() {
   const videoRef = useRef(null);
-  let videoURL = "";
+  let videoURL = useRef("");
   useEffect(() => {
     const fetchVideo = async () => {
       await fetch("/api/coursevideos")
         .then((res) => res.json())
         .then((data) => {
-          videoURL = data.courses[0].url;
+          videoURL.current = data.courses[0].url;
         });
       const videoJSOptions = {
         sources: [

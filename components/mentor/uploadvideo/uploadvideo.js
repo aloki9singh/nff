@@ -1,13 +1,13 @@
 // Verified by Pradhumn
-import React, { useState, useEffect } from 'react';
-import { storage } from '../../../config/firebaseconfig';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import React, { useState, useEffect } from "react";
+import { storage } from "../../../config/firebaseconfig";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function UploadVid() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -16,11 +16,11 @@ export default function UploadVid() {
     const storageRef = ref(storage, `courseVideos/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
+        console.log("Upload is " + progress + "% done");
       },
       (error) => {
         console.log(error);
@@ -36,7 +36,7 @@ export default function UploadVid() {
     if (file) {
       uploadFile();
     }
-  }, [file]);
+  }, [file, uploadFile]);
 
   const postForm = async () => {
     const data = {
@@ -44,22 +44,22 @@ export default function UploadVid() {
       description,
       url,
     };
-    await fetch('/api/courseVideos', {
-      method: 'POST',
+    await fetch("/api/courseVideos", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data), alert('Video uploaded successfully'));
+      .then((data) => console.log(data), alert("Video uploaded successfully"));
   };
   const uploadVideoHandler = (e) => {
     e.preventDefault();
     if (url) {
       postForm();
     } else {
-      alert('Please upload a video');
+      alert("Please upload a video");
     }
   };
 

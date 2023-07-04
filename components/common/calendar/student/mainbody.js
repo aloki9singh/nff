@@ -1,4 +1,5 @@
 //verified 1 by Raviraj Kumar
+// Check line no 160
 import Datecard from "../common/datecard";
 // import Dates2 from "../common/datelist";
 import { useState, useEffect } from "react";
@@ -156,7 +157,8 @@ let Mainbody = () => {
           style={{ height: "90vh" }}
         >
           {showReschedulevar ? (
-            <Reschedule hidefun={hideFun}></Reschedule>
+            // <Reschedule hidefun={hideFun}/>
+            ""
           ) : (
             <></>
           )}

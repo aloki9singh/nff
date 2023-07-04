@@ -25,6 +25,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
       unsubscribe();
     };
   });
+  
   return (
     <>
       <aside className="h-full left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-3 ">
@@ -153,7 +154,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         </label>
                       </Link>
                       <Link
-                        href="/beta/homework"
+                        href="/beta/assignments"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -186,9 +187,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                           />{" "}
                           <span
                             className={`ml-3 text-[${
-                              router.pathname == "/beta/chats"
-                                ? "#E1348B"
-                                : ""
+                              router.pathname == "/beta/chats" ? "#E1348B" : ""
                             }]`}
                           >
                             Chats
@@ -207,10 +206,14 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                           className={`ml-3 text-[${
-                            router.pathname == "/beta/profile" ? "#E1348B" : ""
-                          }]`}
-                          >Profile</span>
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/profile"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
+                          >
+                            Profile
+                          </span>
                         </label>
                       </Link>
                       {user ? (

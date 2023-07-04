@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { studentsArr } from "@/lib/arraytomap";
 import { useSelector } from "react-redux";
 
-function mentorStudent() {
+function MentorStudent() {
     const [count, setCount] = useState(1);
     // const { data } = useSelector((state) => state.authManagerMentor);
     let [searchstate, setsearchstate] = useState("");
@@ -240,4 +240,4 @@ function mentorStudent() {
         </>
     );
 }
-export default mentorStudent;
+export default MentorStudent;

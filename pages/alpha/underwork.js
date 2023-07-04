@@ -3,6 +3,6 @@
 
 import UnderProgress from '../../components/common/underconstruction/underconstruction';
 
-export default function under() {
+export default function Under() {
   return <UnderProgress />;
 }

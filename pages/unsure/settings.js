@@ -10,7 +10,7 @@ import Notification from "../components/settingspart/Notification";
 import Privacy from "../components/settingspart/Privacy";
 import Schoolsidebar from "../components/Sidebar/Schoolsidebar";
 
-function settings() {
+function Settings() {
 
 
 
@@ -148,4 +148,4 @@ function settings() {
   );
 }
 
-export default settings;
+export default Settings;
