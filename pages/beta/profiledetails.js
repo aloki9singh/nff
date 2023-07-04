@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { detailadd } from "@/lib/exportablefunctions";
+import { getUserName } from "@/lib/context/AuthContext";
 
 const options = ["8", "9", "10", "11", "12"];
 
@@ -42,6 +42,7 @@ function uploadToFirebase(file, callback) {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         // console.log('File available at', downloadURL);
+        console.log("downloadURL", downloadURL);
         callback(downloadURL);
       });
     }
@@ -111,23 +112,32 @@ export default function ProfileDetails() {
       },
       parentPhoneNo: data.parentPhoneNo,
       parentAltPhoneNo: data.parentAltPhoneNo,
-      photoURL: data.profilePhoto,
-      aadhaarCard: data.aadhaarCard,
+      photoURL: user.photoURL,
+      aadhaarCard: "",
       uid: user.uid,
     };
     console.log(profile);
-    await detailadd(user.uid, {
-      details: profile,
-      displayName: data.studentFirstName,
-      photoURL: data.profilePhoto,
-    });
-    console.log(data);
-    if (data.profilePhoto)
+    await setDoc(doc(db, "allusers", user.uid), profile);
+
+    if (data.profilePhoto) {
       uploadToFirebase(data.profilePhoto, (url) => {
         updateDoc(doc(db, "allusers", user.uid), {
           photoURL: url,
         });
+        updateProfile(auth.currentUser, {
+          displayName: getUserName(profile),
+          photoURL: url,
+        })
+          .then(() => {
+            // Profile updated!
+            // ...
+          })
+          .catch((error) => {
+            // An error occurred
+            // ...
+          });
       });
+    }
 
     if (data.aadhaarCard)
       uploadToFirebase(data.aadhaarCard, (url) => {
