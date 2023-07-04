@@ -1,14 +1,14 @@
-import SideBar from "../components/Sidebar/sidebar";
-import NavBarSecond from "../components/Navbar/NavbarSecond";
+import NavbarSecond from "@/components/common/navbar/navbar2";
+import Sidebar from "@/components/common/sidebar/sidebar";
 import Image from "next/image";
 
 const contact = () => {
   return (
     <>
       <div className="flex h-screen">
-        <SideBar />
+        <Sidebar />
         <div className="w-full h-full flex flex-col">
-          <NavBarSecond buttonVis="hidden" title="Contact Us" />
+          <NavbarSecond buttonVis="hidden" title="Contact Us" />
           <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
             <div className="w-[90%] flex bg-[#373A41] rounded-[30px] h-fit">
               {/* LEFT */}
