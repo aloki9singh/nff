@@ -8,6 +8,7 @@ import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { detailadd } from "@/lib/exportablefunctions";
 
 const options = ["8", "9", "10", "11", "12"];
 
@@ -18,7 +19,7 @@ function uploadToFirebase(file, callback) {
   // Listen for state changes, errors, and completion of the upload.
   uploadTask.on(
     "state_changed",
-    () => { },
+    () => {},
     (error) => {
       // A full list of error codes is available at
       // https://firebase.google.com/docs/storage/web/handle-errors
@@ -52,7 +53,6 @@ export default function ProfileDetails() {
 
   const [user, setUser] = useState(null);
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -79,7 +79,12 @@ export default function ProfileDetails() {
       return;
     }
 
-    const username = data.studentFirstName[0] + data.studentLastName[0] + data.schoolId + '#' + data.rollNo;
+    const username =
+      data.studentFirstName[0] +
+      data.studentLastName[0] +
+      data.schoolId +
+      "#" +
+      data.rollNo;
     const profile = {
       name: {
         first: data.studentFirstName,
@@ -106,25 +111,25 @@ export default function ProfileDetails() {
       },
       parentPhoneNo: data.parentPhoneNo,
       parentAltPhoneNo: data.parentAltPhoneNo,
-      photoURL: user.photoURL,
-      aadhaarCard: "",
+      photoURL: data.profilePhoto,
+      aadhaarCard: data.aadhaarCard,
       uid: user.uid,
     };
     console.log(profile);
-    await setDoc(doc(db, "allusers", user.uid), profile);
-
+    await detailadd(user.uid, { details: profile });
+    console.log(data);
     if (data.profilePhoto)
       uploadToFirebase(data.profilePhoto, (url) => {
-        updateDoc(doc(db, "allusers", user.uid), {
-          photoURL: url,
-        });
+        // updateDoc(doc(db, "allusers", user.uid), {
+        //   photoURL: url,
+        // });
       });
 
     if (data.aadhaarCard)
       uploadToFirebase(data.aadhaarCard, (url) => {
-        updateDoc(doc(db, "allusers", user.uid), {
-          aadhaarCard: url,
-        });
+        // updateDoc(doc(db, "allusers", user.uid), {
+        //   aadhaarCard: url,
+        // });
       });
 
     router.push("/beta/profilecongrats");
@@ -150,7 +155,7 @@ export default function ProfileDetails() {
               <input
                 type="text"
                 placeholder="First"
-                className="w-full md:w-52 h-10 rounded-lg px-2 placeholder:pl-2 focus:outline-none "
+                className="w-full md:w-52 h-10 rounded-lg px-2 placeholder:pl-2 focus:outline-none  cursor-pointer"
                 style={{ background: "#333333" }}
                 {...register("studentFirstName", { required: true })}
               />
@@ -175,7 +180,7 @@ export default function ProfileDetails() {
                 placeholder="Last"
                 className="w-full md:w-52 h-10 rounded-lg px-2 placeholder:pl-2 focus:outline-none"
                 style={{ background: "#333333" }}
-                {...register("studentLastName",)}
+                {...register("studentLastName")}
               />
               {errors.studentLastName?.type === "required" && (
                 <p className="text-red-400 text-xs" role="alert">
@@ -188,7 +193,7 @@ export default function ProfileDetails() {
           {/* unique id */}
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">School Unique Id *</label>
-            <div className="flex flex-col" >
+            <div className="flex flex-col">
               <input
                 type="text"
                 placeholder="Type Here"
@@ -196,9 +201,7 @@ export default function ProfileDetails() {
                 style={{ background: "#333333" }}
                 {...register("schoolId")}
               />
-
             </div>
-
           </div>
 
           {/* school Name */}
@@ -213,7 +216,9 @@ export default function ProfileDetails() {
                 {...register("schoolName", { required: true })}
               />
               {errors.schoolName?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">School name is required</p>
+                <p className="text-red-400 text-xs" role="alert">
+                  School name is required
+                </p>
               )}
             </div>
           </div>
@@ -222,7 +227,7 @@ export default function ProfileDetails() {
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">Class</label>
             <select
-              className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[200px] "
               {...register("class")}
             >
               {options.map((option) => (
@@ -245,7 +250,9 @@ export default function ProfileDetails() {
                 {...register("rollNo", { required: true })}
               />
               {errors.rollNo?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">Roll no is required</p>
+                <p className="text-red-400 text-xs" role="alert">
+                  Roll no is required
+                </p>
               )}
             </div>
           </div>
@@ -271,7 +278,9 @@ export default function ProfileDetails() {
               )}
             />
             {errors.ReactDatepicker?.type === "required" && (
-              <p className="text-red-400 text-xs" role="alert">DOB is required</p>
+              <p className="text-red-400 text-xs" role="alert">
+                DOB is required
+              </p>
             )}
           </div>
 
@@ -297,10 +306,14 @@ export default function ProfileDetails() {
                   })}
                 />
                 {errors.studentPhoneNo?.type === "required" && (
-                  <p className="text-red-400 text-xs" role="alert">Phone no is required</p>
+                  <p className="text-red-400 text-xs" role="alert">
+                    Phone no is required
+                  </p>
                 )}
                 {errors.studentPhoneNo?.type === "minLength" && (
-                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                  <p className="text-red-400 text-xs" role="alert">
+                    Phone no must be 10 digits
+                  </p>
                 )}
               </div>
             </div>
@@ -324,7 +337,9 @@ export default function ProfileDetails() {
                   })}
                 />
                 {errors.studentAltPhoneNo?.type === "minLength" && (
-                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                  <p className="text-red-400 text-xs" role="alert">
+                    Phone no must be 10 digits
+                  </p>
                 )}
               </div>
             </div>
@@ -342,7 +357,9 @@ export default function ProfileDetails() {
                 {...register("fatherFirstName", { required: true })}
               />
               {errors.fatherFirstName?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">First name is required</p>
+                <p className="text-red-400 text-xs" role="alert">
+                  First name is required
+                </p>
               )}
             </div>
             <div className="flex flex-col">
@@ -360,10 +377,12 @@ export default function ProfileDetails() {
                 placeholder="Last"
                 className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                 style={{ background: "#333333" }}
-                {...register("fatherLastName",)}
+                {...register("fatherLastName")}
               />
               {errors.fatherLastName?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">Last name is required</p>
+                <p className="text-red-400 text-xs" role="alert">
+                  Last name is required
+                </p>
               )}
             </div>
           </div>
@@ -380,7 +399,9 @@ export default function ProfileDetails() {
                 {...register("motherFirstName", { required: true })}
               />
               {errors.motherFirstName?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">First name is required</p>
+                <p className="text-red-400 text-xs" role="alert">
+                  First name is required
+                </p>
               )}
             </div>
             <div className="flex flex-col">
@@ -398,10 +419,12 @@ export default function ProfileDetails() {
                 placeholder="Last"
                 className="w-full md:w-52 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                 style={{ background: "#333333" }}
-                {...register("motherLastName",)}
+                {...register("motherLastName")}
               />
               {errors.motherLastName?.type === "required" && (
-                <p className="text-red-400 text-xs" role="alert">Last name is required</p>
+                <p className="text-red-400 text-xs" role="alert">
+                  Last name is required
+                </p>
               )}
             </div>
           </div>
@@ -427,15 +450,21 @@ export default function ProfileDetails() {
                   })}
                 />
                 {errors.parentPhoneNo?.type === "required" && (
-                  <p className="text-red-400 text-xs" role="alert">Phone no is required</p>
+                  <p className="text-red-400 text-xs" role="alert">
+                    Phone no is required
+                  </p>
                 )}
                 {errors.parentPhoneNo?.type === "minLength" && (
-                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                  <p className="text-red-400 text-xs" role="alert">
+                    Phone no must be 10 digits
+                  </p>
                 )}
               </div>
             </div>
             <div className="flex md:items-center gap-x-4 md:gap-x-2 flex-col md:flex-row">
-              <label className="block  text-white">Alternate Phone Number:</label>
+              <label className="block  text-white">
+                Alternate Phone Number:
+              </label>
               <div className="flex flex-col">
                 <input
                   type="text"
@@ -452,7 +481,9 @@ export default function ProfileDetails() {
                   })}
                 />
                 {errors.parentAltPhoneNo?.type === "minLength" && (
-                  <p className="text-red-400 text-xs" role="alert">Phone no must be 10 digits</p>
+                  <p className="text-red-400 text-xs" role="alert">
+                    Phone no must be 10 digits
+                  </p>
                 )}
               </div>
             </div>

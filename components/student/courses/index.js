@@ -14,6 +14,7 @@ export default function CoursesMain({ coursesData }) {
   const router = useRouter();
   const [courses] = useState(coursesData);
   //console.log(courses);
+  
   return (
     <div className="flex">
       <div className="hidden lg:block">

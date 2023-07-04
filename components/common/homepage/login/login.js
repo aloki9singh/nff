@@ -76,8 +76,16 @@ function LoginComp() {
         });
       })
       .catch((error) => {
-        console.error(error);
-        alert("Either email / password is wrong!");
+        if (error == "FirebaseError: Firebase: Error (auth/user-not-found).") {
+          alert("User doesn't exist! Please sign up.");
+        } else if (
+          error == "FirebaseError: Firebase: Error (auth/wrong-password)."
+        ) {
+          alert("Invalid password. Please check your password and try again.");
+        } else {
+          console.log(error);
+          alert("Either email / password is wrong!");
+        }
       });
     setLoading(false);
   };

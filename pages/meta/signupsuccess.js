@@ -97,7 +97,7 @@ const MentorSignupSuccess = () => {
                 <Link href="/meta/register">
                   <button
                     onClick={sentWelcomeMail}
-                    className="p-2 font-semibold border rounded-lg bg-[#E1348B] w-[100%] md:m-auto w-fit px-12"
+                    className="p-2 font-semibold border rounded-lg bg-[#E1348B]  md:m-auto w-fit px-12"
                   >
                     Proceed
                   </button>
