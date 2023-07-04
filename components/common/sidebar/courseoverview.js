@@ -10,7 +10,7 @@ import { logout } from "@/lib/exportablefunctions";
 const CourseoverviewSidebar = ({ pathname }) => {
   const [user, setUser] = useState({});
   const [showSideBar, setShowSideBar] = useState(false);
-  const router=useRouter()
+  const router = useRouter();
   function toogleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -52,7 +52,13 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         type="checkbox"
                         className="form-checkbox h-3 w-3 text-gray-600"
                       />{" "}
-                      <span>Home</span>
+                      <span
+                        className={`ml-3 text-[${
+                          router.pathname == "/beta/dashboard" ? "#E1348B" : ""
+                        }]`}
+                      >
+                        Home
+                      </span>
                     </label>
                   </Link>
                   <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
@@ -88,7 +94,15 @@ const CourseoverviewSidebar = ({ pathname }) => {
                           type="checkbox"
                           className="form-checkbox h-3 w-3 text-gray-600"
                         />{" "}
-                        <span>Community</span>
+                        <span
+                          className={`ml-3 text-[${
+                            router.pathname == "/beta/community"
+                              ? "#E1348B"
+                              : ""
+                          }]`}
+                        >
+                          Community
+                        </span>
                       </label>
                     </Link>
                   )}
@@ -105,7 +119,15 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             type="checkbox"
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
-                          <span>Schedule</span>
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/checkclass"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
+                          >
+                            Schedule
+                          </span>
                         </label>
                       </Link>
 
@@ -119,7 +141,15 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             type="checkbox"
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
-                          <span>Study Material</span>
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/studymaterial"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
+                          >
+                            Study Material
+                          </span>
                         </label>
                       </Link>
                       <Link
@@ -132,7 +162,15 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             type="checkbox"
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
-                          <span>Homework</span>
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/homework"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
+                          >
+                            Homework
+                          </span>
                         </label>
                       </Link>
                       <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
@@ -146,7 +184,15 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             type="checkbox"
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
-                          <span>Chats</span>
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/chats"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
+                          >
+                            Chats
+                          </span>
                         </label>
                       </Link>
 
@@ -160,7 +206,11 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             type="checkbox"
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
-                          <span>Profile</span>
+                          <span
+                           className={`ml-3 text-[${
+                            router.pathname == "/beta/profile" ? "#E1348B" : ""
+                          }]`}
+                          >Profile</span>
                         </label>
                       </Link>
                       {user ? (
@@ -190,7 +240,12 @@ const CourseoverviewSidebar = ({ pathname }) => {
           <div>
             {user ? (
               <div className="text-white flex-row  space-y-5 mt-20">
-                <button onClick={()=>{logout(router)}} className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
+                <button
+                  onClick={() => {
+                    logout(router);
+                  }}
+                  className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal "
+                >
                   <span>Log Out </span>
                   <BiLogIn className="text-2xl" />
                 </button>
