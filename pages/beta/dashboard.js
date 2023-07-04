@@ -12,14 +12,14 @@ import LeaderBoardMentor from "@/components/student/dashboard/leaderboard";
 
 
 const Studentdashboard = () => {
-  const [active,setActive]=useState(false)
-   
-  var percentage = "0%";
-  active ? (percentage = "75%") : (percentage = "0%"); //Control the percentage of the user here
+  const [active, setActive] = useState(false)
+
+  let percentage = "25%";
+  // active ? (percentage = "75%") : (percentage = "0%"); //Control the percentage of the user here
   const tip =
     "Learning that is spread out over time drastically increases knowledge retention.";
   var user = "Guest";
-  active ? (user = "Rahul") : "Guest";
+  // active ? (user = "Rahul") : "Guest";
   const router = useRouter();
   return (
     <>
@@ -27,8 +27,8 @@ const Studentdashboard = () => {
         <div className="flex">
           <div className="lg:col-span-1 hidden lg:grid">
             {" "}
-            
-          <Sidebar pathname={router.pathname}/>
+
+            <Sidebar pathname={router.pathname} />
           </div>
           <div
             style={{ background: "#2E3036" }}
@@ -43,34 +43,34 @@ const Studentdashboard = () => {
                 <Advertisement />
                 {/* //welcomebar */}
                 <Progress percentage={percentage} user={user.displayName} />
-                 {active?<ActiveComp/>: <InActiveComp/>}
-              </div>  
-                <div className="md:px-2  mt-5 space-y-5 md:space-y-8">
+                {active ? <ActiveComp /> : <InActiveComp />}
+              </div>
+              <div className="md:px-2  mt-5 space-y-5 md:space-y-8">
+                <div>
+
+                  <Calendar />
+
+                </div>
+                {/* //Daily tip section open */}
+                <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
                   <div>
-
-                    <Calendar/>
-
-                  </div>
-                  {/* //Daily tip section open */}
-                  <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
-                    <div>
-                      <div className="text-white  border border-black w-20 text-center  bg-[#A145CD] py-1 mb-1 text-xs">
-                        Daily Tip
-                      </div>
-                      <p className=" text-sm font-semibold text-[#000000]">
-                        Learning that is spread out over time drastically
-                        increases knowledge retention.
-                      </p>
+                    <div className="text-white  border border-black w-20 text-center  bg-[#A145CD] py-1 mb-1 text-xs">
+                      Daily Tip
                     </div>
-                  </div>
-                  {/* //Daily tip section close */}
-                  <div>
-                    {" "}
-
-                    <LeaderBoardMentor/>
-
+                    <p className=" text-sm font-semibold text-[#000000]">
+                      Learning that is spread out over time drastically
+                      increases knowledge retention.
+                    </p>
                   </div>
                 </div>
+                {/* //Daily tip section close */}
+                <div>
+                  {" "}
+
+                  <LeaderBoardMentor />
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
