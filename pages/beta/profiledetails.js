@@ -120,16 +120,16 @@ export default function ProfileDetails() {
     console.log(data);
     if (data.profilePhoto)
       uploadToFirebase(data.profilePhoto, (url) => {
-        // updateDoc(doc(db, "allusers", user.uid), {
-        //   photoURL: url,
-        // });
+        updateDoc(doc(db, "allusers", user.uid), {
+          photoURL: url,
+        });
       });
 
     if (data.aadhaarCard)
       uploadToFirebase(data.aadhaarCard, (url) => {
-        // updateDoc(doc(db, "allusers", user.uid), {
-        //   aadhaarCard: url,
-        // });
+        updateDoc(doc(db, "allusers", user.uid), {
+          aadhaarCard: url,
+        });
       });
 
     router.push("/beta/profilecongrats");
