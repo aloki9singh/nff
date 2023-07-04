@@ -59,8 +59,8 @@ export default function TaskList() {
   };
 
   return (
-    <div className="w-80 h-80 mx-auto mt-10 mb-10 rounded-2xl bg-[#373A41] text-white">
-      <div className="flex justify-between w-[90%] mx-auto mt-4 items-center">
+    <div className="h-fit mt-12 p-1.5 rounded-2xl bg-[#373A41] text-white">
+      <div className="flex justify-between w-[89%] mx-auto mt-4 items-center">
         <h1 className="text-xl">Task List</h1>
         <Popover>
           <Popover.Button className="outline-none p-2">

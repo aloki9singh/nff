@@ -147,7 +147,7 @@ function mentorStudent() {
 
 
                         {/* table */}
-                        <div className="mx-12 h-fit bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
+                        <div className="ms-[2%] me-[2%] h-fit bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
                             <div className="">
                                 <table className="w-full  ">
                                     <thead className="  items-center  border-b  ">

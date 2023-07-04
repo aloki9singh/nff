@@ -13,7 +13,6 @@ import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
-import CourseCard from "@/components/student/courses/CourseCard";
 
 function MentorProfile() {
   const router = useRouter();
@@ -37,14 +36,13 @@ function MentorProfile() {
             {" "}
             <MentorSidebar pathname={router.pathname} />
           </div>
-          <div className="md:rounded-l-[50px] pt-2 w-full bg-[#2E3036] ml-[3%]">
+          <div className="md:rounded-l-[50px] pt-2 w-[90%] bg-[#2E3036] ">
             <MentorTopbar heading={"Profile"} />
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
               {/* text */}
-
-              <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "></div>
-              <div className="w-full h-full   md:text-base text-sm  ">
+              <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "/>
+              <div className="w-[90%] h-full   md:text-base text-sm  ">
                 <div className=" md:mx-10 mx-5">
                   <div className="flex">
                     {" "}
@@ -160,73 +158,73 @@ function MentorProfile() {
                 </div>
               </div>
               <div className="">
-                  <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
-                    <div className=" text-center text-lg font-bold text-gray-500">
-                      Educator highlights
-                    </div>
-                    <div className="text-center pt-2 pb-4 font-extralight">
-                      Worked at Neatskills
-                    </div>
-                    <div className="flex gap-2 text-sm font-medium">
-                      {" "}
-                      <span>
-                        <Image
-                          src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
-                          width={100}
-                          height={100}
-                          alt="img"
-                          className="w-5"
-                        />{" "}
-                      </span>{" "}
-                      Studied at{" "}
-                      <span className="text-[#E1348B] font-black">
-                        xxxxx(B.Tech.)
-                      </span>
-                    </div>
-                    <p className="ml-7  font-extralight text-sm opacity-75">
-                      Latest Result: Ashwin - 100%ile Thrice in Maths in JEE
-                      Main 2021 , AIR 409 (JEE Advanced) through my Evolve
-                      Batch. Many Students Scoring more than 99.5%ile in Maths.
-                      Producing IITians every year.
-                    </p>
+                <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
+                  <div className=" text-center text-lg font-bold text-gray-500">
+                    Educator highlights
+                  </div>
+                  <div className="text-center pt-2 pb-4 font-extralight">
+                    Worked at Neatskills
+                  </div>
+                  <div className="flex gap-2 text-sm font-medium">
+                    {" "}
+                    <span>
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-5"
+                      />{" "}
+                    </span>{" "}
+                    Studied at{" "}
+                    <span className="text-[#E1348B] font-black">
+                      xxxxx(B.Tech.)
+                    </span>
+                  </div>
+                  <p className="ml-7  font-extralight text-sm opacity-75">
+                    Latest Result: Ashwin - 100%ile Thrice in Maths in JEE
+                    Main 2021 , AIR 409 (JEE Advanced) through my Evolve
+                    Batch. Many Students Scoring more than 99.5%ile in Maths.
+                    Producing IITians every year.
+                  </p>
 
-                    <div className="flex gap-2 text-sm font-medium">
+                  <div className="flex gap-2 text-sm font-medium">
+                    {" "}
+                    <span>
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/location_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-4"
+                      />{" "}
+                    </span>{" "}
+                    Lives in{" "}
+                    <span className="text-[#E1348B] font-black">
                       {" "}
-                      <span>
-                        <Image
-                          src={"/pagesgraphics/mentor/profile/location_icon.svg"}
-                          width={100}
-                          height={100}
-                          alt="img"
-                          className="w-4"
-                        />{" "}
-                      </span>{" "}
-                      Lives in{" "}
-                      <span className="text-[#E1348B] font-black">
-                        {" "}
-                        Kota, Rajasthan, India
-                      </span>
-                    </div>
-                    <p className="ml-7  font-extralight text-sm opacity-75">
-                      Unacademy Educator since 10th March, 2022
-                    </p>
+                      Kota, Rajasthan, India
+                    </span>
+                  </div>
+                  <p className="ml-7  font-extralight text-sm opacity-75">
+                    Unacademy Educator since 10th March, 2022
+                  </p>
 
-                    <div className="flex gap-2">
+                  <div className="flex gap-2">
+                    {" "}
+                    <span>
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-5"
+                      />{" "}
+                    </span>{" "}
+                    <span className="text-sm font-medium">
                       {" "}
-                      <span>
-                        <Image
-                          src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
-                          width={100}
-                          height={100}
-                          alt="img"
-                          className="w-5"
-                        />{" "}
-                      </span>{" "}
-                      <span className="text-sm font-medium">
-                        {" "}
-                        Knows Hinglish, Hindi and English
-                      </span>
-                    </div>
+                      Knows Hinglish, Hindi and English
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

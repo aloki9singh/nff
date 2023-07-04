@@ -32,7 +32,6 @@ function MentorDashboard() {
          user.emailVerified = true;
         const value = await callUserById(user.uid);
         setVerified(value.user.verified);
-       console.log("value",value.user.verified)
       }
     });
 

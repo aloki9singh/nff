@@ -2,13 +2,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import withAuth from '@/lib/context/mentorcontext';
-import MentorSidebar from '@/components/mentor/sidebar/sidebar2';
-import MentorTopbar from '@/components/common/navbar/mentortopbar';
-import MentorChart from '@/components/mentor/other/chart';
-import { useRouter } from 'next/router';
-import { studentsArr } from '@/lib/arraytomap';
-import { useSelector } from 'react-redux';
-
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import MentorChart from "@/components/mentor/other/chart";
@@ -16,7 +9,7 @@ import { useRouter } from "next/router";
 import { studentsArr } from "@/lib/arraytomap";
 import { useSelector } from "react-redux";
 
-function mentorStudent() {
+function MentorStudent() {
     const [count, setCount] = useState(1);
     // const { data } = useSelector((state) => state.authManagerMentor);
     const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12];

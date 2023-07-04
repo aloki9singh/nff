@@ -52,7 +52,7 @@ export default function StudyMaterialCard() {
           <Link key={study.id} href="studyMaterial">
             <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-[400px] max-[420px]:w-fit md:gap-6">
               <div className="flex justify-between items-center">
-                <div className="m-3 w-fit mx-auto rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
+                <div className="m-3 w-[182px] w-fit mx-auto rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
                   <Image
                     src="/pagesgraphics/student/coursedescription/laptop.svg"
                     width={90}
