@@ -1,9 +1,10 @@
 //verified 1 by Raviraj Kumar
 import Datecard from "../common/datecard";
-import Dates2 from "../common/datelist";
+// import Dates2 from "../common/datelist";
 import { useState, useEffect } from "react";
 import Months from "../common/monthlist";
 import Card from "./card";
+import Datelist from "../common/datelist";
 
 const months = [
   "January",
@@ -131,7 +132,7 @@ let Mainbody = () => {
         className="m-0 lg:m-2 p-0 lg:p-3 rounded-3xl  text-white "
         style={{ background: "#33353B" }}
       >
-        <div className="bg-black lg:bg-inherit p-2 lg:p-0 rounded-b-3xl ">
+        <div className=" lg:bg-inherit p-2 lg:p-0 rounded-b-3xl ">
           <Datecard
             seletedMonth={monthData}
             currentMonth={currentMonth}
@@ -141,13 +142,13 @@ let Mainbody = () => {
             selectedMonth={selectedMonth}
             currentMonth={currentMonth}
           ></Months>
-          <Dates2
+          <Datelist
             selectedDate={selectedDate}
             currentMonth={currentMonth}
             currentDate={currentDate}
             monthData={monthData}
             currentYear={currentYear}
-          ></Dates2>
+          ></Datelist>
         </div>
         <hr className="m-2 opacity-50 hidden lg:block"></hr>
         <div

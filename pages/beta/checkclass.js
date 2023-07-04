@@ -1,6 +1,6 @@
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StudentScheduleMainBody from "@/components/common/calendar/student/mainbody";
 import { useRouter } from "next/router";
 import StudentTopbar from "@/components/common/navbar/studenttopbar";
