@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { getDownloadURL, ref } from "firebase/storage";
 import videojs from "video.js";
 import "video.js/dist/video-js.min.css";
-import { storage } from "../../config/firebaseConfig";
+import { storage } from "@/config/firebaseconfig";
 
 const CourseVideoPlayer = ({ url }) => {
 	const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -15,20 +15,23 @@ const CourseVideoPlayer = ({ url }) => {
 	const playerRef = useRef(null);
 
 	useEffect(() => {
-		const videoStorageRef = storage.ref(url);
-		getDownloadURL(videoStorageRef)
-			.then((url) => {
-				setVideoSrc(url);
-			})
-			.catch((error) => {
-				console.error("Error getting video download URL:", error);
-			});
+		if (!url) return;
 
-		return () => {
-			if (playerRef.current) {
-				playerRef.current.dispose();
-			}
-		};
+		setVideoSrc(url);
+		// const videoStorageRef = ref(url);
+		// getDownloadURL(videoStorageRef)
+		// 	.then((url) => {
+		// 		setVideoSrc(url);
+		// 	})
+		// 	.catch((error) => {
+		// 		console.error("Error getting video download URL:", error);
+		// 	});
+
+		// return () => {
+		// 	if (playerRef.current) {
+		// 		playerRef.current.dispose();
+		// 	}
+		// };
 	}, [url]);
 
 	useEffect(() => {
