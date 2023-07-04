@@ -152,7 +152,7 @@ let Mainbody = () => {
         </div>
         <hr className="m-2 opacity-50 hidden lg:block"></hr>
         <div
-          className="grid grid-cols-1 overflow-y-scroll "
+          className="grid grid-cols-1 overflow-scroll scrollbar-hide"
           style={{ height: "90vh" }}
         >
           {showReschedulevar ? (

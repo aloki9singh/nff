@@ -32,15 +32,15 @@ function CheckClassSchedule() {
     return null
   }
   return (
-    <div className="h-screen w-full text-base">
-      <div className="grid grid-cols-7 lg:bg-[black] ">
-        <div className="lg:col-span-1 hidden lg:grid">
+    <div className="h-screen w-full text-base ">
+      <div className="flex lg:bg-[black] ">
+        <div className=" hidden lg:grid">
         {" "}
         <CourseoverviewSidebar pathname={router.pathname} />
         </div>
         <div
-          style={{ background: "#2E3036" ,borderRadius:"50px 0px 0px 50px"}}
-          className="lg:col-span-6 col-span-7  "
+          style={{ background: "#2E3036" ,borderRadius:"50px 0px 0px 0px"}}
+          className="lg:col-span-6 col-span-7 w-full "
         >
           <Dashboardnav heading="My Profile" />
           {/* <StudentTopbar heading={"My Profile"} /> */}
