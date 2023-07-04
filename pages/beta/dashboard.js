@@ -1,6 +1,6 @@
 
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StudentTopbar from "@/components/common/navbar/studenttopbar";
 import Advertisement from "@/components/student/dashboard/adbanner";
 import Progress from "@/components/student/assignments/status";
@@ -9,18 +9,36 @@ import InActiveComp from "@/components/student/assignments/inactivecomp";
 import Sidebar from "@/components/common/sidebar/sidebar";
 import Calendar from "@/components/common/calendar/student/calendar";
 import LeaderBoardMentor from "@/components/student/dashboard/leaderboard";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
 
 
 const Studentdashboard = () => {
-  const [active, setActive] = useState(false)
 
-  let percentage = "25%";
-  // active ? (percentage = "75%") : (percentage = "0%"); //Control the percentage of the user here
+  const [active,setActive]=useState(false)
+  var [user, setUser] = useState({});
+  var percentage = "0%";
+  active ? (percentage = "75%") : (percentage = "0%"); //Control the percentage of the user here
   const tip =
     "Learning that is spread out over time drastically increases knowledge retention.";
-  var user = "Guest";
-  // active ? (user = "Rahul") : "Guest";
+  // var user = "Guest";
+  active ? (user = "Rahul") : "Guest";
+
   const router = useRouter();
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      setUser(currentUser);
+    });
+    return () => {
+      unsubscribe();
+    };
+  },[])
+  if(!user){
+    return null
+  }
   return (
     <>
       <div className="md:h-screen h-full  text-base md:bg-[#2E3036] md:w-full">
@@ -28,14 +46,18 @@ const Studentdashboard = () => {
           <div className="lg:col-span-1 hidden lg:grid">
             {" "}
 
-            <Sidebar pathname={router.pathname} />
+            
+          {/* <Sidebar pathname={router.pathname}/> */}
+          <CourseoverviewSidebar pathname={router.pathname} />
+
           </div>
           <div
             style={{ background: "#2E3036" }}
             className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
           >
-            <StudentTopbar heading={"My Progress"} />
-            <hr className="hidden lg:block opacity-50 mt-3 "></hr>
+            {/* <StudentTopbar heading={"My Progress"} /> */}
+            <Dashboardnav heading="My Progress" />
+            {/* <hr className="hidden lg:block opacity-50 mt-3 "></hr> */}
 
             {/* /// */}
             <div className="md:flex gap-2 m-3 md:mt-0 mt-14 text-white">
@@ -43,10 +65,12 @@ const Studentdashboard = () => {
                 <Advertisement />
                 {/* //welcomebar */}
                 <Progress percentage={percentage} user={user.displayName} />
-                {active ? <ActiveComp /> : <InActiveComp />}
-              </div>
-              <div className="md:px-2  mt-5 space-y-5 md:space-y-8">
-                <div>
+
+                 {active?<ActiveComp/>: <InActiveComp/>}
+              </div>  
+                <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4">
+                  <div>
+
 
                   <Calendar />
 

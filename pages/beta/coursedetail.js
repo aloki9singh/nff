@@ -5,17 +5,19 @@ import SideBar from "@/components/common/sidebar/sidebar";
 import Dashboardnav_AfterLog from "@/components/common/navbar/dashboardnavloggedin";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { db } from "@/config/firebaseconfig";
+import { auth, db } from "@/config/firebaseconfig";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Afterlogin = () => {
+  const [user, setUser] = useState({});
   const router = useRouter();
   const { title } = router.query;
   const [course, setCourse] = useState(null);
 
   const fetchCourseData = async () => {
     try {
-      console.log("fetching data is on ")
+      console.log("fetching data is on ");
       const courseRef = collection(db, "allUsers");
       const q = query(courseRef, where("title", "==", "Basics of C++"));
       const courseDocs = await getDocs(q);
@@ -41,10 +43,20 @@ const Afterlogin = () => {
       fetchCourseData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      setUser(currentUser);
+    });
+    return () => {
+      unsubscribe();
+    };
   }, [title]);
 
-  console.log("course data:", course);
+  // console.log("course data:", course);
 
+  if (!user) {
+    return null;
+  }
   return (
     <>
       <div className="flex bg-[#2D2E35] ">

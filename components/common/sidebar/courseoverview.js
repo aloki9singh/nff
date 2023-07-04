@@ -6,10 +6,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { BiLogIn } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
+import { logout } from "@/lib/exportablefunctions";
 const CourseoverviewSidebar = ({ pathname }) => {
   const [user, setUser] = useState({});
   const [showSideBar, setShowSideBar] = useState(false);
-
+  const router=useRouter()
   function toogleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -27,7 +28,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
   return (
     <>
       <aside className="h-full left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-3 ">
-        <div className="fixed  h-full  ">
+        <div className=" h-full  ">
           <div className="">
             <div className="relative">
               <Image
@@ -42,7 +43,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
               <ul>
                 <li className="space-y-[14px]">
                   <Link
-                    href="/mentor-dashboard"
+                    href="/beta/dashboard"
                     className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
                   >
                     <label className="inline-flex items-center space-x-3">
@@ -78,7 +79,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                     <></>
                   ) : (
                     <Link
-                      href="/community"
+                      href="/beta/community"
                       className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                     >
                       <label className="inline-flex items-center space-x-3">
@@ -95,7 +96,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                   {user ? (
                     <div>
                       <Link
-                        href="/Schedule"
+                        href="/beta/checkclass"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -109,7 +110,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                       </Link>
 
                       <Link
-                        href="#"
+                        href="/beta/studymaterial"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -122,7 +123,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         </label>
                       </Link>
                       <Link
-                        href="#"
+                        href="/beta/homework"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -136,7 +137,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                       </Link>
                       <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                       <Link
-                        href="#"
+                        href="/beta/chats"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -150,7 +151,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                       </Link>
 
                       <Link
-                        href="#"
+                        href="/beta/profile"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -189,7 +190,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
           <div>
             {user ? (
               <div className="text-white flex-row  space-y-5 mt-20">
-                <button className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
+                <button onClick={()=>{logout(router)}} className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
                   <span>Log Out </span>
                   <BiLogIn className="text-2xl" />
                 </button>
@@ -201,7 +202,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
           {user ? (
             <></>
           ) : (
-            <div className=" w-full opacity-60 text-center absolute bottom-6">
+            <div className=" w-full opacity-60 text-left pl-5 bottom-6 mt-40 flex flex-col gap-5">
               <div>
                 <Link href="#">
                   <span className="text-white">Cookies</span>
