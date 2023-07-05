@@ -2,20 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { auth } from '@/config/firebaseconfig';
 
-import { onAuthStateChanged } from 'firebase/auth';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 export default function Progress({ percentage }) {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-    });
-    return () => {
-      unsubscribe();
-    };
-  });
+  const { userProfile, user } = useAuthContext()
 
   return (
     <div className="w-full mx-auto">
@@ -23,7 +13,7 @@ export default function Progress({ percentage }) {
         <div className="flex justify-between items-end m-1">
           {user?.displayName ? (
             <h1 className="lg:text-2xl font-semibold">
-              Welcome, {user.displayName}👋
+              Welcome, {userProfile.name.first}👋
 
             </h1>
           ) : (

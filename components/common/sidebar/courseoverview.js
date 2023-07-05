@@ -2,19 +2,21 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { auth } from "@/config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";
 import { BiLogIn } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 import { logout } from "@/lib/exportablefunctions";
+import { useAuthContext } from "@/lib/context/AuthContext";
 const CourseoverviewSidebar = ({ pathname }) => {
-  const [user, setUser] = useState({});
   const [showSideBar, setShowSideBar] = useState(false);
   const router = useRouter();
+  const { user } = useAuthContext();
+
   function toogleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -26,6 +28,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
     };
   });
   
+
   return (
     <>
       <aside className="h-full left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-3 ">
@@ -54,9 +57,8 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         className="form-checkbox h-3 w-3 text-gray-600"
                       />{" "}
                       <span
-                        className={`ml-3 text-[${
-                          router.pathname == "/beta/dashboard" ? "#E1348B" : ""
-                        }]`}
+                        className={`ml-3 text-[${router.pathname == "/beta/dashboard" ? "#E1348B" : ""
+                          }]`}
                       >
                         Home
                       </span>
@@ -74,9 +76,8 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         className="form-checkbox h-3 w-3 text-gray-600"
                       />{" "}
                       <span
-                        className={`ml-3 text-[${
-                          pathname == "/beta/courseoverview" ? "#E1348B" : ""
-                        }]`}
+                        className={`ml-3 text-[${pathname == "/beta/courseoverview" ? "#E1348B" : ""
+                          }]`}
                       >
                         Courses
                       </span>
@@ -96,11 +97,10 @@ const CourseoverviewSidebar = ({ pathname }) => {
                           className="form-checkbox h-3 w-3 text-gray-600"
                         />{" "}
                         <span
-                          className={`ml-3 text-[${
-                            router.pathname == "/beta/community"
-                              ? "#E1348B"
-                              : ""
-                          }]`}
+                          className={`ml-3 text-[${router.pathname == "/beta/community"
+                            ? "#E1348B"
+                            : ""
+                            }]`}
                         >
                           Community
                         </span>
@@ -121,11 +121,10 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/checkclass"
-                                ? "#E1348B"
-                                : ""
-                            }]`}
+                            className={`ml-3 text-[${router.pathname == "/beta/checkclass"
+                              ? "#E1348B"
+                              : ""
+                              }]`}
                           >
                             Schedule
                           </span>
@@ -143,11 +142,10 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/studymaterial"
-                                ? "#E1348B"
-                                : ""
-                            }]`}
+                            className={`ml-3 text-[${router.pathname == "/beta/studymaterial"
+                              ? "#E1348B"
+                              : ""
+                              }]`}
                           >
                             Study Material
                           </span>
@@ -164,11 +162,10 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/homework"
-                                ? "#E1348B"
-                                : ""
-                            }]`}
+                            className={`ml-3 text-[${router.pathname == "/beta/homework"
+                              ? "#E1348B"
+                              : ""
+                              }]`}
                           >
                             Homework
                           </span>
@@ -186,9 +183,12 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/chats" ? "#E1348B" : ""
-                            }]`}
+
+                            className={`ml-3 text-[${router.pathname == "/beta/chats"
+                              ? "#E1348B"
+                              : ""
+                              }]`}
+
                           >
                             Chats
                           </span>
@@ -206,6 +206,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
+
                             className={`ml-3 text-[${
                               router.pathname == "/beta/profile"
                                 ? "#E1348B"
@@ -214,6 +215,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                           >
                             Profile
                           </span>
+
                         </label>
                       </Link>
                       {user ? (

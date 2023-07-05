@@ -42,7 +42,6 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
         ...prevUserData,
         [name]: value,
       }));
-      
     }
   };
 

@@ -7,6 +7,7 @@ import { auth, db } from "../../../config/firebaseconfig";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import profileImage from "@/public/componentsgraphics/common/chatting/user/profile.svg";
 import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.svg";
+import { getUserName } from "@/lib/context/AuthContext";
 
 const DescIcon = (props) => (
   <svg
@@ -27,7 +28,7 @@ const DescIcon = (props) => (
 
 const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
   const [checked, setChecked] = useState(true);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
   const user = auth.currentUser;
   useEffect(() => {
     if (Object.keys(currReciever.members).length <= 3) {
@@ -138,35 +139,31 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
         </p>
         <div className="flex flex-col items-stretch ">
           {/* participants */}
-          {Object.values(currReciever.members)
-            .slice(0, showAll ? 3 : 0)
-            .map((member) => (
-              <div
-                key={member.uid}
-                className="flex flex-row justify-between  items-center py-2"
+          {Object.values(currReciever.members).map((member) => (
+            <div
+              key={member.uid}
+              className="flex flex-row justify-between  items-center py-2"
+            >
+              <button
+                onClick={() => memberClickHandler(member)}
+                className="flex flex-row items-center"
               >
-                <button
-                  onClick={() => memberClickHandler(member)}
-                  className="flex flex-row items-center"
-                >
-                  <Avatar
-                    height={32}
-                    width={32}
-                    src={member.photoURL}
-                    alt="profile-avatar"
-                  />
-                  <div className="flex flex-col items-start ml-[10px]">
-                    <p className="">
-                      {member.name?.first + " " + member.name?.last}
-                    </p>
-                    <p className="text-xs opacity-50">
-                      {member.uid === user?.uid ? "You" : "Online"}
-                    </p>
-                  </div>
-                </button>
-                <p className="text-sm opacity-50">Mentor</p>
-              </div>
-            ))}
+                <Avatar
+                  height={32}
+                  width={32}
+                  src={member.photoURL}
+                  alt="profile-avatar"
+                />
+                <div className="flex flex-col items-start ml-[10px]">
+                  <p className="">{getUserName(member)}</p>
+                  <p className="text-xs opacity-50">
+                    {member.uid === user?.uid ? "You" : "Online"}
+                  </p>
+                </div>
+              </button>
+              <p className="text-sm opacity-50">Mentor</p>
+            </div>
+          ))}
         </div>
         {!showAll && (
           <button className="text-center text-xs py-1">
