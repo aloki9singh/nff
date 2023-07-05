@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 
-const MentorSidebar = ({ pathname }) => {
+const  MentorSidebar = ({ pathname }) => {
   return (
     <>
       <aside className="h-screen left-0 top-0  bg-[#15161B]  flex flex-col  p-5  ">

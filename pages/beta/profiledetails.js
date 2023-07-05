@@ -5,10 +5,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { auth, db, storage } from "../../config/firebaseconfig";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { detailadd } from "@/lib/exportablefunctions";
+import { getUserName } from "@/lib/context/AuthContext";
 
 const options = ["8", "9", "10", "11", "12"];
 
@@ -19,7 +19,7 @@ function uploadToFirebase(file, callback) {
   // Listen for state changes, errors, and completion of the upload.
   uploadTask.on(
     "state_changed",
-    () => {},
+    () => { },
     (error) => {
       // A full list of error codes is available at
       // https://firebase.google.com/docs/storage/web/handle-errors
@@ -42,6 +42,7 @@ function uploadToFirebase(file, callback) {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         // console.log('File available at', downloadURL);
+        console.log("downloadURL", downloadURL);
         callback(downloadURL);
       });
     }
@@ -111,23 +112,43 @@ export default function ProfileDetails() {
       },
       parentPhoneNo: data.parentPhoneNo,
       parentAltPhoneNo: data.parentAltPhoneNo,
-      photoURL: data.profilePhoto,
-      aadhaarCard: data.aadhaarCard,
+      photoURL: user.photoURL,
+      aadhaarCard: "",
       uid: user.uid,
     };
-    console.log(profile);
-    await detailadd(user.uid, {
-      details: profile,
-      displayName: data.studentFirstName,
-      photoURL: data.profilePhoto,
-    });
-    console.log(data);
-    if (data.profilePhoto)
+    console.log("profile", profile);
+    const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(userRef, profile); // exist condition update the doc
+    } else {
+      // taking same user reference trying to add user
+      await setDoc(userRef, {
+        ...profile,
+      });
+    }
+
+
+    if (data.profilePhoto) {
       uploadToFirebase(data.profilePhoto, (url) => {
         updateDoc(doc(db, "allusers", user.uid), {
+          displayName: getUserName(profile),
           photoURL: url,
         });
+        updateProfile(auth.currentUser, {
+          photoURL: url,
+        })
+          .then(() => {
+            // Profile updated!
+            // ...
+          })
+          .catch((error) => {
+            // An error occurred
+            // ...
+          });
       });
+    }
 
     if (data.aadhaarCard)
       uploadToFirebase(data.aadhaarCard, (url) => {
