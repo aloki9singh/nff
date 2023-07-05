@@ -2,13 +2,9 @@
 // chat section working or not needed to be checked
 
 import React, { useState, useEffect } from "react";
-
-import Sidebar from "../../components/common/sidebar/sidebar";
-import Navbar from "../../components/common/chat/navbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
-
 import {
   collection,
   query,
@@ -20,12 +16,9 @@ import {
   where,
 } from "firebase/firestore";
 
-
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../config/firebaseconfig";
 import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
-import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
@@ -66,9 +59,9 @@ const Chat = () => {
     );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let arr = [];
-      querySnapshot.forEach(async (doc) => {
+      querySnapshot.forEach(async (doc, i) => {
         let chat = doc.data();
-
+        console.log("chatGroup ", i, chat);
         arr.push(chat);
       });
       setChats(arr);
@@ -147,7 +140,7 @@ const Chat = () => {
     <>
       <div className="flex overflow-y-hidden">
         <div className="lg:col-span-1 hidden lg:grid">
-        <CourseoverviewSidebar pathname={router.pathname} />
+          <CourseoverviewSidebar pathname={router.pathname} />
         </div>
         <div className="w-full h-full">
           <div>

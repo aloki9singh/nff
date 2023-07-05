@@ -11,7 +11,7 @@ import { auth } from "@/config/firebaseconfig";
 import { Loading, userLogger } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
 
-const otpverification = () => {
+const Otpverification = () => {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [flag, setFlag] = useState(false);
@@ -178,4 +178,4 @@ const otpverification = () => {
   );
 };
 
-export default otpverification;
+export default Otpverification;

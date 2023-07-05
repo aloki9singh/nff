@@ -1,15 +1,17 @@
 // Verified by Pradhumn
 import React, { useContext, useEffect, useState } from "react";
 
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../config/firebaseconfig";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 const MentorFinal = ({ setRegStepCount, regStepCount }) => {
   const { loading, setLoading } = useContext(Loading);
-  const [id, setId] = useState("");
   const [mentor, setMentor] = useState();
+  const { user } = useAuthContext()
+  const id = user.uid;
+
   const [input, setInput] = useState({
     firstname: "",
     lastname: "",
@@ -76,17 +78,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
       setMentor(JSON.parse(localStorage.getItem("userdata")));
     }
     setInput(LSdata);
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is authenticated
-        // You can access the user's properties like user.uid, user.displayName, etc.
-        setId(user.uid);
-      } else {
-        // User is not authenticated
-      }
-    });
 
-    return () => unsubscribe(); // Cleanup the listener
   }, []);
 
   return (

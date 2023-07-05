@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "@/config/firebaseconfig";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import Image from "next/image";
 
 const Afterlogin = () => {
   const [user, setUser] = useState({});
@@ -88,7 +89,7 @@ const Afterlogin = () => {
                     </Link>
                   </div>
                   <div className="flex-1 justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">
-                    <img
+                    <Image
                       src="/pagesgraphics/student/coursedescription/laptop.svg"
                       width={250}
                       height={250}
@@ -109,7 +110,7 @@ const Afterlogin = () => {
                           {course.learn.map((learn) => (
                             <li key={course.id}>
                               <p className="flex my-6 text-sm">
-                                <img
+                                <Image
                                   src="/pagesgraphics/student/coursedescription/tick.svg"
                                   alt="tick"
                                   width={30}
@@ -163,7 +164,7 @@ const Afterlogin = () => {
                         <h2 className="text-base pt-8 pb-6">COURSE DETAILS</h2>
                         <p className="flex my-3 font-medium">
                           <span>
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/clock.svg"
                               width={22}
                               height={22}
@@ -175,7 +176,7 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/Lap.svg"
                               width={22}
                               height={22}
@@ -187,7 +188,7 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/ChartBar.svg"
                               width={22}
                               height={22}
@@ -199,7 +200,7 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/Globe.svg"
                               width={22}
                               height={22}
@@ -211,7 +212,7 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/Smiley.svg"
                               width={22}
                               height={22}
@@ -223,7 +224,7 @@ const Afterlogin = () => {
                         </p>
                         <p className="flex my-3">
                           <span>
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/Group_30.svg"
                               width={22}
                               height={22}
@@ -236,7 +237,7 @@ const Afterlogin = () => {
                         <div>
                           <h2 className="text-base pt-10">OUR EXPERT</h2>
                           <div className="flex my-7">
-                            <img
+                            <Image
                               src="/pagesgraphics/student/coursedescription/Ellipse_1.svg"
                               width={40}
                               height={40}
@@ -268,7 +269,7 @@ const Afterlogin = () => {
                       </div>
                       <div>
                         <div className="flex pt-2">
-                          <img
+                          <Image
                             src="/pagesgraphics/student/coursedescription/Male.svg"
                             width={40}
                             height={40}
@@ -301,7 +302,7 @@ const Afterlogin = () => {
                 <div className="md:flex gap-5  rounded-[30px] md:space-y-0 space-y-5  mt-10 md:mx-[0.5rem] mx-6 ">
                   <div className="border bg-black rounded-[30px] p-5   ">
                     <div className="flex justify-between">
-                      <img
+                      <Image
                         width={100}
                         height={100}
                         alt={"img"}
@@ -328,7 +329,7 @@ const Afterlogin = () => {
                   </div>
                   <div className="border bg-black rounded-[30px] p-5  ">
                     <div className="flex justify-between">
-                      <img
+                      <Image
                         width={100}
                         height={100}
                         alt={"img"}
@@ -355,7 +356,7 @@ const Afterlogin = () => {
                   </div>
                   <div className="border bg-black rounded-[30px] p-5  ">
                     <div className="flex justify-between">
-                      <img
+                      <Image
                         width={100}
                         height={100}
                         alt={"img"}

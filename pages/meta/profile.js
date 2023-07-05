@@ -1,9 +1,14 @@
+// needed to be work on top-courses, stats, edit profile
+
 import { useState } from "react";
 // import MentorSidebar from "../components/Schedule/MentorSidebar2";
 
 import CourseCard from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import {callUserById} from "@/lib/exportablefunctions"
+import { auth } from "@/config/firebaseconfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 import withAuth from "@/lib/context/mentorcontext"
 // import MobileNav from "../components/CalenderParts/MobileNav";
@@ -18,21 +23,26 @@ function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
+  const [uid, setUid] = useState("");
+  const [userData, setUserData] = useState({});
 
-  // uncomment below code for verifying  !mentor
-  // useEffect(() => {
-  //   if (!data.verified) {
-  //     router.push("/");
-  //   }
-  // }, []);
-  // if (!data.verified) {
-  //   return null; // Don't render the user if not verified
-  // }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log(user.uid);
+       callUserById(user.uid).then((data) => setUserData(data.user));
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+
+console.log(userData);
   return (
     <>
-      <div className="md:h-screen h-full  text-base bg-[#15161B]">
+      <div className="md:h-screen h-full w-full text-base bg-[#15161B]">
         <div className="flex">
-          <div className="lg:col-span-5 hidden lg:grid ">
+          <div className="lg:col-span-5 hidden lg:grid w-[261px] ">
             {" "}
             <MentorSidebar pathname={router.pathname} />
           </div>
@@ -47,7 +57,7 @@ function MentorProfile() {
                   <div className="flex">
                     {" "}
                     <Image
-                      src="/pagesgraphics/mentor/profile/ProfileGirlimg.svg"
+                      src={userData.photoURL ? userData.photoURL : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
                       alt="proImg"
                       height={100}
                       width={100}
@@ -55,7 +65,7 @@ function MentorProfile() {
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-35px]">
-                        Garvit Kumar
+                        {userData.displayName}
                       </div>
                       <div className="flex text-xs md:text-sm mt-[-25px]">
                         Edit profile
@@ -163,7 +173,7 @@ function MentorProfile() {
                     Educator highlights
                   </div>
                   <div className="text-center pt-2 pb-4 font-extralight">
-                    Worked at Neatskills
+                    Worked at {userData.details?.experience[0]?.companyname}
                   </div>
                   <div className="flex gap-2 text-sm font-medium">
                     {" "}
@@ -178,7 +188,7 @@ function MentorProfile() {
                     </span>{" "}
                     Studied at{" "}
                     <span className="text-[#E1348B] font-black">
-                      xxxxx(B.Tech.)
+                      {userData.details?.qualification[0]?.universityname}({userData.details?.qualification[0]?.fieldOfStudy})
                     </span>
                   </div>
                   <p className="ml-7  font-extralight text-sm opacity-75">
@@ -202,11 +212,11 @@ function MentorProfile() {
                     Lives in{" "}
                     <span className="text-[#E1348B] font-black">
                       {" "}
-                      Kota, Rajasthan, India
+                     {userData.details?.address}
                     </span>
                   </div>
                   <p className="ml-7  font-extralight text-sm opacity-75">
-                    Unacademy Educator since 10th March, 2022
+                    {userData.details?.experience[0]?.jobtitle} since {userData.details?.experience[0]?.startdate}
                   </p>
 
                   <div className="flex gap-2">
@@ -222,7 +232,11 @@ function MentorProfile() {
                     </span>{" "}
                     <span className="text-sm font-medium">
                       {" "}
-                      Knows Hinglish, Hindi and English
+                      Knows {userData.details?.skills.map((item)=>{
+                        return (<>
+                        {item }, 
+                        </>);
+                      })}
                     </span>
                   </div>
                 </div>

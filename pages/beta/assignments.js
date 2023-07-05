@@ -12,7 +12,7 @@ import AssignmentCard from "../components/Student/AssignmentCard";
 import { useRouter } from "next/router";
 import assignmentupload from "./assignmentupload";
 
-const assignments = () => {
+const Assignments = () => {
   const router = useRouter();
 
   let [searchstate, setsearchstate] = useState("");
@@ -174,6 +174,7 @@ const assignments = () => {
                   (assignment) => module == assignment.module
                 ).map((assignment, index) => (
                   <AssignmentCard
+                    key={index}
                     no={index + 1}
                     name={assignment.name}
                     date={assignment.date}
@@ -189,4 +190,4 @@ const assignments = () => {
   );
 };
 
-export default assignments;
+export default Assignments;

@@ -33,7 +33,7 @@ export default function StudyMaterialCard() {
     : material;
 
   return (
-    <div className="bg-[#2E3036] rounded-3xl h-[98%]">
+    <div className="h-[98%] w-full">
       <div className="w-fit mx-auto p-8">
         <select onChange={(e) => setSelectedOption(e.target.value)}>
           <option disabled selected hidden>
@@ -47,12 +47,12 @@ export default function StudyMaterialCard() {
         </select>
       </div>
 
-      <div className="flex justify-center flex-wrap gap-x-20 gap-y-10 m-5 ">
+      <div className="flex justify-center md:grid md:grid-cols-3 flex-wrap flex-col-3 gap-10 m-5 ">
         {filteredMaterial.map((study) => (
           <Link key={study.id} href="studyMaterial">
             <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-[400px] max-[420px]:w-fit md:gap-6">
               <div className="flex justify-between items-center">
-                <div className="m-3 w-[182px] w-fit mx-auto rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
+                <div className="m-3 w-[200px] mx-auto rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
                   <Image
                     src="/pagesgraphics/student/coursedescription/laptop.svg"
                     width={90}
@@ -60,7 +60,7 @@ export default function StudyMaterialCard() {
                     alt="course"
                     className="mx-auto"
                   />
-                  <h1 className="text-white w-full text-base font-medium text-center">
+                  <h1 className="text-white w-full text-sm font-medium text-center">
                     {study.title}
                   </h1>
                 </div>

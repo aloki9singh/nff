@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { contactFn } from "@/lib/api";
 
-const contact = () => {
+const Contact = () => {
   const [query, setQuery] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -136,4 +136,4 @@ const contact = () => {
   );
 };
 
-export default contact;
+export default Contact;

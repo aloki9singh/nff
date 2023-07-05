@@ -6,34 +6,25 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { auth } from "../../../config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import { logout } from "@/lib/exportablefunctions";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 
 //hardcoded
 
 export default function Dashboardnav({ heading, sendSideBarState }) {
-  const [user, setUser] = useState({});
   const [showSideBar, setShowSideBar] = useState(false);
+  const { user } = useAuthContext()
 
   function toogleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-    });
-    return () => {
-      unsubscribe();
-    };
-  });
-
   return (
-    <nav className="bg-[#2D2E35] border-b-[1px] border-[#728095] px-0 py-3">
+    <nav className="bg-[#2D2E35] border-b-[1px] border-[#728095] px-0 py-2">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
           <p className="text-white font-Inter text-2xl flex justify-start">
@@ -43,14 +34,14 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
         </div>
         <div className="flex items-center gap-x-4">
           <div
-            className="md:flex items-center gap-x-2 py-1 md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
+            className="md:flex items-center gap-x-2  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
             style={{ border: "1px solid #728095" }}
           >
             <AiOutlineSearch className="text-white text-2xl ml-4" />
             <input
               type="text"
               placeholder="Search"
-              className="focus:outline-none bg-inherit text-white"
+              className="focus:outline-none focus:border-none border-none bg-inherit text-white"
             />
           </div>
           {user && (
@@ -58,13 +49,13 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
               <IoMdNotificationsOutline className="text-3xl mr-2" />
               <div className="border border-white rounded-full h-12 w-12 flex justify-center items-center">
                 <Popover className="">
-                  <Popover.Button className="outline-none mt-[6px]">
+                  <Popover.Button className="outline-none ">
                     <Image
                       src={user.photoURL ? user.photoURL : "/User.png"}
                       alt="proImg"
-                      height={10}
-                      width={10}
-                      className="rounded-full h-13 w-12 object-contain"
+                      height={48}
+                      width={48}
+                      className="inline-block relative object-cover object-center !rounded-full aspect-square"
                     />
                   </Popover.Button>
                   <Transition
@@ -120,7 +111,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                           </Link>
 
                           <div className="text-[10px] p-2">
-                            <Link href="/profile">
+                            <Link href="/beta/profile">
                               <p className="mb-2">Profile</p>
                             </Link>
                             <Link href="/invite">
@@ -128,15 +119,15 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                             </Link>
                           </div>
                           <div className="text-[10px] p-2">
-                            <Link href="/contactUs">
+                            <Link href="/alpha/contactUs">
                               <p className="mb-2">Neat Skills Help Centre</p>
                             </Link>
-                            <Link href="/termsAndCondition">
+                            <Link href="/alpha/termsAndCondition">
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>
                           <div className="text-[10px] p-2">
-                            <p onClick={()=>logout()}>Logout</p>
+                            <p onClick={() => signOut(auth)}>Logout</p>
                           </div>
                         </div>
                       </div>

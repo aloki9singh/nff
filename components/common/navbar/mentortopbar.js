@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Link from "next/link";
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 const MentorTopbar = ({ heading }) => {
@@ -50,7 +50,8 @@ const MentorTopbar = ({ heading }) => {
 
           <div className="ml-12 flex space-x-4  ">
             <BiBell className="text-white text-2xl my-auto"></BiBell>
-            <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
+            <Link href="/meta/profile">
+            <BsPersonCircle className="text-white text-4xl"></BsPersonCircle></Link>
           </div>
         </div>
       </div>
