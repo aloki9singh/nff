@@ -5,6 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { adddate, selectSch } from "@/lib/context/contextprovider";
 import { callScheduleGetApiMentor } from "@/lib/mentorapi";
 import Image from "next/image";
+
+import {collection, query, orderBy, onSnapshot} from "firebase/firestore"
+
+import {db} from '@/config/firebaseconfig'
+
 let SideBody = ({ count, setCount }) => {
   const [schedules, setSchedules] = useState([]);
   const { date, setdate } = useContext(adddate);
@@ -23,19 +28,40 @@ let SideBody = ({ count, setCount }) => {
     setCount(2);
   };
 
+  // useEffect(() => {
+    // callScheduleGetApiMentor()
+    //   .then(({ mentorsSchedule }) => {
+    //     const filteredSchedules = mentorsSchedule.filter(
+    //       (e) => e.date.year + e.date.month + e.date.day === date
+    //     );
+    //     setSchedules(filteredSchedules);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      //   alert("Something went wrong!");
+      // });
+  // }, [date]);
+
+
   useEffect(() => {
-    callScheduleGetApiMentor()
-      .then(({ mentorsSchedule }) => {
-        const filteredSchedules = mentorsSchedule.filter(
-          (e) => e.date.year + e.date.month + e.date.day === date
-        );
-        setSchedules(filteredSchedules);
+    const q = query(collection(db, 'mentorsSchedule'))
+    onSnapshot(q, (querySnapshot) => {
+      const docSnapshots = querySnapshot.docs;
+
+        let arr = [];
+        for (var i in docSnapshots) {
+          const doc = docSnapshots[i].data();
+
+          console.log(doc.date.year+ doc.date.month+ doc.date.day == date)
+
+            arr.push(doc);
+          // }
+          }
+          setSchedules(arr);
       })
-      .catch((error) => {
-        console.log(error);
-        alert("Something went wrong!");
-      });
-  }, [date]);
+  },[])
+
+  console.log(schedules)
 
   return (
     <div className="w-full h-full  overflow-scroll-y  ">
@@ -65,7 +91,7 @@ let SideBody = ({ count, setCount }) => {
                   <Image
                     width={100}
                     height={100}
-                    src="./componentsgraphics/commo/calendar/sidebody/videoplayericon.svg"
+                    src="/componentsgraphics/common/calendar/sidebody/Videoplayericon.svg"
                     alt="player"
                     className="w-7px h-3 m-auto"
                   />
