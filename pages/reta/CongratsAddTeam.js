@@ -1,6 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import AddTeamPage from '@/pages/reta/addTeam';
+import { useEffect } from 'react';
+
 
 const CongratsAddTeam = () => {
   const glass = {
@@ -16,6 +18,16 @@ const CongratsAddTeam = () => {
   const handleCreateAnotherTeam = () => {
     router.push(addTeamPage);
   };
+
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = 'hidden';
+
+    // Re-enable scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   return (
     <>
