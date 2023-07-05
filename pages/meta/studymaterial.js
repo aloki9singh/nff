@@ -10,6 +10,7 @@ function StudyMaterial() {
             <MentorSidebar pathname={router.pathname} />
         </div>
         <div className=" col-span-5 lg:col-span-4">
+            
         <StudyMaterialCard />
     </div>
     </div>
