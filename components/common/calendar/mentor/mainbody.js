@@ -9,6 +9,11 @@ import CardMentor from "./card.js";
 import { useContext } from "react";
 import { adddate } from "@/lib/context/contextprovider";
 
+import {collection, query, orderBy, onSnapshot} from "firebase/firestore"
+
+import {db} from '@/config/firebaseconfig'
+
+
 const months = [
   "January",
   "February",
@@ -117,9 +122,20 @@ const Mainbodymentor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await callScheduleGetApiMentor();
-        setDataFetched(res.mentorsSchedule);
+        // const res = await callScheduleGetApiMentor();
+        const q = query(collection(db, 'mentorsSchedule'))
+        onSnapshot(q, (querySnapshot) => {
+          const docSnapshots = querySnapshot.docs;
+    
+            let arr = [];
+            for (var i in docSnapshots) {
+              const doc = docSnapshots[i].data();
+              console.log(doc);
+                arr.push(doc);
+              }
+        setDataFetched(arr);
         setLoading(false);
+            })
       } catch (error) {
         console.log(error);
         alert("Something went wrong!");
@@ -132,6 +148,9 @@ const Mainbodymentor = () => {
     setCurrentYear(Y);
   };
   console.log(combined);
+  console.log(dataFetched);
+
+
   return (
     <>
       <div
