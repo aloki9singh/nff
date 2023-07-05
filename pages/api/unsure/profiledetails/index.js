@@ -1,4 +1,4 @@
-import { profileDetailscollection } from "../../../components/config/firebaseConfig";
+import { profileDetailscollection } from "@/config/firebaseconfig";
 import { addDoc, doc, getDoc, getDocs, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 
 async function handler(req, res) {

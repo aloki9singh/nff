@@ -34,7 +34,7 @@ function Schedule() {
           <div className="w-[88%] flex-wrap max-[1024px]:w-[100%]  col-span-5 lg:col-span-4 md:rounded-l-3xl pt-2 h-full bg-[#2E3036]">
             <div className="flex justify-between lg:flex pt-3 md:static fixed w-full pb-2 bg-[#2E3036] top-0 md:rounded-l-10">
               <h1 className="text-white my-auto ml-12 md:text-2xl text-[19px]">
-                My Progress
+                Schedule
               </h1>
               <div className="mr-12 flex">
                 <div className="xl:w-96">

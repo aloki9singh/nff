@@ -1,4 +1,4 @@
-import { AssignmentsCollection } from "../../../config/firebaseConfig";
+import { AssignmentsCollection } from "@/config/firebaseconfig";
 import { addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 
 async function handler(req, res) {

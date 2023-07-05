@@ -40,13 +40,13 @@ function MentorProfile() {
 console.log(userData);
   return (
     <>
-      <div className="md:h-screen h-full  text-base bg-[#15161B]">
+      <div className="md:h-screen h-full w-full text-base bg-[#15161B]">
         <div className="flex">
-          <div className="lg:col-span-5 hidden lg:grid ">
+          <div className="lg:col-span-5 hidden lg:grid w-[261px] ">
             {" "}
             <MentorSidebar pathname={router.pathname} />
           </div>
-          <div className="md:rounded-l-[50px] pt-2 w-[87%] bg-[#2E3036] ">
+          <div className="md:rounded-l-[50px] pt-2 w-[90%] bg-[#2E3036] ">
             <MentorTopbar heading={"Profile"} />
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">

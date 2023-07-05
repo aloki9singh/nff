@@ -104,7 +104,7 @@ function MentorDashboard() {
                 </div>
               </div>
             </div> */}
-            <MentorTopbar heading={"My Progress"} />
+            <MentorTopbar heading={"Dashboard"} />
 
             <hr className="hidden lg:block opacity-50 m-3"></hr>
             <div className="md:flex gap-5 m-5 md:mt-0 mt-20">
