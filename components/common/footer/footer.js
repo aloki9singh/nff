@@ -11,7 +11,7 @@ import Link from "next/link";
 import LinksList from "./linkslist";
 import SocialLinks from "./sociallinks";
 
-export default function Footer() {
+export default function Footer({background}) {
    const CompanyInformationLinks = [
       {
          title: "About Us",
@@ -71,7 +71,7 @@ export default function Footer() {
 
    return (
 
-      <div className="flex flex-col items-center w-full bg-black">
+      <div className={`${background ? background : "bg-black "} flex flex-col items-center w-full`}>
          <div className="w-full max-w-[1440px] px-3 py-5  lg:px-7 lg:py-11 md:flex md:flex-row md:justify-between">
             <div className="w-full px-2 md:w-auto flex justify-between mb-[50px]">
                <Link href="/" className="">

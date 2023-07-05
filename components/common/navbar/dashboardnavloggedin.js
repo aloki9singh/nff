@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { useEffect, useState } from 'react';
-import { auth } from '../config/firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/config/firebaseconfig';
 
 export default function DashboardNav({ heading, sendSideBarState }) {
   const [user, setUser] = useState({});
