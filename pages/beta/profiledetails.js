@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { auth, db, storage } from "../../config/firebaseconfig";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { getUserName } from "@/lib/context/AuthContext";
@@ -19,7 +19,7 @@ function uploadToFirebase(file, callback) {
   // Listen for state changes, errors, and completion of the upload.
   uploadTask.on(
     "state_changed",
-    () => {},
+    () => { },
     (error) => {
       // A full list of error codes is available at
       // https://firebase.google.com/docs/storage/web/handle-errors
@@ -116,16 +116,27 @@ export default function ProfileDetails() {
       aadhaarCard: "",
       uid: user.uid,
     };
-    console.log(profile);
-    await setDoc(doc(db, "allusers", user.uid), profile);
+    console.log("profile", profile);
+    const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(userRef, profile); // exist condition update the doc
+    } else {
+      // taking same user reference trying to add user
+      await setDoc(userRef, {
+        ...profile,
+      });
+    }
+
 
     if (data.profilePhoto) {
       uploadToFirebase(data.profilePhoto, (url) => {
         updateDoc(doc(db, "allusers", user.uid), {
+          displayName: getUserName(profile),
           photoURL: url,
         });
         updateProfile(auth.currentUser, {
-          displayName: getUserName(profile),
           photoURL: url,
         })
           .then(() => {
