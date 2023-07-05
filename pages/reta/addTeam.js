@@ -1,8 +1,20 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import NavbarSecond from '@/components/common/navbar/navbar2';
+import Image from 'next/image';
+
+
 
 const AddTeam = () => {
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = 'hidden';
+
+    // Enable scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, []);
   // hook for dynamic form
   const [val, setVal] = useState(['a']);
   const [hover, setHover] = useState(false);
@@ -22,12 +34,15 @@ const AddTeam = () => {
         <section className='text-white'>
           <div className='container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between'>
             <div className='flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128'>
-              <img
-                src='/pagesgraphics/admin/AddTeam/amico.svg'
-                alt=''
-                className='object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128'
-              />
-            </div>
+    <Image
+      src='/pagesgraphics/admin/AddTeam/amico.svg'
+      alt=''
+      className='object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128'
+      
+      width={600}
+      height={400}
+    />
+  </div>
 
             <div className='flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left'>
               <h2 className='text-center text-3xl font-semibold'>
