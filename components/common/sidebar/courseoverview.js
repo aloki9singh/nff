@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 import { logout } from "@/lib/exportablefunctions";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { onAuthStateChanged } from "firebase/auth";
 const CourseoverviewSidebar = ({ pathname }) => {
   const [showSideBar, setShowSideBar] = useState(false);
   const router = useRouter();
@@ -18,15 +19,15 @@ const CourseoverviewSidebar = ({ pathname }) => {
   }
 
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-    });
-    return () => {
-      unsubscribe();
-    };
-  });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     console.log(currentUser);
+  //     setUser(currentUser);
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // });
   
 
   return (

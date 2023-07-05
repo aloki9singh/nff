@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import StudentTopbar from "@/components/common/navbar/studenttopbar";
@@ -14,10 +13,8 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/config/firebaseconfig";
 
-
 const Studentdashboard = () => {
-
-  const [active,setActive]=useState(false)
+  const [active, setActive] = useState(false);
   var [user, setUser] = useState({});
   var percentage = "0%";
   active ? (percentage = "75%") : (percentage = "0%"); //Control the percentage of the user here
@@ -27,7 +24,7 @@ const Studentdashboard = () => {
   active ? (user = "Rahul") : "Guest";
 
   const router = useRouter();
-  useEffect(()=>{
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
       setUser(currentUser);
@@ -35,9 +32,9 @@ const Studentdashboard = () => {
     return () => {
       unsubscribe();
     };
-  },[])
-  if(!user){
-    return null
+  }, []);
+  if (!user) {
+    return null;
   }
   return (
     <>
@@ -45,11 +42,8 @@ const Studentdashboard = () => {
         <div className="flex">
           <div className="lg:col-span-1 hidden lg:grid">
             {" "}
-
-            
-          {/* <Sidebar pathname={router.pathname}/> */}
-          <CourseoverviewSidebar pathname={router.pathname} />
-
+            {/* <Sidebar pathname={router.pathname}/> */}
+            <CourseoverviewSidebar pathname={router.pathname} />
           </div>
           <div
             style={{ background: "#2E3036" }}
@@ -61,19 +55,16 @@ const Studentdashboard = () => {
 
             {/* /// */}
             <div className="md:flex gap-2 m-3 md:mt-0 mt-14 text-white">
-              <div className="md:space-y-5 w-full">
+              <div className="md:space-y-5 w-full ">
                 <Advertisement />
                 {/* //welcomebar */}
                 <Progress percentage={percentage} user={user.displayName} />
 
-                 {active?<ActiveComp/>: <InActiveComp/>}
-              </div>  
-                <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4">
-                  <div>
-
-
+                {active ? <ActiveComp /> : <InActiveComp />}
+              </div>
+              <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 ">
+                <div>
                   <Calendar />
-
                 </div>
                 {/* //Daily tip section open */}
                 <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
@@ -90,17 +81,13 @@ const Studentdashboard = () => {
                 {/* //Daily tip section close */}
                 <div>
                   {" "}
-
                   <LeaderBoardMentor />
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className=" ">
-          {/* <MobileNav></MobileNav> */}
-        </div>
+        <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
     </>
   );
