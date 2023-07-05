@@ -94,8 +94,8 @@ const StateDropdown = ({ title }) => {
           </div>
           {isOpen && (
             <div className="absolute top-6 right-0 z-10 mt-4 min-w-[200px] origin-top-right rounded-md border border-gray-100 bg-[#2E3036] shadow-lg">
-              {options.map((option) => (
-                <div>
+              {options.map((option, i) => (
+                <div key={i}>
                   <a
                     href="javascript:void(0)"
                     onClick={onOptionClicked(option)}

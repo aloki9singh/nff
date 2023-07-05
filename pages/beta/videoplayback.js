@@ -1,21 +1,21 @@
 // import Sidebar from '../components/Sidebar/sidebar';
-import Image from 'next/image';
-import laptop from '@/public/pagesgraphics/student/videoplayback/Group 11.svg';
-import { IoIosArrowForward } from 'react-icons/io';
-import { AiFillLock } from 'react-icons/ai';
+import Image from "next/image";
+import laptop from "@/public/pagesgraphics/student//Group 11.svg";
+import { IoIosArrowForward } from "react-icons/io";
+import { AiFillLock } from "react-icons/ai";
 import {
   CircularProgressbar,
   CircularProgressbarWithChildren,
   buildStyles,
-} from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { db } from '@/config/firebaseconfig';
-import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
-import Sidebar from '@/components/common/sidebar/sidebar';
-import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import CourseVideoPlayer from '@/components/student/courses/videoplayer';
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { db } from "@/config/firebaseconfig";
+import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
+import Sidebar from "@/components/common/sidebar/sidebar";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import CourseVideoPlayer from "@/components/student/courses/videoplayer";
 
 const VideoPlayer = ({ videoUrl }) => {
   return (

@@ -23,7 +23,7 @@ const detailadd = async (id) => {
     console.log("Data Added Successfully");
   }
 };
-const signupsuccess = () => {
+const Signupsuccess = () => {
   const router = useRouter();
 
   const displayName = router.query.email;
@@ -98,4 +98,4 @@ const signupsuccess = () => {
   );
 };
 
-export default signupsuccess;
+export default Signupsuccess;

@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-const profile = () => {
+const Profile = () => {
     const[user,setUser]=useState({})
   
   useEffect(() => {
@@ -21,4 +21,4 @@ const profile = () => {
   return <div>profile</div>;
 };
 
-export default profile;
+export default Profile;
