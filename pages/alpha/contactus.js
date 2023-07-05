@@ -1,7 +1,3 @@
-/////main body CSS and nav bar needed to be fixed with responsiveness  //currently mainbody css is fixed  without figma 
-// needed to connect form with backend  to receive mail  // connected to backend
-// ------------------>navbar need to be fixed
-
 import NavbarSecond from "@/components/common/navbar/navbar2";
 import Sidebar from "@/components/common/sidebar/sidebar";
 import Image from "next/image";
@@ -17,13 +13,11 @@ const contact = () => {
   return (
     <>
       <div className="flex h-screen">
-        <div className="lg:col-span-1 hidden lg:grid">
-          <Sidebar />
-        </div>
+        <Sidebar />
         <div className="w-full h-full flex flex-col">
           <NavbarSecond buttonVis="hidden" title="Contact Us" />
-          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
-            <div className="w-[90%] md:flex md:bg-[#373A41] md:my-5 rounded-[30px] h-fit">
+          <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
+            <div className="w-[90%] flex bg-[#373A41] rounded-[30px] h-fit">
               {/* LEFT */}
               <div className="flex-1 md:bg-[#141518] rounded-l-[30px] ">
                 <h1 className="mb-[#728095] text-2xl border-b border-[#728095] md:px-8 py-5">

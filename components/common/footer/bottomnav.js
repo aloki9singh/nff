@@ -9,7 +9,7 @@ import {
  export default function MobileNav({ className }) {
     return (
        <div
-          className={`${className} bg-black flex p-3  justify-evenly opacity-50 lg:hidden  text-white text-4xl `}
+          className={`${className} bg-black flex p-3 sticky bottom-0 justify-evenly opacity-80 md:hidden  text-white text-4xl `}
        >
           <div className=" ">
              <div className="flex justify-center ">
