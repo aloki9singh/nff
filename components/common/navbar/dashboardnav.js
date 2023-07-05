@@ -6,31 +6,22 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { auth } from "../../../config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import { logout } from "@/lib/exportablefunctions";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 
 //hardcoded
 
 export default function Dashboardnav({ heading, sendSideBarState }) {
-  const [user, setUser] = useState({});
   const [showSideBar, setShowSideBar] = useState(false);
+  const { user } = useAuthContext()
 
   function toogleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-    });
-    return () => {
-      unsubscribe();
-    };
-  });
 
   return (
     <nav className="bg-[#2D2E35] border-b-[1px] border-[#728095] px-0 py-3">
@@ -58,13 +49,13 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
               <IoMdNotificationsOutline className="text-3xl mr-2" />
               <div className="border border-white rounded-full h-12 w-12 flex justify-center items-center">
                 <Popover className="">
-                  <Popover.Button className="outline-none mt-[6px]">
+                  <Popover.Button className="outline-none ">
                     <Image
                       src={user.photoURL ? user.photoURL : "/User.png"}
                       alt="proImg"
-                      height={10}
-                      width={10}
-                      className="rounded-full h-13 w-12 object-contain"
+                      height={48}
+                      width={48}
+                      className="inline-block relative object-cover object-center !rounded-full aspect-square"
                     />
                   </Popover.Button>
                   <Transition
@@ -136,7 +127,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                             </Link>
                           </div>
                           <div className="text-[10px] p-2">
-                            <p onClick={()=>logout()}>Logout</p>
+                            <p onClick={() => signOut(auth)}>Logout</p>
                           </div>
                         </div>
                       </div>
