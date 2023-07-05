@@ -1,4 +1,4 @@
-import { courseAssignmentCollection } from "../../../config/firebaseConfig";
+import { courseAssignmentCollection } from "@/config/firebaseconfig";
 import { addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 
 async function handler(req, res) {
@@ -6,7 +6,7 @@ async function handler(req, res) {
     try {
         switch (method) {
             case "GET":
-                const querySnapshot = await getDocs(CourseAssignmentCollection);
+                const querySnapshot = await getDocs(courseAssignmentCollection);
                 const courseAssignments = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),

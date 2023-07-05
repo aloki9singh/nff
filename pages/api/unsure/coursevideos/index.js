@@ -4,7 +4,7 @@ import {
     collection,
     serverTimestamp,
   } from "firebase/firestore";
-  import { db } from "../../../config/firebaseConfig";
+  import { db } from "@/config/firebaseconfig";
   
   export default async function handler(req, res) {
     const { method } = req;

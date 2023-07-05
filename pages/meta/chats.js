@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 
 import MentorSidebar from "@/components/common/sidebar/mentor";
-import Navbar from "../../components/common/chat/navbar";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
@@ -147,9 +147,9 @@ const Chat = () => {
         <div className="lg:col-span-1 hidden lg:grid w-[250px]">
           <MentorSidebar />
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full bg-[#2f3036] rounded-l-3xl">
           <div>
-            <Navbar />
+          <MentorTopbar heading={"Chats"} />
             <hr className="hidden lg:block opacity-50 mt-3 " />
           </div>
           <div

@@ -1,4 +1,3 @@
-import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 import { useState } from "react";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -8,12 +7,13 @@ import { MdOutlinePrivacyTip } from "react-icons/md";
 // import Subscription from "../components/settingspart/subscription";
 import Notification from "@/components/student/setting/notification";
 import Privacy from "@/components/student/setting/privacy";
-import Sidebar from "@/components/common/sidebar/school";
+import MentorSidebar from "@/components/common/sidebar/mentor";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
+import { useRouter } from "next/router";
 
-function Settings() {
-
-
-
+function settings() {
+    const router = useRouter()
+  let [SubscriptionState, setSubscriptionState] = useState(false);
   let [NotificationState, setNotificationState] = useState(true);
   let NotificationFun = () => {
     setNotificationState(true);
@@ -39,18 +39,18 @@ function Settings() {
     <div className=" h-full  text-base bg-black">
       <div className="flex overflow-y-hidden">
         
-      <div className="lg:col-span-1 hidden lg:grid">
+      <div className="lg:col-span-1 hidden lg:grid bg-black w-[261px]">
                         {" "}
-                        <Sidebar/>
+                        <MentorSidebar pathname={router.pathname} />
                     </div>
         {/* sidebar with a div of discord community must be added once made */}
-        <div className="w-full h-[100vh] rounded-tl-[8%] mx-auto rounded-bl-[5%] bg-[#2D2E35] col-span-6 md:col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 ">
-        <SchoolTopbar heading={"Settings"} />
-          <hr className="hidden lg:block opacity-50  "/>
-          <div className="flex min-h-screen rounded-2xl p-2  md:p-4 mx-2 my-8 md:mx-4  justify-between md:my-auto ">
-            <div className="md:grid  md:grid-cols-6 md:w-full md:my-auto self-start">{/* self-start only for sm */}
-              <div className=" w-full  md:col-span-1 p-2 my-4 md:my-auto flex justify-between gap-x-3 md:block">
-              <div className="my-auto md:my-9 hover:opacity-80 flex-1">
+        <div className="w-full h-[100vh] md:rounded-l-3xl  mx-auto bg-[#2D2E35] col-span-6 md:col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 ">
+        <MentorTopbar heading={"Settings"} />
+          <hr className="hidden lg:block opacity-50"/>
+          <div className="flex min-h-screen rounded-2xl p-2  md:p-4 mx-2 md:mx-4 justify-between">
+            <div className="md:grid  md:grid-cols-6 md:w-full self-start">{/* self-start only for sm */}
+              <div className=" w-full  md:col-span-1 p-2 flex justify-between gap-x-3 md:block">
+              <div className=" md:my-9 hover:opacity-80 flex-1">
                   {NotificationState ? (
                     <div
                       className="mx-auto  w-auto md:w-40 min-w-fit rounded-2xl  py-2 text-white bg-gradient-to-r from-[#A145CD] to-[#E1348B] cursor-pointer   md:px-8 md:py-4"
@@ -147,4 +147,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default settings;
