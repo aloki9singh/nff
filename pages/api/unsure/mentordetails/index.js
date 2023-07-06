@@ -1,4 +1,4 @@
-import { mentorsCollection } from "../../../config/firebaseConfig";
+import { mentorsCollection } from "@/config/firebaseconfig";
 import {
   getDocs,
   addDoc,

@@ -7,6 +7,7 @@ import { callUserById } from "@/lib/exportablefunctions";
 import { auth } from "@/config/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
 
+
 import withAuth from "@/lib/context/mentorcontext";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import MentorSidebar from "@/components/common/sidebar/mentor";
@@ -21,7 +22,7 @@ import { FaGreaterThan } from "react-icons/fa";
 
 import { Tabs, Tab } from "@/components/student/profile/Tabs";
 
-function MentorProfile() {
+function Profile() {
   const router = useRouter();
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
   const [uid, setUid] = useState("");
@@ -326,4 +327,5 @@ function MentorProfile() {
     </>
   );
 }
-export default withAuth(MentorProfile, "/meta/signup");
+export default Profile;
+

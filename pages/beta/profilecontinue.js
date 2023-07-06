@@ -12,7 +12,7 @@ import { Loading } from "@/lib/context/contextprovider";
 
 const ProfileContinuepage = () => {
   const router = useRouter();
-  const data = { verified: true };
+
   const { loading, setLoading } = useContext(Loading);
   function handleContinueClick() {
     router.push("/beta/profiledetails");
@@ -28,6 +28,7 @@ const ProfileContinuepage = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
+        const data = { verified: true };
         await detailadd(user.uid, data);
         await callEmailApi({
           displayName: user.email.substring(0, 5),

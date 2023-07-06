@@ -2,7 +2,7 @@
 import SignUp from '@/components/common/homepage/signup/signup';
 import React from 'react';
 
-function signup() {
+function Signup() {
   return (
     <div>
       <SignUp/>
@@ -10,4 +10,4 @@ function signup() {
   );
 }
 
-export default signup;
+export default Signup;

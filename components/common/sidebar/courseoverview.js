@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 import { logout } from "@/lib/exportablefunctions";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { onAuthStateChanged } from "firebase/auth";
 const CourseoverviewSidebar = ({ pathname }) => {
   const [showSideBar, setShowSideBar] = useState(false);
   const router = useRouter();
@@ -17,6 +18,17 @@ const CourseoverviewSidebar = ({ pathname }) => {
     sendSideBarState(showSideBar);
   }
 
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     console.log(currentUser);
+  //     setUser(currentUser);
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // });
+  
 
   return (
     <>
@@ -141,7 +153,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         </label>
                       </Link>
                       <Link
-                        href="/beta/homework"
+                        href="/beta/assignments"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
                       >
                         <label className="inline-flex items-center space-x-3">
@@ -172,10 +184,12 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
+
                             className={`ml-3 text-[${router.pathname == "/beta/chats"
                               ? "#E1348B"
                               : ""
                               }]`}
+
                           >
                             Chats
                           </span>
@@ -193,9 +207,16 @@ const CourseoverviewSidebar = ({ pathname }) => {
                             className="form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 text-[${router.pathname == "/beta/profile" ? "#E1348B" : ""
-                              }]`}
-                          >Profile</span>
+
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/profile"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
+                          >
+                            Profile
+                          </span>
+
                         </label>
                       </Link>
                       {user ? (

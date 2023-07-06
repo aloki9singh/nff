@@ -2,7 +2,7 @@
 import React from 'react';
 import SchoolLoginComp from '@/components/school/login/login';
 
-function schoolLogin() {
+function SchoolLogin() {
     return (
         <div className={
             "w-screen h-screen bg-blu flex flex-col md:flex-row "
@@ -12,4 +12,4 @@ function schoolLogin() {
     );
 }
 
-export default schoolLogin;
+export default SchoolLogin;

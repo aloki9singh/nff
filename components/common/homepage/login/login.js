@@ -30,9 +30,10 @@ function LoginComp() {
   const [role, setRole] = useState("student");
   const { loading, setLoading } = useContext(Loading);
   const login = async (email, pass) => {
-    setLoading(true);
+   
     signInWithEmailAndPassword(auth, email, pass)
       .then((userCredential) => {
+        setLoading(true);n
         // Log in successful
         const user = userCredential.user;
 

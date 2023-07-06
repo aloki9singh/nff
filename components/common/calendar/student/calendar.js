@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Datelist from "../common/datelist";
 import MonthSelector from "../common/monthselector";
 // import DateWithDay from "./DateWithDay"; //this was commented in the prev fol structure as well
+
+
 const months = [
   "January",
   "February",

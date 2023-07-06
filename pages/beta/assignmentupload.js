@@ -8,7 +8,7 @@ import { ref } from "firebase/storage";
 import { storage } from "../components/config/firebaseConfig";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 
-const assignmentupload = () => {
+const Assignmentupload = () => {
     const [file, setFile] = useState("");
     const [uploadState, setUploadState] = useState("neutral");
     const [title, setTitle] = useState("");
@@ -182,4 +182,4 @@ const assignmentupload = () => {
     );
 };
 
-export default assignmentupload;
+export default Assignmentupload;

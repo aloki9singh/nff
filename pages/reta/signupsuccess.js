@@ -17,7 +17,7 @@ const Signupsuccess = () => {
     if (!isAdmin) {
       router.push('/');
     }
-  }, []);
+  }, [router]);
 
   if (!isAdmin) {
     return null;

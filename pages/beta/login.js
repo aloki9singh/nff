@@ -1,6 +1,6 @@
 import LoginComp from "@/components/common/homepage/login/login";
 
-function login() {
+function Login() {
   return (
     <div>
       <LoginComp />
@@ -8,4 +8,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;

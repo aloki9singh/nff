@@ -1,35 +1,95 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
-import { studentsArr } from "@/lib/arraytomap";
 import { useSelector } from "react-redux";
 
-function mentorStudent() {
+function MentorStudent() {
     const [count, setCount] = useState(1);
     // const { data } = useSelector((state) => state.authManagerMentor);
-    let [searchstate, setsearchstate] = useState("");
+    const [studentData, setStudentData] = useState()
+    const [initialcount, setinitialCount] = useState(0)
+    const [gap, setGap] = useState(10)
+    const [hide, setHide] = useState(true)
+    const [id, setId] = useState()
+    const [filterData, setFilterData] = useState()
+    let [searchstate, setsearchstate] = useState();
     const router = useRouter();
     let searchfun = (e) => {
-        setsearchstate(e.target.value);
+        setsearchstate(e.target.value)
     };
+    
+    useEffect(() => {
+        setStudentData(filterData && filterData.filter((ele) => {return ele.displayName.includes(searchstate)}))
+    },[searchstate])
 
     const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
     const tabClass = "w-10 h-10 rounded-xl";
 
 
+    useEffect(() => {
+        fetch("/api/signup")
+            .then((response) => response.json())
+            .then((data) => {
+                setFilterData(data.users.filter((ele) => {
+                    return ele.role == "student"
+                }))
+                setStudentData(data.users.filter((ele) => {
+                    return ele.role == "student"
+                }))
+            })
+    }, [])
+    function handleChange(e) {
+        e.preventDefault()
+        setId(e.target.value)
+    }
+    function handleSubmit() {
+        fetch(`/api/signup/${id}`, {
+            method: "DELETE"
+        }).then((response) => response.json()).then((data) => alert(data.msg))
+    }
+    function handleClick(e) {
+        const totalPage = Math.ceil(studentData.length / 10);
+
+        switch (e.currentTarget.getAttribute("name")) {
+            case "fwd":
+                if (count < totalPage) {
+                    setCount(count + 1);
+                    setinitialCount(initialcount + 10);
+                    setGap(gap + 10);
+                }
+                break;
+
+            case "back":
+                if (count > 1) {
+                    setCount(count - 1);
+                    setinitialCount(initialcount - 10);
+                    setGap(gap - 10);
+                }
+                break;
+
+            default:
+                const pageNumber = parseInt(e.currentTarget.getAttribute("name"));
+                if (pageNumber >= 1 && pageNumber <= totalPage) {
+                    setCount(pageNumber);
+                    setinitialCount((pageNumber - 1) * 10);
+                    setGap(pageNumber * 10);
+                }
+                break;
+        }
+    }
     return (
         <>
-            <div className="h-screen text-base bg-[#2E3036] ">
+            <div className="h-screen text-base">
                 <div className="flex max-w-full">
                     <div className="lg:col-span-1 hidden lg:grid w-[261px]">
                         {" "}
                         <MentorSidebar pathname={router.pathname} />
                     </div>
-                    <div className="col-span-5 lg:col-span-4 bg-[#2E3036] md:rounded-l-3xl pt-2 w-screen overflow-y-scroll scrollbar-hide text-white">
-                        <MentorTopbar heading={"My Progress"} />
+                    <div className="col-span-5 rounded-l-3xl  lg:col-span-4 bg-[#2E3036] pt-2 w-screen overflow-y-scroll scrollbar-hide text-white">
+                        <MentorTopbar heading={"Student Data"} />
                         <hr className="hidden lg:block opacity-50 mt-4"></hr>
                         {/* Dropdown bar */}
                         <div className="gap-5 mx-8 max-[700px]:mx-4 md:mt-0 mt-20">
@@ -89,9 +149,16 @@ function mentorStudent() {
                                         </span>
                                         Filter
                                     </button>
-                                    <button className="bg-[#414348] rounded-xl w-fit h-fit flex px-8 py-2.5 ">
+                                    <button className="bg-[#414348] rounded-xl w-fit h-fit flex px-8 py-2.5" onClick={() => setHide(!hide)}>
                                         Remove a Student
                                     </button>
+                                    {!hide && <div className="absolute right-[1%] bg-black p-4 rounded-2xl w-fit top-[18%]">
+                                        <form className="flex flex-col" onSubmit={handleSubmit}>
+                                            <input type="text" name="delete" id="delete" className="text-black" value={id} onChange={handleChange} placeholder="Enter the uid of student" />
+                                            <button className="my-2 bg-[#A145CD] text-white w-fit p-2 mx-auto rounded-lg" type="submit">Delete student</button>
+                                        </form>
+                                    </div>}
+
                                 </div>
                             </div>
 
@@ -143,45 +210,42 @@ function mentorStudent() {
               </div> */}
                         </div>
 
-
-
-
                         {/* table */}
-                        <div className="ms-[2%] me-[2%] h-fit bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
+                        <div className="ms-[2%] me-[2%] h-[712px] bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
                             <div className="">
                                 <table className="w-full  ">
                                     <thead className="  items-center  border-b  ">
-                                        <tr className=" flex font-semibold  justify-around p-5 space-x-2">
-                                            <th className=" inline">Student Name</th>
-                                            <th className="">Id</th>
-                                            <th className="">Class</th>
-                                            <th className="md:block hidden">Active</th>
-                                            <th className="md:block hidden">Courses</th>
-                                            <th className="">Action</th>
+                                        <tr className=" flex font-semibold  justify-around p-5 mx-4">
+                                            <th className="w-[16.6%]">Student Name</th>
+                                            <th className="w-[16.6%]">Id</th>
+                                            <th className="w-[16.6%]">Class</th>
+                                            <th className="w-[16.6%] md:block hidden">Active</th>
+                                            <th className="w-[16.6%] md:block hidden">Courses</th>
+                                            <th className="w-[16.6%]">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="flex justify-center flex-col items-center mt-4 space-y-6 p-2">
-                                        {studentsArr &&
-                                            studentsArr.map((e, i) => (
+                                    <tbody className="flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6">
+                                        {studentData &&
+                                            (studentData.slice(initialcount, gap)).map((e, i) => (
                                                 <tr
-                                                    className="flex space-x-4 items-center w-full font-medium text-xs text-center justify-around "
+                                                    className="flex items-center w-full font-medium text-xs justify-around "
                                                     key={i}
                                                 >
-                                                    <td className="flex items-center gap-2">
+                                                    <td className="flex items-center gap-2 w-[16.6%] ">
                                                         <Image
-                                                            src={e.image}
+                                                            src={e.photoURL ? e.photoURL : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"}
                                                             alt="img"
                                                             height={25}
                                                             width={25}
                                                             className="rounded-full h-8  object-contain inline"
                                                         />
-                                                        Rachit Rajput
+                                                        {e.displayName}
                                                     </td>
-                                                    <td className="">ID : {e.ID}</td>
-                                                    <td className="">{e.Class}</td>
-                                                    <td className="md:block hidden">{e.Active}</td>
-                                                    <td className="md:block hidden">{e.Courses}</td>
-                                                    <td className=" text-[#E1348B]">
+                                                    <td className="w-[16.6%] ">ID : {e.uid}</td>
+                                                    <td className="w-[16.6%] text-center ">{e?.class}</td>
+                                                    <td className="w-[16.6%] text-center md:block hidden">{e?.active}</td>
+                                                    <td className="w-[16.6%] text-center md:block hidden">{e?.courses}</td>
+                                                    <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]">
                                                         <Link href="">View Profile</Link>
                                                     </td>
                                                 </tr>
@@ -191,7 +255,7 @@ function mentorStudent() {
                             </div>
                             {/* pagination */}
                             <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
-                                <button className="w-6 h-5 border flex justify-center items-center">
+                                <button className="w-6 h-5 border flex justify-center items-center" name="back" onClick={handleClick}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -207,10 +271,10 @@ function mentorStudent() {
                                         />
                                     </svg>
                                 </button>
-                                <button className={activeTabClass}>1</button>
-                                <button className={tabClass}>2</button>
-                                <button className={tabClass}>3</button>
-                                <button className="w-6 h-5 border flex justify-center items-center">
+                                <button className={count == 1 ? activeTabClass : tabClass} name="1" onClick={handleClick}>1</button>
+                                <button className={count == 2 ? activeTabClass : tabClass} name="2" onClick={handleClick}>2</button>
+                                <button className={count == 3 ? activeTabClass : tabClass} name="3" onClick={handleClick}>3</button>
+                                <button className="w-6 h-5 border flex justify-center items-center" name="fwd" onClick={handleClick}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -240,4 +304,4 @@ function mentorStudent() {
         </>
     );
 }
-export default mentorStudent;
+export default MentorStudent;
