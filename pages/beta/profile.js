@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
 import { FaGreaterThan } from "react-icons/fa";
 
-// No need to fix
+// Some bugs are there which are yet need to fix
 
 import { Tabs, Tab } from "@/components/student/profile/Tabs";
 
