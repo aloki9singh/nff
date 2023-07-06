@@ -22,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const MentorChart = ({ data }) => {
+const StudentChart = ({ data }) => {
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -52,6 +52,7 @@ const MentorChart = ({ data }) => {
           data: data,
           borderColor: "rgb(53, 162, 235)",
           backgroundColor: ["#728095", "#A145CD"],
+          borderRadius: 10,
         },
       ],
     });
@@ -60,6 +61,7 @@ const MentorChart = ({ data }) => {
         legend: {
           position: "top",
           display: false,
+          borderRadius: 10,
         },
         // title: {
         //   display: true,
@@ -71,9 +73,9 @@ const MentorChart = ({ data }) => {
       elements: {
         bar: {
           backgroundColor: "#373A41",
-          // borderRadius: 10,
-          // borderSkipped: "bottom",
-          // barThickness: 20,
+          borderRadius: 10,
+          borderSkipped: "bottom",
+          barThickness: 20,
         },
       },
       scales: {
@@ -103,11 +105,10 @@ const MentorChart = ({ data }) => {
 
   return (
     <>
-      <div className="md:w-[460px] md:h-[204px] md:col-span-2 p-3 rounded-[20px] m-auto bg-[#373A41] ">
+     
         <Bar data={chartData} options={chartOptions} />
-      </div>
     </>
   );
 };
 
-export default MentorChart;
+export default StudentChart;
