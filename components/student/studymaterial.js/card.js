@@ -33,9 +33,9 @@ export default function StudyMaterialCard() {
     : material;
 
   return (
-    <div className="h-[98%] w-full">
-      <div className="w-fit mx-auto p-8">
-        <select onChange={(e) => setSelectedOption(e.target.value)}>
+    <div className="h-full w-full">
+      <div className="w-fit p-8">
+        <select className="bg-[#A145CD] text-white rounded-xl px-12" onChange={(e) => setSelectedOption(e.target.value)}>
           <option disabled selected hidden>
             Select an option
           </option>
@@ -47,7 +47,7 @@ export default function StudyMaterialCard() {
         </select>
       </div>
 
-      <div className="flex justify-center md:grid md:grid-cols-3 flex-wrap flex-col-3 gap-10 m-5 ">
+      <div className="flex bg-[#373A41] rounded-[40px] p-12 justify-center md:grid md:grid-cols-3 flex-wrap flex-col-3 gap-10 m-5 mt-1 ">
         {filteredMaterial.map((study) => (
           <Link key={study.id} href="studyMaterial">
             <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-[400px] max-[420px]:w-fit md:gap-6">

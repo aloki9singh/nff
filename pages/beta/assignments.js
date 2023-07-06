@@ -7,7 +7,7 @@ import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import Image from "next/image";
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import AssignmentCard from "../components/Student/AssignmentCard";
+import AssignmentCard from "@/components/student/assignments/foldercard";
 
 import { useRouter } from "next/router";
 import assignmentupload from "./assignmentupload";

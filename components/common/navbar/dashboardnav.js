@@ -24,7 +24,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
   }
 
   return (
-    <nav className="bg-[#2D2E35] border-b-[1px] border-[#728095] px-0 py-2">
+    <nav className="border-b-[1px] border-[#728095] px-0 py-2">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
           <p className="text-white font-Inter text-2xl flex justify-start">

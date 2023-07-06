@@ -32,8 +32,8 @@ const CourseoverviewSidebar = ({ pathname }) => {
 
   return (
     <>
-      <aside className="h-full left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-3 ">
-        <div className=" h-full  ">
+      <aside className="flex flex-col w-[200px] px-3 ">
+        <div className=" h-full">
           <div className="">
             <div className="relative">
               <Image
@@ -44,7 +44,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                 className="pt-5 mb-5"
               />
             </div>
-            <div className="flex flex-col h-full   justify-around ">
+            <div className="flex flex-col h-full justify-around ">
               <ul>
                 <li className="space-y-[14px]">
                   <Link
@@ -77,8 +77,7 @@ const CourseoverviewSidebar = ({ pathname }) => {
                         className="form-checkbox h-3 w-3 text-gray-600"
                       />{" "}
                       <span
-                        className={`ml-3 text-[${pathname == "/beta/courseoverview" ? "#E1348B" : ""
-                          }]`}
+                        className={`ml-3 text-[${pathname == "/beta/courseoverview" ? "#E1348B" : ""}]`}
                       >
                         Courses
                       </span>

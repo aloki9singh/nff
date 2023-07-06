@@ -159,7 +159,6 @@ const InActiveComp = () => {
                 width={110}
                 height={110}
                 alt={"img"}
-
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
 
