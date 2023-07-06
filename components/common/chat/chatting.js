@@ -21,7 +21,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../../config/firebaseconfig";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
-import AudioRecorder from "./AudioRecorder";
+import AudioRecorder, { AudioPlayer } from "./AudioRecorder";
 
 function formatTimePassed(messageTimestamp) {
   if (!messageTimestamp) return "";
@@ -113,6 +113,31 @@ const ImageMessage = ({ img, userIcon, isSender = false }) => {
       </div>
       <div>
         <Avatar alt="Profile-Picture" src={userIcon} />
+      </div>
+    </div>
+  );
+};
+
+const AudioMessage = ({ audio, userIcon, timestamp, isSender = false }) => {
+  return (
+    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
+      <div>
+        <Avatar
+          alt="Profile-Picture"
+          src={
+            userIcon || "/componentsgraphics/common/chatting/user/profile.svg"
+          }
+        />
+      </div>
+      <div
+        className="p-2 py-3 max-w-[80%] rounded-[10px] flex flex-col"
+        style={{ backgroundColor: " #717378" }}
+      >
+        {/* <audio src={message.content} controls /> */}
+        <AudioPlayer src={audio} />
+        <span className="text-[9px] bg-black p-1 rounded-[8px] mr-auto text-left">
+          {formatTimePassed(timestamp)}
+        </span>
       </div>
     </div>
   );
@@ -273,6 +298,17 @@ const Chat = ({
         <div className="flex flex-col mt-4 gap-4 w-full no-srollbar  overflow-y-auto flex-5">
           {messages.map((message, i) => {
             {
+              if (message.type === "audio")
+                return (
+                  <AudioMessage
+                    userIcon={message.sender?.photoURL}
+                    audio={message.content}
+                    isSender={message.senderId === user?.uid}
+                    timestamp={message.timestamp}
+                  />
+                );
+              1;
+
               if (message.type === "image") {
                 return (
                   <ImageMessage
@@ -371,7 +407,7 @@ const Chat = ({
               />
               <div
                 onClick={() => {
-                  setShowRecorder(true)
+                  setShowRecorder(true);
                 }}
                 className="flex items-center p-2"
                 style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
@@ -393,9 +429,10 @@ const Chat = ({
             </button>
           </form>
         ) : (
-          <AudioRecorder setShowRecorder={setShowRecorder} groupId={
-            currReciever?.groupId
-          } />
+          <AudioRecorder
+            setShowRecorder={setShowRecorder}
+            groupId={currReciever?.groupId}
+          />
         )}
       </div>
     </div>

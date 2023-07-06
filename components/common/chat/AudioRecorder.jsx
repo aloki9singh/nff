@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc, serverTimestamp, setDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import { db, storage } from "@/config/firebaseconfig";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 
 const ReactMic = dynamic(
   () => import("react-mic").then((mod) => mod.ReactMic),
   { ssr: false }
 );
 
-const AudioPlayer = ({ src }) => {
+export const AudioPlayer = ({ src }) => {
   const wavesurferRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -31,19 +38,26 @@ const AudioPlayer = ({ src }) => {
         responsive: true,
       });
       wavesurferRef.current.load(src);
-
-      return () => {
-        if (wavesurferRef.current) {
-          wavesurferRef.current.destroy();
-        }
-      };
     });
+    return () => {
+      if (wavesurferRef.current) {
+        wavesurferRef.current.destroy();
+      }
+    };
   }, [src]);
 
   const handlePlayPause = () => {
     if (wavesurferRef.current) {
       if (isPlaying) {
-        wavesurferRef.current.pause();
+        // is audio is completed then play from start
+        if (
+          wavesurferRef.current.getCurrentTime() ===
+          wavesurferRef.current.getDuration()
+        ) {
+          wavesurferRef.current.play(0);
+        } else {
+          wavesurferRef.current.pause();
+        }
       } else {
         wavesurferRef.current.play();
       }
@@ -53,12 +67,12 @@ const AudioPlayer = ({ src }) => {
 
   return (
     <div>
-      <div id="waveform" className="h-16"></div>
+      <div id="waveform" className="h-[100px]"></div>
       <button
         onClick={handlePlayPause}
-        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded overflow-hidden"
       >
-        {isPlaying ? "Pause" : "Play"}
+        {isPlaying ? <BsPauseFill /> : <BsPlayFill />}
       </button>
     </div>
   );
