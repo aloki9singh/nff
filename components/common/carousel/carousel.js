@@ -33,15 +33,16 @@ const CarouselComp = () => {
       },
    ];
    return (
+      <>
       <Swiper
          modules={[Navigation, Pagination, Scrollbar, A11y]}
          spaceBetween={20}
-         slidesPerView={3}
+         slidesPerView={1}
          navigation
          loop={true}
          onSwiper={(swiper) => console.log(swiper)}
          onSlideChange={() => console.log("slide change")}
-         className="h-[141px] md:h-[413px]"
+         className="h-[217px] md:w-0 md:h-0"
       >
          <SwiperSlide>
             <div className="w-full h-full flex justify-center items-center">
@@ -79,6 +80,53 @@ const CarouselComp = () => {
             </div>
          </SwiperSlide>
       </Swiper>
+      <Swiper
+         modules={[Navigation, Pagination, Scrollbar, A11y]}
+         spaceBetween={20}
+         slidesPerView={3}
+         navigation
+         loop={true}
+         onSwiper={(swiper) => console.log(swiper)}
+         onSlideChange={() => console.log("slide change")}
+         className="h-0 w-0 md:w-auto md:h-[413px]"
+      >
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+         <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center">
+               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+            </div>
+         </SwiperSlide>
+      </Swiper>
+      </>
    );
 };
 
