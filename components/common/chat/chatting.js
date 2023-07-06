@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../../config/firebaseconfig";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
+import AudioRecorder from "./AudioRecorder";
 
 function formatTimePassed(messageTimestamp) {
   if (!messageTimestamp) return "";
@@ -100,7 +101,7 @@ const SendMessage = ({ message }) => {
 
 const ImageMessage = ({ img, userIcon, isSender = false }) => {
   return (
-    <div className={`flex gap-2 ${isSender ? 'ml-auto' : 'mr-auto'}`}>
+    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
       <div className="flex items-center justify-center ">
         <Image
           width={300}
@@ -135,6 +136,8 @@ const Chat = ({
   const user = auth.currentUser;
 
   const [message, setMessage] = useState("");
+  const [showRecorder, setShowRecorder] = useState(false);
+
   const lastDiv = React.useRef();
 
   useEffect(() => {
@@ -340,51 +343,60 @@ const Chat = ({
             <MdMoreVert />
           </div>
         </div>
-        <form
-          onSubmit={submitHandler}
-          className="flex-1 flex items-center rounded-[10px] ml-14 self-end"
-          style={{ border: "1px solid grey" }}
-        >
-          <div
-            className="flex flex-1 h-full"
-            style={{
-              borderTopLeftRadius: "10px",
-              borderBottomLeftRadius: "10px",
-            }}
+        {!showRecorder ? (
+          <form
+            onSubmit={submitHandler}
+            className="flex-1 flex items-center rounded-[10px] ml-14 self-end"
+            style={{ border: "1px solid grey" }}
           >
-            <input
-              placeholder="Type Message Here"
-              className="outline-none  p-2 w-full"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              type="text"
-              name="message"
+            <div
+              className="flex flex-1 h-full"
               style={{
-                backgroundColor: "#505057",
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
               }}
-            />
-            <div
-              className="flex items-center p-2"
-              style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             >
-              <MdMic />
+              <input
+                placeholder="Type Message Here"
+                className="outline-none  p-2 w-full"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                type="text"
+                name="message"
+                style={{
+                  backgroundColor: "#505057",
+                  borderTopLeftRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                }}
+              />
+              <div
+                onClick={() => {
+                  setShowRecorder(true)
+                }}
+                className="flex items-center p-2"
+                style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
+              >
+                <MdMic />
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            className="flex items-center justify-center p-2 pl-4 h-full"
-            style={{
-              backgroundColor: "#E1348B",
-              borderTopRightRadius: "10px",
-              borderBottomRightRadius: "10px",
-            }}
-          >
-            <MdSend style={{ transform: "rotate(-20deg)" }} />
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="flex items-center justify-center p-2 pl-4 h-full"
+              style={{
+                backgroundColor: "#E1348B",
+                borderTopRightRadius: "10px",
+                borderBottomRightRadius: "10px",
+              }}
+            >
+              <MdSend style={{ transform: "rotate(-20deg)" }} />
+            </button>
+          </form>
+        ) : (
+          <AudioRecorder setShowRecorder={setShowRecorder} groupId={
+            currReciever?.groupId
+          } />
+        )}
       </div>
     </div>
   );
