@@ -12,7 +12,7 @@ const updateLink = async (docId, newLink) => {
     await updateDoc(docRef, {
       link: newLink,
     });
-
+     alert("Link updated successfully!")
     console.log("Link updated successfully!");
   } catch (err) {
     console.error("Error updating link:", err);
@@ -31,7 +31,7 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
     fetchLinkFromDb();
   }, [id]);
 
-  console.log(linkfromdb);
+  // console.log(linkfromdb);
   const [link, setLink] = useState(linkfromdb ? linkfromdb : " ");
 
   const handleJoinClick = async () => {
@@ -47,9 +47,6 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
     e.preventDefault();
     hidefun();
   };
-  // useEffect(() => {
-  //   setLink(link);
-  // }, [link]);
 
   return (
     <div className="w-screen h-screen top-0 left-0 absolute">
