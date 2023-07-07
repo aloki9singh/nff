@@ -1,4 +1,8 @@
 //verified 1 by Raviraj Kumar
+
+//add id and name of mentor to schedule
+
+
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -47,7 +51,7 @@ let SideBody = ({ count, setCount }) => {
     });
   }, [date]);
 
-  console.log(schedules);
+  // console.log(schedules);
 
   return (
     <div className="w-full h-full  overflow-scroll-y  ">
