@@ -4,15 +4,14 @@ import Dates2 from "../common/datelist.js";
 import { useState, useEffect } from "react";
 import Months from "../common/monthlist.js";
 import CardUserPop from "./CardUserPop";
-import { callScheduleGetApiMentor } from "@/lib/mentorapi";
 import CardMentor from "./card.js";
 import { useContext } from "react";
 import { adddate } from "@/lib/context/contextprovider";
 
-import {collection, query, orderBy, onSnapshot} from "firebase/firestore"
- 
-import {db} from '@/config/firebaseconfig'
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
+import { db } from "@/config/firebaseconfig";
+import e from "cors";
 
 const months = [
   "January",
@@ -30,21 +29,23 @@ const months = [
 ];
 
 const Mainbodymentor = () => {
+  const fulldate = new Date();
   const [popupvalue, setPopupvalue] = useState({});
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const { date, setdate } = useContext(adddate);
-  const [currentMonth, setCurrentMonth] = useState(
-    months[currentDate.getMonth()]
-  );
+  const [currentDate, selectedDate] = useState(fulldate.getDay());
+  const [id, setId] = useState("");
+  const { setdate } = useContext(adddate);
+  const monthValue = months[fulldate.getMonth()];
+  const [currentMonth, setCurrentMonth] = useState(monthValue); //initial it has current month but on select it should change
 
   const [loading, setLoading] = useState(true);
 
-  const [currentYear, setCurrentYear] = useState(
-    currentDate.getFullYear().toString()
-  );
+  const [currentYear, selectedYear] = useState(
+    fulldate.getFullYear().toString()
+  ); ///// initial it has current year but on select it should change
+
   const [dataFetched, setDataFetched] = useState([]);
-  const [monthData, setMonthData] = useState("");
-  const [dateData, setdateData] = useState(currentDate.getDate());
+  const [monthData, selectedMonth] = useState("");
+
   const [showPopUpvar, setshowPopUpvar] = useState(false);
 
   const timing = [
@@ -97,45 +98,37 @@ const Mainbodymentor = () => {
     setPopupvalue(val);
   };
 
-  const selectedMonth = (M) => {
-    setMonthData(M);
-  };
-
-  const selectedDate = (M) => {
-    setdateData(M);
-  };
-
   const combined = {
     currentYear,
     mainMonth: monthData || currentMonth,
-    dateData,
+    currentDate,
   };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setdate(currentYear + combined.mainMonth + dateData);
+      setdate(currentYear + combined.mainMonth + currentDate);
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [currentYear, combined.mainMonth, dateData, setdate]);
+  }, [currentYear, combined.mainMonth, currentDate, setdate]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // const res = await callScheduleGetApiMentor();
-        const q = query(collection(db, 'mentorsSchedule'))
+        const q = query(collection(db, "mentorsSchedule"));
         onSnapshot(q, (querySnapshot) => {
           const docSnapshots = querySnapshot.docs;
-    
-            let arr = [];
-            for (var i in docSnapshots) {
-              const doc = docSnapshots[i].data();
-              console.log(doc);
-                arr.push(doc);
-              }
-        setDataFetched(arr);
-        setLoading(false);
-            })
+
+          let arr = [];
+          for (var i in docSnapshots) {
+            const doc = docSnapshots[i].data();
+            console.log(doc);
+            arr.push(doc);
+          }
+          setDataFetched(arr);
+          setLoading(false);
+        });
       } catch (error) {
         console.log(error);
         alert("Something went wrong!");
@@ -144,12 +137,9 @@ const Mainbodymentor = () => {
 
     fetchData();
   }, []);
-  let selectedYear = (Y) => {
-    setCurrentYear(Y);
-  };
-  console.log(combined);
-  console.log(dataFetched);
 
+  // console.log(combined);
+  //  console.log(dataFetched);
 
   return (
     <>
@@ -160,29 +150,28 @@ const Mainbodymentor = () => {
         <div className="bg-[#33353B] rounded-t-[30px] md:mt-2 lg:bg-inherit p-2 lg:p-0 md:space-y-3 space-x-2 mt-2">
           <Datecard
             seletedMonth={monthData}
-            currentMonth={currentMonth}
-            currentYear={currentYear}
+            currentYear={currentYear} //current year
             selectedYear={selectedYear}
+            currentMonth={currentMonth} //current month
           />
           <Months
             selectedMonth={selectedMonth}
-            currentMonth={currentMonth}
+            currentMonth={currentMonth} //current month
           ></Months>
           <Dates2
             selectedDate={selectedDate}
-            currentMonth={currentMonth}
+            currentYear={currentYear} //current year
+            currentMonth={currentMonth} //current month
             currentDate={currentDate}
             monthData={monthData}
-            currentYear={currentYear}
             all={combined}
           ></Dates2>
         </div>
         <hr className="m-2 opacity-50 hidden lg:block"></hr>
-        <div
-          className="grid grid-cols-1 overflow-hide overflow-y-scroll scrollbar-hide h-[50vh]"
-        >
+        <div className="grid grid-cols-1 overflow-hide overflow-y-scroll scrollbar-hide h-[50vh]">
           {showPopUpvar ? (
             <CardUserPop
+              id={id}
               hidefun={hideFun}
               popupValue={popupvalue}
             ></CardUserPop>
@@ -202,7 +191,7 @@ const Mainbodymentor = () => {
                 {dataFetched.map((valueof, indexof) => {
                   return (
                     <div key={indexof}>
-                      {combined.dateData == valueof.date.day &&
+                      {combined.currentDate == valueof.date.day &&
                       combined.mainMonth == valueof.date.month &&
                       combined.currentYear == valueof.date.year &&
                       val[0] + val[1] ==
@@ -212,7 +201,12 @@ const Mainbodymentor = () => {
                           key={indexof}
                         >
                           {
-                            <div onClick={(e) => showPopUp(e, valueof)}>
+                            <div
+                              onClick={(e) => {
+                                showPopUp(e, valueof);
+                                setId(valueof.uid);
+                              }}
+                            >
                               <CardMentor cardData={valueof}></CardMentor>
                             </div>
                           }

@@ -1,13 +1,15 @@
 //need rechecking
+///getMonthNumber and  getDayFromDate are function from exportable function file file (431-455)
+import { getDayFromDate, getMonthNumber } from "@/lib/exportablefunctions";
 import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
-const  Datelist = ({
+const Datelist = ({
+  selectedDate,
+  currentYear,
+  currentMonth,
   currentDate,
   monthData,
-  currentMonth,
-  currentYear,
-  selectedDate,
 }) => {
   let months = {
     January: [
@@ -66,20 +68,15 @@ const  Datelist = ({
     ],
   };
 
-  let day = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  let day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   let arr = [];
   let arr2 = [];
-  let fileDate = currentDate.getDate() - 1;
-  let dayvar = currentDate.getDay() - 1;
+  let fileDate = currentDate - 1;
+  let dayvar = currentDate - 1;
   let monthforCheck = monthData ? monthData : currentMonth;
+  // console.log(monthforCheck);
+  // console.log(months[monthforCheck]);
+
   for (let i = 0; i < 14 && months[monthforCheck].length > fileDate; i++) {
     fileDate++;
     dayvar++;
@@ -96,42 +93,29 @@ const  Datelist = ({
     arr2 = [...arr2, [fileDate2]];
   }
   //
-  selectedDate=currentDate.getDate();
+  selectedDate(currentDate);
 
   let [finalArr, setfinalArr] = useState(arr.slice());
   useEffect(() => {
     setfinalArr(arr.slice());
   }, [monthData]);
   useEffect(() => {
-    // let days = document.querySelectorAll(".day");
-    // let daytag = document.querySelectorAll(".actualdate");
-    // for (let i = 0; i < days.length; i++) {
-    //   if (currentDate.getDate() == daytag[i].innerText) {
-    //     days[i].style = "background: #E1348B";
-    //   }
-    // }
-    selectedDate=currentDate.getDate();
-    document.getElementById(currentDate.getDate()).style="background: #E1348B";
+    selectedDate(currentDate);
+    document.getElementById(currentDate).style = "background: #E1348B";
   }, [currentDate]);
   let dateSelect = (e) => {
+    // console.log("This is e", e.target.id);
     let days = document.querySelectorAll(".day");
-    // let daytag = document.querySelectorAll(".actualdate");
-    // for (let i = 0; i < days.length; i++) {
-    //   days[i].style = "background:none";
-    // }
-    // for (let i = 0; i < days.length; i++) {
-    //   if (e.target.innerText == daytag[i].innerText) {
-      //     days[i].style = "background: #E1348B";
-      //   }
-      e.target.style="background: #E1348B";
-      if(document.getElementById(selectedDate)) 
-      {document.getElementById(selectedDate).style="background:none";}
-      else{
-        for (let i = 0; i < days.length; i++) {
-            days[i].style = "background:none";
-          }}
-      e.target.style="background: #E1348B";
-      selectedDate=e.target.id;
+    e.target.style = "background: #E1348B";
+    if (document.getElementById(selectedDate)) {
+      document.getElementById(selectedDate).style = "background:none";
+    } else {
+      for (let i = 0; i < days.length; i++) {
+        days[i].style = "background:none";
+      }
+    }
+    e.target.style = "background: #E1348B";
+    selectedDate(e.target.id);
   };
   let dateShifLeft = () => {
     setfinalArr((prev) => {
@@ -154,12 +138,10 @@ const  Datelist = ({
   };
 
   let dateShifRight = () => {
-
-    
     setfinalArr((prev) => {
       let prevArr = prev.slice();
       let last = prevArr[prev.length - 1][0];
-      
+
       for (let i = 0; i < prev.length; i++) {
         let date = prevArr[i][0] + 1;
         let day = prevArr[i][1] + 1;
@@ -175,41 +157,11 @@ const  Datelist = ({
       }
       return prevArr;
     });
-    
   };
+  // console.log(day);
   return (
     <>
       <div className="grid grid-cols-12">
-        <div className=" hidden lg:hidden justify-evenly px-2">
-          {/* <Image
-          onClick={dateShifLeft}
-          src="/caretcircleleft.svg"
-          alt="back"
-          width={30}
-          height={30}
-        ></Image>
-
-        {finalArr.map((val, index) => {
-          return (
-            <div
-              key={index}
-              className=" p-2 rounded-lg text-center day "
-              onClick={dateSelect}
-            >
-              <p className="actualdate text-center">{val[0]}</p>
-              <p>{day[val[1]].slice(0, 3)}</p>
-            </div>
-          );
-        })}
-        <Image
-          onClick={dateShifRight}
-          src="caretcircleright.svg"
-          alt="next"
-          width={30}
-          height={30}
-        ></Image> */}
-        </div>
-
         <Image
           className="justify-self-center place-self-center col-span-1"
           onClick={dateShifLeft}
@@ -218,7 +170,7 @@ const  Datelist = ({
           width={30}
           height={30}
         ></Image>
-        <div className=" flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide text-[17px]">
+        <div className=" flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide text-[17px] text-white">
           {finalArr.map((val, index) => {
             return (
               <div
@@ -228,11 +180,11 @@ const  Datelist = ({
                 onClick={dateSelect}
               >
                 {/* <p className="actualdate"> */}
-                {val[0]}{'\n'}
-                {/* </p> */}
-                {/* <p> */}
-                  {day[val[1]].slice(0, 3)}
-                  {/* </p> */}
+                {val[0]}
+                {}
+                {"\n"}
+                 
+                {   (getDayFromDate(currentYear+"-"+ getMonthNumber(currentMonth)+"-"+val[0])).slice(0,3)}
               </div>
             );
           })}

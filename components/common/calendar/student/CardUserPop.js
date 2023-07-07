@@ -1,55 +1,27 @@
 import { RxCross2 } from "react-icons/rx";
-import { useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/config/firebaseconfig";
+import { useEffect, useState } from "react";
 import { getLinkById } from "@/lib/exportablefunctions";
-import { useEffect } from "react";
 
-const updateLink = async (docId, newLink) => {
-  try {
-    const docRef = doc(db, "mentorsSchedule", docId);
-
-    await updateDoc(docRef, {
-      link: newLink,
-    });
-
-    console.log("Link updated successfully!");
-  } catch (err) {
-    console.error("Error updating link:", err);
-  }
-};
-
-const CardUserPop = ({ hidefun, popupValue, id }) => {
-  const [linkfromdb, setLinkFromDb] = useState("");
-
-  useEffect(() => {
-    const fetchLinkFromDb = async () => {
-      const val = await getLinkById(id);
-      setLinkFromDb(val);
-      setLink(val)
-    };
-    fetchLinkFromDb();
-  }, [id]);
-
-  console.log(linkfromdb);
-  const [link, setLink] = useState(linkfromdb ? linkfromdb : " ");
-
-  const handleJoinClick = async () => {
+const CardUserPop = ({ hidefun, popupValue ,id}) => {
+  const [link, setLink] = useState('');
+   console.log("link",link);
+  const handleJoinClick = () => {
     // Redirect to the link when the "Join" button is clicked
-    // window.location.href = link;
-
-    setLink(link);
-    await updateLink(id, link);
+    window.location.href = link;
   };
-  /// Update meet link   function
 
+  
   const hideschedule = (e) => {
     e.preventDefault();
     hidefun();
   };
-  // useEffect(() => {
-  //   setLink(link);
-  // }, [link]);
+  useEffect(() => {
+    const fetchLinkFromDb = async () => {
+      const val = await getLinkById(id);
+      setLink(val)
+    };
+    fetchLinkFromDb();
+  }, [id]);
 
   return (
     <div className="w-screen h-screen top-0 left-0 absolute">
@@ -87,13 +59,15 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
                     required
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
+                    readOnly
                   />
                   <button
-                    onClick={() => handleJoinClick()}
-                    className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 pointer-cursor"
+                    // className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 pointer-events-none" 
+                    className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 "
                     style={{ background: "#E1348B" }}
+                    onClick={handleJoinClick}
                   >
-                    Add
+                    join
                   </button>
                 </div>
                 <p className="text-sm text-slate-400">

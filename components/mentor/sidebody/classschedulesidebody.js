@@ -1,30 +1,34 @@
 //verified 1 by Raviraj Kumar
+// const Mentorname="Raviraj Kumar"   //replace this by fetching mentor name
+//    this needs to be replaced with mentor name on line 204 and mentor id must also needed to be send to backend
+
 import { AiOutlineClockCircle, AiOutlineCalendar } from "react-icons/ai";
 import { HiUserGroup } from "react-icons/hi";
 import { CiTextAlignLeft } from "react-icons/ci";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  callScheduleGetApiMentor,
-  callSchedulePostApiMentor,
-} from "@/lib/mentorapi";
+
 import { getMonthName } from "@/components/common/calendar/common/timestampfun";
+import { useEffect } from "react";
+
+import { callSchedulePostApiMentor } from "@/lib/exportablefunctions";
 
 const SideBodyClassSchedule = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
+  const [selectedColor, setSelectedColor] = useState("#E1348B");
 
   const val = date.getYear() + date.getMonth() + date.getDate();
-
+  const Mentorname = "Raviraj Kumar"; //replace this by fetching mentor name
   const [userData, setUserData] = useState({
     addTitle: "",
     startTime: "",
     endTime: "",
     addBatch: "",
     description: "",
-    defaultRadio: "#8642AA",
+    defaultRadio: selectedColor,
     date: "",
   });
-
+  console.log("This data is scheduled", userData);
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "date") {
@@ -48,28 +52,28 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const {
-      addTitle,
-      startTime,
-      endTime,
-      addBatch,
-      description,
-      defaultRadio,
-      date,
-    } = userData;
+    const { addTitle, startTime, endTime, addBatch, description, date } =
+      userData;
 
     const requiredFields = [
       addTitle,
       startTime,
       endTime,
-      defaultRadio,
       addBatch,
       description,
       date,
     ];
-    console.log(requiredFields);
+    // console.log(requiredFields);
     if (requiredFields.every((field) => field !== "")) {
-      callSchedulePostApiMentor(userData)
+      const dataToSend = {
+        ...userData,
+        defaultRadio: selectedColor,
+        // mentorId:""
+        //mentorName:""
+        link: "",
+      };
+
+      callSchedulePostApiMentor(dataToSend)
         .then(() => {
           setUserData({
             addTitle: "",
@@ -77,7 +81,6 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
             endTime: "",
             addBatch: "",
             description: "",
-            defaultRadio: "#8642AA",
             date: "",
           });
           setCount(1);
@@ -90,6 +93,10 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
     } else {
       alert("Please fill in all the data");
     }
+  };
+
+  const handleColorSelect = (color) => {
+    setSelectedColor(color);
   };
 
   return (
@@ -164,7 +171,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
               type="text"
               name="addBatch"
               id="AddBatch"
-              className="bg-transparent text-[16px]  md:w-full  w-[7vw]  border-none border-gray-300 text-slate-200  outline-none "
+              className="bg-transparent text-[16px]  md:w-full    border-none border-gray-300 text-slate-200  outline-none "
               placeholder="Add Batch"
               required
               value={userData.addBatch}
@@ -193,48 +200,38 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
         <div className="p-1 flex my-6">
           <AiOutlineCalendar className="text-2xl mx-4"></AiOutlineCalendar>
           <div>
-            Raviraj Kumar<br></br>
+            {Mentorname}
+            <br></br>
             <p className="opacity-50 text-sm">Notify 30 minutes ago</p>
           </div>
         </div>
-        <div className=" flex mt-12 mb-10 rounded-2xl justify-evenly">
-          <div className="bg-[#2E3036] rounded-[30px] h-[50%] m-[auto]">
-            <input
-              type="radio"
-              value={"#2E3036" ? "#2E3036" : userData.defaultRadio}
-              onChange={handleChange}
-              className="w-4 h-4 m-3 defaultradio1  drop-shadow-xl"
-              name="defaultRadio"
-              style={{ accentColor: "#2E3036" }}
-            />
-          </div>
-          <div className="bg-[#E1348B] rounded-[30px] h-[50%] m-[auto]">
-            <input
-              name="defaultRadio"
-              type="radio"
-              value={"#E1348B" ? "#E1348B" : userData.defaultRadio}
-              onChange={handleChange}
-              className="w-4 h-4 m-3 defaultradio2 drop-shadow-xl "
-              style={{ accentColor: "#E1348B" }}
-            />
-          </div>
-          <div className="bg-[#8642AA] rounded-[30px] h-[50%] m-[auto]">
-            <input
-              name="defaultradio"
-              type="radio"
-              value={"#8642AA" ? "#8642AA" : userData.defaultRadio}
-              onChange={handleChange}
-              style={{ accentColor: "#8642AA" }}
-              className="w-4 h-4 m-3 defaultradio3 drop-shadow-xl "
-            />
-          </div>
+        <div className="flex mt-12 mb-10 rounded-2xl justify-evenly h-12 bg-[#575E68]">
+          <div
+            className={`bg-[#2E3036] rounded-[30px] h-[50%] m-auto w-6 ${
+              selectedColor === "#2E3036" ? "border-2 border-white" : ""
+            }`}
+            onClick={() => handleColorSelect("#2E3036")}
+          ></div>
+          <div
+            className={`bg-[#E1348B] rounded-[30px] h-[50%] m-auto w-6 ${
+              selectedColor === "#E1348B" ? "border-2 border-white" : ""
+            }`}
+            onClick={() => handleColorSelect("#E1348B")}
+          ></div>
+          <div
+            className={`bg-[#8642AA] rounded-[30px] h-[50%] m-auto w-6 ${
+              selectedColor === "#8642AA" ? "border-2 border-white" : ""
+            }`}
+            onClick={() => handleColorSelect("#8642AA")}
+          ></div>
         </div>
       </div>
       <div
+        onClick={handleSubmit}
         className="rounded-xl text-white px-3 py-3 text-center m-2"
         style={{ background: "#A145CD" }}
       >
-        <button onClick={handleSubmit}>Schedule new class</button>
+        <button>Schedule new class</button>
       </div>
     </div>
   );

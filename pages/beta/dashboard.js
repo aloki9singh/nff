@@ -60,7 +60,10 @@ const Studentdashboard = () => {
               </div>
               <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 ">
                 <div>
-                  <Calendar />
+                  <Calendar
+                  
+                  
+                  />
                 </div>
                 {/* //Daily tip section open */}
                 <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
