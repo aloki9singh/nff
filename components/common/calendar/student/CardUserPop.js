@@ -2,15 +2,15 @@ import { RxCross2 } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { getLinkById } from "@/lib/exportablefunctions";
 
-const CardUserPop = ({ hidefun, popupValue ,id}) => {
-  const [link, setLink] = useState('');
-   console.log("link",link);
+const CardUserPop = ({ hidefun, popupValue, id }) => {
+  const [link, setLink] = useState("");
+  console.log("link", link);
   const handleJoinClick = () => {
     // Redirect to the link when the "Join" button is clicked
-    window.location.href = link;
+    // window.location.href = link;
+    window.open(link, "_blank");
   };
 
-  
   const hideschedule = (e) => {
     e.preventDefault();
     hidefun();
@@ -18,7 +18,7 @@ const CardUserPop = ({ hidefun, popupValue ,id}) => {
   useEffect(() => {
     const fetchLinkFromDb = async () => {
       const val = await getLinkById(id);
-      setLink(val)
+      setLink(val);
     };
     fetchLinkFromDb();
   }, [id]);
@@ -62,7 +62,7 @@ const CardUserPop = ({ hidefun, popupValue ,id}) => {
                     readOnly
                   />
                   <button
-                    // className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 pointer-events-none" 
+                    // className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 pointer-events-none"
                     className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 "
                     style={{ background: "#E1348B" }}
                     onClick={handleJoinClick}

@@ -34,7 +34,7 @@ const MonthSelector = ({
         />
       </button>
 
-      <h2 className="text-2xl font-bold mx-4">
+      <h2 className="text-xl font-bold mx-4">
         {currentMonth} {currentYear}
       </h2>
 
