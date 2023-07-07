@@ -53,8 +53,8 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
       <div className="w-full h-full flex justify-center">
         <div className="text-white text-3xl my-auto z-10">
           <div
-            className="border-l-8 flex p-6 relative"
-            style={{ background: "rgba(161, 69, 205, 0.75)" }}
+            className="border-l-8 flex p-6 relative bg-[#A145CD]"
+            
           >
             <button
               className="absolute right-3 top-2 text-xl"
