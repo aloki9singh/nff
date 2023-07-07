@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const Homcard = ({ id, name, date }) => {
+const AssignmentCard = ({ id, name, date }) => {
   return (
     <>
       <div className="rounded-xl bg-[#505057] shadow  p-4 w-[21%] m-4">
@@ -22,4 +22,4 @@ const Homcard = ({ id, name, date }) => {
   );
 };
 
-export default Homcard;
+export default AssignmentCard

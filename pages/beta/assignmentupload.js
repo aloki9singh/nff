@@ -1,14 +1,16 @@
 import { useState } from "react";
-import Sidebar from "../components/Sidebar/Liveclasssidebar";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import Image from "next/image";
-import Draganddrop from "../components/Student/Draganddrop";
+// import Draganddrop from "../components/Student/Draganddrop";
 import { ref } from "firebase/storage";
-import { storage } from "../components/config/firebaseConfig";
+import { storage } from "@/config/firebaseconfig";
+import { useRouter } from "next/router";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 
-const Assignmentupload = () => {
+const Assignmentupload = () => { 
+    const router = useRouter()
     const [file, setFile] = useState("");
     const [uploadState, setUploadState] = useState("neutral");
     const [title, setTitle] = useState("");
@@ -57,7 +59,7 @@ const Assignmentupload = () => {
     };
     return (
         <div className="flex">
-            <Sidebar />
+            <CourseoverviewSidebar pathname={router.pathname} />
             <div
                 style={{ background: "#2E3036" }}
                 className="flex flex-col col-span-5 lg:col-span-4 w-full min-h-screen"
@@ -156,7 +158,7 @@ const Assignmentupload = () => {
                         <div>Submit Your Assignment</div>
                         <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
                             <div className="md:w-[60%] mx-auto md:m-auto w-[80%]">
-                                <Draganddrop file={file} setFile={setFile} />
+                                {/* <Draganddrop file={file} setFile={setFile} /> */}
                                 <div className="space-y-4 ">
                                     <div className="mt-3">or attach URL of work</div>
                                     <div className="flex justify-between px-5 py-3 bg-[#505057] rounded-[20px] ">

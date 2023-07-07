@@ -38,17 +38,13 @@ const Studentdashboard = () => {
   }
   return (
     <>
-      <div className="md:h-screen h-full  text-base md:bg-[#2E3036] md:w-full">
+      <div className="md:h-screen h-full text-base md:w-full">
         <div className="flex">
-          <div className="lg:col-span-1 hidden lg:grid">
+          <div className="lg:col-span-1 rounded-l-xl hidden lg:grid">
             {" "}
-            {/* <Sidebar pathname={router.pathname}/> */}
             <CourseoverviewSidebar pathname={router.pathname} />
           </div>
-          <div
-            style={{ background: "#2E3036" }}
-            className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
-          >
+          <div className="col-span-5 lg:col-span-4 bg-[#2E3036] rounded-l-[50px]  w-full">
             {/* <StudentTopbar heading={"My Progress"} /> */}
             <Dashboardnav heading="My Progress" />
             {/* <hr className="hidden lg:block opacity-50 mt-3 "></hr> */}

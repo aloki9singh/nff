@@ -1,7 +1,7 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
 
-import { db } from "@/config/firebaseConfig";
+import { db } from "@/config/firebaseconfig";
 
 import { collection, getDocs, query } from "firebase/firestore";
 

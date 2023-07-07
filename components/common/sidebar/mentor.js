@@ -47,7 +47,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.dashboard}
                     />{" "}
-                    <span>Home</span>
+                    <span className={`${data.dashboard? "text-[#E1348B]":""}`}>Home</span>
                   </label>
                 </Link>
               </li>
@@ -63,7 +63,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.courses}
                     />{" "}
-                    <span>Course</span>
+                    <span className={`${data.courses? "text-[#E1348B]":""}`}>Course</span>
                   </label>
                 </Link>
               </li>
@@ -79,7 +79,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.students}
                     />{" "}
-                    <span>Students</span>
+                    <span className={`${data.students? "text-[#E1348B]":""}`}>Students</span>
                   </label>
                 </Link>
               </li>
@@ -97,7 +97,7 @@ const MentorSidebar = ({ pathname }) => {
                       checked={data.schedule}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${pathname == "/Schedule" ? "#E1348B" : ""
+                      className={`ml-3 text-[${pathname == "/schedule" ? "#E1348B" : ""
                         }]`}
                     >
                       Schedule
@@ -119,7 +119,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.liveclass}
                     />{" "}
-                    <span>Live Class</span>
+                    <span className={`${data.liveclass? "text-[#E1348B]":""}`}>Live Class</span>
                   </label>
                 </Link>
               </li>
@@ -136,7 +136,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.studymaterial}
                     />{" "}
-                    <span>Study Material</span>
+                    <span className={`${data.studymaterial? "text-[#E1348B]":""}`}>Study Material</span>
                   </label>
                 </Link>
               </li>
@@ -153,7 +153,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.homework}
                     />{" "}
-                    <span>Homework</span>
+                    <span className={`${data.homework? "text-[#E1348B]":""}`}>Homework</span>
                   </label>
                 </Link>
               </li>
@@ -170,7 +170,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.chats}
                     />{" "}
-                    <span>Chats</span>
+                    <span className={`${data.chats? "text-[#E1348B]":""}`}>Chats</span>
                   </label>
                 </Link>
               </li>
@@ -186,7 +186,7 @@ const MentorSidebar = ({ pathname }) => {
                       className="form-checkbox h-3 w-3 text-gray-600"
                       checked={data.profile}
                     />{" "}
-                    <span>Profile</span>
+                    <span className={`${data.profile? "text-[#E1348B]":""}`}>Profile</span>
                   </label>
                 </Link>
                 <div className="  font-semibold cursor-pointer text-white bg-[#373A41] flex flex-col mt-9 rounded-xl">
@@ -196,7 +196,7 @@ const MentorSidebar = ({ pathname }) => {
                         </h1>
                         <p>150 members</p>
                         <button className="inline-flex items-center mt-10 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline ">
-                          <span>Join</span>
+                          <span className={`${data.dashboard? "text-[#E1348B]":""}`}>Join</span>
                           <AiOutlineArrowRight />
                         </button>
                       </div> */}
@@ -208,7 +208,7 @@ const MentorSidebar = ({ pathname }) => {
         <div className="text-white space-y-5 mt-20">
           <button className=" bg-[#373A41]  flex  justify-center  items-center px-5  m-auto  rounded pt-2.5 pb-2 text-xs font-medium uppercase leading-normal gap-x-2">
             <AiOutlineSetting />
-            <span>Settings </span>
+            <span className={`${data.dashboard? "text-[#E1348B]":""}`}>Settings </span>
           </button>
         </div>
       </aside>

@@ -23,7 +23,7 @@ function Privacy() {
 
   return (
     <>
-      <div className="py-8 px-14 text-white">
+      <div className="py-8 px-14 text-white rounded-[40px] bg-[#373A41]">
         <div className="mb-4">
           <h3 className="text-2xl">Privacy</h3>
           <p className="text-sm opacity-50">your privacy settings here</p>
