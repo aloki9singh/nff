@@ -3,18 +3,18 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { adddate, selectSch } from "@/lib/context/contextprovider";
-import { callScheduleGetApiMentor } from "@/lib/mentorapi";
+
 import Image from "next/image";
 
-import {collection, query, orderBy, onSnapshot} from "firebase/firestore"
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
-import {db} from '@/config/firebaseconfig'
+import { db } from "@/config/firebaseconfig";
 
 let SideBody = ({ count, setCount }) => {
   const [schedules, setSchedules] = useState([]);
   const { date, setdate } = useContext(adddate);
   const { scheduleSelect, setScheduleSelect } = useContext(selectSch);
-
+  
   const some = new Date(Date.now());
   const monthNumber = some.getMonth() + 1;
   const monthcur = new Date(0, monthNumber - 1).toLocaleString("default", {
@@ -27,41 +27,27 @@ let SideBody = ({ count, setCount }) => {
   const submitData = () => {
     setCount(2);
   };
-
-  // useEffect(() => {
-    // callScheduleGetApiMentor()
-    //   .then(({ mentorsSchedule }) => {
-    //     const filteredSchedules = mentorsSchedule.filter(
-    //       (e) => e.date.year + e.date.month + e.date.day === date
-    //     );
-    //     setSchedules(filteredSchedules);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      //   alert("Something went wrong!");
-      // });
-  // }, [date]);
-
-
   useEffect(() => {
-    const q = query(collection(db, 'mentorsSchedule'))
+    const q = query(collection(db, "mentorsSchedule"));
     onSnapshot(q, (querySnapshot) => {
       const docSnapshots = querySnapshot.docs;
 
-        let arr = [];
-        for (var i in docSnapshots) {
-          const doc = docSnapshots[i].data();
+      let arr = [];
+      for (var i in docSnapshots) {
+        const doc = docSnapshots[i].data();
+        const docDate = doc.date.year + doc.date.month + doc.date.day;
+        if (docDate === date) {
+          arr.push(doc);
+        }
+        // console.log(date,docDate)
+      }
+      
+      setSchedules(arr);
+      
+    });
+  }, [date]);
 
-          console.log(doc.date.year+ doc.date.month+ doc.date.day == date)
-
-            arr.push(doc);
-          // }
-          }
-          setSchedules(arr);
-      })
-  },[])
-
-  console.log(schedules)
+  console.log(schedules);
 
   return (
     <div className="w-full h-full  overflow-scroll-y  ">
@@ -83,6 +69,7 @@ let SideBody = ({ count, setCount }) => {
                 onClick={() => {
                   setCount(3);
                   setScheduleSelect({ e: e });
+                  console.log(e,"seeit");
                 }}
               >
                 <div
@@ -114,7 +101,9 @@ let SideBody = ({ count, setCount }) => {
           className="rounded-xl text-white px-5 py-3 text-center m-2  flex space-x-2"
           style={{ background: "#A145CD" }}
         >
-          <button onClick={submitData} className="cursor-pointer">Add new class</button>
+          <button onClick={submitData} className="cursor-pointer">
+            Add new class
+          </button>
         </div>
       </div>
     </div>

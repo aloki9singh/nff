@@ -19,7 +19,7 @@ const Sidebar = ({ pathname }) => {
               alt="logo"
               className="pt-5"
             />
-          </Link>
+          </div>
           <div className="flex flex-col h-full   justify-around ">
             <ul>
               <li className="space-y-[14px]">

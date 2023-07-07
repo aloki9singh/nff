@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { timestampfunc } from "../../common/calendar/common/timestampfun";
+import { getMonthName, timestampfunc } from "../../common/calendar/common/timestampfun";
 import { useContext } from "react";
 import { selectSch } from "../../../lib/context/contextprovider";
 import { useEffect } from "react";
@@ -16,29 +16,51 @@ import { db } from "../../../config/firebaseconfig";
 const SideBodyDelete = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
   const { scheduleSelect } = useContext(selectSch);
-
+  const [selectedColor, setSelectedColor] = useState(
+    scheduleSelect.e.defaultRadio
+  );
+  console.log("select", scheduleSelect);
   const [userData, setUserData] = useState({
-    addTitle: "",
-    startTime: "",
-    endTime: "",
-    addBatch: "",
-    description: "",
-    defaultRadio: "#8642AA",
-    date: timestampfunc(Date.now()),
+    addTitle: scheduleSelect.e.addTitle,
+    startTime: scheduleSelect.e.startTime,
+    endTime: scheduleSelect.e.endTime,
+    addBatch: scheduleSelect.e.addBatch,
+    description: scheduleSelect.e.description,
+    date:""
+      
+    // date: timestampfunc(Date.now()),
   });
-
+  // date: timestampfunc(Date.now()),
   const handleDateChange = (date) => {
     setDate(date);
   };
 
+  const handleColorSelect = (color) => {
+    setSelectedColor(color);
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
+    if (name === "date") {
+      const [year, month, day] = value.split("-");
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        date: {
+          month: getMonthName(parseInt(month)),
+          day: parseInt(day),
+          year: parseInt(year),
+        },
+      }));
+    } else {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleDeleteData = async () => {
     try {
-      await deleteDoc(doc(db, "mentorsSchedule", userData.id));
+      await deleteDoc(doc(db, "mentorsSchedule", scheduleSelect.e.uid));
       setCount(1);
       alert("Schedule is Deleted");
     } catch (error) {
@@ -50,32 +72,22 @@ const SideBodyDelete = ({ count, setCount }) => {
   const handleEditData = async (event) => {
     event.preventDefault();
 
-    const {
-      addTitle,
-      startTime,
-      endTime,
-      addBatch,
-      description,
-      defaultRadio,
-      date,
-    } = userData;
+    const { addTitle, startTime, endTime, addBatch, description, date } =
+      userData;
 
-    if (
-      addTitle &&
-      startTime &&
-      endTime &&
-      defaultRadio &&
-      addBatch &&
-      description &&
-      date
-    ) {
+    if (addTitle && startTime && endTime && addBatch && description && date) {
       try {
-        const docRef = doc(db, "mentorsSchedule", userData.id);
+        const docRef = doc(db, "mentorsSchedule", scheduleSelect.e.uid);
 
         // Get the existing document data
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          await updateDoc(docRef, userData);
+          const dataToSend = {
+            ...userData,
+            defaultRadio: selectedColor,
+          };
+
+          await updateDoc(docRef, dataToSend);
           setCount(1);
           alert("Schedule is updated successfully");
         } else {
@@ -91,11 +103,15 @@ const SideBodyDelete = ({ count, setCount }) => {
   };
 
   useEffect(() => {
-    if (scheduleSelect) {
-      userData.date = scheduleSelect.e.year + "-" + scheduleSelect.e.month + "-" + scheduleSelect.e.day
-      setUserData(scheduleSelect.e);
-
-    }
+    // if (scheduleSelect) {
+    //   userData.date =
+    //     scheduleSelect.e.year +
+    //     "-" +
+    //     scheduleSelect.e.month +
+    //     "-" +
+    //     scheduleSelect.e.day;
+    //   setUserData(scheduleSelect.e);
+    // }
   }, [scheduleSelect, userData]);
 
   return (
@@ -203,40 +219,25 @@ const SideBodyDelete = ({ count, setCount }) => {
             <p className="opacity-50 text-sm">Notify 30 minutes ago</p>
           </div>
         </div>
-        <div className=" flex mt-12 mb-10 rounded-2xl justify-evenly">
-          <div className="bg-[#2E3036] rounded-[30px] h-[50%] m-[auto]">
-            <input
-              id="defaultRadio"
-              type="radio"
-              value={"#2E3036" ? "#2E3036" : userData.defaultRadio}
-              onChange={handleChange}
-              className="w-4 h-4 m-3 defaultradio1  drop-shadow-xl"
-              name="defaultRadio"
-              style={{ accentColor: "#2E3036" }}
-            />
-          </div>
-          <div className="bg-[#E1348B] rounded-[30px] h-[50%] m-[auto]">
-            <input
-              id="defaultRadio"
-              name="defaultRadio"
-              type="radio"
-              value={"#E1348B" ? "#E1348B" : userData.defaultRadio}
-              onChange={handleChange}
-              className="w-4 h-4 m-3 defaultradio2 drop-shadow-xl "
-              style={{ accentColor: "#E1348B" }}
-            />
-          </div>
-          <div className="bg-[#8642AA] rounded-[30px] h-[50%] m-[auto]">
-            <input
-              id="defaultradio"
-              name="defaultradio"
-              type="radio"
-              value={"#8642AA" ? "#8642AA" : userData.defaultRadio}
-              onChange={handleChange}
-              style={{ accentColor: "#8642AA" }}
-              className="w-4 h-4 m-3 defaultradio3 drop-shadow-xl "
-            />
-          </div>
+        <div className="flex mt-12 mb-10 rounded-2xl justify-evenly h-12 bg-[#575E68]">
+          <div
+            className={`bg-[#2E3036] rounded-[30px] h-[50%] m-auto w-6 ${
+              selectedColor === "#2E3036" ? "border-2 border-white" : ""
+            }`}
+            onClick={() => handleColorSelect("#2E3036")}
+          ></div>
+          <div
+            className={`bg-[#E1348B] rounded-[30px] h-[50%] m-auto w-6 ${
+              selectedColor === "#E1348B" ? "border-2 border-white" : ""
+            }`}
+            onClick={() => handleColorSelect("#E1348B")}
+          ></div>
+          <div
+            className={`bg-[#8642AA] rounded-[30px] h-[50%] m-auto w-6 ${
+              selectedColor === "#8642AA" ? "border-2 border-white" : ""
+            }`}
+            onClick={() => handleColorSelect("#8642AA")}
+          ></div>
         </div>
       </div>
       <div className="flex justify-evenly">
