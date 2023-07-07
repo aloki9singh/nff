@@ -76,7 +76,7 @@ const Datelist = ({
   let monthforCheck = monthData ? monthData : currentMonth;
   // console.log(monthforCheck);
   // console.log(months[monthforCheck]);
-
+  //  console.log(monthData,currentMonth,currentYear);
   for (let i = 0; i < 14 && months[monthforCheck].length > fileDate; i++) {
     fileDate++;
     dayvar++;
@@ -102,7 +102,7 @@ const Datelist = ({
   useEffect(() => {
     selectedDate(currentDate);
     document.getElementById(currentDate).style = "background: #E1348B";
-  }, [currentDate]);
+  }, [currentDate, currentMonth]);
   let dateSelect = (e) => {
     // console.log("This is e", e.target.id);
     let days = document.querySelectorAll(".day");
@@ -183,8 +183,14 @@ const Datelist = ({
                 {val[0]}
                 {}
                 {"\n"}
-                 
-                {   (getDayFromDate(currentYear+"-"+ getMonthNumber(currentMonth)+"-"+val[0])).slice(0,3)}
+
+                {getDayFromDate(
+                  currentYear +
+                    "-" +
+                    getMonthNumber(monthforCheck) +
+                    "-" +
+                    val[0]
+                ).slice(0, 3)}
               </div>
             );
           })}

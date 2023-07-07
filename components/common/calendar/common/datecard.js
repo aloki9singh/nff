@@ -16,7 +16,7 @@ const MonthSelector = ({
           selectedYear(e.target.value);
         }}
         id="yearsSelect"
-        className="bg-[#33353B] focus:border-[#33353B] border-none focus:outline-none outline-none text-sm md:text-lg"
+        className="bg-[#33353B] focus:border-[#33353B] border-none focus:outline-none outline-none text-sm md:text-[16px]"
         name="yearsSelect"
       >
         {arr.map((val, index) => {

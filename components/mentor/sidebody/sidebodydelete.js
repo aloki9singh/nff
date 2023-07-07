@@ -22,7 +22,7 @@ const SideBodyDelete = ({ count, setCount }) => {
   const [selectedColor, setSelectedColor] = useState(
     scheduleSelect.e.defaultRadio
   );
-  console.log("select", scheduleSelect);
+  // console.log("select", scheduleSelect);
   const [userData, setUserData] = useState({
     addTitle: scheduleSelect.e.addTitle,
     startTime: scheduleSelect.e.startTime,
