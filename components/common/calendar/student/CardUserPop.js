@@ -92,8 +92,9 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
 
                   <button
                     // className="flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 pointer-events-none"
-                    className={`flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1`}
-                    style={{ background: "#E1348B" }}
+                    className={`flex absolute inset-y-0 right-1 text-lg items-center rounded px-3 py-1 m-1 ${
+                      !isWithinRange ? "bg-[#E1348B]" : "bg-[#489d0f]"
+                    }`}
                     onClick={handleJoinClick}
                     disabled={!isWithinRange}
                   >
