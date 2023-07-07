@@ -93,7 +93,7 @@ const Calendar = () => {
           />
         </div>
 
-        <div className="md:w-[25vw] m-auto">
+        <div className=" m-auto">
           <Datelist
             selectedDate={selectedDate}
             currentYear={currentYear}
@@ -104,7 +104,7 @@ const Calendar = () => {
 
         <div className="p-3 w-full shrink-0 text-xl text-gray-200">
           <div className="ml-3 mb-2">Upcoming Classes</div>
-          <div className="flex flex-col h-[18vh] items-start justify-between text-base text-white overflow-scroll scrollbar-hide">
+          <div className="grid grid-cols-1 gap-2 h-[27vh]  items-start justify-between text-base text-white overflow-scroll scrollbar-hide">
             {schedules.length === 0 ? (
               <div className="text-gray-500 text-xs text-center my-10 w-full">
                 No upcoming classes ☹️
