@@ -11,15 +11,25 @@ import {
 import { db, storage } from "@/config/firebaseconfig";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
+import { MdDelete, MdSend } from "react-icons/md";
+import { FaStop } from "react-icons/fa";
 
 const ReactMic = dynamic(
   () => import("react-mic").then((mod) => mod.ReactMic),
   { ssr: false }
 );
 
+const formatTime = (time) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
+
 export const AudioPlayer = ({ src }) => {
   const wavesurferRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const randomId = useRef(Math.floor(Math.random() * 1000000));
 
   useEffect(() => {
     const getWaveSurfer = async () => {
@@ -29,15 +39,16 @@ export const AudioPlayer = ({ src }) => {
 
     getWaveSurfer().then((WaveSurfer) => {
       wavesurferRef.current = WaveSurfer.create({
-        container: "#waveform",
+        container: `#waveform-${randomId.current}`,
         waveColor: "#ddd",
-        progressColor: "#555",
-        height: 100,
+        progressColor: "#E1348B",
+        height: 40,
         barWidth: 2,
         cursorWidth: 0,
         responsive: true,
       });
       wavesurferRef.current.load(src);
+      wavesurferRef.current.on("audioprocess", handleAudioProcess);
     });
     return () => {
       if (wavesurferRef.current) {
@@ -45,6 +56,10 @@ export const AudioPlayer = ({ src }) => {
       }
     };
   }, [src]);
+
+  const handleAudioProcess = (time) => {
+    setCurrentTime(time);
+  };
 
   const handlePlayPause = () => {
     if (wavesurferRef.current) {
@@ -66,14 +81,15 @@ export const AudioPlayer = ({ src }) => {
   };
 
   return (
-    <div>
-      <div id="waveform" className="h-[100px]"></div>
+    <div className="flex items-center bg-[#9B9B9F] h-10 rounded-full px-2 gap-1 min-w-min">
       <button
         onClick={handlePlayPause}
-        className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded overflow-hidden"
+        className=" text-white font-bold p-1 rounded overflow-hidden"
       >
         {isPlaying ? <BsPauseFill /> : <BsPlayFill />}
       </button>
+      <div id={`waveform-${randomId.current}`} className="h-10 w-32"></div>
+      <div className="text-gray-600 text-sm">{formatTime(currentTime)}</div>
     </div>
   );
 };
@@ -163,58 +179,81 @@ const AudioRecorder = ({ groupId, setShowRecorder }) => {
     } catch (error) {
       console.log("Error sending message:", error);
     }
+
+    setShowRecorder(false);
   };
 
   return (
-    <div>
-      {typeof window !== "undefined" && (
-        <>
-          <ReactMic
-            record={isRecording}
-            onStop={stopRecording}
-            strokeColor="pink"
-            backgroundColor="rgb(55, 58, 65)"
-          />
-          <button
-            onClick={startRecording}
-            disabled={isRecording}
-            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
-              isRecording ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            Start Recording
-          </button>
-          {/* stop recording button */}
-          {isRecording && (
-            // pause/play button
-            <>
-              <button
-                onClick={pauseRecording}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-              >
-                {isPaused ? "Resume" : "Pause"}
-              </button>
-              <button
-                onClick={stopRecording}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2"
-              >
-                Stop Recording
-              </button>
-            </>
-          )}
-          {audioBlob && (
-            <div className="mt-4">
-              <AudioPlayer src={URL.createObjectURL(audioBlob)} />
-              <button
-                onClick={handleSend}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
-              >
-                Send
-              </button>
+    <div
+      style={{
+        backgroundColor: "#505057",
+      }}
+      className="flex-1 h-12 flex items-center rounded-[10px] ml-14 self-end"
+    >
+      <div className="ml-auto flex items-center gap-2">
+        <button onClick={() => setShowRecorder(false)}>
+          <MdDelete />
+        </button>
+
+        {audioBlob ? (
+          <>
+            <AudioPlayer src={URL.createObjectURL(audioBlob)} />
+
+            <button
+              onClick={handleSend}
+              className="flex items-center justify-center p-2 pl-2 h-full"
+              style={{
+                backgroundColor: "#E1348B",
+                borderTopRightRadius: "10px",
+                borderBottomRightRadius: "10px",
+              }}
+            >
+              <MdSend style={{ transform: "rotate(-20deg)" }} />
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="w-32 h-8">
+              <ReactMic
+                record={isRecording}
+                onStop={stopRecording}
+                strokeColor="pink"
+                backgroundColor="#505057"
+                className="w-full h-full"
+              />
             </div>
-          )}
-        </>
-      )}
+            {!isRecording && (
+              <button
+                onClick={startRecording}
+                disabled={isRecording}
+                className={` text-white font-bold p-2 rounded ${
+                  isRecording ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                <BsPlayFill />
+              </button>
+            )}
+            {/* stop recording button */}
+            {isRecording && (
+              // pause/play button
+              <>
+                <button
+                  onClick={pauseRecording}
+                  className=" text-white font-bold p-2 rounded "
+                >
+                  {!isPaused ? <BsPauseFill /> : <BsPlayFill />}
+                </button>
+                <button
+                  onClick={stopRecording}
+                  className=" text-white font-bold p-2 rounded "
+                >
+                  <FaStop />
+                </button>
+              </>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
