@@ -54,6 +54,11 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
 
     const { addTitle, startTime, endTime, addBatch, description, date } =
       userData;
+      
+      if (startTime >= endTime) {
+        alert("End time must be greater than start time.");
+        return;
+      }
 
     const requiredFields = [
       addTitle,
