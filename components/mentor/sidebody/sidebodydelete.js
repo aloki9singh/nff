@@ -7,7 +7,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { getMonthName, timestampfunc } from "../../common/calendar/common/timestampfun";
+import {
+  getMonthName,
+  timestampfunc,
+} from "../../common/calendar/common/timestampfun";
 import { useContext } from "react";
 import { selectSch } from "../../../lib/context/contextprovider";
 import { useEffect } from "react";
@@ -26,8 +29,8 @@ const SideBodyDelete = ({ count, setCount }) => {
     endTime: scheduleSelect.e.endTime,
     addBatch: scheduleSelect.e.addBatch,
     description: scheduleSelect.e.description,
-    date:""
-      
+    date: "",
+
     // date: timestampfunc(Date.now()),
   });
   // date: timestampfunc(Date.now()),
@@ -74,6 +77,11 @@ const SideBodyDelete = ({ count, setCount }) => {
 
     const { addTitle, startTime, endTime, addBatch, description, date } =
       userData;
+
+    if (startTime >= endTime) {
+      alert("End time must be greater than start time.");
+      return;
+    }
 
     if (addTitle && startTime && endTime && addBatch && description && date) {
       try {
