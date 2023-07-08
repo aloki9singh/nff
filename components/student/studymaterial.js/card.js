@@ -2,12 +2,12 @@
 // can't find the file its used and can't verify images used
 // import db fixed
 
-import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
 // import { db } from '../../config/firebaseConfig';
-import { db } from "../../../config/firebaseconfig";
-import { collection, getDocs, query } from "firebase/firestore";
+import { db } from '../../../config/firebaseconfig';
+import { collection, getDocs, query } from 'firebase/firestore';
 
 export default function StudyMaterialCard() {
   const [material, setMaterial] = useState([]);
@@ -15,7 +15,7 @@ export default function StudyMaterialCard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(db, "studyMaterial"));
+      const q = query(collection(db, 'studyMaterial'));
       const materialSnapshot = await getDocs(q);
       const materialData = materialSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -35,7 +35,10 @@ export default function StudyMaterialCard() {
   return (
     <div className="h-full w-full">
       <div className="w-fit p-8">
-        <select className="bg-[#A145CD] text-white rounded-xl px-12" onChange={(e) => setSelectedOption(e.target.value)}>
+        <select
+          className="bg-[#A145CD] text-white rounded-xl px-12"
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
           <option disabled selected hidden>
             Select an option
           </option>
@@ -50,15 +53,15 @@ export default function StudyMaterialCard() {
       <div className="flex bg-[#373A41] rounded-[40px] p-12 justify-center md:grid md:grid-cols-3 flex-wrap flex-col-3 gap-10 m-5 mt-1 ">
         {filteredMaterial.map((study) => (
           <Link key={study.id} href="studyMaterial">
-            <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-[400px] max-[420px]:w-fit md:gap-6">
+            <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-80 md:gap-6">
               <div className="flex justify-between items-center">
-                <div className="m-3 w-[200px] mx-auto rounded-2xl p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
+                <div className="m-3 w-40 mx-auto rounded-2xl md:p-2 p-3 bg-gradient-to-r from-[#673CAF] to-[#DA2E8B]">
                   <Image
                     src="/pagesgraphics/student/coursedescription/laptop.svg"
                     width={90}
                     height={90}
                     alt="course"
-                    className="mx-auto"
+                    className="mx-auto md:w-20 md:h-20 w-16 h-16"
                   />
                   <h1 className="text-white w-full text-sm font-medium text-center">
                     {study.title}
