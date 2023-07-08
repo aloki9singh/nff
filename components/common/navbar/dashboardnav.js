@@ -51,7 +51,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                 <Popover className="">
                   <Popover.Button className="outline-none ">
                     <Image
-                      src={user.photoURL ? user.photoURL : "/User.png"}
+                      src={user.photoURL ? user.photoURL : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
                       alt="proImg"
                       height={48}
                       width={48}

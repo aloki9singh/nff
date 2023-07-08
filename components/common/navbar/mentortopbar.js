@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
-const MentorTopbar = ({ heading }) => {
+import { RxHamburgerMenu } from "react-icons/rx";
+const MentorTopbar = ({ heading, toggleSideBar }) => {
   let [searchstate, setsearchstate] = useState("");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
+
   return (
     <>
-      <div className="flex justify-between lg:flex  md:static static md:w-[98%] md:ml-5   mt-4 w-full p-2 md:p-0">
+      <div className="flex justify-between lg:flex  md:static static  md:ml-5   mt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
         <h1 className="text-white my-auto ml-5 md:ml-10 font-600 md:text-2xl text-[19px]">
-
           {heading}
         </h1>
         <div className="mr-12 flex">
@@ -48,10 +49,18 @@ const MentorTopbar = ({ heading }) => {
             </form>
           </div>
 
-          <div className="ml-12 flex space-x-4  ">
+          <div className="ml-12 md:flex space-x-4  hidden ">
             <BiBell className="text-white text-2xl my-auto"></BiBell>
             <Link href="/meta/profile">
-            <BsPersonCircle className="text-white text-4xl"></BsPersonCircle></Link>
+              <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
+            </Link>
+          </div>
+
+          <div
+            className=" md:hidden block mr-[-30px] "
+            onClick={() => toggleSideBar()}
+          >
+            <RxHamburgerMenu className="text-white text-3xl block md:hidden" />
           </div>
         </div>
       </div>
@@ -60,4 +69,3 @@ const MentorTopbar = ({ heading }) => {
 };
 
 export default MentorTopbar;
-

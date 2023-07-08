@@ -2,21 +2,68 @@ import StudyMaterialCard from "@/components/student/studymaterial.js/card";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useMediaQuery } from "@/hooks/mediaquery";
 
 function StudyMaterial() {
-    const router = useRouter()
-    return <div className="flex w-full">
-        <div className="lg:col-span-1 hidden lg:grid w-[261px]">
-            {" "}
-            <MentorSidebar pathname={router.pathname} />
-        </div>
-        <div className="w-full bg-[#2E3036] rounded-l-3xl col-span-5 lg:col-span-4">
-            <MentorTopbar heading={"Study Material"} />
-            <hr className="hidden lg:block opacity-50 mt-4"></hr>
-            <StudyMaterialCard />
-        </div>
-    </div>
+  const router = useRouter();
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    //   if (user) {
+    //     user.emailVerified = true;
+    //     const value = await callUserById(user.uid);
+    //     setVerified(value.user.verified);
+    //   }
+    // });
+
+    // return () => unsubscribe(); // Cleanup the listener
+  }, [isMediumScreen]);
+
+  return (
+    <div className="flex w-full">
+      <div className="h-full text-base bg-[#2E3036] ">
+        <div className="flex">
+          {/* First Sidebar - Visible on Mobile */}
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+            >
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block hidden w-[221px] bg-[#141518]`}>
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          <div className="flex-grow">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <MentorTopbar heading="Study Material" toggleSideBar={toggleSideBar} />
+            </div>
+
+            <StudyMaterialCard />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default StudyMaterial
+export default StudyMaterial;
