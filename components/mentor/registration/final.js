@@ -9,9 +9,9 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 const MentorFinal = ({ setRegStepCount, regStepCount }) => {
   const { loading, setLoading } = useContext(Loading);
   const [mentor, setMentor] = useState();
-  const { user } = useAuthContext()
+  const { user } = useAuthContext();
   const id = user.uid;
-
+ 
   const [input, setInput] = useState({
     firstname: "",
     lastname: "",
@@ -23,6 +23,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
     city: "",
     postalcode: "",
     country: "",
+    photoURL: "",
     interest: "",
     others: "",
     skills: "",
@@ -31,7 +32,8 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
   });
   console.log(id);
   // this state is  for experience array data
-
+  console.log(input);
+  console.log(mentor);
   //--------------------
   // for Qualification setting refrence model
 
@@ -39,13 +41,25 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
   // Setting Data in  respective state
 
   const setData = (e) => {
-    const { name, value } = e.target;
-    setInput((preval) => {
-      return {
-        ...preval,
-        [name]: value,
+    const { name, value, files } = e.target;
+    if (name === "profilephoto") {
+      // Handle profile photo separately
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setInput((prev) => ({
+          ...prev,
+          photoURL: event.target.result,
+        }));
       };
-    });
+      reader.readAsDataURL(file);
+    } else {
+      // Handle other inputs normally
+      setInput((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   // detail added to  Render
@@ -78,7 +92,6 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
       setMentor(JSON.parse(localStorage.getItem("userdata")));
     }
     setInput(LSdata);
-
   }, []);
 
   return (
@@ -250,25 +263,44 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                 </div>
               </div>
               <div className=" grid max-w-full md:max-w-4xl mt-5 justify-between md:grid-cols-2 gap-5">
-                <div className="md:flex ">
-                  <label htmlFor="" className=" text-sm font-md mr-10 md: mt-3">
-                    Select Country
-                  </label>
-                  <select
-                    name="country"
-                    onChange={setData}
-                    value={input.country}
-                    type="text"
-                    className="rounded focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
-                  >
-                    <option value="">Select Country</option>
-                    <option value="India">India</option>
-                    <option value="India">India</option>
-                    <option value="India">India</option>
-                    <option value="India">India</option>
-                    <option value="India">India</option>
-                    <option value="India">India</option>
-                  </select>
+                <div className=" grid max-w-full md:max-w-4xl mt-5 justify-between md:grid-cols-2 gap-5">
+                  <div className="">
+                    <label
+                      htmlFor=""
+                      className=" text-sm font-md mr-10 md: mt-3"
+                    >
+                      Select Country
+                    </label>
+                    <select
+                      name="country"
+                      onChange={setData}
+                      value={input.country}
+                      type="text"
+                      className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
+                    >
+                      <option value="">Select Country</option>
+                      <option value="India">India</option>
+                      <option value="India">India</option>
+                      <option value="India">India</option>
+                      <option value="India">India</option>
+                      <option value="India">India</option>
+                      <option value="India">India</option>
+                    </select>
+                  </div>
+
+                  <div className="">
+                    <label htmlFor="" className="text-sm font-md mr-10 mt-3">
+                      Profile Photo
+                    </label>
+                    <input
+                      // value={input.photoURL || ""}
+                      name="profilephoto"
+                      onChange={setData}
+                      type="file"
+                      accept="image/*"
+                      className="input rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333]"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

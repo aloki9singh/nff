@@ -1,9 +1,12 @@
+import { auth } from "@/config/firebaseconfig";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { signOut } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { AiOutlineSetting } from "react-icons/ai";
+import { BsPersonCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 
 const MentorSidebar = ({ toggleSideBar }) => {
@@ -33,17 +36,19 @@ const MentorSidebar = ({ toggleSideBar }) => {
               </div>
             </div>
             <div className="md:hidden block p-2 text-white">
-              <Image
-                src={
-                  user.photoURL
-                    ? user.photoURL
-                    : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"
-                }
-                alt="proImg"
-                height={60}
-                width={60}
-                className="inline-block relative object-cover object-center md:hidden !rounded-full border border-[#E1348B] aspect-square"
-              />
+              <Link href={"/meta/profile"}>
+                {user && user.photoURL ? (
+                  <Image
+                    src={user.photoURL}
+                    alt="proImg"
+                    height={60}
+                    width={60}
+                    className="inline-block relative object-cover object-center md:hidden !rounded-full border border-[#E1348B] aspect-square"
+                  />
+                ) : (
+                  <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
+                )}
+              </Link>
               <p className="pt-2">Rahul Mehra</p>
               <p className="text-gray-500 text-[12px] mt-[-7px]">
                 Roll no- xxxxxxxxxxx
@@ -407,9 +412,16 @@ const MentorSidebar = ({ toggleSideBar }) => {
                         router.pathname == "/meta/logout"
                           ? "text-[#E1348B]"
                           : ""
-                      }`}
+                      } cursor-pointer`}
                     >
-                      Logout
+                      <p
+                        onClick={() => {
+                          signOut(auth);
+                          router.push("/");
+                        }}
+                      >
+                        Logout
+                      </p>
                     </span>
                   </label>
                 </Link>
