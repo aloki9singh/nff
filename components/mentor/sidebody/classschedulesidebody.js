@@ -12,11 +12,13 @@ import { getMonthName } from "@/components/common/calendar/common/timestampfun";
 import { useEffect } from "react";
 
 import { callSchedulePostApiMentor } from "@/lib/exportablefunctions";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
 
 const SideBodyClassSchedule = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
   const [selectedColor, setSelectedColor] = useState("#E1348B");
-
+  const [user, setUser] = useState("");
   const val = date.getYear() + date.getMonth() + date.getDate();
   const Mentorname = "Raviraj Kumar"; //replace this by fetching mentor name
   const [userData, setUserData] = useState({
@@ -28,7 +30,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
     defaultRadio: selectedColor,
     date: "",
   });
-  console.log("This data is scheduled", userData);
+  // console.log("This data is scheduled", userData);
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "date") {
@@ -54,11 +56,11 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
 
     const { addTitle, startTime, endTime, addBatch, description, date } =
       userData;
-      
-      if (startTime >= endTime) {
-        alert("End time must be greater than start time.");
-        return;
-      }
+
+    if (startTime >= endTime) {
+      alert("End time must be greater than start time.");
+      return;
+    }
 
     const requiredFields = [
       addTitle,
@@ -73,8 +75,8 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
       const dataToSend = {
         ...userData,
         defaultRadio: selectedColor,
-        // mentorId:""
-        //mentorName:""
+        mentorId: user.uid,
+        mentorName: user.displayName,
         link: "",
       };
 
@@ -103,7 +105,16 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
   const handleColorSelect = (color) => {
     setSelectedColor(color);
   };
-
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      setUser(currentUser);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  console.log();
   return (
     <div className="h-full">
       <div

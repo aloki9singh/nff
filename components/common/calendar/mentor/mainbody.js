@@ -191,7 +191,6 @@ const Mainbodymentor = () => {
                 {dataFetched.map((valueof, indexof) => {
                   return (
                     <div key={indexof}>
-                      
                       {combined.currentDate == valueof.date.day &&
                       combined.mainMonth == valueof.date.month &&
                       combined.currentYear == valueof.date.year &&
@@ -201,7 +200,6 @@ const Mainbodymentor = () => {
                           className={`absolute bottom-1 left-2/4 `}
                           key={indexof}
                         >
-                          
                           {
                             <div
                               onClick={(e) => {

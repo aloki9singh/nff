@@ -6,11 +6,11 @@ import { useState } from "react";
 import CourseCard from "@/components/student/courses/CourseCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import {callUserById} from "@/lib/exportablefunctions"
+import { callUserById } from "@/lib/exportablefunctions";
 import { auth } from "@/config/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
 
-import withAuth from "@/lib/context/mentorcontext"
+import withAuth from "@/lib/context/mentorcontext";
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
@@ -18,6 +18,7 @@ import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
+import { useMediaQuery } from "@/hooks/mediaquery";
 
 function MentorProfile() {
   const router = useRouter();
@@ -25,39 +26,70 @@ function MentorProfile() {
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
   const [uid, setUid] = useState("");
   const [userData, setUserData] = useState({});
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
 
   useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log(user.uid);
-       callUserById(user.uid).then((data) => setUserData(data.user));
+        callUserById(user.uid).then((data) => setUserData(data.user));
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [isMediumScreen]);
 
-
-console.log(userData);
+  console.log(userData);
   return (
     <>
-      <div className="md:h-screen h-full w-full text-base bg-[#15161B]">
+      <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex">
-          <div className="lg:col-span-5 hidden lg:grid w-[261px] ">
-            {" "}
-            <MentorSidebar pathname={router.pathname} />
-          </div>
-          <div className="md:rounded-l-[50px] pt-2 w-[90%] bg-[#2E3036] ">
-            <MentorTopbar heading={"Profile"} />
-            <hr className="hidden md:block opacity-50 mt-3 "></hr>
+          {/* First Sidebar - Visible on Mobile */}
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+            >
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block hidden w-[221px] bg-[#141518]`}>
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          <div className="flex-grow">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <MentorTopbar heading="Profile" toggleSideBar={toggleSideBar} />
+            </div>
+
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
               {/* text */}
-              <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "/>
+              <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] " />
               <div className="w-[90%] h-full   md:text-base text-sm  ">
                 <div className=" md:mx-10 mx-5">
                   <div className="flex">
                     {" "}
                     <Image
-                      src={userData.photoURL ? userData.photoURL : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
+                      src={
+                        userData.photoURL
+                          ? userData.photoURL
+                          : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"
+                      }
                       alt="proImg"
                       height={100}
                       width={100}
@@ -173,7 +205,9 @@ console.log(userData);
                     Educator highlights
                   </div>
                   <div className="text-center pt-2 pb-4 font-extralight">
-                    Worked at {userData.details?.experience[0]?.companyname}
+                    Worked at{" "}
+                    {userData.details &&
+                      userData.details?.experience[0]?.companyname}
                   </div>
                   <div className="flex gap-2 text-sm font-medium">
                     {" "}
@@ -188,14 +222,19 @@ console.log(userData);
                     </span>{" "}
                     Studied at{" "}
                     <span className="text-[#E1348B] font-black">
-                      {userData.details?.qualification[0]?.universityname}({userData.details?.qualification[0]?.fieldOfStudy})
+                      {userData.details &&
+                        userData.details?.qualification[0]?.universityname}
+                      (
+                      {userData.details &&
+                        userData.details?.qualification[0]?.fieldOfStudy}
+                      )
                     </span>
                   </div>
                   <p className="ml-7  font-extralight text-sm opacity-75">
-                    Latest Result: Ashwin - 100%ile Thrice in Maths in JEE
-                    Main 2021 , AIR 409 (JEE Advanced) through my Evolve
-                    Batch. Many Students Scoring more than 99.5%ile in Maths.
-                    Producing IITians every year.
+                    Latest Result: Ashwin - 100%ile Thrice in Maths in JEE Main
+                    2021 , AIR 409 (JEE Advanced) through my Evolve Batch. Many
+                    Students Scoring more than 99.5%ile in Maths. Producing
+                    IITians every year.
                   </p>
 
                   <div className="flex gap-2 text-sm font-medium">
@@ -212,11 +251,15 @@ console.log(userData);
                     Lives in{" "}
                     <span className="text-[#E1348B] font-black">
                       {" "}
-                     {userData.details?.address}
+                      {userData.details?.address}
                     </span>
                   </div>
                   <p className="ml-7  font-extralight text-sm opacity-75">
-                    {userData.details?.experience[0]?.jobtitle} since {userData.details?.experience[0]?.startdate}
+                    {userData.details &&
+                      userData.details?.experience[0]?.jobtitle}{" "}
+                    since{" "}
+                    {userData.details &&
+                      userData.details?.experience[0]?.startdate}
                   </p>
 
                   <div className="flex gap-2">
@@ -232,11 +275,11 @@ console.log(userData);
                     </span>{" "}
                     <span className="text-sm font-medium">
                       {" "}
-                      Knows {userData.details?.skills.map((item)=>{
-                        return (<>
-                        {item }, 
-                        </>);
-                      })}
+                      Knows{" "}
+                      {userData.details &&
+                        userData.details?.skills.map((item) => {
+                          return <>{item},</>;
+                        })}
                     </span>
                   </div>
                 </div>
