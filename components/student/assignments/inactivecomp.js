@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 const InActiveComp = () => {
   return (
     <div>
@@ -19,19 +19,21 @@ const InActiveComp = () => {
               <Image
                 width={110}
                 height={110}
-                alt={"img"}
-
+                alt={'img'}
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
-
               />
-              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
-              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
+              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
+                25 Lessons
+              </div>
+              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">
+                Beginner
+              </div>
             </div>
             <div className="text-[10px] text-gray-600">COURSE</div>
             <h1 className="text-sm">Introduction to C++</h1>
             <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500">
-              Learn the basics of C++ and how to write your first code.{" "}
+              Learn the basics of C++ and how to write your first code.{' '}
             </p>
             <div className="text-right">
               <button className="mt-2 text-xs  border-pink p-2 border">
@@ -44,19 +46,21 @@ const InActiveComp = () => {
               <Image
                 width={110}
                 height={110}
-                alt={"img"}
-
+                alt={'img'}
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
-
               />
-              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
-              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
+              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
+                25 Lessons
+              </div>
+              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">
+                Beginner
+              </div>
             </div>
             <div className="text-[10px] text-gray-600">COURSE</div>
             <h1 className="text-sm">Introduction to C++</h1>
             <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500">
-              Learn the basics of C++ and how to write your first code.{" "}
+              Learn the basics of C++ and how to write your first code.{' '}
             </p>
             <div className="text-right">
               <button className="mt-2 text-xs border-pink  p-2 border">
@@ -69,19 +73,21 @@ const InActiveComp = () => {
               <Image
                 width={110}
                 height={110}
-                alt={"img"}
-
+                alt={'img'}
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
-
               />
-              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
-              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
+              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
+                25 Lessons
+              </div>
+              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">
+                Beginner
+              </div>
             </div>
             <div className="text-[10px] text-gray-600">COURSE</div>
             <h1 className="text-sm">Introduction to C++</h1>
             <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500">
-              Learn the basics of C++ and how to write your first code.{" "}
+              Learn the basics of C++ and how to write your first code.{' '}
             </p>
             <div className="text-right">
               <button className="mt-2 text-xs border-[#E1348B]  p-2 border ">
@@ -108,19 +114,21 @@ const InActiveComp = () => {
               <Image
                 width={110}
                 height={110}
-                alt={"img"}
-
+                alt={'img'}
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
-
               />
-              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
-              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
+              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
+                25 Lessons
+              </div>
+              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">
+                Beginner
+              </div>
             </div>
             <div className="text-[10px] text-gray-600">COURSE</div>
             <h1 className="text-sm">Introduction to C++</h1>
             <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500">
-              Learn the basics of C++ and how to write your first code.{" "}
+              Learn the basics of C++ and how to write your first code.{' '}
             </p>
             <div className="text-right">
               <button className="mt-2 text-xs  border-pink p-2 border">
@@ -133,19 +141,21 @@ const InActiveComp = () => {
               <Image
                 width={110}
                 height={110}
-                alt={"img"}
-
+                alt={'img'}
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
-
               />
-              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
-              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
+              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
+                25 Lessons
+              </div>
+              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">
+                Beginner
+              </div>
             </div>
             <div className="text-[10px] text-gray-600">COURSE</div>
             <h1 className="text-sm">Introduction to C++</h1>
             <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500">
-              Learn the basics of C++ and how to write your first code.{" "}
+              Learn the basics of C++ and how to write your first code.{' '}
             </p>
             <div className="text-right">
               <button className="mt-2 text-xs border-pink  p-2 border">
@@ -158,18 +168,21 @@ const InActiveComp = () => {
               <Image
                 width={110}
                 height={110}
-                alt={"img"}
+                alt={'img'}
                 src="/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg"
                 className="w-12"
-
               />
-              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">25 Lessons</div>
-              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">Beginner</div>
+              <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
+                25 Lessons
+              </div>
+              <div className="text-xs md:text-[10px] md:ml-1 text-[#E1348B] m-auto">
+                Beginner
+              </div>
             </div>
             <div className="text-[10px] text-gray-600">COURSE</div>
             <h1 className="text-sm">Introduction to C++</h1>
             <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500">
-              Learn the basics of C++ and how to write your first code.{" "}
+              Learn the basics of C++ and how to write your first code.{' '}
             </p>
             <div className="text-right">
               <button className="mt-2 text-xs border-[#E1348B]  p-2 border ">

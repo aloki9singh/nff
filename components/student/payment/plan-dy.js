@@ -39,13 +39,13 @@ export default function Plan({
                 <p className="text-sm">{item}</p>
               </div>
             ))}
+            <button
+              className="bg-[#A145CD] text-sm w-full p-[5px] mt-6 rounded-md"
+              onClick={() => updatePage(1)}
+            >
+              Start Free Trial Now
+            </button>
           </div>
-          <button
-            className="bg-[#A145CD] text-sm w-full p-[5px] rounded-md"
-            onClick={() => updatePage(1)}
-          >
-            Start Free Trial Now
-          </button>
         </div>
       </div>
     </>
