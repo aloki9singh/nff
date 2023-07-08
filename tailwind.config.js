@@ -19,7 +19,8 @@ module.exports = {
         // signupForm:'rgba(255, 255, 255, 0.02)',
         // orBorder:'rgba(255, 255, 255, 0.32)'
 
-        bs: '#0D0E14'
+        bs: '#0D0E14',
+        primary: '#E1348B',
 
       },
       backgroundImage: {
@@ -28,7 +29,7 @@ module.exports = {
       },
       screens: {
         'sd': '300px',
-        
+
       },
       borderRadius: {
         "10": "10px",
