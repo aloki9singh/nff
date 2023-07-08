@@ -1,21 +1,21 @@
-// Mobile bottom-Navbar is missing
 // Hard Coded top-Navbar
+// In mobile screen dropdown is missing of modules.
 
-import { useState } from "react";
-import Sidebar from "@/components/common/sidebar/sidebar";
-import { BiBell } from "react-icons/bi";
-import { BsPersonCircle } from "react-icons/bs";
-import Image from "next/image";
-// import MobileNav from "../components/CalenderParts/MobileNav";
-import AssignmentCard from "@/components/student/assignments/foldercard";
+import { useState } from 'react';
+import Sidebar from '@/components/common/sidebar/sidebar';
+import { BiBell } from 'react-icons/bi';
+import { BsPersonCircle } from 'react-icons/bs';
+import Image from 'next/image';
+// import MobileNav from '../components/CalenderParts/MobileNav';
+import AssignmentCard from '@/components/student/assignments/foldercard';
 
-import { useRouter } from "next/router";
-import assignmentupload from "./assignmentupload";
+import { useRouter } from 'next/router';
+import assignmentupload from './assignmentupload';
 
-const Assignments = () => {
+export default function Assignments() {
   const router = useRouter();
 
-  let [searchstate, setsearchstate] = useState("");
+  let [searchstate, setsearchstate] = useState('');
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
@@ -27,44 +27,44 @@ const Assignments = () => {
 
   const [module, setModule] = useState(0);
   let Activestyle =
-    "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
-  let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
+    'text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]';
+  let Inactivestyle = 'text-sm font-light py-2 pl-8 pr-12';
 
   let Assignments = [
     {
       no: 1,
       module: 1,
       courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
+      name: 'Rohit Mehta',
+      date: '12/12/2021',
     },
     {
       no: 2,
       module: 1,
       courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
+      name: 'Rohit Mehta',
+      date: '12/12/2021',
     },
     {
       no: 3,
       module: 1,
       courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
+      name: 'Rohit Mehta',
+      date: '12/12/2021',
     },
     {
       no: 4,
       module: 1,
       courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
+      name: 'Rohit Mehta',
+      date: '12/12/2021',
     },
     {
       no: 5,
       module: 0,
       courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
+      name: 'Rohit Mehta',
+      date: '12/12/2021',
     },
   ];
 
@@ -74,7 +74,7 @@ const Assignments = () => {
         <Sidebar />
       </div>
       <div
-        style={{ background: "#2E3036" }}
+        style={{ background: '#2E3036' }}
         className="flex flex-col col-span-5 lg:col-span-4 w-full min-h-screen"
       >
         {/* Static Navbar to be replaced starts*/}
@@ -169,7 +169,7 @@ const Assignments = () => {
               <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
                 Files
               </div>
-              <div className="filecontainer py-8 px-12 flex gap-5 flex-wrap">
+              <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-2">
                 {Assignments.filter(
                   (assignment) => module == assignment.module
                 ).map((assignment, index) => (
@@ -188,6 +188,4 @@ const Assignments = () => {
       {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
     </div>
   );
-};
-
-export default Assignments;
+}
