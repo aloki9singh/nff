@@ -30,7 +30,7 @@ export default function Plan({
             {description.map((item, ind) => (
               <div key={ind} className="flex items-center mt-6">
                 <Image
-                  src="/tick.png"
+                  src="/componentsgraphics/student/paymentgateway/plan/tick.png"
                   alt="tick"
                   width={10}
                   height={10}
