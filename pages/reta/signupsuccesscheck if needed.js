@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { auth } from "@/config/firebaseConfig";
+import { auth } from "@/config/firebaseconfig";
 const detailadd = async (id) => {
   const res = await fetch(`/api/mentorsdetail/${id}`, {
     method: "PATCH",
