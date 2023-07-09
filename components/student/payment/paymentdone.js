@@ -48,7 +48,7 @@ const PaymentCompleted = () => {
 						<div className='flex justify-between items-center mb-2'>
 							<p className='text-sm'>46455 45675 43212 45788</p>
 							<Image
-								src='/maestro.svg'
+								src='/componentsgraphics/student/paymentgateway/completion/maestro.svg'
 								alt='card'
 								width={10}
 								height={10}
@@ -66,7 +66,7 @@ const PaymentCompleted = () => {
 			</div>
 			<div className='absolute bottom-0 left-0'>
 				<Image
-					src='/standing.svg'
+					src='/componentsgraphics/student/paymentgateway/completion/standing.svg'
 					alt='standing'
 					width={10}
 					height={10}
