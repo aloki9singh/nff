@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const CourseCard = ({ title, desc, level, lessons, icon }) => {
 	return (
-		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] w-[241px] h-[181px] md:w-[373px] md:h-[289px] py-[10px] px-4 md:p-5">
+		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] w-[241px] h-[181px] md:w-[350px] md:h-[280px] py-[10px] px-4 md:p-5">
 			<div className="flex justify-between ">
 				<div>
 					<Image
