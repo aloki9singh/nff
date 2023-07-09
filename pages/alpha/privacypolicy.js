@@ -3,26 +3,30 @@
 
 import Sidebar from "@/components/common/sidebar/sidebar";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
- import BottomNav from "@/components/common/footer/BottomNav";
+import MobileNav from "@/components/common/footer/bottomnav"
 import Footer from "@/components/common/footer/footer";
 import Link from "next/link";
+
 
 export default function Privacy() {
   return (
     <div className="flex">
-      <div className="lg:col-span-1 hidden lg:grid">
+      <div>
         <Sidebar />
       </div>
-      <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
-        <Dashboardnav heading="Privacy policy" />
-        <div className="flex justify-start items-center text-center text-white md:m-6 m-3">
-          <h1 className="text-[#E1348B] font-semibold md:text-2xl text-xl">
+      <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4 rounded-l-3xl">
+        <Dashboardnav heading="Privacy Policy" />
+        <div className=" justify-start items-center text-center text-white ">
+          <h1 className="text-center w-full font-semibold text-5xl">
+          Privacy Policy
+          </h1>
+          <h1 className="text-[#E1348B] text-center w-full font-semibold text-lg mt-4">
             Last updated on 7th of May 2023
           </h1>
         </div>
-        <div className="md:bg-[#373A41] rounded-[50px]">
+        <div className="mx-20">
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Privacy Policy
             </h1>
             <p>
@@ -35,7 +39,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Collection of Information
             </h1>
             <p>
@@ -49,21 +53,21 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Use of Information
             </h1>
             <p></p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl"></h1>
+            <h1 className="font-semibold md:text-3xl text-2xl"></h1>
             <p></p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl"></h1>
+            <h1 className="font-semibold md:text-3xl text-2xl"></h1>
             <p></p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl"></h1>
+            <h1 className="font-semibold md:text-3xl text-2xl"></h1>
             <p>
               We may use your personal information to provide and improve our
               services, personalize your experience, and communicate with you.
@@ -79,7 +83,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Disclosure of Information
             </h1>
             <p>
@@ -100,7 +104,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">Security</h1>
+            <h1 className="font-semibold md:text-3xl text-2xl">Security</h1>
             <p>
               We take reasonable measures to protect your personal information
               from unauthorized access, use, or disclosure. We use
@@ -110,7 +114,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               {`Children's`} Privacy
             </h1>
             <p>
@@ -123,7 +127,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Retention of Information
             </h1>
             <p>
@@ -135,7 +139,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">Your Rights</h1>
+            <h1 className="font-semibold md:text-3xl text-2xl">Your Rights</h1>
             <p>
               You have the right to access, rectify, or delete your personal
               information that we hold. You also have the right to object to or
@@ -144,7 +148,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Marketing Communications
             </h1>
             <p>
@@ -161,7 +165,7 @@ export default function Privacy() {
             </p>
           </div>
           <div className="md:m-6 m-3 text-white space-y-4">
-            <h1 className="font-semibold md:text-4xl text-2xl">
+            <h1 className="font-semibold md:text-3xl text-2xl">
               Changes to this Policy
             </h1>
             <p>
@@ -171,8 +175,8 @@ export default function Privacy() {
             </p>
           </div>
         </div>
-        <Footer />
-        <BottomNav />
+        <Footer background="bg-[#2D2E35]" />
+        <MobileNav />
       </div>
     </div>
   );
