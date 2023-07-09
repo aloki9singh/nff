@@ -86,9 +86,9 @@ export default function Payment() {
       <>
          <div className="md:h-screen flex flex-col items-center bg-[#2D2E35] text-white font-Inter">
             <StepProgress currentStep={currentStep} />
-            {currentStep == 0 && <ChoosePlan updatePage={updatePage} />}
-            {currentStep == 1 && <Hero onClick={makePayment} />}
-            {currentStep == 2 && <PaymentCompleted />}
+            {currentStep == 1 && <ChoosePlan updatePage={updatePage} />}
+            {currentStep ==  4&& <Hero onClick={makePayment} />}
+            {currentStep == 0 && <PaymentCompleted />}
          </div>
       </>
    );

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-// import MobileNav from "../components/CalenderParts/MobileNav";
-// import StudentTopbar from '../components/Navbar/StudentTopbar';
 import Image from 'next/image';
-// import StudentProfileChart from '../components/Student/studentProfileChart';
-// import Sidebar from '../components/Sidebar/sidebar';
 import { useSelector } from 'react-redux';
 import { FiEdit2 } from 'react-icons/fi';
-// import StudentProfileCirProgress from '../components/Student/studentProfileCirProgress';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import StudentProfileChart from '@/components/student/profile/chart';
+import StudentProfileCirProgress from '@/components/student/profile/StudentProfileCirProgress';
 
 function studentProfile() {
   const router = useRouter();
@@ -21,13 +21,13 @@ function studentProfile() {
         <div className="flex">
           <div className="lg:col-span-1 hidden lg:grid w-[261px] ">
             {' '}
-            {/* <Sidebar pathname={router.pathname} /> */}
+            <CourseoverviewSidebar />
           </div>
           <div
             style={{ background: '#2E3036' }}
             className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
           >
-            {/* <StudentTopbar heading={'Profile'} /> */}
+            <Dashboardnav heading={'Profile'} />
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
               {/* text */}
@@ -166,7 +166,7 @@ function studentProfile() {
                     <div className=" w-[90%] md:w-[60%] h-[100%] flex flex-col justify-between text-center py-4 px-2">
                       <h1 className="font-semibold text-sm">Activity Hours</h1>
                       <div className="mt-2">
-                        {/* <StudentProfileChart data={chartData} /> */}
+                        <StudentProfileChart data={chartData} />
                       </div>
                     </div>
                     <div className="w-[90%] md:w-[40%] h-[100%] flex flex-col justify-between text-center py-4 px-2">
@@ -241,7 +241,7 @@ function studentProfile() {
                     </div>
                     <div className="w-full h-[90%] sd:mt-4 ">
                       {' '}
-                      {/* <StudentProfileCirProgress /> */}
+                      <StudentProfileCirProgress />
                     </div>
                   </div>
                 </div>
