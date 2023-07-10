@@ -75,11 +75,115 @@ const Sidebar = ({ pathname }) => {
                         pathname == "/Schedule" ? "#E1348B" : ""
                       }]`}
                     >
+                      Schedule
+                    </span>
+                  </label>
+                </Link>
+                    
+                <Link
+                  href="/seta/profile"
+                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                >
+                  <label className="inline-flex items-center space-x-3">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 text-gray-600"
+                    />{" "}
+                    <span
+                      className={`ml-3 text-[${
+                        pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
+                    >
+                      Live Class
+                    </span>
+                  </label>
+                </Link>
+
+                <Link
+                  href="/seta/profile"
+                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                >
+                  <label className="inline-flex items-center space-x-3">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 text-gray-600"
+                    />{" "}
+                    <span
+                      className={`ml-3 text-[${
+                        pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
+                    >
+                      Study Material
+                    </span>
+                  </label>
+                </Link>
+
+
+                <Link
+                  href="/seta/profile"
+                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                >
+                  <label className="inline-flex items-center space-x-3">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 text-gray-600"
+                    />{" "}
+                    <span
+                      className={`ml-3 text-[${
+                        pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
+                    >
+                      Homework
+                    </span>
+                  </label>
+                </Link>
+                <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+
+                <Link
+                  href="/seta/profile"
+                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                >
+                  <label className="inline-flex items-center space-x-3">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 text-gray-600"
+                    />{" "}
+                    <span
+                      className={`ml-3 text-[${
+                        pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
+                    >
+                      chat
+                    </span>
+                  </label>
+                </Link>
+
+                <Link
+                  href="/seta/profile"
+                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
+                >
+                  <label className="inline-flex items-center space-x-3">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 text-gray-600"
+                    />{" "}
+                    <span
+                      className={`ml-3 text-[${
+                        pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
+                    >
                       Profile
                     </span>
                   </label>
                 </Link>
 
+
+                  
                 <div className="  font-semibold text-white bg-[#373A41] flex flex-col mt-9 rounded-xl"></div>
               </li>
             </ul>
