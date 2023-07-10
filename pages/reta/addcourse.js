@@ -16,11 +16,43 @@ import Image from "next/image";
 import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useStep } from "@/hooks/useStep";
+import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
 const numOfModules = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const categories = ["Web Development", "App Development", "UI/UX", "Others"];
+
+
+const headingContent = [
+  {
+    title: "Course Details",
+    desc: "Fill out this form with correct information to proceed forward. After submission it takes 1-2 weeks to review your application. If you have any query reach out to us at (add email).",
+  },
+  {
+    title: "Target Students",
+    desc: "The description you write here will help decide the students decide if your course is the one for them."
+  },
+  {
+    title: "Create class module",
+    desc: "Fill out this form with correct information to proceed forward. After submission it takes 1-2 weeks to review your application."
+  }
+]
+
+
+
+const Header = ({ currentStep }) => {
+  return <div className="w-full flex flex-row items-center justify-between p-2 mb-2" >
+    <div className="flex-[4]" >
+      <h3 className="text-3xl font-medium tracking-wide pb-2" >{headingContent[currentStep - 1].title}</h3>
+      <p className="text-sm text-white/60" >{headingContent[currentStep - 1].desc}</p>
+    </div>
+    <div className="flex-1 text-right" >
+      <button className="px-12 py-3 bg-[#A145CD] rounded-md hover:scale-105 duration-100 transition-all"  >Next</button>
+    </div>
+  </div>
+}
+
 
 const Sidebar = ({ currentStep = 1, setStep }) => {
   const steps = ["Plan Course", "Target Students", "Create course content"];
@@ -34,20 +66,18 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
           key={index}
         >
           <h4
-            className={`text-xl ${
-              currentStep === index + 1
-                ? "text-primary"
-                : "text-primary/60 group-hover:text-primary/90"
-            }  font-semibold`}
+            className={`text-xl ${currentStep === index + 1
+              ? "text-primary"
+              : "text-primary/60 group-hover:text-primary/90"
+              }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
-            className={`${
-              currentStep === index + 1
-                ? "text-white"
-                : "text-white/60 group-hover:text-white/90"
-            }`}
+            className={`${currentStep === index + 1
+              ? "text-white"
+              : "text-white/60 group-hover:text-white/90"
+              }`}
           >
             {step}
           </p>
@@ -62,9 +92,9 @@ const CreateCourse = () => {
   const [desc, setDesc] = useState("");
   const [numModules, setNumModules] = useState(0);
   const [modules, setModules] = useState([]);
-  const [category, setCategory] = useState(categories[0]);
-  const [duration, setDuration] = useState(0);
-  const [sessions, setsessions] = useState(0);
+  const [category, setCategory] = useState();
+  const [duration, setDuration] = useState();
+  const [sessions, setsessions] = useState();
   const [language, setLanguage] = useState("English");
   const [details, setDetails] = useState("");
   const [level, setLevel] = useState("");
@@ -264,7 +294,7 @@ const CreateCourse = () => {
         <div className=" flex justify-center gap-x-96 items-center">
           <Link href="/">
             <ul>
-              <li className="ml-2   text-2xl uppercase hover:border-b text-white text-center h-[50px] md:h-[60px]">
+              <li className="ml-2  text-2xl uppercase hover:border-b text-white text-center h-[50px] md:h-[60px]">
                 <Image
                   src={NeatS}
                   alt="logo"
@@ -297,32 +327,35 @@ const CreateCourse = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-10">
-        <div className="col-span-2 h-full ">
+      <div className="grid grid-cols-10 w-full">
+        <div className="col-span-2 h-full pl-12 ">
           <Sidebar currentStep={currentStep} setStep={setStep} />
         </div>
-        <div className="col-span-8 h-max mx-auto px-4 bg-[#222222] rounded-lg mt-4 mb-4">
-          <h1 className="text-2xl py-4">Create Course</h1>
+        <div className="col-span-8 h-max  p-8 bg-[#222222] rounded-lg mt-4 mb-4">
+
+          <Header currentStep={currentStep} />
           <hr className="border-x-2 border-gray-500 mb-4" />
 
           {currentStep === 1 && (
             <>
+
+
               {/* course name */}
               <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
-                <label htmlFor="">Course Name:</label>
+                <label className="w-40" htmlFor="">Course Title</label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Type here"
-                  className="AddMentorInput w-full md:w-2/4 h-10 rounded-lg px-2"
+                  placeholder="Enter coures title"
+                  className="AddMentorInput flex-1  h-10 rounded-lg px-2"
                   style={{ background: "#333333" }}
                 />
               </div>
 
               {/* course desc */}
-              <div className="w-full  flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
-                <label htmlFor="">Course Subtitle:</label>
+              {/* <div className="w-full  flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+                <label className="w-40" htmlFor="">Course Subtitle:</label>
                 <input
                   type="text"
                   value={desc}
@@ -331,64 +364,54 @@ const CreateCourse = () => {
                   className="AddMentorInput w-full md:w-2/4 h-10 rounded-lg px-2"
                   style={{ background: "#333333" }}
                 />
-              </div>
+              </div> */}
 
               {/* course details */}
-              <div className="w-full  flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
-                <label htmlFor="">Course Description:</label>
+              <div className="w-full  flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-2 px-4 mb-8">
+                <label className="w-40" htmlFor="">Course Description</label>
                 <textarea
                   type="text"
-                  placeholder="Type here"
+                  placeholder="Enter course description"
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
-                  className="AddMentorInput w-full md:w-4/6 h-20 rounded-lg px-2"
+                  className="AddMentorInput flex-1 h-28 rounded-lg px-2"
                   style={{ background: "#333333" }}
                 />
               </div>
 
               {/* duration, session and language */}
-              <div className="w-full md:w-3/4 flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 mb-8">
-                <div className="md:w-1/2 flex flex-row items-center gap-x-2 mb-8">
-                  <label htmlFor="">Duration (in Weeks) :</label>
+              <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 px-4 mb-8">
+                <div className="flex flex-1 flex-row items-center gap-x-2">
+                  <label className="w-40" htmlFor="">Duration</label>
                   <input
                     type="number"
-                    className="AddMentorInput w-1/4 h-10 rounded-lg px-2"
+                    className="AddMentorInput h-10 rounded-lg px-2 flex-1"
                     value={duration}
                     onChange={(e) => setDuration(parseInt(e.target.value))}
                     style={{ background: "#333333" }}
+                    placeholder="Enter duration in weeks"
                   />
                 </div>
-                <div className="md:w-1/2 flex items-center gap-x-2 px-4 mb-8">
-                  <label htmlFor="">Total Session :</label>
+                <div className="flex flex-1 items-center gap-x-2 px-4">
+                  <label className="w-40" htmlFor="">Lectures</label>
                   <input
                     type="number"
+                    placeholder="Enter total lectures"
                     value={sessions}
                     onChange={(e) => setsessions(parseInt(e.target.value))}
-                    className="AddMentorInput w-1/4 h-10 rounded-lg px-2"
+                    className="AddMentorInput h-10 rounded-lg px-2 flex-1"
                     style={{ background: "#333333" }}
                   />
                 </div>
-                <div className="md:w-1/2 flex items-center gap-x-2 px-4 mb-8">
-                  <label htmlFor="">Language :</label>
-                  <div className="bg-[#313131] rounded-lg h-10 px-2">
-                    <select
-                      className="AddMentorInput w-32 h-10 rounded-lg"
-                      value={language}
-                      onChange={(e) => setLanguage(e.target.value)}
-                      style={{ background: "#313131" }}
-                    >
-                      <option value="English">English</option>
-                      <option value="Hindi">Hindi</option>
-                      <option value="Spanish">Spanish</option>
-                      <option value="french">french</option>
-                    </select>
-                  </div>
-                </div>
+
+
               </div>
+
+
 
               {/* level */}
               <div className="w-full hidden md:w-3/4 md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 mb-8">
-                <legend htmlFor="">Level :</legend>
+                <legend className="w-40" htmlFor="">Level :</legend>
                 {/* <div className="border-2 border-gray-600 px-3 py-1 rounded-lg">
             <input type="radio" name="level" className="mr-2" />
             <label>All Level</label>
@@ -428,8 +451,53 @@ const CreateCourse = () => {
                 </div>
               </div>
 
+              <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 px-4 mb-8">
+
+                <div className="flex-1 flex items-center gap-x-4">
+                  <label className="w-40" htmlFor="">Category:</label>
+                  <div className="bg-[#313131] rounded-lg h-10 px-2 flex-1">
+                    <select
+                      className="AddMentorInput w-full h-10 bg-[#313131] "
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      style={{ background: "#333333" }}
+                    >
+                      <option className="text-white/50" disabled selected value="">Select a Category</option>
+                      {categories.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex-1 flex items-center gap-x-2 px-4">
+                  <label className="w-40" htmlFor="">Language :</label>
+                  <div className="bg-[#313131] rounded-lg h-10 px-2 flex-1">
+                    <select
+                      className="AddMentorInput w-full h-10 rounded-lg"
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                      style={{ background: "#313131" }}
+                    >
+                      <option value="English">English</option>
+                      <option value="Hindi">Hindi</option>
+                      <option value="Spanish">Spanish</option>
+                      <option value="french">french</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+                <label className="w-40" htmlFor="">Upload Banner Image</label>
+                <IDdraganddrop /> 
+              </div>
+
+
               {/* number of mentor and lead mentor */}
-              <div className="w-full md:w-3/4 flex flex-col md:flex-row justify-start items-start md:items-center gap-y-3 md:gap-x-28 px-4 mb-4 md:mb-8">
+              {/* <div className="w-full md:w-3/4 flex flex-col md:flex-row justify-start items-start md:items-center gap-y-3 md:gap-x-28 px-4 mb-4 md:mb-8">
                 <div className="flex items-center gap-x-4">
                   <label htmlFor="" className="text-xs md:text-base">
                     Num of Mentor:
@@ -471,10 +539,10 @@ const CreateCourse = () => {
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* assistance mentor */}
-              <div className="border-2 border-gray-500 px-4 py-2 h-30">
+              {/* <div className="border-2 border-gray-500 px-4 py-2 h-30">
                 <div className="flex items-center gap-x-4 mb-4">
                   <label htmlFor="" className="text-xs md:text-base">
                     Assistant Mentor :
@@ -492,12 +560,12 @@ const CreateCourse = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </>
           )}
 
           {currentStep === 3 && (
-            <>
+            <div className="w-full ">
               <div className="my-4 flex items-center gap-x-4 w-full">
                 <label htmlFor="">Number of Modules :</label>
                 {/* <input
@@ -523,30 +591,13 @@ const CreateCourse = () => {
               </div>
 
               {renderModuleInputs()}
-            </>
+            </div>
           )}
 
           {currentStep === 2 && (
             <>
               {/* category */}
-              <div className="w-1/2 flex items-center gap-x-4 mt-4">
-                <label htmlFor="">Category:</label>
-                <div className="bg-[#313131] rounded-lg h-10 px-2">
-                  <select
-                    className="AddMentorInput w-48 h-10 bg-[#313131]"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    style={{ background: "#333333" }}
-                  >
-                    <option value="null">Select a Category</option>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+
 
               {/* learnings */}
               <div className="flex flex-col bg-[#404046] h-fit rounded-lg my-6">
@@ -584,14 +635,7 @@ const CreateCourse = () => {
             </>
           )}
 
-          <div className="flex justify-end">
-            <button
-              onClick={handleSubmit}
-              className="px-5 h-10 bg-[#E1348B] rounded-lg mb-6"
-            >
-              Create Course
-            </button>
-          </div>
+
         </div>
       </div>
     </div>
