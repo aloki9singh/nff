@@ -216,9 +216,7 @@ const PlanCourseForm = () => {
   );
 };
 
-
 const TargetStudentsForm = () => {
-
   return (
     <>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
@@ -254,11 +252,9 @@ const TargetStudentsForm = () => {
           style={{ background: "#333333" }}
         />
       </div>
-
     </>
-  )
-
-}
+  );
+};
 
 const headingContent = [
   {
@@ -295,6 +291,125 @@ const Header = ({ currentStep }) => {
   );
 };
 
+const Accordian = ({ title, desc }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="bg-[#333333] p-2 px-3 rounded-md">
+      <h2 id="accordion-flush-heading-1">
+        <button
+          type="button"
+          className="flex items-center justify-between w-full py-2 font-medium text-left "
+          data-accordion-target="#accordion-flush-body-1"
+          aria-expanded="true"
+          aria-controls="accordion-flush-body-1"
+          onClick={() => setOpen(!open)}
+        >
+          <span>{title}</span>
+          <svg
+            data-accordion-icon=""
+            className={`w-3 h-3 ${open ? "rotate-180" : ""}  shrink-0`}
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5 5 1 1 5"
+            />
+          </svg>
+        </button>
+      </h2>
+      <div
+        id="accordion-flush-body-1"
+        className={`${open ? "" : "hidden"}`}
+        aria-labelledby="accordion-flush-heading-1"
+      >
+        <div className="py-3">
+          <p className="text-white/80">{desc}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CourseContentForm = () => {
+  const [modules, setModules] = useState([]);
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+
+  const addModuleHandler = (e) => {
+    e.preventDefault();
+    setModules([...modules, { name, desc }]);
+    setName("");
+    setDesc("");
+  };
+
+  return (
+    <div className="w-full flex flex-row itesm-start gap-5">
+      <form
+        onSubmit={addModuleHandler}
+        className="flex-1 px-10 py-6  border border-[#5F6065] rounded-xl"
+      >
+        <div className="w-full flex flex-col gap-y-4 mb-7">
+          <label className="" htmlFor="">
+            Module Name
+          </label>
+          <input
+            type="text"
+            placeholder="Enter module name"
+            className="AddMentorInput  rounded-lg px-2"
+            style={{ background: "#333333" }}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="w-full flex flex-col gap-y-4 mb-7">
+          <label className="" htmlFor="">
+            Module Description
+          </label>
+          <textarea
+            type="text"
+            placeholder="Enter module description"
+            className="AddMentorInput h-60 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        </div>
+        <button className="bg-pink text-white px-10 py-2 rounded-md ">
+          Add
+        </button>
+      </form>
+      <div className="flex-1 flex flex-col ">
+        <h5>Class module list</h5>
+        <div className="flex-1">
+          {modules.length === 0 ? (
+            <div className="flex h-full items-center justify-center">
+              <p className="text-center text-white/60 text-lg">
+                No added module
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col mt-4 gap-y-3">
+              {modules.map((module, index) => (
+                <div key={index}>
+                  <p className="text-xs text-white/70">Module {index + 1}</p>
+                  <Accordian title={module.name} desc={module.desc} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Sidebar = ({ currentStep = 1, setStep }) => {
   const steps = ["Plan Course", "Target Students", "Create course content"];
 
@@ -308,16 +423,16 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
         >
           <h4
             className={`text-xl ${currentStep === index + 1
-              ? "text-primary"
-              : "text-primary/60 group-hover:text-primary/90"
+                ? "text-primary"
+                : "text-primary/60 group-hover:text-primary/90"
               }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
             className={`${currentStep === index + 1
-              ? "text-white"
-              : "text-white/60 group-hover:text-white/90"
+                ? "text-white"
+                : "text-white/60 group-hover:text-white/90"
               }`}
           >
             {step}
@@ -329,193 +444,62 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
 };
 
 const CreateCourse = () => {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [numModules, setNumModules] = useState(0);
-  const [modules, setModules] = useState([]);
-  const [category, setCategory] = useState();
-  const [duration, setDuration] = useState();
-  const [sessions, setsessions] = useState();
-  const [language, setLanguage] = useState("English");
-  const [details, setDetails] = useState("");
-  const [level, setLevel] = useState("");
-  const [numMentor, setNumMentor] = useState(0);
-  const [leadMentor, setLeadMentor] = useState("");
-  const [assistMentor, setAssistMentor] = useState([
-    { id: 1, name: "Dinesh Saini" },
-    { id: 2, name: "Rahul" },
-    { id: 3, name: "Raj" },
-    { id: 4, name: "Ravi" },
-  ]);
-  const [learn, setLearn] = useState([{ id: 1, point: "" }]);
-  const { user } = useAuthContext();
 
-  const addPoint = () => {
-    setLearn([...learn, { id: learn.length + 1, point: "" }]);
-    console.log(learn);
-  };
+  // const [numMentor, setNumMentor] = useState(0);
+  // const [leadMentor, setLeadMentor] = useState("");
+  // const [assistMentor, setAssistMentor] = useState([
+  //   { id: 1, name: "Dinesh Saini" },
+  //   { id: 2, name: "Rahul" },
+  //   { id: 3, name: "Raj" },
+  //   { id: 4, name: "Ravi" },
+  // ]);
 
-  const handlePointChange = (id, point) => {
-    setLearn(learn.map((l) => (l.id === id ? { ...l, point } : l)));
-  };
+  // const handleAssistanceMentorChange = (index, field, value) => {
+  //   const updatedAssistanceMentors = [...assistMentor];
+  //   updatedAssistanceMentors[index] = {
+  //     ...updatedAssistanceMentors[index],
+  //     [field]: value,
+  //   };
+  //   updatedAssistanceMentors[index] = {
+  //     ...updatedAssistanceMentors[index],
+  //     id: index + 1,
+  //   };
+  //   setAssistMentor(updatedAssistanceMentors);
+  // };
 
-  const handleModuleChange = (index, field, value) => {
-    const updatedModules = [...modules];
-    updatedModules[index] = { ...updatedModules[index], [field]: value };
-    updatedModules[index] = { ...updatedModules[index], id: index + 1 };
-    setModules(updatedModules);
-  };
 
-  const handleAssistanceMentorChange = (index, field, value) => {
-    const updatedAssistanceMentors = [...assistMentor];
-    updatedAssistanceMentors[index] = {
-      ...updatedAssistanceMentors[index],
-      [field]: value,
-    };
-    updatedAssistanceMentors[index] = {
-      ...updatedAssistanceMentors[index],
-      id: index + 1,
-    };
-    setAssistMentor(updatedAssistanceMentors);
-  };
+  // const renderMentorInputs = () => {
+  //   const assistanceMentorInputs = Array.from(
+  //     { length: numMentor - 1 },
+  //     (_, i) => {
+  //       const assistanceMentor = assistMentor[i] || {
+  //         id: i + 1,
+  //         name: "",
+  //       };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  //       return (
+  //         <div key={i}>
+  //           <input
+  //             type="text"
+  //             value={assistanceMentor.name}
+  //             placeholder="Assistant Mentor"
+  //             className="AddMentorInput w-1/2 md:w-3/4 h-10 rounded-xl px-2"
+  //             onChange={(e) =>
+  //               handleAssistanceMentorChange(i, "name", e.target.value)
+  //             }
+  //             style={{ background: "#333333" }}
+  //           />
+  //         </div>
+  //       );
+  //     }
+  //   );
+  //   return assistanceMentorInputs;
+  // };
 
-    try {
-      const docRef = await addDoc(collection(db, "courses"), {
-        title,
-        desc,
-        numModules,
-        modules,
-        category,
-        duration,
-        sessions,
-        language,
-        details,
-        level,
-        numMentor,
-        leadMentor,
-        assistMentor,
-        learn,
-        data: serverTimestamp(),
-      });
-
-      await setDoc(doc(db, "chatGroups", docRef.id), {
-        groupId: docRef.id,
-        members: [user.uid],
-        name: title,
-        isGroup: true,
-        lastMessage: "",
-        lastMessageTimestamp: serverTimestamp(),
-        createdAt: serverTimestamp(),
-      });
-
-      console.log("Document written with ID: ", docRef.id);
-      alert("added");
-
-      resetForm();
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  };
-
-  const resetForm = () => {
-    setTitle("");
-    setDesc("");
-    setNumModules(0);
-    setModules([]);
-    setCategory(categories[0]);
-    setDuration(0);
-    setsessions(0);
-    setLanguage("English");
-    setDetails("");
-    setLevel("");
-    setNumMentor(0);
-    setLeadMentor("");
-    setAssistMentor([]);
-    setLearn([{ id: 1, point: "" }]);
-  };
-
-  const renderModuleInputs = () => {
-    if (!modules) {
-      return null;
-    }
-    const moduleInputs = Array.from({ length: numModules }, (_, i) => {
-      // eslint-disable-next-line @next/next/no-assign-module-variable
-      const module = modules[i] || { id: i + 1, title: "", desc: "" };
-
-      return (
-        <>
-          <div
-            className="flex flex-col w-full bg-[#404046] h-fit md:h-96 rounded-lg my-6"
-            key={i}
-          >
-            <p className="px-8 py-4 md:py-6 text-xl">Add Module {i + 1}</p>
-            <hr className="border-x-2 border-gray-500 mb-6" />
-            <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
-              <label htmlFor="">Module Subtitle:</label>
-              <input
-                type="text"
-                value={module.title}
-                onChange={(e) => handleModuleChange(i, "title", e.target.value)}
-                placeholder="Type here"
-                className="AddMentorInput w-full md:w-3/4 h-10 rounded-lg px-2"
-                style={{ background: "#333333" }}
-              />
-            </div>
-            <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-4 md:mb-8">
-              <label htmlFor="">Desc:</label>
-              <textarea
-                type="text"
-                value={module.desc}
-                onChange={(e) => handleModuleChange(i, "desc", e.target.value)}
-                placeholder="Type here"
-                className="AddMentorInput w-full h-24 rounded-lg px-4 py-4"
-                style={{ background: "#333333" }}
-              />
-            </div>
-          </div>
-          <br></br>
-        </>
-      );
-    });
-
-    return moduleInputs;
-  };
-
-  const renderMentorInputs = () => {
-    const assistanceMentorInputs = Array.from(
-      { length: numMentor - 1 },
-      (_, i) => {
-        const assistanceMentor = assistMentor[i] || {
-          id: i + 1,
-          name: "",
-        };
-
-        return (
-          <div key={i}>
-            <input
-              type="text"
-              value={assistanceMentor.name}
-              placeholder="Assistant Mentor"
-              className="AddMentorInput w-1/2 md:w-3/4 h-10 rounded-xl px-2"
-              onChange={(e) =>
-                handleAssistanceMentorChange(i, "name", e.target.value)
-              }
-              style={{ background: "#333333" }}
-            />
-          </div>
-        );
-      }
-    );
-    return assistanceMentorInputs;
-  };
-
-  function removeMentorInput(id) {
-    console.log("removed");
-    setAssistMentor(assistMentor.filter((m) => m.id !== id));
-  }
+  // function removeMentorInput(id) {
+  //   console.log("removed");
+  //   setAssistMentor(assistMentor.filter((m) => m.id !== id));
+  // }
 
   const [currentStep, helpers] = useStep(3);
 
@@ -578,75 +562,10 @@ const CreateCourse = () => {
 
           {currentStep === 1 && <PlanCourseForm />}
 
-          {currentStep === 3 && (
-            <div className="w-full ">
-              <div className="my-4 flex items-center gap-x-4 w-full">
-                <label htmlFor="">Number of Modules :</label>
-                {/* <input
-            type="text"
-            placeholder="Type here"
-            className="AddMentorInput w-1/4 h-10 rounded-lg px-2"
-            style={{ background: '#333333' }}
-          /> */}
-                <div className="bg-[#313131] rounded-lg h-10 px-2">
-                  <select
-                    className="AddMentorInput w-28 h-10"
-                    style={{ background: "#333333" }}
-                    onChange={(e) => setNumModules(parseInt(e.target.value))}
-                  >
-                    <option value="0">0</option>
-                    {numOfModules.map((moduleNum) => (
-                      <option key={moduleNum} value={moduleNum}>
-                        {moduleNum}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {renderModuleInputs()}
-            </div>
-          )}
+          {currentStep === 3 && <CourseContentForm />}
 
           {currentStep === 2 && (
             <TargetStudentsForm />
-            // <>
-            //   {/* category */}
-
-            //   {/* learnings */}
-            //   <div className="flex flex-col bg-[#404046] h-fit rounded-lg my-6">
-            //     <p className="px-8 py-4 md:py-6 text-xl">
-            //       What you&apos;ll learn
-            //     </p>
-            //     <hr className="border-x-2 border-gray-500 md:mb-6" />
-            //     {learn.map((l) => (
-            //       <div
-            //         key={l.id}
-            //         className="flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-2 px-4 my-4 md:my-8"
-            //       >
-            //         <label htmlFor="">learnings:</label>
-            //         <textarea
-            //           type="text"
-            //           placeholder="Type here"
-            //           id={`point-${l.id}`}
-            //           value={l.point}
-            //           onChange={(e) => handlePointChange(l.id, e.target.value)}
-            //           className="AddMentorInput w-full h-18 rounded-lg px-4 py-4"
-            //           style={{ background: "#333333" }}
-            //         />
-            //       </div>
-            //     ))}
-
-            //     <div className="flex justify-end px-2 py-1 mx-10">
-            //       <button
-            //         onClick={addPoint}
-            //         className="w-fit border-2 border-gray-500 md:my-4 px-6 py-1 rounded-lg"
-            //       >
-            //         Add Point
-            //       </button>
-            //     </div>
-            //   </div>
-            // </>
           )}
         </div>
       </div>
