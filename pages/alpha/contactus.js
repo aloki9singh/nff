@@ -1,4 +1,4 @@
-import NavbarSecond from '@/components/common/navbar/navbar2';
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import Sidebar from '@/components/common/sidebar/sidebar';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ const Contact = () => {
       <div className="flex h-screen">
         <Sidebar />
         <div className="w-full h-full flex flex-col">
-          <NavbarSecond buttonVis="hidden" title="Contact Us" />
+          <Dashboardnav heading="Contact Us" />
           <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
             <div className="w-[90%] flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit p-4">
               {/* LEFT */}
