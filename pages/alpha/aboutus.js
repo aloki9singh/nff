@@ -10,6 +10,18 @@ import Footer from '@/components/common/footer/footer';
 import CarouselComp from '@/components/common/carousel/carousel';
 
 const Aboutus = () => {
+
+  const style = `
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`;
+
   const [query, setQuery] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -53,14 +65,14 @@ const Aboutus = () => {
         <div className='w-full h-full flex flex-col overflow-auto'>
           <div className='flex justify-center items-center flex-col'>
             <span className='text-white text-4xl mt-14'>we're here to</span>
-            <span className='text-[#E1348B] text-4xl mt-5 text-center decoration-white ml-5'>
+            <span className='bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text text-4xl mt-5 text-center decoration-white ml-5'>
               guarantee your success
             </span>
           </div>
 
           {/* Info first part */}
           <div className='w-[80%]  h-64'>
-            <div className='w-full h-[70%] ml-10 md:ml-44 mt-11 p-5 rounded-md bg-[#E1348B] flex items-center text-center text-white font-semibold overflow-auto'>
+            <div className='w-full h-[70%] ml-10 md:ml-44 mt-11 p-5 rounded-md bg-gradient-to-b from-[#A134CD] to-[#E1348B]  flex items-center text-center text-white font-semibold overflow-auto'>
               <span className='text-sm md:text-sm lg:text-2xl'>
                 ConsultUs provides consulting services that help business owners
                 and leaders build a more valuable business. We worked with their
@@ -77,7 +89,7 @@ const Aboutus = () => {
           {/* Our mission */}
           <div className='w-[80%] h-auto mt-20 ml-10 md:ml-44 mb-10'>
             <span className='text-lg ml-4 text-white'>Our</span>
-            <span className='text-lg ml-2 text-[#E1348B]'>mission</span>
+            <span className='text-lg ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>mission</span>
             <div className='w-64 h-1 bg-white mt-2 ml-4' />
 
             <div className='flex flex-col md:flex-row p-4'>
@@ -120,7 +132,7 @@ const Aboutus = () => {
           {/* Our mission */}
           <div className='w-[80%] h-auto mt-10 ml-10 md:ml-44 mb-10'>
             <span className='text-lg ml-4 text-white'>Our</span>
-            <span className='text-lg ml-2 text-[#E1348B]'>Commitment</span>
+            <span className='text-lg ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>Commitment</span>
             <div className='w-64 h-1 bg-white mt-2 ml-4' />
 
             <div className='flex flex-col md:flex-row p-4'>
@@ -155,24 +167,50 @@ const Aboutus = () => {
 
           {/* ourteam section */}
           {/* Our Team */}
-          <div className='w-[80%] mt-10 ml-10 md:ml-44 mb-10'>
-            <div className='flex justify-center items-center'></div>
-            <div className='w-[90%] rounded-2xl px-5 py-9 md:pt-[110px] md:pb-[129px] max-w-[1440px]'>
-              <div className='flex flex-col md:flex-row justify-center items-center'>
-                <div className="text-2xl md:text-3xl flex flex-col items-center bg-[url('/pink_rect.png')] bg-bottom bg-contain bg-no-repeat">
-                  <h1>Meet Our</h1>
-                  <h1>team</h1>
-                  <div className='bg-[#DA2C84] transform -rotate-2 w-full origin-bottom-right h-1 mt-[-10px] ml-[10px]'></div>
-                </div>
-                <div className='text-sm md:text-base md:w-1/2 pt-4 px-4 md:pl-8'>
-                  Neat Skills offers the world's best classes from the world's
-                  best practitioners. It's like having a mentor at your
-                  fingertips - no matter where you are
-                </div>
-              </div>
-              <div>
-                <div className='flex items-center justify-center mt-10 p-2'>
-                  <CarouselComp />
+          <div class='container mx-auto w-full flex-grow px-0 px-4 py-4 sm:py-16'>
+            <h1 class='mx-auto mb-4  px-2 text-center text-3xl uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
+              our successful team
+            </h1>
+            <div class='mx-auto w-full px-4 md:w-4/5'>
+              <div class='container my-8'>
+                <div
+                  id='scrollContainer'
+                  class='flex-no-wrap scrolling-touch mb-8 flex items-start overflow-x-scroll hide-scrollbar'>
+                  <div class='mr-8  max-w-fit flex-none rounded-lg border  md:pb-4'>
+                    <a href='#' class='space-y-4'>
+                      <div class='aspect-w-max aspect-h-ma'>
+                        <img
+                          class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                          src='/componentsgraphics/mentor/mentorcard/mentorpfpsample.svg'
+                          alt=''
+                        />
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                    <a href='#' class='space-y-4'>
+                      <div class='aspect-w-max aspect-h-ma'>
+                        <img
+                          class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                          src='/componentsgraphics/mentor/mentorcard/mentorpfpsample.svg'
+                          alt=''
+                        />
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                    <a href='#' class='space-y-4'>
+                      <div class='aspect-w-max aspect-h-ma'>
+                        <img
+                          class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                          src='/componentsgraphics/mentor/mentorcard/mentorpfpsample.svg'
+                          alt=''
+                        />
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
