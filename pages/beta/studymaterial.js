@@ -6,14 +6,16 @@ import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import { useRouter } from 'next/router';
 import { db } from 'config/firebaseconfig';
 import { collection, getDocs, query } from 'firebase/firestore';
+import { useMediaQuery } from "react-responsive";
 
 export default function StudyMaterial() {
   const router = useRouter();
-
   const [material, setMaterial] = useState([]);
-
   const [selectedOption, setSelectedOption] = useState(null);
-
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, 'studyMaterial'));
@@ -36,11 +38,34 @@ export default function StudyMaterial() {
 
   const func = selectedOption == 'All courses' ? material : filteredMaterial;
 
+
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen])
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
   return (
     <div className="flex h-screen">
-      <CourseoverviewSidebar pathname={router.pathname} />
+       {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
       <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
-        <Dashboardnav heading="Study Material" />
+        <Dashboardnav heading="Study Material" toggleSideBar={toggleSideBar}/>
         <div className="lg:w-64 w-80 items-center lg:ml-16 ml-9 rounded-lg">
           <select
             onChange={(e) => setSelectedOption(e.target.value)}

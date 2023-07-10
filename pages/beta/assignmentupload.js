@@ -12,6 +12,8 @@ import Image from 'next/image';
 import { ref } from 'firebase/storage';
 import { storage } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from "react-responsive";
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
 // import MobileNav from "../components/CalenderParts/MobileNav";
 
 const Assignmentupload = () => {
@@ -21,6 +23,10 @@ const Assignmentupload = () => {
   const [title, setTitle] = useState('');
   const [maximumMarks, setMaximumMarks] = useState(null);
   const [submissionDate, setSubmissionDate] = useState(null);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const data = {
@@ -62,59 +68,38 @@ const Assignmentupload = () => {
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
   return (
     <div className="flex">
-      <div className="lg:col-span-1 hidden lg:grid">
-        <CourseoverviewSidebar pathname={router.pathname} />
-      </div>
-      <div
-        style={{ background: '#2E3036' }}
-        className="flex flex-col col-span-5 lg:col-span-4 w-full min-h-screen"
-      >
-        <div className="flex justify-between lg:flex pt-6">
-          <h1 className="text-white my-auto ml-12 md:text-2xl text-[19px]">
-            Homework
-          </h1>
-          <div className="mr-12 flex">
-            <div className=" xl:w-96">
-              <form className=" items-center hidden md:block ">
-                <label for="voice-search" className="sr-only">
-                  Search
-                </label>
-                <div className="relative w-full">
-                  <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <svg
-                      className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    id="voice-search"
-                    className="bg-transparent  border border-gray-300 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search..."
-                    required
-                    value={searchstate}
-                    onChange={searchfun}
-                  />
-                </div>
-              </form>
-            </div>
-
-            <div className="ml-12 flex space-x-4">
-              <BiBell className="text-white text-2xl my-auto" />
-              <BsPersonCircle className="text-white text-4xl" />
-            </div>
-          </div>
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
+      )}
+
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+      <div className="flex-grow md:bg-[#2E3036] bg-[#141518]">
+        {/* <StudentTopbar heading={"My Progress"} /> */}
+        <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <Dashboardnav heading="Homework" toggleSideBar={toggleSideBar} />
+        </div>
+
         <hr className="hidden lg:block opacity-50 m-3"></hr>
         <div className="h-full bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
           <div className="text-left  p-5  ">
