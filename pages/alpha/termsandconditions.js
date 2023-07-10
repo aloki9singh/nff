@@ -147,7 +147,6 @@ export default function Terms() {
 				</div>
 			</div>
 			<Footer background="bg-[#2D2E35]" />
-			<MobileNav />
 		</div>
 	);
 }
