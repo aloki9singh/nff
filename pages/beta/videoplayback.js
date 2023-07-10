@@ -111,12 +111,12 @@ export default function Videos() {
           </div>
         </div>
 
-        <div className="flex mx-4 md:mx-8 my-6 ">
-          <div className="grid  grid-cols-7 md:gap-10 w-full">
+        <div className="flex mx-4 md:mx-8 my-6">
+          <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
             <div className="md:col-span-5 col-span-7">
               <CourseVideoPlayer url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
               <div
-                className=""
+                className="md:mt-0 mt-10"
                 style={{
                   width: '356px',
 
@@ -136,7 +136,7 @@ export default function Videos() {
               </div>
             </div>
 
-            <div className="md:col-span-2 col-span-7  rounded-2xl bg-[#373A41] text-white text-center scrollbar-hide overflow-y-scroll h-[450px] ">
+            <div className="md:col-span-2 col-span-7  rounded-2xl bg-[#373A41] text-white text-center scrollbar-hide overflow-y-scroll h-[450px]">
               <div className="bg-[#E1348B] p-2 text-xl  h-[7vh]">
                 <h2>Course Content</h2>
               </div>
