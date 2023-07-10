@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { db } from '@/config/firebaseConfig';
+import { db } from '@/config/firebaseconfig';
 import CircularProgress from '../dashboard/circularprogress';
 
 

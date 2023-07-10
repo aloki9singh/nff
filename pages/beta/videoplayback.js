@@ -1,21 +1,21 @@
 // import Sidebar from '../components/Sidebar/sidebar';
-import Image from "next/image";
-import laptop from "@/public/pagesgraphics/student//Group 11.svg";
-import { IoIosArrowForward } from "react-icons/io";
-import { AiFillLock } from "react-icons/ai";
+import Image from 'next/image';
+import laptop from '@/public/pagesgraphics/student/videoplayback/Group 11.svg';
+import { IoIosArrowForward } from 'react-icons/io';
+import { AiFillLock } from 'react-icons/ai';
 import {
   CircularProgressbar,
   CircularProgressbarWithChildren,
   buildStyles,
-} from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { db } from "@/config/firebaseconfig";
-import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
-import Sidebar from "@/components/common/sidebar/sidebar";
-import Dashboardnav from "@/components/common/navbar/dashboardnav";
-import CourseVideoPlayer from "@/components/student/courses/videoplayer";
+} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+import { db } from '@/config/firebaseconfig';
+import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
+import Sidebar from '@/components/common/sidebar/sidebar';
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import CourseVideoPlayer from '@/components/student/courses/videoplayer';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -31,11 +31,11 @@ export default function Videos() {
   const [currentModule, setCurrentModule] = useState(null);
 
   const router = useRouter();
-  const title = router.query.title ? router.query.title : "Basics of C++";
+  const title = router.query.title ? router.query.title : 'Basics of C++';
   const fetchCourseData = async () => {
     try {
-      const courseRef = collection(db, "courses");
-      const q = query(courseRef, where("title", "==", title));
+      const courseRef = collection(db, 'courses');
+      const q = query(courseRef, where('title', '==', title));
       const courseDocs = await getDocs(q);
       if (courseDocs.empty) {
         setCourse(null);
@@ -50,7 +50,7 @@ export default function Videos() {
         setCourse(courseData);
       }
     } catch (error) {
-      console.error("Error fetching course data:", error);
+      console.error('Error fetching course data:', error);
       setCourse(null);
     }
   };
@@ -91,20 +91,20 @@ export default function Videos() {
             <CircularProgressbarWithChildren
               value={100}
               styles={buildStyles({
-                pathColor: "#ADADB0",
-                trailColor: "gray",
-                strokeLinecap: "round",
+                pathColor: '#ADADB0',
+                trailColor: 'gray',
+                strokeLinecap: 'round',
               })}
             >
               <CircularProgressbar
                 value={75}
                 text={`${75}%`}
                 styles={buildStyles({
-                  pathColor: "#E1348B",
-                  trailColor: "transparent",
-                  strokeLinecap: "round",
-                  textColor: "#fff",
-                  textSize: "20px",
+                  pathColor: '#E1348B',
+                  trailColor: 'transparent',
+                  strokeLinecap: 'round',
+                  textColor: '#fff',
+                  textSize: '20px',
                 })}
               />
             </CircularProgressbarWithChildren>
@@ -118,14 +118,14 @@ export default function Videos() {
               <div
                 className=""
                 style={{
-                  width: "356px",
+                  width: '356px',
 
-                  fontFamily: "Inter",
-                  fontStyle: "normal",
+                  fontFamily: 'Inter',
+                  fontStyle: 'normal',
                   fontWeight: 500,
-                  fontSize: "24px",
+                  fontSize: '24px',
 
-                  color: "#FFFFFF",
+                  color: '#FFFFFF',
                 }}
               >
                 {currentModule}

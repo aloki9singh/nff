@@ -20,7 +20,7 @@ export default function CoursesMain({ coursesData }) {
       <div className="hidden lg:block">
         <CourseoverviewSidebar pathname={router.pathname} />
       </div>
-      <div className="rounded-tl-[50px] w-full bg-[#2e3036]">
+      <div className="bg-[#2e3036] rounded-l-[50px] w-full">
         <Dashboardnav heading="Courses" />
         <CourseHeader />
         <CourseList courses={courses} />

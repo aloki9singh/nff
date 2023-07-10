@@ -8,18 +8,17 @@ import { useRouter } from "next/router";
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 const Sidebar = ({ pathname }) => {
   return (
-    <>
-      <aside className="  left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-5 ">
+      <aside className="hidden sticky min-h-screen left-0 top-0 md:flex flex-col w-[250px] px-5 ">
         <div className="">
-          <Link href={"/"} className="">
+          <div className=" mb-10">
             <Image
-              src="/componentsgraphics/common/sidebar/schoolsidebar/Neatskills.svg"
+              src="\componentsgraphics\common\sidebar\sidebar\Neatskills.svg"
               width={500}
               height={500}
               alt="logo"
               className="pt-5"
             />
-          </Link>
+          </div>
           <div className="flex flex-col h-full   justify-around ">
             <ul>
               <li className="space-y-[14px]">
@@ -130,14 +129,13 @@ const Sidebar = ({ pathname }) => {
             </ul>
           </div>
         </div>
-        <div className="text-white flex-row  space-y-5 mt-20 pb-2">
+        <div className="text-white space-y-5 mt-40 mb-[90px]">
           <button className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
             <AiOutlineSetting />
             <span>Settings </span>
           </button>
         </div>
       </aside>
-    </>
   );
 };
 

@@ -7,19 +7,16 @@ const MonthSelector = ({
   seletedMonth,
   selectedYear,
 }) => {
-  let arr = [];
-  for (let i = currentYear; i > currentYear - 1000; i--) {
-    arr[i] = i;
-  }
+  let arr = [2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033];
   return (
-    <div className="p-2 text-lg hidden lg:block w-auto">
+    <div className="pl-5 md:text-lg text-sm block w-auto">
       <span className="p-1">{seletedMonth ? seletedMonth : currentMonth}</span>
       <select
         onChange={(e) => {
           selectedYear(e.target.value);
         }}
         id="yearsSelect"
-        className="bg-transparent border-none outline-none"
+        className="bg-[#33353B] focus:border-[#33353B] border-none focus:outline-none outline-none text-sm md:text-[16px]"
         name="yearsSelect"
       >
         {arr.map((val, index) => {

@@ -9,7 +9,7 @@ import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
 
-import withAuth from "@/lib/context/mentorcontext"
+import withAuth from "@/lib/context/mentorcontext";
 
 import {
   collection,
@@ -22,14 +22,12 @@ import {
   where,
 } from "firebase/firestore";
 
-
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../config/firebaseconfig";
 import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
-
 
 // const userCache = {};
 // async function getUser(uid) {
@@ -46,11 +44,23 @@ const Chat = () => {
   const [showUser, setShowUser] = useState(false);
   const [messages, setMessages] = useState([]);
   const router = useRouter();
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
 
   // const user = auth.currentUser;
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
     if (!user) {
       if (!loading) {
         router.push("/beta/login");
@@ -77,7 +87,7 @@ const Chat = () => {
     });
 
     return unsub;
-  }, [user, router, loading]);
+  }, [user, router, loading, isMediumScreen]);
 
   // console.log("chats", chats);
 
@@ -116,12 +126,10 @@ const Chat = () => {
     };
 
     if (currReciever) getMembers();
-
   }, [currReciever, chats]);
 
   useEffect(() => {
     if (!currReciever) return;
-
 
     const q = query(
       collection(db, "chatGroups", currReciever.groupId, "messages"),
@@ -143,42 +151,59 @@ const Chat = () => {
 
   return (
     <>
-      <div className="flex overflow-y-hidden">
-        <div className="lg:col-span-1 hidden lg:grid w-[250px]">
-          <MentorSidebar />
-        </div>
-        <div className="w-full h-full bg-[#2f3036] rounded-l-3xl">
-          <div>
-          <MentorTopbar heading={"Chats"} />
-            <hr className="hidden lg:block opacity-50 mt-3 " />
-          </div>
-          <div
-            className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
-            style={{ height: "calc(100vh - 76px)" }}
-          >
-            <ChatSidebar
-              currReciever={currReciever}
-              setCurrReciever={setCurrReciever}
-              chats={chats}
-              setChats={setChats}
-            />
-            <Chatpart
-              setCurrReciever={setCurrReciever}
-              currReciever={currReciever}
-              setShowUser={setShowUser}
-              status="online"
-              messages={messages}
-            />
-            {showUser &&
-              (currReciever.isGroup ? (
-                <GroupDetails
-                  currReciever={currReciever}
-                  setShowUser={setShowUser}
-                  setCurrReciever={setCurrReciever}
-                />
-              ) : (
-                <User currReciever={currReciever} setShowUser={setShowUser} />
-              ))}
+      <div className="h-full text-base bg-[#2E3036] ">
+        <div className="flex">
+          {/* First Sidebar - Visible on Mobile */}
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+            >
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518]`}>
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          <div className="flex-grow">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <MentorTopbar heading="Chats" toogleSideBar={toggleSideBar} />
+            </div>
+
+            <div
+              className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
+              style={{ height: "calc(100vh - 76px)" }}
+            >
+              <ChatSidebar
+                currReciever={currReciever}
+                setCurrReciever={setCurrReciever}
+                chats={chats}
+                setChats={setChats}
+              />
+              <Chatpart
+                setCurrReciever={setCurrReciever}
+                currReciever={currReciever}
+                setShowUser={setShowUser}
+                status="online"
+                messages={messages}
+              />
+              {showUser &&
+                (currReciever.isGroup ? (
+                  <GroupDetails
+                    currReciever={currReciever}
+                    setShowUser={setShowUser}
+                    setCurrReciever={setCurrReciever}
+                  />
+                ) : (
+                  <User currReciever={currReciever} setShowUser={setShowUser} />
+                ))}
+            </div>
           </div>
         </div>
       </div>

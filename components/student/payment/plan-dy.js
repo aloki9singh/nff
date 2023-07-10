@@ -30,7 +30,7 @@ export default function Plan({
             {description.map((item, ind) => (
               <div key={ind} className="flex items-center mt-6">
                 <Image
-                  src="/tick.png"
+                  src="/componentsgraphics/student/paymentgateway/plan/tick.png"
                   alt="tick"
                   width={10}
                   height={10}
@@ -39,13 +39,13 @@ export default function Plan({
                 <p className="text-sm">{item}</p>
               </div>
             ))}
+            <button
+              className="bg-[#A145CD] text-sm w-full p-[5px] mt-6 rounded-md"
+              onClick={() => updatePage(1)}
+            >
+              Start Free Trial Now
+            </button>
           </div>
-          <button
-            className="bg-[#A145CD] text-sm w-full p-[5px] rounded-md"
-            onClick={() => updatePage(1)}
-          >
-            Start Free Trial Now
-          </button>
         </div>
       </div>
     </>

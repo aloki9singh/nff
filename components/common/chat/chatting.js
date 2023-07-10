@@ -12,7 +12,6 @@ import {
 import Avatar from "./avatar";
 import Image from "next/image";
 
-
 import {
   collection,
   doc,
@@ -21,6 +20,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../../config/firebaseconfig";
+import { uploadToFirebase } from "@/lib/exportablefunctions";
+import AudioRecorder, { AudioPlayer } from "./AudioRecorder";
 
 function formatTimePassed(messageTimestamp) {
   if (!messageTimestamp) return "";
@@ -52,7 +53,13 @@ const RecievedMessage = ({ message }) => {
   return (
     <div className="flex gap-2 ">
       <div>
-        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
+        <Avatar
+          alt="Profile-Picture"
+          src={
+            message.sender?.photoURL ||
+            "/componentsgraphics/common/chatting/user/profile.svg"
+          }
+        />
       </div>
       <div
         className="p-2 py-3 max-w-[80%] rounded-[10px] flex flex-col"
@@ -80,23 +87,58 @@ const SendMessage = ({ message }) => {
         </span>
       </div>
       <div>
-        <Avatar alt="Profile-Picture" src={message.sender?.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
-
+        <Avatar
+          alt="Profile-Picture"
+          src={
+            message.sender?.photoURL ||
+            "/componentsgraphics/common/chatting/user/profile.svg"
+          }
+        />
       </div>
     </div>
   );
 };
 
-const ImageMessage = ({ img, userIcon }) => {
+const ImageMessage = ({ img, userIcon, isSender = false }) => {
   return (
-    <div className="flex gap-2">
-      <div
-        className="flex items-center justify-center ml-auto"
-        style={{ width: "150px" }}
-      >
-        <Image src={'Img2.png'} alt="" />
+    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
+      <div className="flex items-center justify-center ">
+        <Image
+          width={300}
+          height={300}
+          className="w-[300px] h-auto"
+          src={img}
+          alt=""
+        />
       </div>
-      <Avatar alt="Profile-Picture" src={userIcon} />
+      <div>
+        <Avatar alt="Profile-Picture" src={userIcon} />
+      </div>
+    </div>
+  );
+};
+
+const AudioMessage = ({ audio, userIcon, timestamp, isSender = false }) => {
+  return (
+    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
+      <div>
+        <Avatar
+          alt="Profile-Picture"
+          src={
+            userIcon || "/componentsgraphics/common/chatting/user/profile.svg"
+          }
+        />
+      </div>
+      <div
+        className="p-2 py-3 max-w-[80%] rounded-[10px] flex flex-col"
+        style={{ backgroundColor: " #717378" }}
+      >
+        {/* <audio src={message.content} controls /> */}
+        <AudioPlayer src={audio} />
+        <span className="text-[9px] bg-black p-1 rounded-[8px] mr-auto text-left">
+          {formatTimePassed(timestamp)}
+        </span>
+      </div>
     </div>
   );
 };
@@ -119,12 +161,13 @@ const Chat = ({
   const user = auth.currentUser;
 
   const [message, setMessage] = useState("");
+  const [showRecorder, setShowRecorder] = useState(false);
+
   const lastDiv = React.useRef();
 
   useEffect(() => {
     lastDiv.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -170,13 +213,45 @@ const Chat = ({
     // );
   };
 
+  const uploadImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    uploadToFirebase(file, async (url) => {
+      const chatGroupRef = doc(db, "chatGroups", currReciever.groupId);
+      console.log("image url", url);
+      const messagesRef = collection(chatGroupRef, "messages");
+      const newMessageRef = doc(messagesRef);
+
+      const newMessageData = {
+        messageId: newMessageRef.id,
+        senderId: user.uid,
+        timestamp: serverTimestamp(),
+        content: url,
+        type: "image",
+      };
+
+      try {
+        await setDoc(newMessageRef, newMessageData);
+        await updateDoc(chatGroupRef, {
+          lastMessage: message,
+          lastMessageTimestamp: serverTimestamp(),
+        });
+        setMessage("");
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  };
+
   return (
     <div
       className="flex flex-1 flex-col justify-between w-full relative"
       style={{ color: "white" }}
     >
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">
-        <div className="flex  items-center gap-2 p-4 md:rounded-2xl"
+        <div
+          className="flex  items-center gap-2 p-4 md:rounded-2xl"
           style={{ backgroundColor: "#505057", color: "white" }}
         >
           <div
@@ -188,8 +263,10 @@ const Chat = ({
             <Avatar
               className="cursor-pointer"
               alt="Profile-Picture"
-              src={currReciever?.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'}
-
+              src={
+                currReciever?.photoURL ||
+                "/componentsgraphics/common/chatting/user/profile.svg"
+              }
             />
             <div className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>
@@ -221,13 +298,31 @@ const Chat = ({
         <div className="flex flex-col mt-4 gap-4 w-full no-srollbar  overflow-y-auto flex-5">
           {messages.map((message, i) => {
             {
+              if (message.type === "audio")
+                return (
+                  <AudioMessage
+                    userIcon={message.sender?.photoURL}
+                    audio={message.content}
+                    isSender={message.senderId === user?.uid}
+                    timestamp={message.timestamp}
+                  />
+                );
+              1;
+
+              if (message.type === "image") {
+                return (
+                  <ImageMessage
+                    userIcon={message.sender?.photoURL}
+                    img={message.content}
+                    isSender={message.senderId === user?.uid}
+                  />
+                );
+              }
+
               return message.senderId === user?.uid ? (
                 <SendMessage key={message.messageId} message={message} />
               ) : (
-                <RecievedMessage
-                  key={message.messageId}
-                  message={message}
-                />
+                <RecievedMessage key={message.messageId} message={message} />
               );
             }
           })}
@@ -244,10 +339,24 @@ const Chat = ({
         >
           <div className="hide icons-toggle z-[-0]">
             <div
-              className="p-1 rounded-[5px]"
+              className="rounded-[5px]"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
+            // onClick={}
             >
-              <MdOutlineInsertDriveFile />
+              {/* */}
+              <label
+                for="formFileSm"
+                className="inline-block text-neutral-700 dark:text-neutral-200 mb-0 p-1"
+              >
+                <MdOutlineInsertDriveFile />
+              </label>
+
+              <input
+                className="relative hidden"
+                onChange={(e) => uploadImage(e)}
+                id="formFileSm"
+                type="file"
+              />
             </div>
             <div
               className="p-1 rounded-[5px]"
@@ -270,51 +379,61 @@ const Chat = ({
             <MdMoreVert />
           </div>
         </div>
-        <form
-          onSubmit={submitHandler}
-          className="flex-1 flex items-center rounded-[10px] ml-14 self-end"
-          style={{ border: "1px solid grey" }}
-        >
-          <div
-            className="flex flex-1 h-full"
-            style={{
-              borderTopLeftRadius: "10px",
-              borderBottomLeftRadius: "10px",
-            }}
+        {!showRecorder ? (
+          <form
+            onSubmit={submitHandler}
+            className="flex-1 flex items-center rounded-[10px] ml-14 self-end"
+            style={{ border: "1px solid grey" }}
           >
-            <input
-              placeholder="Type Message Here"
-              className="outline-none  p-2 w-full"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              type="text"
-              name="message"
+            <div
+              className="flex flex-1 h-full"
               style={{
-                backgroundColor: "#505057",
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
               }}
-            />
-            <div
-              className="flex items-center p-2"
-              style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             >
-              <MdMic />
+              <input
+                placeholder="Type Message Here"
+                className="outline-none  p-2 w-full"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                type="text"
+                name="message"
+                style={{
+                  backgroundColor: "#505057",
+                  borderTopLeftRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                }}
+              />
+              <div
+                onClick={() => {
+                  setShowRecorder(true);
+                }}
+                className="flex items-center p-2"
+                style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
+              >
+                <MdMic />
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            className="flex items-center justify-center p-2 pl-4 h-full"
-            style={{
-              backgroundColor: "#E1348B",
-              borderTopRightRadius: "10px",
-              borderBottomRightRadius: "10px",
-            }}
-          >
-            <MdSend style={{ transform: "rotate(-20deg)" }} />
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="flex items-center justify-center p-2 pl-4 h-full"
+              style={{
+                backgroundColor: "#E1348B",
+                borderTopRightRadius: "10px",
+                borderBottomRightRadius: "10px",
+              }}
+            >
+              <MdSend style={{ transform: "rotate(-20deg)" }} />
+            </button>
+          </form>
+        ) : (
+          <AudioRecorder
+            setShowRecorder={setShowRecorder}
+            groupId={currReciever?.groupId}
+          />
+        )}
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="pt-[49px] md:py-[105px] min-h-screen flex flex-col justify-center items-center bg-bs">
+      <div className="pt-[49px] md:py-[105px] min-h-screen flex flex-col justify-center items-center bg-bs ">
         <div className="w-full h-full grid grid-rows-2 max-w-[1440px] lg:grid-rows-none lg:grid-cols-2 ">
           <div className=" justify-center flex items-center row-span-1 lg:row-auto lg:col-span-1">
             <div className="mx-7 lg:ml-[92px] pt-3 mt-[24px] md:mt-0">

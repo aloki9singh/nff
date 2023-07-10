@@ -39,11 +39,14 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.45.0",
     "react-icons": "^4.7.1",
+    "react-mic": "^12.4.6",
     "react-modal": "^3.16.1",
     "react-otp-input": "^3.0.2",
     "react-redux": "^8.0.7",
+    "react-responsive": "^9.0.2",
     "react-spinners": "^0.13.8",
     "react-table": "^7.8.0",
+    "recordrtc": "^5.6.2",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
@@ -52,6 +55,7 @@
     "styled-components": "^5.3.6",
     "swiper": "^9.1.0",
     "video.js": "^8.0.4",
+    "wavesurfer.js": "^6.6.4",
     "yup": "^1.0.2"
   },
   "devDependencies": {

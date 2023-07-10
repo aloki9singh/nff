@@ -1,12 +1,12 @@
-import { IoMdNotificationsOutline, RxHamburgerMenu } from "react-icons/io";
-import { AiOutlineSearch } from "react-icons/ai";
-import Link from "next/link";
-import Image from "next/image";
-import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { useEffect, useState } from "react";
-import { auth } from "@/config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { AiOutlineSearch } from 'react-icons/ai';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Popover, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/config/firebaseconfig';
 
 export default function DashboardNav({ heading, sendSideBarState }) {
   const [isNavOpen, setIsNavOpen] = useState(false);

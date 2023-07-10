@@ -48,6 +48,7 @@ export default function TaskList() {
 
   // Update todo in firebase
   const toggleComplete = async (todo) => {
+    // console.log(index);
     await updateDoc(doc(db, 'taskList', todo.id), {
       completed: !todo.completed,
     });
@@ -129,7 +130,7 @@ export default function TaskList() {
           <Todo
             key={index}
             todo={todo}
-            toggleComplete={toggleComplete}
+            toggleComplete={()=>toggleComplete(index)}
             deleteTodo={deleteTodo}
           />
         ))}
