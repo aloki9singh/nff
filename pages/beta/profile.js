@@ -9,9 +9,24 @@ import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import StudentProfileChart from '@/components/student/profile/chart';
 import StudentProfileCirProgress from '@/components/student/profile/StudentProfileCirProgress';
+import { useMediaQuery } from "react-responsive";
+
 
 function StudentProfile() {
   const router = useRouter();
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
   const chartData = [2, 3, 1, 4, 2, 5, 3]; //Change this student data to show on chart, passed as prop
 
@@ -19,15 +34,27 @@ function StudentProfile() {
     <>
       <div className="md:h-screen h-full  text-base bg-[#15161B]">
         <div className="flex">
-          <div className="lg:col-span-1 hidden lg:grid w-[261px] ">
-            {' '}
-            <CourseoverviewSidebar />
-          </div>
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
           <div
             style={{ background: '#2E3036' }}
             className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
           >
-            <Dashboardnav heading={'Profile'} />
+            <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <Dashboardnav heading={'Profile'} toggleSideBar={toggleSideBar} />
+            </div>
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
               {/* text */}

@@ -7,32 +7,29 @@ import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { auth } from "../../../config/firebaseconfig";
 import { signOut } from "firebase/auth";
-
+import { BsPersonCircle } from "react-icons/bs";
 import { logout } from "@/lib/exportablefunctions";
 import { useAuthContext } from "@/lib/context/AuthContext";
-
+import { useRouter } from "next/router";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 //hardcoded
 
-export default function Dashboardnav({ heading, sendSideBarState }) {
-  const [showSideBar, setShowSideBar] = useState(false);
+export default function Dashboardnav({ heading, toggleSideBar }) {
+  const [profileMenu, setProfileMenu] = useState(false);
+  const router = useRouter();
   const { user } = useAuthContext()
 
-  function toogleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
-
   return (
-    <nav className="border-b-[1px] border-[#728095] px-0 py-2">
+    <nav className="border-b-[1px] border-[#728095] px-0 py-2 w-full mt-2">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
           <p className="text-white font-Inter text-2xl flex justify-start">
-            {`${heading}`}
+            {heading}
           </p>
           {/* <RxHamburgerMenu className="text-white text-3xl block md:hidden" /> */}
         </div>
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center justify-between">
           <div
             className="md:flex items-center gap-x-2  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
             style={{ border: "1px solid #728095" }}
@@ -44,19 +41,21 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
               className="focus:outline-none focus:border-none border-none bg-inherit text-white"
             />
           </div>
-          {user && (
-            <div className="text-white flex items-center">
+          
+          {user &&  (
+            <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10">
               <IoMdNotificationsOutline className="text-3xl mr-2" />
-              <div className="border border-white rounded-full h-12 w-12 flex justify-center items-center">
+              <div className="] h-12 w-12 flex justify-center items-center">
                 <Popover className="">
                   <Popover.Button className="outline-none ">
-                    <Image
-                      src={user.photoURL ? user.photoURL : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"}
+                   {user.photoURL ? <Image
+                      src={user.photoURL}
                       alt="proImg"
                       height={48}
                       width={48}
-                      className="inline-block relative object-cover object-center !rounded-full aspect-square"
-                    />
+                      className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
+                    />:
+                     <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>}
                   </Popover.Button>
                   <Transition
                     as={Fragment}
@@ -67,13 +66,13 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute mt-10 top-4 right-12 z-10 transform">
-                      <div className="h-48 w-36 text-center p-3">
-                        <div className="relative bg-[#373A41] text-white rounded-tl-lg rounded-b-lg divide-y border border-white">
+                    <Popover.Panel className="absolute translate-y-[43px] translate-x-[-163px] top-4">
+                      <div className="h-48 w-[200px] text-center p-3">
+                        <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
                           <Link href="/beta/profile">
                             <p className="p-2">
                               {user.photoURL ? (
-                                <div className="flex gap-1 items-center">
+                                <div className="flex gap-2 items-center">
                                   <Image
                                     src={user.photoURL}
                                     height="35"
@@ -82,26 +81,20 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                                     alt="img"
                                   />
                                   <div className="text-left">
-                                    <p className="text-[10px] mb-1">
+                                    <p className="text-[13px] mb-1">
                                       {user.displayName}
                                     </p>
-                                    <p className="text-[7px] -mt-1">
+                                    <p className="text-[10px] -mt-2">
                                       Class N/A
                                     </p>
                                   </div>
                                 </div>
                               ) : (
                                 <div className="flex gap-1 items-center">
-                                  <Image
-                                    src="/download.png"
-                                    height="35"
-                                    width="35"
-                                    className="rounded-full h-6 w-6"
-                                    alt="img"
-                                  />
+                                <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>
                                   <div className="text-left">
-                                    <p className="text-[10px] mb-1">Guest</p>
-                                    <p className="text-[7px] -mt-1">
+                                    <p className="text-[13px] mb-1">Guest</p>
+                                    <p className="text-[10px] -mt-2">
                                       Class N/A
                                     </p>
                                   </div>
@@ -110,7 +103,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                             </p>
                           </Link>
 
-                          <div className="text-[10px] p-2">
+                          <div className="text-[13px] p-2">
                             <Link href="/beta/profile">
                               <p className="mb-2">Profile</p>
                             </Link>
@@ -118,7 +111,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                               <p>Invite a Friend</p>
                             </Link>
                           </div>
-                          <div className="text-[10px] p-2">
+                          <div className="text-[13px] p-2">
                             <Link href="/alpha/contactUs">
                               <p className="mb-2">Neat Skills Help Centre</p>
                             </Link>
@@ -126,7 +119,7 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>
-                          <div className="text-[10px] p-2">
+                          <div className="text-[13px] p-2">
                             <p onClick={() => signOut(auth)}>Logout</p>
                           </div>
                         </div>
@@ -157,6 +150,12 @@ export default function Dashboardnav({ heading, sendSideBarState }) {
               </Link>
             </div>
           )}
+          <div
+            className=" md:hidden block mr-[-30px] "
+            onClick={() => toggleSideBar()}
+          >
+            <RxHamburgerMenu className="text-white text-3xl block md:hidden" />
+          </div>
         </div>
       </div>
     </nav>
