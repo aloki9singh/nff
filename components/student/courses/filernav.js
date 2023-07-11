@@ -171,9 +171,9 @@ export default function FilterNav({
             ))}
           </div>
         </form>
-        <div className="flex justify-center items-center">
+        <div className="mx-auto w-fit">
           <button
-            className="w-fit bg-[#a145cd] rounded-xl font-extrabold text-base px-14 py-2"
+            className="w-[330px] bg-[#a145cd] rounded-xl font-extrabold text-base px-10 py-2"
             onClick={handleApplyFilters}
           >
             Apply Filter

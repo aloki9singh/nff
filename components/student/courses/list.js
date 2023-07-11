@@ -5,13 +5,12 @@ import CourseSec from './section';
 import chartIcon from '@/public/componentsgraphics/student/courses/list/chartbaricon.svg';
 import FilterNav from './filernav';
 
-function CourseList() {
-
-  // changes for course overview
-  // const [navState, setNavState] = useState("46vh");
-  // console.log(navState);
+function CourseList({courses}) {
+  const [filterUsed, setFilterUsed] = useState()
+  const [courseAfterFilter, setCoursesAfterFilter] = useState()
   const openFilter = () => {
-    document.getElementById('filterNav').style.width = '50vh';
+    document.getElementById('filterNav').style.transform = "translate(0px,0)"
+    document.getElementById('filterNav').style.width = '348px';
   };
   return (
     <>
@@ -21,17 +20,15 @@ function CourseList() {
           <button onClick={openFilter}>
             Filter
             <span>
-              <Image src={chartIcon} height="2" width="2" alt="image" />
+              <Image src={chartIcon} height={2} width={2} alt="image" />
             </span>
           </button>
         </div>
         <div className={styles.courseCardsSec}>
-          <CourseSec />
-          <CourseSec />
-          <CourseSec />
+          <CourseSec courses={courses} FilterUsed={filterUsed} coursesAfterFilter={courseAfterFilter} />
         </div>
-        <div id="filterNav" className={styles.FNavMain}>
-          <FilterNav />
+        <div id="filterNav" className={styles.FNavMain} >
+          <FilterNav courses={courses} setFilterUsed={setFilterUsed} setCoursesAfterFilter={setCoursesAfterFilter} />
         </div>
       </div>
     </>

@@ -1,25 +1,9 @@
 import React from "react";
-
 import styles from "@/styles/componentsstyling/cards/coursecards.module.css";
 import CourseCard from "./CourseCard";
 
-function CourseSec({ courses, category, FilterUsed, coursesAfterFilter }) {
-  // const cardInfo = [
-  //   {
-  //     name: "Introduction to C++",
-  //     desc: "Learn the basics of C++ and how to write your first code.",
-  //   },
-  //   {
-  //     name: "Introduction to Java",
-  //     desc: "Learn the basics of Java and how to write your first code.",
-  //   },
-  //   {
-  //     name: "Introduction to Swift",
-  //     desc: "Learn the basics of Swift and how to write your first code.",
-  //   },
-  // ];
+function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
   const cardInfo = FilterUsed ? coursesAfterFilter : courses;
-
   return (
     <>
       <div className={styles.secMain}>
@@ -33,12 +17,10 @@ function CourseSec({ courses, category, FilterUsed, coursesAfterFilter }) {
           </button>
         </div>
         <div className={styles.mainList}>
-
           {cardInfo &&
             cardInfo.map((info, i) => (
-              <CourseCard coursedata={info} category={category} key={i} />
+              <CourseCard title={info.title} desc = {info.desc}level={info.level} sessions={info.sessions} language = {info.language} category={info.category} />
             ))}
-=
         </div>
       </div>
     </>
