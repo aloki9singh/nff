@@ -2,45 +2,43 @@
 import { RxCounterClockwiseClock, RxCross2 } from "react-icons/rx";
 import { useEffect, useState } from "react";
 
-let studentschedulepop = ({ hidefun, popupValue }) => {
+export default Studentschedulepop = ({ hidefun, popupValue }) => {
   const [meeting, setMeeting] = useState({
     link: "",
-    disable: false
+    disable: false,
   });
-  
+
   // Checking with popup time
   const currentTime = new Date();
   const fiveMinutesBefore = new Date(currentTime.getTime() - 5 * 60000);
-  
+
   const x = popupValue.startTime;
   const y = fiveMinutesBefore.getHours() + ":" + fiveMinutesBefore.getMinutes();
-  
+
   // Comparing the time values
   // const isWithin5Minutes = new Date(x) >= fiveMinutesBefore;
-  
+
   useEffect(() => {
     if (isWithin5Minutes) {
-      setMeeting(prevState => ({ ...prevState, disable: true }));
+      setMeeting((prevState) => ({ ...prevState, disable: true }));
     } else {
-      setMeeting(prevState => ({ ...prevState, disable: false }));
+      setMeeting((prevState) => ({ ...prevState, disable: false }));
     }
   }, [popupValue.startTime]);
-  
+
   const handleJoinLink = () => {
     window.location.href = meeting.link;
   };
-  
+
   const handleMeetingChange = (e) => {
-    setMeeting(prevState => ({ ...prevState, link: e.target.value }));
+    setMeeting((prevState) => ({ ...prevState, link: e.target.value }));
   };
-  
+
   const hideschedule = (e) => {
     e.preventDefault();
     hidefun();
   };
-  
- 
-  
+
   return (
     <>
       {" "}
@@ -103,5 +101,3 @@ let studentschedulepop = ({ hidefun, popupValue }) => {
     </>
   );
 };
-
-export default studentschedulepop;

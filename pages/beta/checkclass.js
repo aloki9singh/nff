@@ -47,7 +47,7 @@ export default function CheckClassSchedule() {
 
   return (
     <div className="h-screen w-full text-base ">
-      <div className="flex lg:bg-[black] ">
+      <div className="flex bg-[#141518] ">
       {isMobileScreen && (
             <div
               className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
@@ -63,17 +63,15 @@ export default function CheckClassSchedule() {
             </div>
           )}
         <div
-          style={{ background: '#2E3036', borderRadius: '50px 0px 0px 0px' }}
-          className="lg:col-span-6 col-span-7 w-full "
+          style={{ background: '#2E3036' }}
+          className=" col-span-7 w-full md:rounded-l-[40px] "
         >
           <Dashboardnav heading="My Profile" toggleSideBar={toggleSideBar} />
-          {/* <StudentTopbar heading={"My Profile"} /> */}
 
-          {/* <hr className="hidden lg:block opacity-50 m-3"></hr> */}
-          <div className="grid grid-cols-5 justify-center lg:h-auto mt-18">
+          <div className="grid grid-cols-5 justify-center  ">
             <div
-              className="m-1 col-span-5 lg:col-span-5 lg:h-auto mb-7"
-              style={{ height: '90%' }}
+              className=" col-span-5 lg:col-span-5 mb-7"
+
             >
               <div className="md:flex mt-2 md:mt-0">
                 <div

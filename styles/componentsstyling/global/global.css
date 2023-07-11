@@ -58,8 +58,12 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 }
-.acrylic{
-  background: linear-gradient(103.67deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.2) 100%);
+.acrylic {
+  background: linear-gradient(
+    103.67deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
 }
 
 ::placeholder {
@@ -229,4 +233,8 @@ body {
     font-size: 30px;
     color: yellow;
   }
+}
+.date-picker-popper {
+  height: auto !important;
+  max-height: 200px !important; /* Adjust the max-height as needed */
 }

@@ -52,7 +52,7 @@ const Aboutus = () => {
       <div className='h-full'>
         <div className='w-full h-full flex flex-col overflow-auto'>
           <div className='flex justify-center items-center flex-col'>
-            <span className='text-white text-4xl mt-14'>we're here to</span>
+            <span className='text-white text-4xl mt-14'>we&apos;re here to</span>
             <span className='text-[#E1348B] text-4xl mt-5 text-center decoration-white ml-5'>
               guarantee your success
             </span>
@@ -165,8 +165,8 @@ const Aboutus = () => {
                   <div className='bg-[#DA2C84] transform -rotate-2 w-full origin-bottom-right h-1 mt-[-10px] ml-[10px]'></div>
                 </div>
                 <div className='text-sm md:text-base md:w-1/2 pt-4 px-4 md:pl-8'>
-                  Neat Skills offers the world's best classes from the world's
-                  best practitioners. It's like having a mentor at your
+                  Neat Skills offers the world&apos;s best classes from the world&apos;s
+                  best practitioners. It&apos;s like having a mentor at your
                   fingertips - no matter where you are
                 </div>
               </div>

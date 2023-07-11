@@ -143,7 +143,7 @@ const Mainbody = () => {
   return (
     <>
       <div
-        className="m-0 lg:m-2 p-0 lg:p-3 rounded-3xl text-white md:mx-0 mx-2 "
+        className="m-0 lg:mx-2 p-0 lg:p-3 rounded-3xl text-white md:mx-0 mx-2 md:mt-2 "
         style={{ background: '#33353B' }}
       >
         <div className="bg-[#33353B] rounded-t-[30px] md:mt-2 lg:bg-inherit p-2 lg:p-0 md:space-y-3 space-x-2 mt-2">
@@ -166,8 +166,8 @@ const Mainbody = () => {
             all={combined}
           ></Dates2>
         </div>
-        <hr className="m-2 opacity-50 hidden lg:block"></hr>
-        <div className="grid grid-cols-1 overflow-hide overflow-y-scroll scrollbar-hide h-[50vh]">
+        <hr className="mx-2 opacity-50 hidden lg:block"></hr>
+        <div className="grid grid-cols-1 overflow-hide overflow-y-scroll scrollbar-hide h-[50vh] md:h-[68vh]">
           {showPopUpvar ? (
             <CardUserPop
               hidefun={hideFun}

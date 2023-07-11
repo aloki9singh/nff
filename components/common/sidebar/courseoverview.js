@@ -12,7 +12,8 @@ import { BsPersonCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 const CourseoverviewSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
-  const { user } = useAuthContext();
+  const { user, userProfile } = useAuthContext();
+  // console.log(userProfile)
   return (
     <>
       <aside className="md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
@@ -50,13 +51,13 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                 </Link>
                 <p className="pt-2">{user ? user.displayName : "Anonymous"}</p>
                 <p className="text-gray-500 text-[12px] mt-[-7px]">
-                  Roll no-xxxxxxxxxxx
+                  Roll no-{userProfile.rollNo}
                 </p>
               </div>
             </div>
             <div className="flex flex-col h-full justify-around ">
               <ul>
-                <li className="space-y-[14px]">
+                <li className="md:space-y-[14px]">
                   <Link
                     href="/beta/dashboard"
                     className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
@@ -65,10 +66,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                       <input
                         id="default-checkbox"
                         type="checkbox"
-                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/dashboard"
-                          ? "shadow-white"
-                          : ""
-                          }`}
+                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                          router.pathname === "/beta/dashboard"
+                            ? "shadow-white"
+                            : ""
+                        }`}
                         style={{
                           boxShadow:
                             router.pathname === "/beta/dashboard"
@@ -77,14 +79,15 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         }}
                       />{" "}
                       <span
-                        className={`ml-3 text-[${router.pathname == "/beta/dashboard" ? "#E1348B" : ""
-                          }]`}
+                        className={`ml-3 text-[${
+                          router.pathname == "/beta/dashboard" ? "#E1348B" : ""
+                        }]`}
                       >
                         Home
                       </span>
                     </label>
                   </Link>
-                  <hr className="h-px  my-4 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+                  <hr className="h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                   <Link
                     href="/beta/courseoverview"
                     className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
@@ -93,10 +96,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                       <input
                         id="default-checkbox"
                         type="checkbox"
-                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/courseview"
-                          ? "shadow-white"
-                          : ""
-                          }`}
+                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                          router.pathname === "/beta/courseview"
+                            ? "shadow-white"
+                            : ""
+                        }`}
                         style={{
                           boxShadow:
                             router.pathname === "/meta/courseview"
@@ -105,7 +109,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         }}
                       />{" "}
                       <span
-                        className={`ml-3 text-[${router.pathname == "/beta/courseoverview" ? "#E1348B" : ""}]`}
+                        className={`ml-3 text-[${
+                          router.pathname == "/beta/courseoverview"
+                            ? "#E1348B"
+                            : ""
+                        }]`}
                       >
                         Courses
                       </span>
@@ -122,10 +130,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         <input
                           id="default-checkbox"
                           type="checkbox"
-                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/community"
-                            ? "shadow-white"
-                            : ""
-                            }`}
+                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                            router.pathname === "/beta/community"
+                              ? "shadow-white"
+                              : ""
+                          }`}
                           style={{
                             boxShadow:
                               router.pathname === "/beta/community"
@@ -134,10 +143,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           }}
                         />{" "}
                         <span
-                          className={`ml-3 text-[${router.pathname == "/beta/community"
-                            ? "#E1348B"
-                            : ""
-                            }]`}
+                          className={`ml-3 text-[${
+                            router.pathname == "/beta/community"
+                              ? "#E1348B"
+                              : ""
+                          }]`}
                         >
                           Community
                         </span>
@@ -146,7 +156,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                   )}
 
                   {user ? (
-                    <div style={{marginTop: "0"}}>
+                    <div style={{ marginTop: "0" }}>
                       <Link
                         href="/beta/checkclass"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
@@ -155,10 +165,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/checkclass"
-                              ? "shadow-white"
-                              : ""
-                              }`}
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === "/beta/checkclass"
+                                ? "shadow-white"
+                                : ""
+                            }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/checkclass"
@@ -167,10 +178,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${router.pathname == "/beta/checkclass"
-                              ? "#E1348B"
-                              : ""
-                              }]`}
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/checkclass"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
                           >
                             Schedule
                           </span>
@@ -185,10 +197,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/studymaterial"
-                              ? "shadow-white"
-                              : ""
-                              }`}
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === "/beta/studymaterial"
+                                ? "shadow-white"
+                                : ""
+                            }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/studymaterial"
@@ -197,10 +210,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${router.pathname == "/beta/studymaterial"
-                              ? "#E1348B"
-                              : ""
-                              }]`}
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/studymaterial"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
                           >
                             Study Material
                           </span>
@@ -214,10 +228,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/assignments"
-                              ? "shadow-white"
-                              : ""
-                              }`}
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === "/beta/assignments"
+                                ? "shadow-white"
+                                : ""
+                            }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/assignments"
@@ -226,16 +241,17 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${router.pathname == "/beta/assignments"
-                              ? "#E1348B"
-                              : ""
-                              }]`}
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/assignments"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
                           >
                             Homework
                           </span>
                         </label>
                       </Link>
-                      <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+                      <hr className="h-px  my-1 md:my-4 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                       <Link
                         href="/beta/chats"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
@@ -244,10 +260,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/chats"
-                              ? "shadow-white"
-                              : ""
-                              }`}
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === "/beta/chats"
+                                ? "shadow-white"
+                                : ""
+                            }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/chats"
@@ -256,12 +273,9 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-
-                            className={`ml-3 text-[${router.pathname == "/beta/chats"
-                              ? "#E1348B"
-                              : ""
-                              }]`}
-
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/chats" ? "#E1348B" : ""
+                            }]`}
                           >
                             Chats
                           </span>
@@ -276,10 +290,11 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/profile"
-                              ? "shadow-white"
-                              : ""
-                              }`}
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === "/beta/profile"
+                                ? "shadow-white"
+                                : ""
+                            }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/profile"
@@ -288,21 +303,21 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-
-                            className={`ml-3 text-[${router.pathname == "/beta/profile"
-                              ? "#E1348B"
-                              : ""
-                              }]`}
+                            className={`ml-3 text-[${
+                              router.pathname == "/beta/profile"
+                                ? "#E1348B"
+                                : ""
+                            }]`}
                           >
                             Profile
                           </span>
-
                         </label>
                       </Link>
-                      <button onClick={() => {
-                        logout(router);
-                      }}
-                        className="flex items-center p-2 text-base font-normal text-white rounded-lg cursor-pointer hover:bg-pin"
+                      <button
+                        onClick={() => {
+                          logout(router);
+                        }}
+                        className="flex items-center p-2 text-base font-normal text-white rounded-lg cursor-pointer hover:bg-pin md:hidden"
                       >
                         <label className="inline-flex items-center space-x-3">
                           <input
@@ -311,24 +326,28 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             className="rounded form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 flex text-[${router.pathname == "/beta/chats"
-                              ? "#E1348B"
-                              : ""
-                              }]`}
-
+                            className={`ml-3 flex text-[${
+                              router.pathname == "/beta/chats" ? "#E1348B" : ""
+                            }]`}
                           >
-                            Logout 
+                            Logout
                           </span>
                         </label>
                       </button>
                       {user ? (
                         <div className="  font-semibold text-white bg-[#373A41] flex flex-col mt-9 rounded-xl">
                           <div className=" px-8 py-2 ">
-                            <h1 className="text-xl font-Inter">
-                              Discord <br /> Community
+                            <h1 className="md:text-xl  font-Inter">
+                              <div className="md:block hidden">
+                                Discord <br /> Community
+                              </div>
+                              <div className="md:hidden">
+                                {" "}
+                                Discord Community
+                              </div>
                             </h1>
                             <p>150 members</p>
-                            <button className="inline-flex items-center mt-10 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline ">
+                            <button className="inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline ">
                               <span>Join</span>
                               <AiOutlineArrowRight />
                             </button>
@@ -347,7 +366,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
           </div>
           <div>
             {user ? (
-              <div className="text-white flex-row mt-2">
+              <div className="text-white flex-row mt-2 md:mt-5 md:block hidden">
                 <button
                   onClick={() => {
                     logout(router);
@@ -372,7 +391,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                 </Link>
               </div>
               <div>
-                <Link href="#">
+                <Link href="/alpha/privacypolicy">
                   {" "}
                   <span className="text-white">Privacy</span>
                 </Link>

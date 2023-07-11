@@ -14,6 +14,7 @@ import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from "react-responsive";
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 function Settings() {
   const router = useRouter();
@@ -52,6 +53,15 @@ function Settings() {
     setNotificationState(false);
     setSubscriptionState(false);
   };
+  // securedroute
+  const { user, userProfile } = useAuthContext();
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   return (
     <>
       <div className=" h-full text-base bg-black">

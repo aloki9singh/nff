@@ -18,9 +18,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 export default function Dashboardnav({ heading, toggleSideBar }) {
   const [profileMenu, setProfileMenu] = useState(false);
   const router = useRouter();
-  const { user } = useAuthContext()
+  const { user,userProfile } = useAuthContext()
 
-  return (
+  return (  
     <nav className="border-b-[1px] border-[#728095] px-0 py-2 w-full mt-2">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
@@ -80,12 +80,12 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                                     className="rounded-full h-6 w-6"
                                     alt="img"
                                   />
-                                  <div className="text-left">
+                                  <div className="text-center">
                                     <p className="text-[13px] mb-1">
                                       {user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
-                                      Class N/A
+                                      Class {userProfile.class}
                                     </p>
                                   </div>
                                 </div>
@@ -115,7 +115,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                             <Link href="/alpha/contactUs">
                               <p className="mb-2">Neat Skills Help Centre</p>
                             </Link>
-                            <Link href="/alpha/termsAndCondition">
+                            <Link href="/alpha/termsandcondition">
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>

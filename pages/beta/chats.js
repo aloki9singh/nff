@@ -47,8 +47,15 @@ const Chat = () => {
   const router = useRouter();
 
   // const user = auth.currentUser;
-  const { user, loading } = useAuthContext();
-
+  const { user, loading,userProfile } = useAuthContext();
+  
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   useEffect(() => {
     if (!user) {
       if (!loading) {
@@ -170,7 +177,7 @@ const Chat = () => {
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
-        <div className="w-full h-full">
+        <div className="w-full h-screen ">
           <div>
             {/* <Navbar /> */}
             <Dashboardnav heading="Chats" toggleSideBar={toggleSideBar} />
@@ -178,7 +185,7 @@ const Chat = () => {
           </div>
           <div
             className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
-            style={{ height: "calc(100vh - 76px)" }}
+            style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
               currReciever={currReciever}

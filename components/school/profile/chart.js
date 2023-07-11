@@ -97,7 +97,7 @@ const StudentChart = ({ data }) => {
         },
       },
     });
-  }, []);
+  }, [data]);
 
   if(!data){
     return <h1 className="text-white">Data absent</h1>
@@ -106,7 +106,7 @@ const StudentChart = ({ data }) => {
   return (
     <>
      
-        <Bar data={chartData} options={chartOptions} />
+        <Bar  data={chartData} options={chartOptions} />
     </>
   );
 };

@@ -26,21 +26,21 @@ export default function Privacy() {
   return (
     <div>
       <div className="flex">
-        {isMobileScreen && (
+        {/* {isMobileScreen && (
           <div
             className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
             <MentorSidebar toggleSideBar={toggleSideBar} />
           </div>
-        )}
+        )} */}
 
         {/* Second Sidebar - Visible on Desktop */}
-        {!isMobileScreen && (
+        {/* {!isMobileScreen && (
           <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
             <MentorSidebar toggleSideBar={toggleSideBar} />
           </div>
-        )}
-        <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4 max-[768px]:rounded-none rounded-ss-[40px]">
+        )} */}
+        <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4 max-[768px]:rounded-none ">
           <Dashboardnav heading="Privacy Policy" toggleSideBar={toggleSideBar}/>
           <div className=" justify-start items-center text-center text-white ">
             <h1 className="text-center w-full font-semibold text-5xl">

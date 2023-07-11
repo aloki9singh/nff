@@ -17,6 +17,7 @@ import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import CourseVideoPlayer from '@/components/student/courses/videoplayer';
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -83,6 +84,15 @@ export default function Videos() {
     }
   }, [isMediumScreen]);
 
+  //securedroute
+  const { user, userProfile } = useAuthContext();
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
         {isMobileScreen && (

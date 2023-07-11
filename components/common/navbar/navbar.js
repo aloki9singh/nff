@@ -4,13 +4,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { ImMenu } from "react-icons/im";
 import Image from "next/dist/client/image";
 
-export default function Navbar() {
-  const [nav, setNav] = useState(false);
-
+export default function Navbar({ nav, setNav }) {
   const handleNav = () => {
     setNav(!nav);
   };
-
   //   change navbar color when scrolling
   const [color, setColor] = useState(false);
 
@@ -52,7 +49,7 @@ export default function Navbar() {
               <Link href="/beta/courseoverview">
                 <li className="text-md uppercase hover:border-b ">Courses</li>
               </Link>
-              <Link href="/alpha/aboutUs">
+              <Link href="/alpha/aboutus">
                 <li className="text-md uppercase hover:border-b ">About Us</li>
               </Link>
               <Link href="/alpha/contactus">
@@ -127,10 +124,10 @@ export default function Navbar() {
           }
         >
           <div>
-            <div className="cursor-pointer flex w-full items-center justify-between top-0 mt-0 pt-0 overflow-clip">
+            <div className=" cursor-pointer flex w-full items-center justify-between top-0 mt-0 pt-5 overflow-clip">
               <div className="w-full">
                 <div
-                  onClick={handleNav}
+                  onClick={() => setNav(false)}
                   className="rounded-full shadow-lg  p-3 cursor-pointer float-right"
                 >
                   <AiOutlineClose className="text-yellow-50" />
@@ -156,7 +153,7 @@ export default function Navbar() {
                     Our Courses
                   </div>
                 </Link>
-                <Link href="/beta/aboutUs">
+                <Link href="/beta/aboutus">
                   <div
                     onClick={() => setNav(false)}
                     className="py-4 text-sm hover:scale-110"
@@ -180,12 +177,12 @@ export default function Navbar() {
                     Signup
                   </div>
                 </Link>
-                <Link href="/beta/contactus">
+                <Link href="/alpha/contactus">
                   <div
                     onClick={() => setNav(false)}
                     className="py-4 text-sm hover:scale-110"
                   >
-                    what a Demo Session
+                    watch a Demo Session
                   </div>
                 </Link>
               </ul>

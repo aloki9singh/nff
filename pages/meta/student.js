@@ -41,7 +41,7 @@ function MentorStudent() {
           return ele.displayName.includes(searchstate);
         })
     );
-  }, [searchstate, isMediumScreen]);
+  }, [searchstate, isMediumScreen, filterData]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
