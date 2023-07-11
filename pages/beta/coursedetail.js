@@ -1,8 +1,6 @@
 // import img from "next/img";
 import Accordion from "@/components/common/accordion/accordion";
 import Link from "next/link";
-import SideBar from "@/components/common/sidebar/sidebar";
-import Dashboardnav_AfterLog from "@/components/common/navbar/dashboardnavloggedin";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { auth, db } from "@/config/firebaseconfig";
@@ -10,11 +8,13 @@ import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
 
 const Afterlogin = () => {
   const [user, setUser] = useState({});
   const router = useRouter();
-  const { title } = router.query;
+  const {title } = router.query;
   const [course, setCourse] = useState(null);
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -24,9 +24,10 @@ const Afterlogin = () => {
   const fetchCourseData = async () => {
     try {
       console.log("fetching data is on ");
-      const courseRef = collection(db, "allUsers");
-      const q = query(courseRef, where("title", "==", "Basics of C++"));
+      const courseRef = collection(db, "courses");
+      const q = query(courseRef, where("title", "==", title));
       const courseDocs = await getDocs(q);
+      console.log(courseDocs)
       if (courseDocs.empty) {
         setCourse("asdfjjf");
       } else {
@@ -51,11 +52,10 @@ const Afterlogin = () => {
   useEffect(() => {
     if (title) {
       console.log(title);
-      fetchCourseData();
     }
+    fetchCourseData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       setUser(currentUser);
     });
     return () => {
@@ -74,10 +74,10 @@ const Afterlogin = () => {
   }
   return (
     <>
-      <div className="flex bg-[#2D2E35] ">
+      <div className="flex ">
         {isMobileScreen && (
           <div
-            className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] min-h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
@@ -125,7 +125,7 @@ const Afterlogin = () => {
                     />
                   </div>
                 </div>
-                <div className="rounded-tl-[30px] rounded-tr-[30px] md:rounded-tr-[0] bg-[#373A41] flex flex-col md:flex-row ml-[-14px]">
+                <div className="rounded-tl-[30px] rounded-tr-[30px] md:rounded-tr-[0] bg-[#373A41] flex flex-col md:flex-row ">
                   <div className="flex-col md:w-3/5 text-base space-y-10">
                     {course.learn ? (
                       <div className="w-[90%] md:w-[80%] mx-auto my-4 mt-10  bg-[#2D2E35] rounded-[30px] px-4 py-3">
@@ -321,8 +321,8 @@ const Afterlogin = () => {
               <p className="text-center m-5">Loading...</p>
             )}
 
-            <div className="text-xl md:text-2xl bg-[#373A41] pb-5 ml-[6px]">
-              <div className="flex justify-center items-center pt-20">
+            <div className=" flex flex-col items-center justify-between text-xl md:text-2xl bg-[#373A41] pb-5 ">
+              <div className="text-center pt-20">
                 Explore Similar Courses
               </div>
               <div>
@@ -333,7 +333,7 @@ const Afterlogin = () => {
                         width={100}
                         height={100}
                         alt={"img"}
-                        src="/pagesgraphics/student/coursedescription/lap.svg"
+                        src="/pagesgraphics/student/coursedescription/laptop.svg"
                         className="w-12"
                       />
                       <div className="text-sm  text-[#E1348B] m-auto">

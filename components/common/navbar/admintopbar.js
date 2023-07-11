@@ -34,43 +34,25 @@ export default function AdminTopbar({ sendSideBarState, heading }) {
   });
 
   return (
-    <nav className=' pl-2 py-2 w-full md:static  fixed top-0 right-0 left-0 space-y-4 border-b-[1px] md:rounded-tl-[50px]  bg-[#2E3036]'>
-      <div className=' flex  gap-y-6  justify-between'>
-        <div className='flex justify-between   items-center'>
-          <p className='text-white font-Inter text-2xl flex justify-start  ml-5'>
+    <nav className=" pl-2 py-2 w-full md:static  fixed top-0 right-0 left-0 space-y-4 border-b-[1px] md:rounded-tl-[50px]  bg-[#1E1E1E]">
+
+      <div className=" flex  gap-y-6  justify-between">
+        <div className="flex justify-between   items-center">
+          <p className="text-white font-Inter text-2xl flex justify-start  ml-5">
             {heading}
           </p>
         </div>
-        <div className='flex items-center gap-x-4 mr-12  '>
-          <div className=' xl:w-96 mr-10 '>
-            <form className=' items-center hidden md:block '>
-              <label htmlFor='voice-search' className='sr-only'>
-                Search
-              </label>
-              <div className='relative w-full '>
-                <div className='flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none'>
-                  <svg
-                    className='w-5 h-5 text-gray-500 dark:text-gray-400'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                    xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      fillRule='evenodd'
-                      d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
-                      clipRule='evenodd'></path>
-                  </svg>
-                </div>
-                <input
-                  type='text'
-                  id='voice-search'
-                  className='bg-[#2E3036] border border-gray-300 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  placeholder='Search...'
-                  required
-                  value={searchstate}
-                  onChange={searchfun}
-                />
-              </div>
-            </form>
+        <div className="flex items-center gap-x-4">
+          <div
+            className="md:flex items-center gap-x-2 py-1 md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
+            style={{ border: "1px solid #728095" }}
+          >
+            <AiOutlineSearch className="text-white text-2xl ml-4" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="focus:outline-none bg-inherit text-white"
+            />
           </div>
 
           {user && (

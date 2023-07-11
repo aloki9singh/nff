@@ -6,7 +6,7 @@ import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
 const Sidebar = ({ pathname }) => {
   return (
     <>
-      <aside className="  left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-5 ">
+      <aside className="  left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] h-screen pt-10 px-5 ">
         <div className="">
           <div className="">
             <Image
@@ -189,7 +189,7 @@ const Sidebar = ({ pathname }) => {
             </ul>
           </div>
         </div>
-        <div className="text-white flex-row  space-y-5 mt-40">
+        <div className="text-white flex-row  space-y-5  mt-32 ">
           <button className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
             <AiOutlineSetting />
             <span>Settings </span>

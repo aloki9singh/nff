@@ -1,12 +1,15 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-const CourseCard = ({ title, desc, level, lessons, icon }) => {
+
+const CourseCard = ({ title, desc, level, sessions, language, category }) => {
+	const router = useRouter()
 	return (
 		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] w-[241px] h-[181px] md:w-[350px] md:h-[280px] py-[10px] px-4 md:p-5">
 			<div className="flex justify-between ">
 				<div>
 					<Image
-						src={icon}
+						src="/pagesgraphics/student/coursedescription/laptop.svg"
 						width={60}
 						height={60}
 						alt="f"
@@ -14,7 +17,7 @@ const CourseCard = ({ title, desc, level, lessons, icon }) => {
 					></Image>
 				</div>
 				<div className="text-[10px] md:text-sm text-[#E1348B] ">
-					<span className="mr-3">{`${lessons} Lessons`}</span>
+					<span className="mr-3">{`${sessions ? sessions : ""} Lessons`}</span>
 					<span>{level}</span>
 				</div>
 			</div>
@@ -31,6 +34,12 @@ const CourseCard = ({ title, desc, level, lessons, icon }) => {
 				</div>
 				<div className="flex justify-end">
 					<button
+						onClick={() => {
+							router.push({
+								pathname: '/beta/coursedetail',
+								query: { title: title},
+							});
+						}}
 						type="button"
 						className="md:w-[111px] md:h-[39px] max-[768px]:mt-[-13px] text-white border border-pink text-xs md:text-sm"
 					>
