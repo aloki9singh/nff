@@ -13,12 +13,30 @@ import Sidebar from '@/components/common/sidebar/school';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from "react-responsive";
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 function Settings() {
   const router = useRouter();
   let [PrivacyState, setPrivacyState] = useState(false);
   let [SubscriptionState, setSubscriptionState] = useState(false);
   let [NotificationState, setNotificationState] = useState(true);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
   let NotificationFun = () => {
     setNotificationState(true);
     setSubscriptionState(false);
@@ -35,17 +53,36 @@ function Settings() {
     setNotificationState(false);
     setSubscriptionState(false);
   };
+  // securedroute
+  const { user, userProfile } = useAuthContext();
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   return (
     <>
       <div className=" h-full text-base bg-black">
         <div className="flex overflow-y-hidden">
-          <div className="lg:col-span-1 hidden lg:grid">
-            {' '}
-            <CourseoverviewSidebar pathname={router.pathname} />
-          </div>
+        {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
           {/* sidebar with a div of discord community must be added once made */}
           <div className="w-full h-screen mx-auto rounded-l-[40px] bg-[#2D2E35] col-span-6 md:col-span-5 lg:col-span-4 ">
-            <Dashboardnav heading="Settings" />
+            <Dashboardnav heading="Settings" toggleSideBar={toggleSideBar}/>
             <hr className="hidden lg:block opacity-50" />
             <div className="flex my-auto my-auto p-2 md:p-4 mx-2 md:mx-8 mt-[7%]">
               <div className="md:grid md:grid-cols-6 my-5 md:w-full max-[860px]:my-2 self-start">

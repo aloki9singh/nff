@@ -22,6 +22,8 @@ import { useRouter } from "next/router";
 import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import { useMediaQuery } from "react-responsive";
+
 
 
 // const userCache = {};
@@ -38,11 +40,22 @@ const Chat = () => {
   const [chats, setChats] = useState([]);
   const [showUser, setShowUser] = useState(false);
   const [messages, setMessages] = useState([]);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   const router = useRouter();
 
   // const user = auth.currentUser;
-  const { user, loading } = useAuthContext();
-
+  const { user, loading,userProfile } = useAuthContext();
+  
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   useEffect(() => {
     if (!user) {
       if (!loading) {
@@ -114,6 +127,17 @@ const Chat = () => {
 
   }, [currReciever, chats]);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+
   useEffect(() => {
     if (!currReciever) return;
 
@@ -139,18 +163,29 @@ const Chat = () => {
   return (
     <>
       <div className="flex overflow-y-hidden">
-        <div className="lg:col-span-1 hidden lg:grid">
-          <CourseoverviewSidebar pathname={router.pathname} />
-        </div>
-        <div className="w-full h-full">
+        {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+        <div className="w-full h-screen ">
           <div>
             {/* <Navbar /> */}
-            <Dashboardnav heading="Chats" />
+            <Dashboardnav heading="Chats" toggleSideBar={toggleSideBar} />
             {/* <hr className="hidden lg:block opacity-50 mt-3 " /> */}
           </div>
           <div
             className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
-            style={{ height: "calc(100vh - 76px)" }}
+            style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
               currReciever={currReciever}

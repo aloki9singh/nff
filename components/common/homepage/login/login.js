@@ -33,7 +33,7 @@ function LoginComp() {
    
     signInWithEmailAndPassword(auth, email, pass)
       .then((userCredential) => {
-        setLoading(true);n
+        setLoading(true);
         // Log in successful
         const user = userCredential.user;
 

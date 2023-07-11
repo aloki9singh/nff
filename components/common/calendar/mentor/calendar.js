@@ -79,7 +79,7 @@ const Calendar = () => {
 
       setSchedules(arr);
     });
-  }, [currentMonth,currentDate]);
+  }, [currentMonth,currentDate,date]);
 // console.log(schedules);
   return (
     <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5">

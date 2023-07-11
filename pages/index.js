@@ -12,20 +12,30 @@ import ExploreCourses from "@/components/student/explorecourses/explorecourses";
 import Footer from "@/components/common/footer/footer";
 import HomepageActivities from "@/components/common/homepage/activities/HomepageActivities";
 import SignUp from "@/components/common/homepage/HomeSignupComp/HomeSignupComp";
+import { useState } from "react";
+import useHoverOutside from "@/components/common/homepage/useHoverOutside/useHoverOutside";
 
 export default function Home({ coursesData }) {
+  const [nav, setNav] = useState(false);
+  const handleClickOutside = () => {
+    setNav(false);
+  };
+  const ref = useHoverOutside(handleClickOutside);
+
   return (
     <div>
-      <Navbar />
-      <HomePage />
-      <Courses coursesData={coursesData} />
-      <Why />
-      <Mentor />
-      <Join />
-      <HomepageActivities />
-      <ExploreCourses />
-      <SignUp />
-      <Footer />
+      <Navbar nav={nav} setNav={setNav} />
+      <div ref={ref}>
+        <HomePage />
+        <Courses coursesData={coursesData} />
+        <Why />
+        <Mentor />
+        <Join />
+        <HomepageActivities />
+        <ExploreCourses />
+        <SignUp />
+        <Footer />
+      </div>
     </div>
   );
 }

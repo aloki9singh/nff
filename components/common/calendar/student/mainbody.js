@@ -1,37 +1,37 @@
 //verified 1 by Raviraj Kumar
-import Datecard from "../common/datecard";
-import Dates2 from "../common/datelist.js";
-import { useState, useEffect } from "react";
-import Months from "../common/monthlist.js";
-import CardUserPop from "./CardUserPop";
-import CardMentor from "./card.js";
-import { useContext } from "react";
-import { adddate } from "@/lib/context/contextprovider";
+import Datecard from '../common/datecard';
+import Dates2 from '../common/datelist.js';
+import { useState, useEffect } from 'react';
+import Months from '../common/monthlist.js';
+import CardUserPop from './CardUserPop';
+import CardMentor from './card.js';
+import { useContext } from 'react';
+import { adddate } from '@/lib/context/contextprovider';
 
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
-import { db } from "@/config/firebaseconfig";
+import { db } from '@/config/firebaseconfig';
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 const Mainbody = () => {
   const fulldate = new Date();
   const [popupvalue, setPopupvalue] = useState({});
   const [currentDate, selectedDate] = useState(fulldate.getDay());
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const { setdate } = useContext(adddate);
   const monthValue = months[fulldate.getMonth()];
   const [currentMonth, setCurrentMonth] = useState(monthValue); //initial it has current month but on select it should change
@@ -43,35 +43,35 @@ const Mainbody = () => {
   ); ///// initial it has current year but on select it should change
 
   const [dataFetched, setDataFetched] = useState([]);
-  const [monthData, selectedMonth] = useState("");
+  const [monthData, selectedMonth] = useState('');
 
   const [showPopUpvar, setshowPopUpvar] = useState(false);
 
   const timing = [
-    "01:00",
-    "02:00",
-    "03:00",
-    "04:00",
-    "05:00",
-    "06:00",
-    "07:00",
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "00:00",
+    '01:00',
+    '02:00',
+    '03:00',
+    '04:00',
+    '05:00',
+    '06:00',
+    '07:00',
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00',
+    '23:00',
+    '00:00',
   ];
 
   const hideFun = () => {
@@ -80,15 +80,15 @@ const Mainbody = () => {
 
   let timeSelectFun = (e) => {
     const newTarget = e.target;
-    const selectedTarget = document.querySelector(".selected");
+    const selectedTarget = document.querySelector('.selected');
 
     if (selectedTarget) {
-      selectedTarget.style.background = "";
-      selectedTarget.classList.remove("selected");
+      selectedTarget.style.background = '';
+      selectedTarget.classList.remove('selected');
     }
 
-    newTarget.style.background = "#A145CD";
-    newTarget.classList.add("selected");
+    newTarget.style.background = '#A145CD';
+    newTarget.classList.add('selected');
   };
 
   const showPopUp = (e, val) => {
@@ -115,7 +115,7 @@ const Mainbody = () => {
     const fetchData = async () => {
       try {
         // const res = await callScheduleGetApiMentor();
-        const q = query(collection(db, "mentorsSchedule"));
+        const q = query(collection(db, 'mentorsSchedule'));
         onSnapshot(q, (querySnapshot) => {
           const docSnapshots = querySnapshot.docs;
 
@@ -130,7 +130,7 @@ const Mainbody = () => {
         });
       } catch (error) {
         console.log(error);
-        alert("Something went wrong!");
+        alert('Something went wrong!');
       }
     };
 
@@ -143,8 +143,8 @@ const Mainbody = () => {
   return (
     <>
       <div
-        className="m-0 lg:m-2 p-0 lg:p-3 rounded-3xl text-white md:mx-0 mx-2 "
-        style={{ background: "#33353B" }}
+        className="m-0 lg:mx-2 p-0 lg:p-3 rounded-3xl text-white md:mx-0 mx-2 md:mt-2 "
+        style={{ background: '#33353B' }}
       >
         <div className="bg-[#33353B] rounded-t-[30px] md:mt-2 lg:bg-inherit p-2 lg:p-0 md:space-y-3 space-x-2 mt-2">
           <Datecard
@@ -166,8 +166,8 @@ const Mainbody = () => {
             all={combined}
           ></Dates2>
         </div>
-        <hr className="m-2 opacity-50 hidden lg:block"></hr>
-        <div className="grid grid-cols-1 overflow-hide overflow-y-scroll scrollbar-hide h-[50vh]">
+        <hr className="mx-2 opacity-50 hidden lg:block"></hr>
+        <div className="grid grid-cols-1 overflow-hide overflow-y-scroll scrollbar-hide h-[50vh] md:h-[68vh]">
           {showPopUpvar ? (
             <CardUserPop
               hidefun={hideFun}

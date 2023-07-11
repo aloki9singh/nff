@@ -1,7 +1,7 @@
 //verified 1 by Raviraj Kumar
 import { useEffect } from "react";
 
-let monthlist = ({ selectedMonth, currentMonth }) => {
+let Monthlist = ({ selectedMonth, currentMonth }) => {
   let monthclick = (e) => {
     let months = document.querySelectorAll(".month");
     selectedMonth(e.target.innerText);
@@ -63,4 +63,4 @@ let monthlist = ({ selectedMonth, currentMonth }) => {
   );
 };
 
-export default monthlist;
+export default Monthlist;

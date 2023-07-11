@@ -13,9 +13,11 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { db } from '@/config/firebaseconfig';
 import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
-import Sidebar from '@/components/common/sidebar/sidebar';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import CourseVideoPlayer from '@/components/student/courses/videoplayer';
+import { useMediaQuery } from "react-responsive";
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -29,6 +31,10 @@ export default function Videos() {
   const [course, setCourse] = useState([]);
   const [modules, setModules] = useState([]);
   const [currentModule, setCurrentModule] = useState(null);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
   const router = useRouter();
   const title = router.query.title ? router.query.title : 'Basics of C++';
@@ -67,12 +73,45 @@ export default function Videos() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+
+  //securedroute
+  const { user, userProfile } = useAuthContext();
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
-      <Sidebar />
+        {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
 
       <div className="w-full  min-h-screen md:h-[100vh] md:rounded-l-3xl bg-[#2D2E35]">
-        <Dashboardnav heading="My Course" />
+        <Dashboardnav heading="My Course" toggleSideBar={toggleSideBar}/>
         <div className="flex  bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
           <div className="flex ">
             <Image
@@ -111,12 +150,12 @@ export default function Videos() {
           </div>
         </div>
 
-        <div className="flex mx-4 md:mx-8 my-6 ">
-          <div className="grid  grid-cols-7 md:gap-10 w-full">
+        <div className="flex mx-4 md:mx-8 my-6">
+          <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
             <div className="md:col-span-5 col-span-7">
               <CourseVideoPlayer url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
               <div
-                className=""
+                className="md:mt-0 mt-10"
                 style={{
                   width: '356px',
 
@@ -136,7 +175,7 @@ export default function Videos() {
               </div>
             </div>
 
-            <div className="md:col-span-2 col-span-7  rounded-2xl bg-[#373A41] text-white text-center scrollbar-hide overflow-y-scroll h-[450px] ">
+            <div className="md:col-span-2 col-span-7  rounded-2xl bg-[#373A41] text-white text-center scrollbar-hide overflow-y-scroll h-[450px]">
               <div className="bg-[#E1348B] p-2 text-xl  h-[7vh]">
                 <h2>Course Content</h2>
               </div>

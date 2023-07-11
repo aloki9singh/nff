@@ -5,16 +5,19 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import StudentScheduleMainBody from '@/components/common/calendar/student/mainbody';
 import { useRouter } from 'next/router';
-import StudentTopbar from '@/components/common/navbar/studenttopbar';
 import { auth } from '@/config/firebaseconfig';
-import Sidebar from '@/components/common/sidebar/sidebar';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useMediaQuery } from "react-responsive";
 
 export default function CheckClassSchedule() {
   const [count, setCount] = useState(1);
   const [user, setUser] = useState({});
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   let [searchstate, setsearchstate] = useState('');
   let searchfun = (e) => {
     setsearchstate(e.target.value);
@@ -22,6 +25,9 @@ export default function CheckClassSchedule() {
   console.log(auth.currentUser);
   const router = useRouter();
   useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
       setUser(currentUser);
@@ -29,28 +35,43 @@ export default function CheckClassSchedule() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [isMediumScreen]);
   if (!user) {
     return null;
   }
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
   return (
     <div className="h-screen w-full text-base ">
-      <div className="flex lg:bg-[black] ">
-        <div className="hidden lg:grid">
-          <CourseoverviewSidebar pathname={router.pathname} />
-        </div>
-        <div
-          style={{ background: '#2E3036', borderRadius: '50px 0px 0px 0px' }}
-          className="lg:col-span-6 col-span-7 w-full "
-        >
-          <Dashboardnav heading="My Profile" />
-          {/* <StudentTopbar heading={"My Profile"} /> */}
-
-          {/* <hr className="hidden lg:block opacity-50 m-3"></hr> */}
-          <div className="grid grid-cols-5 justify-center lg:h-auto mt-18">
+      <div className="flex bg-[#141518] ">
+      {isMobileScreen && (
             <div
-              className="m-1 col-span-5 lg:col-span-5 lg:h-auto mb-7"
-              style={{ height: '90%' }}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+        <div
+          style={{ background: '#2E3036' }}
+          className=" col-span-7 w-full md:rounded-l-[40px] "
+        >
+          <Dashboardnav heading="My Profile" toggleSideBar={toggleSideBar} />
+
+          <div className="grid grid-cols-5 justify-center  ">
+            <div
+              className=" col-span-5 lg:col-span-5 mb-7"
+
             >
               <div className="md:flex mt-2 md:mt-0">
                 <div

@@ -1,5 +1,5 @@
 // Verified by Pradhumn
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { storage } from "../../../config/firebaseconfig";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -12,7 +12,7 @@ export default function UploadVid() {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
   };
-  const uploadFile = async () => {
+  const uploadFile = useCallback(async () => {
     const storageRef = ref(storage, `courseVideos/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
@@ -31,7 +31,7 @@ export default function UploadVid() {
         });
       }
     );
-  };
+  }, [file]);
   useEffect(() => {
     if (file) {
       uploadFile();

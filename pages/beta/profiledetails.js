@@ -13,7 +13,6 @@ import { uploadToFirebase } from "@/lib/exportablefunctions";
 
 const options = ["8", "9", "10", "11", "12"];
 
-
 export default function ProfileDetails() {
   const router = useRouter();
 
@@ -93,7 +92,6 @@ export default function ProfileDetails() {
         ...profile,
       });
     }
-
 
     if (data.profilePhoto) {
       uploadToFirebase(data.profilePhoto, (url) => {
@@ -257,12 +255,26 @@ export default function ProfileDetails() {
                 required: true,
               }}
               render={({ field }) => (
-                <DatePicker
-                  dateFormat="dd/MM/yyyy"
-                  placeholderText="DD/MM/YYYY"
+                <input
+                  type="date"
+                  placeholder="DD/MM/YYYY"
                   className="w-full md:w-40 h-10 rounded-lg px-2 bg-[#333333] focus:outline-none placeholder:pl-2"
-                  onChange={(e) => field.onChange(e)}
-                  selected={field.value}
+                  onChange={(e) => {
+                    const selectedDate = new Date(e.target.value);
+                    const currentDate = new Date();
+                    const minDate = new Date();
+                    minDate.setFullYear(currentDate.getFullYear() - 10);
+
+                    // Check if the selected date is more than 10 years ago
+                    if (selectedDate < minDate) {
+                      field.onChange(e.target.value);
+                    } else {
+                      // If the selected date is not more than 10 years ago, reset the field value
+                      field.onChange(null);
+                      alert("Please Select Valid DOB");
+                    }
+                  }}
+                  value={field.value}
                   onBlur={field.onBlur}
                 />
               )}

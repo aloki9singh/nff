@@ -9,12 +9,17 @@ import { auth, db } from "@/config/firebaseconfig";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
 
 const Afterlogin = () => {
   const [user, setUser] = useState({});
   const router = useRouter();
   const { title } = router.query;
   const [course, setCourse] = useState(null);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
   const fetchCourseData = async () => {
     try {
@@ -37,6 +42,11 @@ const Afterlogin = () => {
       setCourse(null);
     }
   };
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
   useEffect(() => {
     if (title) {
@@ -54,6 +64,10 @@ const Afterlogin = () => {
   }, [title]);
 
   // console.log("course data:", course);
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
 
   if (!user) {
     return null;
@@ -61,12 +75,25 @@ const Afterlogin = () => {
   return (
     <>
       <div className="flex bg-[#2D2E35] ">
-        <div className="lg:col-span-1 hidden lg:grid">
-          <SideBar />
-        </div>
+        {isMobileScreen && (
+          <div
+            className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          >
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
+
+        {/* Second Sidebar - Visible on Desktop */}
+        {!isMobileScreen && (
+          <div className={`md:block  hidden w-[221px] bg-[#141518]z-10`}>
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
 
         <div className="rounded-tl-[50px] w-full bg-[#2D2E35] ">
-          <Dashboardnav_AfterLog heading="Afterlog" />
+          <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+            <Dashboardnav heading="After Log" toggleSideBar={toggleSideBar} />
+          </div>
 
           <div className="h-full text-white bg-[#2D2E35]">
             {course ? (
