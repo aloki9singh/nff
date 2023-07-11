@@ -79,7 +79,6 @@ const MentorSidebar = ({ toggleSideBar }) => {
                             : "none",
                       }}
                     />
-
                     <span
                       className={`${
                         router.pathname == "/meta/dashboard"
@@ -101,7 +100,17 @@ const MentorSidebar = ({ toggleSideBar }) => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      className="f rounded orm-checkbox h-3 w-3 text-gray-600"
+                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                        router.pathname === "/meta/courses"
+                          ? "shadow-white"
+                          : ""
+                      }`}
+                      style={{
+                        boxShadow:
+                          router.pathname === "/meta/courses"
+                            ? "0 0 5px #A145CD"
+                            : "none",
+                      }}
                     />{" "}
                     <span
                       className={`${

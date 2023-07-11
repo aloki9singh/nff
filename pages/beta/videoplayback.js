@@ -13,9 +13,10 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { db } from '@/config/firebaseconfig';
 import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
-import Sidebar from '@/components/common/sidebar/sidebar';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import CourseVideoPlayer from '@/components/student/courses/videoplayer';
+import { useMediaQuery } from "react-responsive";
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -29,6 +30,10 @@ export default function Videos() {
   const [course, setCourse] = useState([]);
   const [modules, setModules] = useState([]);
   const [currentModule, setCurrentModule] = useState(null);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
   const router = useRouter();
   const title = router.query.title ? router.query.title : 'Basics of C++';
@@ -67,12 +72,36 @@ export default function Videos() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
-      <Sidebar />
+        {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
 
       <div className="w-full  min-h-screen md:h-[100vh] md:rounded-l-3xl bg-[#2D2E35]">
-        <Dashboardnav heading="My Course" />
+        <Dashboardnav heading="My Course" toggleSideBar={toggleSideBar}/>
         <div className="flex  bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
           <div className="flex ">
             <Image
