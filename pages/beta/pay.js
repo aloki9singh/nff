@@ -86,13 +86,13 @@ export default function Payment() {
   //securedroute
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
-  if (!user || !userProfile) {
-    router.push("/");
-  }
+//   if (!user || !userProfile) {
+//     router.push("/");
+//   }
 
-  if (!user || !userProfile) {
-    return null;
-  }
+//   if (!user || !userProfile) {
+//     return null;
+//   }
   return (
     <>
       <div className="md:h-screen flex flex-col items-center bg-[#2D2E35] text-white font-Inter">
