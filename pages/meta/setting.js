@@ -12,7 +12,7 @@ import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@/hooks/mediaquery";
 
-function settings() {
+function Settings() {
   const router = useRouter();
   let [SubscriptionState, setSubscriptionState] = useState(false);
   let [NotificationState, setNotificationState] = useState(true);
@@ -29,7 +29,7 @@ function settings() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-}, [isMediumScreen]);
+  }, [isMediumScreen]);
 
   let NotificationFun = () => {
     setNotificationState(true);
@@ -42,7 +42,7 @@ function settings() {
     setNotificationState(false);
     setPrivacyState(false);
   };
-  
+
   let [PrivacyState, setPrivacyState] = useState(false);
   let PrivacyFun = () => {
     setPrivacyState(true);
@@ -179,4 +179,4 @@ function settings() {
   );
 }
 
-export default settings;
+export default Settings;

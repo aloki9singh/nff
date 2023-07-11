@@ -78,7 +78,7 @@ const Calendar = () => {
 
       setSchedules(arr);
     });
-  }, [currentMonth, currentDate]);
+  }, [currentMonth, currentDate,date]);
   // console.log(schedules);
   return (
     <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5">
@@ -110,7 +110,7 @@ const Calendar = () => {
                 No upcoming classes ☹️
               </div>
             ) : (
-              schedules.map((item) => <Schedulecard item={item} />)
+              schedules.map((item) => <Schedulecard key={item} item={item} />)
             )}
           </div>
         </div>

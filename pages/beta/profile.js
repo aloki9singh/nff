@@ -10,7 +10,7 @@ import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import StudentProfileChart from '@/components/student/profile/chart';
 import StudentProfileCirProgress from '@/components/student/profile/StudentProfileCirProgress';
 
-function studentProfile() {
+function StudentProfile() {
   const router = useRouter();
 
   const chartData = [2, 3, 1, 4, 2, 5, 3]; //Change this student data to show on chart, passed as prop
@@ -256,4 +256,4 @@ function studentProfile() {
     </>
   );
 }
-export default studentProfile;
+export default StudentProfile;

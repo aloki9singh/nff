@@ -27,14 +27,14 @@ export default function UnderProgress() {
 
   const fetchStudentDetails = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "students"));
+      const querySnapshot = await getDocs(collection(db, "allusers"));
       const data = querySnapshot.docs.map((doc) => doc.data());
       return data;
     } catch (error) {
       throw new Error("Failed to fetch student details");
     }
   };
-
+console.log(students)
   return (
     <div className="flex h-full bg-[#2D2E35]">
       <div className="lg:col-span-1 hidden lg:grid">
