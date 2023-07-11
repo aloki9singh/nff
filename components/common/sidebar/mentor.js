@@ -11,15 +11,13 @@ import { RxCross2 } from "react-icons/rx";
 
 const MentorSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
-  // const path = router.pathname.split("/")[2];
-
-  const { user } = useAuthContext();
+  const { user, userProfile } = useAuthContext();
 
   return (
     <>
-      <aside className="  md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
-        <div className="">
-          <div className="">
+      <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
+        <div>
+          <div>
             <Image
               src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
               width={150}
@@ -49,9 +47,9 @@ const MentorSidebar = ({ toggleSideBar }) => {
                   <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
                 )}
               </Link>
-              <p className="pt-2">Rahul Mehra</p>
+              <p className="pt-2">{user ? user.displayName : "Guest"}</p>
               <p className="text-gray-500 text-[12px] mt-[-7px]">
-                Roll no- xxxxxxxxxxx
+                Roll no - {userProfile ? userProfile?.rollno : "None"}
               </p>
             </div>
           </div>
