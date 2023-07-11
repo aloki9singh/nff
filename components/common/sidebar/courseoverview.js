@@ -97,13 +97,13 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         id="default-checkbox"
                         type="checkbox"
                         className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === "/beta/courseview"
+                          router.pathname === "/beta/courseoverview"
                             ? "shadow-white"
                             : ""
                         }`}
                         style={{
                           boxShadow:
-                            router.pathname === "/meta/courseview"
+                            router.pathname === "/beta/courseoverview"
                               ? "0 0 5px #A145CD"
                               : "none",
                         }}
