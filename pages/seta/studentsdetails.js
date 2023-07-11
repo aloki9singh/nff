@@ -13,14 +13,27 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebaseconfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import { useMediaQuery } from "react-responsive";
 
 
 export default function Studentdetails() {
   const router = useRouter();
   const { studentId } = router.query;
   const [student, setStudent] = useState(null);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
   useEffect(() => {
     if (studentId) {
       fetchStudentDetails(studentId)
@@ -55,11 +68,26 @@ export default function Studentdetails() {
   //if (!userProfile) return (<div>Loading...</div>);
   return (
     <div className="flex h-screen bg-[#2D2E35]  ">
-      <div className="lg:col-span-1 hidden lg:grid">
-        <Schoolsidebar />
-      </div>
-      <div className="w-full h-fit   bg-[#2D2E35] space-y-4 mt-1 ">
-        <SchoolTopbar heading={"Student Details"} />
+      {/* First Sidebar - Visible on Mobile */}
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <Schoolsidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <Schoolsidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+      <div className="w-full h-fit bg-[#2D2E35] space-y-4">
+        <div className=" md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <SchoolTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
+        </div>
         {/* text */}
         <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-12 ">
           {/* text */}

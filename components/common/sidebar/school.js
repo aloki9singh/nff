@@ -1,21 +1,50 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { BsPersonCircle } from "react-icons/bs";
+import { RxCross2 } from "react-icons/rx";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
-const Sidebar = ({ pathname }) => {
+const Sidebar = ({ toggleSideBar }) => {
+  const router = useRouter();
+  const { user} = useAuthContext();
   return (
     <>
-      <aside className="  left-0 top-0  bg-[#15161B]  flex flex-col w-[200px] px-5 ">
-        <div className="">
-          <div className="">
+      <aside className="md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between">
+        <div>
+          <div>
             <Image
               src="/componentsgraphics/common/sidebar/schoolsidebar/Neatskills.svg"
-              width={500}
-              height={500}
+              width={150}
+              height={100}
               alt="logo"
-              className="pt-5"
+              className="mb-6 md:block hidden"
             />
+            <div
+              className=" flex justify-end w-full md:hidden  "
+              onClick={() => toggleSideBar()}
+            >
+              <div className="bg-gray-500 rounded-full p-[5px]">
+                <RxCross2 className="text-white  text-sm" />
+              </div>
+            </div>
+            <div className="md:hidden block p-2 text-white">
+              <Link href={"/meta/profile"}>
+                {user && user.photoURL ? (
+                  <Image
+                    src={user.photoURL}
+                    alt="proImg"
+                    height={60}
+                    width={60}
+                    className="inline-block relative object-cover object-center md:hidden !rounded-full border border-[#E1348B] aspect-square"
+                  />
+                ) : (
+                  <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
+                )}
+              </Link>
+              <p className="pt-2">{user ? user.displayName : "Anonymous"}</p>
+            </div>
           </div>
           <div className="flex flex-col h-full   justify-around ">
             <ul>
@@ -28,9 +57,23 @@ const Sidebar = ({ pathname }) => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
+                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/seta/dashboard"
+                        ? "shadow-white"
+                        : ""
+                        }`}
+                      style={{
+                        boxShadow:
+                          router.pathname === "/seta/dashboard"
+                            ? "0 0 5px #A145CD"
+                            : "none",
+                      }}
                     />{" "}
-                    <span>Home</span>
+                    <span
+                      className={`ml-3 text-[${router.pathname == "/seta/dashboard" ? "#E1348B" : ""
+                        }]`}
+                    >
+                      Home
+                    </span>
                   </label>
                 </Link>
                 <Link
@@ -41,9 +84,22 @@ const Sidebar = ({ pathname }) => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
+                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/seta/students"
+                        ? "shadow-white"
+                        : ""
+                        }`}
+                      style={{
+                        boxShadow:
+                          router.pathname === "/seta/students"
+                            ? "0 0 5px #A145CD"
+                            : "none",
+                      }}
                     />{" "}
-                    <span>students</span>
+                    <span
+                      className={`ml-3 text-[${router.pathname == "/seta/students"
+                        ? "#E1348B"
+                        : ""
+                        }]`}>Students</span>
                   </label>
                 </Link>
                 <Link
@@ -54,9 +110,22 @@ const Sidebar = ({ pathname }) => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
+                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/seta/"
+                          ? "shadow-white"
+                          : ""
+                        }`}
+                      style={{
+                        boxShadow:
+                          router.pathname === "/seta/"
+                            ? "0 0 5px #A145CD"
+                            : "none",
+                      }}
                     />{" "}
-                    <span>Events</span>
+                    <span
+                      className={`ml-3 text-[${router.pathname == "/seta/"
+                          ? "#E1348B"
+                          : ""
+                        }]`}>Events</span>
                   </label>
                 </Link>
                 <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
@@ -68,12 +137,21 @@ const Sidebar = ({ pathname }) => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      className="form-checkbox h-3 w-3 text-gray-600"
+                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === "/seta/profile"
+                                ? "shadow-white"
+                                : ""
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === "/seta/profile"
+                                  ? "0 0 5px #A145CD"
+                                  : "none",
+                            }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${
-                        pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
+                      className={`ml-3 text-[${router.pathname == "/seta/profile" ? "#E1348B" : ""
+                        }]`}
                     >
                       Profile
                     </span>

@@ -6,6 +6,7 @@ import Datelist from "@/components/common/calendar/common/datelist";
 import DonutInProfile from "@/components/school/dashboard/circularpfp";
 import { callStudentDataApi } from "@/lib/setaapi"; // Import the API function
 import Calendar from "@/components/common/calendar/school/calendar";
+import { useMediaQuery } from "react-responsive";
 
 const months = [
   "January",
@@ -23,7 +24,10 @@ const months = [
 ];
 export default function Studentdetails() {
   const tabClass = "w-10 h-10 rounded-xl";
-
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const Leaderboard = [
     //Dummy Data for LeaderBoard
@@ -110,6 +114,10 @@ export default function Studentdetails() {
     }
     e.target.style = "opacity:1";
   };
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
   const classes = [
     {
       id: 1,
@@ -131,14 +139,29 @@ export default function Studentdetails() {
   }, [currentMonth]);
 
   return (
-    <div className="flex h-full bg-[#2D2E35]  ">
-      <div className="lg:col-span-1 hidden lg:grid">
-        <Schoolsidebar />
-      </div>
-      <div className="w-full h-fit   bg-[#2D2E35] space-y-4 mt-1 ">
-        <SchoolTopbar heading={"School Dashboard"} />
+    <div className="flex">
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <Schoolsidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <Schoolsidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+      <div className="flex-grow bg-[#2E3036]">
+        <div className="md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <SchoolTopbar heading="Dashboard" toggleSideBar={toggleSideBar} />
+        </div>
+        <hr className="hidden lg:block opacity-50"/>
         {/* text */}
-        <div className="bg-[#2D2E35] text-white  h-full md:grid grid-cols-2 w-full gap-10     space-y-10  px-5 md:pt-0  pt-20 pb-5">
+        <div className="bg-[#2D2E35] my-4 text-white  h-full md:grid grid-cols-2 w-full gap-10 space-y-10  px-5 md:pt-0  pt-20 pb-5">
           <div className="space-y-10 ">
             <div className="grid grid-cols-2 text-center rounded-2xl bg-[#373A41] p-5 mt-[-30px] md:mt-[0] items-center">
               <div className="space-y-7">
@@ -154,9 +177,9 @@ export default function Studentdetails() {
               </div>
             </div>
             <div>
-             
+
               <Calendar />
-             
+
             </div>
           </div>
           <div className="bg-[#2D2E35]">
