@@ -10,6 +10,7 @@ import assignmentupload from './assignmentupload';
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 export default function Assignments() {
   const router = useRouter();
@@ -22,7 +23,14 @@ export default function Assignments() {
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
-
+  const { user, userProfile } = useAuthContext();
+  if(!user||!userProfile){
+    router.push("/")
+  }
+  
+   if(!user||!userProfile){
+    return null
+   }
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -97,14 +105,14 @@ export default function Assignments() {
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
       )}
-      <div className="flex-grow md:bg-[#2E3036] bg-[#141518]">
+      <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
             {/* <StudentTopbar heading={"My Progress"} /> */}
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <Dashboardnav heading="My Progress" toggleSideBar={toggleSideBar} />
             </div>
 
-        <hr className="hidden lg:block opacity-50 m-3"></hr>
-        <div className="h-full bg-[#37383F] m-5 rounded-[30px] text-white space-y-6">
+      
+        <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
           <div className="lg:grid lg:grid-cols-11 h-full">
             {/* Modules */}
             <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">

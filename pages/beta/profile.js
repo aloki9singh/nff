@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import Image from 'next/image';
-import { useSelector } from 'react-redux';
-import { FiEdit2 } from 'react-icons/fi';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Image from "next/image";
+import { useSelector } from "react-redux";
+import { FiEdit2 } from "react-icons/fi";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 
-import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import StudentProfileChart from '@/components/student/profile/chart';
-import StudentProfileCirProgress from '@/components/student/profile/StudentProfileCirProgress';
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import StudentProfileChart from "@/components/student/profile/chart";
+import StudentProfileCirProgress from "@/components/student/profile/StudentProfileCirProgress";
 import { useMediaQuery } from "react-responsive";
-
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 function StudentProfile() {
   const router = useRouter();
@@ -22,13 +22,22 @@ function StudentProfile() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+  const { user, userProfile } = useAuthContext();
+  console.log(userProfile);
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
   }, [isMediumScreen]);
+  const chartData = [2, 3, 1, 4, 2, 5, 3, 3, 4, 5, 6, 1]; //Change this student data to show on chart, passed as prop
 
-  const chartData = [2, 3, 1, 4, 2, 5, 3]; //Change this student data to show on chart, passed as prop
+  if (!user || !userProfile) {
+    router.push("/");
+  }
+  if (!user || !userProfile) {
+    return null;
+  }
 
   return (
     <>
@@ -36,7 +45,9 @@ function StudentProfile() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -49,11 +60,11 @@ function StudentProfile() {
             </div>
           )}
           <div
-            style={{ background: '#2E3036' }}
+            style={{ background: "#2E3036" }}
             className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
           >
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-              <Dashboardnav heading={'Profile'} toggleSideBar={toggleSideBar} />
+              <Dashboardnav heading={"Profile"} toggleSideBar={toggleSideBar} />
             </div>
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
@@ -64,18 +75,20 @@ function StudentProfile() {
               <div className="w-full h-full   md:text-base text-sm  ">
                 <div className=" md:mx-10 mx-5">
                   <div className="flex">
-                    {' '}
+                    {" "}
                     <Image
-                      src={'/ProfileGirlimg.png'}
+                      src={userProfile.photoURL}
                       alt="proImg"
                       height={150}
                       width={150}
-                      className="rounded-full w-[150px] object-contain mt-[-85px]"
+                      className="rounded-full w-[120px] h-[120px] object-cover mt-[-85px]"
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
-                        Garvit Kumar
-                        <p className="text-xs ml-2">Roll no-xxxxxxxxxx</p>
+                        {user.displayName}
+                        <p className="text-xs ml-2">
+                          Roll no-{userProfile.rollNo}
+                        </p>
                       </div>
                       <div className="flex text-xs md:text-sm mt-[-25px]">
                         Edit profile
@@ -91,7 +104,7 @@ function StudentProfile() {
             <div className="lg:grid lg:grid-cols-11   m-5  md:mt-0 text-white justify-between">
               <div className="lg:col-span-5 lg:pr-4">
                 <div className="flex justify-center align-center">
-                  <div className="bg-[#373A41]   w-[93%] mx-auto rounded-[20px] pb-9 pt-3 px-4 space-y-2 md:w-[90%] mt-5 flex flex-col">
+                  <div className="bg-[#373A41]   w-full mx-5   rounded-[20px] pb-5 pt-3 px-4 space-y-2 md:px-6 mt-5 flex flex-col">
                     <div className="text-center pt-2 pb-2 px-4 font-semibold flex justify-between w-full">
                       <p>Enrolled courses</p>
                       <p>Completed Courses</p>
@@ -143,7 +156,7 @@ function StudentProfile() {
                 </div>
 
                 <div className="flex justify-center w-[93%] mx-auto align-center">
-                  <div className="bg-[#373A41] rounded-[20px] w-full pb-9 pt-3 px-4 space-y-2 md:w-[90%] mt-5 flex flex-col">
+                  <div className="bg-[#373A41] rounded-[20px] w-full pb-9 pt-3 px-4 space-y-2 md:px-3  mt-5 flex flex-col">
                     <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full">
                       Certificates
                     </div>
@@ -152,9 +165,7 @@ function StudentProfile() {
                       <div className="flex mb-6 px-2 justify-between">
                         <div className="flex">
                           <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
-                          <h1 className="text-sm md:text-lg">
-                            User interface design
-                          </h1>
+                          <h1 className="text-sm ">User interface design</h1>
                         </div>
                         <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
                           View certificate
@@ -163,9 +174,7 @@ function StudentProfile() {
                       <div className="flex mb-6 px-2 justify-between">
                         <div className="flex">
                           <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
-                          <h1 className="text-sm md:text-lg">
-                            User interface design
-                          </h1>
+                          <h1 className="text-sm ">User interface design</h1>
                         </div>
                         <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
                           View certificate
@@ -174,9 +183,7 @@ function StudentProfile() {
                       <div className="flex mb-6 px-2 justify-between">
                         <div className="flex">
                           <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
-                          <h1 className="text-sm md:text-lg">
-                            User interface design
-                          </h1>
+                          <h1 className="text-sm ">User interface design</h1>
                         </div>
                         <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
                           View certificate
@@ -189,14 +196,14 @@ function StudentProfile() {
 
               <div className="lg:col-span-6">
                 <div className="flex justify-center align-center">
-                  <div className="bg-[#373A41] md:h-[296px]  rounded-[20px] py-3 px-4 w-[93%] md:w-[100%] mt-5 flex flex-col md:flex-row">
-                    <div className=" w-[90%] md:w-[60%] h-[100%] flex flex-col justify-between text-center py-4 px-2">
+                  <div className="bg-[#373A41] md:h-[296px]  rounded-[20px] py-3 px-4 md:w-[100%] md:flex  w-[94%] md:mx-0  mt-5 flex flex-col md:flex-row">
+                    <div className=" md:w-2/3  flex flex-col justify-between text-center py-4 ">
                       <h1 className="font-semibold text-sm">Activity Hours</h1>
                       <div className="mt-2">
                         <StudentProfileChart data={chartData} />
                       </div>
                     </div>
-                    <div className="w-[90%] md:w-[40%] h-[100%] flex flex-col justify-between text-center py-4 px-2">
+                    <div className="  h-[100%] flex flex-col justify-between text-center py-4 px-2">
                       <div className="flex space-x-4 justify-end h-[13%]">
                         <select className="py-1 px-2 mr-2 text-sm rounded-xl focus:outline-none bg-[#728095] text-white cursor-pointer">
                           <option selected hidden>
@@ -267,7 +274,7 @@ function StudentProfile() {
                       Rank
                     </div>
                     <div className="w-full h-[90%] sd:mt-4 ">
-                      {' '}
+                      {" "}
                       <StudentProfileCirProgress />
                     </div>
                   </div>

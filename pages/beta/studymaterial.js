@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import { useRouter } from 'next/router';
-import { db } from 'config/firebaseconfig';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import { useRouter } from "next/router";
+import { db } from "config/firebaseconfig";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 
 export default function StudyMaterial() {
@@ -18,7 +18,7 @@ export default function StudyMaterial() {
   const [SideBarState, sendSideBarState] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(db, 'studyMaterial'));
+      const q = query(collection(db, "studyMaterial"));
       const materialSnapshot = await getDocs(q);
       const materialData = materialSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -30,43 +30,44 @@ export default function StudyMaterial() {
   }, []);
 
   const menuItems = [...new Set(material.map((Val) => Val.title))];
-  menuItems[0] = 'All courses';
+  menuItems[0] = "All courses";
 
   const filteredMaterial = selectedOption
     ? material.filter((item) => item.title === selectedOption)
     : material;
 
-  const func = selectedOption == 'All courses' ? material : filteredMaterial;
-
+  const func = selectedOption == "All courses" ? material : filteredMaterial;
 
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-  }, [isMediumScreen])
+  }, [isMediumScreen]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
   return (
-    <div className="flex h-screen">
-       {isMobileScreen && (
-            <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-            >
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+    <div className="flex h-screen bg-[#2D2E35]">
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${
+            SideBarState ? "block" : "hidden"
+          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
 
-          {/* Second Sidebar - Visible on Desktop */}
-          {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
-      <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
-        <Dashboardnav heading="Study Material" toggleSideBar={toggleSideBar}/>
-        <div className="lg:w-64 w-80 items-center lg:ml-16 ml-9 rounded-lg">
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+      <div className="w-full h-screen flex flex-col bg-[#2D2E35] space-y-4">
+        <Dashboardnav heading="Study Material" toggleSideBar={toggleSideBar} />
+        <div className="lg:w-64 w-80 items-center lg:ml-16 ml-9 rounded-lg m-auto">
           <select
             onChange={(e) => setSelectedOption(e.target.value)}
             className="block w-full p-2 text-base rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer"
@@ -82,14 +83,14 @@ export default function StudyMaterial() {
           </select>
         </div>
 
-        <div className="bg-[#2D2E35] text-white grow flex items-center justify-center h-fit">
-          <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px]">
-            <div className="flex justify-center flex-wrap gap-x-20 gap-y-10 m-5">
+        <div className="bg-[#2D2E35] text-white grow flex items-center justify-center h-[screen]">
+          <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
+            <div className="flex justify-center flex-wrap md:grid md:grid-cols-3 gap-x-20 gap-y-10 m-5">
               {func.map((study) => (
                 <Link key={study.id} href="/studyMaterial">
-                  <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] md:w-64 max-w-sm md:gap-6">
+                  <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D]  max-w-sm md:gap-6">
                     <div className="flex justify-between items-center">
-                      <div className="m-2 p-1 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48">
+                      <div className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col justify-between ">
                         <Image
                           src="/pagesgraphics/student/coursedescription/laptop.svg"
                           width={60}

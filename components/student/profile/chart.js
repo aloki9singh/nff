@@ -103,7 +103,7 @@ const StudentProfileChart = ({ data }) => {
 
   return (
     <>
-      <div className="md:w-[460px] md:h-[204px] md:col-span-2 p-3 rounded-[20px] m-auto bg-[#373A41] ">
+      <div className=" md:h-[204px] md:col-span-2 p-3 rounded-[20px] m-auto bg-[#373A41] ">
         <Bar data={chartData} options={chartOptions} />
       </div>
     </>
