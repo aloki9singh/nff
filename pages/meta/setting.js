@@ -10,7 +10,7 @@ import Privacy from "@/components/student/setting/privacy";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
-import { useMediaQuery } from "@/hooks/mediaquery";
+import { useMediaQuery } from "react-responsive";
 
 function Settings() {
   const router = useRouter();
@@ -58,7 +58,7 @@ function Settings() {
             <div
               className={`fixed right-0 ${
                 SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -66,7 +66,7 @@ function Settings() {
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block hidden w-[221px] bg-[#141518]`}>
+            <div className={`md:block hidden w-[221px] bg-[#141518] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
