@@ -1,3 +1,7 @@
+
+
+//responsiveness issue
+
 import { useState } from "react";
 import Head from "next/head";
 import axios from "axios";
