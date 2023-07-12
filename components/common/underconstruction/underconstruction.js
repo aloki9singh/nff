@@ -1,5 +1,5 @@
 //verifed by Shreyas Sahoo
-import Sidebar from '../../common/sidebar/sidebar';
+import CourseoverviewSidebar from '../sidebar/courseoverview';
 import Dashboardnav from '../../common/navbar/dashboardnav';
 import BottomNav from '../../common/footer/bottomnav';
 import { useState, useRef, useEffect } from 'react';
@@ -9,9 +9,11 @@ import oval from '../../../public/componentsgraphics/common/underprogress/semici
 import brown from '../../../public/componentsgraphics/common/underprogress/brownfilledcircle.svg';
 import purple from '../../../public/componentsgraphics/common/underprogress/purplefilledcircle.svg';
 import imac from '../../../public/componentsgraphics/common/underprogress/manstandingwithlaptop.svg';
-import Link from 'next/link'; 
+import Link from 'next/link';
 import { BsInstagram } from 'react-icons/bs';
 import { FaFacebook, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
+import { useMediaQuery } from 'react-responsive';
+
 
 export default function UnderProgress() {
   const [timerDays, setTimerDays] = useState('00');
@@ -56,6 +58,15 @@ export default function UnderProgress() {
       }
     }, 1000);
   };
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
   useEffect(() => {
     startTimer();
@@ -63,13 +74,30 @@ export default function UnderProgress() {
     return () => clearInterval(timerId);
   }, []);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
   return (
     <div className="flex h-screen">
-      <div className="lg:col-span-1 hidden lg:grid">
-        <Sidebar />
-      </div>
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
       <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
-        <Dashboardnav heading="" />
+        <Dashboardnav heading="" toggleSideBar={toggleSideBar} />
         <div className="text-white grow flex items-center justify-center h-fit">
           <div className="w-[90%] h-full flex md:bg-[#373A41] rounded-[30px]">
             <div className="flex justify-center flex-wrap gap-x-20 m-5 gap-y-10 h-fit">
