@@ -23,8 +23,7 @@ import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useMediaQuery } from "react-responsive";
-
-
+import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 
 // const userCache = {};
 // async function getUser(uid) {
@@ -47,15 +46,8 @@ const Chat = () => {
   const router = useRouter();
 
   // const user = auth.currentUser;
-  const { user, loading,userProfile } = useAuthContext();
-  
-  if(!user||!userProfile){
-    router.push("/")
-  }
-  
-   if(!user||!userProfile){
-    return null
-   }
+  const { user, loading, userProfile } = useAuthContext();
+
   useEffect(() => {
     if (!user) {
       if (!loading) {
@@ -84,7 +76,6 @@ const Chat = () => {
 
     return unsub;
   }, [user, router, loading]);
-
 
   useEffect(() => {
     if (!currReciever) setCurrReciever(chats[0]);
@@ -124,7 +115,6 @@ const Chat = () => {
     };
 
     if (currReciever) getMembers();
-
   }, [currReciever, chats]);
 
   function toggleSideBar() {
@@ -140,7 +130,6 @@ const Chat = () => {
 
   useEffect(() => {
     if (!currReciever) return;
-
 
     const q = query(
       collection(db, "chatGroups", currReciever.groupId, "messages"),
@@ -160,23 +149,34 @@ const Chat = () => {
     return unsub;
   }, [currReciever]);
 
+  if (!user || !userProfile) {
+    router.push("/");
+  }
+
+  if (!user || !userProfile) {
+    return null;
+  }
+
   return (
     <>
       <div className="flex overflow-y-hidden">
+        {chats.length === 0 && <NoJoinedCoursesModal />}
         {isMobileScreen && (
-            <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-            >
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+          <div
+            className={`fixed right-0 ${
+              SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          >
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
 
-          {/* Second Sidebar - Visible on Desktop */}
-          {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+        {/* Second Sidebar - Visible on Desktop */}
+        {!isMobileScreen && (
+          <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
         <div className="w-full h-screen ">
           <div>
             {/* <Navbar /> */}
