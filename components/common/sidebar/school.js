@@ -11,7 +11,7 @@ const Sidebar = ({ toggleSideBar }) => {
   const { user} = useAuthContext();
   return (
     <>
-      <aside className="md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between">
+      <aside className="md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px] flex flex-col">
         <div>
           <div>
             <Image
@@ -163,7 +163,7 @@ const Sidebar = ({ toggleSideBar }) => {
             </ul>
           </div>
         </div>
-        <div className="text-white flex-row  space-y-5 mt-40">
+        <div className="text-white flex-row  space-y-5 mt-32 max-[768px]:mt-2">
           <button className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
             <AiOutlineSetting />
             <span>Settings </span>
