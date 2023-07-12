@@ -98,7 +98,7 @@ function MentorStudent() {
 
   return (
     <>
-      <div className="md:w-full h-screen h-full text-base bg-[#2E3036]">
+      <div className="md:w-full h-screen  text-base bg-[#2E3036]">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
