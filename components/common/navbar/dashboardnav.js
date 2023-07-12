@@ -31,7 +31,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
         </div>
         <div className="flex items-center justify-between">
           <div
-            className="md:flex items-center gap-x-2  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
+            className="md:flex items-center gap-x-2 max-[905px]:hidden md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
             style={{ border: "1px solid #728095" }}
           >
             <AiOutlineSearch className="text-white text-2xl ml-4" />

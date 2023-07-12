@@ -5,12 +5,17 @@ import Sidebar from '@/components/common/sidebar/admin';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
 const Signupsuccess = () => {
   // code to check if verified to visit this page or not
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   useEffect(() => {
     const isAdmin = localStorage.getItem('isAdmin');
     setIsAdmin(isAdmin);
@@ -19,17 +24,42 @@ const Signupsuccess = () => {
     }
   }, [router]);
 
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
   if (!isAdmin) {
     return null;
   }
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>
-        <div className='lg:col-span-1 hidden lg:grid'>
-          <Sidebar />
-        </div>
+ {/* First Sidebar - Visible on Mobile */}
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <Sidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <Sidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
-          <AdminTopbar heading={''} />
+          <AdminTopbar heading={''} toggleSideBar={toggleSideBar} />
           {/* text */}
           <div className='w-full h-screen bg-[#1E1E1E]  space-y-5 pt-[80px] '>
             <div className='flex flex-col justify-center h-full'>

@@ -51,7 +51,9 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
           ...prev,
           photoURL: url,
         }));
+
       });
+
     } else {
       // Handle other inputs normally
       setInput((prev) => ({
