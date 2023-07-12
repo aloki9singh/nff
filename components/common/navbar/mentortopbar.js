@@ -22,7 +22,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
   console.log(userProfile);
   return (
     <>
-      <div className="flex justify-between lg:flex md:ml-5   mt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
+      <div className="flex justify-between lg:flex md:pl-5   pt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518] md:rounded-tl-[40px]">
         <h1 className="text-white my-auto  ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
           {heading}
         </h1>

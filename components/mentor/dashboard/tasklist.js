@@ -60,7 +60,7 @@ export default function TaskList() {
   };
 
   return (
-    <div className="h-fit mt-12 p-1.5 rounded-2xl bg-[#373A41] text-white">
+    <div className="h-fit mt-12 pt-2 rounded-2xl bg-[#373A41] text-white">
       <div className="flex justify-between w-[89%] mx-auto mt-4 items-center">
         <h1 className="text-xl">Task List</h1>
         <Popover>
@@ -90,17 +90,17 @@ export default function TaskList() {
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel className="absolute items-center right-[1rem] -mt-4 z-10">
-              <div className="h-48 w-[20rem] md:w-[24rem] text-center p-3">
+              <div className=" text-center p-3">
                 <div className="relative bg-[#373A41] text-black rounded-tl-lg rounded-b-lg ">
                   <form
                     onSubmit={createTask}
-                    className="flex gap-3 items-center"
+                    className="flex gap-3 items-center mr-10"
                   >
                     <input
                       value={input}
                       onChange={(ev) => setInput(ev.target.value)}
                       type="text"
-                      className="bg-transparent border-2 text-white"
+                      className="bg-transparent border-2 w-[200px] text-white"
                     />
                     <button>
                       <svg
@@ -125,7 +125,7 @@ export default function TaskList() {
           </Transition>
         </Popover>
       </div>
-      <ul className="text-white my-2 items-center p-4 ">
+      <ul className="text-white my-2 py-2 items-center pr-5 ">
         {todos?.slice(0, 5).map((todo, index) => (
           <Todo
             key={index}

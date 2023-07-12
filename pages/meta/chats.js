@@ -173,7 +173,7 @@ const Chat = () => {
           )}
 
           <div className="flex-grow">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+            <div className="flex justify-between md:pt-0 pt-2 md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Chats" toggleSideBar={toggleSideBar} />
             </div>
 

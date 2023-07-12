@@ -75,14 +75,14 @@ function MentorDashboard() {
             </div>
           )}
 
-          <div className="flex-grow">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <div className="flex-grow md:rounded-tl-[40px]">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
               <MentorTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
             </div>
 
 
-            <div className="md:flex gap-5 m-5 md:mt-0 ">
-              <div className="md:w-5/6">
+            <div className="md:flex gap-5 m-5 md:mb-0 md:mt-0 ">
+              <div className="md:w-5/6 ">
                 <BasicDetails />
 
                 <div className="md:flex gap-5">
@@ -117,10 +117,10 @@ function MentorDashboard() {
                 </div>
               </div>
               <div className="md:mt-0 ">
-                <div className="md:w-[30vw]">
+                <div className="md:w-[30vw] mt-5">
                   <Calender />
                 </div>
-                <div className="bg-[#373A41] rounded-[20px] md:pb-5 mt-[-20px] md:[mt-0]">
+                <div className="bg-[#373A41] rounded-[20px] md:pb-5 pb-7 mt-[-20px] md:[mt-0]">
                   <TaskList />
                 </div>
               </div>
