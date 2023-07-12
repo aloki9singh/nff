@@ -11,15 +11,13 @@ import { RxCross2 } from "react-icons/rx";
 
 const MentorSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
-  // const path = router.pathname.split("/")[2];
-
-  const { user } = useAuthContext();
+  const { user, userProfile } = useAuthContext();
 
   return (
     <>
-      <aside className="  md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
-        <div className="">
-          <div className="">
+      <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
+        <div>
+          <div>
             <Image
               src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
               width={150}
@@ -37,9 +35,9 @@ const MentorSidebar = ({ toggleSideBar }) => {
             </div>
             <div className="md:hidden block p-2 text-white">
               <Link href={"/meta/profile"}>
-                {user && user.photoURL ? (
+                {user && userProfile.photoURL ? (
                   <Image
-                    src={user.photoURL}
+                    src={userProfile.photoURL}
                     alt="proImg"
                     height={60}
                     width={60}
@@ -49,9 +47,11 @@ const MentorSidebar = ({ toggleSideBar }) => {
                   <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
                 )}
               </Link>
-              <p className="pt-2">Rahul Mehra</p>
-              <p className="text-gray-500 text-[12px] mt-[-7px]">
-                Roll no- xxxxxxxxxxx
+              <p className="pt-2">{user ? user.displayName : "Guest"}</p>
+              <p className="text-gray-500 text-[12px] ">
+                {`MENTOR- ${userProfile
+                  ? userProfile?.displayName || user.displayName
+                  : "None"}`}
               </p>
             </div>
           </div>
@@ -158,7 +158,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
                   </label>
                 </Link>
               </li>
-              <hr className="h-px  bg-gray-500 border-0 w-[90%] m-auto "></hr>
+              <hr className="h-px  bg-gray-500 border-0 w-[90%] mx-auto my-1"></hr>
               <li>
                 <Link
                   href="schedule"
@@ -297,7 +297,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
                   </label>
                 </Link>
               </li>
-              <hr className="h-px  bg-gray-500 border-0 w-[90%] m-auto "></hr>
+              <hr className="h-px  bg-gray-500 border-0 w-[90%] mx-auto my-1 "></hr>
               <li>
                 <Link
                   href="/meta/chats"

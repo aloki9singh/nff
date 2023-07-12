@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import StudentTopbar from "@/components/common/navbar/studenttopbar";
+
 import Advertisement from "@/components/student/dashboard/adbanner";
 import Progress from "@/components/student/assignments/status";
 import ActiveComp from "@/components/student/assignments/activecomp";
 import InActiveComp from "@/components/student/assignments/inactivecomp";
-import Sidebar from "@/components/common/sidebar/sidebar";
+
 import Calendar from "@/components/common/calendar/student/calendar";
 import LeaderBoardMentor from "@/components/student/dashboard/leaderboard";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";

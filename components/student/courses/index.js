@@ -14,8 +14,6 @@ import { useMediaQuery } from "react-responsive";
 export default function CoursesMain({ coursesData }) {
   const router = useRouter();
   const [courses] = useState(coursesData);
-  //console.log(courses);
-
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);

@@ -84,7 +84,7 @@ function Settings() {
           <div className="w-full h-screen mx-auto rounded-l-[40px] bg-[#2D2E35] col-span-6 md:col-span-5 lg:col-span-4 ">
             <Dashboardnav heading="Settings" toggleSideBar={toggleSideBar}/>
             <hr className="hidden lg:block opacity-50" />
-            <div className="flex my-auto my-auto p-2 md:p-4 mx-2 md:mx-8 mt-[7%]">
+            <div className="flex my-auto p-2 md:p-4 mx-2 md:mx-8 mt-[7%]">
               <div className="md:grid md:grid-cols-6 my-5 md:w-full max-[860px]:my-2 self-start">
                 {/* self-start only for sm */}
                 <div className="w-full md:col-span-1 p-2 flex justify-between gap-x-3 md:block">

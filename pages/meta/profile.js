@@ -18,7 +18,7 @@ import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
-import { useMediaQuery } from "@/hooks/mediaquery";
+import { useMediaQuery } from "react-responsive";
 
 function MentorProfile() {
   const router = useRouter();
@@ -59,7 +59,7 @@ function MentorProfile() {
             <div
               className={`fixed right-0 ${
                 SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -67,7 +67,7 @@ function MentorProfile() {
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block hidden w-[221px] bg-[#141518]`}>
+            <div className={`md:block hidden w-[221px] bg-[#141518] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}

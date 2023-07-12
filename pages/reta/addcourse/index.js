@@ -10,7 +10,7 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "@/config/firebaseconfig";
+import { auth, db } from "@/config/firebaseconfig";
 import Link from "next/link";
 import Image from "next/image";
 import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
@@ -20,19 +20,38 @@ import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
 const categories = ["Web Development", "App Development", "UI/UX", "Others"];
 
-const PlanCourseForm = ({ goToNextStep, onSubmit }) => {
+
+const planCourseSchema = yup.object({
+  title: yup.string().required(),
+  desc: yup.string().required("Description cannot be empty"),
+  duration: yup.number().typeError("Duration must be a number").required(),
+  lectures: yup.number().required().typeError("Lectures must be greater than 0"),
+  category: yup.string().required(),
+  language: yup.string().required(),
+  level: yup.string().required(),
+  // banner can by any
+  banner: yup.mixed().required(),
+}).required();
+
+const PlanCourseForm = ({ state, onSubmit }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     setValue,
     control,
-  } = useForm();
+  } = useForm({
+    defaultValues: state,
+    resolver: yupResolver(planCourseSchema),
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,25 +62,35 @@ const PlanCourseForm = ({ goToNextStep, onSubmit }) => {
         <label className="w-40" htmlFor="">
           Course Title
         </label>
-        <input
-          type="text"
-          placeholder="Enter coures title"
-          className="AddMentorInput flex-1  h-10 rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("title", { required: true })}
-        />
+        <div className="flex flex-col flex-1">
+          <input
+            type="text"
+            placeholder="Enter coures title"
+            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
+            style={{ background: "#333333" }}
+            {...register("title", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.title?.message}
+          </p>
+        </div>
       </div>
       <div className="w-full  flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-2 px-4 mb-8">
         <label className="w-40" htmlFor="">
           Course Description
         </label>
-        <textarea
-          type="text"
-          placeholder="Enter course description"
-          className="AddMentorInput flex-1 h-28 rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("desc", { required: true })}
-        />
+        <div className="flex flex-col flex-1">
+          <textarea
+            type="text"
+            placeholder="Enter course description"
+            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? 'border-red-500 border border-solid' : ''} `}
+            style={{ background: "#333333" }}
+            {...register("desc", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.desc?.message}
+          </p>
+        </div>
       </div>
 
       {/* duration, session and language */}
@@ -70,30 +99,46 @@ const PlanCourseForm = ({ goToNextStep, onSubmit }) => {
           <label className="w-40" htmlFor="">
             Duration
           </label>
-          <input
-            type="number"
-            className="AddMentorInput h-10 rounded-lg px-2 flex-1"
-            style={{ background: "#333333" }}
-            placeholder="Enter duration in weeks"
-            {...register("duration", { required: true, valueAsNumber: true })}
-          />
+          <div className='flex flex-col flex-1'>
+            <input
+              type="number"
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
+              style={{ background: "#333333" }}
+              placeholder="Enter duration in weeks"
+              {...register("duration", { required: true, valueAsNumber: true })}
+            />
+            <p className="text-red-500 text-sm" >
+              {errors.duration?.message}
+            </p>
+          </div>
         </div>
         <div className="flex flex-1 items-center gap-x-2 px-4">
           <label className="w-40" htmlFor="">
             Lectures
           </label>
-          <input
-            type="number"
-            placeholder="Enter total lectures"
-            className="AddMentorInput h-10 rounded-lg px-2 flex-1"
-            style={{ background: "#333333" }}
-            {...register("lectures", { required: true, valueAsNumber: true })}
-          />
+          <div className='flex flex-col flex-1'>
+
+            <input
+              type="number"
+              placeholder="Enter total lectures"
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
+              style={{ background: "#333333" }}
+              {...register("lectures", { required: true, valueAsNumber: true })}
+            />
+            <p className="text-red-500 text-sm" >
+              {errors.lectures?.message}
+            </p>
+          </div>
+
         </div>
       </div>
 
+
       {/* level */}
-      <div className="w-full hidden md:w-3/4 md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 mb-8">
+      <div className="w-full hidden relative  md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 pb-8">
+        <p className="text-red-500 text-sm absolute left-48 bottom-2" >
+          {errors.level?.message}
+        </p>
         <legend className="w-40" htmlFor="">
           Level :
         </legend>
@@ -106,6 +151,7 @@ const PlanCourseForm = ({ goToNextStep, onSubmit }) => {
             className="mr-2"
           />
           <label>Beginner</label>
+
         </div>
         <div className="border-2 border-gray-600 px-3 py-1 rounded-lg">
           <input
@@ -175,29 +221,46 @@ const PlanCourseForm = ({ goToNextStep, onSubmit }) => {
         <label className="w-40" htmlFor="">
           Upload Banner Image
         </label>
-        <Controller
-          control={control}
-          name="banner"
-          render={({ field: { onChange, onBlur } }) => (
-            <IDdraganddrop
-              setValue={setValue}
-              name="banner"
-              onChange={onChange}
-              onBlur={onBlur}
-            />
-          )}
-        />
+        <div className="flex flex-col flex-1">
+          <Controller
+            control={control}
+            name="banner"
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur } }) => (
+              <IDdraganddrop
+                setValue={setValue}
+                name="banner"
+                onChange={onChange}
+                onBlur={onBlur}
+              />
+            )}
+          />
+          <p className="text-red-500 text-sm mt-5" >
+            {errors.banner?.message}
+          </p>
+        </div>
+
       </div>
-    </form>
+    </form >
   );
 };
 
-const TargetStudentsForm = ({ onSubmit }) => {
+
+const targetStudentsSchema = yup.object().shape({
+  learn: yup.string().required("This field is required"),
+  requirements: yup.string().required("This field is required"),
+  target: yup.string().required("This field is required"),
+});
+
+const TargetStudentsForm = ({ state, onSubmit }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm({
+    defaultValues: state,
+    resolver: yupResolver(targetStudentsSchema),
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -207,37 +270,54 @@ const TargetStudentsForm = ({ onSubmit }) => {
         <label className="" htmlFor="">
           What will the students learn from your course ?
         </label>
-        <textarea
-          type="text"
-          placeholder="Example, Will learn basics of UI/UX "
-          className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("learn", { required: true })}
-        />
+        <div className="flex flex-col">
+          <textarea
+            type="text"
+            placeholder="Example, Will learn basics of UI/UX "
+            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            {...register("learn", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.learn?.message}
+          </p>
+        </div>
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
         <label className="" htmlFor="">
           Are there any course requirements or prerequisites ?
         </label>
-        <textarea
-          type="text"
-          placeholder="Example, Have a laptop"
-          className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("requirements", { required: true })}
-        />
+        <div className="flex flex-col">
+          <textarea
+            type="text"
+            placeholder="Example, Have a laptop"
+            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            {...register("requirements", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.requirements?.message}
+          </p>
+        </div>
+
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
         <label className="" htmlFor="">
           Who are your target students ?
         </label>
-        <textarea
-          type="text"
-          placeholder="Example, people who are curious about design or beginners"
-          className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("target", { required: true })}
-        />
+        <div className="flex flex-col">
+          <textarea
+            type="text"
+            placeholder="Example, people who are curious about design or beginners"
+            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            {...register("target", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.target?.message}
+          </p>
+        </div>
+
       </div>
     </form>
   );
@@ -418,16 +498,16 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
         >
           <h4
             className={`text-xl ${currentStep === index + 1
-                ? "text-primary"
-                : "text-primary/60 group-hover:text-primary/90"
+              ? "text-primary"
+              : "text-primary/60 group-hover:text-primary/90"
               }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
             className={`${currentStep === index + 1
-                ? "text-white"
-                : "text-white/60 group-hover:text-white/90"
+              ? "text-white"
+              : "text-white/60 group-hover:text-white/90"
               }`}
           >
             {step}
@@ -439,33 +519,38 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
 };
 
 const createCourse = async (courseDetails) => {
-
   const data = {
     ...courseDetails,
     createdAt: serverTimestamp(),
     banner: "",
-  }
+  };
 
-  console.log("data final", data)
+  console.log("data final", data);
 
-  const courseRef = await addDoc(collection(db, "courses"),data);
+  const courseRef = await addDoc(collection(db, "courses"), data);
 
-  if (courseDetails.banner) {
-    uploadToFirebase(courseDetails.banner, (url) => {
-      setDoc(
-        doc(db, "courses", courseRef.id),
-        {
-          banner: url,
-          id: courseRef.id,
-        },
-        {
-          merge: true,
-        }
-      );
-    });
-  }
-
-  console.log("courseRef", courseRef.id);
+  uploadToFirebase(courseDetails.banner, (url) => {
+    setDoc(
+      doc(db, "courses", courseRef.id),
+      {
+        banner: url,
+        id: courseRef.id,
+      },
+      {
+        merge: true,
+      }
+    );
+    setDoc(doc(collection(db, "chatGroups"), courseRef.id), {
+      name: courseDetails.title,
+      members: [auth.currentUser?.uid],
+      photoURL: url,
+      isGroup: true,
+      groupId: courseRef.id,
+      lastMessage: "",
+      lastMessageTimestamp: serverTimestamp(),
+      createdAt: serverTimestamp(),
+    })
+  });
 
   return courseRef.id;
 };
@@ -508,7 +593,7 @@ const CreateCourse = () => {
 
     await createCourse(courseDetails);
 
-    router.push("beta/course-overview");
+    router.push("reta/addcourse/congrats");
   };
 
   return (
@@ -557,7 +642,10 @@ const CreateCourse = () => {
         </div>
         <div className="col-span-8 h-max  p-8 bg-[#222222] rounded-lg mt-4 mb-4">
           {currentStep === 1 && (
-            <PlanCourseForm onSubmit={onPlanCourseFormSubmit} />
+            <PlanCourseForm
+              state={formData}
+              onSubmit={onPlanCourseFormSubmit}
+            />
           )}
 
           {currentStep === 3 && (
@@ -565,7 +653,10 @@ const CreateCourse = () => {
           )}
 
           {currentStep === 2 && (
-            <TargetStudentsForm onSubmit={onTargetStudentFormSubmit} />
+            <TargetStudentsForm
+              state={formData["Q&A"]}
+              onSubmit={onTargetStudentFormSubmit}
+            />
           )}
         </div>
       </div>

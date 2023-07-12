@@ -1,5 +1,4 @@
-import MobileNav from "@/components/common/footer/bottomnav";
-import Sidebar from "@/components/common/sidebar/sidebar";
+
 import Footer from "@/components/common/footer/footer";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useEffect, useState } from "react";
@@ -36,11 +35,11 @@ export default function Terms() {
         )}
 
         {/* Second Sidebar - Visible on Desktop */}
-        {/* {!isMobileScreen && (
+        {!isMobileScreen && (
           <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
-        )} */}
+        )}
         <div className="w-full h-full min-h-screen flex flex-col bg-[#2D2E35] space-y-4 pb-10">
           <Dashboardnav
             heading="Terms and conditions"

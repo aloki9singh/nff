@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MentorSidebar from "@/components/common/sidebar/admin";
-import MentorTopbar from "@/components/common/navbar/admintopbar";
+import Sidebar from "@/components/common/sidebar/admin";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useMediaQuery } from "@/hooks/mediaquery";
+import { useMediaQuery } from "react-responsive";
+import AdminTopbar from "@/components/common/navbar/admintopbar";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -112,30 +112,23 @@ function AdminStudent() {
             <div
               className={`fixed right-0 ${
                 SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+              <Sidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block hidden w-[221px] bg-[#141518]`}>
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+            <div className={`md:block hidden w-[221px] bg-[#141518]z-10`}>
+              <Sidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           <div className="flex-grow">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-              <MentorTopbar heading="Review" toggleSideBar={toggleSideBar} />
+              <AdminTopbar heading="Review" toggleSideBar={toggleSideBar} />
             </div>
-            <div className="  mt-11 ml-12 text-white text-lg font-semibold">
-                    <div>
-                        Students
-                    </div>
-            </div>
-
-
 
             {/* Dropdown bar */}
             <div className="gap-5 mx-8  max-[700px]:mx-4 md:mt-0 text-white">

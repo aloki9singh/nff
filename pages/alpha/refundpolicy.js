@@ -1,16 +1,45 @@
-import MobileNav from "@/components/common/footer/bottomnav";
-import Sidebar from "@/components/common/sidebar/sidebar";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Footer from "@/components/common/footer/footer";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 
 export default function Terms() {
+	const isMediumScreen = useMediaQuery({ minWidth: 768 });
+	const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+	const [showSideBar, setShowSideBar] = useState(false);
+	const [SideBarState, sendSideBarState] = useState(false);
+	useEffect(() => {
+		if (isMediumScreen) {
+		  sendSideBarState(false);
+		}
+	  }, [isMediumScreen]);
+
+	function toggleSideBar() {
+		setShowSideBar(!showSideBar);
+		sendSideBarState(showSideBar);
+	  }
 	return (
 		<div>
 			<div className="flex">
-				<Sidebar />
+				{isMobileScreen && (
+					<div
+						className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+							} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+					>
+						<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+					</div>
+				)}
+
+				{/* Second Sidebar - Visible on Desktop */}
+				{!isMobileScreen && (
+					<div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+						<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+					</div>
+				)}
 				<div className="w-full h-full min-h-screen flex flex-col bg-[#2D2E35] space-y-4 pb-10">
-					<Dashboardnav heading="Return and refund policy" />
+					<Dashboardnav heading="Return and refund policy" toggleSideBar={toggleSideBar} />
 					<div className="lg:mx-14 md:mx-10 max-w-[1440px] self-center  font-Inter py-5 px-[25px]">
 						<h1 className="font-Inter font-semibold md:text-5xl text-2xl text-white text-center mb-2">
 							Return & refund policy
@@ -139,21 +168,20 @@ export default function Terms() {
 								</p>
 							</div>
 						</div>
-            <div className="text-xs  md:text-lg text-white  font-Inter text-justify my-11">
+						<div className="text-xs  md:text-lg text-white  font-Inter text-justify my-11">
 							<p>If you have any questions or concerns about our Refund and Return
-              Policy, please contact our support team at {" "}
-              <span className="font-semibold">
-                <Link href="mailto:support@skilldevelopmentplatform.com">
-                  support@skilldevelopmentplatform.com
-                </Link>
-              </span>
-              . We are always here to help.</p>
+								Policy, please contact our support team at {" "}
+								<span className="font-semibold">
+									<Link href="mailto:support@skilldevelopmentplatform.com">
+										support@skilldevelopmentplatform.com
+									</Link>
+								</span>
+								. We are always here to help.</p>
 						</div>
 					</div>
 				</div>
 			</div>
 			<Footer background="bg-[#2D2E35]" />
-			<MobileNav />
 		</div>
 	);
 }

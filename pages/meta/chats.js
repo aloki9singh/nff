@@ -28,6 +28,7 @@ import GroupDetails from "../../components/common/chat/Group";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
+import { useMediaQuery } from "react-responsive";
 
 // const userCache = {};
 // async function getUser(uid) {
@@ -158,7 +159,7 @@ const Chat = () => {
             <div
               className={`fixed right-0 ${
                 SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -166,14 +167,14 @@ const Chat = () => {
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518]`}>
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           <div className="flex-grow">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-              <MentorTopbar heading="Chats" toogleSideBar={toggleSideBar} />
+            <div className="flex justify-between md:pt-0 pt-2 md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <MentorTopbar heading="Chats" toggleSideBar={toggleSideBar} />
             </div>
 
             <div

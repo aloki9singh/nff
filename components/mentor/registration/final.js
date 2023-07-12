@@ -5,13 +5,14 @@ import { auth } from "../../../config/firebaseconfig";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { uploadToFirebase } from "@/lib/exportablefunctions";
 
 const MentorFinal = ({ setRegStepCount, regStepCount }) => {
   const { loading, setLoading } = useContext(Loading);
   const [mentor, setMentor] = useState();
   const { user } = useAuthContext();
   const id = user.uid;
- 
+
   const [input, setInput] = useState({
     firstname: "",
     lastname: "",
@@ -45,14 +46,14 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
     if (name === "profilephoto") {
       // Handle profile photo separately
       const file = files[0];
-      const reader = new FileReader();
-      reader.onload = (event) => {
+      uploadToFirebase(file, (url) => {
         setInput((prev) => ({
           ...prev,
-          photoURL: event.target.result,
+          photoURL: url,
         }));
-      };
-      reader.readAsDataURL(file);
+
+      });
+
     } else {
       // Handle other inputs normally
       setInput((prev) => ({
@@ -71,7 +72,11 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ details: mentor }),
+      body: JSON.stringify({
+        details: mentor,
+        displayName: input.firstname,
+        photoURL: input.photoURL,
+      }),
     });
 
     const data = await res.json();
@@ -430,7 +435,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
               <div className="text-white text-sm rounded-lg block w-full p-4  bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500">
                 <div className="flex flex-wrap  gap-2  justify-around align-middle mb-4 ">
                   {mentor !== undefined &&
-                    mentor.skills.map((e, i) => (
+                    mentor.skills?.map((e, i) => (
                       <div
                         key={i}
                         className="border  border-[#823DA2] rounded-[10px] px-2 py-2 text-sm "

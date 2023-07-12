@@ -8,15 +8,30 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../config/firebaseconfig"; 
+import { db } from "../../config/firebaseconfig";
 import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 import { studentsArr } from "@/lib/arraytomap";
+import { useMediaQuery } from "react-responsive";
 
 export default function UnderProgress() {
   const tabClass = "w-10 h-10 rounded-xl";
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const [students, setStudents] = useState([]);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
   useEffect(() => {
     // Fetch student details from Firebase Firestore
@@ -34,14 +49,30 @@ export default function UnderProgress() {
       throw new Error("Failed to fetch student details");
     }
   };
-console.log(students)
+  console.log(students)
   return (
     <div className="flex h-full bg-[#2D2E35]">
-      <div className="lg:col-span-1 hidden lg:grid">
-        <Schoolsidebar />
-      </div>
-      <div className="w-full h-fit   bg-[#2D2E35] space-y-4 mt-1 ">
-        <SchoolTopbar heading={"Students"} />
+      {/* First Sidebar - Visible on Mobile */}
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <Schoolsidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <Schoolsidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
+      <div className="w-full h-fit bg-[#2D2E35]">
+        <div className=" md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <SchoolTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
+        </div>
+        <hr className="hidden lg:block opacity-50 mt-3 " />
         {/* text */}
         <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-12 ">
           {/* text */}
@@ -132,51 +163,51 @@ console.log(students)
             </div>
           </div>
 
-      {/* table */}
-      <div className="w-[90%] h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs mb-4">
-        <div className="">
-          <table className="w-full">
-            <thead className="items-center border-b">
-              <tr className="flex font-semibold justify-around p-5 space-x-2">
-                <th className="inline">Student Name</th>
-                <th className="">Id</th>
-                <th className="">Class</th>
-                <th className="md:block hidden">Active</th>
-                <th className="md:block hidden">Courses</th>
-                <th className="">Action</th>
-              </tr>
-            </thead>
-            {/* Table body */}
-            <tbody className="flex justify-center flex-col items-center mt-4 space-y-6 p-2">
-              {students &&
-                students.map((student) => (
-                  <tr
-                    className="flex space-x-4 items-center w-full font-medium text-xs text-center justify-around"
-                    key={student.id}
-                  >
-                    <td className="flex items-center gap-2">
-                      <Image
-                        src={student.image}
-                        alt="img"
-                        height={25}
-                        width={25}
-                        className="rounded-full h-8 object-contain inline"
-                      />
-                      {student.name}
-                    </td>
-                    <td className="">ID : {student.id}</td>
-                    <td className="">{student.class}</td>
-                    <td className="md:block hidden">{student.active}</td>
-                    <td className="md:block hidden">{student.courses}</td>
-                    <td className="text-[#E1348B]">
-                      <Link href={`/students/${student.id}`}>View Profile</Link>
-                    </td>
+          {/* table */}
+          <div className="w-[90%] h-full bg-[#373A41] rounded-[30px] border md:text-base text-xs mb-4">
+            <div className="">
+              <table className="w-full">
+                <thead className="items-center border-b">
+                  <tr className="flex font-semibold justify-around p-5 space-x-2">
+                    <th className="inline">Student Name</th>
+                    <th className="">Id</th>
+                    <th className="">Class</th>
+                    <th className="md:block hidden">Active</th>
+                    <th className="md:block hidden">Courses</th>
+                    <th className="">Action</th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-        {/* pagination */}
+                </thead>
+                {/* Table body */}
+                <tbody className="flex justify-center flex-col items-center mt-4 space-y-6 p-2">
+                  {students &&
+                    students.map((student) => (
+                      <tr
+                        className="flex space-x-4 items-center w-full font-medium text-xs text-center justify-around"
+                        key={student.id}
+                      >
+                        <td className="flex items-center gap-2">
+                          <Image
+                            src={student.image}
+                            alt="img"
+                            height={25}
+                            width={25}
+                            className="rounded-full h-8 object-contain inline"
+                          />
+                          {student.name}
+                        </td>
+                        <td className="">ID : {student.id}</td>
+                        <td className="">{student.class}</td>
+                        <td className="md:block hidden">{student.active}</td>
+                        <td className="md:block hidden">{student.courses}</td>
+                        <td className="text-[#E1348B]">
+                          <Link href={`/students/${student.id}`}>View Profile</Link>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+            {/* pagination */}
             <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
               <button className="w-6 h-5 border flex justify-center items-center">
                 <svg

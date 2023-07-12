@@ -8,6 +8,9 @@ import Image from "next/image";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebaseconfig";
 import { Router, useRouter } from "next/router";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+
 const MentorTopbar = ({ heading, toggleSideBar }) => {
   let [searchstate, setsearchstate] = useState("");
   const [profileMenu, setProfileMenu] = useState(false);
@@ -15,11 +18,11 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
     setsearchstate(e.target.value);
   };
   const router = useRouter();
-  const { user } = useAuthContext();
-
+  const { user, userProfile } = useAuthContext();
+  console.log(userProfile);
   return (
     <>
-      <div className="flex justify-between lg:flex  md:static static  md:ml-5   mt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
+      <div className="flex justify-between lg:flex md:pl-5   pt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518] md:rounded-tl-[40px]">
         <h1 className="text-white my-auto  ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
           {heading}
         </h1>
@@ -57,91 +60,125 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
             </form>
           </div>
 
-          <div className="ml-12 md:flex space-x-4  hidden ">
-            <BiBell className="text-white text-2xl my-auto"></BiBell>
-
-            {user && user.photoURL ? (
-              <Image
-                onClick={() => setProfileMenu(!profileMenu)}
-                src={user.photoURL}
-                alt="proImg"
-                height={60}
-                width={60}
-                className="inline-block relative object-cover object-center md:hidden !rounded-full border border-[#E1348B] aspect-square"
-              />
-            ) : (
-              <BsPersonCircle
-                onClick={() => setProfileMenu(!profileMenu)}
-                className="text-white text-4xl"
-              ></BsPersonCircle>
-            )}
-          </div>
-          <div
-            className={`absolute mt-10 top-4 right-12 z-10 transform ${
-              profileMenu ? "block" : "hidden"
-            }`}
-          >
-            <div className="h-48 w-36 text-center p-3">
-              <div className="relative bg-[#373A41] text-white rounded-tl-lg rounded-b-lg divide-y border border-white">
-                <Link href="/beta/profile">
-                  <p className="p-2">
-                    {user && user.photoURL ? (
-                      <div className="flex gap-1 items-center">
-                        <Image
-                          src={user.photoURL}
-                          height="35"
-                          width="35"
-                          className="rounded-full h-6 w-6"
-                          alt="img"
-                        />
-                        <div className="text-left">
-                          <p className="text-[10px] mb-1">{user.displayName}</p>
-                          <p className="text-[7px] -mt-1">Class N/A</p>
-                        </div>
-                      </div>
+          {user && (
+            <div className="text-white max-[768px]:hidden flex items-center z-10">
+              <BiBell className="text-white text-2xl my-auto mx-4"></BiBell>
+              <div className="] h-12 w-12 flex justify-center items-center">
+                <Popover className="">
+                  <Popover.Button className="outline-none ">
+                    {user && userProfile.photoURL ? (
+                      <Image
+                        // src={user.photoURL}
+                        src={user && userProfile.photoURL}
+                        alt="proImg"
+                        height={48}
+                        width={48}
+                        className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
+                      />
                     ) : (
-                      <div className="flex gap-1 items-center">
-                        <BsPersonCircle className="text-white text-xl"></BsPersonCircle>
-                        <div className="text-left">
-                          <p className="text-[10px] mb-1">Guest</p>
-                          <p className="text-[7px] -mt-1">Class N/A</p>
+                      <BsPersonCircle
+                        onClick={() => setProfileMenu(!profileMenu)}
+                        className="text-white text-4xl"
+                      />
+                    )}
+                  </Popover.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-200"
+                    enterFrom="opacity-0 translate-y-1"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease-in duration-150"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-1"
+                  >
+                    <Popover.Panel className="absolute translate-y-[43px] translate-x-[-163px] top-4">
+                      <div className="h-48 w-[200px] text-center p-3">
+                        <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
+                          <Link href="/meta/profile">
+                            <p className="p-2">
+                              {user && userProfile.photoURL ? (
+                                <div className="flex gap-2 items-center">
+                                  <Image
+                                    src={user && userProfile.photoURL}
+                                    height="35"
+                                    width="35"
+                                    className="rounded-full h-6 w-6"
+                                    alt="img"
+                                  />
+                                  <div className="text-left">
+                                    <p className="text-[13px] mb-1">
+                                      {(user && userProfile.displayName) ||
+                                        user.displayName}
+                                    </p>
+                                    <p className="text-[10px] -mt-2">
+                                      {`MENTOR`}
+                                    </p>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="flex gap-1 items-center">
+                                  <BsPersonCircle
+                                    onClick={() => setProfileMenu(!profileMenu)}
+                                    className="text-white text-4xl"
+                                  />
+                                  <div className="text-left">
+                                    <p className="text-[13px] mb-1">Guest</p>
+                                    <p className="text-[10px] -mt-2">
+                                    
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                            </p>
+                          </Link>
+
+                          <div className="text-[13px] p-2">
+                            <Link href="/meta/profile">
+                              <p className="mb-2">Profile</p>
+                            </Link>
+                            <Link href="/invite">
+                              <p>Invite a Friend</p>
+                            </Link>
+                          </div>
+                          <div className="text-[13px] p-2">
+                            <Link href="/alpha/contactUs">
+                              <p className="mb-2">Neat Skills Help Centre</p>
+                            </Link>
+                            <Link href="/alpha/termsandcondition">
+                              <p>Terms & Conditions</p>
+                            </Link>
+                          </div>
+                          <div className="text-[13px] p-2 cursor-pointer ">
+                            <p onClick={() => signOut(auth)}>Logout</p>
+                          </div>
                         </div>
                       </div>
-                    )}
-                  </p>
-                </Link>
-
-                <div className="text-[10px] p-2">
-                  <Link href="/beta/profile">
-                    <p className="mb-2">Profile</p>
-                  </Link>
-                  <Link href="/invite">
-                    <p>Invite a Friend</p>
-                  </Link>
-                </div>
-                <div className="text-[10px] p-2">
-                  <Link href="/alpha/contactUs">
-                    <p className="mb-2">Neat Skills Help Centre</p>
-                  </Link>
-                  <Link href="/alpha/termsAndCondition">
-                    <p>Terms & Conditions</p>
-                  </Link>
-                </div>
-                <div className="text-[10px] p-2 cursor-pointer">
-                  <p
-                    onClick={() => {
-                      signOut(auth);
-
-                      router.push("/");
-                    }}
-                  >
-                    Logout
-                  </p>
-                </div>
+                    </Popover.Panel>
+                  </Transition>
+                </Popover>
               </div>
             </div>
-          </div>
-
+          )}
+          {!user && (
+            <div className="hidden md:block ml-6">
+              <Link href={"/meta/signup"}>
+                <button
+                  type="button"
+                  className="inline-block justify-start items-start px-[20px] py-2.5 bg-[#404147] text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                >
+                  Signup
+                </button>
+              </Link>
+              <Link href={"/beta/login"}>
+                <button
+                  type="button"
+                  className="inline-block justify-start items-start px-[20px] ml-6 mr-3 py-2.5 bg-pin text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                >
+                  LOGIN
+                </button>
+              </Link>
+            </div>
+          )}
           <div
             className=" md:hidden block mr-[-30px] "
             onClick={() => toggleSideBar()}

@@ -7,7 +7,7 @@ import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import MentorChart from "@/components/mentor/other/chart";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useMediaQuery } from "@/hooks/mediaquery";
+import { useMediaQuery } from "react-responsive";
 
 function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
@@ -15,7 +15,6 @@ function MentorStudent() {
   const [count, setCount] = useState(1);
   // const { data } = useSelector((state) => state.authManagerMentor);
   const [courseData, setCourseData] = useState();
-  const [SideBarState, sendSideBarState] = useState(false);
   const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12];
   const [monthData, setMonthData] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -29,14 +28,14 @@ function MentorStudent() {
   };
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-
+  const [SideBarState, sendSideBarState] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-
+  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -47,6 +46,7 @@ function MentorStudent() {
         setCourseData(data);
       });
   }, [isMediumScreen]);
+
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
   function getTotalEnrolled() {
@@ -98,14 +98,13 @@ function MentorStudent() {
 
   return (
     <>
-      <div className="h-full text-base bg-[#2E3036] ">
+      <div className="md:w-full h-screen  text-base bg-[#2E3036]">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -113,13 +112,13 @@ function MentorStudent() {
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block hidden w-[221px] bg-[#141518]`}>
+            <div className={`md:block hidden w-[221px] bg-[#141518] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           <div className="flex-grow">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Courses" toggleSideBar={toggleSideBar} />
             </div>
 

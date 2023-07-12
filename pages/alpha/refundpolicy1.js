@@ -1,15 +1,42 @@
 import Link from 'next/link';
-import Sidebar from '@/components/common/sidebar/sidebar';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import MobileNav from '@/components/common/footer/bottomnav';
 import Footer from '@/components/common/footer/footer';
-
+import { useMediaQuery } from "react-responsive";
+import { useState, useEffect } from 'react';
 export default function Return() {
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+	const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+	const [showSideBar, setShowSideBar] = useState(false);
+	const [SideBarState, sendSideBarState] = useState(false);
+	useEffect(() => {
+		if (isMediumScreen) {
+		  sendSideBarState(false);
+		}
+	  }, [isMediumScreen]);
+  function toggleSideBar() {
+		setShowSideBar(!showSideBar);
+		sendSideBarState(showSideBar);
+	  }
   return (
     <div className="flex">
-      <Sidebar />
+      {isMobileScreen && (
+					<div
+						className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+							} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+					>
+						<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+					</div>
+				)}
+
+				{/* Second Sidebar - Visible on Desktop */}
+				{!isMobileScreen && (
+					<div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+						<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+					</div>
+				)}
       <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4">
-        <Dashboardnav heading="Return and refund policy" />
+        <Dashboardnav heading="Return and refund policy" toggleSideBar={toggleSideBar} />
         <div className="flex justify-start items-center text-center text-white md:m-6 m-3">
           <h1 className="text-[#E1348B] font-semibold md:text-2xl text-xl">
             Last updated on 7th of May 2023
@@ -134,7 +161,6 @@ export default function Return() {
           </div>
         </div>
         <Footer />
-        <MobileNav />
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ function MentorDashboard() {
             <div
               className={`fixed right-0 ${
                 SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] `}
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -70,19 +70,19 @@ function MentorDashboard() {
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518]`}>
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
-          <div className="flex-grow">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <div className="flex-grow md:rounded-tl-[40px]">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
               <MentorTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
             </div>
 
 
-            <div className="md:flex gap-5 m-5 md:mt-0 ">
-              <div className="md:w-5/6">
+            <div className="md:flex gap-5 m-5 md:mb-0 md:mt-0 ">
+              <div className="md:w-5/6 ">
                 <BasicDetails />
 
                 <div className="md:flex gap-5">
@@ -117,10 +117,10 @@ function MentorDashboard() {
                 </div>
               </div>
               <div className="md:mt-0 ">
-                <div className="md:w-[30vw]">
+                <div className="md:w-[30vw] mt-5">
                   <Calender />
                 </div>
-                <div className="bg-[#373A41] rounded-[20px] md:pb-5 mt-[-20px] md:[mt-0]">
+                <div className="bg-[#373A41] rounded-[20px] md:pb-5 pb-7 mt-[-20px] md:[mt-0]">
                   <TaskList />
                 </div>
               </div>

@@ -50,14 +50,16 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                   )}
                 </Link>
                 <p className="pt-2">{user ? user.displayName : "Anonymous"}</p>
-                <p className="text-gray-500 text-[12px] mt-[-7px]">
-                  Roll no-{userProfile.rollNo}
-                </p>
+                {userProfile && (
+                  <p className="text-gray-500 text-[12px] mt-[-7px]">
+                    Roll no-{userProfile.rollNo}
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col h-full justify-around ">
               <ul>
-                <li className="md:space-y-[14px]">
+                <li className="md:space-y-[16px]">
                   <Link
                     href="/beta/dashboard"
                     className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
@@ -97,13 +99,13 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         id="default-checkbox"
                         type="checkbox"
                         className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === "/beta/courseview"
+                          router.pathname === "/beta/courseoverview"
                             ? "shadow-white"
                             : ""
                         }`}
                         style={{
                           boxShadow:
-                            router.pathname === "/meta/courseview"
+                            router.pathname === "/beta/courseoverview"
                               ? "0 0 5px #A145CD"
                               : "none",
                         }}
