@@ -57,7 +57,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
             </div>
             <div className="flex flex-col h-full justify-around ">
               <ul>
-                <li className="md:space-y-[14px]">
+                <li className="md:space-y-[16px]">
                   <Link
                     href="/beta/dashboard"
                     className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"

@@ -10,7 +10,7 @@ const Sidebar = ({ toggleSideBar }) => {
   const { user, userProfile } = useAuthContext();
   return (
     <>
-      <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
+      <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col">
         <div>
           <div>
             <Image
@@ -50,7 +50,7 @@ const Sidebar = ({ toggleSideBar }) => {
           </div>
           <div className="flex flex-col h-full ">
             <ul>
-              <li className="space-y-[16px]">
+              <li className="space-y-[16px] max-[768px]:space-y-[4px]">
                 <Link
                   href="/seta/dashboard"
                   className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
@@ -306,15 +306,11 @@ const Sidebar = ({ toggleSideBar }) => {
                     </span>
                   </label>
                 </Link>
-
-
-
-                <div className="  font-semibold text-white bg-[#373A41] flex flex-col mt-9 rounded-xl"></div>
               </li>
             </ul>
           </div>
         </div>
-        <div className="text-white flex-row  space-y-5  mt-32 ">
+        <div className="text-white flex-row  space-y-5 mt-32 max-[768px]:mt-2 ">
           <button className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
             <AiOutlineSetting />
             <span>Settings </span>
