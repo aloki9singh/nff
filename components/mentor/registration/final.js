@@ -51,7 +51,9 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
           ...prev,
           photoURL: url,
         }));
-      })
+
+      });
+
     } else {
       // Handle other inputs normally
       setInput((prev) => ({
@@ -70,7 +72,11 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ details: mentor }),
+      body: JSON.stringify({
+        details: mentor,
+        displayName: input.firstname,
+        photoURL: input.photoURL,
+      }),
     });
 
     const data = await res.json();

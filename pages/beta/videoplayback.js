@@ -1,4 +1,4 @@
-// import Sidebar from '../components/Sidebar/sidebar';
+
 import Image from 'next/image';
 import laptop from '@/public/pagesgraphics/student/videoplayback/Group 11.svg';
 import { IoIosArrowForward } from 'react-icons/io';

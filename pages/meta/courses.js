@@ -98,7 +98,7 @@ function MentorStudent() {
 
   return (
     <>
-      <div className="md:w-full h-screen h-full text-base bg-[#2E3036]">
+      <div className="md:w-full h-screen  text-base bg-[#2E3036]">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
@@ -118,7 +118,7 @@ function MentorStudent() {
           )}
 
           <div className="flex-grow">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Courses" toggleSideBar={toggleSideBar} />
             </div>
 

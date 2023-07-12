@@ -18,11 +18,11 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
     setsearchstate(e.target.value);
   };
   const router = useRouter();
-  const { user,userProfile } = useAuthContext()
-
+  const { user, userProfile } = useAuthContext();
+  console.log(userProfile);
   return (
     <>
-      <div className="flex justify-between lg:flex md:ml-5   mt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
+      <div className="flex justify-between lg:flex md:pl-5   pt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518] md:rounded-tl-[40px]">
         <h1 className="text-white my-auto  ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
           {heading}
         </h1>
@@ -60,21 +60,27 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
             </form>
           </div>
 
-
-          {user &&  (
+          {user && (
             <div className="text-white max-[768px]:hidden flex items-center z-10">
-            <BiBell className="text-white text-2xl my-auto mx-4"></BiBell>
+              <BiBell className="text-white text-2xl my-auto mx-4"></BiBell>
               <div className="] h-12 w-12 flex justify-center items-center">
                 <Popover className="">
                   <Popover.Button className="outline-none ">
-                   {user.photoURL ? <Image
-                      src={user.photoURL}
-                      alt="proImg"
-                      height={48}
-                      width={48}
-                      className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
-                    />:
-                     <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>}
+                    {user && userProfile.photoURL ? (
+                      <Image
+                        // src={user.photoURL}
+                        src={user && userProfile.photoURL}
+                        alt="proImg"
+                        height={48}
+                        width={48}
+                        className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
+                      />
+                    ) : (
+                      <BsPersonCircle
+                        onClick={() => setProfileMenu(!profileMenu)}
+                        className="text-white text-4xl"
+                      />
+                    )}
                   </Popover.Button>
                   <Transition
                     as={Fragment}
@@ -90,10 +96,10 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                         <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
                           <Link href="/meta/profile">
                             <p className="p-2">
-                              {user.photoURL ? (
+                              {user && userProfile.photoURL ? (
                                 <div className="flex gap-2 items-center">
                                   <Image
-                                    src={user.photoURL}
+                                    src={user && userProfile.photoURL}
                                     height="35"
                                     width="35"
                                     className="rounded-full h-6 w-6"
@@ -101,20 +107,24 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                                   />
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">
-                                      {user.displayName}
+                                      {(user && userProfile.displayName) ||
+                                        user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
-                                      Class {userProfile.class}
+                                      {`MENTOR`}
                                     </p>
                                   </div>
                                 </div>
                               ) : (
                                 <div className="flex gap-1 items-center">
-                                <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>
+                                  <BsPersonCircle
+                                    onClick={() => setProfileMenu(!profileMenu)}
+                                    className="text-white text-4xl"
+                                  />
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">Guest</p>
                                     <p className="text-[10px] -mt-2">
-                                      Class N/A
+                                    
                                     </p>
                                   </div>
                                 </div>
@@ -138,7 +148,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>
-                          <div className="text-[13px] p-2">
+                          <div className="text-[13px] p-2 cursor-pointer ">
                             <p onClick={() => signOut(auth)}>Logout</p>
                           </div>
                         </div>

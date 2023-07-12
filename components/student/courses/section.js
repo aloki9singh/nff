@@ -18,7 +18,24 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
         </div>
         <div className={styles.mainList}>
           {cardInfo &&
-            cardInfo.map((info, i) => (
+            cardInfo.slice(0,3).map((info, i) => (
+              <CourseCard title={info.title} desc = {info.desc}level={info.level} sessions={info.sessions} language = {info.language} category={info.category} />
+            ))}
+        </div>
+      </div>
+      <div className={styles.secMain}>
+        <div className={styles.secHead}>
+          <p>Expand your career opportunities</p>
+          <button
+            className="mx-4"
+            style={{ whiteSpace: "nowrap", textAlign: "center" }}
+          >
+            View All
+          </button>
+        </div>
+        <div className={styles.mainList}>
+          {cardInfo &&
+            cardInfo.slice(3,6).map((info, i) => (
               <CourseCard title={info.title} desc = {info.desc}level={info.level} sessions={info.sessions} language = {info.language} category={info.category} />
             ))}
         </div>

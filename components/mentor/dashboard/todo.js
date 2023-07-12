@@ -12,10 +12,10 @@ export default function Todo({ todo, toggleComplete, deleteTodo }) {
           />
           <p
             onClick={() => toggleComplete(todo)}
-            className={`cursor-pointer overflow-hidden text-ellipsis ml-3 ${
+            className={`cursor-pointer overflow-hidden text-ellipsis text-inline ml-3 ${
               todo.completed ? "line-through" : ""
             }`}
-            style={{ maxWidth: "130px" }}
+            style={{ maxWidth: "" }}
           >
             {todo.text}
           </p>
