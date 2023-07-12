@@ -1,5 +1,4 @@
 import NavbarSecond from '@/components/common/navbar/navbar2';
-import Sidebar from '@/components/common/sidebar/sidebar';
 import Image from 'next/image';
 import { useState } from 'react';
 import { contactFn } from '@/lib/api';

@@ -2,8 +2,20 @@
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import CoursesMain from "@/components/student/courses";
 import { db } from "@/config/firebaseconfig";
+import { useAuthContext } from "@/lib/context/AuthContext";
+import { useRouter } from "next/router";
 
 export default function CourseOverview({ coursesData }) {
+
+  // const router = useRouter();
+  // const { user, userProfile } = useAuthContext();
+  // if (!user || !userProfile) {
+  //   router.push("/");
+  // }
+
+  // if (!user || !userProfile) {
+  //   return null;
+  // }
   return (
     <div className="">
       <CoursesMain coursesData={JSON.parse(coursesData)} />

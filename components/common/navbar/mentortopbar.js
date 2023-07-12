@@ -19,7 +19,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
   };
   const router = useRouter();
   const { user,userProfile } = useAuthContext()
-
+console.log(userProfile)
   return (
     <>
       <div className="flex justify-between lg:flex md:ml-5   mt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
@@ -68,7 +68,8 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                 <Popover className="">
                   <Popover.Button className="outline-none ">
                    {user.photoURL ? <Image
-                      src={user.photoURL}
+                      // src={user.photoURL}
+                      src={`data:image/png;base64,${user.photoURL}`} 
                       alt="proImg"
                       height={48}
                       width={48}

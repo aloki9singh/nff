@@ -1,5 +1,4 @@
-import MobileNav from "@/components/common/footer/bottomnav";
-import Sidebar from "@/components/common/sidebar/sidebar";
+
 import Footer from "@/components/common/footer/footer";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useEffect, useState } from "react";
