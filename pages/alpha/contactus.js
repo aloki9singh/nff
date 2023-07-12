@@ -1,9 +1,9 @@
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import Sidebar from '@/components/common/sidebar/sidebar';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { contactFn } from '@/lib/api';
-
+import { useMediaQuery } from "react-responsive";
 const Contact = () => {
   const [query, setQuery] = useState('');
 
@@ -14,13 +14,41 @@ const Contact = () => {
   const [phoneNo, setPhoneNo] = useState('');
 
   const formData = { query, email, name, phoneNo };
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
 
   return (
     <>
       <div className="flex h-screen">
-        <Sidebar />
+        {isMobileScreen && (
+          <div
+            className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          >
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
+
+        {/* Second Sidebar - Visible on Desktop */}
+        {!isMobileScreen && (
+          <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
         <div className="w-full h-full flex flex-col">
-          <Dashboardnav heading="Contact Us" />
+          <Dashboardnav heading="Contact Us" toggleSideBar={toggleSideBar} />
           <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
             <div className="w-[90%] flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit p-4">
               {/* LEFT */}
