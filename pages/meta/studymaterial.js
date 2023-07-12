@@ -33,8 +33,8 @@ function StudyMaterial() {
 
   return (
     <div className="flex w-full">
-      <div className="h-full text-base bg-[#2E3036] ">
-        <div className="flex">
+      <div className="h-full w-full text-base bg-[#2E3036] ">
+        <div className="flex w-full">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div

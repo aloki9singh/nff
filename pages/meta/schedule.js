@@ -43,7 +43,7 @@ function Schedule() {
   return (
     <>
     <div className="h-full text-base bg-[#2E3036] ">
-        <div className="flex">
+        <div className="flex md:w-[89%] ">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
@@ -62,7 +62,7 @@ function Schedule() {
             </div>
           )}
 
-          <div className="flex-grow">
+          <div className="flex-grow w-full">
             <div className="flex md:pt-0 pt-2 justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Schedule" toggleSideBar={toggleSideBar} />
             </div>
@@ -86,7 +86,7 @@ function Schedule() {
             </div>
           </div>
         </div>
-        <div className=" ">{/* <MobileNav></MobileNav> */}</div>
+        {/* <div className=" "><MobileNav></MobileNav></div> */}
       </div>
     </>
   );
