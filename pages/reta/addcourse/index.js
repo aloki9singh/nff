@@ -10,7 +10,7 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "@/config/firebaseconfig";
+import { auth, db } from "@/config/firebaseconfig";
 import Link from "next/link";
 import Image from "next/image";
 import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
@@ -135,7 +135,10 @@ const PlanCourseForm = ({ state, onSubmit }) => {
 
 
       {/* level */}
-      <div className="w-full hidden  md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 mb-8">
+      <div className="w-full hidden relative  md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 pb-8">
+        <p className="text-red-500 text-sm absolute left-48 bottom-2" >
+          {errors.level?.message}
+        </p>
         <legend className="w-40" htmlFor="">
           Level :
         </legend>
@@ -148,6 +151,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             className="mr-2"
           />
           <label>Beginner</label>
+
         </div>
         <div className="border-2 border-gray-600 px-3 py-1 rounded-lg">
           <input
@@ -217,24 +221,36 @@ const PlanCourseForm = ({ state, onSubmit }) => {
         <label className="w-40" htmlFor="">
           Upload Banner Image
         </label>
-        <Controller
-          control={control}
-          name="banner"
-          render={({ field: { onChange, onBlur } }) => (
-            <IDdraganddrop
-              setValue={setValue}
-              name="banner"
-              onChange={onChange}
-              onBlur={onBlur}
-            />
-          )}
-        />
+        <div className="flex flex-col flex-1">
+          <Controller
+            control={control}
+            name="banner"
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur } }) => (
+              <IDdraganddrop
+                setValue={setValue}
+                name="banner"
+                onChange={onChange}
+                onBlur={onBlur}
+              />
+            )}
+          />
+          <p className="text-red-500 text-sm mt-5" >
+            {errors.banner?.message}
+          </p>
+        </div>
+
       </div>
     </form >
   );
 };
 
 
+const targetStudentsSchema = yup.object().shape({
+  learn: yup.string().required("This field is required"),
+  requirements: yup.string().required("This field is required"),
+  target: yup.string().required("This field is required"),
+});
 
 const TargetStudentsForm = ({ state, onSubmit }) => {
   const {
@@ -243,6 +259,7 @@ const TargetStudentsForm = ({ state, onSubmit }) => {
     handleSubmit,
   } = useForm({
     defaultValues: state,
+    resolver: yupResolver(targetStudentsSchema),
   });
 
   return (
@@ -253,37 +270,54 @@ const TargetStudentsForm = ({ state, onSubmit }) => {
         <label className="" htmlFor="">
           What will the students learn from your course ?
         </label>
-        <textarea
-          type="text"
-          placeholder="Example, Will learn basics of UI/UX "
-          className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("learn", { required: true })}
-        />
+        <div className="flex flex-col">
+          <textarea
+            type="text"
+            placeholder="Example, Will learn basics of UI/UX "
+            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            {...register("learn", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.learn?.message}
+          </p>
+        </div>
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
         <label className="" htmlFor="">
           Are there any course requirements or prerequisites ?
         </label>
-        <textarea
-          type="text"
-          placeholder="Example, Have a laptop"
-          className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("requirements", { required: true })}
-        />
+        <div className="flex flex-col">
+          <textarea
+            type="text"
+            placeholder="Example, Have a laptop"
+            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            {...register("requirements", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.requirements?.message}
+          </p>
+        </div>
+
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
         <label className="" htmlFor="">
           Who are your target students ?
         </label>
-        <textarea
-          type="text"
-          placeholder="Example, people who are curious about design or beginners"
-          className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-          style={{ background: "#333333" }}
-          {...register("target", { required: true })}
-        />
+        <div className="flex flex-col">
+          <textarea
+            type="text"
+            placeholder="Example, people who are curious about design or beginners"
+            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
+            style={{ background: "#333333" }}
+            {...register("target", { required: true })}
+          />
+          <p className="text-red-500 text-sm" >
+            {errors.target?.message}
+          </p>
+        </div>
+
       </div>
     </form>
   );
@@ -495,20 +529,29 @@ const createCourse = async (courseDetails) => {
 
   const courseRef = await addDoc(collection(db, "courses"), data);
 
-  if (courseDetails.banner) {
-    uploadToFirebase(courseDetails.banner, (url) => {
-      setDoc(
-        doc(db, "courses", courseRef.id),
-        {
-          banner: url,
-          id: courseRef.id,
-        },
-        {
-          merge: true,
-        }
-      );
-    });
-  }
+  uploadToFirebase(courseDetails.banner, (url) => {
+    setDoc(
+      doc(db, "courses", courseRef.id),
+      {
+        banner: url,
+        id: courseRef.id,
+      },
+      {
+        merge: true,
+      }
+    );
+    setDoc(doc(collection(db, "chatGroups"), courseRef.id), {
+      name: courseDetails.title,
+      members: [auth.currentUser?.uid],
+      photoURL: url,
+      isGroup: true,
+      groupId: courseRef.id,
+      lastMessage: "",
+      lastMessageTimestamp: serverTimestamp(),
+      createdAt: serverTimestamp(),
+    })
+  });
+
   return courseRef.id;
 };
 
@@ -550,7 +593,7 @@ const CreateCourse = () => {
 
     await createCourse(courseDetails);
 
-    router.push("beta/course-overview");
+    router.push("reta/addcourse/congrats");
   };
 
   return (

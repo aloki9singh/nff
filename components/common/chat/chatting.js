@@ -418,12 +418,13 @@ const Chat = ({
 
             <button
               type="submit"
-              className="flex items-center justify-center p-2 pl-4 h-full"
+              className="flex items-center justify-center p-2 pl-4 h-full disabled:opacity-70"
               style={{
                 backgroundColor: "#E1348B",
                 borderTopRightRadius: "10px",
                 borderBottomRightRadius: "10px",
               }}
+              disabled={message === ""}
             >
               <MdSend style={{ transform: "rotate(-20deg)" }} />
             </button>
