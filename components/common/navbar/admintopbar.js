@@ -9,9 +9,10 @@ import { BsPersonCircle } from "react-icons/bs";
 import { signOut } from "firebase/auth";
 import { auth } from '@/config/firebaseconfig';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 export default function AdminTopbar({ toggleSideBar , heading }) {
-  const [user, setUser] = useState({});
+  const { user,userProfile } = useAuthContext()
   const [showSideBar, setShowSideBar] = useState(false);
 
   function toogleSideBar() {
@@ -47,7 +48,7 @@ export default function AdminTopbar({ toggleSideBar , heading }) {
         </div>
         <div className="flex items-center justify-between">
           <div
-            className="md:flex items-center gap-x-2  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
+            className="md:flex items-center gap-x-2 max-[905px]:hidden  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
             style={{ border: "1px solid #728095" }}
           >
             <AiOutlineSearch className="text-white text-2xl ml-4" />

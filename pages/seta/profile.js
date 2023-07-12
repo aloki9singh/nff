@@ -11,6 +11,7 @@ import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
+import { useMediaQuery } from "react-responsive";
 
 function MentorProfile() {
   const router = useRouter();
@@ -33,7 +34,10 @@ function MentorProfile() {
   const [schWebsite, setSchWebsite] = useState("");
   const [insta, setInsta] = useState("");
   const [facebook, setFacebook] = useState("");
-
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -75,25 +79,47 @@ function MentorProfile() {
       console.log(e);
     }
   };
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
   return (
     <>
-      <div className="md:h-screen h-full  text-base bg-[#15161B]">
+      <div className="md:h-screen h-full text-base">
         <div className="flex">
-          <div className="lg:col-span-1 hidden lg:grid">
-            {" "}
-            <Schoolsidebar pathname={router.pathname} />
-          </div>
+          {/* First Sidebar - Visible on Mobile */}
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <Schoolsidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <Schoolsidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
           <div
-            style={{ background: "#2E3036" }}
-            className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
+            className="col-span-5 bg-[#2E3036] w-full lg:col-span-4 "
           >
-            <SchoolTopbar heading={"Profile"} />
+            <div className=" md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <SchoolTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
+            </div>
             <hr className="hidden lg:block opacity-50 mt-3 " />
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-12">
               {/* text */}
 
-              <div className="   h-[200px] w-full  bg-gradient-to-r from-[#A145CD] to-[#E1348B] flex items-center justify-between">
+              <div className="h-[200px] w-full  bg-gradient-to-r from-[#A145CD] to-[#E1348B] flex items-center justify-between">
                 <div>
                   <div className="flex items-center">
                     <Image
@@ -125,7 +151,7 @@ function MentorProfile() {
                             </div> */}
             </div>
             {/* /// */}
-            <div className="  md:flex  gap-5 m-5  md:mt-0 text-white">
+            <div className="md:flex  gap-5 m-5  md:mt-0 text-white">
               <form
                 method="post"
                 action="#"
