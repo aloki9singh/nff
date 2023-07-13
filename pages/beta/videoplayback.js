@@ -1,23 +1,22 @@
-
-import Image from 'next/image';
-import laptop from '@/public/pagesgraphics/student/videoplayback/Group 11.svg';
-import { IoIosArrowForward } from 'react-icons/io';
-import { AiFillLock } from 'react-icons/ai';
+import Image from "next/image";
+import laptop from "@/public/pagesgraphics/student/videoplayback/Group 11.svg";
+import { IoIosArrowForward } from "react-icons/io";
+import { AiFillLock } from "react-icons/ai";
 import {
   CircularProgressbar,
   CircularProgressbarWithChildren,
   buildStyles,
-} from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { db } from '@/config/firebaseconfig';
-import { collection, query, where, getDocs, getDoc } from 'firebase/firestore';
-import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import CourseVideoPlayer from '@/components/student/courses/videoplayer';
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { db } from "@/config/firebaseconfig";
+import { collection, query, where, getDocs, getDoc, updateDoc, doc, arrayUnion } from "firebase/firestore";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import CourseVideoPlayer from "@/components/student/courses/videoplayer";
 import { useMediaQuery } from "react-responsive";
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import { useAuthContext } from '@/lib/context/AuthContext';
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -37,29 +36,7 @@ export default function Videos() {
   const [SideBarState, sendSideBarState] = useState(false);
 
   const router = useRouter();
-  const title = router.query.title ? router.query.title : 'Basics of C++';
-  const fetchCourseData = async () => {
-    try {
-      const courseRef = collection(db, 'courses');
-      const q = query(courseRef, where('title', '==', title));
-      const courseDocs = await getDocs(q);
-      if (courseDocs.empty) {
-        setCourse(null);
-      } else {
-        var courseData;
-        courseDocs.forEach((doc) => {
-          courseData = doc.data();
-        });
-        console.log(courseData);
-        // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
-        setModules(courseData.modules);
-        setCourse(courseData);
-      }
-    } catch (error) {
-      console.error('Error fetching course data:', error);
-      setCourse(null);
-    }
-  };
+  const title = router.query.title ? router.query.title : "Basics of C++";
 
   const startVideoStream = (videoUrl) => {
     console.log(modules[0].video);
@@ -67,11 +44,33 @@ export default function Videos() {
   };
 
   useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        const courseRef = collection(db, "courses");
+        const q = query(courseRef, where("title", "==", title));
+        const courseDocs = await getDocs(q);
+        if (courseDocs.empty) {
+          setCourse(null);
+        } else {
+          var courseData;
+          courseDocs.forEach((doc) => {
+            courseData = doc.data();
+          });
+          console.log(courseData);
+          // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
+          setModules(courseData.modules);
+          setCourse(courseData);
+        }
+      } catch (error) {
+        console.error("Error fetching course data:", error);
+        setCourse(null);
+      }
+    };
+
     if (title) {
       fetchCourseData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [title]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -86,32 +85,42 @@ export default function Videos() {
 
   //securedroute
   const { user, userProfile } = useAuthContext();
-  if(!user||!userProfile){
-    router.push("/")
+  if (!user || !userProfile) {
+    router.push("/");
   }
-  
-   if(!user||!userProfile){
-    return null
-   }
+
+
+  async function joinCourseChat(){
+    const groupRef = doc(db, "chatGroups", course.id);
+
+    await updateDoc(doc(collection(db,"chatGroups"),course.id),{
+      members: arrayUnion(user.uid)
+    })
+
+    alert("You have joined the course")
+  }
+
+
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
-        {isMobileScreen && (
-            <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-            >
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
 
-          {/* Second Sidebar - Visible on Desktop */}
-          {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+      {/* Second Sidebar - Visible on Desktop */}
+      {!isMobileScreen && (
+        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
 
       <div className="w-full  min-h-screen md:h-[100vh] md:rounded-l-3xl bg-[#2D2E35]">
-        <Dashboardnav heading="My Course" toggleSideBar={toggleSideBar}/>
+        <Dashboardnav heading="My Course" toggleSideBar={toggleSideBar} />
         <div className="flex  bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
           <div className="flex ">
             <Image
@@ -126,24 +135,25 @@ export default function Videos() {
               <p className="opacity-30">{course?.desc}</p>
             </div>
           </div>
+          <button className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md" onClick={joinCourseChat} >Join</button>
           <div className="w-28 md:w-14 md:mr-8 flex items-center justify-center ">
             <CircularProgressbarWithChildren
               value={100}
               styles={buildStyles({
-                pathColor: '#ADADB0',
-                trailColor: 'gray',
-                strokeLinecap: 'round',
+                pathColor: "#ADADB0",
+                trailColor: "gray",
+                strokeLinecap: "round",
               })}
             >
               <CircularProgressbar
                 value={75}
                 text={`${75}%`}
                 styles={buildStyles({
-                  pathColor: '#E1348B',
-                  trailColor: 'transparent',
-                  strokeLinecap: 'round',
-                  textColor: '#fff',
-                  textSize: '20px',
+                  pathColor: "#E1348B",
+                  trailColor: "transparent",
+                  strokeLinecap: "round",
+                  textColor: "#fff",
+                  textSize: "20px",
                 })}
               />
             </CircularProgressbarWithChildren>
@@ -157,21 +167,21 @@ export default function Videos() {
               <div
                 className="md:mt-0 mt-10"
                 style={{
-                  width: '356px',
+                  width: "356px",
 
-                  fontFamily: 'Inter',
-                  fontStyle: 'normal',
+                  fontFamily: "Inter",
+                  fontStyle: "normal",
                   fontWeight: 500,
-                  fontSize: '24px',
+                  fontSize: "24px",
 
-                  color: '#FFFFFF',
+                  color: "#FFFFFF",
                 }}
               >
                 {currentModule}
               </div>
               <div className="text-white">
                 <h1 className="text-2xl">{course?.title}</h1>
-                <p className="opacity-50  pb-2">{course.desc}</p>
+                <p className="opacity-50  pb-2">{course?.desc}</p>
               </div>
             </div>
 
@@ -188,7 +198,7 @@ export default function Videos() {
                         className="justify-between hover:bg-[#585d67] bg-[#373A41] p-3 border-b border-slate-500 flex h-fit cursor-pointer"
                         onClick={() => startVideoStream(m.video)}
                       >
-                        <p>{m.title}</p>
+                        <p>{m.name}</p>
                         <IoIosArrowForward></IoIosArrowForward>
                       </div>
                     </div>

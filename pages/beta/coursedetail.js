@@ -108,7 +108,12 @@ const Afterlogin = () => {
                       {course.desc}
                     </div>
                     <Link
-                      href={`/course-video?title=${course.title}`}
+                      href={{
+                        pathname: '/beta/videoplayback',
+                        query: {
+                          title: course.title
+                        }
+                      }}
                       type="button"
                       className=" md:text-base mt-10 mb-10 lg:text-base xl:text-lg rounded-xl bg-[#A145CD] px-4 py-2 font-semibold"
                     >
