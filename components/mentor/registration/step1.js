@@ -38,6 +38,17 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
       alert("Field Empty");
     } else {
       e.preventDefault();
+     
+      const selectedDate = new Date(input.dob);
+    const currentDate = new Date();
+    const diffYears = Math.floor((currentDate - selectedDate) / (1000 * 60 * 60 * 24 * 365));
+    // console.log(diffYears);
+    if (diffYears < 15) {
+    
+      alert("Invalid date of birth.");
+      return;
+    }
+     
       localStorage.setItem("userdata", JSON.stringify(input));
 
       // router.push("/MentorStep2");
