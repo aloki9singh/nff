@@ -30,16 +30,27 @@ const Aboutus = () => {
     });
   };
 
-  const style = `
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
+  const style = document.createElement('style');
+
+  // Set the CSS code as the inner text of the <style> element
+  style.innerText = `
+  .hide-scrollbar {
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
   }
 
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .hide-scrollbar::-webkit-scrollbar {
+    width: 0.5rem; /* Adjust as needed */
+    background-color: transparent;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
   }
 `;
+
+  document.head.appendChild(style);
 
   const [query, setQuery] = useState('');
   const [email, setEmail] = useState('');
@@ -71,8 +82,8 @@ const Aboutus = () => {
 
           <div className='w-[80%] h-auto'>
             <div className='relative'>
-              <div className='w-full h-56 ml-10 md:ml-44 mt-11 p-5 rounded-md bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex items-center text-center text-white font-semibold overflow-auto'>
-                <span className='text-sm md:text-sm lg:text-xl'>
+              <div className='w-full h-56 ml-10 md:ml-44 mt-11 px- p-10 rounded-md bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex items-center  text-white  '>
+                <span className='text-sm md:text-sm lg:text-2xl lg:px-11  '>
                   ConsultUs provides consulting services that help business
                   owners and leaders build a more valuable business. We worked
                   with their founder to build a professional, modern site that
@@ -82,9 +93,9 @@ const Aboutus = () => {
               </div>
             </div>
             <div class='relative'>
-              <div class='absolute w-full  h-56  ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden'>
+              <div class='absolute w-full  h-40  lg:h-56  ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden'>
                 <img
-                  src="/componentsgraphics/common/aboutpage/about.png"
+                  src='/componentsgraphics/common/aboutpage/about.png'
                   alt='random image'
                   class='w-full object-center px-8 shadow-md transform -translate-y-16'
                 />
@@ -93,17 +104,17 @@ const Aboutus = () => {
           </div>
         </div>
         <div className='w-[80%] h-auto  mt-56 ml-10 md:ml-44 mb-10'>
-          <span className='text-xl  font-extrabold ml-4 text-white'>Our</span>
-          <span className='text-xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
+          <span className='text-4xl  font-extrabold ml-4 text-white'>Our</span>
+          <span className='text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
             mission
           </span>
-          <div className='w-64 h-1 bg-white mt-2 ml-4' />
+          <div className=' w-72 h-1 bg-white mt-2 ml-4' />
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>
               unmatched service
             </div>
-            <div className='text-white md:ml-5'>
+            <div className='text-white md:ml-20 md:pl-1'>
               Support corporate clients and financial investors with their
               growth strategy and international development.
             </div>
@@ -111,7 +122,7 @@ const Aboutus = () => {
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Specific</div>
-            <div className='text-white ml-0 md:ml-24 md:pl-4'>
+            <div className='text-white ml-0 md:ml-24 md:pl-20 '>
               ConsultUs core expertise lies in the ability to support our
               clients in understanding, analysing and executing commercial and
               investment strategies in specific markets.
@@ -120,7 +131,7 @@ const Aboutus = () => {
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Experience</div>
-            <div className='text-white ml-0 md:ml-20 md:pl-2'>
+            <div className='text-white ml-0 md:ml-36 md:pl-2'>
               Experience in working with and assisting a wide range of clients
               from international corporations to small/medium-sized businesses,
               from large corporate debt providers to mid-market private equity
@@ -130,7 +141,7 @@ const Aboutus = () => {
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Technology</div>
-            <div className='text-white md:ml-20'>
+            <div className='text-white md:ml-36'>
               The best combination of technology and people.
             </div>
           </div>
@@ -138,15 +149,17 @@ const Aboutus = () => {
 
         {/* Our mission */}
         <div className='w-[80%] h-auto mt-10 ml-10 md:ml-44 mb-10'>
-          <span className='text-xl font-extrabold ml-4 text-white'>Our</span>
-          <span className='text-xl font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
+          <span className='text-2xl lg:4xl font-extrabold ml-4 text-white'>
+            Our
+          </span>
+          <span className='text-2xl lg:4xl font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
             Commitment
           </span>
-          <div className='w-64 h-1 bg-white mt-2 ml-4' />
+          <div className='w-72 h-1 bg-white mt-2 ml-4' />
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Ethics</div>
-            <div className='text-white ml-0 md:ml-32'>
+            <div className='text-white ml-0 md:ml-48'>
               Ethics for ConsultUs means ensuring our customers the
               confidentiality and uniqueness of the service they are provided. A
               client must be reassured by the fact that the service provided to
@@ -157,7 +170,7 @@ const Aboutus = () => {
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Quality</div>
-            <div className='text-white ml-0 md:ml-28 md:pl-1'>
+            <div className='text-white ml-0 md:ml-44 md:pl-1'>
               ConsultUs is committed to ensuring that our advice and
               recommendations are based on the best combination of methods,
               information research, creativity and internal quality assurance.
@@ -166,7 +179,7 @@ const Aboutus = () => {
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Continuity</div>
-            <div className='text-white ml-0 md:ml-24 mr-2'>
+            <div className='text-white ml-0 md:ml-36 md:pl-2'>
               ConsultUs considers that the continuity of relations on the long
               term with its clients is the guarantee of the satisfaction of
               these and the quality of the services provided.
@@ -177,15 +190,15 @@ const Aboutus = () => {
         {/* ourteam section */}
         {/* Our Team */}
         <div class='container mx-auto w-screen flex-grow px-0 px-4 py-4 sm:py-16'>
-          <h1 class='mx-auto mb-4  px-2 text-center text-3xl uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
+          <h1 class='mx-auto mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl'>
             our successful team
           </h1>
           <div class='mx-auto w-auto  md:w-auto'>
             <div class='container my-8'>
               <div
                 ref={scrollContainerRef}
-                class='flex-no-wrap scrolling-touch mb-8 flex items-start  overflow-x-hidden'>
-                <div class='mr-8  max-w-fit flex-none rounded-lg   md:pb-4'>
+                class='flex-no-wrap scrolling-touch mb-8 flex items-start   overflow-x-auto  hide-scrollbar'>
+                <div class='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
                   <a href='#' class='space-y-4'>
                     <div class='aspect-w-max aspect-h-ma'>
                       <img
@@ -194,10 +207,13 @@ const Aboutus = () => {
                         alt=''
                       />
                     </div>
+                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                      Jenny Wilson
+                    </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
                   <a href='#' class='space-y-4'>
                     <div class='aspect-w-max aspect-h-ma'>
                       <img
@@ -206,10 +222,13 @@ const Aboutus = () => {
                         alt=''
                       />
                     </div>
+                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                      Eleanor Pena
+                    </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
                   <a href='#' class='space-y-4'>
                     <div class='aspect-w-max aspect-h-ma'>
                       <img
@@ -218,10 +237,13 @@ const Aboutus = () => {
                         alt=''
                       />
                     </div>
+                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                      Robert Fox{' '}
+                    </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
                   <a href='#' class='space-y-4'>
                     <div class='aspect-w-max aspect-h-ma'>
                       <img
@@ -230,10 +252,13 @@ const Aboutus = () => {
                         alt=''
                       />
                     </div>
+                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                      Robert Fox{' '}
+                    </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                <div class='mr-8 max-w-fit flex-none  md:pb-4'>
                   <a href='#' class='space-y-4'>
                     <div class='aspect-w-max aspect-h-ma'>
                       <img
@@ -242,10 +267,13 @@ const Aboutus = () => {
                         alt=''
                       />
                     </div>
+                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                      Eleanor Pena
+                    </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none rounded-lg border  md:pb-4'>
+                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
                   <a href='#' class='space-y-4'>
                     <div class='aspect-w-max aspect-h-ma'>
                       <img
@@ -254,117 +282,102 @@ const Aboutus = () => {
                         alt=''
                       />
                     </div>
+                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                      Eleanor Pena
+                    </h2>
                   </a>
                 </div>
-              </div>
-              <div className='flex  item-center justify-center  gap-4  items-center mx-auto max-w-screen-md px-4'>
-                <button
-                  onClick={scrollBackward}
-                  className='p-2 rounded-full bg-white shadow-md hover:shadow-lg focus:outline-none'>
-                  <BsChevronLeft size={24} />
-                </button>
-                <button
-                  onClick={scrollForward}
-                  className='p-2 rounded-full bg-white shadow-md hover:shadow-lg focus:outline-none'>
-                  <BsChevronRight size={24} color='black' />
-                </button>
               </div>
             </div>
           </div>
 
-          <div className='w-[80%] h-auto ml-10 md:ml-44'>
-            <section className=''>
-              <div className='py-8 lg:py-16 px-4 mx-auto max-w-screen-md'>
-                <h2 className='mb-4 text-4xl tracking-tight font-extrabold text-center text-[#E1348B]'>
-                  Contact Us
-                </h2>
-                <p className='mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl'>
-                  We’d love to hear from you. Please fill out this form.
-                </p>
-                <form action='#' className='space-y-8'>
-                  <div>
-                    <label
-                      htmlFor='email'
-                      className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                      Name
-                    </label>
-                    <input
-                      type='email'
-                      id='email'
-                      class='shadow-sm bg-transparent border-0 border-b border-gray-300 text-gray-900 text-sm rounded-none focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-transparent dark:border-0 dark:border-b dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
-                      placeholder='name@flowbite.com'
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor='subject'
-                      className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                      Email
-                    </label>
-                    <input
-                      type='text'
-                      id='subject'
-                      class='shadow-sm bg-transparent border-0 border-b border-gray-300 text-gray-900 text-sm rounded-none focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-transparent dark:border-0 dark:border-b dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
-                      placeholder='Let us know how we can help you'
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor='subject'
-                      className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                      Phone
-                    </label>
-                    <input
-                      type='text'
-                      id='subject'
-                      class='shadow-sm bg-transparent border-0 border-b border-gray-300 text-gray-900 text-sm rounded-none focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-transparent dark:border-0 dark:border-b dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
-                      placeholder='Let us know how we can help you'
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor='subject'
-                      className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                      Title
-                    </label>
-                    <input
-                      type='text'
-                      id='subject'
-                      class='shadow-sm bg-transparent border-0 border-b border-gray-300 text-gray-900 text-sm rounded-none focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-transparent dark:border-0 dark:border-b dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
-                      placeholder='Let us know how we can help you'
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor='subject'
-                      className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                      Subject
-                    </label>
-                    <input
-                      type='text'
-                      id='subject'
-                      class='shadow-sm bg-transparent border-0 border-b border-gray-300 text-gray-900 text-sm rounded-none focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-transparent dark:border-0 dark:border-b dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
-                      placeholder='Let us know how we can help you'
-                      required
-                    />
-                  </div>
-
-                  <div className='flex justify-center items-center'>
-                    <button
-                      type='submit'
-                      className='py-3 px-5  text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'>
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
+          <div className='w-full mx-auto px-4 py-8 md:px-8 lg:px-16 xl:px-20'>
+            <section className='max-w-screen-md mx-auto'>
+              <h2 className='mb-4 text-3xl md:text-4xl lg:text-5xl tracking-tight font-extrabold text-center bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
+                Get in touch
+              </h2>
+              <p className='mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 md:text-xl'>
+                We’d love to hear from you. Please fill out this form.
+              </p>
+              <form className='space-y-6'>
+                <div className='flex flex-col'>
+                  <label
+                    htmlFor='name'
+                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                    Name
+                  </label>
+                  <input
+                    type='text'
+                    id='name'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    placeholder='Your Name'
+                    required
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label
+                    htmlFor='email'
+                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                    Email
+                  </label>
+                  <input
+                    type='email'
+                    id='email'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    placeholder='Your Email'
+                    required
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label
+                    htmlFor='phone'
+                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                    Phone
+                  </label>
+                  <input
+                    type='text'
+                    id='phone'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    placeholder='Your Phone Number'
+                    required
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label
+                    htmlFor='title'
+                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                    Title
+                  </label>
+                  <input
+                    type='text'
+                    id='title'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    placeholder='Your Title'
+                    required
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label
+                    htmlFor='subject'
+                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                    Subject
+                  </label>
+                  <input
+                    type='text'
+                    id='subject'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    placeholder='Your Subject'
+                    required
+                  />
+                </div>
+                <div className='flex justify-center items-center'>
+                  <button
+                    type='submit'
+                    className='py-3 px-8 md:px-48 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'>
+                    Submit
+                  </button>
+                </div>
+              </form>
             </section>
           </div>
         </div>
