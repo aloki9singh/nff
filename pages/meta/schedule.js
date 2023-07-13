@@ -62,7 +62,7 @@ function Schedule() {
             </div>
           )}
 
-          <div className="flex-grow w-full">
+          <div className="flex-grow w-[94%] mr-0 md:mr-[-9rem]">
             <div className="flex md:pt-0 pt-2 justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Schedule" toggleSideBar={toggleSideBar} />
             </div>

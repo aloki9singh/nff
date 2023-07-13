@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const CourseCard = ({ title, desc, level, sessions, language, category }) => {
 	const router = useRouter()
 	return (
-		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518]   py-[10px] px-4 md:p-5">
+		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] h-[17rem] w-[18rem]  py-[10px] px-4 md:p-5">
 			<div className="flex justify-between ">
 				<div>
 					<Image

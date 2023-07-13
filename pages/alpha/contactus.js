@@ -140,7 +140,7 @@ const Contact = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="text-white bg-[#AA2769] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] focus:ring-blue-800 my-8"
+                        className="text-white bg-[#AA2769] focus:ring-4 focus:outline-none font-sm rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] focus:ring-blue-800 my-8"
                       >
                         Submit
                       </button>

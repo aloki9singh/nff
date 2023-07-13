@@ -33,7 +33,7 @@ export default function StudyMaterialCard() {
     : material;
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full">
       <div className="w-fit p-8">
         <select
           className="bg-[#A145CD] text-white rounded-xl px-12"
@@ -50,7 +50,7 @@ export default function StudyMaterialCard() {
         </select>
       </div>
 
-      <div className="flex bg-[#373A41] rounded-[40px] p-12 justify-center md:grid md:grid-cols-3 flex-wrap flex-col-3 gap-10 m-5 mt-1 ">
+      <div className="flex bg-[#373A41] sm:w-[24rem] md:w-full rounded-[40px] p-12 justify-center md:grid md:grid-cols-3 flex-wrap flex-col-3 gap-10 m-5 mt-1 ">
         {filteredMaterial.map((study) => (
           <Link key={study.id} href="studyMaterial">
             <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D] w-80 md:gap-6">
