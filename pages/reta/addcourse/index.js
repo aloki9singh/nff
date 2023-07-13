@@ -26,7 +26,7 @@ import * as yup from "yup";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
-const categories = ["Web Development", "App Development", "UI/UX", "Others"];
+const categories = ["Web Development", "App Development", "UI/UX", "Programming Language", "Others"];
 
 
 const planCourseSchema = yup.object({
@@ -415,7 +415,7 @@ const CourseContentForm = ({ onSubmit }) => {
 
   const addModuleHandler = (e) => {
     e.preventDefault();
-    setModules([...modules, { name, desc }]);
+    setModules([...modules, { id: modules.length + 1, name, desc }]);
     setName("");
     setDesc("");
   };
@@ -593,7 +593,7 @@ const CreateCourse = () => {
 
     await createCourse(courseDetails);
 
-    router.push("reta/addcourse/congrats");
+    router.push("addcourse/congrats");
   };
 
   return (

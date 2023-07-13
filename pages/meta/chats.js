@@ -8,6 +8,8 @@ import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import ChatSidebar from "../../components/common/chat/chatsidebar";
 import Chatpart from "../../components/common/chat/chatting";
 import User from "../../components/common/chat/user";
+import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
+
 
 import withAuth from "@/lib/context/mentorcontext";
 
@@ -152,14 +154,15 @@ const Chat = () => {
 
   return (
     <>
+      {chats.length === 0 && <NoJoinedCoursesModal />}
+
       <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
