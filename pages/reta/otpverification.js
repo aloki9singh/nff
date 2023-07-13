@@ -156,7 +156,7 @@ const Otpverification = () => {
           <div className="text-sm">
             {" "}
             Did not receive the code?{" "}
-            <span className="cursor-pointer" onClick={sendOTPAgain}>
+            <span className="cursor-pointer font-semibold" onClick={sendOTPAgain}>
               Send again.
             </span>{" "}
           </div>

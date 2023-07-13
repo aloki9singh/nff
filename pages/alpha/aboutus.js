@@ -84,7 +84,7 @@ const Aboutus = () => {
             <div class='relative'>
               <div class='absolute w-full  h-56  ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden'>
                 <img
-                  src='https://source.unsplash.com/random/350x350'
+                  src="/componentsgraphics/common/aboutpage/about.png"
                   alt='random image'
                   class='w-full object-center px-8 shadow-md transform -translate-y-16'
                 />
