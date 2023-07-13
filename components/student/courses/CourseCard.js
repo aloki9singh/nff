@@ -2,16 +2,16 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 
-const CourseCard = ({ title, desc, level, sessions, language, category }) => {
+const CourseCard = ({ title, desc, level, sessions, language, category, banner }) => {
 	const router = useRouter()
 	return (
 		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518]   py-[10px] px-4 md:p-5">
 			<div className="flex justify-between ">
 				<div>
 					<Image
-						src="/pagesgraphics/student/coursedescription/laptop.svg"
-						width={60}
-						height={60}
+						src={banner || "/pagesgraphics/student/coursedescription/laptop.svg"}
+						width={100}
+						height={100}
 						alt="f"
 						className="md:w-[88px] md:h-[88px]"
 					></Image>
@@ -37,7 +37,7 @@ const CourseCard = ({ title, desc, level, sessions, language, category }) => {
 						onClick={() => {
 							router.push({
 								pathname: '/beta/coursedetail',
-								query: { title: title},
+								query: { title: title },
 							});
 						}}
 						type="button"

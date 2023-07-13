@@ -2,14 +2,18 @@
 import Image from "next/image";
 import React from "react";
 
-function Avatar({ src, alt, height, width }) {
+function Avatar({ src, alt, height = 40, width = 40 }) {
   return (
     <Image
       src={src}
       alt={alt}
-      width={width || 40}
-      height={height || 40}
-      className="inline-block relative object-cover object-center !rounded-full aspect-square "
+      width={100}
+      height={100}
+      style={{
+        width: width,
+        height: height
+      }}
+      className="inline-block relative object-cover object-center !rounded-full aspect-square"
     />
   );
 }

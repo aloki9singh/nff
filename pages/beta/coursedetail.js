@@ -14,7 +14,7 @@ import Dashboardnav from "@/components/common/navbar/dashboardnav";
 const Afterlogin = () => {
   const [user, setUser] = useState({});
   const router = useRouter();
-  const {title } = router.query;
+  const { title } = router.query;
   const [course, setCourse] = useState(null);
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -117,7 +117,7 @@ const Afterlogin = () => {
                   </div>
                   <div className="flex-1 justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">
                     <Image
-                      src="/pagesgraphics/student/coursedescription/laptop.svg"
+                      src={course.banner || "/pagesgraphics/student/coursedescription/laptop.svg"}
                       width={250}
                       height={250}
                       alt="laptop"
@@ -161,7 +161,7 @@ const Afterlogin = () => {
                           {course.modules.map((ele) => (
                             <Accordion
                               key={ele.id}
-                              title={ele.title}
+                              title={ele.name}
                               desc={ele.desc}
                               course={course.title}
                             />
@@ -187,7 +187,7 @@ const Afterlogin = () => {
                     <div className=" bg-[#2D2E35] font-raleway px-5 py-2  mx-2  xl:mr-8   rounded-[20px] mt-10 ">
                       <h1 className="pt-8 text-base">COURSE DESCRIPTION</h1>
                       <div className="leading-[28px] text-sm pt-5">
-                        {course.details}
+                        {course.desc}
                         <h2 className="text-base pt-8 pb-6">COURSE DETAILS</h2>
                         <p className="flex my-3 font-medium">
                           <span>
@@ -211,7 +211,7 @@ const Afterlogin = () => {
                               className="mr-4"
                             />
                           </span>
-                          {course.sessions} Sessions
+                          {course.lectures} Sessions
                         </p>
                         <p className="flex my-3">
                           <span>
