@@ -246,7 +246,7 @@ const Chat = ({
 
   return (
     <div
-      className="flex flex-1 flex-col justify-between w-full relative"
+      className="md:flex flex-1 flex-col justify-between w-full relative hidden"
       style={{ color: "white" }}
     >
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">
@@ -341,7 +341,7 @@ const Chat = ({
             <div
               className="rounded-[5px]"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
-            // onClick={}
+              // onClick={}
             >
               {/* */}
               <label

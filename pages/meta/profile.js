@@ -72,7 +72,7 @@ function MentorProfile() {
             </div>
           )}
 
-          <div className="flex-grow">
+          <div className="flex-grow w-[10rem]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Profile" toggleSideBar={toggleSideBar} />
             </div>
@@ -200,16 +200,16 @@ function MentorProfile() {
                 </div>
               </div>
               <div className="">
-                <div className="bg-[#373A41] rounded-[20px] pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
-                  <div className=" text-center text-lg font-bold text-gray-500">
+                <div className="bg-[#373A41] rounded-[20px] text-xl justify-center pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
+                  <div className=" text-center text-xl font-bold text-gray-500">
                     Educator highlights
                   </div>
-                  <div className="text-center pt-2 pb-4 font-extralight">
+                  <div className="text-center text-lg pt-2 pb-4 font-extralight">
                     Worked at{" "}
                     {userData.details &&
                       userData.details?.experience[0]?.companyname}
                   </div>
-                  <div className="flex gap-2 text-sm font-medium">
+                  <div className="flex gap-2 text-lg font-medium">
                     {" "}
                     <span>
                       <Image
@@ -221,7 +221,7 @@ function MentorProfile() {
                       />{" "}
                     </span>{" "}
                     Studied at{" "}
-                    <span className="text-[#E1348B] font-black">
+                    <span className="text-[#E1348B] text-lg font-black">
                       {userData.details &&
                         userData.details?.qualification[0]?.universityname}
                       (
@@ -230,14 +230,14 @@ function MentorProfile() {
                       )
                     </span>
                   </div>
-                  <p className="ml-7  font-extralight text-sm opacity-75">
+                  <p className="ml-7  font-extralight text-[0.9rem] opacity-75">
                     Latest Result: Ashwin - 100%ile Thrice in Maths in JEE Main
                     2021 , AIR 409 (JEE Advanced) through my Evolve Batch. Many
                     Students Scoring more than 99.5%ile in Maths. Producing
                     IITians every year.
                   </p>
 
-                  <div className="flex gap-2 text-sm font-medium">
+                  <div className="flex gap-2 text-[0.9rem] font-medium">
                     {" "}
                     <span>
                       <Image
@@ -254,7 +254,7 @@ function MentorProfile() {
                       {userData.details?.address}
                     </span>
                   </div>
-                  <p className="ml-7  font-extralight text-sm opacity-75">
+                  <p className="ml-7  font-extralight text-[0.9rem] opacity-75">
                     {userData.details &&
                       userData.details?.experience[0]?.jobtitle}{" "}
                     since{" "}
@@ -273,7 +273,7 @@ function MentorProfile() {
                         className="w-5"
                       />{" "}
                     </span>{" "}
-                    <span className="text-sm font-medium">
+                    <span className="text-[0.9rem] font-medium">
                       {" "}
                       Knows{" "}
                       {userData.details &&

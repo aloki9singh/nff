@@ -104,7 +104,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
 
   return (
     <div
-      className="flex flex-col  rounded-[1rem] gap-6"
+      className="flex flex-col w-full rounded-[1rem] gap-6"
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
       <div
@@ -112,7 +112,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
         style={{ backgroundColor: " #505057" }}
       >
         <input
-          className="p-2 rounded-lg outline-none"
+          className="p-2 w-full rounded-lg outline-none"
           name="search"
           id=""
           placeholder="Search"
