@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import Todo from './todo';
-import { db } from '@/config/firebaseconfig';
+import { useEffect, useState } from "react";
+import Todo from "./todo";
+import { db } from "@/config/firebaseconfig";
 import {
   collection,
   query,
@@ -9,32 +9,32 @@ import {
   doc,
   addDoc,
   deleteDoc,
-} from 'firebase/firestore';
-import { Popover, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+} from "firebase/firestore";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 
-export default function TaskList() {
+export default function TaskList({ userId }) {
   const [todos, setTodos] = useState([]);
 
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
   // Create todo
   const createTask = async (ev) => {
     ev.preventDefault(ev);
-    if (input === '') {
-      alert('Task Invalid');
+    if (input === "") {
+      alert("Task Invalid");
       return;
     }
-    await addDoc(collection(db, 'taskList'), {
+    await addDoc(collection(db, `taskList/${userId}/tasks`), {
       text: input,
       completed: false,
     });
-    setInput('');
+    setInput("");
   };
 
   // Read todo from firebase
   useEffect(() => {
-    const q = query(collection(db, 'taskList'));
+    const q = query(collection(db, `taskList/${userId}/tasks`));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let taskListArr = [];
@@ -44,19 +44,19 @@ export default function TaskList() {
       setTodos(taskListArr);
     });
     return () => unsubscribe();
-  }, []);
+  }, [userId]);
 
   // Update todo in firebase
   const toggleComplete = async (todo) => {
     // console.log(index);
-    await updateDoc(doc(db, 'taskList', todo.id), {
+    await updateDoc(doc(db, `taskList/${userId}/tasks`, todo.id), {
       completed: !todo.completed,
     });
   };
 
   // Delete todo
   const deleteTodo = async (id) => {
-    await deleteDoc(doc(db, 'taskList', id));
+    await deleteDoc(doc(db, `taskList/${userId}/tasks`, id));
   };
 
   return (
@@ -71,7 +71,7 @@ export default function TaskList() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6 rounded-full text-pink-600 bg-gray-200"
+              className="w-6 h-6 rounded-full text-pink bg-gray-200"
             >
               <path
                 strokeLinecap="round"
@@ -125,15 +125,26 @@ export default function TaskList() {
           </Transition>
         </Popover>
       </div>
-      <ul className="text-white my-2 py-2 items-center pr-5 ">
-        {todos?.slice(0, 5).map((todo, index) => (
-          <Todo
-            key={index}
-            todo={todo}
-            toggleComplete={()=>toggleComplete(index)}
-            deleteTodo={deleteTodo}
-          />
-        ))}
+      <ul
+        className="text-white my-2 py-2 items-center pr-5 "
+        style={{ minHeight: "210px" }}
+      >
+        {todos.length==0 ? (
+          <div className="text-gray-500 flex justify-center items-center h-[200px]">
+           No tasks created yet   
+          </div>
+        ) : (
+          todos
+            ?.slice(0, 5)
+            .map((todo, index) => (
+              <Todo
+                key={index}
+                todo={todo}
+                toggleComplete={() => toggleComplete(index)}
+                deleteTodo={deleteTodo}
+              />
+            ))
+        )}
       </ul>
     </div>
   );

@@ -66,10 +66,10 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
               <div className="] h-12 w-12 flex justify-center items-center">
                 <Popover className="">
                   <Popover.Button className="outline-none ">
-                    {user && userProfile.photoURL ? (
+                    {user && userProfile && userProfile.photoURL ? (
                       <Image
                         // src={user.photoURL}
-                        src={user && userProfile.photoURL}
+                        src={user && userProfile && userProfile.photoURL}
                         alt="proImg"
                         height={48}
                         width={48}
@@ -96,7 +96,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                         <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
                           <Link href="/meta/profile">
                             <p className="p-2">
-                              {user && userProfile.photoURL ? (
+                              {user && userProfile && userProfile.photoURL ? (
                                 <div className="flex gap-2 items-center">
                                   <Image
                                     src={user && userProfile.photoURL}
@@ -107,7 +107,9 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                                   />
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">
-                                      {(user && userProfile.displayName) ||
+                                      {(user &&
+                                        userProfile &&
+                                        userProfile.displayName) ||
                                         user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
@@ -123,9 +125,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                                   />
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">Guest</p>
-                                    <p className="text-[10px] -mt-2">
-                                    
-                                    </p>
+                                    <p className="text-[10px] -mt-2"></p>
                                   </div>
                                 </div>
                               )}

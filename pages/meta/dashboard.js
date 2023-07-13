@@ -15,12 +15,16 @@ import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
 import withAuth from "@/lib/context/mentorcontext";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 function MentorDashboard() {
   const [count, setCount] = useState(1);
   const [verified, setVerified] = useState();
+  //set Below two for marked homework
+  const [marked, setMarked] = useState(0);
+  const [toBeMarked, setToBeMarked] = useState(0);
   let [searchstate, setsearchstate] = useState("");
-
+  const { user, userProfile } = useAuthContext();
   const router = useRouter();
   let searchfun = (e) => {
     setsearchstate(e.target.value);
@@ -77,9 +81,11 @@ function MentorDashboard() {
 
           <div className="flex-grow md:rounded-tl-[40px]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-              <MentorTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
+              <MentorTopbar
+                heading="My Progress"
+                toggleSideBar={toggleSideBar}
+              />
             </div>
-
 
             <div className="md:flex gap-5 m-5 md:mb-0 md:mt-0 ">
               <div className="md:w-5/6 ">
@@ -94,13 +100,13 @@ function MentorDashboard() {
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
                           <div>To be Marked</div>
                           <div className="border border-[#A145CD] rounded-[5px] px-1">
-                            29
+                            {toBeMarked}
                           </div>
                         </div>
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
                           <div>Marked</div>
                           <div className="border border-[#A145CD] rounded-[5px] px-1">
-                            2
+                            {marked}
                           </div>
                         </div>
                       </div>
@@ -121,7 +127,7 @@ function MentorDashboard() {
                   <Calender />
                 </div>
                 <div className="bg-[#373A41] rounded-[20px] md:pb-5 pb-7 mt-[-20px] md:[mt-0]">
-                  <TaskList />
+                  <TaskList userId={userProfile && userProfile.uid} />
                 </div>
               </div>
             </div>
