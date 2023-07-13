@@ -62,11 +62,10 @@ function Schedule() {
             </div>
           )}
 
-          <div className="flex-grow w-full">
+          <div className="flex-grow w-[94%] mr-0 md:mr-[-9rem]">
             <div className="flex md:pt-0 pt-2 justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <MentorTopbar heading="Schedule" toggleSideBar={toggleSideBar} />
             </div>
-
 
             <div className="md:flex gap-5 md:m-5 m-1 md:mt-0 mt-20 md:space-y-0 space-y-7 md:mb-5 mb-0 ">
               <div className="md:w-4/6 " onClick={() => setCount(1)}>
