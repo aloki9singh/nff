@@ -30,7 +30,6 @@ function LoginComp() {
   const [role, setRole] = useState("student");
   const { loading, setLoading } = useContext(Loading);
   const login = async (email, pass) => {
-   
     signInWithEmailAndPassword(auth, email, pass)
       .then((userCredential) => {
         setLoading(true);
@@ -48,7 +47,7 @@ function LoginComp() {
 
           // console.log("value", value.user.role);
           if (role == "admin" || role == "mentor" || role == "school") {
-            alert(`You are logged as different type of user.`);
+            alert(`You are not registered as a student.`);
           } else {
             if (res.success == false) {
               const val1 = await callVerificationEmailApi(datah);

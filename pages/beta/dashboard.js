@@ -1,4 +1,5 @@
-// coursecards should be made considering from the neatskills code
+// if course buyed setActive to true
+// after buying courses needed to pass leaderboarddata, workpercentage
 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import ActiveComp from "@/components/student/assignments/activecomp";
 import InActiveComp from "@/components/student/assignments/inactivecomp";
 
 import Calendar from "@/components/common/calendar/student/calendar";
-import LeaderBoardMentor from "@/components/student/dashboard/leaderboard";
+import LeaderBoardStudent from "@/components/student/dashboard/leaderboard";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { onAuthStateChanged } from "firebase/auth";
@@ -20,21 +21,19 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 const Studentdashboard = () => {
   const [active, setActive] = useState(false);
+  
   const [verified, setVerified] = useState(false);
-  // var [user, setUser] = useState({});
+  const [leaderboarddata, setLeaderboardData] = useState([]);
   const { user, userProfile } = useAuthContext();
   // console.log(userProfile)
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  var percentage = "0%";
-  active ? (percentage = "75%") : (percentage = "0%"); //Control the percentage of the user here
+  const [workpercentage,setworkpercentage]=useState(0)
+
   const tip =
     "Learning that is spread out over time drastically increases knowledge retention.";
-  // var user = "Guest";
-  // active ? (user = 'Rahul') : 'Guest';
-
   const router = useRouter();
   useEffect(() => {
     if (isMediumScreen) {
@@ -65,7 +64,7 @@ const Studentdashboard = () => {
 
   return (
     <>
-      <div className="md:h-screen h-full text-base md:w-full">
+      <div className="md:h-screen h-full text-base md:w-full ">
         <div className="flex">
           {isMobileScreen && (
             <div
@@ -83,9 +82,9 @@ const Studentdashboard = () => {
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
-          <div className="flex-grow md:bg-[#2E3036] bg-[#141518]">
+          <div className="flex-grow bg-[#2E3036]  md:rounded-l-[50px]">
             {/* <StudentTopbar heading={"My Progress"} /> */}
-            <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+            <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]  md:rounded-l-[50px] ">
               <Dashboardnav
                 heading="My Progress"
                 toggleSideBar={toggleSideBar}
@@ -94,21 +93,21 @@ const Studentdashboard = () => {
             {/* <hr className="hidden lg:block opacity-50 mt-3 "></hr> */}
 
             {/* /// */}
-            <div className="md:flex gap-2 m-3 md:mt-0 mt-14 text-white">
-              <div className="md:space-y-5 w-full ">
+            <div className="md:flex gap-2 m-3 md:mt-0  text-white">
+              <div className="md:space-y-5 w-full  ">
                 <Advertisement />
                 {/* //welcomebar */}
-                <Progress percentage={percentage} user={user.displayName} />
+                <Progress percentage={`${workpercentage} %`} user={user.displayName} />
 
                 <div className="overflow-y-auto">
-                  {active ? <ActiveComp /> : <InActiveComp />}
+                  {!active ? <ActiveComp /> : <InActiveComp />}
                 </div>
               </div>
               <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 ">
                 <div>
                   <Calendar />
                 </div>
-                {/* //Daily tip section open */}
+                {/* //Daily tip section open , this needs to be changed */}
                 <div className=" md:block  p-6 rounded-2xl bg-[#FFB8DC]">
                   <div>
                     <div className="text-white  border border-black w-20 text-center  bg-[#A145CD] py-1 mb-1 text-xs">
@@ -123,7 +122,7 @@ const Studentdashboard = () => {
                 {/* //Daily tip section close */}
                 <div>
                   {" "}
-                  <LeaderBoardMentor />
+                  <LeaderBoardStudent LeaderBoardData={leaderboarddata} />
                 </div>
               </div>
             </div>

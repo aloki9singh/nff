@@ -5,7 +5,7 @@ import HomeworkProgress from './progress';
 
 const ActiveComp = () => {
   return (
-    <div className="md:w-[700px] h-full">
+    <div className=" h-full">
       <div>
         <MyCourses />
       </div>

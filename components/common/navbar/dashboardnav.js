@@ -21,10 +21,10 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
   const { user,userProfile } = useAuthContext()
 
   return (  
-    <nav className="border-b-[1px] border-[#728095] px-0 py-2 w-full mt-2">
+    <nav className="border-b-[1px] border-[#728095] px-0 md:py-2 w-full  md:bg-[#2E3036] bg-[#141518] py-5  md:rounded-tl-[50px] ">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
-          <p className="text-white font-Inter text-2xl flex justify-start">
+          <p className="text-white font-Inter text-2xl flex justify-start md:pl-5 ml-[-15px]">
             {heading}
           </p>
           {/* <RxHamburgerMenu className="text-white text-3xl block md:hidden" /> */}
@@ -43,7 +43,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
           </div>
           
           {user &&  (
-            <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10">
+            <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
               <IoMdNotificationsOutline className="text-3xl mr-2" />
               <div className="] h-12 w-12 flex justify-center items-center">
                 <Popover className="">
@@ -154,7 +154,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
             className=" md:hidden block mr-[-30px] "
             onClick={() => toggleSideBar()}
           >
-            <RxHamburgerMenu className="text-white text-3xl block md:hidden" />
+            <RxHamburgerMenu className="text-white text-3xl block md:hidden mr-2" />
           </div>
         </div>
       </div>

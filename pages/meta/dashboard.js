@@ -94,7 +94,7 @@ function MentorDashboard() {
                 <div className="md:flex gap-5">
                   <div className="md:w-1/2">
                     <div>
-                      <LeaderBoardMentor />
+                      <LeaderBoardMentor data={[]} />
                       <div className="bg-[#373A41] rounded-[20px] p-5 px-8 my-5 space-y-2 text-white mt-[-12px]">
                         <div className="py-2 text-center">Homework Status</div>
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
