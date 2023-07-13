@@ -26,9 +26,9 @@ const CourseCard = ({ title, desc, level, sessions, language, category }) => {
 				<h1 className="text-slate-400 text-[6px] md:text-sm font-medium">
 					COURSE
 				</h1>
-				<h1 className="text-white text-sm md:text-2xl font-medium">{title}</h1>
+				<h1 className="text-white text-sm md:text-lg font-medium">{title}</h1>
 				<div className="text-left pr-3">
-					<p className="text-white text-[9px] md:text-sm mb-1 md:mb-6">
+					<p className="text-white text-sm md:text-[0.7rem] mb-1 md:mb-6">
 						{desc}
 					</p>
 				</div>
@@ -41,7 +41,7 @@ const CourseCard = ({ title, desc, level, sessions, language, category }) => {
 							});
 						}}
 						type="button"
-						className="md:w-[111px] md:h-[39px] max-[768px]:mt-[-13px] text-white border border-pink text-xs md:text-sm"
+						className="md:w-[111px] md:h-[39px] max-[768px]:mt-[-15px] md:mt-[-1rem] text-white border border-pink text-xs md:text-sm"
 					>
 						Explore
 					</button>

@@ -12,6 +12,9 @@ import StudentProfileCirProgress from "@/components/student/profile/StudentProfi
 import { useMediaQuery } from "react-responsive";
 import { useAuthContext } from "@/lib/context/AuthContext";
 
+
+//returning some backed error
+
 function StudentProfile() {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });

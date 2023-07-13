@@ -67,7 +67,6 @@ function Schedule() {
               <MentorTopbar heading="Schedule" toggleSideBar={toggleSideBar} />
             </div>
 
-
             <div className="md:flex gap-5 md:m-5 m-1 md:mt-0 mt-20 md:space-y-0 space-y-7 md:mb-5 mb-0 ">
               <div className="md:w-4/6 " onClick={() => setCount(1)}>
                 <Mainbodymentor />
