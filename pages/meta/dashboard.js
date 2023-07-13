@@ -20,6 +20,9 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 function MentorDashboard() {
   const [count, setCount] = useState(1);
   const [verified, setVerified] = useState();
+  //set Below two for marked homework
+  const [marked, setMarked] = useState(0);
+  const [toBeMarked, setToBeMarked] = useState(0);
   let [searchstate, setsearchstate] = useState("");
   const { user, userProfile } = useAuthContext();
   const router = useRouter();
@@ -97,13 +100,13 @@ function MentorDashboard() {
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
                           <div>To be Marked</div>
                           <div className="border border-[#A145CD] rounded-[5px] px-1">
-                            29
+                            {toBeMarked}
                           </div>
                         </div>
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
                           <div>Marked</div>
                           <div className="border border-[#A145CD] rounded-[5px] px-1">
-                            2
+                            {marked}
                           </div>
                         </div>
                       </div>

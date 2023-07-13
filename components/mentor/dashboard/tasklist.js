@@ -129,7 +129,7 @@ export default function TaskList({ userId }) {
         className="text-white my-2 py-2 items-center pr-5 "
         style={{ minHeight: "210px" }}
       >
-        {todos ? (
+        {todos.length==0 ? (
           <div className="text-gray-500 flex justify-center items-center h-[200px]">
            No tasks created yet   
           </div>
