@@ -151,7 +151,7 @@ const Afterlogin = () => {
                                   height={30}
                                   className="mr-4"
                                 />
-                                {learn.point}
+                                {learn}
                               </p>
                             </li>
                           ))}
@@ -183,8 +183,7 @@ const Afterlogin = () => {
                       <div className="md:w-[80%] w-[90%]  mx-auto">
                         <h1 className="text-xl">Requirement</h1>
                         <div className="border rounded-xl border-[#728095] my-4 px-4 py-6">
-                          Access to a computer running Windows. Mac OS X or
-                          Linux
+                          {course.QA.requirements}
                         </div>
                       </div>
                     </div>
@@ -291,7 +290,7 @@ const Afterlogin = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="font-raleway  bg-[#2D2E35] px-5 py-2 mt-4 md:mt-4 mx-2 xl:mr-8  xl:mt-8 rounded-[20px] pb-6">
+                    <div className="font-raleway mb-4 bg-[#2D2E35] px-5 py-2 mt-4 md:mt-4 mx-2 xl:mr-8  xl:mt-8 rounded-[20px] pb-6">
                       <div className="my-8">
                         <h2 className="text-base">Students Reviews</h2>
                         <p className="leading-[29px] text-sm font-normal my-4">
@@ -302,7 +301,7 @@ const Afterlogin = () => {
                         </p>
                       </div>
                       <div>
-                        <div className="flex pt-2">
+                        {/* <div className="flex pt-2">
                           <Image
                             src="/pagesgraphics/student/coursedescription/Male.svg"
                             width={40}
@@ -318,7 +317,7 @@ const Afterlogin = () => {
                               Student
                             </p>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -328,7 +327,7 @@ const Afterlogin = () => {
               <p className="text-center m-5">Loading...</p>
             )}
 
-            <div className=" flex flex-col items-center justify-between text-xl md:text-2xl bg-[#373A41] pb-5 ">
+            {/* <div className=" flex flex-col items-center justify-between text-xl md:text-2xl bg-[#373A41] pb-5 ">
               <div className="text-center pt-20">
                 Explore Similar Courses
               </div>
@@ -417,7 +416,7 @@ const Afterlogin = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
