@@ -1,54 +1,89 @@
 //verifed by Shreyas Sahoo
-import React from 'react';
+import React, {useState} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import styles from '../../../styles/componentsstyling/auth/auth.module.css';
-
 import NeatS from '/public/componentsgraphics/schools/login/neatskillslogosample.svg'
 import neatSvg from '/public/componentsgraphics/schools/login/Group 2.svg';//space in name
-
 import { AiOutlineMail } from 'react-icons/ai';
 import { FaLock } from 'react-icons/fa';
-
-import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-
-import { auth } from '@/config/firebaseconfig';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword  } from 'firebase/auth';
+import { auth, db } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
-import { callEmailApi, callVerificationEmailApiforseta } from '@/lib/api';
+import { callSignupApi } from '@/lib/exportablefunctions';
 // import { adminAuth } from '../config/firebaseAdminConfig';
+import { collection, getDoc, getDocs, doc, query, where } from 'firebase/firestore';
 
-function SchoolLoginComp() {
+function SchoolSignupComp() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [schooluniqueID, setSchooluniqueID] = useState('');
+    const [role, setRole] = useState("school");
 
-    const login = async (email, password, schooluniqueID) => {
+    const signup = async (email, password) => {
         try {
-            const userCredential = await signInWithEmailAndPassword(
-                auth,
-                email,
-                password,
-            );
-            // await sendEmailVerification(userCredential.user);
-            const displayName = email;
-            const data = { displayName, email };
-            const user = userCredential.user;
-            console.log(user);
-            await callVerificationEmailApiforseta(data);
-            alert('verification email sent!!');
+            const usersCollection = collection(db, "allusers");
+            const q = query(usersCollection, where("email", "==", email));
+            const querySnapshot = await getDocs(q);
+            //If user is previously logged in
+            if (!querySnapshot.empty) {
+                console.log("User is already signed up earlier")
+                const documentSnapshot = querySnapshot.docs[0];
+                const documentData = documentSnapshot.data();
 
-            await callEmailApi(data);
-            console.log(userCredential);
+                // For checking the user in School Profile
+                const setaDetails = collection(db, "schoolProfile");
+                const userRef = doc(setaDetails,documentData.uid);
+                const userSnapshot = await getDoc(userRef);
+                
+                // if user has already filled the signup form and submitted it
+                if (userSnapshot.exists()) {
+                    console.log("User has submitted the form")
+                    alert("You have already submitted the form");
+                } else {
+                    // if not submitted
+                    console.log("User has not submitted the form")
+                    const userCredential = await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password,
+                    );
+                    const user = userCredential.user;
+                    router.push({
+                        pathname: '/seta/register',
+                        query: { uid: user.uid }
+                    })
+                }
+            } 
+            else {
+                // If user does not exist then signup and routing
+                console.log("New user")
+                const userCredential = await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password,
+                );
+                const user = userCredential.user;
+                const schoolData = {
+                    uid: user.uid,
+                    displayName: user.email.substring(0, 5),
+                    email: user.email,
+                    role: role,
+                    photoURL: user.photoURL,
+                };
+                await callSignupApi(schoolData);
+                router.push({
+                    pathname: '/seta/register',
+                    query: { uid: user.uid }
+                })
+            }
         } catch (error) {
             console.log(error);
             alert(error);
         }
     };
 
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         if (!email) {
             alert('Please enter your email');
             return;
@@ -57,13 +92,9 @@ function SchoolLoginComp() {
             alert('Please enter your Password');
             return;
         }
-        // if (!schooluniqueID) {
-        //     alert('Please enter your School Unique ID');
-        //     return;
-        // }
         e.preventDefault();
         try {
-            await login(email, password);
+            await signup(email, password);
         } catch (error) {
             console.log(error);
         }
@@ -88,10 +119,9 @@ function SchoolLoginComp() {
                 <div className="md:w-[90%] xl:w-[80%] sd:w-[80%] sd:h-[95%] lg:h-[85%] md:h-[80%] text-center bg-signupForm px-[10%] flex flex-col justify-center items-center gap-1 rounded-[30px]">
                     <h3 className="xl:text-[30px] lg:text-[25px] md:text-[22px] sd:text-[18px] text-white">School {''}
                         <span style={{ color: '#E1348B' }}>
-                            <Link href={''}> Log In </Link>
+                            <Link href={''}>Sign Up </Link>
                         </span>
                     </h3>
-
                     <div className="xl:w-[90%] md:w-full h-auto mt-6">
                         <form className="w-full h-auto flex flex-col gap-4 md:mt-1 ">
                             <div className="w-full h-auto flex flex-col text-white text-left">
@@ -146,45 +176,13 @@ function SchoolLoginComp() {
                                     />
                                 </div>
                             </div>
-                            {/* <div className="w-full h-auto flex flex-col text-white text-left">
-                                <span className="xl:text-[16px] lg:text-[14px] sd:text-[12px]">School Unique Id</span>
-                                <div style={{
-                                    "background-image":
-                                        "linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)",
-                                }} className="w-full h-auto flex  xl:p-4  md:p-3 sd:p-2 items-center justify-start md:rounded-xl sd:rounded-md overflow-hidden">
-                                    <AiOutlineMail
-                                        size={'2.5vh'}
-                                        style={{
-                                            color: 'green',
-                                            width: '30px',
-                                            marginLeft: '2vh',
-                                            marginRight: '2vh',
-                                        }}
-                                    />
-                                    <input
-                                        className="bg-inherit text-white w-full outline-none md:text-[12px] lg:text-[14px] sd:text-[12px]"
-                                        type="text"
-                                        placeholder="Enter school code"
-                                        onChange={(e) => setSchooluniqueID(e.target.value)}
-                                        value={schooluniqueID}
-                                        required
-                                        autoComplete="off"
-                                    />
-                                </div>
-                            </div> */}
 
                             <button
                                 className='w-full xl:p-4 md:p-3 sd:p-2 md:text-[12px] lg:text-[16px] sd:text-[14px] bg-pink text-white rounded-lg'
-                                onClick={handleLogin}
+                                onClick={handleSignup}
                             >
-                                Login
+                                Sign Up
                             </button>
-
-                            <div className="text-white opacity-60 xl:text-[15px] lg:text-[13px] md:text-[12px] sd:text-[10px]">
-                                <h5>
-                                    Forgot your Password?
-                                </h5>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -193,4 +191,6 @@ function SchoolLoginComp() {
     );
 }
 
-export default SchoolLoginComp;
+export default SchoolSignupComp;
+
+

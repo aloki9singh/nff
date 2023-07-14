@@ -17,7 +17,7 @@ import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useStep } from "@/hooks/useStep";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -66,7 +66,10 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <input
             type="text"
             placeholder="Enter coures title"
-            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
+
+            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+              }`}
+
             style={{ background: "#333333" }}
             {...register("title", { required: true })}
           />
@@ -83,7 +86,10 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             placeholder="Enter course description"
-            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? 'border-red-500 border border-solid' : ''} `}
+
+            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? "border-red-500 border border-solid" : ""
+              } `}
+
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
           />
@@ -102,7 +108,9 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <div className='flex flex-col flex-1'>
             <input
               type="number"
-              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+                }`}
+
               style={{ background: "#333333" }}
               placeholder="Enter duration in weeks"
               {...register("duration", { required: true, valueAsNumber: true })}
@@ -121,7 +129,10 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             <input
               type="number"
               placeholder="Enter total lectures"
-              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
+
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+                }`}
+
               style={{ background: "#333333" }}
               {...register("lectures", { required: true, valueAsNumber: true })}
             />
@@ -247,21 +258,41 @@ const PlanCourseForm = ({ state, onSubmit }) => {
 
 
 const targetStudentsSchema = yup.object().shape({
-  learn: yup.string().required("This field is required"),
+
+  // learn: yup.string().required("This field is required"),
+  learn: yup.array().of(yup.object({
+    value: yup.string().required("This field is required")
+  })),
+
   requirements: yup.string().required("This field is required"),
   target: yup.string().required("This field is required"),
 });
 
 const TargetStudentsForm = ({ state, onSubmit }) => {
+
   const {
     register,
     formState: { errors },
     handleSubmit,
+    control
   } = useForm({
-    defaultValues: state,
+
+    defaultValues: {
+      ...state,
+      learn: state?.learn?.map((l) => ({ value: l.value })) || [{ value: "" }],
+    },
     resolver: yupResolver(targetStudentsSchema),
   });
 
+  const { fields, append, remove } = useFieldArray({
+    name: "learn",
+    control,
+  })
+
+  console.log("errors", errors)
+
+
+>>>>>>> 7f83282db080a70c12c6b62cc4a1da1a80580621
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Header currentStep={2} />
@@ -271,6 +302,7 @@ const TargetStudentsForm = ({ state, onSubmit }) => {
           What will the students learn from your course ?
         </label>
         <div className="flex flex-col">
+<<<<<<< HEAD
           <textarea
             type="text"
             placeholder="Example, Will learn basics of UI/UX "
@@ -281,6 +313,31 @@ const TargetStudentsForm = ({ state, onSubmit }) => {
           <p className="text-red-500 text-sm" >
             {errors.learn?.message}
           </p>
+=======
+          <ul className="flex flex-col gap-3">
+            {fields.map((field, index) => (
+              <li
+                className="flex flex-row items-center max-w-4xl gap-3"
+                key={field.id}
+              >
+                <input
+                  type="text"
+                  className="text-white text-sm rounded-lg block p-4  bg-[#333333]  placeholder-[#5F6065] focus:outline-none flex-[2]"
+                  placeholder="Type here "
+                  {...register(`learn.${index}.value`)}
+                />
+                <button className="self-stretch px-3 rounded-md bg-gray-500 " onClick={() => {
+                  remove(index)
+                }} >Delete</button>
+              </li>
+            ))}
+          </ul>
+          <button type="button" onClick={() => {
+            append({ value: "" })
+          }} className="bg-primary text-white text-center mt-3 w-24 rounded-md py-2 " >Add</button>
+
+          <p className="text-red-500 text-sm">{errors.learn?.message}</p>
+>>>>>>> 7f83282db080a70c12c6b62cc4a1da1a80580621
         </div>
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
@@ -519,6 +576,9 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
 };
 
 const createCourse = async (courseDetails) => {
+
+  courseDetails.QA.learn = courseDetails.QA.learn.map((l) => l.value);
+
   const data = {
     ...courseDetails,
     createdAt: serverTimestamp(),
