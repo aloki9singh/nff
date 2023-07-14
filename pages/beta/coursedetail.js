@@ -132,14 +132,16 @@ const Afterlogin = () => {
                 </div>
                 <div className="rounded-tl-[30px] rounded-tr-[30px] md:rounded-tr-[0] bg-[#373A41] flex flex-col md:flex-row ">
                   <div className="flex-col md:w-3/5 text-base space-y-10">
-                    {course.learn ? (
+                          {console.log("herrlo", course)}
+                    {course.QA.learn ? (
                       <div className="w-[90%] md:w-[80%] mx-auto my-4 mt-10  bg-[#2D2E35] rounded-[30px] px-4 py-3">
                         <h1 className="text-2xl text-center my-6">
                           What you&apos;ll Learn
+
                         </h1>
 
                         <ul>
-                          {course.learn.map((learn) => (
+                          {course.QA.learn.map((learn) => (
                             <li key={course.id}>
                               <p className="flex my-6 text-sm">
                                 <Image
