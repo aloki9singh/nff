@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import AdminSidebar from '@/components/admin/sidebar/admin';
+import AdminSidebar from '@/components/common/sidebar/admin';
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
