@@ -38,7 +38,7 @@ export default function AdminTopbar({ toggleSideBar , heading }) {
   });
 
   return (
-    <nav className=" pl-2 py-2 w-full md:static fixed top-0 right-0 left-0 space-y-4 border-b-[1px]  bg-[#2D2E35]">
+    <nav className=" pl-2 py-2 w-full md:static fixed top-0 right-0 left-0 space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35]">
 
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
@@ -57,7 +57,7 @@ export default function AdminTopbar({ toggleSideBar , heading }) {
         </div>
         <div className="flex items-center justify-between">
           <div
-            className="md:flex items-center gap-x-2 max-[905px]:hidden  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden "
+            className="md:flex items-center gap-x-2 max-[905px]:hidden  md:mr-1 sm:mr-5 sm:py-2 rounded-lg h-[40px] hidden "
             style={{ border: "1px solid #728095" }}
           >
             <AiOutlineSearch className="text-white text-2xl ml-4" />
