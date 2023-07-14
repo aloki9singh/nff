@@ -1,73 +1,70 @@
-import React, { useState } from 'react';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { AiOutlineSearch } from 'react-icons/ai';
 import Link from 'next/link';
-import { BiBell } from 'react-icons/bi';
-import { BsPersonCircle } from 'react-icons/bs';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { useAuthContext } from '@/lib/context/AuthContext';
 import Image from 'next/image';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/config/firebaseconfig';
-import { Router, useRouter } from 'next/router';
 import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { useEffect, useState } from 'react';
+import { BsPersonCircle } from 'react-icons/bs';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/config/firebaseconfig';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
-const AdminTopbar = ({ heading, toggleSideBar }) => {
+export default function AdminTopbar({ toggleSideBar, heading }) {
+  const { user, userProfile } = useAuthContext();
+  const [showSideBar, setShowSideBar] = useState(false);
+
+  function toogleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
+
   let [searchstate, setsearchstate] = useState('');
   const [profileMenu, setProfileMenu] = useState(false);
   let searchfun = e => {
     setsearchstate(e.target.value);
   };
-  const router = useRouter();
-  const { user, userProfile } = useAuthContext();
-  console.log(userProfile);
+
+  useEffect(() => {
+    // const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    //   console.log(currentUser);
+    //   setUser(currentUser);
+    // });
+    // return () => {
+    //   unsubscribe();
+    // };
+  });
+
   return (
-    <>
-      <div className='flex justify-between lg:flex md:pl-5   pt-2 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518] md:rounded-tl-[40px]'>
-        <h1 className='text-white my-auto  ml-5 md:ml-0 font-600 md:text-2xl text-[19px]'>
-          {heading}
-        </h1>
-        <div className='mr-12 flex'>
-          <div className=' xl:w-96'>
-            <form className=' items-center hidden md:block '>
-              <label htmlFor='voice-search' className='sr-only'>
-                Search
-              </label>
-              <div className='relative w-full'>
-                <div className='flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none'>
-                  <svg
-                    className='w-5 h-5 text-gray-500 dark:text-gray-400'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                    xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      fillRule='evenodd'
-                      d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
-                      clipRule='evenodd'></path>
-                  </svg>
-                </div>
-                <input
-                  type='text'
-                  id='voice-search'
-                  className='bg-transparent  border border-gray-300 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  placeholder='Search...'
-                  required
-                  value={searchstate}
-                  onChange={searchfun}
-                />
-              </div>
-            </form>
+    <nav className=' pl-2 py-2 w-full md:static  fixed top-0 right-0 left-0 space-y-4 border-b-[1px] md:rounded-tl-[50px]  bg-[#1E1E1E]'>
+      <div className='container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full'>
+        <div className='flex justify-between items-center'>
+          <p className='text-white font-Inter text-2xl flex justify-start'>
+            {heading}
+          </p>
+        </div>
+        <div className='flex items-center justify-between'>
+          <div
+            className='md:flex items-center gap-x-2 max-[905px]:hidden  md:mr-1 sm:mr-5 sm:py-2 rounded-lg hidden '
+            style={{ border: '1px solid #728095' }}>
+            <AiOutlineSearch className='text-white text-2xl ml-4' />
+            <input
+              type='text'
+              placeholder='Search'
+              className='focus:outline-none focus:border-none border-none bg-inherit text-white'
+            />
           </div>
 
           {user && (
-            <div className='text-white max-[768px]:hidden flex items-center z-10'>
-              <BiBell className='text-white text-2xl my-auto mx-4'></BiBell>
-              <div className='] h-12 w-12 flex justify-center items-center'>
+            <div className='text-white flex items-center max-[768px]:hidden'>
+              <IoMdNotificationsOutline className='text-3xl mx-4' />
+              <div className='rounded-full h-12 w-12 flex justify-center  items-center'>
                 <Popover className=''>
-                  <Popover.Button className='outline-none '>
-                    {user && userProfile && userProfile.photoURL ? (
+                  <Popover.Button className='outline-none  pt-[6px]'>
+                    {user.photoURL ? (
                       <Image
-                        // src={user.photoURL}
-                        src={user && userProfile && userProfile.photoURL}
+                        src={user.photoURL}
                         alt='proImg'
                         height={48}
                         width={48}
@@ -91,26 +88,23 @@ const AdminTopbar = ({ heading, toggleSideBar }) => {
                     <Popover.Panel className='absolute translate-y-[43px] translate-x-[-163px] top-4'>
                       <div className='h-48 w-[200px] text-center p-3'>
                         <div className='bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative'>
-                          <Link href='/meta/profile'>
+                          <Link href='/beta/profile'>
                             <p className='p-2'>
-                              {user && userProfile && userProfile.photoURL ? (
+                              {user.photoURL ? (
                                 <div className='flex gap-2 items-center'>
                                   <Image
-                                    src={user && userProfile.photoURL}
+                                    src={user.photoURL}
                                     height='35'
                                     width='35'
                                     className='rounded-full h-6 w-6'
                                     alt='img'
                                   />
-                                  <div className='text-left'>
+                                  <div className='text-center'>
                                     <p className='text-[13px] mb-1'>
-                                      {(user &&
-                                        userProfile &&
-                                        userProfile.displayName) ||
-                                        user.displayName}
+                                      {user.displayName}
                                     </p>
                                     <p className='text-[10px] -mt-2'>
-                                      {`MENTOR`}
+                                      Class {userProfile.class}
                                     </p>
                                   </div>
                                 </div>
@@ -118,11 +112,13 @@ const AdminTopbar = ({ heading, toggleSideBar }) => {
                                 <div className='flex gap-1 items-center'>
                                   <BsPersonCircle
                                     onClick={() => setProfileMenu(!profileMenu)}
-                                    className='text-white text-4xl'
+                                    className='text-white text-4xl mr-2'
                                   />
                                   <div className='text-left'>
                                     <p className='text-[13px] mb-1'>Guest</p>
-                                    <p className='text-[10px] -mt-2'></p>
+                                    <p className='text-[10px] -mt-2'>
+                                      Class N/A
+                                    </p>
                                   </div>
                                 </div>
                               )}
@@ -130,7 +126,7 @@ const AdminTopbar = ({ heading, toggleSideBar }) => {
                           </Link>
 
                           <div className='text-[13px] p-2'>
-                            <Link href='/meta/profile'>
+                            <Link href='/beta/profile'>
                               <p className='mb-2'>Profile</p>
                             </Link>
                             <Link href='/invite'>
@@ -145,7 +141,7 @@ const AdminTopbar = ({ heading, toggleSideBar }) => {
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>
-                          <div className='text-[13px] p-2 cursor-pointer '>
+                          <div className='text-[13px] p-2'>
                             <p onClick={() => signOut(auth)}>Logout</p>
                           </div>
                         </div>
@@ -158,14 +154,14 @@ const AdminTopbar = ({ heading, toggleSideBar }) => {
           )}
           {!user && (
             <div className='hidden md:block ml-6'>
-              <Link href={'/meta/signup'}>
+              <Link href={'/signup'}>
                 <button
                   type='button'
                   className='inline-block justify-start items-start px-[20px] py-2.5 bg-[#404147] text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>
                   Signup
                 </button>
               </Link>
-              <Link href={'/beta/login'}>
+              <Link href={'/login'}>
                 <button
                   type='button'
                   className='inline-block justify-start items-start px-[20px] ml-6 mr-3 py-2.5 bg-pin text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>
@@ -181,8 +177,6 @@ const AdminTopbar = ({ heading, toggleSideBar }) => {
           </div>
         </div>
       </div>
-    </>
+    </nav>
   );
-};
-
-export default AdminTopbar;
+}
