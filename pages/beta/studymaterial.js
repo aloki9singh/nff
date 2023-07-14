@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { db } from "config/firebaseconfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
+import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 
 export default function StudyMaterial() {
   const router = useRouter();
@@ -16,6 +17,12 @@ export default function StudyMaterial() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+
+  
+  //yet to write logic to change course bougth or not ??
+  const [courseBuyed, setCourseBuyed] = useState(false);
+
+
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, "studyMaterial"));
@@ -48,6 +55,8 @@ export default function StudyMaterial() {
     sendSideBarState(showSideBar);
   }
   return (
+    <>
+    {!courseBuyed && <NoJoinedCoursesModal />}
     <div className="flex h-screen bg-[#2D2E35]">
       {isMobileScreen && (
         <div
@@ -163,5 +172,6 @@ export default function StudyMaterial() {
         </div>
       </div>
     </div>
+    </>
   );
 }
