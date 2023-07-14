@@ -9,7 +9,7 @@ const HomeworkProgress = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(db, "homeworkDummy"), orderBy("id"));
+      const q = query(collection(db, "homework"), orderBy("id"));
 
       const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs.map((doc) => ({
@@ -25,11 +25,11 @@ const HomeworkProgress = () => {
 
   return (
     <>
-      <div className="font-Inter mt-10">
-        <h1 className="text-white text-2xl font-semibold w-[90%] mx-auto">
+      <div className="font-Inter mt-5">
+        <h1 className="text-white text-2xl font-semibold w-[95%] mx-auto">
           Homework Progress
         </h1>
-        <div className="text-white w-[90%] mx-auto flex justify-around py-4">
+        <div className="text-white w-[95%] mx-auto flex justify-around py-4">
           <h1 className="flex-1 flex justify-center"></h1>
           <h1 className="flex-1 flex justify-center"></h1>
           <h1 className="flex-1 flex justify-center text-[#ffffffd6] text-sm">
@@ -54,7 +54,7 @@ const HomeworkProgress = () => {
           assignments.map((assignment) => (
             <div
               key={assignment.id}
-              className="rounded-md text-white w-76 mx-auto flex py-4 text-xl  hover:bg-[#A145CDA8] transition-all duration-300 ease-in-out cursor-pointer"
+              className="rounded-md text-white w-76 mx-auto flex py-4 text-xl  hover:bg-[#A145CDA8] transition-all duration-300 ease-in-out cursor-pointer scrillbar-hide overflow-scroll h-[250px]"
             >
               <h1 className=" flex-1 flex justify-center items-center text-sm  font-medium">
                 {assignment.id}

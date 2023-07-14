@@ -21,7 +21,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 const Studentdashboard = () => {
   const [active, setActive] = useState(false);
-  
+
   const [verified, setVerified] = useState(false);
   const [leaderboarddata, setLeaderboardData] = useState([]);
   const { user, userProfile } = useAuthContext();
@@ -30,7 +30,7 @@ const Studentdashboard = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const [workpercentage,setworkpercentage]=useState(0)
+  const [workpercentage, setworkpercentage] = useState(0);
 
   const tip =
     "Learning that is spread out over time drastically increases knowledge retention.";
@@ -97,10 +97,13 @@ const Studentdashboard = () => {
               <div className="md:space-y-5 w-full  ">
                 <Advertisement />
                 {/* //welcomebar */}
-                <Progress percentage={`${workpercentage} %`} user={user.displayName} />
+                <Progress
+                  percentage={`${workpercentage} %`}
+                  user={user.displayName}
+                />
 
                 <div className="overflow-y-auto">
-                  {!active ? <ActiveComp /> : <InActiveComp />}
+                  {active ? <ActiveComp percent={0} /> : <InActiveComp />}
                 </div>
               </div>
               <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 ">
