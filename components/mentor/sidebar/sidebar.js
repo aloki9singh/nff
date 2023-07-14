@@ -12,8 +12,8 @@ const MentorSidebar = ({ pathname }) => {
           <div className="">
             <Image
               src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg"
-              width= {169}
-height= {38}
+              width={169}
+              height={38}
               alt="logo"
               className="pb-2"
             />
