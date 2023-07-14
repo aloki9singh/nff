@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
-import NavbarSecond from '@/components/common/navbar/navbar2';
+import NavbarSecond from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/sidebar';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -82,7 +82,8 @@ const Aboutus = () => {
 
           <div className='w-[80%] h-auto'>
             <div className='relative'>
-              <div className='w-full h-56 ml-10 md:ml-44 mt-11 px- p-10 rounded-md bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex items-center  text-white  '>
+              <div className='w-full h-56 ml-10 md:ml-44 mt-11 px- p-10 rounded-lg bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex items-center  text-white  '
+              style={{clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)"}}>
                 <span className='text-sm md:text-sm lg:text-2xl lg:px-11  '>
                   ConsultUs provides consulting services that help business
                   owners and leaders build a more valuable business. We worked
@@ -92,12 +93,12 @@ const Aboutus = () => {
                 </span>
               </div>
             </div>
-            <div class='relative'>
-              <div class='absolute w-full  h-40  lg:h-56  ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden'>
+            <div className='relative'>
+              <div className='absolute w-full h-[21rem] ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden' style={{clipPath: "polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)"}}>
                 <img
                   src='/componentsgraphics/common/aboutpage/about.png'
                   alt='random image'
-                  class='w-full object-center px-8 shadow-md transform -translate-y-16'
+                  className='w-full object-center mt-12 px-8 shadow-md transform -translate-y-16 rounded-lg'
                 />
               </div>
             </div>
@@ -309,7 +310,7 @@ const Aboutus = () => {
                   <input
                     type='text'
                     id='name'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    className='py-2 px-3 align-start border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
                     placeholder='Your Name'
                     required
                   />
@@ -323,7 +324,7 @@ const Aboutus = () => {
                   <input
                     type='email'
                     id='email'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
                     placeholder='Your Email'
                     required
                   />
@@ -337,7 +338,7 @@ const Aboutus = () => {
                   <input
                     type='text'
                     id='phone'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
                     placeholder='Your Phone Number'
                     required
                   />
@@ -351,7 +352,7 @@ const Aboutus = () => {
                   <input
                     type='text'
                     id='title'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
                     placeholder='Your Title'
                     required
                   />
@@ -365,7 +366,7 @@ const Aboutus = () => {
                   <input
                     type='text'
                     id='subject'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-transparent dark:border-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-0'
                     placeholder='Your Subject'
                     required
                   />

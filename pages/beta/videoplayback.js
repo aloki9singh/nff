@@ -29,18 +29,20 @@ const VideoPlayer = ({ videoUrl }) => {
 export default function Videos() {
   const [course, setCourse] = useState([]);
   const [modules, setModules] = useState([]);
-  const [currentModule, setCurrentModule] = useState(null);
+  // const [currentModule, setCurrentModule] = useState(null);
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(null);
 
   const router = useRouter();
   const title = router.query.title ? router.query.title : "Basics of C++";
 
   const startVideoStream = (videoUrl) => {
     console.log(modules[0].video);
-    setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
+    // setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
+    setVideoUrl(videoUrl);
   };
 
   useEffect(() => {
@@ -60,6 +62,7 @@ export default function Videos() {
           // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
           setModules(courseData.modules);
           setCourse(courseData);
+          setVideoUrl(courseData.modules[0].video);
         }
       } catch (error) {
         console.error("Error fetching course data:", error);
@@ -90,16 +93,17 @@ export default function Videos() {
   }
 
 
-  async function joinCourseChat(){
+  async function joinCourseChat() {
     const groupRef = doc(db, "chatGroups", course.id);
 
-    await updateDoc(doc(collection(db,"chatGroups"),course.id),{
+    await updateDoc(doc(collection(db, "chatGroups"), course.id), {
       members: arrayUnion(user.uid)
     })
 
     alert("You have joined the course")
   }
 
+  console.log(course);
 
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
@@ -119,7 +123,7 @@ export default function Videos() {
         </div>
       )}
 
-      <div className="w-full  min-h-screen md:h-[100vh] md:rounded-l-3xl bg-[#2D2E35]">
+      <div className="w-full  min-h-screen  md:rounded-l-3xl bg-[#2D2E35]">
         <Dashboardnav heading="My Course" toggleSideBar={toggleSideBar} />
         <div className="flex  bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
           <div className="flex ">
@@ -163,8 +167,10 @@ export default function Videos() {
         <div className="flex mx-4 md:mx-8 my-6">
           <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
             <div className="md:col-span-5 col-span-7">
-              <CourseVideoPlayer url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
-              <div
+              {videoUrl ? <video src={videoUrl} controls className="max-h-[30rem]" /> : <p>
+                No video selected yet or video not found
+              </p>}
+              {/* <div
                 className="md:mt-0 mt-10"
                 style={{
                   width: "356px",
@@ -178,7 +184,7 @@ export default function Videos() {
                 }}
               >
                 {currentModule}
-              </div>
+              </div> */}
               <div className="text-white">
                 <h1 className="text-2xl">{course?.title}</h1>
                 <p className="opacity-50  pb-2">{course?.desc}</p>

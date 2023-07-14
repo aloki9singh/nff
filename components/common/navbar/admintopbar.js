@@ -37,12 +37,14 @@ export default function AdminTopbar({ toggleSideBar, heading }) {
   });
 
   return (
+
     <nav className=' pl-2 py-2 w-full md:static  fixed top-0 right-0 left-0 space-y-4 border-b-[1px] md:rounded-tl-[50px]  bg-[#1E1E1E]'>
       <div className='container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full'>
         <div className='flex justify-between items-center'>
           <p className='text-white font-Inter text-2xl flex justify-start'>
             {heading}
           </p>
+
         </div>
         <div className='flex items-center justify-between'>
           <div
