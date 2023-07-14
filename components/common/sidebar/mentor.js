@@ -35,7 +35,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
             </div>
             <div className="md:hidden block p-2 text-white">
               <Link href={"/meta/profile"}>
-                {user && userProfile.photoURL ? (
+                {user && userProfile && userProfile.photoURL ? (
                   <Image
                     src={userProfile.photoURL}
                     alt="proImg"
@@ -49,9 +49,18 @@ const MentorSidebar = ({ toggleSideBar }) => {
               </Link>
               <p className="pt-2">{user ? user.displayName : "Guest"}</p>
               <p className="text-gray-500 text-[12px] ">
-                {`MENTOR- ${userProfile
-                  ? userProfile?.displayName || user.displayName
-                  : "None"}`}
+                {`MENTOR- ${
+                  userProfile
+                    ? (userProfile.displayName || user.displayName).includes(
+                        "gmail"
+                      )
+                      ? (userProfile.displayName || user.displayName).slice(
+                          0,
+                          5
+                        )
+                      : userProfile.displayName || user.displayName
+                    : "None"
+                }`}
               </p>
             </div>
           </div>

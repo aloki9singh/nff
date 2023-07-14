@@ -2,7 +2,7 @@
 // This page ui is different from the figma design.
 
 import { IoClose } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   collection,
   addDoc,
@@ -20,35 +20,26 @@ import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
-const categories = [
-  "Web Development",
-  "App Development",
-  "UI/UX",
-  "Programming Language",
-  "Others",
-];
+const categories = ["Web Development", "App Development", "UI/UX", "Programming Language", "Others"];
 
-const planCourseSchema = yup
-  .object({
-    title: yup.string().required(),
-    desc: yup.string().required("Description cannot be empty"),
-    duration: yup.number().typeError("Duration must be a number").required(),
-    lectures: yup
-      .number()
-      .required()
-      .typeError("Lectures must be greater than 0"),
-    category: yup.string().required(),
-    language: yup.string().required(),
-    level: yup.string().required(),
-    // banner can by any
-    banner: yup.mixed().required(),
-  })
-  .required();
+
+const planCourseSchema = yup.object({
+  title: yup.string().required(),
+  desc: yup.string().required("Description cannot be empty"),
+  duration: yup.number().typeError("Duration must be a number").required(),
+  lectures: yup.number().required().typeError("Lectures must be greater than 0"),
+  category: yup.string().required(),
+  language: yup.string().required(),
+  level: yup.string().required(),
+  // banner can by any
+  banner: yup.mixed().required(),
+}).required();
 
 const PlanCourseForm = ({ state, onSubmit }) => {
   const {
@@ -75,13 +66,13 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <input
             type="text"
             placeholder="Enter coures title"
-            className={`   h-10 rounded-lg px-2 ${
-              errors.title ? "border border-red-500" : "border-none"
-            }`}
+            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
             style={{ background: "#333333" }}
             {...register("title", { required: true })}
           />
-          <p className="text-red-500 text-sm">{errors.title?.message}</p>
+          <p className="text-red-500 text-sm" >
+            {errors.title?.message}
+          </p>
         </div>
       </div>
       <div className="w-full  flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-2 px-4 mb-8">
@@ -92,13 +83,13 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             placeholder="Enter course description"
-            className={`  h-28 rounded-lg px-2 ${
-              errors.desc?.message ? "border-red-500 border border-solid" : ""
-            } `}
+            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? 'border-red-500 border border-solid' : ''} `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
           />
-          <p className="text-red-500 text-sm">{errors.desc?.message}</p>
+          <p className="text-red-500 text-sm" >
+            {errors.desc?.message}
+          </p>
         </div>
       </div>
 
@@ -108,41 +99,44 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <label className="w-40" htmlFor="">
             Duration
           </label>
-          <div className="flex flex-col flex-1">
+          <div className='flex flex-col flex-1'>
             <input
               type="number"
-              className={`   h-10 rounded-lg px-2 ${
-                errors.title ? "border border-red-500" : "border-none"
-              }`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
               style={{ background: "#333333" }}
               placeholder="Enter duration in weeks"
               {...register("duration", { required: true, valueAsNumber: true })}
             />
-            <p className="text-red-500 text-sm">{errors.duration?.message}</p>
+            <p className="text-red-500 text-sm" >
+              {errors.duration?.message}
+            </p>
           </div>
         </div>
         <div className="flex flex-1 items-center gap-x-2 px-4">
           <label className="w-40" htmlFor="">
             Lectures
           </label>
-          <div className="flex flex-col flex-1">
+          <div className='flex flex-col flex-1'>
+
             <input
               type="number"
               placeholder="Enter total lectures"
-              className={`   h-10 rounded-lg px-2 ${
-                errors.title ? "border border-red-500" : "border-none"
-              }`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"}`}
               style={{ background: "#333333" }}
               {...register("lectures", { required: true, valueAsNumber: true })}
             />
-            <p className="text-red-500 text-sm">{errors.lectures?.message}</p>
+            <p className="text-red-500 text-sm" >
+              {errors.lectures?.message}
+            </p>
           </div>
+
         </div>
       </div>
 
+
       {/* level */}
       <div className="w-full hidden relative  md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 pb-8">
-        <p className="text-red-500 text-sm absolute left-48 bottom-2">
+        <p className="text-red-500 text-sm absolute left-48 bottom-2" >
           {errors.level?.message}
         </p>
         <legend className="w-40" htmlFor="">
@@ -157,6 +151,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             className="mr-2"
           />
           <label>Beginner</label>
+
         </div>
         <div className="border-2 border-gray-600 px-3 py-1 rounded-lg">
           <input
@@ -240,61 +235,33 @@ const PlanCourseForm = ({ state, onSubmit }) => {
               />
             )}
           />
-          <p className="text-red-500 text-sm mt-5">{errors.banner?.message}</p>
+          <p className="text-red-500 text-sm mt-5" >
+            {errors.banner?.message}
+          </p>
         </div>
+
       </div>
-    </form>
+    </form >
   );
 };
 
+
 const targetStudentsSchema = yup.object().shape({
-  // learn: yup.string().required("This field is required"),
-  learn: yup.array().of(yup.string()).required("This field is required"),
+  learn: yup.string().required("This field is required"),
   requirements: yup.string().required("This field is required"),
   target: yup.string().required("This field is required"),
 });
 
-const TargetStudentsForm = ({ state, onSubmit}) => {
-
-
-  const [skill, setskill] = useState("");
-  const [id, setId] = useState("");
-  const [learn, setLearn] = useState(["state", "is not updating"]);
-  
-  const deleteItem = (itemToDelete) => {
-    // Create a new array excluding the item to delete
-    const updatedArray = learn.filter((item) => item !== itemToDelete);
-  
-    // Update the state with the new array
-    setLearn(updatedArray);
-  };
-  
-  const skillsArrwithoutBlank2 = learn.filter((e) => e !== "");
-  const skillsArrwithoutBlank = skillsArrwithoutBlank2.filter((e, i) => i !== id);
-
-
-  
-  
-
+const TargetStudentsForm = ({ state, onSubmit }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues:{
-      ...state,
-      learn:learn
-    },
+    defaultValues: state,
     resolver: yupResolver(targetStudentsSchema),
   });
-  
-  useEffect(() => {
-   handleSubmit();
-   console.log("leran arry", learn);
-  }, [learn])
 
-  
-  
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Header currentStep={2} />
@@ -304,51 +271,16 @@ const TargetStudentsForm = ({ state, onSubmit}) => {
           What will the students learn from your course ?
         </label>
         <div className="flex flex-col">
-          {/* <textarea
+          <textarea
             type="text"
             placeholder="Example, Will learn basics of UI/UX "
             className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
             style={{ background: "#333333" }}
-            {...register("learn.0", { required: true })}
-          /> */}
-
-          <div className="flex flex-wrap    justify-around align-middle mb-4 gap-2">
-            {skillsArrwithoutBlank.map((e, i) => (
-              <div
-                key={i}
-                className="border  border-[#823DA2] rounded-[10px] px-2 py-2 text-sm "
-              >
-                {e}{" "}
-                <span className="text-l ml-5 " onClick={() => deleteItem(e)}>
-                  x
-                </span>
-              </div>
-            ))}
-          </div>
-          <input
-            type="text"
-            className="text-white text-center text-sm rounded-lg block w-[50%] m-auto p-4  bg-[#333333]  placeholder-[#5F6065] focus:outline-none"
-            placeholder="Type here "
-            onKeyPress={(e) => {
-              if (
-                e.key === "Enter" ||
-                e.key === "Go" ||
-                e.key === "Up Next" ||
-                e.type === "click" ||
-                e.type == " "
-              ) {
-                setLearn([...learn, skill]);
-                {console.log(learn)}
-                setskill("");
-              }
-            }}
-            value={skill}
-            onChange={((e)=>setskill(e.target.value))}
-            // {...register("learn":skillsArr)}
-            id=""
+            {...register("learn", { required: true })}
           />
-
-          <p className="text-red-500 text-sm">{errors.learn?.message}</p>
+          <p className="text-red-500 text-sm" >
+            {errors.learn?.message}
+          </p>
         </div>
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
@@ -363,8 +295,11 @@ const TargetStudentsForm = ({ state, onSubmit}) => {
             style={{ background: "#333333" }}
             {...register("requirements", { required: true })}
           />
-          <p className="text-red-500 text-sm">{errors.requirements?.message}</p>
+          <p className="text-red-500 text-sm" >
+            {errors.requirements?.message}
+          </p>
         </div>
+
       </div>
       <div className="w-full flex flex-col mt-12  gap-y-2 md:gap-x-2 px-4 mb-8">
         <label className="" htmlFor="">
@@ -378,8 +313,11 @@ const TargetStudentsForm = ({ state, onSubmit}) => {
             style={{ background: "#333333" }}
             {...register("target", { required: true })}
           />
-          <p className="text-red-500 text-sm">{errors.target?.message}</p>
+          <p className="text-red-500 text-sm" >
+            {errors.target?.message}
+          </p>
         </div>
+
       </div>
     </form>
   );
@@ -559,20 +497,18 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
           key={index}
         >
           <h4
-            className={`text-xl ${
-              currentStep === index + 1
-                ? "text-primary"
-                : "text-primary/60 group-hover:text-primary/90"
-            }  font-semibold`}
+            className={`text-xl ${currentStep === index + 1
+              ? "text-primary"
+              : "text-primary/60 group-hover:text-primary/90"
+              }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
-            className={`${
-              currentStep === index + 1
-                ? "text-white"
-                : "text-white/60 group-hover:text-white/90"
-            }`}
+            className={`${currentStep === index + 1
+              ? "text-white"
+              : "text-white/60 group-hover:text-white/90"
+              }`}
           >
             {step}
           </p>
@@ -613,7 +549,7 @@ const createCourse = async (courseDetails) => {
       lastMessage: "",
       lastMessageTimestamp: serverTimestamp(),
       createdAt: serverTimestamp(),
-    });
+    })
   });
 
   return courseRef.id;
@@ -634,15 +570,15 @@ const CreateCourse = () => {
     goToNextStep();
   };
 
-  const onTargetStudentFormSubmit = (data, learn) => {
+  const onTargetStudentFormSubmit = (data) => {
     setFormData({
       ...formData,
-      QA: {
+      "Q&A": {
         ...data,
       },
     });
 
-    console.log("target students data", data, learn);
+    console.log("target students data", data);
     goToNextStep();
   };
 
@@ -718,7 +654,7 @@ const CreateCourse = () => {
 
           {currentStep === 2 && (
             <TargetStudentsForm
-              state={formData["QA"]}
+              state={formData["Q&A"]}
               onSubmit={onTargetStudentFormSubmit}
             />
           )}

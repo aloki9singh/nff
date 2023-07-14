@@ -124,7 +124,11 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                                     className="text-white text-4xl"
                                   />
                                   <div className="text-left">
-                                    <p className="text-[13px] mb-1">Guest</p>
+                                    <p className="text-[13px] mb-1">
+                                      {userProfile.displayName.includes("gmail")
+                                        ? userProfile.displayName.slice(0, 5)
+                                        : userProfile.displayName}
+                                    </p>
                                     <p className="text-[10px] -mt-2"></p>
                                   </div>
                                 </div>

@@ -9,16 +9,18 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FaLock } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../redux/actions/mentor.action";
-import { auth } from "../../../config/firebaseconfig";
+import { auth, db } from "../../../config/firebaseconfig";
 
 import { signUpMentor } from "@/lib/exportablefunctions";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const MentorSignupcomp = () => {
   var { loading, setLoading } = useContext(Loading);
   const [role, setRole] = useState("mentor");
+  const [userid, setuserid] = useState("");
   const router = useRouter();
   const [mentorLogData, setMentorLogData] = useState({
     email: "",
@@ -45,32 +47,57 @@ const MentorSignupcomp = () => {
       return;
     }
     try {
-      signUpMentor(mentorLogData, router, setLoading, role, setRole);
-    } 
-    catch (error) {
+      signUpMentor(
+        mentorLogData,
+        router,
+        setLoading,
+        role,
+        setRole,
+        setuserid,
+        userid
+      );
+    } catch (error) {
       alert(error.message);
       console.error(error);
     }
   };
   const handleResetPassword = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       if (!email) {
-        alert("Please enter your email !");
+        alert("Please enter your email!");
       } else {
-        await sendPasswordResetEmail(auth, email);
-        alert("Password reset email sent. Please check your inbox/spam.");
+        // Find user by email
+        const userQuery = query(
+          collection(db, "allusers"),
+          where("email", "==", email)
+        );
+        const userSnapshot = await getDocs(userQuery);
+
+        console.log(userSnapshot);
+        if (userSnapshot.empty) {
+          alert("User not found!");
+        } else {
+          // Get the user document
+          const user = userSnapshot.docs[0].data();
+
+          if (user.role !== "mentor") {
+            alert("You may be authorized for different role!");
+            router.push("/");
+          } else {
+            const value = await sendPasswordResetEmail(auth, email);
+            console.log(value);
+            alert("Password reset email sent. Please check your inbox/spam.");
+          }
+        }
       }
-      setLoading(false);
     } catch (error) {
-      if (error == "FirebaseError: Firebase: Error (auth/user-not-found).") {
-        alert("User not Found!");
-      } else {
-        alert("Error resetting password. Please try again.");
-        console.error(error);
-      }
+      alert("Error resetting password. Please try again.");
+      console.error(error);
     }
+    setLoading(false);
   };
+
   // console.log(loading)
   return (
     <div className={`${loading ? "pointer-events-none z-1" : ""}`}>

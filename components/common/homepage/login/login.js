@@ -46,8 +46,11 @@ function LoginComp() {
           setRole(value.user.role);
 
           // console.log("value", value.user.role);
-          if (role == "admin" || role == "mentor" || role == "school") {
-            alert(`You are not registered as a student.`);
+          if (value.user.role == "admin" || value.user.role == "mentor" || value.user.role == "school") {
+            alert(`You aren't registered as a student.`);
+            router.push("/")
+            setLoading(false)
+
           } else {
             if (res.success == false) {
               const val1 = await callVerificationEmailApi(datah);
