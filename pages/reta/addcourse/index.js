@@ -17,7 +17,7 @@ import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useStep } from "@/hooks/useStep";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -75,9 +75,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <input
             type="text"
             placeholder="Enter coures title"
-            className={`   h-10 rounded-lg px-2 ${
-              errors.title ? "border border-red-500" : "border-none"
-            }`}
+            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+              }`}
             style={{ background: "#333333" }}
             {...register("title", { required: true })}
           />
@@ -92,9 +91,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             placeholder="Enter course description"
-            className={`  h-28 rounded-lg px-2 ${
-              errors.desc?.message ? "border-red-500 border border-solid" : ""
-            } `}
+            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? "border-red-500 border border-solid" : ""
+              } `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
           />
@@ -111,9 +109,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <div className="flex flex-col flex-1">
             <input
               type="number"
-              className={`   h-10 rounded-lg px-2 ${
-                errors.title ? "border border-red-500" : "border-none"
-              }`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+                }`}
               style={{ background: "#333333" }}
               placeholder="Enter duration in weeks"
               {...register("duration", { required: true, valueAsNumber: true })}
@@ -129,9 +126,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             <input
               type="number"
               placeholder="Enter total lectures"
-              className={`   h-10 rounded-lg px-2 ${
-                errors.title ? "border border-red-500" : "border-none"
-              }`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+                }`}
               style={{ background: "#333333" }}
               {...register("lectures", { required: true, valueAsNumber: true })}
             />
@@ -249,52 +245,36 @@ const PlanCourseForm = ({ state, onSubmit }) => {
 
 const targetStudentsSchema = yup.object().shape({
   // learn: yup.string().required("This field is required"),
-  learn: yup.array().of(yup.string()).required("This field is required"),
+  learn: yup.array().of(yup.object({
+    value: yup.string().required("This field is required")
+  })),
   requirements: yup.string().required("This field is required"),
   target: yup.string().required("This field is required"),
 });
 
-const TargetStudentsForm = ({ state, onSubmit}) => {
-
-
-  const [skill, setskill] = useState("");
-  const [id, setId] = useState("");
-  const [learn, setLearn] = useState(["state", "is not updating"]);
-  
-  const deleteItem = (itemToDelete) => {
-    // Create a new array excluding the item to delete
-    const updatedArray = learn.filter((item) => item !== itemToDelete);
-  
-    // Update the state with the new array
-    setLearn(updatedArray);
-  };
-  
-  const skillsArrwithoutBlank2 = learn.filter((e) => e !== "");
-  const skillsArrwithoutBlank = skillsArrwithoutBlank2.filter((e, i) => i !== id);
-
-
-  
-  
+const TargetStudentsForm = ({ state, onSubmit }) => {
 
   const {
     register,
     formState: { errors },
     handleSubmit,
+    control
   } = useForm({
-    defaultValues:{
+    defaultValues: {
       ...state,
-      learn:learn
+      learn: state?.learn?.map((l) => ({ value: l.value })) || [{ value: "" }],
     },
     resolver: yupResolver(targetStudentsSchema),
   });
-  
-  useEffect(() => {
-   handleSubmit();
-   console.log("leran arry", learn);
-  }, [learn])
 
-  
-  
+  const { fields, append, remove } = useFieldArray({
+    name: "learn",
+    control,
+  })
+
+  console.log("errors", errors)
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Header currentStep={2} />
@@ -304,49 +284,27 @@ const TargetStudentsForm = ({ state, onSubmit}) => {
           What will the students learn from your course ?
         </label>
         <div className="flex flex-col">
-          {/* <textarea
-            type="text"
-            placeholder="Example, Will learn basics of UI/UX "
-            className="AddMentorInput h-28 max-w-4xl rounded-lg px-2"
-            style={{ background: "#333333" }}
-            {...register("learn.0", { required: true })}
-          /> */}
-
-          <div className="flex flex-wrap    justify-around align-middle mb-4 gap-2">
-            {skillsArrwithoutBlank.map((e, i) => (
-              <div
-                key={i}
-                className="border  border-[#823DA2] rounded-[10px] px-2 py-2 text-sm "
+          <ul className="flex flex-col gap-3">
+            {fields.map((field, index) => (
+              <li
+                className="flex flex-row items-center max-w-4xl gap-3"
+                key={field.id}
               >
-                {e}{" "}
-                <span className="text-l ml-5 " onClick={() => deleteItem(e)}>
-                  x
-                </span>
-              </div>
+                <input
+                  type="text"
+                  className="text-white text-sm rounded-lg block p-4  bg-[#333333]  placeholder-[#5F6065] focus:outline-none flex-[2]"
+                  placeholder="Type here "
+                  {...register(`learn.${index}.value`)}
+                />
+                <button className="self-stretch px-3 rounded-md bg-gray-500 " onClick={() => {
+                  remove(index)
+                }} >Delete</button>
+              </li>
             ))}
-          </div>
-          <input
-            type="text"
-            className="text-white text-center text-sm rounded-lg block w-[50%] m-auto p-4  bg-[#333333]  placeholder-[#5F6065] focus:outline-none"
-            placeholder="Type here "
-            onKeyPress={(e) => {
-              if (
-                e.key === "Enter" ||
-                e.key === "Go" ||
-                e.key === "Up Next" ||
-                e.type === "click" ||
-                e.type == " "
-              ) {
-                setLearn([...learn, skill]);
-                {console.log(learn)}
-                setskill("");
-              }
-            }}
-            value={skill}
-            onChange={((e)=>setskill(e.target.value))}
-            // {...register("learn":skillsArr)}
-            id=""
-          />
+          </ul>
+          <button type="button" onClick={() => {
+            append({ value: "" })
+          }} className="bg-primary text-white text-center mt-3 w-24 rounded-md py-2 " >Add</button>
 
           <p className="text-red-500 text-sm">{errors.learn?.message}</p>
         </div>
@@ -559,20 +517,18 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
           key={index}
         >
           <h4
-            className={`text-xl ${
-              currentStep === index + 1
-                ? "text-primary"
-                : "text-primary/60 group-hover:text-primary/90"
-            }  font-semibold`}
+            className={`text-xl ${currentStep === index + 1
+              ? "text-primary"
+              : "text-primary/60 group-hover:text-primary/90"
+              }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
-            className={`${
-              currentStep === index + 1
-                ? "text-white"
-                : "text-white/60 group-hover:text-white/90"
-            }`}
+            className={`${currentStep === index + 1
+              ? "text-white"
+              : "text-white/60 group-hover:text-white/90"
+              }`}
           >
             {step}
           </p>
@@ -583,6 +539,9 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
 };
 
 const createCourse = async (courseDetails) => {
+
+  courseDetails.QA.learn = courseDetails.QA.learn.map((l) => l.value);
+
   const data = {
     ...courseDetails,
     createdAt: serverTimestamp(),
