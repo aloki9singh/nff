@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import { BsPersonCircle } from "react-icons/bs";
 
 const Afterlogin = () => {
   const [user, setUser] = useState({});
@@ -43,6 +44,7 @@ const Afterlogin = () => {
       setCourse(null);
     }
   };
+  console.log(course)
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -95,7 +97,7 @@ const Afterlogin = () => {
             <Dashboardnav heading="After Log" toggleSideBar={toggleSideBar} />
           </div>
 
-          <div className="h-full text-white bg-[#2D2E35]">
+          <div className="h-screen text-white bg-[#2D2E35]">
             {course ? (
               <>
                 <div className="flex flex-col md:flex-row pt-10 px-4">
@@ -132,16 +134,14 @@ const Afterlogin = () => {
                 </div>
                 <div className="rounded-tl-[30px] rounded-tr-[30px] md:rounded-tr-[0] bg-[#373A41] flex flex-col md:flex-row ">
                   <div className="flex-col md:w-3/5 text-base space-y-10">
-                          {console.log("herrlo", course)}
-                    {course.QA.learn ? (
+                    {console.log("herrlo", course)}
+                    {course?.QA?.learn ? (
                       <div className="w-[90%] md:w-[80%] mx-auto my-4 mt-10  bg-[#2D2E35] rounded-[30px] px-4 py-3">
                         <h1 className="text-2xl text-center my-6">
                           What you&apos;ll Learn
-
                         </h1>
-
                         <ul>
-                          {course.QA.learn.map((learn) => (
+                          {course?.QA?.learn.map((learn) => (
                             <li key={course.id}>
                               <p className="flex my-6 text-sm">
                                 <Image
@@ -151,7 +151,7 @@ const Afterlogin = () => {
                                   height={30}
                                   className="mr-4"
                                 />
-                                {learn.point}
+                                {learn}
                               </p>
                             </li>
                           ))}
@@ -160,19 +160,27 @@ const Afterlogin = () => {
                     ) : (
                       <></>
                     )}
-
                     <div className="">
                       {course.modules ? (
                         <div className="md:w-[80%] w-[90%] mx-auto">
                           <h1 className="text-xl">Course Content</h1>
-                          {course.modules.map((ele) => (
-                            <Accordion
-                              key={ele.id}
-                              title={ele.name}
-                              desc={ele.desc}
-                              course={course.title}
-                            />
-                          ))}
+                          <div className="my-4  border border-[#728095] bg-[#2D2E35] rounded-xl">
+                            <button
+                              className="rounded-xl py-4 font-[500]"
+                            >
+                              <span className="px-4 text-lg">{course.title}</span>
+                            </button>
+                          </div>
+                          {course.modules.map((ele) => {
+                            return (
+                              <Accordion
+                                key={ele.id}
+                                title={ele.name}
+                                desc={ele.desc}
+                                course={course.title}
+                              />
+                            )
+                          })}
                         </div>
                       ) : (
                         <></>
@@ -183,8 +191,7 @@ const Afterlogin = () => {
                       <div className="md:w-[80%] w-[90%]  mx-auto">
                         <h1 className="text-xl">Requirement</h1>
                         <div className="border rounded-xl border-[#728095] my-4 px-4 py-6">
-                          Access to a computer running Windows. Mac OS X or
-                          Linux
+                          {course?.QA?.requirements}
                         </div>
                       </div>
                     </div>
@@ -271,18 +278,20 @@ const Afterlogin = () => {
                         <div>
                           <h2 className="text-base pt-10">OUR EXPERT</h2>
                           <div className="flex my-7">
-                            <Image
-                              src="/pagesgraphics/student/coursedescription/Ellipse_1.svg"
+                            {course.banner ? <Image
+                              src={course.banner}
                               width={40}
                               height={40}
                               alt="f"
                               className="mr-4"
-                            />
+                            /> :
+                              <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
+                            }
                             <div className="pl-4">
-                              <p className="font-medium text-lg  leading-7 tracking-wide">
+                              <p className="font-medium text-lg leading-7 tracking-wide">
                                 {course.leadMentor}
                               </p>
-                              <p className="text-sm leading-4">C++ Professor</p>
+                              <p className="text-sm mx-[-12px] leading-10">{course.category} Professor</p>
                             </div>
                           </div>
                           <div className="mb-10 font-medium tracking-wide text-xs">
@@ -291,7 +300,7 @@ const Afterlogin = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="font-raleway  bg-[#2D2E35] px-5 py-2 mt-4 md:mt-4 mx-2 xl:mr-8  xl:mt-8 rounded-[20px] pb-6">
+                    {/* <div className="font-raleway mb-4 bg-[#2D2E35] px-5 py-2 mt-4 md:mt-4 mx-2 xl:mr-8  xl:mt-8 rounded-[20px] pb-6">
                       <div className="my-8">
                         <h2 className="text-base">Students Reviews</h2>
                         <p className="leading-[29px] text-sm font-normal my-4">
@@ -320,7 +329,7 @@ const Afterlogin = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </>
@@ -328,7 +337,7 @@ const Afterlogin = () => {
               <p className="text-center m-5">Loading...</p>
             )}
 
-            <div className=" flex flex-col items-center justify-between text-xl md:text-2xl bg-[#373A41] pb-5 ">
+            {/* <div className=" flex flex-col items-center justify-between text-xl md:text-2xl bg-[#373A41] pb-5 ">
               <div className="text-center pt-20">
                 Explore Similar Courses
               </div>
@@ -417,7 +426,7 @@ const Afterlogin = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
