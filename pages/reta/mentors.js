@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import MentorSidebar from '@/components/common/sidebar/mentor';
-import MentorTopbar from '@/components/common/navbar/mentortopbar';
+import AdminSidebar from '@/components/admin/sidebar/admin';
+import AdminTopbar from '@/components/common/navbar/admintopbar';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -63,7 +63,7 @@ function AdminStudent() {
   }
   return (
     <>
-      <div className='h-full text-base bg-[#2E3036] '>
+      <div className='h-full text-base bg-[#2E3036]  '>
         <div className='flex'>
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
@@ -71,23 +71,23 @@ function AdminStudent() {
               className={`fixed right-0 ${
                 SideBarState ? 'block' : 'hidden'
               } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+              <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
             <div className={`md:block hidden w-[221px] bg-[#141518] z-10`}>
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+              <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
-          <div className='flex-grow'>
+          <div className='flex-grow '>
             <div className='flex md:pt-0 pt-2  justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]'>
-              <MentorTopbar heading='Review' toggleSideBar={toggleSideBar} />
+              <AdminTopbar heading='Review' toggleSideBar={toggleSideBar} />
             </div>
             <div className='  ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white'>
-              Mentor : 199 / student : 133
+              Mentor : 199
             </div>
             {/* Dropdown bar */}
             <div className='gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white'>
@@ -234,7 +234,7 @@ function AdminStudent() {
                           Active
                         </td>
                       </div>
-                      <div className=' md:ml-36'>
+                      <div className=' md:ml-36 md:mr-1'>
                         <td className='w-[14.2%]  mr-2 text-right pr-[3%]'>
                           <Link href='' className=' text-[#E1348B]'>
                             {' '}
