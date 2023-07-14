@@ -203,7 +203,7 @@ function AdminStudent() {
                     </tr>
                   </thead>
                   <tbody className='flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-5   '>
-                    <tr className='flex items-center w-full font-medium text-xs md:justify-between'>
+                    <tr className='flex items-center w-full font-medium text-xs justify-between'>
                       <td className='w-[14.2%]'>
                         <div className='flex items-center justify-center first-letter md:mr-16'>
                           <Image
