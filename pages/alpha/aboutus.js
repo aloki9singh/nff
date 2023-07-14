@@ -1,19 +1,37 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
+import { db } from "@/config/firebaseconfig";
 import NavbarSecond from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/sidebar';
 import Image from 'next/image';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { contactFn } from '@/lib/api';
 import { Carousel } from 'react-responsive-carousel';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Footer from '@/components/common/footer/footer';
-import CarouselComp from '@/components/common/carousel/carousel';
-import Image1 from '../../public/componentsgraphics/common/aboutpage/team1.svg';
+
 
 const Aboutus = () => {
+
+
+const [mentor, setMentor] = useState([]);
+ 
+const fetchPost = async () => {
+  
+
+const q = query(collection(db, "allusers"), where("role", "==", "mentor"));
+    const querySnapshot = await getDocs(q);
+    const newData = querySnapshot.docs.map((doc) => ({...doc.data(), id:doc.id }));
+            setMentor(newData); 
+}
+
+useEffect(()=>{
+    fetchPost();
+}, [])
+
   const scrollContainerRef = useRef(null);
 
   const scrollBackward = () => {
@@ -52,11 +70,11 @@ const Aboutus = () => {
 
   document.head.appendChild(style);
 
-  const [query, setQuery] = useState('');
+  const [que, setQuery] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
-  const formData = { query, email, name, phoneNo };
+  const formData = { que, email, name, phoneNo };
 
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
@@ -68,7 +86,7 @@ const Aboutus = () => {
   return (
     <>
       <NavbarSecond buttonVis='hidden' title='About Us' />
-      <div className='h-full'>
+      <div className='mt-8 md:mt-0 h-full'>
         <div className='w-full h-full flex flex-col'>
           <div className='flex justify-center items-center flex-col'>
             <span className='text-white text-4xl mt-14'>
@@ -77,12 +95,12 @@ const Aboutus = () => {
             <span className=' text-4xl mt-5 text-center bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   '>
               guarantee your success
             </span>
-            <div className='w-80 h-1 bg-white mt-2 ml-4' />
+            <div className='w-[30rem] h-1 bg-white mt-2 ml-4' />
           </div>
 
           <div className='w-[80%] h-auto'>
             <div className='relative'>
-              <div className='w-full h-56 ml-10 md:ml-44 mt-11 px- p-10 rounded-lg bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex items-center  text-white  '
+              <div className='w-full h-[18rem] self-start ml-10 md:ml-44 mt-11 px- p-10 rounded-lg bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-white  '
               style={{clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)"}}>
                 <span className='text-sm md:text-sm lg:text-2xl lg:px-11  '>
                   ConsultUs provides consulting services that help business
@@ -94,11 +112,11 @@ const Aboutus = () => {
               </div>
             </div>
             <div className='relative'>
-              <div className='absolute w-full h-[21rem] ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden' style={{clipPath: "polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)"}}>
+              <div className='absolute w-full h-[28rem] ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden' style={{clipPath: "polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)"}}>
                 <img
                   src='/componentsgraphics/common/aboutpage/about.png'
                   alt='random image'
-                  className='w-full object-center mt-12 px-8 shadow-md transform -translate-y-16 rounded-lg'
+                  className='w-full object-center h-[46rem] mt-[10rem] shadow-md transform -translate-y-16 rounded-lg'
                 />
               </div>
             </div>
@@ -109,7 +127,7 @@ const Aboutus = () => {
           <span className='text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
             mission
           </span>
-          <div className=' w-72 h-1 bg-white mt-2 ml-4' />
+          <div className=' w-[40rem] h-1 bg-white mt-2 ml-4' />
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>
@@ -156,7 +174,7 @@ const Aboutus = () => {
           <span className='text-2xl lg:4xl font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text'>
             Commitment
           </span>
-          <div className='w-72 h-1 bg-white mt-2 ml-4' />
+          <div className='w-[40rem] h-1 bg-white mt-2 ml-4' />
 
           <div className='flex flex-col md:flex-row p-4'>
             <div className='text-white mb-4 md:mb-0 md:mr-8'>Ethics</div>
@@ -190,104 +208,114 @@ const Aboutus = () => {
 
         {/* ourteam section */}
         {/* Our Team */}
-        <div class='container mx-auto w-screen flex-grow px-0 px-4 py-4 sm:py-16'>
-          <h1 class='mx-auto mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl'>
+        <div className='container mx-auto w-screen flex-grow px-0 px-4 py-4 sm:py-16'>
+          <h1 className='mx-auto mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl'>
             our successful team
           </h1>
-          <div class='mx-auto w-auto  md:w-auto'>
-            <div class='container my-8'>
+          <div className='mx-auto w-auto  md:w-auto'>
+            <div className='container my-8'>
               <div
                 ref={scrollContainerRef}
-                class='flex-no-wrap scrolling-touch mb-8 flex items-start   overflow-x-auto  hide-scrollbar'>
-                <div class='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
-                  <a href='#' class='space-y-4'>
-                    <div class='aspect-w-max aspect-h-ma'>
+                className='flex-no-wrap scrolling-touch mb-8 flex items-start   overflow-x-auto  hide-scrollbar'>
+                {/* <div className='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
+                  <a href='#' className='space-y-4'>
+                    <div className='aspect-w-max aspect-h-ma'>
                       <img
-                        class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
                         src='/componentsgraphics/common/aboutpage/team1.svg'
                         alt=''
                       />
                     </div>
-                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
                       Jenny Wilson
                     </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' class='space-y-4'>
-                    <div class='aspect-w-max aspect-h-ma'>
+                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
+                  <a href='#' className='space-y-4'>
+                    <div className='aspect-w-max aspect-h-ma'>
                       <img
-                        class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
                         src='/componentsgraphics/common/aboutpage/team2.svg'
                         alt=''
                       />
                     </div>
-                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
                       Eleanor Pena
                     </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' class='space-y-4'>
-                    <div class='aspect-w-max aspect-h-ma'>
+                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
+                  <a href='#' className='space-y-4'>
+                    <div className='aspect-w-max aspect-h-ma'>
                       <img
-                        class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
                         src='/componentsgraphics/common/aboutpage/team3.svg'
                         alt=''
                       />
                     </div>
-                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
                       Robert Fox{' '}
                     </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' class='space-y-4'>
-                    <div class='aspect-w-max aspect-h-ma'>
+                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
+                  <a href='#' className='space-y-4'>
+                    <div className='aspect-w-max aspect-h-ma'>
                       <img
-                        class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
                         src='/componentsgraphics/common/aboutpage/team1.svg'
                         alt=''
                       />
                     </div>
-                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
                       Robert Fox{' '}
                     </h2>
                   </a>
-                </div>
+                </div> */}
 
-                <div class='mr-8 max-w-fit flex-none  md:pb-4'>
-                  <a href='#' class='space-y-4'>
-                    <div class='aspect-w-max aspect-h-ma'>
+
+                {mentor && mentor.map((ment)=>{
+
+                  return (
+                    <>
+                  <div className='mr-8 max-w-fit flex-none  md:pb-4'>
+                  <a href='#' className='space-y-4'>
+                    <div className='aspect-w-max aspect-h-ma'>
                       <img
-                        class='rounded-lg object-cover shadow-md hover:shadow-xl'
-                        src='/componentsgraphics/common/aboutpage/team2.svg'
+                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
+                        src={ment.photoURL ? ment.photoURL : '/componentsgraphics/common/aboutpage/team2.svg'}
                         alt=''
+                        style={{height:"28rem"}}
                       />
                     </div>
-                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
-                      Eleanor Pena
+                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
+                      {ment.displayName}
                     </h2>
                   </a>
                 </div>
 
-                <div class='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' class='space-y-4'>
-                    <div class='aspect-w-max aspect-h-ma'>
+                      </>                  
+                      )
+                })}
+{/* 
+                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
+                  <a href='#' className='space-y-4'>
+                    <div className='aspect-w-max aspect-h-ma'>
                       <img
-                        class='rounded-lg object-cover shadow-md hover:shadow-xl'
+                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
                         src='/componentsgraphics/common/aboutpage/team3.svg'
                         alt=''
                       />
                     </div>
-                    <h2 class='text-center mt-2 text-2xl text-white font-semibold'>
+                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
                       Eleanor Pena
                     </h2>
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -302,80 +330,56 @@ const Aboutus = () => {
               </p>
               <form className='space-y-6'>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='name'
-                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                    Name
-                  </label>
                   <input
                     type='text'
                     id='name'
-                    className='py-2 px-3 align-start border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
+                    className='py-2 px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-0 w-[28rem] m-auto'
                     placeholder='Your Name'
                     required
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='email'
-                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                    Email
-                  </label>
                   <input
                     type='email'
                     id='email'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
-                    placeholder='Your Email'
+                    className='py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-none w-[28rem] m-auto'
+                    placeholder='Company Email'
                     required
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='phone'
-                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                    Phone
-                  </label>
                   <input
                     type='text'
                     id='phone'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
-                    placeholder='Your Phone Number'
+                    className='py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-none w-[28rem] m-auto'
+                    placeholder='Phone Number'
                     required
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='title'
-                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                    Title
-                  </label>
                   <input
                     type='text'
                     id='title'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-none'
-                    placeholder='Your Title'
+                    className='py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-none w-[28rem] m-auto'
+                    placeholder='Title/Position'
                     required
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='subject'
-                    className='mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                    Subject
-                  </label>
+                  
                   <input
                     type='text'
                     id='subject'
-                    className='py-2 px-3  border-0 border-b border-white   text-gray-900 dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-[#1E1E1E] text-white outline-0'
-                    placeholder='Your Subject'
+                    className='py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-transparent text-white outline-0 w-[28rem] m-auto'
+                    placeholder='Subject'
                     required
                   />
                 </div>
                 <div className='flex justify-center items-center'>
                   <button
                     type='submit'
-                    className='py-3 px-8 md:px-48 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'>
-                    Submit
+                    className='py-3 px-8 md:px-40 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-[28rem]'>
+                      Connect with us
                   </button>
                 </div>
               </form>
