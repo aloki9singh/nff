@@ -153,7 +153,7 @@ export default function Navbar({ nav, setNav }) {
                     Our Courses
                   </div>
                 </Link>
-                <Link href="/beta/aboutus">
+                <Link href="/alpha/aboutus">
                   <div
                     onClick={() => setNav(false)}
                     className="py-4 text-sm hover:scale-110"
