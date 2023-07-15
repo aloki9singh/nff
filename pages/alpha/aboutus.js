@@ -3,7 +3,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 import { db } from "@/config/firebaseconfig";
-import NavbarSecond from "@/components/common/navbar/admintopbar";
+import Dashboardnav from "@/components/common/navbar/dashboardnav"
 import Sidebar from "@/components/common/sidebar/sidebar";
 import Image from "next/image";
 import { contactFn } from "@/lib/api";
@@ -95,7 +95,7 @@ const Aboutus = () => {
 
   return (
     <>
-      <NavbarSecond buttonVis="hidden" title="About Us" />
+      <Dashboardnav title="About Us" />
       <div className="mt-8 md:mt-0 h-full">
         <div className="w-full h-full flex flex-col">
           <div className="flex justify-center items-center flex-col">
