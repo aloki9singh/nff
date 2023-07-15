@@ -184,7 +184,7 @@ const Chat = () => {
             {/* <hr className="hidden lg:block opacity-50 mt-3 " /> */}
           </div>
           <div
-            className="p-4 w-full justify-between flex flex-row gap-4  bg-[#2f3036] "
+            className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
             style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
