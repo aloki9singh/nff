@@ -18,13 +18,15 @@ const MentorSidebar = ({ toggleSideBar }) => {
       <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
         <div>
           <div>
-            <Image
-              src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
-              width={150}
-              height={150}
-              alt="logo"
-              className="mb-6 md:block hidden"
-            />
+           
+              <Image
+                src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
+                width={150}
+                height={150}
+                alt="logo"
+                className="mb-6 md:block hidden"
+              />
+           
             <div
               className=" flex justify-end w-full md:hidden  "
               onClick={() => toggleSideBar()}
@@ -35,7 +37,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
             </div>
             <div className="md:hidden block p-2 text-white">
               <Link href={"/meta/profile"}>
-                {user && userProfile.photoURL ? (
+                {user && userProfile && userProfile.photoURL ? (
                   <Image
                     src={userProfile.photoURL}
                     alt="proImg"
@@ -49,9 +51,18 @@ const MentorSidebar = ({ toggleSideBar }) => {
               </Link>
               <p className="pt-2">{user ? user.displayName : "Guest"}</p>
               <p className="text-gray-500 text-[12px] ">
-                {`MENTOR- ${userProfile
-                  ? userProfile?.displayName || user.displayName
-                  : "None"}`}
+                {`MENTOR- ${
+                  userProfile
+                    ? (userProfile.displayName || user.displayName).includes(
+                        "gmail"
+                      )
+                      ? (userProfile.displayName || user.displayName).slice(
+                          0,
+                          5
+                        )
+                      : userProfile.displayName || user.displayName
+                    : "None"
+                }`}
               </p>
             </div>
           </div>

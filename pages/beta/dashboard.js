@@ -103,7 +103,7 @@ const Studentdashboard = () => {
                 />
 
                 <div className="overflow-y-auto">
-                  {active ? <ActiveComp percent={0} /> : <InActiveComp />}
+                  {!active ? <ActiveComp percent={0} /> : <InActiveComp />}
                 </div>
               </div>
               <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 ">

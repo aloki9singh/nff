@@ -97,7 +97,11 @@ function MentorProfile() {
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-35px]">
-                        {userData.displayName}
+                        {userData &&
+                        userData.displayName &&
+                        userData.displayName.includes("gmail")
+                          ? userData.displayName.slice(0, 5)
+                          : userData.displayName}
                       </div>
                       <div className="flex text-xs md:text-sm mt-[-25px]">
                         Edit profile

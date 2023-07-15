@@ -10,17 +10,19 @@ import { useMediaQuery } from "react-responsive";
 function MentorStudent() {
   const [count, setCount] = useState(1);
   // const { data } = useSelector((state) => state.authManagerMentor);
-  const [studentData, setStudentData] = useState();
+  const [studentData, setStudentData] = useState([]);
   const [initialcount, setinitialCount] = useState(0);
   const [gap, setGap] = useState(10);
   const [hide, setHide] = useState(true);
   const [id, setId] = useState();
-  const [filterData, setFilterData] = useState();
+  const [filterData, setFilterData] = useState([]);
   let [searchstate, setsearchstate] = useState();
+  
   const router = useRouter();
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
+
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
@@ -50,18 +52,13 @@ function MentorStudent() {
     fetch("/api/signup")
       .then((response) => response.json())
       .then((data) => {
-        setFilterData(
-          data.users.filter((ele) => {
-            return ele.role == "student";
-          })
-        );
-        setStudentData(
-          data.users.filter((ele) => {
-            return ele.role == "student";
-          })
-        );
+        const students = data.users.filter((ele) => ele.role === "student");
+  
+        setFilterData(students);
+        setStudentData(students);
       });
-  }, []);
+  }, [studentData]);
+  console.log(studentData);
   function handleChange(e) {
     e.preventDefault();
     setId(e.target.value);
@@ -73,6 +70,7 @@ function MentorStudent() {
       .then((response) => response.json())
       .then((data) => alert(data.msg));
   }
+
   function handleClick(e) {
     const totalPage = Math.ceil(studentData.length / 10);
 
@@ -315,6 +313,7 @@ function MentorStudent() {
                           </td>
                         </tr>
                       ))}
+                    {/* {studentData.map((e)=>e.displayName)} */}
                   </tbody>
                 </table>
               </div>

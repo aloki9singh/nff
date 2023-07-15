@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   callSignupApi,
+  callUserById,
   createWithGoogle,
   handleResetPassword,
   login,
@@ -71,21 +72,36 @@ function SignUp() {
       const user = result.user;
       const { displayName, email } = user;
       const data = { displayName, email };
-      await callEmailApi(data);
-      console.log(user);
-      const studentData = {
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        role: "student",
-        verified: true,
-        photoURL: user.photoURL,
-      };
+  
+      // console.log(user);
+      const value = await callUserById(user.uid);
+      // setRole(value.user.role);
 
-      callSignupApi(studentData);
-      alert("Sign up successful!!");
-      // router.push('/course-overview');
-      router.push("/beta/profiledetails");
+      // console.log("value", value.user.role);
+      if (
+        value.user.role == "admin" ||
+        value.user.role == "mentor" ||
+        value.user.role == "school"
+      ) {
+        alert(`You are already registered not as student .`);
+        router.push("/");
+        setLoading(false);
+      } else {
+        await callEmailApi(data);
+        const studentData = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          role: "student",
+          verified: true,
+          photoURL: user.photoURL,
+        };
+
+        callSignupApi(studentData);
+        alert("Sign up successful!!");
+        // router.push('/course-overview');
+        router.push("/beta/profiledetails");
+      }
     } catch (error) {
       console.error("Failed to sign up with Google:", error);
     }
