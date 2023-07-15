@@ -18,13 +18,15 @@ const MentorSidebar = ({ toggleSideBar }) => {
       <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
         <div>
           <div>
-            <Image
-              src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
-              width={150}
-              height={150}
-              alt="logo"
-              className="mb-6 md:block hidden"
-            />
+           
+              <Image
+                src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
+                width={150}
+                height={150}
+                alt="logo"
+                className="mb-6 md:block hidden"
+              />
+           
             <div
               className=" flex justify-end w-full md:hidden  "
               onClick={() => toggleSideBar()}

@@ -11,7 +11,7 @@ import StudentProfileChart from "@/components/student/profile/chart";
 import StudentProfileCirProgress from "@/components/student/profile/StudentProfileCirProgress";
 import { useMediaQuery } from "react-responsive";
 import { useAuthContext } from "@/lib/context/AuthContext";
-
+import Link from "next/link";
 
 //returning some backed error
 
@@ -21,6 +21,11 @@ function StudentProfile() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const [enrolledcourses, setenrolledcourses] = useState([]);
+  const [completedcourses, setcompletedcourses] = useState([]);
+  const [certificates, setCertificates] = useState([]);
+  const [subscribed, setSubscribed] = useState(false);
+  const [switchcomp, setswitchcomp] = useState("enrolled");
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -64,13 +69,13 @@ function StudentProfile() {
           )}
           <div
             style={{ background: "#2E3036" }}
-            className="col-span-5 lg:col-span-4 md:rounded-l-[50px] pt-2 w-full "
+            className="col-span-5 lg:col-span-4 md:rounded-l-[50px]  w-full "
           >
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <Dashboardnav heading={"Profile"} toggleSideBar={toggleSideBar} />
             </div>
             <hr className="hidden md:block opacity-50 mt-3 "></hr>
-            <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
+            <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 ">
               {/* text */}
 
               <div className="   h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "></div>
@@ -93,10 +98,12 @@ function StudentProfile() {
                           Roll no-{userProfile.rollNo}
                         </p>
                       </div>
-                      <div className="flex text-xs md:text-sm mt-[-25px]">
-                        Edit profile
-                        <FiEdit2 className="ml-1 mt-[2px]" />
-                      </div>
+                      <Link href={"/beta/profiledetails"}>
+                        <div className="flex text-xs md:text-sm mt-[-25px]">
+                          Edit profile
+                          <FiEdit2 className="ml-1 mt-[2px]" />
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -109,52 +116,53 @@ function StudentProfile() {
                 <div className="flex justify-center align-center">
                   <div className="bg-[#373A41]   w-full mx-5   rounded-[20px] pb-5 pt-3 px-4 space-y-2 md:px-6 mt-5 flex flex-col">
                     <div className="text-center pt-2 pb-2 px-4 font-semibold flex justify-between w-full">
-                      <p>Enrolled courses</p>
-                      <p>Completed Courses</p>
+                      <p onClick={() => setswitchcomp("enrolled")}>
+                        Enrolled courses
+                      </p>
+                      <p onClick={() => setswitchcomp("completed")}>
+                        Completed Courses
+                      </p>
                     </div>
                     {/* Need to done using Array */}
-                    <div className="mt-2 h-[200px] overflow-y-scroll scrollbar-hide py-2">
-                      <div className="border-l-[4px] border-pink flex mb-2 pl-4">
-                        <div>
-                          <h1>After effects cc masterclass</h1>
-                          <p className="text-xs text-[#FFFFFF80] font-semibold">
-                            10:30-11:30
-                          </p>
-                        </div>
+                    {switchcomp == "enrolled" ? (
+                      <div className="mt-2 h-[200px] overflow-y-scroll scrollbar-hide py-2">
+                        {enrolledcourses.length ? (
+                          enrolledcourses.map((e) => (
+                            <div className="border-l-[4px] border-pink flex mb-2 pl-4">
+                              <div>
+                                <h1>{e.title}</h1>
+                                <p className="text-xs text-[#FFFFFF80] font-semibold">
+                                  {e.time}
+                                </p>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-gray-500 flex justify-center items-center h-[180px]">
+                            No enrolled courses available
+                          </div>
+                        )}
                       </div>
-                      <div className="border-l-[4px] border-pink flex mb-2 pl-4">
-                        <div>
-                          <h1>After effects cc masterclass</h1>
-                          <p className="text-xs text-[#FFFFFF80] font-semibold">
-                            10:30-11:30
-                          </p>
-                        </div>
+                    ) : (
+                      <div className="mt-2 h-[200px] overflow-y-scroll scrollbar-hide py-2">
+                        {completedcourses.length ? (
+                          completedcourses.map((e) => (
+                            <div className="border-l-[4px] border-pink flex mb-2 pl-4">
+                              <div>
+                                <h1>{e.title}</h1>
+                                <p className="text-xs text-[#FFFFFF80] font-semibold">
+                                  {e.time}
+                                </p>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-gray-500 flex justify-center items-center h-[180px]">
+                            Currently no completed courses
+                          </div>
+                        )}
                       </div>
-                      <div className="border-l-[4px] border-pink flex mb-2 pl-4">
-                        <div>
-                          <h1>After effects cc masterclass</h1>
-                          <p className="text-xs text-[#FFFFFF80] font-semibold">
-                            10:30-11:30
-                          </p>
-                        </div>
-                      </div>
-                      <div className="border-l-[4px] border-pink flex mb-2 pl-4">
-                        <div>
-                          <h1>After effects cc masterclass</h1>
-                          <p className="text-xs text-[#FFFFFF80] font-semibold">
-                            10:30-11:30
-                          </p>
-                        </div>
-                      </div>
-                      <div className="border-l-[4px] border-pink flex mb-2 pl-4">
-                        <div>
-                          <h1>After effects cc masterclass</h1>
-                          <p className="text-xs text-[#FFFFFF80] font-semibold">
-                            10:30-11:30
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 
@@ -165,33 +173,22 @@ function StudentProfile() {
                     </div>
                     {/* Need to done using Array */}
                     <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2">
-                      <div className="flex mb-6 px-2 justify-between">
-                        <div className="flex">
-                          <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
-                          <h1 className="text-sm ">User interface design</h1>
+                      {certificates.length ? (
+                        certificates.map((e) => (
+                          <div className="border-l-[4px] border-pink flex mb-2 pl-4">
+                            <div>
+                              <h1>{e.title}</h1>
+                              <p className="text-xs text-[#FFFFFF80] font-semibold">
+                                {e.time}
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-gray-500 flex justify-center items-center h-[130px]">
+                          You haven't earned a certificate
                         </div>
-                        <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
-                          View certificate
-                        </div>
-                      </div>
-                      <div className="flex mb-6 px-2 justify-between">
-                        <div className="flex">
-                          <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
-                          <h1 className="text-sm ">User interface design</h1>
-                        </div>
-                        <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
-                          View certificate
-                        </div>
-                      </div>
-                      <div className="flex mb-6 px-2 justify-between">
-                        <div className="flex">
-                          <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
-                          <h1 className="text-sm ">User interface design</h1>
-                        </div>
-                        <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
-                          View certificate
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -260,17 +257,24 @@ function StudentProfile() {
                     <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full">
                       Subscription
                     </div>
-
-                    <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2">
-                      <div className="flex mb-6 px-2 justify-between border-l-[4px] border-pink">
-                        <div className="flex">
-                          <h1 className="text-base">UI/UX Designer</h1>
+                    {enrolledcourses.length ? (
+                      enrolledcourses.map((e) => (
+                        <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2">
+                          <div className="flex mb-6 px-2 justify-between border-l-[4px] border-pink">
+                            <div className="flex">
+                              <h1 className="text-base">UI/UX Designer</h1>
+                            </div>
+                            <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
+                              Active
+                            </div>
+                          </div>
                         </div>
-                        <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
-                          Active
-                        </div>
+                      ))
+                    ) : (
+                      <div className="text-gray-500 flex justify-center items-center h-[180px]">
+                        No enrolled courses available
                       </div>
-                    </div>
+                    )}
                   </div>
                   <div className="bg-[#373A41] h-[264px]  rounded-[20px] py-3 px-4  md:w-[40%] mt-5 flex flex-col">
                     <div className="text-center h-[10%] pt-2 pb-4 px-4 flex justify-center w-full">

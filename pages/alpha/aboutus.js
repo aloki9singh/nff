@@ -278,7 +278,7 @@ useEffect(()=>{
                 </div> */}
 
 
-                {mentor && mentor.map((ment)=>{
+                {mentor && mentor.slice(0,6).map((ment)=>{
 
                   return (
                     <>

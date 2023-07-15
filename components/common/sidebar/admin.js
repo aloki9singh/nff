@@ -13,13 +13,15 @@ const Sidebar = ({ toggleSideBar }) => {
       <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col">
         <div>
           <div>
-            <Image
-              src="/componentsgraphics/common/sidebar/schoolsidebar/Neatskills.svg"
-              width={150}
-              height={150}
-              alt="logo"
-              className="mb-6 md:block hidden"
-            />
+          
+              <Image
+                src="/pagesgraphics/common/createcategory/Neatskills.svg"
+                width={150}
+                height={100}
+                alt="logo"
+                className="mb-6 md:block hidden"
+              />
+           
             <div
               className=" flex justify-end w-full md:hidden  "
               onClick={() => toggleSideBar()}
@@ -59,10 +61,11 @@ const Sidebar = ({ toggleSideBar }) => {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/seta/dashboard"
+                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                        router.pathname === "/seta/dashboard"
                           ? "shadow-white"
                           : ""
-                        }`}
+                      }`}
                       style={{
                         boxShadow:
                           router.pathname === "/seta/dashboard"
@@ -71,10 +74,9 @@ const Sidebar = ({ toggleSideBar }) => {
                       }}
                     />{" "}
                     <span
-                      className={`${router.pathname == ""
-                          ? "text-[#E1348B]"
-                          : ""
-                        }`}
+                      className={`${
+                        router.pathname == "" ? "text-[#E1348B]" : ""
+                      }`}
                     >
                       Home
                     </span>
@@ -100,11 +102,15 @@ const Sidebar = ({ toggleSideBar }) => {
                             : "none",
                       }}
                     />{" "}
-                    <span className={`${
+                    <span
+                      className={`${
                         router.pathname == "/reta/students"
                           ? "text-[#E1348B]"
                           : ""
-                      }`}>Students</span>
+                      }`}
+                    >
+                      Students
+                    </span>
                   </label>
                 </Link>
                 <Link
@@ -116,15 +122,11 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span>Events</span>
@@ -140,20 +142,17 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${router.pathname == "/Schedule" ? "#E1348B" : ""
-                        }]`}
+                      className={`ml-3 text-[${
+                        router.pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
                     >
                       Schedule
                     </span>
@@ -169,20 +168,17 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${router.pathname == "/Schedule" ? "#E1348B" : ""
-                        }]`}
+                      className={`ml-3 text-[${
+                        router.pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
                     >
                       Live Class
                     </span>
@@ -198,26 +194,22 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${router.pathname == "/Schedule" ? "#E1348B" : ""
-                        }]`}
+                      className={`ml-3 text-[${
+                        router.pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
                     >
                       Study Material
                     </span>
                   </label>
                 </Link>
-
 
                 <Link
                   href="/seta/profile"
@@ -228,20 +220,17 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${router.pathname == "/Schedule" ? "#E1348B" : ""
-                        }]`}
+                      className={`ml-3 text-[${
+                        router.pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
                     >
                       Homework
                     </span>
@@ -258,20 +247,17 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${router.pathname == "/Schedule" ? "#E1348B" : ""
-                        }]`}
+                      className={`ml-3 text-[${
+                        router.pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
                     >
                       Chat
                     </span>
@@ -287,20 +273,17 @@ const Sidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === ""
-                          ? "shadow-white"
-                          : ""
+                        router.pathname === "" ? "shadow-white" : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === ""
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
                       }}
                     />{" "}
                     <span
-                      className={`ml-3 text-[${router.pathname == "/Schedule" ? "#E1348B" : ""
-                        }]`}
+                      className={`ml-3 text-[${
+                        router.pathname == "/Schedule" ? "#E1348B" : ""
+                      }]`}
                     >
                       Profile
                     </span>
