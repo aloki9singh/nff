@@ -354,7 +354,7 @@ const Aboutus = () => {
                   <input
                     type="text"
                     id="name"
-                    className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-0 w-[80%] md:w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-0 w-[80%] md:w-[28rem] m-auto"
                     placeholder="Your Name"
                     required
                   />
