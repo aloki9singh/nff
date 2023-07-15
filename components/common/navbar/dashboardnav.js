@@ -27,12 +27,15 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
         <div className="flex items-center">
             <Link
               href="/"
-              className="uppercase hover:border-b w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
+              className="uppercase w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
             >
+        <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
+          {heading}
+        </h1>
               <Image
                 src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
                 alt="logo"
-                className="w-full h-full justify-center object-contain
+                className="w-full hidden max-[768px]:block h-full justify-center object-contain
               "
                 width={100}
                 height={100}
@@ -97,7 +100,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                                       {user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
-                                      Class {userProfile.class}
+                                      Class {userProfile?.class}
                                     </p>
                                   </div>
                                 </div>

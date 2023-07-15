@@ -281,13 +281,13 @@ const Chat = ({
 
           <div className="flex gap-4">
             <div
-              className="p-1 rounded-[0.9rem]"
+              className="p-1 rounded-[10px] text-2xl"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             >
               <MdOutlineCall />
             </div>
             <div
-              className="p-1 rounded-[0.9rem]"
+              className="p-1 rounded-[10px] text-2xl"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             >
               <MdVideoCall />
@@ -341,12 +341,12 @@ const Chat = ({
             <div
               className="rounded-[5px]"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
-              // onClick={}
+            // onClick={}
             >
               {/* */}
               <label
                 for="formFileSm"
-                className="inline-block text-neutral-700 dark:text-neutral-200 mb-0 p-1"
+                className="inline-block text-2xl dark:text-neutral-200 mb-0 p-1"
               >
                 <MdOutlineInsertDriveFile />
               </label>
@@ -359,20 +359,20 @@ const Chat = ({
               />
             </div>
             <div
-              className="p-1 rounded-[5px]"
+              className="p-1 text-2xl rounded-[5px]"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             >
               <MdAttachFile />
             </div>
             <div
-              className="p-1 rounded-[5px]"
+              className="p-1 rounded-[5px] text-2xl"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             >
               <MdMic />
             </div>
           </div>
           <div
-            className="p-1 rounded-[5px] flex items-center justify-center"
+            className="p-1 rounded-[5px] text-2xl flex items-center justify-center"
             onClick={() => handleClick()}
             style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
           >
@@ -394,40 +394,42 @@ const Chat = ({
             >
               <input
                 placeholder="Type Message Here"
-                className="outline-none  p-2 w-full"
+                className="outline-none rounded-l-[10px] w-full border-r-0"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 type="text"
                 name="message"
                 style={{
-                  backgroundColor: "#505057",
-                  borderTopLeftRadius: "10px",
-                  borderBottomLeftRadius: "10px",
+                  background: "linear-gradient(0deg, #505057, #505057),linear-gradient(0deg, rgba(255, 255, 255, 0.43), rgba(255, 255, 255, 0.43))"
                 }}
               />
-              <div
-                onClick={() => {
-                  setShowRecorder(true);
-                }}
-                className="flex items-center p-2"
-                style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
-              >
-                <MdMic />
+              <div className="flex relative"  style={{
+                  background: "linear-gradient(0deg, #505057, #505057),linear-gradient(0deg, rgba(255, 255, 255, 0.43), rgba(255, 255, 255, 0.43))"
+                }}>
+                <div
+                  onClick={() => {
+                    setShowRecorder(true);
+                  }}
+                  className="flex items-center p-2 mr-2 h-[34px] rounded-[10px] text-2xl my-auto"
+                  style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
+                >
+                  <MdMic />
+                </div>
               </div>
-            </div>
 
-            <button
-              type="submit"
-              className="flex items-center justify-center p-2 pl-4 h-full disabled:opacity-70"
-              style={{
-                backgroundColor: "#E1348B",
-                borderTopRightRadius: "10px",
-                borderBottomRightRadius: "10px",
-              }}
-              disabled={message === ""}
-            >
-              <MdSend style={{ transform: "rotate(-20deg)" }} />
-            </button>
+              <button
+                type="submit"
+                className="flex items-center justify-center p-3 text-2xl disabled:opacity-70"
+                style={{
+                  backgroundColor: "#E1348B",
+                  borderTopRightRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                }}
+                disabled={message === ""}
+              >
+                <MdSend style={{ transform: "rotate(-20deg)" }} />
+              </button>
+            </div>
           </form>
         ) : (
           <AudioRecorder
