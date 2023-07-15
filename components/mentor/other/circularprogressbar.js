@@ -6,8 +6,9 @@ import {
 } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function CirProgress() {
-  const percentage = 60;
+export default function CirProgress({percentage}) {
+  const calculatedPercentage = Math.round(percentage);
+
 
   return (
     <div className=" h-40 mx-auto mb-10 rounded-2xl bg-[#373A41] text-white lg:my-8">
@@ -34,18 +35,18 @@ export default function CirProgress() {
       <div className="w-[90%] mx-auto">
         <div className="w-28 h-28  ml-24 -mb-9">
           <CircularProgressbarWithChildren
-            value={80}
+            value={percentage}
             styles={buildStyles({
               pathColor: '#A145CD',
-              trailColor: 'gray',
+              trailColor: '#E1348B',
               strokeLinecap: 'round',
             })}
           >
             <CircularProgressbar
-              value={percentage}
-              text={`${percentage}%`}
+              value={100-calculatedPercentage}
+              text={`${calculatedPercentage}%`}
               styles={buildStyles({
-                pathColor: '#E1348B',
+                pathColor: '#A145CD',
                 trailColor: 'transparent',
                 strokeLinecap: 'round',
                 textColor: '#fff',

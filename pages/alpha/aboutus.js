@@ -322,7 +322,7 @@ const Aboutus = () => {
                       );
                     }
                   })}
-                {/* 
+              
                 <div className='mr-8 max-w-fit flex-none   md:pb-4'>
                   <a href='#' className='space-y-4'>
                     <div className='aspect-w-max aspect-h-ma'>
