@@ -3,7 +3,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 import { db } from "@/config/firebaseconfig";
-import NavbarSecond from "@/components/common/navbar/admintopbar";
+import Dashboardnav from "@/components/common/navbar/dashboardnav"
 import Sidebar from "@/components/common/sidebar/sidebar";
 import Image from "next/image";
 import { contactFn } from "@/lib/api";
@@ -95,7 +95,7 @@ const Aboutus = () => {
 
   return (
     <>
-      <NavbarSecond buttonVis="hidden" title="About Us" />
+      <Dashboardnav title="About Us" />
       <div className="mt-8 md:mt-0 h-full">
         <div className="w-full h-full flex flex-col">
           <div className="flex justify-center items-center flex-col">
@@ -354,7 +354,7 @@ const Aboutus = () => {
                   <input
                     type="text"
                     id="name"
-                    className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-0 w-[80%] md:w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-0 w-[80%] md:w-[28rem] m-auto"
                     placeholder="Your Name"
                     required
                   />
