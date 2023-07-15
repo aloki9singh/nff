@@ -282,7 +282,7 @@ function StudentProfile() {
                     </div>
                     <div className="w-full h-[90%] sd:mt-4 ">
                       {" "}
-                      <StudentProfileCirProgress />
+                      <StudentProfileCirProgress percentage={0} />
                     </div>
                   </div>
                 </div>
