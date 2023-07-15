@@ -108,7 +108,7 @@ export default function Payment() {
     </>
   );
 }
-
+// 
 const Hero = ({ onClick }) => {
   return (
     <div className="relative z-10 flex flex-col md:flex-row mt-10 items-center  max-w-6xl justify-evenly mx-auto">
