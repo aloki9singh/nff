@@ -64,8 +64,8 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
 
       <Avatar alt="Profile-Picture" src={chat.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
 
-      <div className="flex flex-col flex-1 items-start">
-        <h1>{chat.name}</h1>
+      <div className="flex flex-col flex-1 items-start overflow-hidden">
+        <h1 className=" truncate w-4/5 " >{chat.name}</h1>
         <p className="text-sm">{chat.lastMessage}</p>
       </div>
       <div className="flex flex-col justify-end items-center">
@@ -104,7 +104,8 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
 
   return (
     <div
-      className="flex flex-col w-full rounded-[1rem] gap-6"
+      className="flex flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6"
+
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
       <div
@@ -120,7 +121,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
           onChange={(e) => handleChange(e)}
           style={{ backgroundColor: "#505057", color: "white" }}
         />
-        <MdSearch style={{ color: "white", marginLeft: "0.8rem" }} />
+        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize:"25px" }} />
       </div>
 
       <div className="sideBarContainer flex  flex-col gap-4 relative">

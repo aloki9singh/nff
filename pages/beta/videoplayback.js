@@ -11,7 +11,16 @@ import "react-circular-progressbar/dist/styles.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { db } from "@/config/firebaseconfig";
-import { collection, query, where, getDocs, getDoc, updateDoc, doc, arrayUnion } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  updateDoc,
+  doc,
+  arrayUnion,
+} from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseVideoPlayer from "@/components/student/courses/videoplayer";
 import { useMediaQuery } from "react-responsive";
@@ -26,6 +35,17 @@ const VideoPlayer = ({ videoUrl }) => {
   );
 };
 
+async function checkUserJoinedCourse(courseId, userId) {
+  const groupRef = doc(db, "chatGroups", courseId);
+  const groupDoc = await getDoc(groupRef);
+  const groupData = groupDoc.data();
+  if (groupData.members.includes(userId)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export default function Videos() {
   const [course, setCourse] = useState([]);
   const [modules, setModules] = useState([]);
@@ -35,6 +55,18 @@ export default function Videos() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
+  const [isJoined, setIsJoined] = useState(false);
+  const { user, userProfile } = useAuthContext();
+
+  useEffect(() => {
+    const checkJoined = async () => {
+      const isJoined = await checkUserJoinedCourse(course.id, user.uid);
+      setIsJoined(isJoined);
+    };
+    if (course.id) {
+      checkJoined();
+    }
+  }, [course.id, user.uid]);
 
   const router = useRouter();
   const title = router.query.title ? router.query.title : "Basics of C++";
@@ -87,20 +119,19 @@ export default function Videos() {
   }, [isMediumScreen]);
 
   //securedroute
-  const { user, userProfile } = useAuthContext();
+
   if (!user || !userProfile) {
     router.push("/");
   }
-
 
   async function joinCourseChat() {
     const groupRef = doc(db, "chatGroups", course.id);
 
     await updateDoc(doc(collection(db, "chatGroups"), course.id), {
-      members: arrayUnion(user.uid)
-    })
+      members: arrayUnion(user.uid),
+    });
 
-    alert("You have joined the course")
+    alert("You have joined the course");
   }
 
   console.log(course);
@@ -139,7 +170,13 @@ export default function Videos() {
               <p className="opacity-30">{course?.desc}</p>
             </div>
           </div>
-          <button className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md" onClick={joinCourseChat} >Join</button>
+          <button
+            className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
+            onClick={joinCourseChat}
+            disabled={isJoined}
+          >
+            {isJoined ? "Joined" : "Join"}
+          </button>
           <div className="w-28 md:w-14 md:mr-8 flex items-center justify-center ">
             <CircularProgressbarWithChildren
               value={100}
@@ -167,9 +204,11 @@ export default function Videos() {
         <div className="flex mx-4 md:mx-8 my-6">
           <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
             <div className="md:col-span-5 col-span-7">
-              {videoUrl ? <video src={videoUrl} controls className="max-h-[30rem]" /> : <p>
-                No video selected yet or video not found
-              </p>}
+              {videoUrl ? (
+                <video src={videoUrl} controls className="max-h-[30rem]" />
+              ) : (
+                <p>No video selected yet or video not found</p>
+              )}
               {/* <div
                 className="md:mt-0 mt-10"
                 style={{

@@ -21,12 +21,27 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
   const { user,userProfile } = useAuthContext()
 
   return (  
-    <nav className="border-b-[1px] border-[#728095] px-0 md:py-2 w-full  md:bg-[#2E3036] bg-[#141518] py-5  md:rounded-tl-[50px] ">
+    <nav className="border-b-[1px] border-[#728095] px-0 md:py-2 w-full  md:bg-[#2E3036] bg-[#141518] py-5  ">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
-          <p className="text-white font-Inter text-2xl flex justify-start md:pl-5 ml-[-15px]">
-            {heading}
-          </p>
+        <div className="flex items-center">
+            <Link
+              href="/"
+              className="uppercase w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
+            >
+        <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
+          {heading}
+        </h1>
+              <Image
+                src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
+                alt="logo"
+                className="w-full hidden max-[768px]:block h-full justify-center object-contain
+              "
+                width={100}
+                height={100}
+              />
+            </Link>
+          </div>
           {/* <RxHamburgerMenu className="text-white text-3xl block md:hidden" /> */}
         </div>
         <div className="flex items-center justify-between">
@@ -85,7 +100,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                                       {user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
-                                      Class {userProfile.class}
+                                      Class {userProfile?.class}
                                     </p>
                                   </div>
                                 </div>

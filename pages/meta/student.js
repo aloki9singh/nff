@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MentorSidebar from "@/components/common/sidebar/mentor";
@@ -9,72 +9,79 @@ import { useMediaQuery } from "react-responsive";
 
 function MentorStudent() {
   const [count, setCount] = useState(1);
-  // const { data } = useSelector((state) => state.authManagerMentor);
-  const [studentData, setStudentData] = useState();
+  const [studentData, setStudentData] = useState([]);
   const [initialcount, setinitialCount] = useState(0);
   const [gap, setGap] = useState(10);
   const [hide, setHide] = useState(true);
-  const [id, setId] = useState();
-  const [filterData, setFilterData] = useState();
-  let [searchstate, setsearchstate] = useState();
+  const [id, setId] = useState("");
+  const [filterData, setFilterData] = useState([]);
+  const [searchstate, setsearchstate] = useState("");
+
   const router = useRouter();
-  let searchfun = (e) => {
-    setsearchstate(e.target.value);
-  };
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
 
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
+  const fetchStudentData = useCallback(() => {
+    fetch("/api/signup")
+      .then((response) => response.json())
+      .then((data) => {
+        const students = data.users.filter((ele) => ele.role === "student");
+        setFilterData(students);
+        setStudentData(students);
+      });
+  }, []);
+
+  const filterStudentData = useCallback(() => {
+    return filterData.filter((ele) => ele.displayName.includes(searchstate));
+  }, [filterData, searchstate]);
+
+  const filteredStudentData = useMemo(() => filterStudentData(), [
+    filterData,
+    filterStudentData,
+  ]);
 
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-    setStudentData(
-      filterData &&
-        filterData.filter((ele) => {
-          return ele.displayName.includes(searchstate);
-        })
-    );
-  }, [searchstate, isMediumScreen, filterData]);
+    setStudentData(filteredStudentData.slice(initialcount, gap));
+  }, [
+    isMediumScreen,
+    filteredStudentData,
+    initialcount,
+    gap,
+    setStudentData,
+  ]);
+
+  useEffect(() => {
+    fetchStudentData();
+  }, [fetchStudentData]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
 
-  useEffect(() => {
-    fetch("/api/signup")
-      .then((response) => response.json())
-      .then((data) => {
-        setFilterData(
-          data.users.filter((ele) => {
-            return ele.role == "student";
-          })
-        );
-        setStudentData(
-          data.users.filter((ele) => {
-            return ele.role == "student";
-          })
-        );
-      });
-  }, []);
-  function handleChange(e) {
+  const toggleSideBar = () => {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  };
+
+  const handleInputChange = (e) => {
+    setsearchstate(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setId(e.target.value);
-  }
-  function handleSubmit() {
     fetch(`/api/signup/${id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
       .then((data) => alert(data.msg));
-  }
-  function handleClick(e) {
-    const totalPage = Math.ceil(studentData.length / 10);
+  };
+
+  const handleClick = (e) => {
+    const totalPage = Math.ceil(filterData.length / 10);
 
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
@@ -102,7 +109,8 @@ function MentorStudent() {
         }
         break;
     }
-  }
+  };
+
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] ">
@@ -131,8 +139,8 @@ function MentorStudent() {
             </div>
 
             {/* Dropdown bar */}
-            <div className="gap-5 mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white">
-              <div className="flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2">
+            <div className="gap-5 mx-8 max-[700px]:mx-4 md:mt-0  text-white">
+              <div className="flex flex-wrap items-center justify-between w-[99%] m-5 space-y-2">
                 <div className="md:flex items-center rounded-lg gap-4 justify-around ">
                   <div className="flex  min-w-[200px] space-x-4">
                     <select className="block w-fit p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
@@ -173,7 +181,7 @@ function MentorStudent() {
                         placeholder="Search Student..."
                         required
                         value={searchstate}
-                        onChange={searchfun}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </form>
@@ -218,53 +226,6 @@ function MentorStudent() {
                   )}
                 </div>
               </div>
-
-              {/* <div className="  md:w-5/6 ">
-                <BasicDetails />
-                   
-                <div className="md:flex gap-5">
-                  <div className="md:w-1/2">
-                    <div>
-                      {" "}
-                      <LeaderBoardMentor />
-                      <div className="bg-[#373A41] rounded-[20px] p-5 px-8 my-5 space-y-2 text-white mt-[-12px]">
-                        <div className="py-2 text-center">Homework Status</div>
-                        <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
-                          <div>To be Marked</div>
-                          <div className=" border border-[#A145CD] rounded-[5px] px-1">
-                            {" "}
-                            29
-                          </div>{" "}
-                        </div>
-                        <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
-                          <div>Marked</div>
-                          <div className=" border border-[#A145CD] rounded-[5px] px-1">
-                            {" "}
-                            2
-                          </div>{" "}
-                        </div>
-                      </div>
-                    </div>
-                    <div> </div>
-                  </div>
-                  <div className="md:w-1/2">
-                    <div className="bg-[#373A41] rounded-[20px] pt-1">
-                      {" "}
-                      <CirProgress />
-                    </div>
-                    <div className="bg-[#373A41] rounded-[20px] mb-10 mt-[-20px] md:mt-0">
-                      {" "}
-                      <MentorChatWidget />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className=" md:mt-0 mt-[-20px] ">
-                <Calender />
-                <div className="bg-[#373A41] rounded-[20px] md:pb-5 mt-[-20px] md:[mt-0] ">
-                  <TaskList />
-                </div>
-              </div> */}
             </div>
 
             {/* table */}
@@ -282,39 +243,38 @@ function MentorStudent() {
                     </tr>
                   </thead>
                   <tbody className="flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6">
-                    {studentData &&
-                      studentData.slice(initialcount, gap).map((e, i) => (
-                        <tr
-                          className="flex items-center w-full font-medium text-xs justify-around "
-                          key={i}
-                        >
-                          <td className="flex items-center gap-2 w-[16.6%] ">
-                            <Image
-                              src={
-                                e.photoURL
-                                  ? e.photoURL
-                                  : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
-                              }
-                              alt="img"
-                              height={25}
-                              width={25}
-                              className="rounded-full h-8  object-contain inline"
-                            />
-                            {e.displayName}
-                          </td>
-                          <td className="w-[16.6%] ">ID : {e.uid}</td>
-                          <td className="w-[16.6%] text-center ">{e?.class}</td>
-                          <td className="w-[16.6%] text-center md:block hidden">
-                            {e?.active}
-                          </td>
-                          <td className="w-[16.6%] text-center md:block hidden">
-                            {e?.courses}
-                          </td>
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]">
-                            <Link href="">View Profile</Link>
-                          </td>
-                        </tr>
-                      ))}
+                    {studentData.map((e, i) => (
+                      <tr
+                        className="flex items-center w-full font-medium text-xs justify-around "
+                        key={i}
+                      >
+                        <td className="flex items-center gap-2 w-[16.6%] ">
+                          <Image
+                            src={
+                              e.photoURL
+                                ? e.photoURL
+                                : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
+                            }
+                            alt="img"
+                            height={25}
+                            width={25}
+                            className="rounded-full h-8  object-contain inline"
+                          />
+                          {e.displayName}
+                        </td>
+                        <td className="w-[16.6%] ">ID : {e.uid}</td>
+                        <td className="w-[16.6%] text-center ">{e?.class}</td>
+                        <td className="w-[16.6%] text-center md:block hidden">
+                          {e?.active}
+                        </td>
+                        <td className="w-[16.6%] text-center md:block hidden">
+                          {e?.courses}
+                        </td>
+                        <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]">
+                          <Link href="">View Profile</Link>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -390,4 +350,5 @@ function MentorStudent() {
     </>
   );
 }
+
 export default MentorStudent;

@@ -20,13 +20,15 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
         <div>
           <div>
             <div>
-              <Image
-                src="/pagesgraphics/common/createcategory/Neatskills.svg"
-                width={150}
-                height={100}
-                alt="logo"
-                className="mb-6 md:block hidden"
-              />
+              
+                <Image
+                  src="/pagesgraphics/common/createcategory/Neatskills.svg"
+                  width={150}
+                  height={100}
+                  alt="logo"
+                  className="mb-6 md:block hidden"
+                />
+             
               <div
                 className=" flex justify-end w-full md:hidden  "
                 onClick={() => toggleSideBar()}
@@ -329,7 +331,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           />{" "}
                           <span
                             className={`ml-3 flex text-[${
-                              router.pathname == "/beta/chats" ? "#E1348B" : ""
+                              router.pathname == "/beta/logout" ? "#E1348B" : ""
                             }]`}
                           >
                             Logout

@@ -101,14 +101,14 @@ export default function Payment() {
     <>
       <div className="md:h-screen flex flex-col items-center bg-[#2D2E35] text-white font-Inter">
         <StepProgress currentStep={currentStep} />
-        {currentStep == 1 && <ChoosePlan updatePage={updatePage} />}
-        {currentStep == 4 && <Hero onClick={makePayment} />}
-        {currentStep == 0 && <PaymentCompleted />}
+        {currentStep == 0 && <ChoosePlan updatePage={updatePage} />}
+        {currentStep == 1 && <Hero onClick={makePayment} />}
+        {currentStep == 2 && <PaymentCompleted />}
       </div>
     </>
   );
 }
-
+// 
 const Hero = ({ onClick }) => {
   return (
     <div className="relative z-10 flex flex-col md:flex-row mt-10 items-center  max-w-6xl justify-evenly mx-auto">
