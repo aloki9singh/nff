@@ -18,7 +18,6 @@ export default function CoursesMain({ coursesData }) {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -45,7 +44,7 @@ export default function CoursesMain({ coursesData }) {
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
-      <div className="bg-[#2e3036] rounded-l-[50px] max-[768px]:rounded-none w-full ">
+      <div className="bg-[#2e3036] rounded-l-[50px] max-[768px]:rounded-none w-screen">
         <Dashboardnav heading="Courses" toggleSideBar={toggleSideBar}  />
         <CourseHeader />
         <CourseList courses={courses} />
