@@ -114,7 +114,7 @@ function MentorDashboard() {
                   </div>
                   <div className="md:w-1/2">
                     <div className="bg-[#373A41] rounded-[20px] pt-1">
-                      <CirProgress />
+                      <CirProgress percentage={0} />
                     </div>
                     <div className="bg-[#373A41] rounded-[20px] mb-10 mt-[-20px] md:mt-0">
                       <MentorChatWidget />

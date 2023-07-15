@@ -20,7 +20,7 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
           <div className={styles.mainList}>
             {cardInfo &&
               cardInfo
-                .slice(0, 3)
+                .slice(3, 6)
                 .map((info, i) => (
                   <CourseCard
                     key={i}
