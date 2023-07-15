@@ -104,7 +104,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
 
   return (
     <div
-      className="flex flex-col w-full rounded-[1rem] gap-6"
+      className="flex flex-col w-full rounded-[1rem] w-[30%] gap-6 min-w-[250px]"
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
       <div
@@ -120,7 +120,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
           onChange={(e) => handleChange(e)}
           style={{ backgroundColor: "#505057", color: "white" }}
         />
-        <MdSearch style={{ color: "white", marginLeft: "0.8rem" }} />
+        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize:"25px" }} />
       </div>
 
       <div className="sideBarContainer flex  flex-col gap-4 relative">
