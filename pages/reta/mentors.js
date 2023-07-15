@@ -24,11 +24,15 @@ function AdminStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const [activeTab, setActiveTab] = useState('mentor');
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+  const handleTabClick = tab => {
+    setActiveTab(tab);
+  };
 
   const activeTabClass = 'w-10 h-10 bg-[#A145CD] rounded-xl';
   const tabClass = 'w-10 h-10 rounded-xl';
@@ -83,17 +87,36 @@ function AdminStudent() {
           )}
 
           <div className='flex-grow '>
-            <div className='flex md:pt-0 pt-2  justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]'>
+            <div className='flex md:pt-0 pt-2 justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]'>
               <AdminTopbar heading='Review' toggleSideBar={toggleSideBar} />
             </div>
-            <div className='  ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white'>
-              Mentor : 199
+
+            <div className=' flex gap-2 mt-10'>
+              <div
+                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
+                  activeTab === 'mentor' ? 'cursor-pointer' : ''
+                }`}
+                onClick={() => handleTabClick('mentor')}>
+                Mentor : 199
+              </div>
+
+              <div
+                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
+                  activeTab === 'student' ? 'cursor-pointer' : ''
+                }`}
+                onClick={() => handleTabClick('student')}>
+                Student : 199
+              </div>
             </div>
+
             {/* Dropdown bar */}
             <div className='gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white'>
               <div className='flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2'>
-                <div className='md:flex items-center rounded-lg gap-4 justify-around '>
-                  Total Mentor : 199
+                <div
+                  className='md:flex items-center rounded-lg gap-4 justify-around'
+                  onClick={() => setActiveTab('mentor')}>
+                  Total {activeTab === 'mentor' ? 'Mentors' : 'Students'}:{' '}
+                  {activeTab === 'mentor' ? 199 : 198}
                 </div>
                 <div className='flex justify-between'>
                   <form className=' items-center hidden md:block '>
@@ -117,7 +140,7 @@ function AdminStudent() {
                         type='text'
                         id='voice-search'
                         className='bg-[#414348]  border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-[#414348] dark:border-gray-600 dark:placeholder-white placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                        placeholder='Search Mentor...'
+                        placeholder='Search '
                         required
                         value={searchstate}
                         onChange={searchfun}
@@ -188,21 +211,37 @@ function AdminStudent() {
             </div>
 
             {/* table */}
+
             <div className='ms-[2%] me-[2%] h-[712px] bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto mb-4 text-white'>
               <div className=''>
                 <table className='w-full'>
                   <thead className='items-center border-b'>
                     <tr className='flex font-semibold justify-around p-5'>
                       <th className='w-[14.2%]'>Photo</th>
-                      <th className='w-[14.2%]'>Mentor Name</th>
-                      <th className='w-[14.2%]'>ID</th>
-                      <th className='w-[14.2%]'>Class</th>
-                      <th className='w-[14.2%] md:block hidden'>Group</th>
-                      <th className='w-[14.2%] md:block hidden'>Status</th>
-                      <th className='w-[14.2%]  md:pl-10'>Profile</th>
+
+                      {activeTab === 'student' && (
+                        <>
+                          <th className='w-[14.2%]'>studnet Name</th>
+                          <th className='w-[14.2%]'>ID</th>
+                          <th className='w-[14.2%]'>class</th>
+                          <th className='w-[14.2%] md:block hidden'>Group</th>
+                          <th className='w-[14.2%] md:block hidden'>Status</th>
+                        </>
+                      )}
+                      {activeTab === 'mentor' && (
+                        <>
+                          <th className='w-[14.2%]'>Mentor Name</th>
+
+                          <th className='w-[14.2%]'>ID</th>
+                          <th className='w-[14.2%]'>subject</th>
+                          <th className='w-[14.2%] md:block hidden'>email</th>
+                          <th className='w-[14.2%] md:block hidden'>Grade</th>
+                        </>
+                      )}
+                      <th className='w-[14.2%] md:pl-10'>Profile</th>
                     </tr>
                   </thead>
-                  <tbody className='flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-5   '>
+                  <tbody className='flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-5'>
                     <tr className='flex items-center w-full font-medium text-xs justify-between'>
                       <td className='w-[14.2%]'>
                         <div className='flex items-center justify-center first-letter md:mr-16'>
@@ -215,29 +254,46 @@ function AdminStudent() {
                           />
                         </div>
                       </td>
-                      <div className=' md:ml-6'>
-                        <td className='w-[14.2%] '>John Doe</td>
+                      <div className='md:ml-6'>
+                        <td className='w-[14.2%]'>John Doe</td>
                       </div>
-                      <div className=' md:ml-32'>
-                        <td className='w-[14.2%] '> 123456</td>
+                      <div className='md:ml-32'>
+                        <td className='w-[14.2%]'> 123456</td>
                       </div>
-                      <div className='  md:ml-36'>
+                      <div className='md:ml-36 md:mr-10 '>
                         <td className='w-[14.2%] text-center'> 10</td>
                       </div>
-                      <div className='  md:ml-44'>
-                        <td className='w-[14.2%] text-center md:block hidden'>
-                          A
-                        </td>
-                      </div>
-                      <div className=' md:ml-36'>
-                        <td className='w-[14.2%]  mr-4 text-center  text-[#E1348B] md:block hidden'>
-                          Active
-                        </td>
-                      </div>
-                      <div className=' md:ml-36 md:mr-1'>
-                        <td className='w-[14.2%]  mr-2 text-right pr-[3%]'>
-                          <Link href='' className=' text-[#E1348B]'>
-                            {' '}
+                      {activeTab === 'mentor' && (
+                        <>
+                          <div className='md:ml-20  '>
+                            <td className='w-[14.2%] text-center md:block hidden'>
+                              123@gmail.com
+                            </td>
+                          </div>
+                          <div className='md:ml-20'>
+                            <td className='w-[14.2%] mr-4 text-center text-[#E1348B] md:block hidden'>
+                              Active
+                            </td>
+                          </div>
+                        </>
+                      )}
+                      {activeTab === 'student' && (
+                        <>
+                          <div className='md:ml-32 '>
+                            <td className='w-[14.2%] text-center md:block hidden'>
+                              2022
+                            </td>
+                          </div>
+                          <div className='md:ml-36 md:mr-2'>
+                            <td className='w-[14.2%] mr-4 text-center text-[#E1348B] md:block hidden'>
+                              A+
+                            </td>
+                          </div>
+                        </>
+                      )}
+                      <div className='md:ml-36 md:mr-1'>
+                        <td className='w-[14.2%] mr-2 text-right pr-[3%]'>
+                          <Link href='' className='text-[#E1348B]'>
                             Profile
                           </Link>
                         </td>
