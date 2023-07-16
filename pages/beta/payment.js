@@ -4,6 +4,7 @@ import ChoosePlan from "@/components/student/payment/plan";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useRouter } from "next/router";
 import {db} from "@/config/firebaseconfig"
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const Payment = () => {
   
@@ -36,7 +37,7 @@ const Payment = () => {
   return (
     <>
       <style>{styles}</style>
-      <DashboardNav />
+      <DashboardNav  />
       <div className="w-full bg-[#0D0E14]">
         <div className="text-center text-white text-lg pt-[12rem]">
           <h1 className="text-[2.2rem] font-bold">Subscribe</h1>
@@ -50,4 +51,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default withStudentAuthorization(Payment);
