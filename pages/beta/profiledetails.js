@@ -8,7 +8,7 @@ import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { getUserName } from "@/lib/context/AuthContext";
+import { getUserName, useAuthContext } from "@/lib/context/AuthContext";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 
 const options = ["8", "9", "10", "11", "12"];
@@ -16,18 +16,7 @@ const options = ["8", "9", "10", "11", "12"];
 export default function ProfileDetails() {
   const router = useRouter();
 
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        // User is signed out
-        // ...
-        setUser(null);
-      }
-    });
-  }, []);
+  const { user } = useAuthContext()
 
   const {
     register,
@@ -35,7 +24,40 @@ export default function ProfileDetails() {
     control,
     setValue,
     formState: { errors },
-  } = useForm();
+    reset
+  } = useForm({
+    defaultValues: {
+    }
+  });
+
+  useEffect(() => {
+
+    const getInitialProfile = async () => {
+      const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const initialProfile = {
+          ...data,
+          studentFirstName: data.name.first,
+          studentMiddleName: data.name.middle,
+          studentLastName: data.name.last,
+          fatherFirstName: data.fatherName.first,
+          fatherMiddleName: data.fatherName.middle,
+          fatherLastName: data.fatherName.last,
+          motherFirstName: data.motherName.first,
+          motherMiddleName: data.motherName.middle,
+          motherLastName: data.motherName.last,
+          ReactDatepicker: data.dob,
+        }
+        reset(initialProfile)
+      }
+    }
+
+    getInitialProfile()
+
+  }, [user.uid, reset])
+
 
   const onSubmit = async (data) => {
     console.log("data", data);
@@ -46,7 +68,7 @@ export default function ProfileDetails() {
 
     const username =
       data.studentFirstName[0] +
-      data.studentLastName[0] +
+      (data.studentLastName[0] || "") +
       data.schoolId +
       "#" +
       data.rollNo;
@@ -516,7 +538,7 @@ export default function ProfileDetails() {
             <Controller
               control={control}
               name="aadhaarCard"
-              render={({ field: { onChange, onBlur } }) => (
+              render={({ field: { onChange, onBlur, } }) => (
                 <IDdraganddrop
                   setValue={setValue}
                   name="aadhaarCard"

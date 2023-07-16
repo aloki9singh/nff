@@ -340,7 +340,7 @@ const Aboutus = () => {
                       Eleanor Pena
                     </h2>
                   </a>
-                </div> 
+                </div>
               </div>
             </div>
           </div>
