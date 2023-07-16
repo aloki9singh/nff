@@ -33,20 +33,20 @@ const InActiveComp = () => {
         </div>
         <div className="w-[100%] flex-wrap md:grid md:grid-cols-3 rounded-[30px] md:space-y-0 space-y-5  gap-3">
           {myCourse &&
-            myCourse.slice(0,6).map((e) => (
+            myCourse.slice(0, 6).map((e) => (
               <div
                 className="border bg-black rounded-[30px] p-5 md:py-5 "
                 key={e.id}
               >
                 <div className="flex justify-between">
                   <div className="my-auto">
-                  <Image
-                    width={110}
-                    height={110}
-                    alt={"img"}
-                    src={e.banner}
-                    className="w-12 h-12"
-                  />
+                    <Image
+                      width={110}
+                      height={110}
+                      alt={"img"}
+                      src={e.banner}
+                      className="w-12 h-12"
+                    />
                   </div>
                   <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
                     {e.lectures} Lessons
@@ -62,7 +62,10 @@ const InActiveComp = () => {
                 </p>
 
                 <div className="text-right">
-                  <Link href={"/beta/coursedetail"}>
+                  <Link href={{
+                    pathname: "/beta/coursedetail",
+                    query: { title: e.title }
+                  }}>
                     <button className="mt-2 text-xs  border-pink p-2 border">
                       Explore
                     </button>
@@ -72,8 +75,6 @@ const InActiveComp = () => {
             ))}
         </div>
       </div>
-      
-     
     </div>
   );
 };
