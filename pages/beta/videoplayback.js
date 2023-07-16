@@ -168,7 +168,7 @@ async function checkUserJoinedCourse(courseId, userId) {
             />
             <div className="text-white mx-2">
               <h2 className="">{course?.title}</h2>
-              <p className="opacity-30">{course?.desc}</p>
+              <p className="opacity-30">{course?.category}</p>
             </div>
           </div>
           <button
@@ -178,7 +178,7 @@ async function checkUserJoinedCourse(courseId, userId) {
           >
             {isJoined ? "Joined" : "Join"}
           </button>
-          <div className="w-28 md:w-14 md:mr-8 flex items-center justify-center ">
+          {/* <div className="w-28 md:w-14 md:mr-8 flex items-center justify-center ">
             <CircularProgressbarWithChildren
               value={100}
               styles={buildStyles({
@@ -199,16 +199,18 @@ async function checkUserJoinedCourse(courseId, userId) {
                 })}
               />
             </CircularProgressbarWithChildren>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex mx-4 md:mx-8 my-6">
           <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
-            <div className="md:col-span-5 col-span-7">
+            <div className="md:col-span-5 col-span-7 py-5">
               {videoUrl ? (
-                <video src={videoUrl} controls className="max-h-[30rem]" />
+                <video src={videoUrl} controls className="max-h-[30rem] pb-5" />
               ) : (
-                <p>No video selected yet or video not found</p>
+                <div className="h-[300px] text-gray-500  items-center justify-center flex text-center">
+                  <div>No video selected yet or video not found</div>
+                </div>
               )}
               {/* <div
                 className="md:mt-0 mt-10"
