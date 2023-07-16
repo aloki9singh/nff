@@ -159,7 +159,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className="flex overflow-y-hidden">
+      <div className="flex overflow-hidden items-stretch h-screen ">
         {/* {chats.length === 0 && <NoJoinedCoursesModal />} */}
         {isMobileScreen && (
           <div
@@ -177,15 +177,15 @@ const Chat = () => {
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
-        <div className="w-full h-screen ">
+        <div className="w-full flex-col flex ">
           <div>
             {/* <Navbar /> */}
             <Dashboardnav heading="Chats" toggleSideBar={toggleSideBar} />
             {/* <hr className="hidden lg:block opacity-50 mt-3 " /> */}
           </div>
           <div
-            className="p-4 justify-between flex flex-row gap-4  bg-[#2f3036] "
-            style={{ height: "calc(90vh  )" }}
+            className="p-4 justify-between flex-1 flex flex-row gap-4 bg-[#2f3036] "
+            // style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
               currReciever={currReciever}
