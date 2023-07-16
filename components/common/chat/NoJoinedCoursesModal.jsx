@@ -8,7 +8,7 @@ export default function NoJoinedCoursesModal() {
   const router = useRouter();
 
   function closeModal() {
-    // setIsOpen(false)
+    setIsOpen(false);
     router.push("/beta/courseoverview");
   }
 
@@ -67,7 +67,17 @@ export default function NoJoinedCoursesModal() {
                     </p>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 flex items-center gap-4">
+                    <button
+
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent text-primary px-4 py-2 text-sm font-semibold  hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
+                      onClick={()=>{
+                        router.back();
+                      }}
+                    >
+                      Go Back
+                    </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-primary/90 px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
