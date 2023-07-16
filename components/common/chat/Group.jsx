@@ -75,7 +75,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
 
   return (
     <div
-      className="user-container overflow-auto no-scrollbar"
+      className="user-container overflow-auto no-scrollbar md:max-w-sm"
       style={{
         backgroundColor: "#373A41",
         color: "white",
