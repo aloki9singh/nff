@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const CourseCard = ({ title, desc, level, sessions, language, category, banner }) => {
 	const router = useRouter()
 	return (
-		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] h-[17rem] w-[18rem]  py-[10px] px-4 md:p-5 flex flex-col justify-around">
+		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] h-[17rem] min-w-[375px] py-[10px] px-4 md:p-5 flex flex-col justify-around">
 			<div className="flex justify-between ">
 				<div>
 					<Image
@@ -26,9 +26,9 @@ const CourseCard = ({ title, desc, level, sessions, language, category, banner }
 				<h1 className="text-slate-400 text-[15px] md:text-sm font-medium">
 					COURSE
 				</h1>
-				<h1 className="text-white text-sm md:text-lg font-medium">{title}</h1>
+				<h1 className="text-white text-sm md:text-2xl font-medium">{title}</h1>
 				<div className="text-left pr-3">
-					<p className="text-white text-sm md:text-[0.7rem] mb-1 md:mb-6 overflow-hidden overflow-ellipsis leading-2 line-clamp-3">
+					<p className="text-white text-lg md:text-[0.8rem] w-[280px] mb-1 md:mb-6 overflow-hidden overflow-ellipsis leading-2 line-clamp-3">
 						{desc}
 					</p>
 				</div>
