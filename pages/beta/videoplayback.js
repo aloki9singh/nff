@@ -26,6 +26,7 @@ import CourseVideoPlayer from "@/components/student/courses/videoplayer";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -46,7 +47,7 @@ async function checkUserJoinedCourse(courseId, userId) {
   }
 }
 
-export default function Videos() {
+ function Videos() {
   const [course, setCourse] = useState([]);
   const [modules, setModules] = useState([]);
   // const [currentModule, setCurrentModule] = useState(null);
@@ -305,3 +306,4 @@ export default function Videos() {
     </div>
   );
 }
+export default withStudentAuthorization(Videos);

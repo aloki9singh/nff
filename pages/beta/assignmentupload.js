@@ -14,6 +14,7 @@ import { storage } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import withStudentAuthorization from '@/lib/HOC/withStudentAuthorization';
 // import MobileNav from "../components/CalenderParts/MobileNav";
 
 const Assignmentupload = () => {
@@ -178,4 +179,5 @@ const Assignmentupload = () => {
   );
 };
 
-export default Assignmentupload;
+export default withStudentAuthorization( Assignmentupload);
+
