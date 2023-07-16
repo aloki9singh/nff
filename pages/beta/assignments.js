@@ -12,8 +12,9 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
-export default function Assignments() {
+function Assignments() {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -185,3 +186,5 @@ export default function Assignments() {
     </>
   );
 }
+
+export default withStudentAuthorization(Assignments);

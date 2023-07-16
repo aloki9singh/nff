@@ -12,6 +12,7 @@ import StudentProfileCirProgress from "@/components/student/profile/StudentProfi
 import { useMediaQuery } from "react-responsive";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import Link from "next/link";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 //returning some backed error
 
@@ -24,7 +25,7 @@ function StudentProfile() {
   const [enrolledcourses, setenrolledcourses] = useState([]);
   const [completedcourses, setcompletedcourses] = useState([]);
   const [certificates, setCertificates] = useState([]);
-  const [subscribed, setSubscribed] = useState(false);
+  const [subscribed, setSubscribed] = useState([]);
   const [switchcomp, setswitchcomp] = useState("enrolled");
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -38,8 +39,8 @@ function StudentProfile() {
       sendSideBarState(false);
     }
   }, [isMediumScreen]);
-  const chartData = [2, 3, 1, 4, 2, 5, 3, 3, 4, 5, 6, 1]; //Change this student data to show on chart, passed as prop
-
+  const chartData = [0, 0, 0, 0, 0, 0, 0]; //Change this student data to show on chart, passed as prop
+ ``
   if (!user || !userProfile) {
     router.push("/");
   }
@@ -74,7 +75,7 @@ function StudentProfile() {
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <Dashboardnav heading={"Profile"} toggleSideBar={toggleSideBar} />
             </div>
-            <hr className="hidden md:block opacity-50 mt-3 "></hr>
+            {/* <hr className="hidden md:block opacity-50 mt-3 "></hr> */}
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 ">
               {/* text */}
 
@@ -172,15 +173,16 @@ function StudentProfile() {
                       Certificates
                     </div>
                     {/* Need to done using Array */}
-                    <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2">
+                    <div className="mt-2 h-[175px] overflow-y-scroll scrollbar-hide py-2">
                       {certificates.length ? (
                         certificates.map((e) => (
-                          <div className="border-l-[4px] border-pink flex mb-2 pl-4">
-                            <div>
-                              <h1>{e.title}</h1>
-                              <p className="text-xs text-[#FFFFFF80] font-semibold">
-                                {e.time}
-                              </p>
+                          <div className="flex mb-6 px-2 justify-between">
+                            <div className="flex">
+                              <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
+                              <h1 className="text-sm ">{e.coursename}</h1>
+                            </div>
+                            <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
+                              View certificate
                             </div>
                           </div>
                         ))
@@ -220,9 +222,9 @@ function StudentProfile() {
                         <div className="w-full md:w-[75%]  min-w-[146px] mx-2 h-[100%] text-center text-white flex flex-col justify-between py-2 px-4 rounded-xl bg-gradient-to-r from-[#A145CD] to-[#E1348B]">
                           <p className="text-sm">Time Spent</p>
                           <div className="flex justify-between px-3">
-                            <span className="font-semibold">28</span>
+                            <span className="font-semibold">{0}</span>
                             <span className="bg-[#000] text-[12px] px-1 rounded-md py-[0.8]">
-                              142%
+                             {0} %
                             </span>
                           </div>
                         </div>
@@ -231,9 +233,9 @@ function StudentProfile() {
                         <div className="w-full md:w-[75%]  min-w-[146px] mx-2 h-[100%] text-center text-white flex flex-col justify-between py-2 px-4 rounded-xl bg-gradient-to-r from-[#A145CD] to-[#E1348B]">
                           <p className="text-sm">Lesson Taken</p>
                           <div className="flex justify-between px-3">
-                            <span className="font-semibold">50</span>
+                            <span className="font-semibold">{0}</span>
                             <span className="bg-[#000] text-[12px] px-1 rounded-md py-[0.8]">
-                              84%
+                              {0} %
                             </span>
                           </div>
                         </div>
@@ -242,9 +244,9 @@ function StudentProfile() {
                         <div className="w-full md:w-[75%]  min-w-[146px] mx-2 h-[100%] text-center text-white flex flex-col justify-between py-2 px-4 rounded-xl bg-gradient-to-r from-[#A145CD] to-[#E1348B]">
                           <p className="text-sm">Exam Passed</p>
                           <div className="flex justify-between px-3">
-                            <span className="font-semibold">10</span>
+                            <span className="font-semibold">{0}</span>
                             <span className="bg-[#000] text-[12px] px-1 rounded-md py-[0.8]">
-                              100%
+                              {0} %
                             </span>
                           </div>
                         </div>
@@ -257,9 +259,9 @@ function StudentProfile() {
                     <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full">
                       Subscription
                     </div>
-                    {enrolledcourses.length ? (
-                      enrolledcourses.map((e) => (
-                        <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2">
+                    <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2 px-2">
+                      {subscribed.length ? (
+                        subscribed.map((e) => (
                           <div className="flex mb-6 px-2 justify-between border-l-[4px] border-pink">
                             <div className="flex">
                               <h1 className="text-base">UI/UX Designer</h1>
@@ -268,13 +270,13 @@ function StudentProfile() {
                               Active
                             </div>
                           </div>
+                        ))
+                      ) : (
+                        <div className="text-gray-500 flex justify-center items-center h-[140px]">
+                          Not subscribed yet
                         </div>
-                      ))
-                    ) : (
-                      <div className="text-gray-500 flex justify-center items-center h-[180px]">
-                        No enrolled courses available
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                   <div className="bg-[#373A41] h-[264px]  rounded-[20px] py-3 px-4  md:w-[40%] mt-5 flex flex-col">
                     <div className="text-center h-[10%] pt-2 pb-4 px-4 flex justify-center w-full">
@@ -297,4 +299,4 @@ function StudentProfile() {
     </>
   );
 }
-export default StudentProfile;
+export default withStudentAuthorization(StudentProfile);

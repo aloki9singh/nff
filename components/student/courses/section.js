@@ -1,9 +1,18 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styles from "@/styles/componentsstyling/cards/coursecards.module.css";
 import CourseCard from "./CourseCard";
 
 function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
+  const [show, setShow] = useState(3)
   const cardInfo = FilterUsed ? coursesAfterFilter : courses;
+  // const handleShow = () => {
+  //   if (show==3){
+  //     setShow(cardInfo.length)
+  //   }
+  //   else{
+  //     setShow(3)
+  //   }
+  // }
   return (
     <>
       <div className={styles.secMain}>
@@ -12,15 +21,16 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
           <button
             className="mx-4"
             style={{ whiteSpace: "nowrap", textAlign: "center" }}
+            // onClick={handleShow}
           >
             View All
           </button>
         </div>
-        <div className="overflow-scrollbar scrollbar-hide ">
+        <div className="overflow-scrollbar scrollbar-hide">
           <div className={styles.mainList}>
             {cardInfo &&
               cardInfo
-                .slice(3, 6)
+                .slice(0,3)
                 .map((info, i) => (
                   <CourseCard
                     key={i}
@@ -49,7 +59,7 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
         <div className={styles.mainList}>
           {cardInfo &&
             cardInfo
-              .slice(3, 6)
+              .slice(0,3)
               .map((info, i) => (
                 <CourseCard
                   key={i}

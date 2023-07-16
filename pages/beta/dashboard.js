@@ -18,6 +18,7 @@ import { auth } from "@/config/firebaseconfig";
 import { useMediaQuery } from "react-responsive";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const Studentdashboard = () => {
   const [active, setActive] = useState(false);
@@ -137,4 +138,4 @@ const Studentdashboard = () => {
   );
 };
 
-export default Studentdashboard;
+export default withStudentAuthorization(Studentdashboard);

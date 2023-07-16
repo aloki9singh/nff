@@ -11,8 +11,9 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { onAuthStateChanged } from "firebase/auth";
 import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
-export default function CheckClassSchedule() {
+ function CheckClassSchedule() {
   const [count, setCount] = useState(1);
   const [user, setUser] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -95,3 +96,5 @@ export default function CheckClassSchedule() {
     </>
   );
 }
+export default withStudentAuthorization(CheckClassSchedule);
+

@@ -1,20 +1,21 @@
-import SchoolTopbar from '@/components/common/navbar/schooltopbar';
-import { useState } from 'react';
-import { MdOutlinePersonOutline } from 'react-icons/md';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { BsEnvelopeOpen } from 'react-icons/bs';
-import Profile from '@/components/student/setting/profile';
-import { MdOutlinePrivacyTip } from 'react-icons/md';
+import SchoolTopbar from "@/components/common/navbar/schooltopbar";
+import { useState } from "react";
+import { MdOutlinePersonOutline } from "react-icons/md";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BsEnvelopeOpen } from "react-icons/bs";
+import Profile from "@/components/student/setting/profile";
+import { MdOutlinePrivacyTip } from "react-icons/md";
 // import Subscription from "../components/settingspart/subscription";
-import SubscriptionData from '@/components/student/subscription';
-import Notification from '@/components/student/setting/notification';
-import Privacy from '@/components/student/setting/privacy';
-import Sidebar from '@/components/common/sidebar/school';
-import Dashboardnav from '@/components/common/navbar/dashboardnav';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import { useRouter } from 'next/router';
+import SubscriptionData from "@/components/student/subscription";
+import Notification from "@/components/student/setting/notification";
+import Privacy from "@/components/student/setting/privacy";
+import Sidebar from "@/components/common/sidebar/school";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
-import { useAuthContext } from '@/lib/context/AuthContext';
+import { useAuthContext } from "@/lib/context/AuthContext";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 function Settings() {
   const router = useRouter();
@@ -55,20 +56,22 @@ function Settings() {
   };
   // securedroute
   const { user, userProfile } = useAuthContext();
-  if(!user||!userProfile){
-    router.push("/")
+  if (!user || !userProfile) {
+    router.push("/");
   }
-  
-   if(!user||!userProfile){
-    return null
-   }
+
+  if (!user || !userProfile) {
+    return null;
+  }
   return (
     <>
       <div className=" h-full text-base bg-black">
         <div className="flex overflow-y-hidden">
-        {isMobileScreen && (
+          {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -82,7 +85,7 @@ function Settings() {
           )}
           {/* sidebar with a div of discord community must be added once made */}
           <div className="w-full h-screen mx-auto rounded-l-[40px] bg-[#2D2E35] col-span-6 md:col-span-5 lg:col-span-4 ">
-            <Dashboardnav heading="Settings" toggleSideBar={toggleSideBar}/>
+            <Dashboardnav heading="Settings" toggleSideBar={toggleSideBar} />
             <hr className="hidden lg:block opacity-50" />
             <div className="flex my-auto p-2 md:p-4 mx-2 md:mx-8 mt-[7%]">
               <div className="md:grid md:grid-cols-6 my-5 md:w-full max-[860px]:my-2 self-start">
@@ -187,4 +190,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default withStudentAuthorization(Settings);

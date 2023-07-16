@@ -228,7 +228,7 @@ const Aboutus = () => {
 
         {/* ourteam section */}
         {/* Our Team */}
-        <div className="container mx-auto w-screen flex-grow px-0 px-4 py-4 sm:py-16">
+        <div className="container mx-auto w-screen flex-grow  px-4 py-4 sm:py-16">
           <h1 className="mx-auto mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
             our successful team
           </h1>
@@ -358,7 +358,7 @@ const Aboutus = () => {
                   <input
                     type="text"
                     id="name"
-                    className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-0 w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-0 w-[80%] md:w-[28rem] m-auto"
                     placeholder="Your Name"
                     required
                   />
@@ -367,7 +367,7 @@ const Aboutus = () => {
                   <input
                     type="email"
                     id="email"
-                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-none w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent outline-none w-[80%] md:w-[28rem] m-auto"
                     placeholder="Company Email"
                     required
                   />
@@ -376,7 +376,7 @@ const Aboutus = () => {
                   <input
                     type="text"
                     id="phone"
-                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-none w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none  dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-none w-[80%] md:w-[28rem] m-auto"
                     placeholder="Phone Number"
                     required
                   />
@@ -385,7 +385,7 @@ const Aboutus = () => {
                   <input
                     type="text"
                     id="title"
-                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent text-white outline-none w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none   bg-transparent  outline-none w-[80%] md:w-[28rem] m-auto"
                     placeholder="Title/Position"
                     required
                   />
@@ -394,7 +394,7 @@ const Aboutus = () => {
                   <input
                     type="text"
                     id="subject"
-                    className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-transparent text-white outline-0 w-[80%] md:w-[28rem] m-auto"
+                    className="py-2 px-3  border-0 border-b border-white  dark:text-gray-300 focus:ring-none focus:border-none da dark:focus:ring-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-transparent text-white outline-0 w-[80%] md:w-[28rem] m-auto"
                     placeholder="Subject"
                     required
                   />
