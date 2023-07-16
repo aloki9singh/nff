@@ -308,4 +308,4 @@ async function checkUserJoinedCourse(courseId, userId) {
     </div>
   );
 }
-export default withStudentAuthorization(Videos);
+export default Videos;

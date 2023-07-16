@@ -51,4 +51,4 @@ const Payment = () => {
   );
 };
 
-export default withStudentAuthorization(Payment);
+export default Payment;

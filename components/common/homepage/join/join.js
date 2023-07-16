@@ -90,7 +90,7 @@ export default function Join() {
 							</div>
 						</div>
 						<div className="flex justify-center pt-5 pb-24">
-							<Link href="/beta/pay">
+							<Link href="/beta/payment">
 								<button className="border-2 border-[#E1348B] bg-[#000000] text-xl md:text-2xl w-64 h-16 justify-center items-center font-medium rounded-md z-40">
 									Subscribe Now
 								</button>

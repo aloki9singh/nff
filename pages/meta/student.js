@@ -38,23 +38,17 @@ function MentorStudent() {
     return filterData.filter((ele) => ele.displayName.includes(searchstate));
   }, [filterData, searchstate]);
 
-  const filteredStudentData = useMemo(() => filterStudentData(), [
-    filterData,
-    filterStudentData,
-  ]);
+  const filteredStudentData = useMemo(
+    () => filterStudentData(),
+    [filterData, filterStudentData]
+  );
 
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
     setStudentData(filteredStudentData.slice(initialcount, gap));
-  }, [
-    isMediumScreen,
-    filteredStudentData,
-    initialcount,
-    gap,
-    setStudentData,
-  ]);
+  }, [isMediumScreen, filteredStudentData, initialcount, gap, setStudentData]);
 
   useEffect(() => {
     fetchStudentData();
@@ -145,13 +139,106 @@ function MentorStudent() {
                 <div className="md:flex items-center rounded-lg gap-4 justify-around ">
                   <div className="flex  min-w-[200px] space-x-4">
                     <select className="block w-fit p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
-                      <option selected hidden>
+                      <option value="" selected>
                         Select Course
                       </option>
-                      <option className="cursor-pointer">Course-1</option>
-                      <option className="cursor-pointer">Course-2</option>
-                      <option className="cursor-pointer">Course-3</option>
-                      <option className="cursor-pointer">Course-4</option>
+                      <option value="Web Developer" className="cursor-pointer">
+                        Web Developer
+                      </option>
+                      <option value="C++ & DSA" className="cursor-pointer">
+                        C++ & DSA
+                      </option>
+                      <option
+                        value="UI/UX Designing"
+                        className="cursor-pointer"
+                      >
+                        UI/UX Designing
+                      </option>
+                      <option
+                        value="Yoga & Wellness"
+                        className="cursor-pointer"
+                      >
+                        Yoga & Wellness
+                      </option>
+                      <option value="Painting" className="cursor-pointer">
+                        Painting
+                      </option>
+                      <option
+                        value="Graphic Designing"
+                        className="cursor-pointer"
+                      >
+                        Graphic Designing
+                      </option>
+                      <option value="Video Shooting" className="cursor-pointer">
+                        Video Shooting
+                      </option>
+                      <option
+                        value="Content Writing"
+                        className="cursor-pointer"
+                      >
+                        Content Writing
+                      </option>
+                      <option value="Marketing" className="cursor-pointer">
+                        Marketing
+                      </option>
+                      <option
+                        value="Basic Medical Science"
+                        className="cursor-pointer"
+                      >
+                        {" "}
+                        Basic Medical Science{" "}
+                      </option>
+                      <option
+                        value="Yoga & Wellness"
+                        className="cursor-pointer"
+                      >
+                        Yoga & Wellness
+                      </option>
+                      <option value="Sketching" className="cursor-pointer">
+                        Sketching
+                      </option>
+                      <option
+                        value="Financial Literacy of Planning"
+                        className="cursor-pointer"
+                      >
+                        Financial Literacy of Planning
+                      </option>
+                      <option
+                        value=" Sound / Audio Engineering"
+                        className="cursor-pointer"
+                      >
+                        Sound / Audio Engineering
+                      </option>
+                      <option value="IOT" className="cursor-pointer">
+                        IOT
+                      </option>
+                      <option
+                        value="3D Video Editing"
+                        className="cursor-pointer"
+                      >
+                        3D Video Editing
+                      </option>
+                      <option value="AI/ML" className="cursor-pointer">
+                        AI/ML
+                      </option>
+                      <option value="Gaming" className="cursor-pointer">
+                        Gaming
+                      </option>
+                      <option value="Poetry" className="cursor-pointer">
+                        Poetry
+                      </option>
+                      <option
+                        value="Thesis of Book Writing"
+                        className="cursor-pointer"
+                      >
+                        Thesis of Book Writing
+                      </option>
+                      <option
+                        value="Productivity of Basic Software"
+                        className="cursor-pointer"
+                      >
+                        Productivity of Basic Software
+                      </option>
                     </select>
                   </div>
                 </div>

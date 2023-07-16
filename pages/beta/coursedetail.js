@@ -94,7 +94,7 @@ const Afterlogin = () => {
 
         <div className="rounded-tl-[50px] w-full bg-[#2D2E35] ">
           <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-            <Dashboardnav heading="After Log" toggleSideBar={toggleSideBar} />
+            <Dashboardnav heading=" Details" toggleSideBar={toggleSideBar} />
           </div>
 
           <div className="h-screen text-white bg-[#2D2E35]">
