@@ -24,6 +24,7 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 // const userCache = {};
 // async function getUser(uid) {
@@ -218,4 +219,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default withStudentAuthorization(Chat);

@@ -12,6 +12,7 @@ import StudentProfileCirProgress from "@/components/student/profile/StudentProfi
 import { useMediaQuery } from "react-responsive";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import Link from "next/link";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 //returning some backed error
 
@@ -298,4 +299,4 @@ function StudentProfile() {
     </>
   );
 }
-export default StudentProfile;
+export default withStudentAuthorization(StudentProfile);

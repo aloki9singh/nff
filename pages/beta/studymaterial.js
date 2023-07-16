@@ -8,8 +8,9 @@ import { db } from "config/firebaseconfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
-export default function StudyMaterial() {
+ function StudyMaterial() {
   const router = useRouter();
   const [material, setMaterial] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -175,3 +176,4 @@ export default function StudyMaterial() {
     </>
   );
 }
+export default withStudentAuthorization(StudyMaterial);
