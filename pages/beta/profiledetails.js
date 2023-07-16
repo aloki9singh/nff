@@ -101,6 +101,8 @@ export default function ProfileDetails() {
       photoURL: user.photoURL,
       aadhaarCard: "",
       uid: user.uid,
+      trialValid:true,
+      courseAccess:false
     };
     console.log("profile", profile);
     const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
