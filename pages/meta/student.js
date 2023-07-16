@@ -6,6 +6,7 @@ import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function MentorStudent() {
   const [count, setCount] = useState(1);
@@ -351,4 +352,4 @@ function MentorStudent() {
   );
 }
 
-export default MentorStudent;
+export default withMentorAuthorization(MentorStudent);

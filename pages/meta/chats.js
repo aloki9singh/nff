@@ -31,6 +31,7 @@ import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 // const userCache = {};
 // async function getUser(uid) {
@@ -215,4 +216,5 @@ const Chat = () => {
   );
 };
 
-export default withAuth(Chat, "/meta/signup");
+// export default withAuth(Chat, "/meta/signup");
+ export default withMentorAuthorization(Chat);

@@ -16,6 +16,7 @@ import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
 import withAuth from "@/lib/context/mentorcontext";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function MentorDashboard() {
   const [count, setCount] = useState(1);
@@ -138,4 +139,4 @@ function MentorDashboard() {
   );
 }
 
-export default withAuth(MentorDashboard, "/meta/signup");
+export default withMentorAuthorization(MentorDashboard);

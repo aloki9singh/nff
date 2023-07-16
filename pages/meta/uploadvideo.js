@@ -6,6 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import Link from 'next/link';
 
 import withAuth from "@/lib/context/mentorcontext"
+import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
 
 function Uploadvideo() {
   const [leadMentor, setLeadMentor] = useState('');
@@ -262,4 +263,4 @@ function Uploadvideo() {
 }
 
 
-export default withAuth(Uploadvideo, "/meta/signup");
+export default withMentorAuthorization(Uploadvideo);

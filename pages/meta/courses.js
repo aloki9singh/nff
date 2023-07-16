@@ -8,6 +8,7 @@ import MentorChart from "@/components/mentor/other/chart";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
@@ -329,4 +330,4 @@ function MentorStudent() {
     </>
   );
 }
-export default withAuth(MentorStudent, "/meta/signup");
+export default withMentorAuthorization(MentorStudent);
