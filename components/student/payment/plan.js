@@ -1,6 +1,7 @@
 import Plan from './plan-dy';
 
-const ChoosePlan = ({ updatePage }) => {
+const ChoosePlan = ({ clickEvent, trial}) => {
+
   const plan = [
     {
       id: 1,
@@ -25,7 +26,7 @@ const ChoosePlan = ({ updatePage }) => {
       description: [
         'Get Access To All The Courses',
         'Live Classes With Mentors',
-        'Study Material & More',
+        'StudyupdatePage Material & More',
       ],
     },
     {
@@ -44,18 +45,32 @@ const ChoosePlan = ({ updatePage }) => {
   ];
   return (
     <>
-      <h1 className="text-3xl md:text-5xl font-semibold mb-2">
-        Choose Your Plan
+
+    {trial ? <>
+
+    <div className={`relative text-wrapper top-8 md:mt-4 text-center`}>
+
+      <h1 className="text-2xl md:text-4xl font-semibold md:mb-2">
+        Try 1 week <span className="text-[#E1348B]">
+           Free
+          </span>
       </h1>
-      <h2 className="text-base md:text-xl mb-2 font-semibold">
+      {/* <h2 className="text-base md:text-xl mb-2 font-semibold">
         Transparent <span className="text-[#A145CD]">Pricing</span> For You
-      </h2>
-      <p className="text-[9px] md:text-[14px] mb-4">
-        Start With Free Plan And Get Access To Beginner Courses.
+      </h2> */}
+      <p className="text-[9px] md:text-[14px] mb-20">
+        Cancel Anytime
       </p>
+      
+      </div>
+    </> : <> 
+    <div>Heloo</div>
+    </>
+    }
       <div className="flex flex-col md:flex-row justify-center w-[90%] h-[60%]">
         {plan.map((item, ind) => (
           <Plan
+            odd={ind % 2 == 0 ? "oddcard" : "evencard"}
             key={item.id}
             title={item.title}
             price={item.price}
@@ -63,7 +78,7 @@ const ChoosePlan = ({ updatePage }) => {
             description={item.description}
             from={item.from}
             to={item.to}
-            updatePage={updatePage}
+            updatePage={(e) => clickEvent(e)}
             ind={ind}
           />
         ))}
