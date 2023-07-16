@@ -5,7 +5,7 @@ import Sidebar from "@/components/common/sidebar/admin";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
-import AdminTopbar from "@/components/common/navbar/admintopbar";
+import AdminTopbar from "@/comp@/lib/hooks/mediaqueryar/admintopbar";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
