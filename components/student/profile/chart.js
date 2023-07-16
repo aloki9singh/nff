@@ -29,51 +29,94 @@ const StudentProfileChart = ({ data }) => {
 
   const [chartOptions, setChartOptions] = useState({});
 
-  useEffect(() => {
-    setChartData({
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "July",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+  // useEffect(() => {
+  //   setChartData({
+  //     labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 
+  //     datasets: [
+  //       {
+  //         label: "Students",
+  //         data: data,
+  //         borderColor: "rgb(53, 162, 235)",
+  //         backgroundColor: ["#728095", "#A145CD"],
+  //       },
+  //     ],
+  //   });
+  //   setChartOptions({
+  //     plugins: {
+  //       legend: {
+  //         position: "top",
+  //         display: false,
+  //       },
+  //       // title: {
+  //       //   display: true,
+  //       //   text: "Daily Revenue",
+  //       // },
+  //     },
+  //     maintainAspectRatio: false,
+  //     responsive: true,
+  //     elements: {
+  //       bar: {
+  //         backgroundColor: "#373A41",
+  //         // borderRadius: 10,
+  //         // borderSkipped: "bottom",
+  //         // barThickness: 20,
+  //       },
+  //     },
+  //     scales: {
+  //       x: {
+  //         grid: {
+  //           color: "",
+  //         },
+  //         ticks: {
+  //           color: "white",
+  //         },
+  //       },
+  //       y: {
+  //         grid: {
+  //           color: "",
+  //         },
+  //         ticks: {
+  //           color: "white",
+  //         },
+  //       },
+  //     },
+  //   });
+  // }, [data]);
+  useEffect(() => {
+    const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const dayData = data.map((hours, index) => {
+      if (index >= 1 && index <= 3) {
+        // Apply the logic for Mon, Tue, Wed
+        return hours; // Subtract 2 hours from the original data
+      }
+      return hours; // Keep the original data for other days
+    });
+  
+    setChartData({
+      labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       datasets: [
         {
           label: "Students",
-          data: data,
+          data: dayData,
           borderColor: "rgb(53, 162, 235)",
           backgroundColor: ["#728095", "#A145CD"],
         },
       ],
     });
+  
     setChartOptions({
       plugins: {
         legend: {
           position: "top",
           display: false,
         },
-        // title: {
-        //   display: true,
-        //   text: "Daily Revenue",
-        // },
       },
       maintainAspectRatio: false,
       responsive: true,
       elements: {
         bar: {
           backgroundColor: "#373A41",
-          // borderRadius: 10,
-          // borderSkipped: "bottom",
-          // barThickness: 20,
         },
       },
       scales: {
@@ -91,14 +134,15 @@ const StudentProfileChart = ({ data }) => {
           },
           ticks: {
             color: "white",
+            callback: (value) => `${value}h`, // Add 'h' to the y-axis labels
           },
         },
       },
     });
   }, [data]);
-
-  if(!data){
-    return <h1 className="text-white">Data absent</h1>
+  
+  if (!data) {
+    return <h1 className="text-white">Data absent</h1>;
   }
 
   return (
