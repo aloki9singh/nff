@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const CourseCard = ({ title, desc, level, sessions, language, category, banner }) => {
 	const router = useRouter()
 	return (
-		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] h-[17rem] min-w-[355px] py-[10px] px-4 md:p-5 flex flex-col justify-around">
+		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] h-[17rem] md:w-[355px] py-[10px] px-4 md:p-5 flex flex-col justify-around">
 			<div className="flex justify-between ">
 				<div>
 					<Image
@@ -13,7 +13,7 @@ const CourseCard = ({ title, desc, level, sessions, language, category, banner }
 						width={100}
 						height={100}
 						alt="f"
-						className="md:w-[80px] md:h-[80px] w-[80px] h-[80px] p-2"
+						className="md:w-[80px] md:h-[80px] w-[80px] h-[80px] p-2 pb-0"
 					></Image>
 				</div>
 				<div className="text-[10px] md:text-sm text-[#E1348B] ">
@@ -28,11 +28,11 @@ const CourseCard = ({ title, desc, level, sessions, language, category, banner }
 				</h1>
 				<h1 className="text-white text-sm md:text-2xl font-medium">{title.length>16?title.slice(0,16)+"...":title}</h1>
 				<div className="text-left pr-3">
-					<p className="text-white text-sm md:text-[0.8rem] w-[280px] mb-1 md:mb-6 overflow-hidden overflow-ellipsis leading-2 line-clamp-3">
+					<p className="text-white text-sm md:text-[0.8rem] w-[280px] mb-1 md:mb-6 overflow-hidden overflow-ellipsis leading-2 md:line-clamp-3 line-clamp-2">
 						{desc}
 					</p>
 				</div>
-				<div className="flex justify-end">
+				<div className="flex justify-end pt-4">
 					<button
 						onClick={() => {
 							router.push({

@@ -103,7 +103,7 @@ export default function ProfileDetails() {
       uid: user.uid,
 
       trialValid:true,
-      courseAccess:false
+      courseAccess:false,
 
       joinedCourses: [],
 
