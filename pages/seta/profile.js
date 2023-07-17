@@ -8,77 +8,71 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
 import { useMediaQuery } from "react-responsive";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 function MentorProfile() {
   const router = useRouter();
-  const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
-
-  const [schoolName, setSchoolName] = useState("");
-  const [udisecode, setUdisecode] = useState("");
-  const [authCode, setAuthCode] = useState("");
-  const [principalName, setPrincipalName] = useState("");
-  const [priMail, setPriMail] = useState("");
-  const [secMail, setSecMail] = useState("");
-  const [priCall, setPriCall] = useState("");
-  const [secCall, setSecCall] = useState("");
-  const [admin, setAdmin] = useState("");
-  const [noOfStudent, setNoOfStudent] = useState("");
-  const [building, setBuilding] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("");
-  const [schWebsite, setSchWebsite] = useState("");
-  const [insta, setInsta] = useState("");
-  const [facebook, setFacebook] = useState("");
+  const [profile, setProfile] = useState()
+  const [edit, setEdit] = useState(false)
+  const getData = async () => {
+    const usersCollection = collection(db, "allusers");
+    const q = doc(usersCollection, user.uid)
+    const querySnapshot = await getDoc(q);
+    if (!querySnapshot.empty) {
+      setProfile(querySnapshot.data());
+    }
+  }
+  useEffect(() => {
+    getData()
+  }, [])
+  const handleChange = (e) => {
+    e.preventDefault()
+    setProfile({ ...profile, [e.target.name]: e.target.value })
+  }
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const { user } = useAuthContext()
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    if (!udisecode || !authCode) {
-      alert("Please fill all the required fields");
-      return;
-    }
-
     const schoolProfile = {
-      schoolName,
-      udiseId: udisecode,
-      authCode,
-      principalName,
-      numberOfStudents: noOfStudent,
-      primaryEmail: priMail,
-      secondaryEmail: secMail,
-      adminName: admin,
-      primaryPhoneNumber: priCall,
-      secondaryPhoneNumber: secCall,
-      schoolAddress: building,
-      city,
-      postalCode,
-      country,
-      schoolWebsite: schWebsite,
-      instagramLink: insta,
-      facebookLink: facebook,
+      principalName: profile?.principalName,
+      numberOfStudents: profile?.numberOfStudents,
+      primaryEmail: profile?.primaryEmail,
+      secondaryEmail: profile?.secondaryEmail,
+      primaryPhoneNumber: profile?.primaryPhoneNumber,
+      secondaryPhoneNumber: profile?.secondaryPhoneNumber,
+      schoolWebsite: profile?.schoolWebsite,
+      instagramLink: profile?.instagramLink,
+      facebookLink: profile?.facebookLink,
     };
-    console.log("schoolProfile", schoolProfile);
 
     // store to firestore
     try {
-      const docRef = await setDoc(
-        doc(db, "schoolProfiles", udisecode),
+      const docRef = await updateDoc(
+        doc(db, "allusers",user.uid ),
         schoolProfile
       );
-      console.log("Document written with ID: ", docRef.id);
+      // console.log("Document written with ID: ", docRef.id);
       alert("Profile Updated");
+      setEdit(false)
     } catch (e) {
       console.log(e);
     }
   };
+
+  const handleClick = () => {
+    setEdit(!edit)
+  }
+
+
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -115,11 +109,11 @@ function MentorProfile() {
             <div className=" md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <SchoolTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
             </div>
-            <hr className="hidden lg:block opacity-50 mt-3 " />
-            <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-12">
+            <hr className="hidden lg:block opacity-50 " />
+            <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0">
               {/* text */}
 
-              <div className="h-[200px] w-full  bg-gradient-to-r from-[#A145CD] to-[#E1348B] flex items-center justify-between">
+              <div className="h-[200px] w-full  bg-[url('/componentsgraphics/schools/back.svg')] bg-no-repeat bg-cover flex items-center justify-between">
                 <div>
                   <div className="flex items-center">
                     <Image
@@ -130,27 +124,35 @@ function MentorProfile() {
                       className="rounded-full w-[150px] object-contain mt-[-55px] p-4"
                     />
                     <div className="text-2xl ml-4 mt-[-35px]">
-                      Dav Public School
+                      {profile?.schoolName}
                     </div>
                   </div>
                 </div>
-                <div className="w-[160px] border rounded-lg bg-slate-800 p-4 mr-4">
-                  DRJ469
+                <div className="w-[200px] border rounded-lg bg-slate-800 p-4 mr-4">
+                  <h1 className="text-center text-xl">
+                    {profile?.authCode}
+                  </h1>
                   <br />
-                  DAV Ratu Road, Ranchi
+                  <p className="text-sm">
+                    {profile?.buiding}, {profile?.city}, {profile?.district}
+                  </p>
                 </div>
               </div>
-              {/* <div className="w-full h-full   md:text-base text-sm  ">
-                                <div className=" md:mx-10 mx-5">
-                                    <div className="flex">
-                                        {" "}
-                                        
-                                        <div className="text-2xl ml-4 mt-[-35px]">Garvit Kumar</div>
-                                    </div>
-                                </div>
-                            </div> */}
             </div>
             {/* /// */}
+            {!edit ? <div className="flex justify-end mt-8 mr-8">
+              <button className="p-4 px-8 bg-[#505057] text-white rounded-[10px]" onClick={handleClick}>
+                Edit Profile
+              </button>
+            </div> :
+              <div className="flex justify-end mt-8 mr-8">
+                <button className="p-4 px-8 bg-[#A145CD] text-white rounded-[10px] mr-2  " onClick={onSubmitHandler}>
+                  Save
+                </button>
+                <button className="p-4 px-8 bg-[#505057] text-white rounded-[10px]" onClick={handleClick}>
+                  Cancel
+                </button>
+              </div>}
             <div className="md:flex  gap-5 m-5  md:mt-0 text-white">
               <form
                 method="post"
@@ -162,24 +164,26 @@ function MentorProfile() {
                   School Information
                 </div>
 
-                <div className="w-full md:w-full flex flex-col md:flex-row items-start md:justify-between   md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                  <div className="w-full md:w-50% flex-col md:flex md:flex-row  justify-between md:justify-between md:items-center md:flex-1">
-                    <label
-                      htmlFor=""
-                      className="whitespace-nowrap md:whitespace-normal md:flex-1"
-                    >
-                      Name of School
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
-                      style={{ background: "#505057" }}
-                      value={schoolName}
-                      onChange={(e) => setSchoolName(e.target.value)}
-                      required
-                    />
-                  </div>
+                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                  <label
+                    htmlFor=""
+                  >
+                    Name of School
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type Here"
+                    className="w-full md:w-[81.3%] h-14  rounded-lg px-2 placeholder:text-sm focus:outline-none md:p-4"
+                    style={{ background: "#505057" }}
+                    value={profile?.schoolName}
+                    onChange={handleChange}
+                    name="schoolName"
+                    readOnly
+                    required
+                  />
+                </div>
+
+                <div className="w-full md:w-full  flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
                   <div className="w-full flex-col md:flex md:flex-row justify-between md:items-center md:flex-1">
                     <label
                       htmlFor=""
@@ -190,30 +194,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={udisecode}
-                      onChange={(e) => setUdisecode(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="w-full md:w-full  flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                  <div className="w-full flex-col md:flex md:flex-row justify-between md:items-center md:flex-1">
-                    <label
-                      htmlFor=""
-                      className="whitespace-nowrap md:whitespace-normal md:flex-1"
-                    >
-                      6 Digit Auth Code
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
-                      style={{ background: "#505057" }}
-                      value={authCode}
-                      onChange={(e) => setAuthCode(e.target.value)}
+                      value={profile?.udiseId}
+                      onChange={handleChange}
+                      name="udiseId"
+                      readOnly
                       required
                     />
                   </div>
@@ -227,13 +213,16 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={principalName}
-                      onChange={(e) => setPrincipalName(e.target.value)}
+                      value={profile?.principalName}
+                      onChange={handleChange}
+                      readOnly={!edit}
+                      name="principalName"
                       required
                     />
                   </div>
+
                 </div>
 
                 <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
@@ -247,10 +236,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={priMail}
-                      onChange={(e) => setPriMail(e.target.value)}
+                      value={profile?.primaryEmail}
+                      onChange={handleChange}
+                      readOnly={!edit}
+                      name="primaryEmail"
                       required
                     />
                   </div>
@@ -264,10 +255,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={secMail}
-                      onChange={(e) => setSecMail(e.target.value)}
+                      value={profile?.secondaryEmail}
+                      onChange={handleChange}
+                      readOnly={!edit}
+                      name="secondaryEmail"
                       required
                     />
                   </div>
@@ -283,10 +276,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={priCall}
-                      onChange={(e) => setPriCall(e.target.value)}
+                      value={profile?.primaryPhoneNumber}
+                      onChange={handleChange}
+                      readOnly={!edit}
+                      name="primaryPhoneNumber"
                       required
                     />
                   </div>
@@ -300,10 +295,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={secCall}
-                      onChange={(e) => setSecCall(e.target.value)}
+                      value={profile?.secondaryPhoneNumber}
+                      onChange={handleChange}
+                      readOnly={!edit}
+                      name="secondaryPhoneNumber"
                       required
                     />
                   </div>
@@ -319,10 +316,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={admin}
-                      onChange={(e) => setAdmin(e.target.value)}
+                      value={profile?.adminName}
+                      onChange={handleChange}
+                      name="adminName"
+                      readOnly
                       required
                     />
                   </div>
@@ -336,10 +335,12 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                       style={{ background: "#505057" }}
-                      value={noOfStudent}
-                      onChange={(e) => setNoOfStudent(e.target.value)}
+                      value={profile?.numberOfStudents}
+                      onChange={handleChange}
+                      readOnly={!edit}
+                      name="numberOfStudents"
                       required
                     />
                   </div>
@@ -349,35 +350,39 @@ function MentorProfile() {
                   School Address
                 </div>
 
-                <div className="w-full md:w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
                   <label htmlFor="">Building, Street name</label>
                   <input
                     type="text"
                     placeholder="Type Here"
-                    className="w-full md:w-[80%] h-14  rounded-lg px-2 placeholder:text-sm focus:outline-none md:p-4"
+                    className="w-full md:w-[81.3%] h-14  rounded-lg px-2 placeholder:text-sm focus:outline-none md:p-4"
                     style={{ background: "#505057" }}
-                    value={building}
-                    onChange={(e) => setBuilding(e.target.value)}
+                    value={profile?.schoolAddress}
+                    onChange={handleChange}
+                    readOnly
+                    name="schoolAddress"
                     required
                   />
                 </div>
 
                 <div className="w-[331px] md:w-full flex flex-col md:flex-row justify-start items-start md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                  <div className="md:flex-1">
+                  <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                     <label htmlFor="" className="md:flex-1 mr-10">
                       City
                     </label>
                     <input
-                      type="text"
+                      type="text" E
                       placeholder="Type Here"
-                      className="w-full md:w-[319px] h-10 rounded-lg px-2 md:flex-1"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2"
                       style={{ background: "#505057" }}
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      value={profile?.city}
+                      onChange={handleChange}
+                      readOnly
+                      name="city"
                       required
                     />
                   </div>
-                  <div className="md:flex-1">
+                  <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                     <label
                       htmlFor=""
                       className="whitespace-nowrap md:flex-1 mr-10"
@@ -387,89 +392,105 @@ function MentorProfile() {
                     <input
                       type="text"
                       placeholder="Type Here"
-                      className="w-full md:w-[319px] h-10 rounded-lg px-2 md:flex-1 "
+                      className="w-full md:w-[60%] h-10 rounded-lg px-2 "
                       style={{ background: "#505057" }}
-                      value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
+                      value={profile?.postalCode}
+                      onChange={handleChange}
+                      readOnly
+                      name="postalCode"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="w-full md:w-fit  flex flex-col md:flex-row justify-between items-start  md:items-center gap-y-2 md:gap-x-2 px-4 mb-8  text-white">
-                  <label htmlFor="">Country</label>
-                  <input
-                    type="text"
-                    placeholder="Type Here"
-                    className="w-full md:w-[319px] h-10 rounded-lg px-2"
-                    style={{ background: "#505057" }}
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-                  />
+                <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8 text-white">
+                  <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
+                    <label htmlFor="" className="md:flex-1 mr-4">
+                      District
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Type Here"
+                      className="w-full md:w-[62%] h-10 rounded-lg px-2 "
+                      style={{ background: "#505057" }}
+                      value={profile?.district}
+                      onChange={handleChange}
+                      readOnly
+                      required
+                    />
+                  </div>
+                  <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
+                    <label htmlFor="" className="whitespace-nowrap md:flex-1 mr-[4.3em]">Country</label>
+                    <input
+                      type="text"
+                      placeholder="Type Here"
+                      className="w-full md:w-[60%] h-10 rounded-lg px-2"
+                      style={{ background: "#505057" }}
+                      value={profile?.country}
+                      onChange={handleChange}
+                      readOnly
+                      name="country"
+                      required
+                    />
+                  </div>
                 </div>
-
                 <div className=" text-left mt-6 text-[#E1348B] text-lg mb-4 ml-4">
                   Links and Logo
                 </div>
-                <div className="w-[60%]  flex flex-col md:flex-row justify-between items-start md:items-center md:justify-start gap-y-2 md:gap-x-4 px-4 mb-8  text-white ">
+                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between items-start md:items-center gap-y-2  px-4 mb-8  text-white">
                   <label htmlFor="">School Website Link</label>
                   <input
                     type="text"
                     placeholder="Add URL"
-                    className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                    className="w-full md:w-[60%] h-10 rounded-lg px-2 mx-4"
                     style={{ background: "#505057" }}
-                    value={schWebsite}
-                    onChange={(e) => setSchWebsite(e.target.value)}
+                    value={profile?.schoolWebsite}
+                    onChange={handleChange}
+                    readOnly={!edit}
+                    name="schoolWebsite"
                     required
                   />
                 </div>
-                <div className="w-[60%]  flex flex-col md:flex-row justify-between items-start md:items-center md:justify-start gap-y-2 md:gap-x-14 px-4 mb-8  text-white">
+                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between items-start md:items-center gap-y-2  px-4 mb-8  text-white">
                   <label htmlFor="">Instagram Link</label>
                   <input
                     type="text"
                     placeholder="Add URL"
-                    className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                    className="w-full md:w-[60%] h-10 rounded-lg px-2 mx-4"
                     style={{ background: "#505057" }}
-                    value={insta}
-                    onChange={(e) => setInsta(e.target.value)}
+                    value={profile?.instagramLink}
+                    onChange={handleChange}
+                    readOnly={!edit}
+                    name="instagramLink"
                     required
                   />
                 </div>
-                <div className="w-[60%] flex flex-col md:flex-row justify-between items-start md:items-center md:justify-start gap-y-2 md:gap-x-16 px-4 mb-8  text-white">
+                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between items-start md:items-center gap-y-2  px-4 mb-8  text-white">
                   <label htmlFor="">Facebook Link</label>
                   <input
                     type="text"
                     placeholder="Add URL"
-                    className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                    className="w-full md:w-[60%] h-10 rounded-lg px-2 mx-4"
                     style={{ background: "#505057" }}
-                    value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}
+                    value={profile?.facebookLink}
+                    readOnly={!edit}
+                    name="facebookLink"
                     required
                   />
+
                 </div>
-                <div className="w-full md:w-[80%] flex flex-col md:flex-row   gap-y-2 md:gap-x-16 p-8 mb-8  text-white">
+                {edit ? <div className="w-full md:w-[80%] flex flex-col md:flex-row   gap-y-2 md:gap-x-16 p-8 mb-8  text-white">
                   <label htmlFor="" className="whitespace-nowrap">
                     School Logo
                   </label>
                   <div className="border border-gray-300 rounded-10 flex justify-center items-center p-4 md:w-full">
                     <IDdraganddrop />
                   </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    className="text-white  bg-[#AA2769] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] my-8"
-                  >
-                    Submit
-                  </button>
-                </div>
+                </div> : ""}
               </form>
             </div>
           </div>
         </div>
-        <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
     </>
   );

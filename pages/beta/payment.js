@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardNav from "@/components/common/navbar/dashboardnav";
 import ChoosePlan from "@/components/student/payment/plan";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useRouter } from "next/router";
-import {db} from "@/config/firebaseconfig"
-import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
+import { db } from "@/config/firebaseconfig";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {accountcleanup} from "@/pages/api/signup/index"
 
 const Payment = () => {
-  
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
-  // const { user, userProfile } = useAuthContext();
 
   const styles = `
     .myClass {
@@ -21,30 +20,63 @@ const Payment = () => {
     }
   `;
 
-  const handleClickFreeTrail = (e) => {
+  const handleClickFreeTrail = async (e) => {
     e.preventDefault();
     if (!user || !userProfile) {
       router.push("/beta/login");
     }
-  
+
     if (!user || !userProfile) {
       return null;
     }
 
+    if (user) {
 
+      const trialStartDate = new Date();
+      const startdate = trialStartDate.toString();
+      const trialEndDate = new Date(trialStartDate.getTime() + 5 * 60 * 1000);
+
+      const trialData = {
+        trial: {
+          trialStartDate: startdate,
+          trialEndDate: trialEndDate,
+        },
+        trialValid: false,
+        courseAccess: true,
+      };
+
+      try {
+        const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+        const docSnap = await getDoc(userRef);
+
+        if (docSnap.exists()) {
+          await updateDoc(userRef, trialData); // exist condition update the doc
+        }
+        
+        console.log("Trial activated successfully!");
+
+      } catch (error) {
+        console.error("Error activating trial:", error);
+      }
+
+      console.log(trialStartDate, trialEndDate);
+    }
   };
 
   return (
     <>
       <style>{styles}</style>
-      <DashboardNav  />
-      <div className="w-full bg-[#0D0E14]">
+      <DashboardNav />
+      <div className="w-full h-full bg-[#0D0E14]">
         <div className="text-center text-white text-lg pt-[12rem]">
           <h1 className="text-[2.2rem] font-bold">Subscribe</h1>
           <p className="mb-4">Join NeatSkills & Choose From The Below Plan</p>
         </div>
         <div className="md:h-screen myClass flex flex-col items-center text-white font-Inter">
-          <ChoosePlan clickEvent={(e) => handleClickFreeTrail(e)} trial={true}/>
+          <ChoosePlan
+            clickEvent={(e) => handleClickFreeTrail(e)}
+            trial={true}
+          />
         </div>
       </div>
     </>
@@ -52,3 +84,4 @@ const Payment = () => {
 };
 
 export default Payment;
+

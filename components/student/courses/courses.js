@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import CourseCard from "./CourseCard";
+import Link from "next/link";
 // import CourseCard from "./CourseCard";g
 // import { db } from '../config/firebaseConfig';
 // import { collection, getDocs, addDoc } from 'firebase/firestore';
@@ -52,7 +53,7 @@ export default function Courses({ coursesData }) {
     },
   ];
 
-  coursesData = dummyCourses;
+  // coursesData = dummyCourses;
   const categories = useMemo(
     () => [
       "All Category",
@@ -70,7 +71,7 @@ export default function Courses({ coursesData }) {
   // console.log(courses);
   // const CoursesCollectionref = collection(db, 'CoursesCollection');
 
-  useEffect(() => {
+  // useEffect(() => {
     // const CoursesCollectionref = collection(db, 'CoursesCollection');
     // const getData = async () => {
     //   getDocs(CoursesCollectionref).then((response) => {
@@ -82,18 +83,18 @@ export default function Courses({ coursesData }) {
     //   });
     // };
     // getData()
-    categories.forEach((category) => {
-      const element = document.getElementById(category);
-      element.classList.remove("text-[#DA2C84]");
-      element.classList.remove("underline");
-      element.classList.remove("font-semibold");
-    });
+  //   categories.forEach((category) => {
+  //     const element = document.getElementById(category);
+  //     element.classList.remove("text-[#DA2C84]");
+  //     element.classList.remove("underline");
+  //     element.classList.remove("font-semibold");
+  //   });
 
-    const element = document.getElementById(activeClass);
-    element.classList.add("text-[#DA2C84]");
-    element.classList.add("underline");
-    element.classList.add("font-semibold");
-  }, [activeClass, categories]);
+  //   const element = document.getElementById(activeClass);
+  //   element.classList.add("text-[#DA2C84]");
+  //   element.classList.add("underline");
+  //   element.classList.add("font-semibold");
+  // }, [activeClass, categories]);
 
   // const Arr = courses.filter((el) => el.category[1] == 'All Category');
 
@@ -125,12 +126,12 @@ export default function Courses({ coursesData }) {
           </div>
         </div>
 
-        <button className="hidden md:flex border-2 text-base md:text-lg w-64 h-16 justify-center items-center font-semibold">
+        <Link href={'/beta/courseoverview'} className="hidden md:flex border-2 text-base md:text-lg w-64 h-16 justify-center items-center font-semibold">
           Explore Courses
-        </button>
+        </Link>
       </div>
       <div className="flex flex-col md:w-[90%] w-[90%] items-center mx-auto lg:mt-20 mt-12 max-w-[1440px]">
-        <div className="text-white w-screen lg:w-full overflow-x-scroll scrollbar-hide flex md:space-x-24 self-center ">
+        {/* <div className="text-white w-screen lg:w-full overflow-x-scroll scrollbar-hide flex md:space-x-24 self-center ">
           {categories.map((category, index) => (
             <h1
               className="mx-6 text-lg cursor-pointer whitespace-nowrap"
@@ -141,7 +142,7 @@ export default function Courses({ coursesData }) {
               {category}
             </h1>
           ))}
-        </div>
+        </div> */}
         <div className="w-full lg:mt-16 mt-10 flex flex-col ">
           {/* <div className="flex justify-between md:flex-wrap overflow-x-scroll scrollbar-hide w-full">
             {coursesData.map((course) => (
@@ -155,16 +156,17 @@ export default function Courses({ coursesData }) {
               />
             ))}
           </div> */}
-          <div className="grid grid-rows-2 grid-flow-col overflow-scroll scrollbar-hide gap-10">
+          <div className="grid grid-cols-3 grid-flow-col overflow-scroll scrollbar-hide gap-10">
             {coursesData.map((course, i) => (
               <div key={i}>
                 <CourseCard
                   key={course.id}
-                  lessons={course.lessons}
+                  sessions={course.lessons}
                   title={course.title}
                   desc={course.desc}
                   level={course.level}
                   icon={course.icon}
+                  banner={course.banner}
                 />
               </div>
             ))}
