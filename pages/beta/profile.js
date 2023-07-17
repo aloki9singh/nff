@@ -96,7 +96,7 @@ function StudentProfile() {
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
                         {user.displayName}
                         <p className="text-xs ml-2">
-                          Roll no-{userProfile.rollNo}
+                          Roll no-{userProfile.rollNo ||" N/A"}
                         </p>
                       </div>
                       <Link href={"/beta/profiledetails"}>
