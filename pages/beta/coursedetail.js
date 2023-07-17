@@ -71,9 +71,7 @@ const Afterlogin = () => {
     sendSideBarState(showSideBar);
   }
 
-  if (!user) {
-    return null;
-  }
+
   return (
     <>
       <div className="flex ">
@@ -110,12 +108,12 @@ const Afterlogin = () => {
                       {course.desc}
                     </div>
                     <Link
-                      href={{
+                      href={user ? {
                         pathname: '/beta/videoplayback',
                         query: {
                           title: course.title
                         }
-                      }}
+                      } : '/beta/signup'}
                       type="button"
                       className=" md:text-base mt-10 mb-10 lg:text-base xl:text-lg rounded-xl bg-[#A145CD] px-4 py-2 font-semibold"
                     >

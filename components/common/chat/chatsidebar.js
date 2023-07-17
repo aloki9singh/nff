@@ -70,12 +70,12 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
       </div>
       <div className="flex flex-col justify-end items-center">
         <span className="text-[10px]">{time}</span>
-        <span
+        {/* <span
           className="text-[10px] h-[15px] w-[15px] text-center"
           style={{ borderRadius: "50%", backgroundColor: "#E1348B" }}
         >
           {noOfMessages}
-        </span>
+        </span> */}
       </div>
     </div>
   );
