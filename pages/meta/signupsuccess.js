@@ -9,26 +9,28 @@ import { useContext } from "react";
 import withAuth from "@/lib/context/mentorcontext"
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+import { detailadd } from "@/lib/exportablefunctions";
 
 
 
-const detailadd = async (id) => {
-  const res = await fetch(`/api/signup/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ verified: true }),
-  });
-  const data = await res.json();
+// const detailadd = async (id) => {
+//   const res = await fetch(`/api/signup/${id}`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ verified: true }),
+//   });
+//   const data = await res.json();
 
-  if (res.status === 404) {
-    alert("error");
-    console.log("Error!");
-  } else {
-    console.log("Data Added Successfully");
-  }
-};
+//   if (res.status === 404) {
+//     alert("error");
+//     console.log("Error!");
+//   } else {
+//     console.log("Data Added Successfully");
+//   }
+// };
+
 const MentorSignupSuccess = () => {
   const router = useRouter();
   const { loading, setLoading } = useContext(Loading);
@@ -37,10 +39,11 @@ const MentorSignupSuccess = () => {
   let arr = { displayName, email };
 
   useEffect(() => {
+    
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
-        await detailadd(user.uid);
+       await detailadd(user.uid,{ verified: true })
       }
     });
     // if (!email) {
