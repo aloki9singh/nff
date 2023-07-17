@@ -10,38 +10,47 @@ import neatSvg from '/public/componentsgraphics/schools/login/Group 2.svg';//spa
 
 import { AiOutlineMail } from 'react-icons/ai';
 import { FaLock } from 'react-icons/fa';
-
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-
-import { auth } from '@/config/firebaseconfig';
+import { collection, getDocs, doc, query, where } from 'firebase/firestore';
+import { auth, db } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
 import { callEmailApi, callVerificationEmailApiforseta } from '@/lib/api';
 // import { adminAuth } from '../config/firebaseAdminConfig';
 
 function SchoolLoginComp() {
     const router = useRouter();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [email, setEmail] = useState('');
     const [schooluniqueID, setSchooluniqueID] = useState('');
+    const [password, setPassword] = useState('');
 
-    const login = async (email, password, schooluniqueID) => {
+    const login = async (schooluniqueID, password) => {
         try {
-            const userCredential = await signInWithEmailAndPassword(
-                auth,
-                email,
-                password,
-            );
-            // await sendEmailVerification(userCredential.user);
-            const displayName = email;
-            const data = { displayName, email };
-            const user = userCredential.user;
-            console.log(user);
-            await callVerificationEmailApiforseta(data);
-            alert('verification email sent!!');
+            const usersCollection = collection(db, "allusers");
+            const q = query(usersCollection, where("authCode", "==", schooluniqueID));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                const documentSnapshot = querySnapshot.docs[0];
+                const documentData = documentSnapshot.data();
+                await signInWithEmailAndPassword(
+                    auth,
+                    documentData.email,
+                    password,
+                );
+                router.push({
+                    pathname:"/seta/profile"
+                })
 
-            await callEmailApi(data);
-            console.log(userCredential);
+            }
+            else{
+                alert("Invalid School Code")
+            }
+            // const user = userCredential.user;
+            // console.log(user);
+            // await callVerificationEmailApiforseta(data);
+            // alert('verification email sent!!');
+            // await callEmailApi(data);
+            // console.log(userCredential);
         } catch (error) {
             console.log(error);
             alert(error);
@@ -49,21 +58,21 @@ function SchoolLoginComp() {
     };
 
     const handleLogin = async (e) => {
-        if (!email) {
-            alert('Please enter your email');
-            return;
-        }
+        // if (!email) {
+        //     alert('Please enter your email');
+        //     return;
+        // }
         if (!password) {
             alert('Please enter your Password');
             return;
         }
-        // if (!schooluniqueID) {
-        //     alert('Please enter your School Unique ID');
-        //     return;
-        // }
+        if (!schooluniqueID) {
+            alert('Please enter your School Unique ID');
+            return;
+        }
         e.preventDefault();
         try {
-            await login(email, password);
+            await login(schooluniqueID, password);
         } catch (error) {
             console.log(error);
         }
@@ -94,7 +103,7 @@ function SchoolLoginComp() {
 
                     <div className="xl:w-[90%] md:w-full h-auto mt-6">
                         <form className="w-full h-auto flex flex-col gap-4 md:mt-1 ">
-                            <div className="w-full h-auto flex flex-col text-white text-left">
+                            {/* <div className="w-full h-auto flex flex-col text-white text-left">
                                 <span className="xl:text-[16px] lg:text-[14px] sd:text-[12px]">Email</span>
                                 <div style={{
                                     "background-image":
@@ -119,7 +128,34 @@ function SchoolLoginComp() {
                                         autoComplete="off"
                                     />
                                 </div>
+                            </div> */}
+                            <div className="w-full h-auto flex flex-col text-white text-left">
+                                <span className="xl:text-[16px] lg:text-[14px] sd:text-[12px]">School Unique Id</span>
+                                <div style={{
+                                    "background-image":
+                                        "linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)",
+                                }} className="w-full h-auto flex  xl:p-4  md:p-3 sd:p-2 items-center justify-start md:rounded-xl sd:rounded-md overflow-hidden">
+                                    <AiOutlineMail
+                                        size={'2.5vh'}
+                                        style={{
+                                            color: 'green',
+                                            width: '30px',
+                                            marginLeft: '2vh',
+                                            marginRight: '2vh',
+                                        }}
+                                    />
+                                    <input
+                                        className="bg-inherit text-white w-full outline-none md:text-[12px] lg:text-[14px] sd:text-[12px]"
+                                        type="text"
+                                        placeholder="Enter school code"
+                                        onChange={(e) => setSchooluniqueID(e.target.value)}
+                                        value={schooluniqueID}
+                                        required
+                                        autoComplete="off"
+                                    />
+                                </div>
                             </div>
+
                             <div className="w-full h-auto flex flex-col text-white text-left">
                                 <span className="xl:text-[16px] lg:text-[14px] sd:text-[12px] ">Password</span>
                                 <div style={{
@@ -146,33 +182,6 @@ function SchoolLoginComp() {
                                     />
                                 </div>
                             </div>
-                            {/* <div className="w-full h-auto flex flex-col text-white text-left">
-                                <span className="xl:text-[16px] lg:text-[14px] sd:text-[12px]">School Unique Id</span>
-                                <div style={{
-                                    "background-image":
-                                        "linear-gradient(177.81deg, rgba(255, 255, 255, 0.11) 1.84%, rgba(255, 255, 255, 0) 123.81%)",
-                                }} className="w-full h-auto flex  xl:p-4  md:p-3 sd:p-2 items-center justify-start md:rounded-xl sd:rounded-md overflow-hidden">
-                                    <AiOutlineMail
-                                        size={'2.5vh'}
-                                        style={{
-                                            color: 'green',
-                                            width: '30px',
-                                            marginLeft: '2vh',
-                                            marginRight: '2vh',
-                                        }}
-                                    />
-                                    <input
-                                        className="bg-inherit text-white w-full outline-none md:text-[12px] lg:text-[14px] sd:text-[12px]"
-                                        type="text"
-                                        placeholder="Enter school code"
-                                        onChange={(e) => setSchooluniqueID(e.target.value)}
-                                        value={schooluniqueID}
-                                        required
-                                        autoComplete="off"
-                                    />
-                                </div>
-                            </div> */}
-
                             <button
                                 className='w-full xl:p-4 md:p-3 sd:p-2 md:text-[12px] lg:text-[16px] sd:text-[14px] bg-pink text-white rounded-lg'
                                 onClick={handleLogin}

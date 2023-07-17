@@ -118,6 +118,11 @@ export default function Studentdetails() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
   const classes = [
     {
       id: 1,
@@ -139,7 +144,7 @@ export default function Studentdetails() {
   }, [currentMonth]);
 
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       {isMobileScreen && (
         <div
           className={`fixed right-0 ${SideBarState ? "block" : "hidden"
@@ -155,28 +160,28 @@ export default function Studentdetails() {
           <Schoolsidebar toggleSideBar={toggleSideBar} />
         </div>
       )}
-      <div className="flex-grow bg-[#2E3036]">
+      <div className="flex-grow bg-[#2E3036] h-screen">
         <div className="md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
           <SchoolTopbar heading="Dashboard" toggleSideBar={toggleSideBar} />
         </div>
         <hr className="hidden lg:block opacity-50"/>
         {/* text */}
-        <div className="bg-[#2D2E35] my-4 text-white  h-full md:grid grid-cols-2 w-full gap-10 space-y-10  px-5 md:pt-0  pt-20 pb-5">
-          <div className="space-y-10 ">
-            <div className="grid grid-cols-2 text-center rounded-2xl bg-[#373A41] p-5 mt-[-30px] md:mt-[0] items-center">
-              <div className="space-y-7">
-                <div className="ml-[-10px]">Active Learners</div>
+        <div className="bg-[#2D2E35] my-4 text-white md:grid grid-cols-2 w-full gap-10 space-y-10  px-5 md:pt-0  pt-20 pb-5">
+          <div className="space-y-10">
+            <div className="grid grid-cols-2 text-center rounded-2xl bg-[#373A41] mt-[-30px] md:mt-[0] p-12 px-16 items-center h-[240px]">
+              <div className="space-y-3 w-fit mx-auto">
+                <div className="text-3xl">Active Learners</div>
                 <div>
                   {" "}
                   <div className="text-[#E1348B] text-2xl">850</div>
                   <div>Out of 1000</div>
                 </div>
               </div>
-              <div className="flex justify-center">
+              <div className="mx-auto">
                 <DonutInProfile />
               </div>
             </div>
-            <div>
+            <div className="">
 
               <Calendar />
 

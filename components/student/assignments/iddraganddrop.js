@@ -15,22 +15,22 @@ export default function IDdraganddrop({ name, setValue, onChange, onBlur }) {
   });
 
   return (
-    <div className="w-[80%] md:w-[70%] md:h-60 text-gray-400 ">
+    <div className="w-[80%] md:w-[70%] h-fit text-gray-400 p-4">
       <div
         {...getRootProps()}
-        className={`w-full h-full px-10 py-4 md:py-6 mt-2 rounded-xl bg-[#333333]`}
+        className={`w-full h-full px-10 py-4 md:py-6 border-dashed border-white p-4 border-[1px] mt-2 rounded-xl bg-[#333333]`}
       >
         <input {...getInputProps({
           onChange,
           onBlur,
         })} />
-        <div className="flex py-2 md:py-8 justify-center">
+        <div className="flex py-2 md:py-6 justify-center">
           <TbFileUpload size={30} />
         </div>
 
-        <p className="text-center text-sm  py-2"><span className='font-medium text-white'>Click to upload</span> or drag and drop</p>
+        <p className="text-center text-lg "><span className='font-medium text-white'>Click to upload or</span> drag and drop</p>
         <p className="text-sm flex justify-center text-center">
-          SVG , PNG or JPG(max.800x400px)
+        jpeg , png, svg (max 2-5 mb)
         </p>
       </div>
       <div className="mt-3">
