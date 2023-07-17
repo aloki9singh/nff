@@ -2,6 +2,7 @@
 // side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
+import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -148,4 +149,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default withAdminAuthorization(dashboard);
