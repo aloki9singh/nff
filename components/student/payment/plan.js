@@ -48,9 +48,9 @@ const ChoosePlan = ({ clickEvent, trial}) => {
 
     {trial ? <>
 
-    <div className={`relative text-wrapper top-8 md:mt-4 text-center`}>
+    <div className={`relative text-wrapper text-center mb-[10px]`}>
 
-      <h1 className="text-2xl md:text-4xl font-semibold md:mb-2">
+      <h1 className="text-xl md:text-4xl font-semibold ">
         Try 1 week <span className="text-[#E1348B]">
            Free
           </span>
@@ -58,7 +58,7 @@ const ChoosePlan = ({ clickEvent, trial}) => {
       {/* <h2 className="text-base md:text-xl mb-2 font-semibold">
         Transparent <span className="text-[#A145CD]">Pricing</span> For You
       </h2> */}
-      <p className="text-[9px] md:text-[14px] mb-20">
+      <p className="text-[9px] md:text-[14px]">
         Cancel Anytime
       </p>
       
@@ -80,6 +80,7 @@ const ChoosePlan = ({ clickEvent, trial}) => {
             to={item.to}
             updatePage={(e) => clickEvent(e)}
             ind={ind}
+            trial={trial}
           />
         ))}
       </div>

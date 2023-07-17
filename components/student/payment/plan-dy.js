@@ -9,7 +9,18 @@ export default function Plan({
   to,
   updatePage,
   odd,
+  trial
 }) {
+
+
+
+  const paymentFuction = (e) => {
+    e.preventDefault();
+
+    alert("Payment Function");
+  }
+
+
   const styles = `
 .oddcard{
   position:relative;
@@ -32,7 +43,7 @@ export default function Plan({
     <>
       <style>{styles}</style>
       <div
-        className={` ${odd} h-[29rem] w-min-[480px] md:w-[25%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto`}
+        className={` ${odd} h-[24rem] w-min-[480px] md:w-[22.5%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto`}
       >
         <div className="border-b border-[#ffffffc0] px-6 pt-8 pb-2">
           <h1 className="text-2xl md:xl lg:text-2xl xl:text-4xl md:mb-2 font-medium">
@@ -59,27 +70,54 @@ export default function Plan({
                 <p className="text-sm">{item}</p>
               </div>
             ))}
-            <button
-              className="bg-[#A145CD] flex items-center m-auto justify-center text-sm w-full p-[12px] mt-[6rem] rounded-xl"
-              onClick={(e) => updatePage(e)}
-            >
-              Start Free Trial Now
-              <svg
-                class="w-3.5 h-3.5 ml-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
+
+
+            {trial ? <>
+              <button
+                className="bg-[#A145CD] flex items-center m-auto justify-center text-sm w-full p-[12px] mt-[2rem] rounded-xl"
+                onClick={(e) => updatePage(e)}
               >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </button>
+                Start Free Trial Now
+                <svg
+                  class="w-3.5 h-3.5 ml-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </button>
+            </> :
+              <>
+                <button
+                  className="bg-[#A145CD] flex items-center m-auto justify-center text-sm w-full p-[12px] mt-[2rem] rounded-xl"
+                  onClick={(e) => paymentFuction(e)}
+                >
+                  Subscribe Now
+                  <svg
+                    class="w-3.5 h-3.5 ml-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M1 5h12m0 0L9 1m4 4L9 9"
+                    />
+                  </svg>
+                </button>
+              </>}
           </div>
         </div>
       </div>

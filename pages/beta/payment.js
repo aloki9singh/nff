@@ -5,11 +5,27 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import { useRouter } from "next/router";
 import { db } from "@/config/firebaseconfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import {accountcleanup} from "@/pages/api/signup/index"
+import { accountcleanup } from "@/pages/api/signup/index";
+import CourseAccess from "@/lib/context/AccessCourseContext";
+import ToastMessage from "@/components/student/payment/ToastMessage";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const Payment = () => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
+
+  const [showToast, setShowToast] = useState(false);
+  let isTrialValid = false;
+
+  if (user) {
+    isTrialValid = CourseAccess(user.uid).isTrialValid;
+  }
+
+  console.log(isTrialValid);
+
+  const handleToastMessage = () => {
+    setShowToast(true);
+  };
 
   const styles = `
     .myClass {
@@ -31,7 +47,6 @@ const Payment = () => {
     }
 
     if (user) {
-
       const trialStartDate = new Date();
       const startdate = trialStartDate.toString();
       const trialEndDate = new Date(trialStartDate.getTime() + 5 * 60 * 1000);
@@ -52,8 +67,9 @@ const Payment = () => {
         if (docSnap.exists()) {
           await updateDoc(userRef, trialData); // exist condition update the doc
         }
-        
-        console.log("Trial activated successfully!");
+
+
+        handleToastMessage();
 
       } catch (error) {
         console.error("Error activating trial:", error);
@@ -65,22 +81,34 @@ const Payment = () => {
 
   return (
     <>
-      <style>{styles}</style>
-      <DashboardNav />
-      <div className="w-full h-full bg-[#0D0E14]">
-        <div className="text-center text-white text-lg pt-[12rem]">
-          <h1 className="text-[2.2rem] font-bold">Subscribe</h1>
-          <p className="mb-4">Join NeatSkills & Choose From The Below Plan</p>
-        </div>
-        <div className="md:h-screen myClass flex flex-col items-center text-white font-Inter">
-          <ChoosePlan
-            clickEvent={(e) => handleClickFreeTrail(e)}
-            trial={true}
+      <div
+        className={`md:overflow-hidden h-screen ${
+          showToast ? "blur-lg" : null
+        }`}
+      >
+        {showToast && (
+          <ToastMessage
+            heading="Trial Activated"
+            message="Learn and become your best with Neatskills"
           />
+        )}
+        <style>{styles}</style>
+        <DashboardNav />
+        <div className="w-full bg-[#0D0E14] overflow-hidden">
+          <div className="text-center text-white text-lg">
+            <h1 className="text-[2.2rem] font-bold">Subscribe</h1>
+            <p className="mb-4">Join NeatSkills & Choose From The Below Plan</p>
+          </div>
+          <div className="md:h-screen myClass flex flex-col items-center text-white font-Inter">
+            <ChoosePlan
+              clickEvent={(e) => handleClickFreeTrail(e)}
+              trial={isTrialValid}
+            />
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default Payment;
+export default withStudentAuthorization(Payment);
