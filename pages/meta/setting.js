@@ -11,6 +11,7 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function Settings() {
   const router = useRouter();
@@ -179,4 +180,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default withMentorAuthorization(Settings);

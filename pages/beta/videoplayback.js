@@ -336,4 +336,4 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
     </>
   );
 }
-export default withStudentAuthorization(Videos);
+export default Videos;

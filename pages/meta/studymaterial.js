@@ -4,6 +4,7 @@ import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function StudyMaterial() {
   const router = useRouter();
@@ -66,4 +67,4 @@ function StudyMaterial() {
   );
 }
 
-export default StudyMaterial;
+export default withMentorAuthorization(StudyMaterial);

@@ -19,6 +19,7 @@ import MentorChart from "@/components/mentor/other/chart";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function MentorProfile() {
   const router = useRouter();
@@ -298,4 +299,4 @@ function MentorProfile() {
     </>
   );
 }
-export default withAuth(MentorProfile, "/meta/signup");
+export default withMentorAuthorization(MentorProfile);

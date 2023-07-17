@@ -14,11 +14,12 @@ import LeaderBoardStudent from "@/components/student/dashboard/leaderboard";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/config/firebaseconfig";
+import { auth, db } from "@/config/firebaseconfig";
 import { useMediaQuery } from "react-responsive";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 const Studentdashboard = () => {
   const [active, setActive] = useState(false);
@@ -32,6 +33,7 @@ const Studentdashboard = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const [workpercentage, setworkpercentage] = useState(0);
+  const [lastTip, setLastTip] = useState(null);
 
   const tip =
     "Learning that is spread out over time drastically increases knowledge retention.";
@@ -47,6 +49,21 @@ const Studentdashboard = () => {
         setVerified(value.user.verified);
       }
     });
+    const fetchLastTip = async () => {
+      const DailyTipsCollectionRef = collection(db, "dailytip");
+      const tipsQuery = query(
+        DailyTipsCollectionRef,
+        orderBy("createdAt", "desc"),
+        limit(1)
+      );
+      const querySnapshot = await getDocs(tipsQuery);
+
+      querySnapshot.forEach((doc) => {
+        setLastTip(doc.data().text);
+      });
+    };
+
+    fetchLastTip();
 
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
@@ -118,8 +135,7 @@ const Studentdashboard = () => {
                       Daily Tip
                     </div>
                     <p className=" text-sm font-semibold text-[#000000]">
-                      Learning that is spread out over time drastically
-                      increases knowledge retention.
+                      {lastTip && lastTip}
                     </p>
                   </div>
                 </div>

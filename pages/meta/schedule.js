@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useMediaQuery } from "react-responsive";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 // import MobileNav from "../components/CalenderParts/MobileNav";
 function Schedule() {
@@ -90,4 +91,4 @@ function Schedule() {
     </>
   );
 }
-export default withAuth(Schedule, "/meta/signup");
+export default withMentorAuthorization(Schedule)

@@ -16,6 +16,9 @@ import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
 import withAuth from "@/lib/context/mentorcontext";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import { CiEdit } from "react-icons/ci";
+import DailyTip from "@/components/mentor/dashboard/DailyTip";
 
 function MentorDashboard() {
   const [count, setCount] = useState(1);
@@ -116,9 +119,8 @@ function MentorDashboard() {
                     <div className="bg-[#373A41] rounded-[20px] pt-1">
                       <CirProgress percentage={0} />
                     </div>
-                    <div className="bg-[#373A41] rounded-[20px] mb-10 mt-[-20px] md:mt-0">
-                      <MentorChatWidget />
-                    </div>
+                   
+                    <DailyTip/>
                   </div>
                 </div>
               </div>
@@ -138,4 +140,4 @@ function MentorDashboard() {
   );
 }
 
-export default withAuth(MentorDashboard, "/meta/signup");
+export default withMentorAuthorization(MentorDashboard);

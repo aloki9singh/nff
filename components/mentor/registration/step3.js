@@ -127,14 +127,130 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                         <option value="" className="text-xs">
                           Select from this List
                         </option>
-                        <option value="Python" className="text-xs">
-                          Python
+
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Web Developer"
+                        >
+                          Web Developer
                         </option>
-                        <option value="Java" className="text-xs">
-                          Java
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="C++ & DSA"
+                        >
+                          C++ & DSA
                         </option>
-                        <option value="MERN" className="text-xs">
-                          MERN
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="UI/UX Designing"
+                        >
+                          UI/UX Designing
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Yoga & Wellness"
+                        >
+                          Yoga & Wellness
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Painting"
+                        >
+                          Painting
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Graphic Designing"
+                        >
+                          Graphic Designing
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Video Shooting"
+                        >
+                          Video Shooting
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Content Writing"
+                        >
+                          Content Writing
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Marketing"
+                        >
+                          Marketing
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Basic Medical Science"
+                        >
+                          {" "}
+                          Basic Medical Science{" "}
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Yoga & Wellness"
+                        >
+                          Yoga & Wellness
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Sketching"
+                        >
+                          Sketching
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Financial Literacy of Planning"
+                        >
+                          Financial Literacy of Planning
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value=" Sound / Audio Engineering"
+                        >
+                          Sound / Audio Engineering
+                        </option>
+                        <option className="text-xs cursor-pointer" value="IOT">
+                          IOT
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="3D Video Editing"
+                        >
+                          3D Video Editing
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="AI/ML"
+                        >
+                          AI/ML
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Gaming"
+                        >
+                          Gaming
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Poetry"
+                        >
+                          Poetry
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Thesis of Book Writing"
+                        >
+                          Thesis of Book Writing
+                        </option>
+                        <option
+                          className="text-xs cursor-pointer"
+                          value="Productivity of Basic Software"
+                        >
+                          Productivity of Basic Software
                         </option>
                       </select>
                     </div>
@@ -192,23 +308,22 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                             setskill("");
                           }
                         }}
-   
                         value={skill}
                         id=""
                       />
-                     <div className="text-center">
-                     <button
-                        className="md:hidden  text-white text-center text-sm rounded-lg px-2 py-1 bg-[#A145CD]"
-                        onClick={() => {
-                          if (skill.trim() !== "") {
-                            setskillsArr([...skillsArr, skill.trim()]);
-                            setskill("");
-                          }
-                        }}
-                      >
-                        Add Skill
-                      </button>
-                     </div>
+                      <div className="text-center">
+                        <button
+                          className="md:hidden  text-white text-center text-sm rounded-lg px-2 py-1 bg-[#A145CD]"
+                          onClick={() => {
+                            if (skill.trim() !== "") {
+                              setskillsArr([...skillsArr, skill.trim()]);
+                              setskill("");
+                            }
+                          }}
+                        >
+                          Add Skill
+                        </button>
+                      </div>
                     </div>
                   </div>
 
