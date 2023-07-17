@@ -10,6 +10,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '@/config/firebaseconfig';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { useAuthContext } from '@/lib/context/AuthContext';
+import { useRouter } from 'next/router';
 
 export default function AdminTopbar({ heading }) {
   let [searchstate, setsearchstate] = useState('');

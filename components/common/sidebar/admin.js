@@ -1,307 +1,301 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { RxCross2 } from "react-icons/rx";
-import { BsPersonCircle } from "react-icons/bs";
-import { useAuthContext } from "@/lib/context/AuthContext";
-import { AiOutlineArrowRight, AiOutlineSetting } from "react-icons/ai";
-const Sidebar = ({ toggleSideBar }) => {
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { auth } from '@/config/firebaseconfig';
+import { BiLogIn } from 'react-icons/bi';
+import { useRouter } from 'next/router';
+import { AiOutlineArrowRight, AiOutlineSetting } from 'react-icons/ai';
+import { logout } from '@/lib/exportablefunctions';
+import { useAuthContext } from '@/lib/context/AuthContext';
+import { onAuthStateChanged } from 'firebase/auth';
+import { BsPersonCircle } from 'react-icons/bs';
+import { RxCross2 } from 'react-icons/rx';
+const CourseoverviewSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
+  // console.log(userProfile)
   return (
     <>
-      <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col">
+      <aside className='md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between '>
         <div>
           <div>
-          
+            <div>
               <Image
-                src="/pagesgraphics/common/createcategory/Neatskills.svg"
+                src='/pagesgraphics/common/createcategory/Neatskills.svg'
                 width={150}
                 height={100}
-                alt="logo"
-                className="mb-6 md:block hidden"
+                alt='logo'
+                className='mb-6 md:block hidden'
               />
-           
-            <div
-              className=" flex justify-end w-full md:hidden  "
-              onClick={() => toggleSideBar()}
-            >
-              <div className="bg-gray-500 rounded-full p-[5px]">
-                <RxCross2 className="text-white  text-sm" />
+
+              <div
+                className=' flex justify-end w-full md:hidden  '
+                onClick={() => toggleSideBar()}>
+                <div className='bg-gray-500 rounded-full p-[5px]'>
+                  <RxCross2 className='text-white  text-sm' />
+                </div>
+              </div>
+              <div className='md:hidden block p-2 text-white'>
+                <Link href={'/meta/profile'}>
+                  {user && userProfile && user.photoURL ? (
+                    <Image
+                      src={user.photoURL}
+                      alt='proImg'
+                      height={60}
+                      width={60}
+                      className='inline-block relative object-cover object-center md:hidden !rounded-full border border-[#E1348B] aspect-square'
+                    />
+                  ) : (
+                    <BsPersonCircle className='text-white text-4xl'></BsPersonCircle>
+                  )}
+                </Link>
+                <p className='pt-2'>{user ? user.displayName : 'Anonymous'}</p>
+                {userProfile && (
+                  <p className='text-gray-500 text-[12px] mt-[-4px]'>
+                    Roll no-{userProfile.rollNo}
+                  </p>
+                )}
               </div>
             </div>
-            <div className="md:hidden block p-2 text-white">
-              <Link href={"/meta/profile"}>
-                {user && user.photoURL ? (
-                  <Image
-                    src={user.photoURL}
-                    alt="proImg"
-                    height={60}
-                    width={60}
-                    className="inline-block relative object-cover object-center md:hidden !rounded-full border border-[#E1348B] aspect-square"
-                  />
-                ) : (
-                  <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
-                )}
-              </Link>
-              <p className="pt-2">{user ? user.displayName : "Guest"}</p>
-              <p className="text-gray-500 text-[12px] mt-[-7px]">
-                Roll no - {userProfile ? userProfile?.rollno : "None"}
-              </p>
+            <div className='flex flex-col h-full justify-around '>
+              <ul>
+                <li className='md:space-y-[16px]'>
+                  <Link
+                    href='/reta/dashboard'
+                    className='flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin'>
+                    <label className='inline-flex items-center space-x-3'>
+                      <input
+                        id='default-checkbox'
+                        type='checkbox'
+                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                          router.pathname === '/reta/dashboard'
+                            ? 'shadow-white'
+                            : ''
+                        }`}
+                        style={{
+                          boxShadow:
+                            router.pathname === '/reta/dashboard'
+                              ? '0 0 5px #A145CD'
+                              : 'none'
+                        }}
+                      />{' '}
+                      <span
+                        className={`ml-3 text-[${
+                          router.pathname == '/reta/dashboard' ? '#E1348B' : ''
+                        }]`}>
+                        Home
+                      </span>
+                    </label>
+                  </Link>
+                  <hr className='h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto '></hr>
+                  <Link
+                    href='/reta/courseoverview'
+                    className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                    <label className='inline-flex items-center space-x-3'>
+                      <input
+                        id='default-checkbox'
+                        type='checkbox'
+                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                          router.pathname === '/reta/courseoverview'
+                            ? 'shadow-white'
+                            : ''
+                        }`}
+                        style={{
+                          boxShadow:
+                            router.pathname === '/reta/courseoverview'
+                              ? '0 0 5px #A145CD'
+                              : 'none'
+                        }}
+                      />{' '}
+                      <span
+                        className={`ml-3 text-[${
+                          router.pathname == '/reta/courseoverview'
+                            ? '#E1348B'
+                            : ''
+                        }]`}>
+                        Courses
+                      </span>
+                    </label>
+                  </Link>
+                  {user ? (
+                    ' '
+                  ) : (
+                    <Link
+                      href='/reta/community'
+                      className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                      <label className='inline-flex items-center space-x-3'>
+                        <input
+                          id='default-checkbox'
+                          type='checkbox'
+                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                            router.pathname === '/reta/team'
+                              ? 'shadow-white'
+                              : ''
+                          }`}
+                          style={{
+                            boxShadow:
+                              router.pathname === '/reta/team'
+                                ? '0 0 5px #A145CD'
+                                : 'none'
+                          }}
+                        />{' '}
+                        <span
+                          className={`ml-3 text-[${
+                            router.pathname == '/reta/team' ? '#E1348B' : ''
+                          }]`}>
+                          team
+                        </span>
+                      </label>
+                    </Link>
+                  )}
+
+                  {user ? (
+                    <div style={{ marginTop: '0' }}>
+                      <Link
+                        href='/reta/checkclass'
+                        className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === '/reta/checkclass'
+                                ? 'shadow-white'
+                                : ''
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === '/reta/checkclass'
+                                  ? '0 0 5px #A145CD'
+                                  : 'none'
+                            }}
+                          />{' '}
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == '/reta/checkclass'
+                                ? '#E1348B'
+                                : ''
+                            }]`}>
+                            Schedule
+                          </span>
+                        </label>
+                      </Link>
+
+                      <Link
+                        href='/reta/profile'
+                        className='flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === '/reta/profile'
+                                ? 'shadow-white'
+                                : ''
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === '/reta/profile'
+                                  ? '0 0 5px #A145CD'
+                                  : 'none'
+                            }}
+                          />{' '}
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == '/reta/profile'
+                                ? '#E1348B'
+                                : ''
+                            }]`}>
+                            Profile
+                          </span>
+                        </label>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          logout(router);
+                        }}
+                        className='flex items-center p-2 text-base font-normal text-white rounded-lg cursor-pointer hover:bg-pin md:hidden'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className='rounded form-checkbox h-3 w-3 text-gray-600'
+                          />{' '}
+                          <span
+                            className={`ml-3 flex text-[${
+                              router.pathname == '/reta/logout' ? '#E1348B' : ''
+                            }]`}>
+                            Logout
+                          </span>
+                        </label>
+                      </button>
+                      {user ? (
+                        <div className='  font-semibold text-white bg-[#373A41] flex flex-col mt-9 rounded-xl'>
+                          <div className=' px-8 py-2 '>
+                            <h1 className='md:text-xl  font-Inter'>
+                              <div className='md:block hidden'>
+                                Discord <br /> Community
+                              </div>
+                              <div className='md:hidden'>
+                                {' '}
+                                Discord Community
+                              </div>
+                            </h1>
+                            <p>150 members</p>
+                            <button className='inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline '>
+                              <span>Join</span>
+                              <AiOutlineArrowRight />
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="flex flex-col h-full ">
-            <ul>
-              <li className="space-y-[16px] max-[768px]:space-y-[4px]">
-                <Link
-                  href="/seta/dashboard"
-                  className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "/seta/dashboard"
-                          ? "shadow-white"
-                          : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "/seta/dashboard"
-                            ? "0 0 5px #A145CD"
-                            : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`${
-                        router.pathname == "" ? "text-[#E1348B]" : ""
-                      }`}
-                    >
-                      Home
-                    </span>
-                  </label>
-                </Link>
-                <Link
-                  href="/reta/students"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "/reta/students"
-                          ? "shadow-white"
-                          : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "/reta/students"
-                            ? "0 0 5px #A145CD"
-                            : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`${
-                        router.pathname == "/reta/students"
-                          ? "text-[#E1348B]"
-                          : ""
-                      }`}
-                    >
-                      Students
-                    </span>
-                  </label>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span>Events</span>
-                  </label>
-                </Link>
-                <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
-                <Link
-                  href="/seta/profile"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`ml-3 text-[${
-                        router.pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
-                    >
-                      Schedule
-                    </span>
-                  </label>
-                </Link>
-
-                <Link
-                  href="/seta/profile"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`ml-3 text-[${
-                        router.pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
-                    >
-                      Live Class
-                    </span>
-                  </label>
-                </Link>
-
-                <Link
-                  href="/seta/profile"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`ml-3 text-[${
-                        router.pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
-                    >
-                      Study Material
-                    </span>
-                  </label>
-                </Link>
-
-                <Link
-                  href="/seta/profile"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`ml-3 text-[${
-                        router.pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
-                    >
-                      Homework
-                    </span>
-                  </label>
-                </Link>
-                <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>
-
-                <Link
-                  href="/seta/profile"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`ml-3 text-[${
-                        router.pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
-                    >
-                      Chat
-                    </span>
-                  </label>
-                </Link>
-
-                <Link
-                  href="/seta/profile"
-                  className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
-                >
-                  <label className="inline-flex items-center space-x-3">
-                    <input
-                      id="default-checkbox"
-                      type="checkbox"
-                      className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "" ? "shadow-white" : ""
-                      }`}
-                      style={{
-                        boxShadow:
-                          router.pathname === "" ? "0 0 5px #A145CD" : "none",
-                      }}
-                    />{" "}
-                    <span
-                      className={`ml-3 text-[${
-                        router.pathname == "/Schedule" ? "#E1348B" : ""
-                      }]`}
-                    >
-                      Profile
-                    </span>
-                  </label>
-                </Link>
-              </li>
-            </ul>
+          <div>
+            {user ? (
+              <div className='text-white flex-row mt-2 md:mt-5 md:block hidden'>
+                <button
+                  onClick={() => {
+                    logout(router);
+                  }}
+                  className=' bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal '>
+                  <span>Log Out </span>
+                  <BiLogIn className='text-2xl' />
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-        </div>
-        <div className="text-white flex-row  space-y-5 mt-32 max-[768px]:mt-2 ">
-          <button className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal ">
-            <AiOutlineSetting />
-            <span>Settings </span>
-          </button>
+          {user ? (
+            <></>
+          ) : (
+            <div className=' w-full opacity-60 text-left pl-5 bottom-6 mt-40 flex flex-col gap-5'>
+              <div>
+                <Link href='#'>
+                  <span className='text-white'>Cookies</span>
+                </Link>
+              </div>
+              <div>
+                <Link href='/alpha/privacypolicy'>
+                  {' '}
+                  <span className='text-white'>Privacy</span>
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </aside>
     </>
   );
 };
 
-export default Sidebar;
+export default CourseoverviewSidebar;

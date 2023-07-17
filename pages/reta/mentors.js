@@ -91,63 +91,84 @@ function AdminStudent() {
               <AdminTopbar heading='Review' toggleSideBar={toggleSideBar} />
             </div>
 
-            <div className=' flex gap-2 mt-10'>
+            <div className='flex gap-2 mt-10'>
               <div
                 className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
-                  activeTab === 'mentor' ? 'cursor-pointer' : ''
+                  activeTab === 'mentor' ? 'cursor-pointer underline' : ''
                 }`}
                 onClick={() => handleTabClick('mentor')}>
                 Mentor : 199
               </div>
 
+              <span className='ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white'>
+                /
+              </span>
+
               <div
-                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
-                  activeTab === 'student' ? 'cursor-pointer' : ''
+                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${
+                  activeTab === 'student' ? 'cursor-pointer underline' : ''
                 }`}
                 onClick={() => handleTabClick('student')}>
                 Student : 199
               </div>
             </div>
 
-            {/* Dropdown bar */}
+            {/* filter bar */}
+
             <div className='gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white'>
-              <div className='flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2'>
-                <div
-                  className='md:flex items-center rounded-lg gap-4 justify-around'
-                  onClick={() => setActiveTab('mentor')}>
-                  Total {activeTab === 'mentor' ? 'Mentors' : 'Students'}:{' '}
-                  {activeTab === 'mentor' ? 199 : 198}
-                </div>
-                <div className='flex justify-between'>
-                  <form className=' items-center hidden md:block '>
-                    <label htmlFor='voice-search' className='sr-only'>
-                      Search
-                    </label>
-                    <div className='relative'>
-                      <div className='flex absolute inset-y-0 right-[10px]  items-center pointer-events-none'>
+              <div className=' flex   justify-between'>
+                <div>
+                  <div className='flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2'>
+                    <div className='flex justify-between'>
+                      <form className=' items-center hidden md:block '>
+                        <label htmlFor='voice-search' className='sr-only'>
+                          Search
+                        </label>
+                        <div className='relative'>
+                          <div className='flex absolute  inset-y-0 right-[10px]  items-center pointer-events-none'>
+                            <svg
+                              className='w-5 h-5 text-white dark:text-white'
+                              fill='currentColor'
+                              viewBox='0 0 20 20'
+                              xmlns='http://www.w3.org/2000/svg'>
+                              <path
+                                fillRule='evenodd'
+                                d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+                                clipRule='evenodd'></path>
+                            </svg>
+                          </div>
+                          <input
+                            type='text'
+                            id='voice-search'
+                            className='bg-[#414348]  border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-[#414348] dark:border-gray-600 dark:placeholder-white placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                            placeholder='Search Mentor '
+                            required
+                            value={searchstate}
+                            onChange={searchfun}
+                          />
+                        </div>
+                      </form>
+                      <button className=' w-fit h-fit flex px-8 py-2.5  max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14 bg-[#E1348B]'>
                         <svg
-                          className='w-5 h-5 text-white dark:text-white'
-                          fill='currentColor'
-                          viewBox='0 0 20 20'
-                          xmlns='http://www.w3.org/2000/svg'>
-                          <path
-                            fillRule='evenodd'
-                            d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
-                            clipRule='evenodd'></path>
+                          xmlns='http://www.w3.org/2000/svg'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          className='w-4 h-4 text-white mr-1'>
+                          <path d='M12 5v14M5 12h14' />
                         </svg>
-                      </div>
-                      <input
-                        type='text'
-                        id='voice-search'
-                        className='bg-[#414348]  border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-[#414348] dark:border-gray-600 dark:placeholder-white placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                        placeholder='Search '
-                        required
-                        value={searchstate}
-                        onChange={searchfun}
-                      />
+                        Add Mentor
+                      </button>
                     </div>
-                  </form>
-                  <button className='bg-[#414348] w-fit h-fit flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14'>
+                  </div>
+                </div>
+
+                {/* {/student/} */}
+                <div>
+                  <button className='bg-[#414348] w-fit h-fit mt-4 flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14'>
                     <span>
                       <Image
                         src='/componentsgraphics/student/courses/list/chartbaricon.svg'
@@ -161,6 +182,58 @@ function AdminStudent() {
                   </button>
                 </div>
               </div>
+
+              {activeTab === 'student' && (
+                <div className='gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white'>
+                  <div className='flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2'>
+                    <div className='md:flex items-center rounded-lg gap-4 justify-around '>
+                      Total student : 199
+                    </div>
+                    <div className='flex justify-between'>
+                      <form className=' items-center hidden md:block '>
+                        <label htmlFor='voice-search' className='sr-only'>
+                          Search
+                        </label>
+                        <div className='relative'>
+                          <div className='flex absolute inset-y-0 right-[10px]  items-center pointer-events-none'>
+                            <svg
+                              className='w-5 h-5 text-white dark:text-white'
+                              fill='currentColor'
+                              viewBox='0 0 20 20'
+                              xmlns='http://www.w3.org/2000/svg'>
+                              <path
+                                fillRule='evenodd'
+                                d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+                                clipRule='evenodd'></path>
+                            </svg>
+                          </div>
+                          <input
+                            type='text'
+                            id='voice-search'
+                            className='bg-[#414348]  border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-[#414348] dark:border-gray-600 dark:placeholder-white placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                            placeholder='Search studnet'
+                            required
+                            value={searchstate}
+                            onChange={searchfun}
+                          />
+                        </div>
+                      </form>
+                      <button className='bg-[#414348] w-fit h-fit flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14'>
+                        <span>
+                          <Image
+                            src='/componentsgraphics/student/courses/list/chartbaricon.svg'
+                            width={20}
+                            height={20}
+                            alt='chart icon'
+                            className='ml-1'
+                          />
+                        </span>
+                        Filter
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* <div className="  md:w-5/6 ">
                 <BasicDetails />
@@ -212,99 +285,100 @@ function AdminStudent() {
 
             {/* table */}
 
-            <div className='ms-[2%] me-[2%] h-[712px] bg-[#373A41] max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto mb-4 text-white'>
-              <div className=''>
-                <table className='w-full'>
-                  <thead className='items-center border-b'>
-                    <tr className='flex font-semibold justify-around p-5'>
-                      <th className='w-[14.2%]'>Photo</th>
-
+            <div className=' ms-[2%] me-[2%] h-[712px]  max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto mb-4 text-white'>
+              <div className='overflow-x-auto mt-3'>
+                <table className='w-full h-20 table-auto '>
+                  <thead className=' font-semibold text-lg border-b bg-transprent '>
+                    <tr className='font-bold  text-center mt-10  '>
+                      <th className=''>Photo</th>
                       {activeTab === 'student' && (
                         <>
-                          <th className='w-[14.2%]'>studnet Name</th>
-                          <th className='w-[14.2%]'>ID</th>
-                          <th className='w-[14.2%]'>class</th>
-                          <th className='w-[14.2%] md:block hidden'>Group</th>
-                          <th className='w-[14.2%] md:block hidden'>Status</th>
+                          <th className=''>Student Name</th>
+                          <th className=''>ID</th>
+                          <th className=''>Class</th>
+                          <th className='hidden md:table-cell'>Group</th>
+                          <th className='hidden md:table-cell'>Status</th>
+                          <th className='md:pl-10'>Profile</th>
                         </>
                       )}
                       {activeTab === 'mentor' && (
                         <>
-                          <th className='w-[14.2%]'>Mentor Name</th>
-
-                          <th className='w-[14.2%]'>ID</th>
-                          <th className='w-[14.2%]'>subject</th>
-                          <th className='w-[14.2%] md:block hidden'>email</th>
-                          <th className='w-[14.2%] md:block hidden'>Grade</th>
+                          <th className=''>Mentor Name</th>
+                          <th className=''>ID</th>
+                          <th className=''>Subject</th>
+                          <th className='hidden md:table-cell'>Email</th>
+                          <th className='hidden md:table-cell'>Grade</th>
+                          <th className='md:w-[16.6%] md:pl-10'>Profile</th>
                         </>
                       )}
-                      <th className='w-[14.2%] md:pl-10'>Profile</th>
                     </tr>
                   </thead>
-                  <tbody className='flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-5'>
-                    <tr className='flex items-center w-full font-medium text-xs justify-between'>
-                      <td className='w-[14.2%]'>
-                        <div className='flex items-center justify-center first-letter md:mr-16'>
-                          <Image
-                            src='/path/to/mentor-image.jpg'
-                            alt='Mentor Image'
-                            height={25}
-                            width={25}
-                            className='rounded-full h-8 object-contain'
-                          />
-                        </div>
+                  <tbody className=' bg-[#373A41] w-full h-full'>
+                    <tr className='text-center font-medium text-xs'>
+                      <td className='flex justify-center items-center'>
+                        <Image
+                          src='/path/to/mentor-image.jpg'
+                          alt='Mentor Image'
+                          height={25}
+                          width={25}
+                          className='h-8 w-8 rounded-full object-contain'
+                        />
                       </td>
-                      <div className='md:ml-6'>
-                        <td className='w-[14.2%]'>John Doe</td>
-                      </div>
-                      <div className='md:ml-32'>
-                        <td className='w-[14.2%]'> 123456</td>
-                      </div>
-                      <div className='md:ml-36 md:mr-10 '>
-                        <td className='w-[14.2%] text-center'> 10</td>
-                      </div>
-                      {activeTab === 'mentor' && (
-                        <>
-                          <div className='md:ml-20  '>
-                            <td className='w-[14.2%] text-center md:block hidden'>
-                              123@gmail.com
-                            </td>
-                          </div>
-                          <div className='md:ml-20'>
-                            <td className='w-[14.2%] mr-4 text-center text-[#E1348B] md:block hidden'>
-                              Active
-                            </td>
-                          </div>
-                        </>
-                      )}
                       {activeTab === 'student' && (
                         <>
-                          <div className='md:ml-32 '>
-                            <td className='w-[14.2%] text-center md:block hidden'>
-                              2022
-                            </td>
-                          </div>
-                          <div className='md:ml-36 md:mr-2'>
-                            <td className='w-[14.2%] mr-4 text-center text-[#E1348B] md:block hidden'>
-                              A+
-                            </td>
-                          </div>
+                          <td className=''>
+                            <div className='truncate'>John Doe</div>
+                          </td>
+                          <td className=''>
+                            <div className='truncate'>123456</div>
+                          </td>
+                          <td className=''>
+                            <div className='truncate'>Class Data</div>
+                          </td>
+                          <td className='hidden md:table-cell'>
+                            <div className='truncate'>Group Data</div>
+                          </td>
+                          <td className='hidden md:table-cell'>
+                            <div className='truncate'>Status Data</div>
+                          </td>
+                          <td className=''>
+                            <Link href='' className='text-[#E1348B] truncate'>
+                              Profile
+                            </Link>
+                          </td>
                         </>
                       )}
-                      <div className='md:ml-36 md:mr-1'>
-                        <td className='w-[14.2%] mr-2 text-right pr-[3%]'>
-                          <Link href='' className='text-[#E1348B]'>
-                            Profile
-                          </Link>
-                        </td>
-                      </div>
+                      {activeTab === 'mentor' && (
+                        <>
+                          <td className=''>
+                            <div className='truncate'>Mentor Name Data</div>
+                          </td>
+                          <td className=''>
+                            <div className='truncate'>ID Data</div>
+                          </td>
+                          <td className=''>
+                            <div className='truncate'>Subject Data</div>
+                          </td>
+                          <td className='hidden md:table-cell'>
+                            <div className='truncate'>Email Data</div>
+                          </td>
+                          <td className='hidden md:table-cell'>
+                            <div className='truncate'>Grade Data</div>
+                          </td>
+                          <td className=''>
+                            <Link href='' className='text-[#E1348B] truncate'>
+                              Profile
+                            </Link>
+                          </td>
+                        </>
+                      )}
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               {/* pagination */}
-              <div className='w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4'>
+              <div className='w-60 h-10  lg:bottom-0 mx-10 my-5 flex justify-center  items-center space-x-4'>
                 <button
                   className='w-6 h-5 border flex justify-center items-center'
                   name='back'
