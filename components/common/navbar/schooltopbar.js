@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -30,7 +32,7 @@ export default function SchoolTopbar({ toggleSideBar, heading }) {
 
   return (
     <nav>
-      <div className="flex justify-between lg:flex md:ml-5 p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
+      <div className="flex justify-between lg:flex md:pl-5 p-2 w-full md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518]">
         <h1 className="text-white my-auto  ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
           {heading}
         </h1>

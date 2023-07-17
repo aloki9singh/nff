@@ -20,6 +20,7 @@ import {
   updateDoc,
   doc,
   arrayUnion,
+  serverTimestamp,
 } from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseVideoPlayer from "@/components/student/courses/videoplayer";
@@ -146,8 +147,18 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
       members: arrayUnion(user.uid),
     });
 
-    alert("You have joined the course");
+
+    await updateDoc(doc(collection(db, "allusers"), user.uid), {
+      joinedCourses: arrayUnion({
+        id: course.id,
+        title: course.title,
+        joinedAt: serverTimestamp()
+      })
+    })
+
+    setIsJoined(true);
   }
+
 
   return (
 

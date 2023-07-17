@@ -71,9 +71,7 @@ const Afterlogin = () => {
     sendSideBarState(showSideBar);
   }
 
-  if (!user) {
-    return null;
-  }
+
   return (
     <>
       <div className="flex ">
@@ -101,28 +99,28 @@ const Afterlogin = () => {
             {course ? (
               <>
                 <div className="flex flex-col md:flex-row pt-10 px-4">
-                  <div className="flex-1 md:pl-20">
+                  <div className="flex-1 max-w-4xl md:pl-20">
                     <span className="text-sm text-gray-500"> COURSE</span>
                     <div className="text-3xl md:text-4xl font-bold">
                       {course.title}
                     </div>
-                    <div className="text-xl md:text-[22px] mt-4">
+                    <div className="text-xl md:text-[22px] mt-4 truncate">
                       {course.desc}
                     </div>
                     <Link
-                      href={{
+                      href={user ? {
                         pathname: '/beta/videoplayback',
                         query: {
                           title: course.title
                         }
-                      }}
+                      } : '/beta/signup'}
                       type="button"
                       className=" md:text-base mt-10 mb-10 lg:text-base xl:text-lg rounded-xl bg-[#A145CD] px-4 py-2 font-semibold"
                     >
                       Get Started for Free
                     </Link>
                   </div>
-                  <div className="flex-1 justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">
+                  <div className="flex justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">
                     <Image
                       src={course.banner || "/pagesgraphics/student/coursedescription/laptop.svg"}
                       width={250}

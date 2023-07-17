@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/common/navbar/navbar";
 import { db } from "../config/firebaseconfig";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, limit } from "firebase/firestore";
 import HomePage from "@/components/common/homepage/part1/home";
 import Courses from "@/components/student/courses/courses";
 import Why from "@/components/common/homepage/why/why";
@@ -42,11 +42,17 @@ export default function Home({ coursesData }) {
 
 export async function getStaticProps() {
   try {
-    const CoursesCollectionref = collection(db, "CoursesCollection");
-    const coursesSnapshot = await getDocs(CoursesCollectionref);
+    const CoursesCollectionref = collection(db, "courses");
+    const coursesSnapshot = await getDocs(CoursesCollectionref, limit(6));
     const coursesData = coursesSnapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data(),
+      title: doc.data().title,
+      desc: doc.data().desc,
+      level: doc.data().level,
+      lessons: doc.data().lectures,
+      language: doc.data().language,
+      category: doc.data().category,
+      banner: doc.data().banner
     }));
     return {
       props: {
