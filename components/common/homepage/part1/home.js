@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "@/styles/componentsstyling/homepage/home.module.css";
 
 import mainDesign1 from "@/public/componentsgraphics/common/homepage/home/Group174.svg";
+import Link from "next/link";
 
 export default function HomePage() {
   const transition = {
@@ -49,12 +50,16 @@ export default function HomePage() {
               {/* BUttons */}
               <div className="w-full flex  justify-center lg:justify-start">
                 <div className=" flex flex-wrap justify-between text-white max-w-xs md:max-w-lg w-full">
-                  <button className=" text-xs md:text-xl lg:text-2xl border md:border-2 h-[42px] md:h-[70px] mt-8 px-6 hover:bg-[#e1348b] flex items-center">
-                    Start Learning
-                  </button>
-                  <button className=" text-xs md:text-xl border md:border-2 h-[42px] md:h-[70px] mt-8 px-[9px] md:px-4 bg-[#e1348b] flex items-center ">
-                    Watch Demo Session
-                  </button>
+                  <Link href={"/beta/courseoverview"}>
+                    <button className=" text-xs md:text-xl lg:text-2xl border md:border-2 h-[42px] md:h-[70px] mt-8 px-6 hover:bg-[#e1348b] flex items-center">
+                      Start Learning
+                    </button>
+                  </Link>
+                  <Link href={"/beta/courseoverview"}>
+                    <button className=" text-xs md:text-xl border md:border-2 h-[42px] md:h-[70px] mt-8 px-[9px] md:px-4 bg-[#e1348b] flex items-center ">
+                      Watch Demo Session
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
