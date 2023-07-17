@@ -59,7 +59,7 @@ const ProfileCongratulation = () => {
           <div className="flex flex-col items-center w-fit m-auto text-center md:space-x-5 md:p-0 translate-y-[-10%]">
             <div className="flex  justify-center w-full sm:mx-0 sm:mb-4 sm:w-350px">
               <h1 className="sm:px-20 sm:h-20 not-italic font-semibold text-2xl sm:text-6xl text-white">
-                Welcome <span>{userProfile?.name.first}</span>
+                Welcome <span>{userProfile?.name?.first}</span>
               </h1>
             </div>
             <div className="">
