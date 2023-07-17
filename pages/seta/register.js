@@ -8,7 +8,7 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc,updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
 import { useMediaQuery } from "react-responsive";
@@ -39,7 +39,7 @@ function SchoolRegister() {
     const [showSideBar, setShowSideBar] = useState(false);
     const [SideBarState, sendSideBarState] = useState(false);
 
-    function generateCode(school,district,city,length) {
+    async function generateCode(school,district,city,length) {
         const digits = "0123456789";
         let code = school.slice(0,1)+district.slice(0,1)+city.slice(0,1)+"";
 
@@ -47,14 +47,13 @@ function SchoolRegister() {
             code += digits[Math.floor(Math.random() * digits.length)];
         }
 
-        setAuthCode(code)
+        return code;
     }
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
 
-        generateCode(schoolName,district,city,3);
-        if (!udisecode || !authCode) {
+        if (!udisecode) {
             alert("Please fill all the required fields");
             return;
         }
@@ -63,7 +62,7 @@ function SchoolRegister() {
             uid,
             schoolName,
             udiseId: udisecode,
-            authCode,
+            authCode : await generateCode(schoolName,district,city,3),
             principalName,
             numberOfStudents: noOfStudent,
             primaryEmail: priMail,
@@ -80,12 +79,11 @@ function SchoolRegister() {
             instagramLink: insta,
             facebookLink: facebook,
         };
-        console.log("schoolProfile", schoolProfile);
 
         // store to firestore
         try {
-            const docRef = await setDoc(
-                doc(db, "schoolProfile", udisecode),
+            const docRef = await updateDoc(
+                doc(db, "allusers", uid),
                 schoolProfile
             );
             alert("You will receive an email after confirmation. For more information contact to support@neatskills");
@@ -138,23 +136,36 @@ function SchoolRegister() {
                             >
                                 <div className=" text-left mt-6 text-[#E1348B] text-lg mb-4 ml-4">
                                     School Information
+                                </div>  
+
+                                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                                    <label htmlFor="">Name of School</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Type Here"
+                                        className="w-full md:w-[81.3%] h-14  rounded-lg px-2 placeholder:text-sm focus:outline-none md:p-4"
+                                        style={{ background: "#505057" }}
+                                        value={schoolName}
+                                        onChange={(e) => setSchoolName(e.target.value)}
+                                        required
+                                    />
                                 </div>
 
-                                <div className="w-full md:w-full flex flex-col md:flex-row items-start md:justify-between   md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                                    <div className="w-full md:w-50% flex-col md:flex md:flex-row  justify-between md:justify-between md:items-center md:flex-1">
+                                <div className="w-full flex-wrap md:w-full  flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                                <div className="w-full flex-col md:flex md:flex-row justify-between md:items-center md:flex-1">
                                         <label
                                             htmlFor=""
                                             className="whitespace-nowrap md:whitespace-normal md:flex-1"
                                         >
-                                            Name of School
+                                            Principal Name
                                         </label>
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
-                                            value={schoolName}
-                                            onChange={(e) => setSchoolName(e.target.value)}
+                                            value={principalName}
+                                            onChange={(e) => setPrincipalName(e.target.value)}
                                             required
                                         />
                                     </div>
@@ -168,7 +179,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={udisecode}
                                             onChange={(e) => setUdisecode(e.target.value)}
@@ -177,45 +188,7 @@ function SchoolRegister() {
                                     </div>
                                 </div>
 
-                                <div className="w-full md:w-full  flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                                    <div className="w-full flex-col md:flex md:flex-row justify-between md:items-center md:flex-1">
-                                        <label
-                                            htmlFor=""
-                                            className="whitespace-nowrap md:whitespace-normal md:flex-1"
-                                        >
-                                            6 Digit Auth Code
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Automatically Filled"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
-                                            style={{ background: "#505057" }}
-                                            value={authCode}
-                                            onChange={(e) => setAuthCode(e.target.value)}
-                                            disabled
-                                            required
-                                        />
-                                    </div>
-                                    <div className="w-full flex-col md:flex md:flex-row justify-between md:items-center md:flex-1">
-                                        <label
-                                            htmlFor=""
-                                            className="whitespace-nowrap md:whitespace-normal md:flex-1"
-                                        >
-                                            Principal Name
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
-                                            style={{ background: "#505057" }}
-                                            value={principalName}
-                                            onChange={(e) => setPrincipalName(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                                <div className="w-full flex-wrap md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
                                     <div className="w-full flex-col md:flex md:flex-row justify-between md:items-center md:flex-1">
                                         <label
                                             htmlFor=""
@@ -226,7 +199,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={priMail}
                                             onChange={(e) => setPriMail(e.target.value)}
@@ -243,7 +216,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={secMail}
                                             onChange={(e) => setSecMail(e.target.value)}
@@ -251,8 +224,8 @@ function SchoolRegister() {
                                         />
                                     </div>
                                 </div>
-                                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white ">
-                                    <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
+                                <div className="w-full flex-wrap md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                                    <div className="w-full flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                                         <label
                                             htmlFor=""
                                             className="whitespace-nowrap md:whitespace-normal md:flex-1"
@@ -262,7 +235,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={priCall}
                                             onChange={(e) => setPriCall(e.target.value)}
@@ -279,7 +252,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={secCall}
                                             onChange={(e) => setSecCall(e.target.value)}
@@ -287,8 +260,8 @@ function SchoolRegister() {
                                         />
                                     </div>
                                 </div>
-                                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                                    <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
+                                <div className="w-full flex-wrap md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                                    <div className="w-full flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                                         <label
                                             htmlFor=""
                                             className="whitespace-nowrap md:whitespace-normal md:flex-1"
@@ -298,7 +271,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={admin}
                                             onChange={(e) => setAdmin(e.target.value)}
@@ -315,7 +288,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[330px] h-10 rounded-lg px-2 md:flex-2"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 md:flex-2"
                                             style={{ background: "#505057" }}
                                             value={noOfStudent}
                                             onChange={(e) => setNoOfStudent(e.target.value)}
@@ -328,12 +301,12 @@ function SchoolRegister() {
                                     School Address
                                 </div>
 
-                                <div className="w-full md:w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
+                                <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
                                     <label htmlFor="">Building, Street name</label>
                                     <input
                                         type="text"
                                         placeholder="Type Here"
-                                        className="w-full md:w-[80%] h-14  rounded-lg px-2 placeholder:text-sm focus:outline-none md:p-4"
+                                        className="w-full md:w-[81.3%] h-14  rounded-lg px-2 placeholder:text-sm focus:outline-none md:p-4"
                                         style={{ background: "#505057" }}
                                         value={building}
                                         onChange={(e) => setBuilding(e.target.value)}
@@ -342,21 +315,21 @@ function SchoolRegister() {
                                 </div>
 
                                 <div className="w-[331px] md:w-full flex flex-col md:flex-row justify-start items-start md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                                    <div className="md:flex-1">
+                                    <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                                         <label htmlFor="" className="md:flex-1 mr-10">
                                             City
                                         </label>
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[319px] h-10 rounded-lg px-2 md:flex-1"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2"
                                             style={{ background: "#505057" }}
                                             value={city}
                                             onChange={(e) => setCity(e.target.value)}
                                             required
                                         />
                                     </div>
-                                    <div className="md:flex-1">
+                                    <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                                         <label
                                             htmlFor=""
                                             className="whitespace-nowrap md:flex-1 mr-10"
@@ -366,7 +339,7 @@ function SchoolRegister() {
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[319px] h-10 rounded-lg px-2 md:flex-1 "
+                                            className="w-full md:w-[60%] h-10 rounded-lg px-2 "
                                             style={{ background: "#505057" }}
                                             value={postalCode}
                                             onChange={(e) => setPostalCode(e.target.value)}
@@ -375,28 +348,28 @@ function SchoolRegister() {
                                     </div>
                                 </div>
 
-                                <div className="w-[331px] md:w-full flex flex-col md:flex-row justify-start items-start md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                                <div className="md:flex-1">
+                                <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center  gap-y-2 md:gap-x-6 px-4 mb-8 text-white">
+                                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                                         <label htmlFor="" className="md:flex-1 mr-4">
                                             District
                                         </label>
                                         <input
                                             type="text"
                                             placeholder="Type Here"
-                                            className="w-full md:w-[319px] h-10 rounded-lg px-2 md:flex-1"
+                                            className="w-full md:w-[62%] h-10 rounded-lg px-2 "
                                             style={{ background: "#505057" }}
                                             value={district}
                                             onChange={(e) => setDistrict(e.target.value)}
                                             required
                                         />
                                     </div>
-                                <div className="md:flex-1">
+                                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
                                     <label htmlFor=""
                                      className="whitespace-nowrap md:flex-1 mr-[4.3em]">Country</label>
                                     <input
                                         type="text"
                                         placeholder="Type Here"
-                                        className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                                        className="w-full md:w-[60%] h-10 rounded-lg px-2"
                                         style={{ background: "#505057" }}
                                         value={country}
                                         onChange={(e) => setCountry(e.target.value)}
@@ -408,55 +381,54 @@ function SchoolRegister() {
                                 <div className=" text-left mt-6 text-[#E1348B] text-lg mb-4 ml-4">
                                     Links and Logo
                                 </div>
-                                <div className="w-[60%]  flex flex-col md:flex-row justify-between items-start md:items-center md:justify-start gap-y-2 md:gap-x-4 px-4 mb-8  text-white ">
+                                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between items-start md:items-center gap-y-2  px-4 mb-8  text-white">
                                     <label htmlFor="">School Website Link</label>
                                     <input
                                         type="text"
                                         placeholder="Add URL"
-                                        className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                                        className="w-full md:w-[60%] h-10 rounded-lg px-2 mx-4"
                                         style={{ background: "#505057" }}
                                         value={schWebsite}
                                         onChange={(e) => setSchWebsite(e.target.value)}
                                         required
                                     />
                                 </div>
-                                <div className="w-[60%]  flex flex-col md:flex-row justify-between items-start md:items-center md:justify-start gap-y-2 md:gap-x-14 px-4 mb-8  text-white">
+                                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between items-start md:items-center gap-y-2  px-4 mb-8  text-white">
                                     <label htmlFor="">Instagram Link</label>
                                     <input
                                         type="text"
                                         placeholder="Add URL"
-                                        className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                                        className="w-full md:w-[60%] h-10 rounded-lg px-2 mx-4"
                                         style={{ background: "#505057" }}
                                         value={insta}
                                         onChange={(e) => setInsta(e.target.value)}
                                         required
                                     />
                                 </div>
-                                <div className="w-[60%] flex flex-col md:flex-row justify-between items-start md:items-center md:justify-start gap-y-2 md:gap-x-16 px-4 mb-8  text-white">
+                                <div className="w-[50%] flex-col md:flex md:flex-row  justify-between items-start md:items-center gap-y-2  px-4 mb-8  text-white">
                                     <label htmlFor="">Facebook Link</label>
                                     <input
                                         type="text"
                                         placeholder="Add URL"
-                                        className="w-full md:w-[319px] h-10 rounded-lg px-2"
+                                        className="w-full md:w-[60%] h-10 rounded-lg px-2 mx-4"
                                         style={{ background: "#505057" }}
                                         value={facebook}
                                         onChange={(e) => setFacebook(e.target.value)}
                                         required
                                     />
                                 </div>
-                                <div className="w-full md:w-[80%] flex flex-col md:flex-row   gap-y-2 md:gap-x-16 p-8 mb-8  text-white">
+                                <div className="w-full md:w-[80%] flex flex-col md:flex-row gap-y-2 md:gap-x-16 px-4 mb-8  text-white">
                                     <label htmlFor="" className="whitespace-nowrap">
                                         School Logo
                                     </label>
-                                    <div className="border border-gray-300 rounded-10 flex justify-center items-center p-4 md:w-full">
+                                    <div className="border border-[#5F6065] rounded-10 flex justify-center items-center md:w-full">
                                         <IDdraganddrop />
                                     </div>
                                 </div>
-
                                 <div className="flex justify-end">
                                     <button
                                         type="submit"
-                                        className="text-white  bg-[#AA2769] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] my-8"
+                                        className="text-white  bg-[#AA2769] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] my-6"
                                     >
                                         Submit
                                     </button>
