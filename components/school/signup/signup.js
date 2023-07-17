@@ -24,7 +24,7 @@ function SchoolSignupComp() {
         try {
             const usersCollection = collection(db, "allusers");
             const q = query(usersCollection, where("email", "==", email));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(q);   
             //If user is previously logged in
             if (!querySnapshot.empty) {
                 console.log("User is already signed up earlier")
@@ -32,15 +32,11 @@ function SchoolSignupComp() {
                 const documentData = documentSnapshot.data();
 
                 // For checking the user in School Profile
-                const setaDetails = collection(db, "schoolProfile");
-                const userRef = doc(setaDetails,documentData.uid);
-                const userSnapshot = await getDoc(userRef);
-                
-                // if user has already filled the signup form and submitted it
-                if (userSnapshot.exists()) {
+                if(documentData.authCode){
                     console.log("User has submitted the form")
                     alert("You have already submitted the form");
-                } else {
+                }
+                else{
                     // if not submitted
                     console.log("User has not submitted the form")
                     const userCredential = await signInWithEmailAndPassword(
@@ -54,7 +50,7 @@ function SchoolSignupComp() {
                         query: { uid: user.uid }
                     })
                 }
-            } 
+            }
             else {
                 // If user does not exist then signup and routing
                 console.log("New user")
