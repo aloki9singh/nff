@@ -20,6 +20,7 @@ import {
   updateDoc,
   doc,
   arrayUnion,
+  serverTimestamp,
 } from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseVideoPlayer from "@/components/student/courses/videoplayer";
@@ -47,7 +48,7 @@ async function checkUserJoinedCourse(courseId, userId) {
   }
 }
 
- function Videos() {
+function Videos() {
   const [course, setCourse] = useState([]);
   const [modules, setModules] = useState([]);
   // const [currentModule, setCurrentModule] = useState(null);
@@ -132,10 +133,18 @@ async function checkUserJoinedCourse(courseId, userId) {
       members: arrayUnion(user.uid),
     });
 
-    alert("You have joined the course");
+
+    await updateDoc(doc(collection(db, "allusers"), user.uid), {
+      joinedCourses: arrayUnion({
+        id: course.id,
+        title: course.title,
+        joinedAt: serverTimestamp()
+      })
+    })
+
+    setIsJoined(true);
   }
 
-  console.log(course);
 
   return (
     <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
