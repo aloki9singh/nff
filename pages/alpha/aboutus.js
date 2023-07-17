@@ -98,7 +98,7 @@ const Aboutus = () => {
   return (
     <>
 
-      <Dashboardnav title="About Us" />
+      <Dashboardnav heading="About Us" />
 
       <div className="mt-8 md:mt-0 h-full">
         <div className="w-full h-full flex flex-col">

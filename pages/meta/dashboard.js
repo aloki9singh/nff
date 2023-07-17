@@ -119,23 +119,7 @@ function MentorDashboard() {
                     <div className="bg-[#373A41] rounded-[20px] pt-1">
                       <CirProgress percentage={0} />
                     </div>
-                    {/* <div className="bg-[#373A41] rounded-[20px] mb-10 mt-[-20px] md:mt-0">
-                      <div className=" md:h-80 h-60 mx-auto rounded-2xl bg-[#373A41] text-white">
-                        <div className=" mt-4 items-center">
-                         
-                            <h1 className="text-xl flex justify-between px-8 text-center pt-10 md:pb-10 pb-5">
-                              <p>Daily Tip</p>
-                              <CiEdit />
-                            </h1>
-                            
-                
-                          <p className=" text-xl font-extralight text-center mx-5 py-5 bg-[#2E3036] rounded-[10px] md:px-5 px-2">
-                            Learning that is spread out over time drastically
-                            increases knowledge retention.
-                          </p>
-                        </div>
-                      </div>
-                    </div> */}
+                   
                     <DailyTip/>
                   </div>
                 </div>
