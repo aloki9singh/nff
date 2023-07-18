@@ -502,7 +502,7 @@ function AdminStudent() {
                           </td>
 
                           <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
-                          onClick={()=> router.push({pathname: "/reta/profile", query:{uid: e.uid}})}>
+                          onClick={()=> router.push({pathname: "/reta/mentorprofile", query:{uid: e.uid}})}>
                             View Profile
                           </td>
                         </tr>

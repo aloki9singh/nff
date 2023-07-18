@@ -30,7 +30,19 @@ export default function studentProfile() {
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const initialProfile = {
+        const initialProfile = data.role == "student" ?{
+          ...data,
+          studentFirstName: data.name?.first,
+          studentMiddleName: data.name?.middle,
+          studentLastName: data.name?.last,
+          fatherFirstName: data.fatherName?.first,
+          fatherMiddleName: data.fatherName?.middle,
+          fatherLastName: data.fatherName?.last,
+          motherFirstName: data.motherName?.first,
+          motherMiddleName: data.motherName?.middle,
+          motherLastName: data.motherName?.last,
+          ReactDatepicker: data?.dob,
+        } : {
           ...data,
           studentFirstName: data.name?.first,
           studentMiddleName: data.name?.middle,
