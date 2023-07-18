@@ -151,6 +151,12 @@ function Videos() {
       joinedAt: serverTimestamp(),
     })
 
+    await setDoc(doc(db, "allusers", course.mentorid, "joinedStudents", course.id), {
+      courseId: course.id,
+      studentId:user.uid,
+      joinedAt: serverTimestamp(),
+    })
+
     setIsJoined(true);
   }
 
@@ -158,6 +164,9 @@ function Videos() {
   return (
 
     <>
+
+
+    {/* console.log(course.mentorid)} */}
 
       <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
         {isMobileScreen && (
