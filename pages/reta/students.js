@@ -105,7 +105,7 @@ function AdminStudent() {
   }
   return (
     <>
-      <div className="h-full text-base bg-[#2E3036] ">
+      <div className="text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
@@ -125,7 +125,7 @@ function AdminStudent() {
             </div>
           )}
 
-          <div className="flex-grow">
+          <div className="flex-grow h-screen  ">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <AdminTopbar heading="Review" toggleSideBar={toggleSideBar} />
             </div>
