@@ -154,4 +154,5 @@ const Studentdashboard = () => {
   );
 };
 
-export default withStudentAuthorization(Studentdashboard);
+// export default withStudentAuthorization(Studentdashboard);
+ export default (Studentdashboard);
