@@ -154,6 +154,8 @@ const Chat = ({
   setShowUser,
   messages,
   currReciever,
+  showChat,
+  setShowChat,
 }) => {
   const handleClick = () => {
     const elem = document.querySelector(".icons-toggle");
@@ -210,9 +212,7 @@ const Chat = ({
 
   const displayReciever = () => {
     setShowUser(true);
-    // setCurrReciever(
-    //   currReciever
-    // );
+    setShowChat(false);
   };
 
   const uploadImage = async (e) => {
@@ -255,7 +255,7 @@ const Chat = ({
 
   return (
     <div
-      className="flex flex-1 flex-col justify-between w-full relative "
+      className={`${showChat ? 'flex' : 'hidden md:flex'} flex flex-1 flex-col justify-between w-full relative `}
       style={{ color: "white" }}
     >
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">
