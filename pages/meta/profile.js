@@ -296,14 +296,9 @@ function MentorProfile() {
             </div>
           </div>
         </div>
-        {/* <div className=" ">
-          <MobileNav></MobileNav>
-        </div> */}
+       
       </div>
     </>
   );
 }
-// export default withMentorAuthorization(MentorProfile);
-export default (MentorProfile);
-
-//this one
+export default withMentorAuthorization(MentorProfile);

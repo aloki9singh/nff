@@ -269,27 +269,27 @@ const AdminSidebar = ({ toggleSideBar }) => {
                         </label>
                       </Link>
                       <Link
-                        href='/reta/addTeam'
+                        href='/reta/addteam'
                         className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input
                             id='default-checkbox'
                             type='checkbox'
                             className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === '/reta/addTeam'
+                              router.pathname === '/reta/addteam'
                                 ? 'shadow-white'
                                 : ''
                             }`}
                             style={{
                               boxShadow:
-                                router.pathname === '/reta/addTeam'
+                                router.pathname === '/reta/addteam'
                                   ? '0 0 5px #A145CD'
                                   : 'none'
                             }}
                           />{' '}
                           <span
                             className={`ml-3 text-[${
-                              router.pathname == '/reta/addTeam'
+                              router.pathname == '/reta/addteam'
                                 ? '#E1348B'
                                 : ''
                             }]`}>
