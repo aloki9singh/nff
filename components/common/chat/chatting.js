@@ -266,7 +266,7 @@ const Chat = ({
           <div
             className="flex flex-1 items-center gap-4 "
           >
-            <button className="text-white p-2 rounded-lg bg-primary" onClick={() => setCurrReciever(null)} >
+            <button className="text-white block md:hidden p-2 rounded-lg bg-primary" onClick={() => setCurrReciever(null)} >
               <SlArrowLeft />
             </button>
             <Avatar
