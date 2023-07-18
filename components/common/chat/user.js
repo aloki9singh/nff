@@ -6,17 +6,18 @@ import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.
 import { Switch } from "@headlessui/react";
 import Image from "next/image";
 
-const User = ({ currReciever, setShowUser }) => {
+const User = ({ currReciever, setShowUser, setShowChat }) => {
   const [checked, setChecked] = useState(true);
 
 
   const handleClick = () => {
     setShowUser(false);
+    setShowChat(true);
   };
 
   return (
     <div
-      className="user-container"
+      className="user-container w-screen md:w-auto"
       style={{
         backgroundColor: "#373A41",
         color: "white",

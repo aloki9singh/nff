@@ -26,8 +26,6 @@ import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
-
-
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
   const [chats, setChats] = useState([]);
@@ -38,6 +36,7 @@ const Chat = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const router = useRouter();
+  const [showChat, setShowChat] = useState(false);
 
   // const user = auth.currentUser;
   const { user, loading, userProfile } = useAuthContext();
@@ -107,6 +106,7 @@ const Chat = () => {
         newReceiver.photoURL = friend.photoURL;
         newReceiver.username = friend.username;
         newReceiver.studentPhoneNo = friend.studentPhoneNo;
+        newReceiver.role = friend.role;
       }
       setCurrReciever(newReceiver);
     };
@@ -189,6 +189,7 @@ const Chat = () => {
               setCurrReciever={setCurrReciever}
               chats={chats}
               setChats={setChats}
+              setShowChat={setShowChat}
             />
 
             <Chatpart
@@ -197,6 +198,8 @@ const Chat = () => {
               setShowUser={setShowUser}
               status="online"
               messages={messages}
+              showChat={showChat}
+              setShowChat={setShowChat}
             />
             {showUser &&
               (currReciever?.isGroup ? (
@@ -204,9 +207,14 @@ const Chat = () => {
                   currReciever={currReciever}
                   setShowUser={setShowUser}
                   setCurrReciever={setCurrReciever}
+                  setShowChat={setShowChat}
                 />
               ) : (
-                <User currReciever={currReciever} setShowUser={setShowUser} />
+                <User
+                  setShowChat={setShowChat}
+                  currReciever={currReciever}
+                  setShowUser={setShowUser}
+                />
               ))}
           </div>
         </div>
