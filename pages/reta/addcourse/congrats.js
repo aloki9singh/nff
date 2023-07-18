@@ -51,10 +51,6 @@ const CongratsAddTeam = () => {
             </div>
 
             <div className='button-container text-center my-3 '>
-              <button className='d-flex h-11 px-6 text-white sm:m-4 justify-center items-center gap-2 rounded-xl bg-[#E1348B] my-6'>
-                Assign A Mentor
-              </button>
-
               <button
                 className='d-flex text-white sm:m-4 h-11 px-6 justify-center items-center gap-2 rounded-xl bg-[#E1348B] my-4'
                 onClick={() => router.push('/meta/dashboard')}>
