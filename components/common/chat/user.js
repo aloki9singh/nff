@@ -41,7 +41,7 @@ const User = ({ currReciever, setShowUser }) => {
           src={'/componentsgraphics/common/chatting/user/profile.svg'}
           sx={{ height: 76, width: 76 }}
         />
-        {currReciever.name}
+        {currReciever?.name}
       </div>
 
       <div
@@ -51,12 +51,12 @@ const User = ({ currReciever, setShowUser }) => {
         <div className="flex">
           <MdInfoOutline />
           <div>
-            <p className="text-[14px]">+{currReciever.studentPhoneNo}</p>
+            <p className="text-[14px]">+{currReciever?.studentPhoneNo}</p>
             <p className="text-[10px]">Mobile</p>
           </div>
         </div>
         <div className="flex flex-col">
-          <p className="text-[14px]">@{currReciever.username}</p>
+          <p className="text-[14px]">@{currReciever?.username}</p>
           <p className="text-[10px]">Username</p>
         </div>
       </div>

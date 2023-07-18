@@ -26,14 +26,7 @@ import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
-// const userCache = {};
-// async function getUser(uid) {
-//   if (userCache[uid]) return userCache[uid];
 
-//   const user = await getDoc(doc(db, "allusers", uid));
-//   userCache[uid] = user.data();
-//   return user.data();
-// }
 
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
@@ -79,7 +72,10 @@ const Chat = () => {
   }, [user, router, loading]);
 
   useEffect(() => {
-    if (!currReciever) setCurrReciever(chats[0]);
+    if (!currReciever) {
+      // setCurrReciever(chats[0]);
+      return;
+    }
 
     const getMembers = async () => {
       const newReceiver = JSON.parse(JSON.stringify(currReciever));
@@ -185,7 +181,7 @@ const Chat = () => {
             {/* <hr className="hidden lg:block opacity-50 mt-3 " /> */}
           </div>
           <div
-            className="p-4 justify-between flex-1 flex flex-row gap-4 bg-[#2f3036] "
+            className="md:p-4 justify-between flex-1 flex flex-row gap-4 bg-[#2f3036] "
             // style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
@@ -203,7 +199,7 @@ const Chat = () => {
               messages={messages}
             />
             {showUser &&
-              (currReciever.isGroup ? (
+              (currReciever?.isGroup ? (
                 <GroupDetails
                   currReciever={currReciever}
                   setShowUser={setShowUser}
