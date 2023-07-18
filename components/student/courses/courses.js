@@ -156,7 +156,7 @@ export default function Courses({ coursesData }) {
               />
             ))}
           </div> */}
-          <div className="grid grid-cols-3 grid-flow-col overflow-scroll scrollbar-hide gap-10">
+          <div className="grid grid-cols-2 xl:grid-cols-3   overflow-scroll scrollbar-hide gap-5">
             {coursesData.map((course, i) => (
               <div key={i}>
                 <CourseCard

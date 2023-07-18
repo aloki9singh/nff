@@ -161,7 +161,7 @@ const Chat = () => {
   return (
     <>
       <div className="flex overflow-hidden items-stretch h-screen ">
-        {/* {chats.length === 0 && <NoJoinedCoursesModal />} */}
+        {chats.length === 0 && <NoJoinedCoursesModal />}
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${

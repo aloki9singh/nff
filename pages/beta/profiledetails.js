@@ -39,16 +39,16 @@ export default function ProfileDetails() {
         const data = docSnap.data();
         const initialProfile = {
           ...data,
-          studentFirstName: data.name.first,
-          studentMiddleName: data.name.middle,
-          studentLastName: data.name.last,
-          fatherFirstName: data.fatherName.first,
-          fatherMiddleName: data.fatherName.middle,
-          fatherLastName: data.fatherName.last,
-          motherFirstName: data.motherName.first,
-          motherMiddleName: data.motherName.middle,
-          motherLastName: data.motherName.last,
-          ReactDatepicker: data.dob,
+          studentFirstName: data.name?.first,
+          studentMiddleName: data.name?.middle,
+          studentLastName: data.name?.last,
+          fatherFirstName: data.fatherName?.first,
+          fatherMiddleName: data.fatherName?.middle,
+          fatherLastName: data.fatherName?.last,
+          motherFirstName: data.motherName?.first,
+          motherMiddleName: data.motherName?.middle,
+          motherLastName: data.motherName?.last,
+          ReactDatepicker: data?.dob,
         }
         reset(initialProfile)
       }
@@ -124,7 +124,6 @@ export default function ProfileDetails() {
     if (data.profilePhoto) {
       uploadToFirebase(data.profilePhoto, (url) => {
         updateDoc(doc(db, "allusers", user.uid), {
-          displayName: getUserName(profile),
           photoURL: url,
         });
         updateProfile(auth.currentUser, {
@@ -299,7 +298,6 @@ export default function ProfileDetails() {
                     } else {
                       // If the selected date is not more than 10 years ago, reset the field value
                       field.onChange(null);
-                      alert("Please Select Valid DOB");
                     }
                   }}
                   value={field.value}

@@ -21,6 +21,7 @@ import {
   doc,
   arrayUnion,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseVideoPlayer from "@/components/student/courses/videoplayer";
@@ -40,14 +41,10 @@ const VideoPlayer = ({ videoUrl }) => {
 };
 
 async function checkUserJoinedCourse(courseId, userId) {
-  const groupRef = doc(db, "chatGroups", courseId);
-  const groupDoc = await getDoc(groupRef);
-  const groupData = groupDoc.data();
-  if (groupData.members.includes(userId)) {
-    return true;
-  } else {
-    return false;
-  }
+  const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
+
+  const courseDoc = await getDoc(courseRef);
+  return courseDoc.exists();
 }
 
 function Videos() {
@@ -61,7 +58,6 @@ function Videos() {
   const [videoUrl, setVideoUrl] = useState(null);
   const [isJoined, setIsJoined] = useState(false);
   const { user, userProfile } = useAuthContext();
-  const [subs, setSubs] = useState(false);
 
   useEffect(() => {
     const checkJoined = async () => {
@@ -114,14 +110,14 @@ function Videos() {
 
 
 
-//check and set the eligibility for the course access through context
-// useEffect(() => {
+  //check and set the eligibility for the course access through context
+  // useEffect(() => {
 
-// }, []);
+  // }, []);
 
 
 
-const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
+  const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -148,12 +144,11 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
     });
 
 
-    await updateDoc(doc(collection(db, "allusers"), user.uid), {
-      joinedCourses: arrayUnion({
-        id: course.id,
-        title: course.title,
-        joinedAt: serverTimestamp()
-      })
+
+    await setDoc(doc(db, "allusers", user.uid, "joinedCourses", course.id), {
+      id: course.id,
+      title: course.title,
+      joinedAt: serverTimestamp(),
     })
 
     setIsJoined(true);
@@ -164,7 +159,6 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
     <>
 
-      {!fetchsubsdata && <NoJoinedCoursesModal />}
       <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
         {isMobileScreen && (
           <div
