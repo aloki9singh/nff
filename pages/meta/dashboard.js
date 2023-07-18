@@ -49,7 +49,7 @@ function MentorDashboard() {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user.verified);
+        setVerified(value?.user?.verified);
       }
     });
 

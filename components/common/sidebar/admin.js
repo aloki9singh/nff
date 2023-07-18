@@ -10,13 +10,13 @@ import { useAuthContext } from '@/lib/context/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { BsPersonCircle } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
-const CourseoverviewSidebar = ({ toggleSideBar }) => {
+const AdminSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
   // console.log(userProfile)
   return (
     <>
-      <aside className='md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between '>
+      <aside className='h-screen  md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between '>
         <div>
           <div>
             <div>
@@ -87,7 +87,6 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                       </span>
                     </label>
                   </Link>
-                  <hr className='h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto '></hr>
                   <Link
                     href='/reta/courseoverview'
                     className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
@@ -117,6 +116,37 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                       </span>
                     </label>
                   </Link>
+                  <Link
+                        href='/reta/mentors'
+                        className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === '/reta/mentors'
+                                ? 'shadow-white'
+                                : ''
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === '/reta/mentors'
+                                  ? '0 0 5px #A145CD'
+                                  : 'none'
+                            }}
+                          />{' '}
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == '/reta/mentors'
+                                ? '#E1348B'
+                                : ''
+                            }]`}>
+                            View Students
+                          </span>
+                        </label>
+                      </Link>
+                  <hr className='h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto '></hr>
+                 
                   {user ? (
                     ' '
                   ) : (
@@ -143,7 +173,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           className={`ml-3 text-[${
                             router.pathname == '/reta/team' ? '#E1348B' : ''
                           }]`}>
-                          team
+                          Team
                         </span>
                       </label>
                     </Link>
@@ -151,9 +181,39 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
 
                   {user ? (
                     <div style={{ marginTop: '0' }}>
+
+                      <Link
+                        href='/reta/mentors'
+                        className='flex items-center p-2 text-base font-normal my-4 text-white rounded-lg   hover:bg-pin'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === '/reta/mentors'
+                                ? 'shadow-white'
+                                : ''
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === '/reta/mentors'
+                                  ? '0 0 5px #A145CD'
+                                  : 'none'
+                            }}
+                          />{' '}
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == '/reta/mentors'
+                                ? '#E1348B'
+                                : ''
+                            }]`}>
+                            View Mentors
+                          </span>
+                        </label>
+                      </Link>
                       <Link
                         href='/reta/checkclass'
-                        className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                        className='flex items-center p-2 text-base font-normal mb-2 text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input
                             id='default-checkbox'
@@ -176,33 +236,92 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                                 ? '#E1348B'
                                 : ''
                             }]`}>
-                            Schedule
+                            Add Mentor
                           </span>
                         </label>
                       </Link>
-
                       <Link
-                        href='/reta/profile'
-                        className='flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin'>
+                        href='/reta/checkclass'
+                        className='flex items-center p-2 text-base font-normal mb-2 text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input
                             id='default-checkbox'
                             type='checkbox'
                             className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === '/reta/profile'
+                              router.pathname === '/reta/checkclass'
                                 ? 'shadow-white'
                                 : ''
                             }`}
                             style={{
                               boxShadow:
-                                router.pathname === '/reta/profile'
+                                router.pathname === '/reta/checkclass'
                                   ? '0 0 5px #A145CD'
                                   : 'none'
                             }}
                           />{' '}
                           <span
                             className={`ml-3 text-[${
-                              router.pathname == '/reta/profile'
+                              router.pathname == '/reta/checkclass'
+                                ? '#E1348B'
+                                : ''
+                            }]`}>
+                            View Team
+                          </span>
+                        </label>
+                      </Link>
+                      <Link
+                        href='/reta/addTeam'
+                        className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === '/reta/addTeam'
+                                ? 'shadow-white'
+                                : ''
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === '/reta/addTeam'
+                                  ? '0 0 5px #A145CD'
+                                  : 'none'
+                            }}
+                          />{' '}
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == '/reta/addTeam'
+                                ? '#E1348B'
+                                : ''
+                            }]`}>
+                            Add Team
+                          </span>
+                        </label>
+                      </Link>
+                  <hr className='h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto '></hr>
+
+                      <Link
+                        href='/reta/checkclass'
+                        className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
+                        <label className='inline-flex items-center space-x-3'>
+                          <input
+                            id='default-checkbox'
+                            type='checkbox'
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                              router.pathname === '/reta/checkclass'
+                                ? 'shadow-white'
+                                : ''
+                            }`}
+                            style={{
+                              boxShadow:
+                                router.pathname === '/reta/checkclass'
+                                  ? '0 0 5px #A145CD'
+                                  : 'none'
+                            }}
+                          />{' '}
+                          <span
+                            className={`ml-3 text-[${
+                              router.pathname == '/reta/checkclass'
                                 ? '#E1348B'
                                 : ''
                             }]`}>
@@ -229,28 +348,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           </span>
                         </label>
                       </button>
-                      {user ? (
-                        <div className='  font-semibold text-white bg-[#373A41] flex flex-col mt-9 rounded-xl'>
-                          <div className=' px-8 py-2 '>
-                            <h1 className='md:text-xl  font-Inter'>
-                              <div className='md:block hidden'>
-                                Discord <br /> Community
-                              </div>
-                              <div className='md:hidden'>
-                                {' '}
-                                Discord Community
-                              </div>
-                            </h1>
-                            <p>150 members</p>
-                            <button className='inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline '>
-                              <span>Join</span>
-                              <AiOutlineArrowRight />
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <></>
-                      )}
+
                     </div>
                   ) : (
                     <></>
@@ -298,4 +396,4 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
   );
 };
 
-export default CourseoverviewSidebar;
+export default AdminSidebar;

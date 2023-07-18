@@ -9,12 +9,12 @@ import { useMediaQuery } from 'react-responsive';
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
-  // const { data } = useSelector((state) => state.authManagerMentor);
   const [initialcount, setinitialCount] = useState(0);
   const [gap, setGap] = useState(10);
   const [hide, setHide] = useState(true);
   const [id, setId] = useState();
-  const [filterData, setFilterData] = useState();
+  const [filterStudent, setFilterStudent] = useState();
+  const [filterMentor, setFilterMentor] = useState();
   let [searchstate, setsearchstate] = useState();
   const router = useRouter();
   let searchfun = e => {
@@ -25,15 +25,63 @@ function AdminStudent() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const [activeTab, setActiveTab] = useState('mentor');
+  const [student, setStudent] = useState()
+  const [mentor, setMentor] = useState()
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+    setStudent  (
+      filterStudent &&
+        filterStudent.filter((ele) => {
+          return ele.displayName.includes(searchstate);
+        })
+    );
+    setMentor(
+      filterMentor &&
+      filterMentor.filter((ele) => {
+        return ele.displayName.includes(searchstate);
+      })
+    )
+  }, [searchstate, isMediumScreen]);
+
   const handleTabClick = tab => {
+    setsearchstate("")
     setActiveTab(tab);
   };
 
+  useEffect(() => {
+    fetch("/api/signup")
+      .then((response) => response.json())
+      .then((data) => {
+        setFilterStudent(
+          data.users.filter((ele) => {
+            return ele.role == "student";
+          })
+        );
+        setStudent(
+          data.users.filter((ele) => {
+            return ele.role == "student";
+          })
+        );
+        setMentor(
+          data.users.filter((ele) => {
+            return ele.role == "mentor";
+          })
+        )
+        setFilterMentor(
+          data.users.filter((ele) => {
+            return ele.role == "mentor";
+          })
+        )
+      });
+  }, []);
   const activeTabClass = 'w-10 h-10 bg-[#A145CD] rounded-xl';
   const tabClass = 'w-10 h-10 rounded-xl';
 
@@ -72,9 +120,8 @@ function AdminStudent() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? 'block' : 'hidden'
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
+              className={`fixed right-0 ${SideBarState ? 'block' : 'hidden'
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
               <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
@@ -93,11 +140,10 @@ function AdminStudent() {
 
             <div className='flex gap-2 mt-10'>
               <div
-                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
-                  activeTab === 'mentor' ? 'cursor-pointer underline' : ''
-                }`}
+                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${activeTab === 'mentor' ? 'cursor-pointer underline' : ''
+                  }`}
                 onClick={() => handleTabClick('mentor')}>
-                Mentor : 199
+                Mentor : {mentor?.length}
               </div>
 
               <span className='ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white'>
@@ -105,18 +151,17 @@ function AdminStudent() {
               </span>
 
               <div
-                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${
-                  activeTab === 'student' ? 'cursor-pointer underline' : ''
-                }`}
+                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${activeTab === 'student' ? 'cursor-pointer underline' : ''
+                  }`}
                 onClick={() => handleTabClick('student')}>
-                Student : 199
+                Student : {student?.length}
               </div>
             </div>
 
             {/* filter bar */}
 
             <div className='gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white'>
-              <div className=' flex   justify-between'>
+              {activeTab =="mentor" && <div className=' flex   justify-between'>
                 <div>
                   <div className='flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2'>
                     <div className='flex justify-between'>
@@ -181,13 +226,13 @@ function AdminStudent() {
                     Filter
                   </button>
                 </div>
-              </div>
+              </div>}
 
               {activeTab === 'student' && (
                 <div className='gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white'>
                   <div className='flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2'>
                     <div className='md:flex items-center rounded-lg gap-4 justify-around '>
-                      Total student : 199
+                      Total student : {student?.length}
                     </div>
                     <div className='flex justify-between'>
                       <form className=' items-center hidden md:block '>
@@ -211,7 +256,7 @@ function AdminStudent() {
                             type='text'
                             id='voice-search'
                             className='bg-[#414348]  border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-[#414348] dark:border-gray-600 dark:placeholder-white placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                            placeholder='Search studnet'
+                            placeholder='Search student'
                             required
                             value={searchstate}
                             onChange={searchfun}
@@ -286,10 +331,10 @@ function AdminStudent() {
             {/* table */}
 
             <div className=' ms-[2%] me-[2%] h-[712px]  max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto mb-4 text-white'>
-              <div className='overflow-x-auto mt-3'>
-                <table className='w-full h-20 table-auto '>
-                  <thead className=' font-semibold text-lg border-b bg-transprent '>
-                    <tr className='font-bold  text-center mt-10  '>
+              <div className=''>
+                <table className='w-full '>
+                  <thead className='items-center  border-b  '>
+                    <tr className='flex font-semibold  justify-between   p-5 mx-4'>
                       <th className=''>Photo</th>
                       {activeTab === 'student' && (
                         <>
@@ -313,132 +358,138 @@ function AdminStudent() {
                       )}
                     </tr>
                   </thead>
-                  <tbody className=' bg-[#373A41] w-full h-full'>
-                    <tr className='text-center font-medium text-xs'>
-                      <td className='flex justify-center items-center'>
-                        <Image
-                          src='/path/to/mentor-image.jpg'
-                          alt='Mentor Image'
-                          height={25}
-                          width={25}
-                          className='h-8 w-8 rounded-full object-contain'
-                        />
-                      </td>
-                      {activeTab === 'student' && (
-                        <>
-                          <td className=''>
-                            <div className='truncate'>John Doe</div>
+                  <tbody className='flex w-[95%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6'>
+                    {(activeTab === 'student' && student) &&
+                      student.slice(initialcount, gap).map((e, i) => (
+                        <tr
+                          className="flex items-center w-full font-medium text-xs justify-between "
+                        >
+                          <td className="flex items-center gap-2 w-[16.6%] ">
+                            <Image
+                              src={
+                                e.photoURL
+                                  ? e.photoURL
+                                  : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
+                              }
+                              alt="img"
+                              height={25}
+                              width={25}
+                              className="rounded-full h-8  object-contain inline"
+                            />
                           </td>
-                          <td className=''>
-                            <div className='truncate'>123456</div>
+                          <td className="w-[16.6%] ">{e.displayName}</td>
+                          <td className="w-[16.6%] ">ID : {e.uid}</td>
+                          <td className="w-[16.6%] text-center ">{e?.class}</td>
+                          <td className="w-[16.6%] text-center md:block hidden">
+                            {e?.active}
                           </td>
-                          <td className=''>
-                            <div className='truncate'>Class Data</div>
+                          <td className="w-[16.6%] text-center md:block hidden">
+                            {e?.courses}
                           </td>
-                          <td className='hidden md:table-cell'>
-                            <div className='truncate'>Group Data</div>
+                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]">
+                            <Link href="">View Profile</Link>
                           </td>
-                          <td className='hidden md:table-cell'>
-                            <div className='truncate'>Status Data</div>
+                        </tr>
+                      ))}
+                      { (activeTab === 'mentor' && mentor) &&
+                      mentor.slice(initialcount, gap).map((e, i) => (
+                        <tr
+                          className="flex items-center w-full font-medium text-xs justify-around "
+                          key={i}
+                        >
+                          <td className="flex items-center gap-2 w-[16.6%] ">
+                            <Image
+                              src={
+                                e.photoURL
+                                  ? e.photoURL
+                                  : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
+                              }
+                              alt="img"
+                              height={25}
+                              width={25}
+                              className="rounded-full h-8  object-contain inline"
+                            />
                           </td>
-                          <td className=''>
-                            <Link href='' className='text-[#E1348B] truncate'>
-                              Profile
-                            </Link>
+                          <td className="w-[16.6%] text-left ">{e.displayName}</td>
+                          <td className="w-[16.6%] ">ID : {e.uid}</td>
+                          <td className="w-[16.6%] text-center ">{e?.class}</td>
+                          <td className="w-[16.6%] text-center md:block hidden">
+                            {e?.active}
                           </td>
-                        </>
-                      )}
-                      {activeTab === 'mentor' && (
-                        <>
-                          <td className=''>
-                            <div className='truncate'>Mentor Name Data</div>
+                          <td className="w-[16.6%] text-center md:block hidden">
+                            {e?.courses}
                           </td>
-                          <td className=''>
-                            <div className='truncate'>ID Data</div>
+                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]">
+                            <Link href="">View Profile</Link>
                           </td>
-                          <td className=''>
-                            <div className='truncate'>Subject Data</div>
-                          </td>
-                          <td className='hidden md:table-cell'>
-                            <div className='truncate'>Email Data</div>
-                          </td>
-                          <td className='hidden md:table-cell'>
-                            <div className='truncate'>Grade Data</div>
-                          </td>
-                          <td className=''>
-                            <Link href='' className='text-[#E1348B] truncate'>
-                              Profile
-                            </Link>
-                          </td>
-                        </>
-                      )}
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </div>
 
-              {/* pagination */}
-              <div className='w-60 h-10  lg:bottom-0 mx-10 my-5 flex justify-center  items-center space-x-4'>
-                <button
-                  className='w-6 h-5 border flex justify-center items-center'
-                  name='back'
-                  onClick={handleClick}>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='w-4 h-4'>
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z'
-                    />
-                  </svg>
-                </button>
-                <button
-                  className={count == 1 ? activeTabClass : tabClass}
-                  name='1'
-                  onClick={handleClick}>
-                  1
-                </button>
-                <button
-                  className={count == 2 ? activeTabClass : tabClass}
-                  name='2'
-                  onClick={handleClick}>
-                  2
-                </button>
-                <button
-                  className={count == 3 ? activeTabClass : tabClass}
-                  name='3'
-                  onClick={handleClick}>
-                  3
-                </button>
-                <button
-                  className='w-6 h-5 border flex justify-center items-center'
-                  name='fwd'
-                  onClick={handleClick}>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='w-4 h-4'>
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z'
-                    />
-                  </svg>
-                </button>
-              </div>
+            {/* pagination */}
+            <div className='w-60 h-10  lg:bottom-0 mx-10 my-5 flex justify-center  items-center space-x-4'>
+              <button
+                className='w-6 h-5 border flex justify-center items-center'
+                name='back'
+                onClick={handleClick}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='currentColor'
+                  className='w-4 h-4'>
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z'
+                  />
+                </svg>
+              </button>
+              <button
+                className={count == 1 ? activeTabClass : tabClass}
+                name='1'
+                onClick={handleClick}>
+                1
+              </button>
+              <button
+                className={count == 2 ? activeTabClass : tabClass}
+                name='2'
+                onClick={handleClick}>
+                2
+              </button>
+              <button
+                className={count == 3 ? activeTabClass : tabClass}
+                name='3'
+                onClick={handleClick}>
+                3
+              </button>
+              <button
+                className='w-6 h-5 border flex justify-center items-center'
+                name='fwd'
+                onClick={handleClick}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='currentColor'
+                  className='w-4 h-4'>
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z'
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
-        <div className=' '>{/* <MobileNav></MobileNav> */}</div>
       </div>
+      <div className=' '>{/* <MobileNav></MobileNav> */}</div>
+    </div >
     </>
   );
 }
