@@ -7,12 +7,14 @@ import { auth, db } from "../../config/firebaseconfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
+import Image from "next/image";
 
 const options = ["8", "9", "10", "11", "12"];
 
 export default function studentProfile() {
   const router = useRouter();
-  const {uid} = router.query
+  const [studentData, setstudentData] = useState([]);
+  const { uid } = router.query;
   const {
     register,
     handleSubmit,
@@ -30,6 +32,7 @@ export default function studentProfile() {
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
+        setstudentData(data);
         const initialProfile = {
           ...data,
           studentFirstName: data.name?.first,
@@ -42,8 +45,8 @@ export default function studentProfile() {
           motherMiddleName: data.motherName?.middle,
           motherLastName: data.motherName?.last,
           ReactDatepicker: data?.dob,
-        }
-        reset(initialProfile)
+        };
+        reset(initialProfile);
       }
     };
 
@@ -51,9 +54,9 @@ export default function studentProfile() {
   }, [reset]);
 
   const onSubmit = async (data) => {
-    if (!user) {
-      return;
-    }
+    // if (!user) {
+    //   return;
+    // }
 
     const username =
       data.studentFirstName[0] +
@@ -87,17 +90,17 @@ export default function studentProfile() {
       },
       parentPhoneNo: data.parentPhoneNo,
       parentAltPhoneNo: data.parentAltPhoneNo,
-      photoURL: user.photoURL,
-      aadhaarCard: "",
-      uid: user.uid,
+      // photoURL: data.photoURL,
+      // aadhaarCard: data.aadhaarCard,
+      uid: data.uid,
 
-      trialValid: true,
-      courseAccess: false,
+      // trialValid: true,
+      // courseAccess: false,
 
-      joinedCourses: [],
+      // joinedCourses: [],
     };
     console.log("profile", profile);
-    const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+    const userRef = doc(db, "allusers", data.uid); // searching if user exists or not
     const docSnap = await getDoc(userRef);
 
     if (docSnap.exists()) {
@@ -109,31 +112,32 @@ export default function studentProfile() {
       });
     }
 
-    if (data.profilePhoto) {
-      uploadToFirebase(data.profilePhoto, (url) => {
-        updateDoc(doc(db, "allusers", user.uid), {
-          photoURL: url,
-        });
-        updateProfile(auth.currentUser, {
-          photoURL: url,
-        })
-          .then(() => {
-            // Profile updated!
-            // ...
-          })
-          .catch((error) => {
-            // An error occurred
-            // ...
-          });
-      });
-    }
+    // if (data.profilePhoto) {
+    //   uploadToFirebase(data.profilePhoto, (url) => {
+    //     updateDoc(doc(db, "allusers", data.uid), {
+    //       photoURL: url,
+    //     });
+    //     updateProfile(auth.currentUser, {
+    //       photoURL: url,
+    //     })
+    //       .then(() => {
+    //         // Profile updated!
+    //         // ...
+    //       })
+    //       .catch((error) => {
+    //         // An error occurred
+    //         // ...
+    //       });
+    //   });
+    // }
 
-    if (data.aadhaarCard)
-      uploadToFirebase(data.aadhaarCard, (url) => {
-        updateDoc(doc(db, "allusers", user.uid), {
-          aadhaarCard: url,
-        });
-      });
+    // if (data.aadhaarCard)
+    
+    //   uploadToFirebase(data.aadhaarCard, (url) => {
+    //     updateDoc(doc(db, "allusers", data.uid), {
+    //       aadhaarCard: url,
+    //     });
+    //   });
 
     router.push("/reta/mentors");
   };
@@ -505,7 +509,7 @@ export default function studentProfile() {
             </div>
           </div>
 
-          {/* photo and identity proof */}
+          {/* photo and identity proof
           <div className="w-full flex flex-col justify-center items-center gap-y-2  px-4 mb-8">
             <label htmlFor="" className="self-start">
               Profile Photo
@@ -539,16 +543,47 @@ export default function studentProfile() {
                 />
               )}
             />
+          </div> */}
+          <div className="flex md:flex-row flex-col w-full justify-center items-center gap-5">
+            <div>
+              {studentData?.photoURL && (
+                <Image
+                  width={150}
+                  height={150}
+                  src={studentData.photoURL}
+                  alt="profile image"
+                />
+              )}
+            </div>
+            <div>
+              {studentData?.aadhaarCard && (
+                <Image
+                  width={150}
+                  height={150}
+                  src={studentData.aadhaarCard}
+                  alt="aadhar image"
+                  
+                />
+              )}
+            </div>
           </div>
 
           {/* submit button */}
-          <div className="flex justify-center md:justify-end ">
+          <div className="flex justify-center md:justify-end gap-5 ">
+          <button
+              type="button"
+              onClick={()=>router.replace("/reta/mentors")}
+              className="text-white  bg-[#AA2769] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-[80px] md:w-[100px]  px-2 py-2 text-center  hover:bg-[#93225a] my-8"
+            >
+              Back
+            </button>
             <button
               type="submit"
               className="text-white  bg-[#AA2769] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-[80px] md:w-[100px]  px-2 py-2 text-center  hover:bg-[#93225a] my-8"
             >
               Save
             </button>
+           
           </div>
         </form>
       </div>

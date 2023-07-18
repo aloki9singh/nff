@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
-import { query } from 'firebase/firestore';
+import { query } from "firebase/firestore";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -388,8 +388,15 @@ function AdminStudent() {
                             )}
                           </td>
 
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
-                          onClick={()=> router.push({pathname: "/reta/profile", query:{uid: e.uid}})}>
+                          <td
+                            className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
+                            onClick={() =>
+                              router.push({
+                                pathname: "/reta/profile",
+                                query: { uid: e.uid },
+                              })
+                            }
+                          >
                             View Profile
                           </td>
                         </tr>
@@ -421,8 +428,8 @@ function AdminStudent() {
                             {e.uid.slice(0, 5)}
                           </td>
                           <td className="w-[16.6%] text-center ">
-                            {e.assignedCourses
-                              ? e.assignedCourses[0]
+                            {e?.details.interest
+                              ? e.details.interest
                               : "Not Assigned"}
                           </td>
                           <td className="w-[16.6%] text-center  md:block hidden ">
@@ -456,8 +463,15 @@ function AdminStudent() {
                             )}
                           </td>
 
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
-                          onClick={()=> router.push({pathname: "/reta/profile", query:{uid: e.uid}})}>
+                          <td
+                            className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
+                            onClick={() =>
+                              router.push({
+                                pathname: "/reta/profile",
+                                query: { uid: e.uid },
+                              })
+                            }
+                          >
                             View Profile
                           </td>
                         </tr>

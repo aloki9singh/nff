@@ -46,7 +46,7 @@ function AddMentor() {
       .then((response) => response.json())
       .then((data) => {
         const filteredMentors = data.users.filter((ele) => {
-          return ele.role === "mentor";
+          return ele.role === "mentor" &&ele.courseAssigned==false ;
         });
         setMentor(filteredMentors);
          setFilterMentor(filteredMentors);
@@ -112,7 +112,7 @@ function AddMentor() {
 
             <div className="flex gap-2 mt-20 md:mt-10">
               <div className="ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white cursor-pointer" onClick={() => handleTabClick("mentor")}>
-                Application Pending: (Total - {mentor?.length})
+                Application Pending: ({mentor?.length})
               </div>
             </div>
 
