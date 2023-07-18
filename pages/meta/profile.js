@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import Link from "next/link";
 
 function MentorProfile() {
   const router = useRouter();
@@ -31,7 +32,8 @@ function MentorProfile() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-
+  const [rating, setRating] = useState(0);
+  const [answeredquestions, setAnsweredQuestions] = useState(0);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -53,8 +55,8 @@ function MentorProfile() {
   console.log(userData);
   return (
     <>
-      <div className="h-full text-base bg-[#2E3036] ">
-        <div className="flex">
+      <div className="h-full text-base bg-[#2E3036] md:rounded-tl-[40px]">
+        <div className="flex md:rounded-tl-[40px]">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
@@ -73,12 +75,12 @@ function MentorProfile() {
             </div>
           )}
 
-          <div className="flex-grow w-[10rem]">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <div className="flex-grow w-[10rem] md:rounded-tl-[40px]">
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
               <MentorTopbar heading="Profile" toggleSideBar={toggleSideBar} />
             </div>
 
-            <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0 pt-14">
+            <div className="text-white grow flex flex-col items-center justify-center h-fit ">
               {/* text */}
               <div className="h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] " />
               <div className="w-[90%] h-full   md:text-base text-sm  ">
@@ -104,10 +106,12 @@ function MentorProfile() {
                           ? userData.displayName.slice(0, 5)
                           : userData.displayName}
                       </div>
-                      <div className="flex text-xs md:text-sm mt-[-25px]">
-                        Edit profile
-                        <FiEdit2 className="ml-1 mt-[2px]" />
-                      </div>
+                      <Link href={"/meta/register"}>
+                        <div className="flex text-xs md:text-sm mt-[-25px]">
+                          Edit profile
+                          <FiEdit2 className="ml-1 mt-[2px]" />
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -124,17 +128,17 @@ function MentorProfile() {
                       </div>
                       <div className="text-center gap-5  text-white  my-1 flex lg:block">
                         <div className="bg-gradient-to-r from-[#A145CD] to-[#E1348B] rounded-2xl   p-3 my-4 ">
-                          <p className="text-sm font-semibold">4.8/5.0</p>
+                          <p className="text-sm font-semibold">{rating}/5.0</p>
                           <p className="text-xs font-medium">Tutor rating</p>
                         </div>
                         <div className="bg-gradient-to-r from-[#A145CD] to-[#E1348B] rounded-2xl   p-3 my-4">
-                          <p className="text-sm font-semibold">500+</p>
+                          <p className="text-sm font-semibold">{answeredquestions}</p>
                           <p className="text-xs font-medium">
                             Question answered
                           </p>
                         </div>
                         <div className="bg-gradient-to-r from-[#A145CD] to-[#E1348B] rounded-2xl   p-3 my-4">
-                          <p className="text-sm font-semibold">March 2023</p>
+                          <p className="text-sm font-semibold">August 2023</p>
                           <p className="text-xs font-medium">
                             Material Prepared
                           </p>

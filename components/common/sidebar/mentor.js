@@ -1,5 +1,6 @@
 import { auth } from "@/config/firebaseconfig";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 import { signOut } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,10 +57,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
                     ? (userProfile.displayName || user.displayName).includes(
                         "gmail"
                       )
-                      ? (userProfile.displayName || user.displayName).slice(
-                          0,
-                          5
-                        )
+                      ? removeDomainFromEmail(userProfile.displayName || user.displayName)
                       : userProfile.displayName || user.displayName
                     : "None"
                 }`}

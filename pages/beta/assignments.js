@@ -187,4 +187,6 @@ function Assignments() {
   );
 }
 
-export default withStudentAuthorization(Assignments);
+// export default withStudentAuthorization(Assignments);
+export default (Assignments);
+

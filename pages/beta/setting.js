@@ -1,5 +1,5 @@
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsEnvelopeOpen } from "react-icons/bs";
@@ -55,14 +55,14 @@ function Settings() {
     setSubscriptionState(false);
   };
   // securedroute
-  const { user, userProfile } = useAuthContext();
-  if (!user || !userProfile) {
-    router.push("/");
-  }
+  // const { user, userProfile } = useAuthContext();
+  // if (!user || !userProfile) {
+  //   router.push("/");
+  // }
 
-  if (!user || !userProfile) {
-    return null;
-  }
+  // if (!user || !userProfile) {
+  //   return null;
+  // }
   return (
     <>
       <div className=" h-full text-base bg-black">
@@ -190,4 +190,5 @@ function Settings() {
   );
 }
 
-export default withStudentAuthorization(Settings);
+export default (Settings);
+// export default withStudentAuthorization(Settings);

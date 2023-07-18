@@ -64,7 +64,7 @@ const Otpverification = () => {
     if (otp === decryptedOTP) {
       //   console.log("OTP verification successful");
       const isAdmin = localStorage.setItem("isAdmin", JSON.stringify(true));
-      router.push("/reta/signupsuccess");
+      router.push("/reta/dashboard");
     } else {
       alert("Invalid OTP");
       //   console.log("Invalid OTP");

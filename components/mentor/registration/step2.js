@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useClickOutside from "@/components/mentor/other/useclickoutside";
 
-
-const MentorStep2 = ({setRegStepCount,regStepCount}) => {
+const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
   // this state is  for qualification array data
   const [arrQ, setArrQ] = useState([]);
   // this state is  for experience array data
@@ -131,6 +130,10 @@ const MentorStep2 = ({setRegStepCount,regStepCount}) => {
       experience.locationtype == ""
     ) {
       alert("Field Empty!");
+    } else if (experience.working && experience.enddate !== "") {
+      alert(
+        "Please select either 'Working' or provide an 'End Date', not both."
+      );
     } else {
       setArrE([...arrE, experience]);
       setExperience({
@@ -157,8 +160,8 @@ const MentorStep2 = ({setRegStepCount,regStepCount}) => {
         user.experience = arrE;
         user.qualification = arrQ;
         localStorage.setItem("userdata", JSON.stringify(user));
-        
-        setRegStepCount(3)
+
+        setRegStepCount(3);
       } catch (error) {
         console.log(error);
       }
@@ -357,11 +360,9 @@ const MentorStep2 = ({setRegStepCount,regStepCount}) => {
                   </div>
                   <div className="flex gap-20">
                     <div
-                      onClick={() =>setRegStepCount(1)}
+                      onClick={() => setRegStepCount(1)}
                       className={`${
-                        regStepCount==2
-                          ? "text-[#6E294C]"
-                          : `text-[#E1348B]`
+                        regStepCount == 2 ? "text-[#6E294C]" : `text-[#E1348B]`
                       }  mt-3 hidden md:block`}
                     >
                       Step1
@@ -369,9 +370,7 @@ const MentorStep2 = ({setRegStepCount,regStepCount}) => {
                     <div
                       onClick={() => setRegStepCount(2)}
                       className={`${
-                        regStepCount==2
-                          ? `text-[#E1348B]`
-                          : "text-[#6E294C]"
+                        regStepCount == 2 ? `text-[#E1348B]` : "text-[#6E294C]"
                       } mt-3 hidden md:block`}
                     >
                       Step2
@@ -379,9 +378,7 @@ const MentorStep2 = ({setRegStepCount,regStepCount}) => {
                     <div
                       onClick={() => setRegStepCount(3)}
                       className={`${
-                        regStepCount==2
-                          ? "text-[#6E294C]"
-                          : `text-[#E1348B]`
+                        regStepCount == 2 ? "text-[#6E294C]" : `text-[#E1348B]`
                       } mt-3 hidden md:block`}
                     >
                       Step3
