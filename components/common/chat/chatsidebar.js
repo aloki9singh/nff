@@ -36,7 +36,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
         setChats(prev => prev.map((chat) => {
           if (chat.isGroup) return chat;
 
-          if(!friend) return chat;
+          if (!friend) return chat;
 
           const fuid = chat.members.find(
             (uid) => uid !== auth.currentUser.uid
@@ -104,7 +104,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
 
   return (
     <div
-      className="flex flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6"
+      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6`}
 
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
@@ -121,7 +121,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
           onChange={(e) => handleChange(e)}
           style={{ backgroundColor: "#505057", color: "white" }}
         />
-        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize:"25px" }} />
+        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize: "25px" }} />
       </div>
 
       <div className="sideBarContainer flex  flex-col gap-4 relative">
