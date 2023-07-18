@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
-import { query } from 'firebase/firestore';
+import { query } from "firebase/firestore";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -86,7 +86,7 @@ function AdminStudent() {
   }, []);
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
- 
+
   function handleClick(e) {
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
@@ -168,7 +168,7 @@ function AdminStudent() {
 
             {/* filter bar */}
 
-            <div className="gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-20 text-white">
+            <div className="gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-5 text-white">
               {activeTab == "mentor" && (
                 <div className=" flex   justify-between">
                   <div>
@@ -204,21 +204,23 @@ function AdminStudent() {
                             />
                           </div>
                         </form>
-                        <button className=" w-fit h-fit flex px-8 py-2.5  max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14 bg-[#E1348B]">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4 text-white mr-1"
-                          >
-                            <path d="M12 5v14M5 12h14" />
-                          </svg>
-                          Add Mentor
-                        </button>
+                        <Link href={"/reta/addmentor"}>
+                          <button className=" w-fit h-fit flex px-8 py-2.5  max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14 bg-[#E1348B]">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-4 h-4 text-white mr-1"
+                            >
+                              <path d="M12 5v14M5 12h14" />
+                            </svg>
+                            Add Mentor
+                          </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -294,53 +296,6 @@ function AdminStudent() {
                   </div>
                 </div>
               )}
-
-              {/* <div className="  md:w-5/6 ">
-                <BasicDetails />
-                   
-                <div className="md:flex gap-5">
-                  <div className="md:w-1/2">
-                    <div>
-                      {" "}
-                      <LeaderBoardMentor />
-                      <div className="bg-[#373A41] rounded-[20px] p-5 px-8 my-5 space-y-2 text-white mt-[-12px]">
-                        <div className="py-2 text-center">Homework Status</div>
-                        <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
-                          <div>To be Marked</div>
-                          <div className=" border border-[#A145CD] rounded-[5px] px-1">
-                            {" "}
-                            29
-                          </div>{" "}
-                        </div>
-                        <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
-                          <div>Marked</div>
-                          <div className=" border border-[#A145CD] rounded-[5px] px-1">
-                            {" "}
-                            2
-                          </div>{" "}
-                        </div>
-                      </div>
-                    </div>
-                    <div> </div>
-                  </div>
-                  <div className="md:w-1/2">
-                    <div className="bg-[#373A41] rounded-[20px] pt-1">
-                      {" "}
-                      <CirProgress />
-                    </div>
-                    <div className="bg-[#373A41] rounded-[20px] mb-10 mt-[-20px] md:mt-0">
-                      {" "}
-                      <MentorChatWidget />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className=" md:mt-0 mt-[-20px] ">
-                <Calender />
-                <div className="bg-[#373A41] rounded-[20px] md:pb-5 mt-[-20px] md:[mt-0] ">
-                  <TaskList />
-                </div>
-              </div> */}
             </div>
 
             {/* table */}
@@ -433,8 +388,15 @@ function AdminStudent() {
                             )}
                           </td>
 
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
-                          onClick={()=> router.push({pathname: "/reta/profile", query:{uid: e.uid}})}>
+                          <td
+                            className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
+                            onClick={() =>
+                              router.push({
+                                pathname: "/reta/profile",
+                                query: { uid: e.uid },
+                              })
+                            }
+                          >
                             View Profile
                           </td>
                         </tr>
@@ -466,8 +428,8 @@ function AdminStudent() {
                             {e.uid.slice(0, 5)}
                           </td>
                           <td className="w-[16.6%] text-center ">
-                            {e.assignedCourses
-                              ? e.assignedCourses[0]
+                            {e?.details.interest
+                              ? e.details.interest
                               : "Not Assigned"}
                           </td>
                           <td className="w-[16.6%] text-center  md:block hidden ">
@@ -500,7 +462,6 @@ function AdminStudent() {
                               </p>
                             )}
                           </td>
-
                           <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
                           onClick={()=> router.push({pathname: "/reta/mentorprofile", query:{uid: e.uid}})}>
                             View Profile

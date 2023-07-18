@@ -40,7 +40,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
 
   //step2end
   // Setting Data in  respective state
-
+    
   const setData = (e) => {
     const { name, value, files } = e.target;
     if (name === "profilephoto") {
@@ -65,6 +65,11 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
 
   const detailadd = async () => {
     setLoading(true);
+    if (!input.photoURL) {
+      alert("Profile photo is required!");
+      setLoading(false);
+      return;
+    }
     const res = await fetch(`/api/signup/${id}`, {
       method: "PATCH",
       headers: {
