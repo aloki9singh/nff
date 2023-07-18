@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
+import { query } from 'firebase/firestore';
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -432,8 +433,9 @@ function AdminStudent() {
                             )}
                           </td>
 
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer ">
-                            <Link href="">View Profile</Link>
+                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
+                          onClick={()=> router.push({pathname: "/reta/profile", query:{uid: e.uid}})}>
+                            View Profile
                           </td>
                         </tr>
                       ))}
@@ -499,8 +501,9 @@ function AdminStudent() {
                             )}
                           </td>
 
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]   cursor-pointer">
-                            <Link href="">View Profile</Link>
+                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
+                          onClick={()=> router.push({pathname: "/reta/profile", query:{uid: e.uid}})}>
+                            View Profile
                           </td>
                         </tr>
                       ))}
