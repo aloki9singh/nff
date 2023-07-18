@@ -160,8 +160,8 @@ const Chat = () => {
 
   return (
     <>
-      <div className="flex overflow-hidden items-stretch h-screen ">
-        {/* {chats.length === 0 && <NoJoinedCoursesModal />} */}
+      <div className="flex overflow-x-hidden items-stretch min-h-screen ">
+        {chats.length === 0 && <NoJoinedCoursesModal />}
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${
