@@ -143,7 +143,7 @@ export default function Courses({ coursesData }) {
             </h1>
           ))}
         </div> */}
-        <div className="w-full lg:mt-16 mt-10 flex flex-col ">
+        <div className="w-full lg:mt-16 mt-10 flex flex-col">
           {/* <div className="flex justify-between md:flex-wrap overflow-x-scroll scrollbar-hide w-full">
             {coursesData.map((course) => (
               <CourseCard
@@ -156,7 +156,7 @@ export default function Courses({ coursesData }) {
               />
             ))}
           </div> */}
-          <div className="grid grid-cols-3 grid-flow-col overflow-scroll scrollbar-hide gap-10">
+          <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 ">
             {coursesData.map((course, i) => (
               <div key={i}>
                 <CourseCard
