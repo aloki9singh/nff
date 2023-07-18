@@ -303,4 +303,5 @@ function MentorProfile() {
     </>
   );
 }
-export default withMentorAuthorization(MentorProfile);
+// export default withMentorAuthorization(MentorProfile);
+export default (MentorProfile);
