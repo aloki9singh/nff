@@ -10,19 +10,19 @@ import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
 const dashboard = () => {
-  // code to check if verified to visit this page or not
-  const [isAdmin, setIsAdmin] = useState(false);
+  // // code to check if verified to visit this page or not
+  // const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   useEffect(() => {
-    const isAdmin = localStorage.getItem('isAdmin');
-    setIsAdmin(isAdmin);
-    if (!isAdmin) {
-      router.push('/');
-    }
+    // const isAdmin = localStorage.getItem('isAdmin');
+    // setIsAdmin(isAdmin);
+    // if (!isAdmin) {
+    //   router.push('/');
+    // }
   }, [router]);
 
   useEffect(() => {
@@ -36,9 +36,9 @@ const dashboard = () => {
     sendSideBarState(showSideBar);
   }
 
-  if (!isAdmin) {
-    return null;
-  }
+  // if (!isAdmin) {
+  //   return null;
+  // }
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>
@@ -149,4 +149,5 @@ const dashboard = () => {
   );
 };
 
-export default withAdminAuthorization(dashboard);
+// export default withAdminAuthorization(dashboard);
+ export default (dashboard);
