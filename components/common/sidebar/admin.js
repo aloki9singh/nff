@@ -13,7 +13,6 @@ import { RxCross2 } from 'react-icons/rx';
 const AdminSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
-  // console.log(userProfile)
   return (
     <>
       <aside className='h-screen  md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between '>
@@ -88,27 +87,27 @@ const AdminSidebar = ({ toggleSideBar }) => {
                     </label>
                   </Link>
                   <Link
-                    href='/reta/courseoverview'
+                    href='/reta/addcourse'
                     className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
                     <label className='inline-flex items-center space-x-3'>
                       <input
                         id='default-checkbox'
                         type='checkbox'
                         className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === '/reta/courseoverview'
+                          router.pathname === '/reta/addcourse'
                             ? 'shadow-white'
                             : ''
                         }`}
                         style={{
                           boxShadow:
-                            router.pathname === '/reta/courseoverview'
+                            router.pathname === '/reta/addcourse'
                               ? '0 0 5px #A145CD'
                               : 'none'
                         }}
                       />{' '}
                       <span
                         className={`ml-3 text-[${
-                          router.pathname == '/reta/courseoverview'
+                          router.pathname == '/reta/addcourse'
                             ? '#E1348B'
                             : ''
                         }]`}>
@@ -130,7 +129,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                             }`}
                             style={{
                               boxShadow:
-                                router.pathname === '/reta/mentors'
+                              router.pathname === '/reta/mentors'
                                   ? '0 0 5px #A145CD'
                                   : 'none'
                             }}
@@ -141,7 +140,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                                 ? '#E1348B'
                                 : ''
                             }]`}>
-                            View Students
+                            View Students/Mentors
                           </span>
                         </label>
                       </Link>
@@ -181,7 +180,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
 
                   {user ? (
                     <div style={{ marginTop: '0' }}>
-
+{/* 
                       <Link
                         href='/reta/mentors'
                         className='flex items-center p-2 text-base font-normal my-4 text-white rounded-lg   hover:bg-pin'>
@@ -203,36 +202,36 @@ const AdminSidebar = ({ toggleSideBar }) => {
                           />{' '}
                           <span
                             className={`ml-3 text-[${
-                              router.pathname == '/reta/mentors'
+                              router.pathname === '/reta/mentors'
                                 ? '#E1348B'
                                 : ''
                             }]`}>
                             View Mentors
                           </span>
                         </label>
-                      </Link>
+                      </Link> */}
                       <Link
-                        href='/reta/checkclass'
+                        href='/reta/addmentor'
                         className='flex items-center p-2 text-base font-normal mb-2 text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input
                             id='default-checkbox'
                             type='checkbox'
                             className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === '/reta/checkclass'
+                              router.pathname === '/reta/addmentor'
                                 ? 'shadow-white'
                                 : ''
                             }`}
                             style={{
                               boxShadow:
-                                router.pathname === '/reta/checkclass'
+                                router.pathname === '/reta/addmentor'
                                   ? '0 0 5px #A145CD'
                                   : 'none'
                             }}
                           />{' '}
                           <span
                             className={`ml-3 text-[${
-                              router.pathname == '/reta/checkclass'
+                              router.pathname == '/reta/addmentor'
                                 ? '#E1348B'
                                 : ''
                             }]`}>
@@ -301,27 +300,27 @@ const AdminSidebar = ({ toggleSideBar }) => {
                   <hr className='h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto '></hr>
 
                       <Link
-                        href='/reta/checkclass'
+                        href='/reta/profile'
                         className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input
                             id='default-checkbox'
                             type='checkbox'
                             className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === '/reta/checkclass'
+                              router.pathname === '/reta/profile'
                                 ? 'shadow-white'
                                 : ''
                             }`}
                             style={{
                               boxShadow:
-                                router.pathname === '/reta/checkclass'
+                                router.pathname === '/reta/profile'
                                   ? '0 0 5px #A145CD'
                                   : 'none'
                             }}
                           />{' '}
                           <span
                             className={`ml-3 text-[${
-                              router.pathname == '/reta/checkclass'
+                              router.pathname == '/reta/profile'
                                 ? '#E1348B'
                                 : ''
                             }]`}>

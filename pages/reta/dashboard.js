@@ -60,7 +60,7 @@ const dashboard = () => {
             </div>
           )}
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
-          <AdminTopbar heading={''} toggleSideBar={toggleSideBar} />
+          <AdminTopbar heading={'Dashboard'} toggleSideBar={toggleSideBar} />
           {/* text */}
           <div className='w-full h-screen bg-[#1E1E1E]  space-y-5 pt-[80px] '>
             <div className='flex flex-col justify-center h-full'>
