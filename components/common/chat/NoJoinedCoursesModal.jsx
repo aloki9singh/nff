@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import React, { useState, Fragment } from "react";
 
-export default function NoJoinedCoursesModal() {
+export default function NoJoinedCoursesModal({ message }) {
   let [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
 
@@ -62,17 +62,16 @@ export default function NoJoinedCoursesModal() {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-white/70">
-                      You have not joined any courses yet. Please join a course
-                      to start chatting.
+                      {message ||
+                        "You have not joined any courses yet. Please join a course to start chatting."}
                     </p>
                   </div>
 
                   <div className="mt-4 flex items-center gap-4">
                     <button
-
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent text-primary px-4 py-2 text-sm font-semibold  hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
-                      onClick={()=>{
+                      onClick={() => {
                         router.back();
                       }}
                     >
