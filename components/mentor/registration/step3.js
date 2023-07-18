@@ -254,7 +254,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                         </option>
                       </select>
                     </div>
-                    <div className="mb-10 md:flex items-center space-y-4    w-full">
+                    {/* <div className="mb-10 md:flex items-center space-y-4    w-full">
                       <label className="block text-sm font-medium text-white mt-4 mr-12 md:ml-5">
                         Others:
                       </label>
@@ -266,7 +266,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                         onChange={setData}
                         value={input.others}
                       />
-                    </div>
+                    </div> */}
                   </div>
                   <div className="mb-10 md:flex items-center space-y-4    w-full">
                     <label className="block text-sm font-medium text-white mt-4 mr-12">

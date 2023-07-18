@@ -25,7 +25,7 @@ const MentorRegForm = () => {
   // }
   return (
     <>
-      {regStepCount == 1 && (
+      {regStepCount == 0 && (
         <MentorRegFormStep1
           setRegStepCount={setRegStepCount}
           regStepCount={regStepCount}
@@ -43,7 +43,7 @@ const MentorRegForm = () => {
           regStepCount={regStepCount}
         />
       )}
-      {regStepCount == 4 && (
+      {regStepCount == 1 && (
         <MentorFinal
           setRegStepCount={setRegStepCount}
           regStepCount={regStepCount}

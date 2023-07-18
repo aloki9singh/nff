@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
+const MentorRegFormStep1 = ({ setRegStepCount, regStepCount }) => {
   const [input, setInput] = useState({
     firstname: "",
     lastname: "",
@@ -38,17 +38,18 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
       alert("Field Empty");
     } else {
       e.preventDefault();
-     
+
       const selectedDate = new Date(input.dob);
-    const currentDate = new Date();
-    const diffYears = Math.floor((currentDate - selectedDate) / (1000 * 60 * 60 * 24 * 365));
-    // console.log(diffYears);
-    if (diffYears < 15) {
-    
-      alert("Invalid date of birth.");
-      return;
-    }
-     
+      const currentDate = new Date();
+      const diffYears = Math.floor(
+        (currentDate - selectedDate) / (1000 * 60 * 60 * 24 * 365)
+      );
+      // console.log(diffYears);
+      if (diffYears < 15) {
+        alert("Invalid date of birth.");
+        return;
+      }
+
       localStorage.setItem("userdata", JSON.stringify(input));
 
       // router.push("/MentorStep2");
@@ -132,6 +133,7 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                 value={input.pPhone}
                 onChange={setData}
                 type="tel"
+                maxLength={10}
                 placeholder="Type here"
                 className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%]  bg-[#333333] "
               />
@@ -159,6 +161,7 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                 name="sPhone"
                 value={input.sPhone}
                 onChange={setData}
+                maxLength={10}
                 type="tel"
                 placeholder="Type here"
                 className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%]  bg-[#333333] "
@@ -189,7 +192,15 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                 <label htmlFor="" className=" text-sm font-md mr-10 md: mt-3">
                   City
                 </label>
-                <select
+                <input
+                  type="text"
+                  name="city"
+                  onChange={setData}
+                  value={input.city}
+                  placeholder="Enter City"
+                  className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333] "
+                ></input>
+                {/* <select
                   type="text"
                   name="city"
                   onChange={setData}
@@ -203,7 +214,7 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                   <option value="Udaipur">Udaipur</option>
                   <option value="Ajmer">Ajmer</option>
                   <option value="Jaipur">Jaipur</option>
-                </select>
+                </select> */}
               </div>
               <div className="md:flex ">
                 <label htmlFor="" className=" text-sm font-md mr-10 md: mt-3">
@@ -214,6 +225,7 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                   value={input.postalcode}
                   onChange={setData}
                   type="text"
+                  maxLength={8}
                   placeholder="Enter Area code"
                   className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%]  bg-[#333333] "
                 />
@@ -224,7 +236,17 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                 <label htmlFor="" className=" text-sm font-md mr-10 md: mt-3">
                   Select Country
                 </label>
-                <select
+                <input
+                  name="country"
+                  onChange={setData}
+                  value={input.country}
+                  type="text"
+                  placeholder="Enter Country"
+                  className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
+                >
+                
+                </input>
+                {/* <select
                   name="country"
                   onChange={setData}
                   value={input.country}
@@ -238,7 +260,7 @@ const MentorRegFormStep1 = ({ setRegStepCount,regStepCount }) => {
                   <option value="India">India</option>
                   <option value="India">India</option>
                   <option value="India">India</option>
-                </select>
+                </select> */}
               </div>
             </div>
           </div>
