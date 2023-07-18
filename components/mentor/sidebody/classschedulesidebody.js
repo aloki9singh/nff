@@ -11,16 +11,26 @@ import "react-datepicker/dist/react-datepicker.css";
 import { getMonthName } from "@/components/common/calendar/common/timestampfun";
 import { useEffect } from "react";
 
-import { callSchedulePostApiMentor } from "@/lib/exportablefunctions";
+import {
+  callSchedulePostApiMentor,
+  removeDomainFromEmail,
+} from "@/lib/exportablefunctions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/config/firebaseconfig";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 const SideBodyClassSchedule = ({ count, setCount }) => {
   const [date, setDate] = useState(new Date(Date.now()));
   const [selectedColor, setSelectedColor] = useState("#E1348B");
   const [user, setUser] = useState("");
+
+  const { userProfile } = useAuthContext();
+  console.log(userProfile, "UserP");
+
   const val = date.getYear() + date.getMonth() + date.getDate();
-  const Mentorname = "Raviraj Kumar"; //replace this by fetching mentor name
+  const Mentorname = userProfile
+    ? removeDomainFromEmail(userProfile.displayName)
+    : ""; //replace this by fetching mentor name
   const [userData, setUserData] = useState({
     addTitle: "",
     startTime: "",
@@ -75,8 +85,8 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
       const dataToSend = {
         ...userData,
         defaultRadio: selectedColor,
-        mentorId: user.uid,
-        mentorName: user.displayName,
+        mentorId: userProfile ? userProfile.uid : "",
+        mentorName: Mentorname,
         link: "",
       };
 

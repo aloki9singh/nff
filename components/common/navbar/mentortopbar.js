@@ -10,6 +10,7 @@ import { auth } from "@/config/firebaseconfig";
 import { Router, useRouter } from "next/router";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 
 const MentorTopbar = ({ heading, toggleSideBar }) => {
   let [searchstate, setsearchstate] = useState("");
@@ -126,7 +127,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">
                                       {userProfile.displayName.includes("gmail")
-                                        ? userProfile.displayName.slice(0, 5)
+                                        ? removeDomainFromEmail(userProfile.displayName)
                                         : userProfile.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2"></p>

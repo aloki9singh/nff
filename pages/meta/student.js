@@ -350,7 +350,7 @@ function MentorStudent() {
                           />
                           {e.displayName}
                         </td>
-                        <td className="w-[16.6%] ">ID : {e.uid}</td>
+                        <td className="w-[16.6%] ">{e.uid}</td>
                         <td className="w-[16.6%] text-center ">{e?.class}</td>
                         <td className="w-[16.6%] text-center md:block hidden">
                           {e?.active}

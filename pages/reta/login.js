@@ -15,7 +15,11 @@ import {
   sendOTP,
 } from "@/lib/exportablefunctions";
 import CryptoJS from "crypto-js";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
 
