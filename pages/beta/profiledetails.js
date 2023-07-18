@@ -16,7 +16,7 @@ const options = ["8", "9", "10", "11", "12"];
 export default function ProfileDetails() {
   const router = useRouter();
 
-  const { user } = useAuthContext()
+  const { user } = useAuthContext();
 
   const {
     register,
@@ -24,14 +24,12 @@ export default function ProfileDetails() {
     control,
     setValue,
     formState: { errors },
-    reset
+    reset,
   } = useForm({
-    defaultValues: {
-    }
+    defaultValues: {},
   });
 
   useEffect(() => {
-
     const getInitialProfile = async () => {
       const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
       const docSnap = await getDoc(userRef);
@@ -52,12 +50,10 @@ export default function ProfileDetails() {
         }
         reset(initialProfile)
       }
-    }
+    };
 
-    getInitialProfile()
-
-  }, [user.uid, reset])
-
+    getInitialProfile();
+  }, [user.uid, reset]);
 
   const onSubmit = async (data) => {
     console.log("data", data);
@@ -102,11 +98,10 @@ export default function ProfileDetails() {
       aadhaarCard: "",
       uid: user.uid,
 
-      trialValid:true,
-      courseAccess:false,
+      trialValid: true,
+      courseAccess: false,
 
       joinedCourses: [],
-
     };
     console.log("profile", profile);
     const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
@@ -542,7 +537,7 @@ export default function ProfileDetails() {
             <Controller
               control={control}
               name="aadhaarCard"
-              render={({ field: { onChange, onBlur, } }) => (
+              render={({ field: { onChange, onBlur } }) => (
                 <IDdraganddrop
                   setValue={setValue}
                   name="aadhaarCard"

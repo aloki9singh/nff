@@ -51,9 +51,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
           ...prev,
           photoURL: url,
         }));
-
       });
-
     } else {
       // Handle other inputs normally
       setInput((prev) => ({
@@ -76,6 +74,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
         details: mentor,
         displayName: input.firstname,
         photoURL: input.photoURL,
+        detailSubmitted: true,
       }),
     });
 
@@ -180,6 +179,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                   value={input.pPhone}
                   onChange={setData}
                   type="tel"
+                  maxLength={10}
                   placeholder="Type here"
                   className="rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%]  bg-[#333333] "
                 />
@@ -205,6 +205,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                 </label>
                 <input
                   name="sPhone"
+                  maxLength={10}
                   value={input.sPhone}
                   onChange={setData}
                   type="tel"
@@ -237,7 +238,14 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                   <label htmlFor="" className=" text-sm font-md mr-10 md: mt-3">
                     City
                   </label>
-                  <select
+                  <input
+                    type="text"
+                    name="city"
+                    onChange={setData}
+                    value={input.city}
+                    className="rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333] "
+                  ></input>
+                  {/* <select
                     type="text"
                     name="city"
                     onChange={setData}
@@ -251,7 +259,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                     <option value="Udaipur">Udaipur</option>
                     <option value="Ajmer">Ajmer</option>
                     <option value="Jaipur">Jaipur</option>
-                  </select>
+                  </select> */}
                 </div>
                 <div className="md:flex ">
                   <label htmlFor="" className=" text-sm font-md mr-10 md: mt-3">
@@ -259,6 +267,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                   </label>
                   <input
                     name="postalcode"
+                    maxLength={8}
                     value={input.postalcode}
                     onChange={setData}
                     type="text"
@@ -276,7 +285,14 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                     >
                       Select Country
                     </label>
-                    <select
+                    <input
+                      name="country"
+                      onChange={setData}
+                      value={input.country}
+                      type="text"
+                      className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
+                    ></input>
+                    {/* <select
                       name="country"
                       onChange={setData}
                       value={input.country}
@@ -290,7 +306,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                       <option value="India">India</option>
                       <option value="India">India</option>
                       <option value="India">India</option>
-                    </select>
+                    </select> */}
                   </div>
 
                   <div className="">
@@ -403,6 +419,120 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                   <option value="" className="text-xs">
                     Select from this List
                   </option>
+
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Web Developer"
+                  >
+                    Web Developer
+                  </option>
+                  <option className="text-xs cursor-pointer" value="C++ & DSA">
+                    C++ & DSA
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="UI/UX Designing"
+                  >
+                    UI/UX Designing
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Yoga & Wellness"
+                  >
+                    Yoga & Wellness
+                  </option>
+                  <option className="text-xs cursor-pointer" value="Painting">
+                    Painting
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Graphic Designing"
+                  >
+                    Graphic Designing
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Video Shooting"
+                  >
+                    Video Shooting
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Content Writing"
+                  >
+                    Content Writing
+                  </option>
+                  <option className="text-xs cursor-pointer" value="Marketing">
+                    Marketing
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Basic Medical Science"
+                  >
+                    {" "}
+                    Basic Medical Science{" "}
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Yoga & Wellness"
+                  >
+                    Yoga & Wellness
+                  </option>
+                  <option className="text-xs cursor-pointer" value="Sketching">
+                    Sketching
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Financial Literacy of Planning"
+                  >
+                    Financial Literacy of Planning
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value=" Sound / Audio Engineering"
+                  >
+                    Sound / Audio Engineering
+                  </option>
+                  <option className="text-xs cursor-pointer" value="IOT">
+                    IOT
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="3D Video Editing"
+                  >
+                    3D Video Editing
+                  </option>
+                  <option className="text-xs cursor-pointer" value="AI/ML">
+                    AI/ML
+                  </option>
+                  <option className="text-xs cursor-pointer" value="Gaming">
+                    Gaming
+                  </option>
+                  <option className="text-xs cursor-pointer" value="Poetry">
+                    Poetry
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Thesis of Book Writing"
+                  >
+                    Thesis of Book Writing
+                  </option>
+                  <option
+                    className="text-xs cursor-pointer"
+                    value="Productivity of Basic Software"
+                  >
+                    Productivity of Basic Software
+                  </option>
+                </select>
+                {/* <select
+                  name="interest"
+                  onChange={setData}
+                  value={input.interest}
+                  className="focus:outline-none text-white text-sm rounded-lg block w-full p-4  bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="" className="text-xs">
+                    Select from this List
+                  </option>
                   <option value="Python" className="text-xs">
                     Python
                   </option>
@@ -412,9 +542,9 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                   <option value="MERN" className="text-xs">
                     MERN
                   </option>
-                </select>
+                </select> */}
               </div>
-              <div className="mb-10 md:flex items-center space-y-4    w-full">
+              {/* <div className="mb-10 md:flex items-center space-y-4    w-full">
                 <label className="block text-sm font-medium text-white mt-4 mr-12 md:ml-5">
                   Others:
                 </label>
@@ -426,7 +556,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
                   onChange={setData}
                   value={input.others}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="mb-10 md:flex items-center space-y-4    w-full">
               <label className="block text-sm font-medium text-white mt-4 mr-12">
