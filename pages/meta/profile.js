@@ -212,6 +212,26 @@ function MentorProfile() {
                         icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
                       />
                     </div>
+                    <div>
+                      <CourseCard
+                        key="1"
+                        lessons="8"
+                        title="Introduction to C++"
+                        desc="Learn the basics of C++ programming language."
+                        level="Beginner"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
+                      />
+                    </div>
+                    <div>
+                      <CourseCard
+                        key="1"
+                        lessons="8"
+                        title="Introduction to C++"
+                        desc="Learn the basics of C++ programming language."
+                        level="Beginner"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
