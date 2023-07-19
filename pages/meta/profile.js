@@ -25,7 +25,7 @@ import Link from "next/link";
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
-  const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
+  const chartData  = new Array(12).fill(0);
   const [uid, setUid] = useState("");
   const [userData, setUserData] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -45,14 +45,21 @@ function MentorProfile() {
     }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user.uid);
         callUserById(user.uid).then((data) => setUserData(data.user));
       }
     });
     return () => unsubscribe();
   }, [isMediumScreen]);
 
-  console.log(userData);
+
+
+  userData.joinedStudents?.map((student)=>{
+    const joinDate = new Date(student.joinedAt.seconds * 1000);
+    console.log(joinDate.getMonth());
+    chartData[joinDate.getMonth()]++;
+  });
+
+  
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] md:rounded-tl-[40px]">

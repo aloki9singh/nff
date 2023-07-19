@@ -58,6 +58,7 @@ function Videos() {
   const [videoUrl, setVideoUrl] = useState(null);
   const [isJoined, setIsJoined] = useState(false);
   const { user, userProfile } = useAuthContext();
+  const [currentarray, setCurrentArray] = useState([]);
 
   useEffect(() => {
     const checkJoined = async () => {
@@ -93,6 +94,19 @@ function Videos() {
           });
           console.log(courseData);
           // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
+
+          const userRef = doc(db, "allusers", courseData.mentorid); // searching if user exists or not
+          const docSnap = await getDoc(userRef).then((docsnap) => {
+            if (docsnap.exists()) {
+              const userd = docsnap.data();
+              setCurrentArray(userd.joinedStudents);
+            }
+            else {
+              setCurrentArray([]);
+              console.log("user not found");
+            }
+          });
+
           setModules(courseData.modules);
           setCourse(courseData);
           setVideoUrl(courseData.modules[0].video);
@@ -136,6 +150,8 @@ function Videos() {
     router.push("/");
   }
 
+
+
   async function joinCourseChat() {
     const groupRef = doc(db, "chatGroups", course.id);
 
@@ -144,19 +160,33 @@ function Videos() {
     });
 
 
-
     await setDoc(doc(db, "allusers", user.uid, "joinedCourses", course.id), {
       id: course.id,
       title: course.title,
       joinedAt: serverTimestamp(),
     })
 
-    await setDoc(doc(db, "allusers", course.mentorid, "joinedStudents", course.id), {
-      courseId: course.id,
-      studentId:user.uid,
-      joinedAt: serverTimestamp(),
-    })
 
+    const mentorRef = doc(db, "allusers", course.mentorid);
+
+    const d = {
+      courseId: course.id,
+      studentId: user.uid,
+      joinedAt: new Date(),
+    }
+
+    let joinedStudents = [];
+    currentarray.map((item) => {
+      joinedStudents.push(item);
+    })
+    joinedStudents.push(d);
+
+
+    const joindData = {
+      joinedStudents,
+    }
+
+    await updateDoc(mentorRef, joindData);
     setIsJoined(true);
   }
 
@@ -166,7 +196,8 @@ function Videos() {
     <>
 
 
-    {/* console.log(course.mentorid)} */}
+
+    {  console.log(currentarray)}
 
       <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
         {isMobileScreen && (
