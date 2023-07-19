@@ -545,4 +545,4 @@ function AdminStudent() {
     </>
   );
 }
-export default withAdminAuthorization(AdminStudent);
+export default (AdminStudent);

@@ -688,7 +688,14 @@ const MentorProfile = () => {
                       courseAssigned: true,
                       active: true,
                       courseid: id ? id : "",
+
                     });
+
+
+
+
+
+                    
                     router.replace("/reta/addmentor");
                   }}
                   className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
@@ -717,4 +724,4 @@ const MentorProfile = () => {
   );
 };
 
-export default withAdminAuthorization(MentorProfile);
+export default (MentorProfile);

@@ -313,4 +313,4 @@ function AddMentor() {
   );
 }
 
-export default withAdminAuthorization(AddMentor);
+export default (AddMentor);
