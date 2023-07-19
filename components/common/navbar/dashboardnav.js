@@ -20,18 +20,18 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
   const router = useRouter();
   const { user,userProfile } = useAuthContext()
 
-  return (  
+  return (
     <nav className="border-b-[1px] border-[#728095] px-0 md:py-2 w-full  md:bg-[#2E3036] bg-[#141518] py-5  ">
       <div className="container flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full">
         <div className="flex justify-between items-center">
-        <div className="flex items-center">
+          <div className="flex items-center">
             <Link
-              href="/"
+              href="/beta/dashboard"
               className="uppercase w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
             >
-        <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
-          {heading}
-        </h1>
+              <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
+                {heading}
+              </h1>
               <Image
                 src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
                 alt="logo"
@@ -56,21 +56,21 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
               className="focus:outline-none focus:border-none border-none bg-inherit text-white"
             />
           </div>
-          
+
           {user &&  (
             <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
               <IoMdNotificationsOutline className="text-3xl mr-2" />
               <div className="] h-12 w-12 flex justify-center items-center">
                 <Popover className="">
                   <Popover.Button className="outline-none ">
-                   {user.photoURL ? <Image
+                    {user.photoURL ? <Image
                       src={user.photoURL}
                       alt="proImg"
                       height={48}
                       width={48}
                       className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
                     />:
-                     <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>}
+                      <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>}
                   </Popover.Button>
                   <Transition
                     as={Fragment}
@@ -106,7 +106,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                                 </div>
                               ) : (
                                 <div className="flex gap-1 items-center">
-                                <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>
+                                  <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">Guest</p>
                                     <p className="text-[10px] -mt-2">
@@ -127,10 +127,10 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                             </Link>
                           </div>
                           <div className="text-[13px] p-2">
-                            <Link href="/alpha/contactUs">
+                            <Link href="/alpha/contactus">
                               <p className="mb-2">Neat Skills Help Centre</p>
                             </Link>
-                            <Link href="/alpha/termsandcondition">
+                            <Link href="/alpha/termsandconditions">
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>
