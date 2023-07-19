@@ -5,6 +5,7 @@ import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 const Addteam = () => {
   const router = useRouter();
