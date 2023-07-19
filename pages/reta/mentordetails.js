@@ -697,6 +697,7 @@ const MentorProfile = () => {
               <div className="max-w-full text-right">
                 <button
 
+
                   onClick={AcceptReqHandler}
 
                   className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
