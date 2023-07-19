@@ -80,6 +80,19 @@ const MentorProfile = () => {
     setEdit(!edit);
   };
 
+  const AcceptReqHandler = async () => {
+    detailadd(data?.uid, {
+      courseAssigned: true,
+      active: true,
+      courseid: id ? id : "",
+    });
+    router.replace("/reta/addmentor");
+
+    const courseRef =  doc(db, "courses", id);
+    await updateDoc(courseRef, {mentorid:data?.uid});
+    
+  }
+
   // const setData = (e) => {
   //     const { name, value, files } = e.target;
   //     if (name === "profilephoto") {
@@ -683,14 +696,7 @@ const MentorProfile = () => {
               </div>
               <div className="max-w-full text-right">
                 <button
-                  onClick={() => {
-                    detailadd(data?.uid, {
-                      courseAssigned: true,
-                      active: true,
-                      courseid: id ? id : "",
-                    });
-                    router.replace("/reta/addmentor");
-                  }}
+                  onClick={AcceptReqHandler}
                   className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
                 >
                   Accept
