@@ -8,10 +8,11 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 import Image from "next/image";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 const options = ["8", "9", "10", "11", "12"];
 
-export default function studentProfile() {
+function studentProfile() {
   const router = useRouter();
   const [studentData, setstudentData] = useState([]);
   const { uid } = router.query;
@@ -601,3 +602,4 @@ export default function studentProfile() {
     </div>
   );
 }
+export default withAdminAuthorization(studentProfile)

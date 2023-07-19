@@ -17,7 +17,7 @@ const MentorProfile = () => {
   const [data, setData] = useState({});
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
-
+  //   console.log(id)
   const getData = async () => {
     const usersCollection = collection(db, "allusers");
     const q = doc(usersCollection, uid);
@@ -28,12 +28,12 @@ const MentorProfile = () => {
       console.log(documentData);
     }
   };
-
+  //  console.log(data)
   const getCourse = async () => {
     const usersCollection = collection(db, "courses");
     const q = query(
       usersCollection,
-      where("title", "==", data?.details.interest)
+      where("title", "==", data.details.interest)
     );
     const querySnapshot = await getDoc(q);
     querySnapshot.forEach((doc) => {
@@ -46,8 +46,8 @@ const MentorProfile = () => {
   useEffect(() => {
     getData();
     if (data.details) {
-        getCourse();
-      }
+      getCourse();
+    }
   }, []);
   console.log(data);
   const handleChange = (e) => {
@@ -187,6 +187,7 @@ const MentorProfile = () => {
             </button>
           </div>
         )}
+
         {/* section form starts of preview */}
         <div className="md:mx-10 w-full">
           <form action=" " className="md:ml-10 w-full">
@@ -365,7 +366,6 @@ const MentorProfile = () => {
                       }
                       width={100}
                       height={10000}
-                      alt={"profile"}
                     ></Image>
                     {/* <input
                                             value={data?.photoURL || ""}
@@ -679,6 +679,21 @@ const MentorProfile = () => {
                   className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
                 >
                   Back
+                </button>
+              </div>
+              <div className="max-w-full text-right">
+                <button
+                  onClick={() => {
+                    detailadd(data?.uid, {
+                      courseAssigned: true,
+                      active: true,
+                      courseid: id ? id : "",
+                    });
+                    router.replace("/reta/addmentor");
+                  }}
+                  className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
+                >
+                  Accept
                 </button>
               </div>
             </div>

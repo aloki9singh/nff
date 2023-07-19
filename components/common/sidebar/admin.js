@@ -240,7 +240,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                         </label>
                       </Link>
                       <Link
-                        href='/reta/checkclass'
+                        href=''
                         className='flex items-center p-2 text-base font-normal mb-2 text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input
@@ -300,7 +300,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                   <hr className='h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto '></hr>
 
                       <Link
-                        href='/reta/profile'
+                        href=""
                         className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
                         <label className='inline-flex items-center space-x-3'>
                           <input

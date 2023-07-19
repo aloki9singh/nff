@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 function ViewTeam() {
   const [count, setCount] = useState(1);
@@ -240,4 +241,4 @@ function ViewTeam() {
   );
 }
 
-export default ViewTeam;
+export default withAdminAuthorization(ViewTeam);

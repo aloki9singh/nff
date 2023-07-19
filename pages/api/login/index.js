@@ -25,8 +25,9 @@ async function handleLogin(req, res) {
     if (userData.role !== "admin") {
       return res.status(400).json({ error: "Unauthorized User" });
     }
+
     // Successful login
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, user: userData });
   } catch (error) {
     if (error.code === "auth/invalid-email") {
       return res.status(400).json({ error: "Invalid user" });

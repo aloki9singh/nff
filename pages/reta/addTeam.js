@@ -13,7 +13,9 @@ const Addteam = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const [filterMentor, setFilterMentor] = useState();
-
+  function toggleSidebar() {
+    setShowSidebar((prevState) => !prevState);
+  }
   useEffect(() => {
     if (isMediumScreen) {
       setShowSidebar(false);
@@ -22,10 +24,7 @@ const Addteam = () => {
 
   const [val, setVal] = useState(["a"]);
   const [hover, setHover] = useState(false);
-  function toggleSidebar() {
-    setShowSidebar((prevState) => !prevState);
-  }
- 
+
   const handleAdd = () => {
     const adding = [...val, []];
     setVal(adding);
@@ -199,4 +198,4 @@ const Addteam = () => {
   );
 };
 
-export default Addteam;
+export default withAdminAuthorization(Addteam);

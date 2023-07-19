@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { auth } from "@/config/firebaseconfig";
 import { Loading, userLogger } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 const Otpverification = () => {
   const [otp, setOtp] = useState("");
@@ -18,6 +19,8 @@ const Otpverification = () => {
   const [sendAgain, setsendAgain] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const { loading, setLoading } = useContext(Loading);
+  const { userProfile } = useAuthContext();
+  // console.log(userProfile)
   const inputRefs = useRef([]);
   const maxLength = 1; // Maximum length for each input field
   const router = useRouter();
@@ -156,7 +159,10 @@ const Otpverification = () => {
           <div className="text-sm">
             {" "}
             Did not receive the code?{" "}
-            <span className="cursor-pointer font-semibold" onClick={sendOTPAgain}>
+            <span
+              className="cursor-pointer font-semibold"
+              onClick={sendOTPAgain}
+            >
               Send again.
             </span>{" "}
           </div>
