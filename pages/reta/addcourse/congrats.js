@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import AddTeamPage from '@/pages/reta/addteam';
+// import AddTeamPage from '@/pages/reta/addteam';
 import { useEffect } from 'react';
 
 
@@ -14,9 +14,9 @@ const CongratsAddTeam = () => {
   };
 
   const router = useRouter();
-  const handleCreateAnotherTeam = () => {
-    router.push(addTeamPage);
-  };
+  // const handleCreateAnotherTeam = () => {
+  //   router.push(addTeamPage);
+  // };
 
   useEffect(() => {
     // Disable scrolling when the component mounts

@@ -34,6 +34,9 @@ const Aboutus = () => {
   }, []);
 
   const scrollContainerRef = useRef(null);
+  const toggleSideBar = () =>{
+    console.log("")
+  }
 
   const scrollBackward = () => {
     scrollContainerRef.current.scrollBy({
@@ -98,7 +101,7 @@ const Aboutus = () => {
   return (
     <>
 
-      <Dashboardnav heading="About Us" />
+      <Dashboardnav heading="About Us" toggleSideBar={toggleSideBar} />
 
       <div className="mt-8 md:mt-0 h-full">
         <div className="w-full h-full flex flex-col">
