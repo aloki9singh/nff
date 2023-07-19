@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import AddTeamPage from '@/pages/reta/addteam';
 import { useEffect } from 'react';
+import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
 
 
 const CongratsAddTeam = () => {
@@ -71,4 +72,4 @@ const CongratsAddTeam = () => {
   );
 };
 
-export default CongratsAddTeam;
+export default withAdminAuthorization(CongratsAddTeam);

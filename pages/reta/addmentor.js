@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 function AddMentor() {
   const [count, setCount] = useState(1);
@@ -19,7 +20,7 @@ function AddMentor() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [mentor, setMentor] = useState([]);
   const [filterMentor, setFilterMentor] = useState();
-  
+
   function toggleSidebar() {
     setShowSidebar((prevState) => !prevState);
   }
@@ -28,7 +29,7 @@ function AddMentor() {
     if (isMediumScreen) {
       setShowSidebar(false);
     }
-  
+
     setMentor(
       filterMentor &&
         filterMentor.filter((ele) => {
@@ -46,10 +47,10 @@ function AddMentor() {
       .then((response) => response.json())
       .then((data) => {
         const filteredMentors = data.users.filter((ele) => {
-          return ele.role === "mentor" &&ele.courseAssigned==false ;
+          return ele.role === "mentor" && ele.courseAssigned == false;
         });
         setMentor(filteredMentors);
-         setFilterMentor(filteredMentors);
+        setFilterMentor(filteredMentors);
       });
   }, []);
 
@@ -111,7 +112,10 @@ function AddMentor() {
             </div>
 
             <div className="flex gap-2 mt-20 md:mt-10">
-              <div className="ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white cursor-pointer" onClick={() => handleTabClick("mentor")}>
+              <div
+                className="ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white cursor-pointer"
+                onClick={() => handleTabClick("mentor")}
+              >
                 Application Pending: ({mentor?.length})
               </div>
             </div>
@@ -128,8 +132,17 @@ function AddMentor() {
                         </label>
                         <div className="relative">
                           <div className="flex absolute inset-y-0 right-[10px] items-center pointer-events-none">
-                            <svg className="w-5 h-5 text-white dark:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
+                            <svg
+                              className="w-5 h-5 text-white dark:text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clipRule="evenodd"
+                              ></path>
                             </svg>
                           </div>
                           <input
@@ -150,7 +163,13 @@ function AddMentor() {
                 <div>
                   <button className="bg-[#414348] w-fit h-fit mt-4 flex px-8 py-2.5 max-[585px]:mx-0 mb-2 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14">
                     <span>
-                      <Image src="/componentsgraphics/student/courses/list/chartbaricon.svg" width={20} height={20} alt="chart icon" className="ml-1" />
+                      <Image
+                        src="/componentsgraphics/student/courses/list/chartbaricon.svg"
+                        width={20}
+                        height={20}
+                        alt="chart icon"
+                        className="ml-1"
+                      />
                     </span>
                     Filter
                   </button>
@@ -175,7 +194,10 @@ function AddMentor() {
                   <tbody className="flex w-[95%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6">
                     {mentor &&
                       mentor.slice(initialCount, gap).map((e, i) => (
-                        <tr className="flex items-center w-full font-medium text-xs justify-around" key={i}>
+                        <tr
+                          className="flex items-center w-full font-medium text-xs justify-around"
+                          key={i}
+                        >
                           <td className="flex items-center gap-2 w-[16.6%]">
                             <Image
                               src={
@@ -202,7 +224,16 @@ function AddMentor() {
                             {e?.details.interest}
                           </td>
                           <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer">
-                            <Link href="">Details</Link>
+                            <div
+                              onClick={() =>
+                                router.push({
+                                  pathname: "/reta/mentordetails",
+                                  query: { uid: e.uid },
+                                })
+                              }
+                            >
+                              Details
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -212,23 +243,65 @@ function AddMentor() {
 
               {/* pagination */}
               <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
-                <button className="w-6 h-5 border flex justify-center items-center" name="back" onClick={handleClick}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+                <button
+                  className="w-6 h-5 border flex justify-center items-center"
+                  name="back"
+                  onClick={handleClick}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"
+                    />
                   </svg>
                 </button>
-                <button className={count === 1 ? activeTabClass : tabClass} name="1" onClick={handleClick}>
+                <button
+                  className={count === 1 ? activeTabClass : tabClass}
+                  name="1"
+                  onClick={handleClick}
+                >
                   1
                 </button>
-                <button className={count === 2 ? activeTabClass : tabClass} name="2" onClick={handleClick}>
+                <button
+                  className={count === 2 ? activeTabClass : tabClass}
+                  name="2"
+                  onClick={handleClick}
+                >
                   2
                 </button>
-                <button className={count === 3 ? activeTabClass : tabClass} name="3" onClick={handleClick}>
+                <button
+                  className={count === 3 ? activeTabClass : tabClass}
+                  name="3"
+                  onClick={handleClick}
+                >
                   3
                 </button>
-                <button className="w-6 h-5 border flex justify-center items-center" name="fwd" onClick={handleClick}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
+                <button
+                  className="w-6 h-5 border flex justify-center items-center"
+                  name="fwd"
+                  onClick={handleClick}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"
+                    />
                   </svg>
                 </button>
               </div>
@@ -240,4 +313,4 @@ function AddMentor() {
   );
 }
 
-export default AddMentor;
+export default withAdminAuthorization(AddMentor);

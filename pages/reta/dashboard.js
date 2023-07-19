@@ -149,5 +149,5 @@ const dashboard = () => {
   );
 };
 
-// export default withAdminAuthorization(dashboard);
- export default (dashboard);
+export default withAdminAuthorization(dashboard);
+//  export default (dashboard);

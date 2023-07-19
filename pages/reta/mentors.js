@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import { query } from "firebase/firestore";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -544,4 +545,4 @@ function AdminStudent() {
     </>
   );
 }
-export default AdminStudent;
+export default withAdminAuthorization(AdminStudent);

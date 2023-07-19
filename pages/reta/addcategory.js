@@ -4,6 +4,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 const Createcategory = () => {
   const [category, setCategory] = useState("");
@@ -53,4 +54,4 @@ const Createcategory = () => {
   );
 };
 
-export default Createcategory;
+export default withAdminAuthorization(Createcategory);

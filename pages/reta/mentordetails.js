@@ -17,7 +17,7 @@ const MentorProfile = () => {
   const [data, setData] = useState();
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
-
+  //   console.log(id)
   const getData = async () => {
     const usersCollection = collection(db, "allusers");
     const q = doc(usersCollection, uid);
@@ -30,17 +30,19 @@ const MentorProfile = () => {
   };
 
   const getCourse = async () => {
-    const usersCollection = collection(db, "courses");
-    const q = query(
-      usersCollection,
-      where("title", "==", data?.details.interest)
-    );
-    const querySnapshot = await getDoc(q);
-    querySnapshot.forEach((doc) => {
-      const documentData = doc.data();
-      setId(documentData.uid);
-      console.log(documentData);
-    });
+    if (data.details) {
+      const usersCollection = collection(db, "courses");
+      const q = query(
+        usersCollection,
+        where("title", "==", data.details.interest)
+      );
+      const querySnapshot = await getDoc(q);
+      querySnapshot.forEach((doc) => {
+        const documentData = doc.data();
+        setId(documentData.uid);
+        console.log(documentData);
+      });
+    }
   };
 
   useEffect(() => {
@@ -675,8 +677,21 @@ const MentorProfile = () => {
                   Back
                 </button>
               </div>
-             
-           
+              <div className="max-w-full text-right">
+                <button
+                  onClick={() => {
+                    detailadd(data?.uid, {
+                      courseAssigned: true,
+                      active: true,
+                      courseid: id ? id : "",
+                    });
+                    router.replace("/reta/addmentor");
+                  }}
+                  className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
+                >
+                  Accept
+                </button>
+              </div>
             </div>
           </div>
           {/* //endsection3 */}
