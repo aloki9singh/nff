@@ -14,7 +14,7 @@ const MentorProfile = () => {
   const { loading, setLoading } = useContext(Loading);
   const router = useRouter();
   const { uid } = router.query;
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
   //   console.log(id)
@@ -28,26 +28,26 @@ const MentorProfile = () => {
       console.log(documentData);
     }
   };
-
+  //  console.log(data)
   const getCourse = async () => {
-    if (data.details) {
-      const usersCollection = collection(db, "courses");
-      const q = query(
-        usersCollection,
-        where("title", "==", data.details.interest)
-      );
-      const querySnapshot = await getDoc(q);
-      querySnapshot.forEach((doc) => {
-        const documentData = doc.data();
-        setId(documentData.uid);
-        console.log(documentData);
-      });
-    }
+    const usersCollection = collection(db, "courses");
+    const q = query(
+      usersCollection,
+      where("title", "==", data.details.interest)
+    );
+    const querySnapshot = await getDoc(q);
+    querySnapshot.forEach((doc) => {
+      const documentData = doc.data();
+      setId(documentData.uid);
+      console.log(documentData);
+    });
   };
 
   useEffect(() => {
     getData();
-    getCourse();
+    if (data.details) {
+      getCourse();
+    }
   }, []);
   console.log(data);
   const handleChange = (e) => {
@@ -187,6 +187,7 @@ const MentorProfile = () => {
             </button>
           </div>
         )}
+
         {/* section form starts of preview */}
         <div className="md:mx-10 w-full">
           <form action=" " className="md:ml-10 w-full">
@@ -359,7 +360,10 @@ const MentorProfile = () => {
                       Profile Photo
                     </label>
                     <Image
-                      src={data?.photoURL}
+                      src={
+                        data?.photoURL ||
+                        "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                      }
                       width={100}
                       height={10000}
                     ></Image>

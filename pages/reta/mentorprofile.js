@@ -14,7 +14,7 @@ const MentorProfile = () => {
   const { loading, setLoading } = useContext(Loading);
   const router = useRouter();
   const { uid } = router.query;
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
 
@@ -45,7 +45,9 @@ const MentorProfile = () => {
 
   useEffect(() => {
     getData();
-    getCourse();
+    if (data.details) {
+        getCourse();
+      }
   }, []);
   console.log(data);
   const handleChange = (e) => {
@@ -357,9 +359,13 @@ const MentorProfile = () => {
                       Profile Photo
                     </label>
                     <Image
-                      src={data?.photoURL}
+                      src={
+                        data?.photoURL ||
+                        "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                      }
                       width={100}
                       height={10000}
+                      alt={"profile"}
                     ></Image>
                     {/* <input
                                             value={data?.photoURL || ""}
@@ -675,8 +681,6 @@ const MentorProfile = () => {
                   Back
                 </button>
               </div>
-             
-           
             </div>
           </div>
           {/* //endsection3 */}

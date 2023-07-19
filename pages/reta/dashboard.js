@@ -2,6 +2,8 @@
 // side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
+import { useAuthContext } from '@/lib/context/AuthContext';
+import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -17,6 +19,7 @@ const dashboard = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const {userProfile}=useAuthContext()
   useEffect(() => {
     // const isAdmin = localStorage.getItem('isAdmin');
     // setIsAdmin(isAdmin);
@@ -62,13 +65,13 @@ const dashboard = () => {
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
           <AdminTopbar heading={'Dashboard'} toggleSideBar={toggleSideBar} />
           {/* text */}
-          <div className='w-full h-screen bg-[#1E1E1E]  space-y-5 pt-[80px] '>
+          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-[80px] '>
             <div className='flex flex-col justify-center h-full'>
               <div className='flex align-middle justify-center  '>
                 <div className='text-center space-y-5 '>
                   <div className=' space-y-4 '>
                     <h1 className='text-[#A145CD] md:text-4xl text-2xl  '>
-                      Welcome Back, Raviraj !{' '}
+                      Welcome Back, {removeDomainFromEmail(userProfile.displayName)}!{' '}
                     </h1>
                     <p className='text-white'>Select what you want to do</p>
                   </div>
