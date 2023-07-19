@@ -296,9 +296,7 @@ function MentorProfile() {
             </div>
           </div>
         </div>
-        {/* <div className=" ">
-          <MobileNav></MobileNav>
-        </div> */}
+       
       </div>
     </>
   );
