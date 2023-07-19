@@ -23,6 +23,8 @@ import { uploadToFirebase } from "@/lib/exportablefunctions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { AiOutlinePlus } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
@@ -76,9 +78,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <input
             type="text"
             placeholder="Enter coures title"
-            className={`   h-10 rounded-lg px-2 ${
-              errors.title ? "border border-red-500" : "border-none"
-            }`}
+            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+              }`}
             style={{ background: "#333333" }}
             {...register("title", { required: true })}
           />
@@ -93,9 +94,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             placeholder="Enter course description"
-            className={`  h-28 rounded-lg px-2 ${
-              errors.desc?.message ? "border-red-500 border border-solid" : ""
-            } `}
+            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? "border-red-500 border border-solid" : ""
+              } `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
           />
@@ -112,9 +112,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <div className="flex flex-col flex-1">
             <input
               type="number"
-              className={`   h-10 rounded-lg px-2 ${
-                errors.title ? "border border-red-500" : "border-none"
-              }`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+                }`}
               style={{ background: "#333333" }}
               placeholder="Enter duration in weeks"
               {...register("duration", { required: true, valueAsNumber: true })}
@@ -130,9 +129,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             <input
               type="number"
               placeholder="Enter total lectures"
-              className={`   h-10 rounded-lg px-2 ${
-                errors.title ? "border border-red-500" : "border-none"
-              }`}
+              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
+                }`}
               style={{ background: "#333333" }}
               {...register("lectures", { required: true, valueAsNumber: true })}
             />
@@ -444,77 +442,228 @@ const Accordian = ({ title, desc }) => {
   );
 };
 
+const moduleSchema = yup.object().shape({
+  name: yup.string().required("This field is required"),
+  desc: yup.string().required("This field is required"),
+  video: yup.array().of(
+    yup.object({
+      value: yup
+        .string()
+        .required("This field is required")
+        .url()
+        .typeError("Must be a valid url"),
+    })
+  ),
+});
+
+const ModuleForm = ({ onSubmit }) => {
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(moduleSchema),
+    defaultValues: {
+      video: [{ value: "" }],
+    },
+  });
+
+  const { fields, append, remove, } = useFieldArray(
+    {
+      control,
+      name: "video",
+    }
+  );
+
+  return (
+    <form
+      onSubmit={handleSubmit((data) => {
+        console.log(data);
+        const moduleData = {
+          ...data,
+          video: data.video.map((v) => v.value),
+        }
+        reset()
+      })}
+      className="flex-1 px-10 py-6  border border-[#5F6065] rounded-xl"
+    >
+      <div className="w-full flex flex-col gap-y-4 mb-7">
+        <label className="" htmlFor="name">
+          Module Name
+        </label>
+        <input
+          name="name"
+          type="text"
+          placeholder="Enter module name"
+          className="AddMentorInput  rounded-lg px-2"
+          style={{ background: "#333333" }}
+          {...register("name")}
+        />
+      </div>
+      <div className="w-full flex flex-col gap-y-4 mb-7">
+        <label className="" htmlFor="desc">
+          Module Description
+        </label>
+        <textarea
+          name="desc"
+          type="text"
+          placeholder="Enter module description"
+          className="AddMentorInput h-60 max-w-4xl rounded-lg px-2"
+          style={{ background: "#333333" }}
+          {...register("desc")}
+        />
+      </div>
+      {/* <div className="w-full flex flex-col gap-y-4 mb-7">
+        <label className="" htmlFor="">
+          Upload Module Video{" "}
+          {isUploading && (
+            <span className="text-white/60">
+              Uploading {uploadProgress.toFixed(2)}%
+            </span>
+          )}
+        </label>
+        <div>
+          <label htmlFor="file-input" className="sr-only">
+            Choose file
+          </label>
+          <input
+            type="file"
+            name="file-input"
+            onChange={(e) => uploadVideo(e.target.files[0])}
+            accept="video/*"
+            id="file-input"
+            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+file:bg-transparent file:border-0
+file:bg-gray-100 file:mr-4
+file:py-3 file:px-4
+dark:file:bg-gray-700 dark:file:text-gray-400"
+          />
+          {video && <p className="text-white/60">{video}</p>}
+        </div>
+      </div> */}
+      <div className="w-full flex flex-col gap-y-4 mb-7">
+        <label className="" htmlFor="">
+          Add Video Drive Link
+        </label>
+        <div className="flex flex-col">
+          <ul className="flex flex-col gap-3">
+            {fields.map((field, index) => (
+              <li
+                className="flex flex-row items-center max-w-4xl gap-3"
+                key={field.id}
+              >
+                <div className="flex flex-col flex-1">
+                  <input
+                    type="text"
+                    className="text-white text-sm rounded-lg block p-4  bg-[#333333]  placeholder-[#5F6065] focus:outline-none flex-[2]"
+                    placeholder="Enter link"
+                    {...register(`video.${index}.value`)}
+                  />
+                  <p className="text-red-500 text-sm">
+                    {errors.video?.[index]?.value?.type === "url" ? 'Must be a valid url' : errors.video?.[index]?.value?.message || ''}
+                  </p>
+                </div>
+                <button
+                  className=" self-stretch  rounded-md px-3 transition-colors duration-150 hover:bg-gray-800 "
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  <MdDelete className="text-lg" />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            onClick={() => {
+              append({ value: "" });
+            }}
+            className=" text-white flex items-center text-center mt-3 rounded-md py-2 self-end hover:bg-gray-800 px-4 transition-colors duration-150 "
+          >
+            <AiOutlinePlus className="mr-2" />
+            Add another video
+          </button>
+
+          <p className="text-red-500 text-sm">{errors.learn?.message}</p>
+        </div>
+      </div>
+
+      <button
+        // disabled={isUploading}
+        className="bg-pink text-white px-10 py-2 rounded-md disabled:cursor-not-allowed mt-2 "
+      >
+        Add
+      </button>
+    </form>
+  );
+};
+
 const CourseContentForm = ({ onSubmit }) => {
   const [modules, setModules] = useState([]);
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
-  const [video, setVideo] = useState(null);
 
-  const addModuleHandler = (e) => {
-    e.preventDefault();
-    setModules([...modules, { id: modules.length + 1, name, desc, video }]);
-    setName("");
-    setDesc("");
-    setVideo(null);
-    // reset form
-    e.target.reset();
-  };
+  // const [uploadProgress, setUploadProgress] = useState(0);
+  // const [isUploading, setIsUploading] = useState(false);
 
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [isUploading, setIsUploading] = useState(false);
+  // const uploadVideo = (file) => {
+  //   // Upload file and metadata to the object 'images/mountains.jpg'
+  //   const storageRef = ref(storage, "course-videos/" + file.name);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
+  //   setIsUploading(true);
+  //   // Listen for state changes, errors, and completion of the upload.
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+  //       const progress =
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-  const uploadVideo = (file) => {
-    // Upload file and metadata to the object 'images/mountains.jpg'
-    const storageRef = ref(storage, "course-videos/" + file.name);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    setIsUploading(true);
-    // Listen for state changes, errors, and completion of the upload.
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       setUploadProgress(progress);
+  //       console.log("Upload is " + progress + "% done");
+  //       switch (snapshot.state) {
+  //         case "paused":
+  //           console.log("Upload is paused");
+  //           break;
+  //         case "running":
+  //           console.log("Upload is running");
+  //           break;
+  //       }
+  //     },
+  //     (error) => {
+  //       // A full list of error codes is available at
+  //       // https://firebase.google.com/docs/storage/web/handle-errors
+  //       switch (error.code) {
+  //         case "storage/unauthorized":
+  //           // User doesn't have permission to access the object
+  //           break;
+  //         case "storage/canceled":
+  //           // User canceled the upload
+  //           break;
 
-        setUploadProgress(progress);
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
-      },
-      (error) => {
-        // A full list of error codes is available at
-        // https://firebase.google.com/docs/storage/web/handle-errors
-        switch (error.code) {
-          case "storage/unauthorized":
-            // User doesn't have permission to access the object
-            break;
-          case "storage/canceled":
-            // User canceled the upload
-            break;
+  //         // ...
 
-          // ...
+  //         case "storage/unknown":
+  //           // Unknown error occurred, inspect error.serverResponse
+  //           break;
+  //       }
+  //       setIsUploading(false);
+  //     },
+  //     () => {
+  //       // Upload completed successfully, now we can get the download URL
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         console.log("File available at", downloadURL);
+  //         setVideo(downloadURL);
+  //         setIsUploading(false);
+  //       });
+  //     }
+  //   );
+  // };
 
-          case "storage/unknown":
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
-        setIsUploading(false);
-      },
-      () => {
-        // Upload completed successfully, now we can get the download URL
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          setVideo(downloadURL);
-          setIsUploading(false);
-        });
-      }
-    );
+  const onModuleSubmit = (data) => {
+    console.log("data", data);
+    setModules([...modules, data]);
   };
 
   return (
@@ -522,69 +671,7 @@ const CourseContentForm = ({ onSubmit }) => {
       <Header currentStep={3} onSubmit={() => onSubmit(modules)} />
       <hr className="border-x-2 border-gray-500 mb-4" />
       <div className="w-full flex flex-row itesm-start gap-5">
-        <form
-          onSubmit={addModuleHandler}
-          className="flex-1 px-10 py-6  border border-[#5F6065] rounded-xl"
-        >
-          <div className="w-full flex flex-col gap-y-4 mb-7">
-            <label className="" htmlFor="">
-              Module Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter module name"
-              className="AddMentorInput  rounded-lg px-2"
-              style={{ background: "#333333" }}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="w-full flex flex-col gap-y-4 mb-7">
-            <label className="" htmlFor="">
-              Module Description
-            </label>
-            <textarea
-              type="text"
-              placeholder="Enter module description"
-              className="AddMentorInput h-60 max-w-4xl rounded-lg px-2"
-              style={{ background: "#333333" }}
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-            />
-          </div>
-          <div className="w-full flex flex-col gap-y-4 mb-7">
-            <label className="" htmlFor="">
-              Upload Module Video{" "}
-              {isUploading && (
-                <span className="text-white/60">
-                  Uploading {uploadProgress.toFixed(2)}%
-                </span>
-              )}
-            </label>
-            <div>
-              <label htmlFor="file-input" className="sr-only">
-                Choose file
-              </label>
-              <input
-                type="file"
-                name="file-input"
-                onChange={(e) => uploadVideo(e.target.files[0])}
-                accept="video/*"
-                id="file-input"
-                className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-    file:bg-transparent file:border-0
-    file:bg-gray-100 file:mr-4
-    file:py-3 file:px-4
-    dark:file:bg-gray-700 dark:file:text-gray-400"
-              />
-              {video && <p className="text-white/60">{video}</p>}
-            </div>
-          </div>
-
-          <button disabled={isUploading} className="bg-pink text-white px-10 py-2 rounded-md disabled:cursor-not-allowed ">
-            Add
-          </button>
-        </form>
+        <ModuleForm onSubmit={onModuleSubmit} />
         <div className="flex-1 flex flex-col ">
           <h5>Class module list</h5>
           <div className="flex-1">
@@ -623,20 +710,18 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
           key={index}
         >
           <h4
-            className={`text-xl ${
-              currentStep === index + 1
-                ? "text-primary"
-                : "text-primary/60 group-hover:text-primary/90"
-            }  font-semibold`}
+            className={`text-xl ${currentStep === index + 1
+              ? "text-primary"
+              : "text-primary/60 group-hover:text-primary/90"
+              }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
-            className={`${
-              currentStep === index + 1
-                ? "text-white"
-                : "text-white/60 group-hover:text-white/90"
-            }`}
+            className={`${currentStep === index + 1
+              ? "text-white"
+              : "text-white/60 group-hover:text-white/90"
+              }`}
           >
             {step}
           </p>
