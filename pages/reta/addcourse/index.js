@@ -413,7 +413,7 @@ const Accordian = ({ title, children }) => {
 
   return (
 
-    <div className="bg-[#333333] p-2 px-3 rounded-md md:w-[28rem] max-w-md overflow-hidden">
+    <div className="bg-[#333333] p-2 px-5 rounded-md md:w-[28rem] max-w-md overflow-hidden">
 
       <h2 id="accordion-flush-heading-1">
         <button
@@ -683,7 +683,7 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
     <>
       <Header currentStep={3} onSubmit={() => onSubmit(modules)} />
       <hr className="border-x-2 border-gray-500 mb-4" />
-      
+
       <div className="w-full flex flex-col md:flex-row items-start gap-5">
 
         <ModuleForm onSubmit={onModuleSubmit} />
@@ -702,21 +702,23 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
                   <div key={index}>
                     <p className="text-xs text-white/70">Module {index + 1}</p>
                     <Accordian title={module.name}>
-                      <div className="flex flex-col gap-2">
-                        <p className="text-white/80">{module.desc}</p>
-                        <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2 text-sm text-white/80">
+                        <p className=" font-semibold">Description:</p>
+                        <p className="">{module.desc}</p>
+                        <p className=" font-semibold">Videos:</p>
+                        <ul className="flex flex-col gap-2 list-disc	">
                           {Array.isArray(module.video) ? (
                             module.video.map((video, index) => (
-                              <div key={index}>
+                              <li key={index}>
                                 <p className="text-white/80">{video}</p>
-                              </div>
+                              </li>
                             ))
                           ) : (
                             <p className="text-white/80 truncate">
                               {module.video}
                             </p>
                           )}
-                        </div>
+                        </ul>
                       </div>
                     </Accordian>
                   </div>
@@ -743,16 +745,16 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
         >
           <h4
             className={`text-xl ${currentStep === index + 1
-                ? "text-primary"
-                : "text-primary/60 group-hover:text-primary/90"
+              ? "text-primary"
+              : "text-primary/60 group-hover:text-primary/90"
               }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
             className={`${currentStep === index + 1
-                ? "text-white"
-                : "text-white/60 group-hover:text-white/90"
+              ? "text-white"
+              : "text-white/60 group-hover:text-white/90"
               }`}
           >
             {step}
