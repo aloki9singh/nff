@@ -1,11 +1,45 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import AdminSidebar from "@/components/common/sidebar/admin";
 import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+
+const AddEmployeeForm = () => {
+  return (
+    <div className="main_form_container">
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <h4>Employee</h4>
+      <div>
+        <input
+          type="text"
+          className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
+          placeholder="Name"
+          required
+        />
+        <input
+          type="text"
+          className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="text"
+          className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
+          placeholder="Contact No"
+          required
+        />
+        <input
+          type="text"
+          className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
+          placeholder="Employee ID"
+          required
+        />
+      </div>
+    </div>
+  );
+};
 
 const Addteam = () => {
   const router = useRouter();
@@ -13,18 +47,11 @@ const Addteam = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSidebar, setShowSidebar] = useState(false);
 
-  const [filterMentor, setFilterMentor] = useState();
-  function toggleSidebar() {
+  const toggleSidebar = () => {
     setShowSidebar((prevState) => !prevState);
-  }
-  useEffect(() => {
-    if (isMediumScreen) {
-      setShowSidebar(false);
-    }
-  }, [isMediumScreen]);
+  };
 
   const [val, setVal] = useState(["a"]);
-  const [hover, setHover] = useState(false);
 
   const handleAdd = () => {
     const adding = [...val, []];
@@ -101,65 +128,23 @@ const Addteam = () => {
                           </select>
                         </div>
 
-                        {val.map((da, i) => {
-                          return (
-                            <div className="main_form_container " key={i}>
-                              <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-
-                              <h4>Employee</h4>
-                              <div>
-                                <input
-                                  key={`name.${i}`}
-                                  type="text"
-                                  id={`name-${i}`}
-                                  className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
-                                  placeholder="Name"
-                                  required
-                                />
-                                <input
-                                  key={`email.${i}`}
-                                  type="text"
-                                  id={`email-${i}`}
-                                  className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
-                                  placeholder="Email"
-                                  required
-                                />
-                                <input
-                                  key={`contact.${i}`}
-                                  type="text"
-                                  id={`contact-${i}`}
-                                  className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
-                                  placeholder="Contact No"
-                                  required
-                                />
-                                <input
-                                  key={`employee-id.${i}`}
-                                  type="text"
-                                  id={`employee-id-${i}`}
-                                  className="d-flex h-9 w-64 sm:w-96 px-5 py-6 items-center gap-16 shrink-0 rounded-xl bg-[#333] my-2"
-                                  placeholder="Employee ID"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          );
-                        })}
+                        {val.map((da, i) => (
+                          <AddEmployeeForm key={i} />
+                        ))}
 
                         {/* Button for adding another form */}
                         <div className="button-container">
                           <button
                             type="button"
-                            className="d-flex w-52 h-8 px-5  gap-3.5 shrink-0 rounded-xl bg-[#fff] text-start text-[#5F6065] text-base font-medium  inline-flex items-center m-2"
-                            onClick={() => {
-                              handleAdd();
-                            }}
+                            className="d-flex w-52 h-8 px-5 gap-3.5 shrink-0 rounded-xl bg-[#fff] text-start text-[#5F6065] text-base font-medium  inline-flex items-center m-2"
+                            onClick={handleAdd}
                           >
                             <svg
                               width="24"
                               height="24"
                               xmlns="http://www.w3.org/2000/svg"
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
                             >
                               <path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z" />
                             </svg>
@@ -168,9 +153,7 @@ const Addteam = () => {
                           <button
                             type="button"
                             className="d-flex w-36 h-8 justify-center items-center gap-2 shrink-0 rounded-xl border border-solid border-white bg-[#A145CD]"
-                            onClick={() => {
-                              handleAdd();
-                            }}
+                            onClick={handleAdd}
                           >
                             Save
                           </button>
@@ -196,7 +179,7 @@ const Addteam = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default withAdminAuthorization(Addteam);
