@@ -74,7 +74,6 @@ const PlanCourseForm = ({ state, onSubmit }) => {
     defaultValues: state,
     resolver: yupResolver(planCourseSchema),
   });
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Header currentStep={1} />
@@ -108,6 +107,17 @@ const PlanCourseForm = ({ state, onSubmit }) => {
               } `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
+          />
+          <p className="text-red-500 text-sm">{errors.desc?.message}</p>
+        </div>
+      </div>
+      <div className="hidden">
+        <div className="">
+          <textarea
+            type="text"
+            hidden
+              value={auth.currentUser.uid}
+            {...register("uid", { required: true })}
           />
           <p className="text-red-500 text-sm">{errors.desc?.message}</p>
         </div>
@@ -604,7 +614,6 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
           <p className="text-red-500 text-sm">{errors.learn?.message}</p>
         </div>
       </div>
-
       <button
         // disabled={isUploading}
         className="bg-pink text-white px-10 py-2 rounded-md disabled:cursor-not-allowed mt-2 "

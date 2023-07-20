@@ -3,14 +3,14 @@ import MentorSidebar from '@/components/common/sidebar/mentor';
 import MentorTopbar from '@/components/common/navbar/mentortopbar';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { auth } from '@/config/firebaseconfig';
-
+import { auth, db } from '@/config/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import { callUserById } from '@/lib/exportablefunctions';
 import { useMediaQuery } from 'react-responsive';
-
+import { getDocs } from 'firebase/firestore';
 import { useAuthContext } from '@/lib/context/AuthContext';
 import AssigmentForm from '@/components/mentor/assigment/assigmentForm';
+import { collection, doc } from 'firebase/firestore';
 
 function AddAssigments() {
   const [count, setCount] = useState(1);
@@ -28,9 +28,10 @@ function AddAssigments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
- 
-
+  const [assignedCourse, setAssignCourse] = useState([])
   const [activeElement, setActiveElement] = useState('');
+  const course = []
+
 
   const handleToggleElement = element => {
     setActiveElement(element);
@@ -48,7 +49,7 @@ function AddAssigments() {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user.verified);
+        setVerified(value?.user?.verified);
       }
     });
 
@@ -58,6 +59,17 @@ function AddAssigments() {
   if (!verified) {
     return null;
   }
+  const getData = async () => {
+    const courseCollection = collection(db, "courses")
+    const courseInfo = await getDocs(courseCollection, user.uid);
+    courseInfo.forEach((doc) => {
+      course.push(doc.data())
+    });
+    setAssignCourse(course)
+  }
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
     <>
@@ -66,9 +78,8 @@ function AddAssigments() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? 'block' : 'hidden'
-              } w-[281px] h-screen bg-[#25262C] rounded-l-[40px] z-10`}>
+              className={`fixed right-0 ${SideBarState ? 'block' : 'hidden'
+                } w-[281px] h-screen bg-[#25262C] rounded-l-[40px] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
@@ -89,7 +100,7 @@ function AddAssigments() {
                   <div className=' w-full border-2 border-[#535760] '></div>
                 </div>
 
-                <AssigmentForm />
+                <AssigmentForm assignedCourse={assignedCourse} />
               </div>
             </div>
           </div>
