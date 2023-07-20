@@ -28,7 +28,8 @@ import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
-import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
+
+import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import { BsFillPlayFill } from "react-icons/bs";
 
@@ -104,6 +105,10 @@ function Videos() {
   const { user, userProfile } = useAuthContext();
   const [currentarray, setCurrentArray] = useState([]);
 
+
+
+  const { userSubsribed } = CourseAccess(user.uid);
+
   useEffect(() => {
     const checkJoined = async () => {
       const isJoined = await checkUserJoinedCourse(course.id, user.uid);
@@ -170,6 +175,7 @@ function Videos() {
 
   const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
+
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -225,12 +231,26 @@ function Videos() {
   return (
     <>
 
+
+      {!userSubsribed && (
+        <ToastMessage
+          heading={"OOPS!"}
+          message={
+            "You have not joined any courses yet. Please join a course to access this course."
+          }
+        />
+      )}
+
+
+      <div className={`${!userSubsribed ? "blur-lg" : null }`}>
+
+
       <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
         {isMobileScreen && (
           <div
-            className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-          >
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+        } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
@@ -252,7 +272,7 @@ function Videos() {
                 alt=""
                 width={10}
                 height={10}
-              />
+                />
               <div className="text-white mx-2">
                 <h2 className="">{course?.title}</h2>
                 <p className="opacity-30">{course?.category}</p>
@@ -262,7 +282,7 @@ function Videos() {
               className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
               onClick={joinCourseChat}
               disabled={isJoined}
-            >
+              >
               {isJoined ? "Joined" : "Join"}
             </button>
             {/* <div className="w-28 md:w-14 md:mr-8 flex items-center justify-center ">
@@ -272,19 +292,19 @@ function Videos() {
               pathColor: "#ADADB0",
               trailColor: "gray",
               strokeLinecap: "round",
-              })}
-              >
-              <CircularProgressbar
-                value={75}
-                text={`${75}%`}
-                styles={buildStyles({
-                  pathColor: "#E1348B",
-                  trailColor: "transparent",
-                  strokeLinecap: "round",
-                  textColor: "#fff",
-                  textSize: "20px",
-                })}
-                />
+            })}
+            >
+            <CircularProgressbar
+            value={75}
+            text={`${75}%`}
+            styles={buildStyles({
+              pathColor: "#E1348B",
+              trailColor: "transparent",
+              strokeLinecap: "round",
+              textColor: "#fff",
+              textSize: "20px",
+            })}
+            />
             </CircularProgressbarWithChildren>
           </div> */}
           </div>
@@ -293,12 +313,14 @@ function Videos() {
             <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
               <div className="md:col-span-5 col-span-7 py-5">
                 {videoUrl ? (
+
                   <video
                     src={videoUrl}
                     controls
                     className="max-h-[30rem] pb-5"
                   />
                 ) : (
+
                   <div className="h-[300px] text-gray-500  items-center justify-center flex text-center">
                     <div>No video selected yet or video not found</div>
                   </div>
@@ -332,6 +354,7 @@ function Videos() {
                 <div class="h-fit self-start w-full">
                   {modules?.map((module, i) => {
                     return (
+
                       <Accordion key={i} title={module.name}>
                         <div className="flex flex-col gap-2 ">
                           {module.video.map((video, i) => {
@@ -342,6 +365,15 @@ function Videos() {
                               <p className="truncate max-w-[15rem]" >{video}</p>
                             </button>;
                           })}
+
+                      <div key={i} className="h-fit">
+                        <div
+                          className="justify-between hover:bg-[#585d67] bg-[#373A41] p-3 border-b border-slate-500 flex h-fit cursor-pointer"
+                          onClick={() => startVideoStream(m.video)}
+                          >
+                          <p>{m.name}</p>
+                          <IoIosArrowForward></IoIosArrowForward>
+
                         </div>
                       </Accordion>
                     );
@@ -362,10 +394,10 @@ function Videos() {
                     <div key={index}>
                     <div className="justify-between hover:bg-[#585d67] bg-[#373A41] p-3 border-b border-slate-500 flex ">
                     <p>Introduction to Course</p>
-                        <IoIosArrowForward></IoIosArrowForward>
-                        </div>
-                        </div>
-                        );
+                    <IoIosArrowForward></IoIosArrowForward>
+                    </div>
+                    </div>
+                    );
                       }
                       return (
                         <div key={index}>
@@ -382,7 +414,7 @@ function Videos() {
                     <div className="justify-between hover:bg-[#585d67] bg-[#373A41] p-3 border-b border-slate-500 flex rounded-b-2xl">
                     <p>Introduction to Course</p>
                     <IoIosArrowForward></IoIosArrowForward>
-                      </div>
+                    </div>
                     </div>
                     );
                   }
@@ -396,10 +428,11 @@ function Videos() {
                     );
                   }
                 })}
-          </div> */}
+              </div> */}
           </div>
         </div>
       </div>
+  </div>
     </>
   );
 }

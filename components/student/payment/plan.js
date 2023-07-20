@@ -64,7 +64,9 @@ const ChoosePlan = ({ clickEvent, trial}) => {
       
       </div>
     </> : <> 
-    <div>Heloo</div>
+    <div> <h2 className="text-base md:text-xl mb-2 font-semibold">
+        Transparent <span className="text-[#A145CD]">Pricing</span> For You
+      </h2> </div>
     </>
     }
       <div className="flex flex-col md:flex-row justify-center w-[90%] h-[60%]">

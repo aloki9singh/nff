@@ -12,6 +12,12 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { BsPersonCircle } from "react-icons/bs";
 
+import { useAuthContext } from "@/lib/context/AuthContext";
+
+import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
+import CourseAccess from "@/lib/context/AccessCourseContext";
+
+
 const Afterlogin = () => {
   const [user, setUser] = useState({});
   const router = useRouter();
@@ -21,6 +27,7 @@ const Afterlogin = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const userID = useAuthContext().user;
 
   const fetchCourseData = async () => {
     try {
@@ -71,6 +78,9 @@ const Afterlogin = () => {
     sendSideBarState(showSideBar);
   }
 
+  const {userSubsribed, isTrialValid} = CourseAccess(userID.uid);
+
+  console.log(userSubsribed, isTrialValid)
 
   return (
     <>
@@ -117,7 +127,7 @@ const Afterlogin = () => {
                       type="button"
                       className=" md:text-base mt-10 mb-10 lg:text-base xl:text-lg rounded-xl bg-[#A145CD] px-4 py-2 font-semibold"
                     >
-                      Get Started for Free
+                      {isTrialValid ? "Get Started for Free" : userSubsribed? "Continue Learning":"Subscribe Now"}
                     </Link>
                   </div>
                   <div className="flex justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">

@@ -43,9 +43,9 @@ export default function Plan({
     <>
       <style>{styles}</style>
       <div
-        className={` ${odd} h-[24rem] w-min-[480px] md:w-[22.5%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto`}
+        className={` ${odd} h-[24rem] w-min-[480px] md:w-[23.5%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto`}
       >
-        <div className="border-b border-[#ffffffc0] px-6 pt-8 pb-2">
+        <div className="border-b border-[#ffffffc0] px-6 pt-8 md:pt-4 pb-2">
           <h1 className="text-2xl md:xl lg:text-2xl xl:text-4xl md:mb-2 font-medium">
             {title}
           </h1>
@@ -56,10 +56,10 @@ export default function Plan({
           </h1>
           <h1 className="text-[10px] text-[#ffffff8f]">One time payment</h1>
         </div>
-        <div className="px-6 pb-2.5 mt-6 md:mt-10 w-full">
+        <div className="px-6 pb-2.5 mt-10 md:mt-8 w-full">
           <div className="mb-10 md:mb-28 w-full">
             {description.map((item, ind) => (
-              <div key={ind} className="flex items-center mt-6">
+              <div key={ind} className="flex items-center mt-4">
                 <Image
                   src="/componentsgraphics/student/paymentgateway/plan/Tick.png"
                   alt="tick"

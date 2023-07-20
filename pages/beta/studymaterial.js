@@ -7,9 +7,12 @@ import { useRouter } from "next/router";
 import { db } from "config/firebaseconfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
-import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import { useAuthContext } from "@/lib/context/AuthContext";
+
+import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
+import CourseAccess from "@/lib/context/AccessCourseContext";
+
 
 function StudyMaterial() {
   const router = useRouter();
@@ -20,9 +23,12 @@ function StudyMaterial() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const { joinedCourses } = useAuthContext();
+  const { user, userProfile } = useAuthContext();
   //yet to write logic to change course bougth or not ??
   const [courseBuyed, setCourseBuyed] = useState(false);
 
+
+  
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, "studyMaterial"));
@@ -35,16 +41,16 @@ function StudyMaterial() {
     };
     fetchData();
   }, []);
-
+  
   const menuItems = [...new Set(material.map((Val) => Val.title))];
   menuItems[0] = "All courses";
-
+  
   const filteredMaterial = selectedOption
-    ? material.filter((item) => item.title === selectedOption)
-    : material;
-
+  ? material.filter((item) => item.title === selectedOption)
+  : material;
+  
   const func = selectedOption == "All courses" ? material : filteredMaterial;
-
+  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -54,16 +60,21 @@ function StudyMaterial() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+  const {userSubsribed} = CourseAccess(user.uid);
+
+  // console.log(userSubsribed);
   return (
     <>
-      {!joinedCourses && (
-        <NoJoinedCoursesModal
+      {!userSubsribed && (
+        <ToastMessage
+        heading={"OOPS!"}
           message={
             "You have not joined any courses yet. Please join a course to access the study material."
           }
         />
       )}
-      <div className="flex h-screen bg-[#2D2E35]">
+      <div className={`flex h-screen bg-[#2D2E35] ${!userSubsribed ? "blur-lg" : null }`}>
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${
