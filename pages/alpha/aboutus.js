@@ -109,7 +109,7 @@ const Aboutus = () => {
 					</p>
 				</div>
 
-				<div className="relative w-full flex flex-col items-center md:px-20 ">
+				<div className="relative w-full flex flex-col items-center px-4 md:px-20 ">
 					<div
 						className="w-full pb-20 sm:pb-20  md:pb-32 max-w-[1440px] mt-11 px- p-10 rounded-[50px] bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-white"
 						style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
