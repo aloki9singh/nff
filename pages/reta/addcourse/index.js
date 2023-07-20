@@ -25,6 +25,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import { generate } from "shortid";
+import withAdminandMentorAuthorization from "@/lib/HOC/withAdminandMentorAuthorization";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
@@ -917,7 +918,7 @@ const CreateCourse = ({ course }) => {
   );
 };
 
-export default CreateCourse;
+export default withAdminandMentorAuthorization(CreateCourse);
 
 export const getServerSideProps = async (ctx) => {
   const id = ctx.query.id;

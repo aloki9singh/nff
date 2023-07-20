@@ -2,6 +2,7 @@
 // side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
@@ -12,7 +13,9 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
-const Dashboard = ({userProfile}) => {
+
+const dashboard = () => {
+
 
   // // code to check if verified to visit this page or not
   // const [isAdmin, setIsAdmin] = useState(false);
@@ -21,7 +24,7 @@ const Dashboard = ({userProfile}) => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
- 
+  const {userProfile} =useAuthContext()
   useEffect(() => {
     // const isAdmin = localStorage.getItem('isAdmin');
     // setIsAdmin(isAdmin);
@@ -44,6 +47,8 @@ const Dashboard = ({userProfile}) => {
   // if (!isAdmin) {
   //   return null;
   // }
+
+  console.log(userProfile)
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>
@@ -73,7 +78,7 @@ const Dashboard = ({userProfile}) => {
                 <div className='text-center space-y-5 '>
                   <div className=' space-y-4 '>
                     <h1 className='text-[#A145CD] md:text-4xl text-2xl  '>
-                      Welcome Back, {removeDomainFromEmail(userProfile?.displayName)}!{' '}
+                      Welcome Back, {removeDomainFromEmail(userProfile?.email)}!{' '}
                     </h1>
                     <p className='text-white'>Select what you want to do</p>
                   </div>
