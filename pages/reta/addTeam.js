@@ -196,7 +196,7 @@ const Addteam = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default withAdminAuthorization(Addteam);
