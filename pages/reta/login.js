@@ -124,9 +124,9 @@ function Adminlogin() {
       setLoading(false);
     }
     catch (error) {
-      if (error.includes("Firebase: Error (auth/wrong-password)")) {
+      if (error.message=="Firebase: Error (auth/wrong-password)") {
         alert("Please check Your Credentials.");
-      } else if (error.includes("Internal server error")) {
+      } else if (error.message=="Internal server error") {
         alert("Please check Your Credentials.");
       }
       else {

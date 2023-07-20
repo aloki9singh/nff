@@ -36,12 +36,12 @@ export default function AdminTopbar({ heading,toggleSideBar }) {
   })
 
   return (
-    <nav className=' pl-2 py-2 w-full md:static  top-0 right-0 left-0 space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35] z-10'>
+    <nav className=' pl-2 py-2 w-full md:static   space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35] z-10'>
       <div className='container md:mt-[-10px] flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full'>
         <div className='flex justify-between items-center'>
           <div className='flex items-center'>
             <Link
-              href='/'
+              href=''
               className='uppercase hover:border-b  h-[43px]  md:h-[71px] flex-shrink-0'>
               <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
                 {heading}
@@ -49,7 +49,7 @@ export default function AdminTopbar({ heading,toggleSideBar }) {
               <Image
                 src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
                 alt="logo"
-                className="w-full  hidden max-[768px]:block h-[80%] justify-center object-contain ml-[-20px]
+                className="w-full  hidden max-[768px]:block h-[80%] justify-center object-contain md:ml-20 ml-[-30px] md:mt-5 mt-1
               "
                 width={100}
                 height={100}

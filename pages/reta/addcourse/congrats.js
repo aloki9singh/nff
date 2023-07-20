@@ -32,7 +32,7 @@ const CongratsAddTeam = () => {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div className="w-screen h-screen flex items-center justify-center bg-[#222222]">
         <div
           className="d-flex items-center justify-center w-[85%] sm:w-[1350px] h-[724px] rounded-xl bg-[#1E1E1E] m-12"
           style={{
