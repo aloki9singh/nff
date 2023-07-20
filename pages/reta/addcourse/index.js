@@ -899,7 +899,7 @@ const CreateCourse = ({ course }) => {
   );
 };
 
-export default CreateCourse;
+export default withAdminandMentorAuthorization(CreateCourse);
 
 export const getServerSideProps = async (ctx) => {
   const id = ctx.query.id;

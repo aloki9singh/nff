@@ -68,4 +68,4 @@ const CongratsAddTeam = () => {
   );
 };
 
-export default CongratsAddTeam;
+export default withAdminandMentorAuthorization(CongratsAddTeam);
