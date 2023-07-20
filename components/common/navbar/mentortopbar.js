@@ -126,7 +126,7 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
                                   />
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">
-                                      {userProfile.displayName.includes("gmail")
+                                      {userProfile?.displayName.includes("gmail")
                                         ? removeDomainFromEmail(userProfile.displayName)
                                         : userProfile.displayName}
                                     </p>

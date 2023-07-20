@@ -8,14 +8,13 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { accountcleanup } from "@/pages/api/signup/index";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import ToastMessage from "@/components/student/payment/ToastMessage";
-import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const Payment = () => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
 
   const [showToast, setShowToast] = useState(false);
-  let isTrialValid = false;
+  let isTrialValid = true;
 
   if (user) {
     isTrialValid = CourseAccess(user.uid).isTrialValid;
@@ -49,7 +48,7 @@ const Payment = () => {
     if (user) {
       const trialStartDate = new Date();
       const startdate = trialStartDate.toString();
-      const trialEndDate = new Date(trialStartDate.getTime() + 5 * 60 * 1000);
+      const trialEndDate = new Date(trialStartDate.getTime() + 7 * 60 * 1000);
 
       const trialData = {
         trial: {
@@ -67,7 +66,6 @@ const Payment = () => {
         if (docSnap.exists()) {
           await updateDoc(userRef, trialData); // exist condition update the doc
         }
-
 
         handleToastMessage();
 
@@ -93,8 +91,8 @@ const Payment = () => {
           />
         )}
         <style>{styles}</style>
-        <DashboardNav />
-        <div className="w-full bg-[#0D0E14] overflow-hidden">
+        <DashboardNav  heading={"Payment"}/>
+        <div className="w-full bg-[#0D0E14] overflow-hidden pt-5">
           <div className="text-center text-white text-lg">
             <h1 className="text-[2.2rem] font-bold">Subscribe</h1>
             <p className="mb-4">Join NeatSkills & Choose From The Below Plan</p>
@@ -110,5 +108,5 @@ const Payment = () => {
     </>
   );
 };
+export default Payment;
 
-export default withStudentAuthorization(Payment);

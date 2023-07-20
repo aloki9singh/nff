@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { auth } from "@/config/firebaseconfig";
 import LeaderBoardMentor from "@/components/mentor/dashboard/leaderboard";
 import CirProgress from "@/components/mentor/other/circularprogressbar";
-import { useSelector } from "react-redux";
+
 import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
@@ -49,7 +49,7 @@ function MentorDashboard() {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user.verified);
+        setVerified(value?.user?.verified);
       }
     });
 

@@ -31,16 +31,16 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
     reason: "",
     aspiring: "",
   });
-  console.log(id);
+  // console.log(id);
   // this state is  for experience array data
-  console.log(input);
-  console.log(mentor);
+  // console.log(input);
+  // console.log(mentor);
   //--------------------
   // for Qualification setting refrence model
 
   //step2end
   // Setting Data in  respective state
-
+    
   const setData = (e) => {
     const { name, value, files } = e.target;
     if (name === "profilephoto") {
@@ -65,6 +65,11 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
 
   const detailadd = async () => {
     setLoading(true);
+    if (!input.photoURL) {
+      alert("Profile photo is required!");
+      setLoading(false);
+      return;
+    }
     const res = await fetch(`/api/signup/${id}`, {
       method: "PATCH",
       headers: {
@@ -75,6 +80,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
         displayName: input.firstname,
         photoURL: input.photoURL,
         detailSubmitted: true,
+        joinedStudents:null,
       }),
     });
 

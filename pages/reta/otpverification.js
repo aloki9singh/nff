@@ -1,5 +1,3 @@
-// in mobile view needed to be fixed make it unscrollable
-
 import axios from "axios";
 import Image from "next/image";
 import React, { useContext, useRef, useState } from "react";
@@ -10,6 +8,8 @@ import { useEffect } from "react";
 import { auth } from "@/config/firebaseconfig";
 import { Loading, userLogger } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+import { useAuthContext } from "@/lib/context/AuthContext";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Otpverification = () => {
   const [otp, setOtp] = useState("");
@@ -18,10 +18,10 @@ const Otpverification = () => {
   const [sendAgain, setsendAgain] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const { loading, setLoading } = useContext(Loading);
+  const { userProfile } = useAuthContext();
   const inputRefs = useRef([]);
   const maxLength = 1; // Maximum length for each input field
   const router = useRouter();
-
   const handleKeyUp = (index, event) => {
     if (event.key === "Backspace" && event.target.value === "") {
       // Check if Backspace key was pressed and the current input value is empty
@@ -54,7 +54,8 @@ const Otpverification = () => {
       }
     }
   };
-  //verify otp
+
+  // Verify OTP
   const handleOtpVerification = async () => {
     setLoading(true);
     const encryptedOTP = localStorage.getItem("otp");
@@ -62,16 +63,15 @@ const Otpverification = () => {
     const decryptedBytes = CryptoJS.AES.decrypt(encryptedOTP, secretKey);
     const decryptedOTP = decryptedBytes.toString(CryptoJS.enc.Utf8);
     if (otp === decryptedOTP) {
-      //   console.log("OTP verification successful");
       const isAdmin = localStorage.setItem("isAdmin", JSON.stringify(true));
       router.push("/reta/dashboard");
     } else {
       alert("Invalid OTP");
-      //   console.log("Invalid OTP");
     }
     setLoading(false);
   };
-  //send OTP again
+
+  // Send OTP again
   const sendOTPAgain = async () => {
     setLoading(true);
     try {
@@ -92,18 +92,28 @@ const Otpverification = () => {
     setLoading(false);
   };
 
-  //email verify and disturbroutes
-
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+      } else {
+        console.log(null);
+      }
+    });
     localStorage.setItem("isAdmin", JSON.stringify(false));
     const email = JSON.parse(localStorage.getItem("email")) || "";
     setEmail(email);
     setTimeout(() => {
       setShowMessage(true);
     }, 1500);
+    return () => unsubscribe();
   }, []);
+
   return (
-    <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
+    <div
+      className={`${loading ? "pointer-events-none z-1" : ""}`}
+      style={{ overflow: "hidden" }} // Fix mobile view scrolling issue
+    >
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
           <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
@@ -111,11 +121,7 @@ const Otpverification = () => {
           </div>
         </div>
       )}
-      <div className=" md:h-screen h-[92vh] align-middle flex justify-center">
-        {/* <div className="absolute right-0 top-0 text-white bg-[#373A41] justify-center align-middle flex w-[200px] h-[150px] text-sm">
-            <div>OTP was sent!.</div>
-        </div> */}
-
+      <div className="md:h-screen h-[92vh] align-middle flex justify-center">
         {!showMessage && (
           <div className="fixed top-0 right-0 w-44 h-28 bg-[#373A41] text-white flex justify-center items-center text-sm rounded-md shadow-md animate-slide-in border-[#E1348B] border-[1px]  ">
             <div>OTP was sent!</div>
@@ -126,7 +132,7 @@ const Otpverification = () => {
             <div>OTP was sent!</div>
           </div>
         )}
-        <div className="  text-white  text-center my-auto space-y-5">
+        <div className="text-white text-center my-auto space-y-5">
           <div className="flex justify-center">
             <Image
               alt="Icon"
@@ -137,7 +143,7 @@ const Otpverification = () => {
           </div>
 
           <h1 className="text-2xl">Admin Verification</h1>
-          <p className=" text-gray-600">
+          <p className="text-gray-600">
             Enter OTP Code sent to <span>{email}</span>{" "}
           </p>
           <div className="flex gap-2 md:gap-5 justify-center pt-10 pb-5  ">
@@ -154,9 +160,11 @@ const Otpverification = () => {
           </div>
 
           <div className="text-sm">
-            {" "}
             Did not receive the code?{" "}
-            <span className="cursor-pointer font-semibold" onClick={sendOTPAgain}>
+            <span
+              className="cursor-pointer font-semibold"
+              onClick={sendOTPAgain}
+            >
               Send again.
             </span>{" "}
           </div>
@@ -164,7 +172,7 @@ const Otpverification = () => {
           <div>
             <button
               type="button"
-              className={`  px-12 py-2 text-sm rounded  font-Inter ${
+              className={`px-12 py-2 text-sm rounded font-Inter ${
                 flag ? "bg-[#E1348B]" : "bg-[#373A41]"
               }`}
               onClick={handleOtpVerification}

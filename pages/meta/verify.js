@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { callVerificationEmailApiMentor } from "@/lib/api";
 import { updateProfile } from "firebase/auth";
-import { useSelector } from "react-redux";
+
 import { auth } from "@/config/firebaseconfig";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";

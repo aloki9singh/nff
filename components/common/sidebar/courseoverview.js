@@ -20,15 +20,15 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
         <div>
           <div>
             <div>
-              
-                <Image
-                  src="/pagesgraphics/common/createcategory/Neatskills.svg"
-                  width={150}
-                  height={100}
-                  alt="logo"
-                  className="mb-6 md:block hidden"
-                />
-             
+            <Link href="/beta/dashboard">
+              <Image
+                src="/pagesgraphics/common/createcategory/Neatskills.svg"
+                width={150}
+                height={100}
+                alt="logo"
+                className="mb-6 md:block hidden"
+              />
+              </Link>
               <div
                 className=" flex justify-end w-full md:hidden  "
                 onClick={() => toggleSideBar()}
@@ -54,7 +54,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                 <p className="pt-2">{user ? user.displayName : "Anonymous"}</p>
                 {userProfile && (
                   <p className="text-gray-500 text-[12px] mt-[-4px]">
-                    Roll no-{userProfile.rollNo}
+                    Roll no-{userProfile.rollNo||"N/A"}
                   </p>
                 )}
               </div>
@@ -70,11 +70,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                       <input
                         id="default-checkbox"
                         type="checkbox"
-                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === "/beta/dashboard"
+                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/dashboard"
                             ? "shadow-white"
                             : ""
-                        }`}
+                          }`}
                         style={{
                           boxShadow:
                             router.pathname === "/beta/dashboard"
@@ -83,9 +82,8 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         }}
                       />{" "}
                       <span
-                        className={`ml-3 text-[${
-                          router.pathname == "/beta/dashboard" ? "#E1348B" : ""
-                        }]`}
+                        className={`ml-3 text-[${router.pathname == "/beta/dashboard" ? "#E1348B" : ""
+                          }]`}
                       >
                         Home
                       </span>
@@ -100,11 +98,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                       <input
                         id="default-checkbox"
                         type="checkbox"
-                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === "/beta/courseoverview"
+                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/courseoverview"
                             ? "shadow-white"
                             : ""
-                        }`}
+                          }`}
                         style={{
                           boxShadow:
                             router.pathname === "/beta/courseoverview"
@@ -113,11 +110,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         }}
                       />{" "}
                       <span
-                        className={`ml-3 text-[${
-                          router.pathname == "/beta/courseoverview"
+                        className={`ml-3 text-[${router.pathname == "/beta/courseoverview"
                             ? "#E1348B"
                             : ""
-                        }]`}
+                          }]`}
                       >
                         Courses
                       </span>
@@ -134,11 +130,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                         <input
                           id="default-checkbox"
                           type="checkbox"
-                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                            router.pathname === "/beta/community"
+                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/community"
                               ? "shadow-white"
                               : ""
-                          }`}
+                            }`}
                           style={{
                             boxShadow:
                               router.pathname === "/beta/community"
@@ -147,11 +142,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           }}
                         />{" "}
                         <span
-                          className={`ml-3 text-[${
-                            router.pathname == "/beta/community"
+                          className={`ml-3 text-[${router.pathname == "/beta/community"
                               ? "#E1348B"
                               : ""
-                          }]`}
+                            }]`}
                         >
                           Community
                         </span>
@@ -169,11 +163,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === "/beta/checkclass"
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/checkclass"
                                 ? "shadow-white"
                                 : ""
-                            }`}
+                              }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/checkclass"
@@ -182,11 +175,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/checkclass"
+                            className={`ml-3 text-[${router.pathname == "/beta/checkclass"
                                 ? "#E1348B"
                                 : ""
-                            }]`}
+                              }]`}
                           >
                             Schedule
                           </span>
@@ -201,11 +193,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === "/beta/studymaterial"
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/studymaterial"
                                 ? "shadow-white"
                                 : ""
-                            }`}
+                              }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/studymaterial"
@@ -214,11 +205,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/studymaterial"
+                            className={`ml-3 text-[${router.pathname == "/beta/studymaterial"
                                 ? "#E1348B"
                                 : ""
-                            }]`}
+                              }]`}
                           >
                             Study Material
                           </span>
@@ -232,11 +222,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === "/beta/assignments"
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/assignments"
                                 ? "shadow-white"
                                 : ""
-                            }`}
+                              }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/assignments"
@@ -245,11 +234,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/assignments"
+                            className={`ml-3 text-[${router.pathname == "/beta/assignments"
                                 ? "#E1348B"
                                 : ""
-                            }]`}
+                              }]`}
                           >
                             Homework
                           </span>
@@ -264,11 +252,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === "/beta/chats"
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/chats"
                                 ? "shadow-white"
                                 : ""
-                            }`}
+                              }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/chats"
@@ -277,9 +264,8 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/chats" ? "#E1348B" : ""
-                            }]`}
+                            className={`ml-3 text-[${router.pathname == "/beta/chats" ? "#E1348B" : ""
+                              }]`}
                           >
                             Chats
                           </span>
@@ -294,11 +280,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                           <input
                             id="default-checkbox"
                             type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === "/beta/profile"
+                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${router.pathname === "/beta/profile"
                                 ? "shadow-white"
                                 : ""
-                            }`}
+                              }`}
                             style={{
                               boxShadow:
                                 router.pathname === "/beta/profile"
@@ -307,11 +292,10 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/profile"
+                            className={`ml-3 text-[${router.pathname == "/beta/profile"
                                 ? "#E1348B"
                                 : ""
-                            }]`}
+                              }]`}
                           >
                             Profile
                           </span>
@@ -330,9 +314,8 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                             className="rounded form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 flex text-[${
-                              router.pathname == "/beta/logout" ? "#E1348B" : ""
-                            }]`}
+                            className={`ml-3 flex text-[${router.pathname == "/beta/logout" ? "#E1348B" : ""
+                              }]`}
                           >
                             Logout
                           </span>
@@ -374,6 +357,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                 <button
                   onClick={() => {
                     logout(router);
+                    router.push("/beta/login")
                   }}
                   className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal "
                 >

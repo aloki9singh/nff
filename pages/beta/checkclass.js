@@ -10,18 +10,23 @@ import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { onAuthStateChanged } from "firebase/auth";
 import { useMediaQuery } from "react-responsive";
-import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
- function CheckClassSchedule() {
+
+import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
+import CourseAccess from "@/lib/context/AccessCourseContext";
+
+function CheckClassSchedule() {
   const [count, setCount] = useState(1);
-  const [user, setUser] = useState({});
+  const [us, setUser] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   let [searchstate, setsearchstate] = useState("");
-
+  const { joinedCourses } = useAuthContext();
+  const { user, userProfile } = useAuthContext();
   //yet to write logic to change course bougth or not ??
   const [courseBuyed, setCourseBuyed] = useState(false);
 
@@ -42,7 +47,7 @@ import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
       unsubscribe();
     };
   }, [isMediumScreen]);
-  if (!user) {
+  if (!us) {
     return null;
   }
 
@@ -50,17 +55,24 @@ import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+  const { userSubsribed } = CourseAccess(user.uid);
 
   return (
     <>
-      {!courseBuyed && <NoJoinedCoursesModal />}
-      <div className="h-screen w-full text-base ">
+      {!userSubsribed && (
+        <ToastMessage
+          heading={"Nothing is Scheduled!!"}
+          message={
+            "You have not joined any courses yet. Please join a course to access the study material."
+          }
+        />
+      )}
+      <div className={`h-screen w-full text-base ${!userSubsribed ? "blur-lg" : null}`}>
         <div className="flex bg-[#141518] ">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>

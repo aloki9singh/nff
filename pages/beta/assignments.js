@@ -11,8 +11,11 @@ import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
+
+
+import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
+import CourseAccess from "@/lib/context/AccessCourseContext";
 
 function Assignments() {
   const router = useRouter();
@@ -22,20 +25,17 @@ function Assignments() {
   const [SideBarState, sendSideBarState] = useState(false);
 
   //yet to write logic to change course bougth or not ??
-  const [courseBuyed, setCourseBuyed] = useState(false);
 
   let [searchstate, setsearchstate] = useState("");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
-  const { user, userProfile } = useAuthContext();
+  const { user, userProfile, joinedCourses } = useAuthContext();
   if (!user || !userProfile) {
     router.push("/");
   }
 
-  if (!user || !userProfile) {
-    return null;
-  }
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -94,17 +94,33 @@ function Assignments() {
     },
   ];
 
+  if (!user || !userProfile) {
+    return null;
+  }
+
+  const {userSubsribed} = CourseAccess(user.uid);
+
+
   return (
     <>
-   {!courseBuyed && <NoJoinedCoursesModal />}
+     {!userSubsribed && (
+        <ToastMessage
+        heading={"OOPS!"}
+          message={
+            "You have not joined any courses yet. Please join a course to access the study material."
+          }
+        />
+      )}
       {/* {!courseBuyed ? <NoJoinedCoursesModal /> : null} */}
+
+      <div className={`${!userSubsribed ? "blur-lg" : null }`}>
+
       <div className="flex">
         {isMobileScreen && (
           <div
-            className={`fixed right-0 ${
-              SideBarState ? "block" : "hidden"
-            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-          >
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              >
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
@@ -131,7 +147,7 @@ function Assignments() {
                 <div
                   className={module == 0 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(0)}
-                >
+                  >
                   1. UX Case Study - studying the experience
                 </div>
                 <div
@@ -143,19 +159,19 @@ function Assignments() {
                 <div
                   className={module == 2 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(2)}
-                >
+                  >
                   1. UX Case Study - studying the experience
                 </div>
                 <div
                   className={module == 3 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(3)}
-                >
+                  >
                   1. UX Case Study - studying the experience
                 </div>
                 <div
                   className={module == 4 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(4)}
-                >
+                  >
                   1. UX Case Study - studying the experience
                 </div>
               </div>
@@ -168,8 +184,8 @@ function Assignments() {
                 <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-2">
                   {Assignments.filter(
                     (assignment) => module == assignment.module
-                  ).map((assignment, index) => (
-                    <AssignmentCard
+                    ).map((assignment, index) => (
+                      <AssignmentCard
                       key={index}
                       no={index + 1}
                       name={assignment.name}
@@ -183,10 +199,11 @@ function Assignments() {
         </div>
         {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
       </div>
+                      </div>
     </>
   );
 }
 
 // export default withStudentAuthorization(Assignments);
-export default (Assignments);
+export default withStudentAuthorization(Assignments);
 

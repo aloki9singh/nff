@@ -11,10 +11,12 @@ import { auth } from '@/config/firebaseconfig';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { useAuthContext } from '@/lib/context/AuthContext';
 import { useRouter } from 'next/router';
+import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 
-export default function AdminTopbar({ heading }) {
+export default function AdminTopbar({ heading,toggleSideBar }) {
   let [searchstate, setsearchstate] = useState('');
   const [profileMenu, setProfileMenu] = useState(false);
+
   let searchfun = e => {
     setsearchstate(e.target.value);
   };
@@ -31,24 +33,27 @@ export default function AdminTopbar({ heading }) {
     // return () => {
     //   unsubscribe();
     // };
-  });
+  })
 
   return (
-    <nav className=' pl-2 py-2 w-full md:static fixed top-0 right-0 left-0 space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35] z-10'>
+    <nav className=' pl-2 py-2 w-full md:static  top-0 right-0 left-0 space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35] z-10'>
       <div className='container md:mt-[-10px] flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full'>
         <div className='flex justify-between items-center'>
           <div className='flex items-center'>
             <Link
               href='/'
               className='uppercase hover:border-b w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0'>
+              <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
+                {heading}
+              </h1>
               <Image
-                src='/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg'
-                alt='logo'
-                className='w-full h-full justify-center object-contain
-              '
+                src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
+                alt="logo"
+                className="w-full hidden max-[768px]:block h-full justify-center object-contain
+              "
                 width={100}
                 height={100}
-              />
+              />  
             </Link>
           </div>
         </div>
@@ -72,7 +77,7 @@ export default function AdminTopbar({ heading }) {
                   <Popover.Button className='outline-none  pt-[6px]'>
                     {user.photoURL ? (
                       <Image
-                        src={user.photoURL}
+                      src={user.photoURL||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
                         alt='proImg'
                         height={48}
                         width={48}
@@ -98,10 +103,10 @@ export default function AdminTopbar({ heading }) {
                         <div className='bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative'>
                           <Link href='/beta/profile'>
                             <p className='p-2'>
-                              {user.photoURL ? (
+                              {userProfile? (
                                 <div className='flex gap-2 items-center'>
                                   <Image
-                                    src={user.photoURL}
+                                    src={user.photoURL||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
                                     height='35'
                                     width='35'
                                     className='rounded-full h-6 w-6'
@@ -109,10 +114,10 @@ export default function AdminTopbar({ heading }) {
                                   />
                                   <div className='text-center'>
                                     <p className='text-[13px] mb-1'>
-                                      {user.displayName}
+                                      {removeDomainFromEmail(userProfile.displayName)}
                                     </p>
                                     <p className='text-[10px] -mt-2'>
-                                      Class {userProfile.class}
+                                      Admin
                                     </p>
                                   </div>
                                 </div>
@@ -125,7 +130,7 @@ export default function AdminTopbar({ heading }) {
                                   <div className='text-left'>
                                     <p className='text-[13px] mb-1'>Guest</p>
                                     <p className='text-[10px] -mt-2'>
-                                      Class N/A
+                                     ""
                                     </p>
                                   </div>
                                 </div>
@@ -134,10 +139,10 @@ export default function AdminTopbar({ heading }) {
                           </Link>
 
                           <div className='text-[13px] p-2'>
-                            <Link href='/beta/profile'>
+                            <Link href=''>
                               <p className='mb-2'>Profile</p>
                             </Link>
-                            <Link href='/invite'>
+                            <Link href=''>
                               <p>Invite a Friend</p>
                             </Link>
                           </div>

@@ -16,7 +16,7 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
-import { useSelector } from "react-redux";
+
 import { FiEdit2 } from "react-icons/fi";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
@@ -25,7 +25,7 @@ import Link from "next/link";
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
-  const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12]; //Change this student data to show on chart, passed as prop
+  const chartData  = new Array(12).fill(0);
   const [uid, setUid] = useState("");
   const [userData, setUserData] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -45,14 +45,21 @@ function MentorProfile() {
     }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user.uid);
         callUserById(user.uid).then((data) => setUserData(data.user));
       }
     });
     return () => unsubscribe();
   }, [isMediumScreen]);
 
-  console.log(userData);
+
+
+  userData.joinedStudents?.map((student)=>{
+    const joinDate = new Date(student.joinedAt.seconds * 1000);
+    console.log(joinDate.getMonth());
+    chartData[joinDate.getMonth()]++;
+  });
+
+  
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] md:rounded-tl-[40px]">
@@ -205,6 +212,26 @@ function MentorProfile() {
                         icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
                       />
                     </div>
+                    <div>
+                      <CourseCard
+                        key="1"
+                        lessons="8"
+                        title="Introduction to C++"
+                        desc="Learn the basics of C++ programming language."
+                        level="Beginner"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
+                      />
+                    </div>
+                    <div>
+                      <CourseCard
+                        key="1"
+                        lessons="8"
+                        title="Introduction to C++"
+                        desc="Learn the basics of C++ programming language."
+                        level="Beginner"
+                        icon="/pagesgraphics/mentor/profile/ProgrammingIcon.svg"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -296,9 +323,7 @@ function MentorProfile() {
             </div>
           </div>
         </div>
-        {/* <div className=" ">
-          <MobileNav></MobileNav>
-        </div> */}
+       
       </div>
     </>
   );

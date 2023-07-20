@@ -26,7 +26,12 @@ const DescIcon = (props) => (
   </svg>
 );
 
-const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
+const GroupDetails = ({
+  currReciever,
+  setShowUser,
+  setCurrReciever,
+  setShowChat,
+}) => {
   const [checked, setChecked] = useState(true);
   const [showAll, setShowAll] = useState(true);
   const user = auth.currentUser;
@@ -38,6 +43,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
 
   const handleClick = () => {
     setShowUser(false);
+    setShowChat(true);
   };
 
   const memberClickHandler = async (member) => {
@@ -75,7 +81,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
 
   return (
     <div
-      className="user-container overflow-auto no-scrollbar md:max-w-sm"
+      className="user-container overflow-auto w-screen md:w-auto no-scrollbar md:max-w-sm"
       style={{
         backgroundColor: "#373A41",
         color: "white",
@@ -161,7 +167,7 @@ const GroupDetails = ({ currReciever, setShowUser, setCurrReciever }) => {
                   </p>
                 </div>
               </button>
-              <p className="text-sm opacity-50">Mentor</p>
+              <p className="text-sm opacity-50">{member.role}</p>
             </div>
           ))}
         </div>
