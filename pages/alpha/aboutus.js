@@ -95,37 +95,39 @@ const Aboutus = () => {
 	};
 
 	return (
-		<>
+		<div className="flex flex-col items-center">
 			<Dashboardnav heading="About Us" />
 
-			<div className="flex flex-col items-center mt-8 md:mt-0 h-full">
-				<div className="text-center text-4xl my-10 py-2 border-b-white border-b-4">
+			<div className="flex flex-col items-center mt-8 md:mt-0 ">
+				<div
+					className="text-center text-2xl md:text-4xl md:m-10 py-2
+        space-y-4 border-b-white border-b-4"
+				>
 					<p className="text-white">We're here to</p>
-					<p className="mt-5 bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   ">
+					<p className=" bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   ">
 						gaurantee your success
 					</p>
 				</div>
 
-				{/* <div className="w-[80%] h-auto bg-white"> */}
-					<div className="relative w-full flex flex-col items-center md:px-20 bg-green-200">
-						<div
-							className="w-full h-[24rem] md:h-[18rem] max-w-[1440px] mt-11 px- p-10 rounded-[50px] bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-white"
-							style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
-						>
-							<p className="text-sm md:text-sm lg:text-2xl lg:px-11  ">
-								ConsultUs provides consulting services that help business owners
-								and leaders build a more valuable business. We worked with their
-								founder to build a professional, modern site that follows the
-								StoryBrand framework to clearly communicate the value it adds to
-								potential clients.
-							</p>
-						</div>
-            <img
-								src="/componentsgraphics/common/aboutpage/about.png"
-								alt="random image"
-								className="w-full object-cover shadow-md rounded-lg "
-							/>
-            {/* <div
+				<div className="relative w-full flex flex-col items-center md:px-20 ">
+					<div
+						className="w-full pb-20 sm:pb-20  md:pb-32 max-w-[1440px] mt-11 px- p-10 rounded-[50px] bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-white"
+						style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
+					>
+						<p className="text-sm md:text-xl lg:text-2xl lg:px-11  ">
+							ConsultUs provides consulting services that help business owners
+							and leaders build a more valuable business. We worked with their
+							founder to build a professional, modern site that follows the
+							StoryBrand framework to clearly communicate the value it adds to
+							potential clients.
+						</p>
+					</div>
+					<img
+						src="/componentsgraphics/common/aboutpage/about.png"
+						alt="random image"
+						className="w-9/12 pt-3 -translate-y-[40%]  sm:-translate-y-1/3 object-cover shadow-md rounded-lg max-w-[900px]"
+					/>
+					{/* <div
 							className="absolute
               top-full left-1/2
               rounded-lg overflow-hidden bg-red-200"
@@ -140,118 +142,176 @@ const Aboutus = () => {
 								className="w-full object-cover shadow-md rounded-lg"
 							/>
 						</div> */}
-					</div>
-					<div className="relative">
-						<div
-							className="absolute w-full h-[28rem] ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden"
-							style={{
-								clipPath:
-									"polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)",
-							}}
-						>
-							<img
-								src="/componentsgraphics/common/aboutpage/about.png"
-								alt="random image"
-								className="w-full object-cover mt-[10rem] shadow-md transform -translate-y-16 rounded-lg"
-							/>
-						</div>
-					</div>
-				{/* </div> */}
-			</div>
-			<div className="w-[80%] h-auto  mt-56 ml-10 md:ml-44 mb-10">
-				<span className="text-4xl  font-extrabold ml-4 text-white">Our</span>
-				<span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
-					Mission
-				</span>
-				<div className=" md:w-[40rem] h-1 bg-white mt-2 ml-4" />
-
-				<div className="flex flex-col md:flex-row p-4 ">
-					<div className="text-white mb-4 md:mb-0 md:mr-[-60px]">
-						unmatched service
-					</div>
-					<div className="text-white ml-0 md:ml-24 md:pl-20 ">
-						Support corporate clients and financial investors with their growth
-						strategy and international development.
-					</div>
 				</div>
-
-				<div className="flex flex-col md:flex-row p-4">
-					<div className="text-white mb-4 md:mb-0 md:mr-8">Specific</div>
-					<div className="text-white ml-0 md:ml-24 md:pl-20 ">
-						ConsultUs core expertise lies in the ability to support our clients
-						in understanding, analysing and executing commercial and investment
-						strategies in specific markets.
-					</div>
-				</div>
-
-				<div className="flex flex-col md:flex-row p-4">
-					<div className="text-white mb-4 md:mb-0 md:mr-8">Experience</div>
-					<div className="text-white ml-0 md:ml-36 md:pl-2">
-						Experience in working with and assisting a wide range of clients
-						from international corporations to small/medium-sized businesses,
-						from large corporate debt providers to mid-market private equity
-						investors.
-					</div>
-				</div>
-
-				<div className="flex flex-col md:flex-row p-4">
-					<div className="text-white mb-4 md:mb-0 md:mr-8">Technology</div>
-					<div className="text-white md:ml-36">
-						The best combination of technology and people.
+				<div className="relative">
+					<div
+						className="absolute w-full h-[28rem] ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden"
+						style={{
+							clipPath: "polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)",
+						}}
+					>
+						<img
+							src="/componentsgraphics/common/aboutpage/about.png"
+							alt="random image"
+							className="w-full object-cover mt-[10rem] shadow-md transform -translate-y-16 rounded-lg"
+						/>
 					</div>
 				</div>
 			</div>
 
-			{/* Our mission */}
-			<div className="w-[80%] h-auto mt-10 ml-10 md:ml-44 mb-10">
-				<span className="text-4xl  font-extrabold ml-4 text-white">Our</span>
-				<span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
-					Commitment
-				</span>
-				<div className="md:w-[40rem] h-1 bg-white mt-2 ml-4" />
+			{/* Our misson */}
+			<div className="space-y-12">
+				<div className="max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
+					<p>
+						<span className="text-4xl  font-extrabold text-white">Our</span>
+						<span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
+							Mission
+						</span>
+					</p>
+					<div className=" md:w-[40rem] h-1 bg-white mt-2" />
 
-				<div className="flex flex-col md:flex-row p-4">
-					<div className="text-white mb-4 md:mb-0 md:mr-8">Ethics</div>
-					<div className="text-white ml-0 md:ml-48">
-						Ethics for ConsultUs means ensuring our customers the
-						confidentiality and uniqueness of the service they are provided. A
-						client must be reassured by the fact that the service provided to
-						them is made-to-measure and will not be recycled for their
-						competitors.
+					<div className="flex flex-col md:flex-row py-4 ">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Unmatched Service
+						</p>
+						<p className=" text-white ">
+							Support corporate clients and financial investors with their
+							growth strategy and international development.
+						</p>
+					</div>
+
+					<div className="flex flex-col md:flex-row py-4">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Specific
+						</p>
+						<p className="text-white ">
+							ConsultUs core expertise lies in the ability to support our
+							clients in understanding, analysing and executing commercial and
+							investment strategies in specific markets.
+						</p>
+					</div>
+
+					<div className="flex flex-col md:flex-row py-4">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Experience
+						</p>
+						<p className="text-white">
+							Experience in working with and assisting a wide range of clients
+							from international corporations to small/medium-sized businesses,
+							from large corporate debt providers to mid-market private equity
+							investors.
+						</p>
+					</div>
+
+					<div className="flex flex-col md:flex-row py-4">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Technology
+						</p>
+						<p className="text-white ">
+							The best combination of technology and people.
+						</p>
 					</div>
 				</div>
 
-				<div className="flex flex-col md:flex-row p-4">
-					<div className="text-white mb-4 md:mb-0 md:mr-8">Quality</div>
-					<div className="text-white ml-0 md:ml-44 md:pl-1">
-						ConsultUs is committed to ensuring that our advice and
-						recommendations are based on the best combination of methods,
-						information research, creativity and internal quality assurance.
-					</div>
-				</div>
+				{/* Our commitmnetn */}
+				<div className="max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
+					<span className="text-4xl  font-extrabold text-white">Our</span>
+					<span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
+						Commitment
+					</span>
+					<div className="md:w-[40rem] h-1 bg-white mt-2 " />
 
-				<div className="flex flex-col md:flex-row p-4">
-					<div className="text-white mb-4 md:mb-0 md:mr-8">Continuity</div>
-					<div className="text-white ml-0 md:ml-36 md:pl-2">
-						ConsultUs considers that the continuity of relations on the long
-						term with its clients is the guarantee of the satisfaction of these
-						and the quality of the services provided.
+					<div className="flex flex-col md:flex-row py-4">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Ethics
+						</p>
+						<p className="text-white">
+							Ethics for ConsultUs means ensuring our customers the
+							confidentiality and uniqueness of the service they are provided. A
+							client must be reassured by the fact that the service provided to
+							them is made-to-measure and will not be recycled for their
+							competitors.
+						</p>
+					</div>
+
+					<div className="flex flex-col md:flex-row py-4">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Quality
+						</p>
+						<p className="text-white">
+							ConsultUs is committed to ensuring that our advice and
+							recommendations are based on the best combination of methods,
+							information research, creativity and internal quality assurance.
+						</p>
+					</div>
+
+					<div className="flex flex-col md:flex-row py-4">
+						<p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+							Continuity
+						</p>
+						<p className="text-white">
+							ConsultUs considers that the continuity of relations on the long
+							term with its clients is the guarantee of the satisfaction of
+							these and the quality of the services provided.
+						</p>
 					</div>
 				</div>
 			</div>
 
-			{/* ourteam section */}
 			{/* Our Team */}
-			<div className="container mx-auto w-screen flex-grow  px-4 py-4 sm:py-16">
-				<h1 className="mx-auto mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
+			<div className="px-4 py-4 sm:py-16">
+				<h1 className="mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
 					our successful team
 				</h1>
 				<div className="mx-auto w-auto  md:w-auto">
-					<div className="container my-8">
+					<div className="">
 						<div
 							ref={scrollContainerRef}
-							className="flex-no-wrap scrolling-touch mb-8 flex items-start   overflow-x-auto  hide-scrollbar"
+							className="flex-no-wrap mb-8 flex items-start overflow-x-scroll  hide-scrollbar space-x-5"
 						>
+							{mentor &&
+								mentor.map((mentor, index) => {
+									if (index < 5) {
+										return (
+											<a
+												href="#"
+												className="flex flex-col items-center
+                        shrink-0 "
+											>
+												<img
+													src={`${
+														mentor.photoURL
+															? mentor.photoURL
+															: "/componentsgraphics/common/aboutpage/team2.svg"
+													}`}
+													className="w-[95px] sm:w-[175px] md:w-[250px]  object-cover bg-transparent rounded-xl aspect-[3/4]"
+												/>
+											</a>
+											// <>
+											// 	<div className="mr-8 max-w-fit flex-none  md:pb-4">
+											// 		<a href="#" className="space-y-4">
+											// 			<div className="aspect-w-max aspect-h-ma">
+											// 				<img
+											// 					className="rounded-lg object-cover shadow-md hover:shadow-xl"
+											// 					src={
+											// 						ment.photoURL
+											// 							? ment.photoURL
+											// 							: "/componentsgraphics/common/aboutpage/team2.svg"
+											// 					}
+											// 					alt=""
+											// 					style={{ height: "28rem" }}
+											// 				/>
+											// 			</div>
+											// 			<h2 className="text-center mt-2 text-2xl text-white font-semibold">
+											// 				{extractNameFromEmail(ment.displayName)}
+											// 			</h2>
+											// 		</a>
+											// 	</div>
+											// </>
+										);
+									}
+								})}
+
 							{/* <div className='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
                   <a href='#' className='space-y-4'>
                     <div className='aspect-w-max aspect-h-ma'>
@@ -312,36 +372,7 @@ const Aboutus = () => {
                   </a>
                 </div> */}
 
-							{mentor &&
-								mentor.map((ment, index) => {
-									if (index < 5) {
-										return (
-											<>
-												<div className="mr-8 max-w-fit flex-none  md:pb-4">
-													<a href="#" className="space-y-4">
-														<div className="aspect-w-max aspect-h-ma">
-															<img
-																className="rounded-lg object-cover shadow-md hover:shadow-xl"
-																src={
-																	ment.photoURL
-																		? ment.photoURL
-																		: "/componentsgraphics/common/aboutpage/team2.svg"
-																}
-																alt=""
-																style={{ height: "28rem" }}
-															/>
-														</div>
-														<h2 className="text-center mt-2 text-2xl text-white font-semibold">
-															{extractNameFromEmail(ment.displayName)}
-														</h2>
-													</a>
-												</div>
-											</>
-										);
-									}
-								})}
-
-							<div className="mr-8 max-w-fit flex-none   md:pb-4">
+							{/* <div className="mr-8 max-w-fit flex-none   md:pb-4">
 								<a href="#" className="space-y-4">
 									<div className="aspect-w-max aspect-h-ma">
 										<img
@@ -354,7 +385,7 @@ const Aboutus = () => {
 										Eleanor Pena
 									</h2>
 								</a>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</div>
@@ -426,7 +457,7 @@ const Aboutus = () => {
 				</div>
 			</div>
 			<Footer />
-		</>
+		</div>
 	);
 };
 
