@@ -36,6 +36,15 @@ const categories = [
   "Others",
 ];
 
+
+const styles = `
+input {
+    width: 100%;
+}
+`;
+
+
+
 const planCourseSchema = yup
   .object({
     title: yup.string().required(),
@@ -70,11 +79,11 @@ const PlanCourseForm = ({ state, onSubmit }) => {
       <Header currentStep={1} />
       <hr className="border-x-2 border-gray-500 mb-4" />
       {/* course name */}
-      <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+      <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 md:px-4 mb-8">
         <label className="w-40" htmlFor="">
           Course Title
         </label>
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col md:flex-row flex-col flex-1">
           <input
             type="text"
             placeholder="Enter coures title"
@@ -86,7 +95,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <p className="text-red-500 text-sm">{errors.title?.message}</p>
         </div>
       </div>
-      <div className="w-full  flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-2 px-4 mb-8">
+      <div className="w-full  flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-2 md:px-4 mb-8">
         <label className="w-40" htmlFor="">
           Course Description
         </label>
@@ -94,7 +103,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             placeholder="Enter course description"
-            className={`  h-28 rounded-lg px-2 ${errors.desc?.message ? "border-red-500 border border-solid" : ""
+            className={`  h-28 w-full rounded-lg px-2 ${errors.desc?.message ? "border-red-500 border border-solid" : ""
               } `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
@@ -104,8 +113,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
       </div>
 
       {/* duration, session and language */}
-      <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 px-4 mb-8">
-        <div className="flex flex-1 flex-row items-center gap-x-2">
+      <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 md:px-4 mb-8">
+        <div className="flex flex-col md:flex-row flex-1 flex-row items-center gap-x-2">
           <label className="w-40" htmlFor="">
             Duration
           </label>
@@ -121,7 +130,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             <p className="text-red-500 text-sm">{errors.duration?.message}</p>
           </div>
         </div>
-        <div className="flex flex-1 items-center gap-x-2 px-4">
+        <div className="flex flex-col md:flex-row flex-1 items-center gap-x-2 px-4">
           <label className="w-40" htmlFor="">
             Lectures
           </label>
@@ -140,7 +149,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
       </div>
 
       {/* level */}
-      <div className="w-full hidden relative  md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 px-4 pb-8">
+      <div className="w-full relative  md:flex flex-col md:flex-row justify-start items-start md:items-center gap-x-2 md:px-4 pb-8">
         <p className="text-red-500 text-sm absolute left-48 bottom-2">
           {errors.level?.message}
         </p>
@@ -179,8 +188,8 @@ const PlanCourseForm = ({ state, onSubmit }) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 px-4 mb-8">
-        <div className="flex-1 flex items-center gap-x-4">
+      <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 md:px-4 mb-8">
+        <div className="flex-col md:flex-row flex-1 flex items-center gap-x-4">
           <label className="w-40" htmlFor="">
             Category:
           </label>
@@ -202,7 +211,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           </div>
         </div>
 
-        <div className="flex-1 flex items-center gap-x-2 px-4">
+        <div className="flex-1 flex-col md:flex-row flex items-center gap-x-2 px-4">
           <label className="w-40" htmlFor="">
             Language :
           </label>
@@ -221,7 +230,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
         </div>
       </div>
 
-      <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 px-4 mb-8">
+      <div className="w-full flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-2 md:px-4 mb-8">
         <label className="w-40" htmlFor="">
           Upload Banner Image
         </label>
@@ -374,25 +383,28 @@ const headingContent = [
 
 const Header = ({ currentStep, onSubmit }) => {
   return (
-    <div className="w-full flex flex-row items-center justify-between p-2 mb-2">
-      <div className="flex-[4]">
-        <h3 className="text-3xl font-medium tracking-wide pb-2">
-          {headingContent[currentStep - 1].title}
-        </h3>
-        <p className="text-sm text-white/60">
-          {headingContent[currentStep - 1].desc}
-        </p>
+    <>
+      <style>{styles}</style>
+      <div className="w-full flex-col md:flex-row flex items-center justify-between p-2 mb-2">
+        <div className="flex-[4]">
+          <h3 className="text-3xl font-medium tracking-wide pb-2">
+            {headingContent[currentStep - 1].title}
+          </h3>
+          <p className="text-sm text-white/60">
+            {headingContent[currentStep - 1].desc}
+          </p>
+        </div>
+        <div className="flex-1 text-right">
+          <button
+            onClick={() => onSubmit?.()}
+            type="submit"
+            className="px-12 py-3 bg-[#A145CD] rounded-md hover:scale-105 duration-100 transition-all"
+          >
+            {currentStep === 3 ? "Submit" : "Next"}
+          </button>
+        </div>
       </div>
-      <div className="flex-1 text-right">
-        <button
-          onClick={() => onSubmit?.()}
-          type="submit"
-          className="px-12 py-3 bg-[#A145CD] rounded-md hover:scale-105 duration-100 transition-all"
-        >
-          {currentStep === 3 ? "Submit" : "Next"}
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -400,7 +412,7 @@ const Accordian = ({ title, desc }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-[#333333] p-2 px-3 rounded-md">
+    <div className=" bg-[#333333] p-2 px-3 rounded-md">
       <h2 id="accordion-flush-heading-1">
         <button
           type="button"
@@ -497,7 +509,7 @@ const ModuleForm = ({ onSubmit }) => {
           name="name"
           type="text"
           placeholder="Enter module name"
-          className="AddMentorInput  rounded-lg px-2"
+          className="AddMentorInput w-full rounded-lg px-2"
           style={{ background: "#333333" }}
           {...register("name")}
         />
@@ -510,7 +522,7 @@ const ModuleForm = ({ onSubmit }) => {
           name="desc"
           type="text"
           placeholder="Enter module description"
-          className="AddMentorInput h-60 max-w-4xl rounded-lg px-2"
+          className="AddMentorInput w-full h-60 max-w-4xl rounded-lg px-2"
           style={{ background: "#333333" }}
           {...register("desc")}
         />
@@ -670,7 +682,7 @@ const CourseContentForm = ({ onSubmit }) => {
     <>
       <Header currentStep={3} onSubmit={() => onSubmit(modules)} />
       <hr className="border-x-2 border-gray-500 mb-4" />
-      <div className="w-full flex flex-row itesm-start gap-5">
+      <div className="w-full flex flex-col md:flex-row items-start gap-5">
         <ModuleForm onSubmit={onModuleSubmit} />
         <div className="flex-1 flex flex-col ">
           <h5>Class module list</h5>
@@ -851,8 +863,8 @@ const CreateCourse = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-10 w-full">
-        <div className="col-span-2 h-full pl-12 ">
+      <div className="grid grid-cols-1 md:grid-cols-10 w-full">
+        <div className="col-span-2 hidden md:block h-full pl-12 ">
           <Sidebar currentStep={currentStep} setStep={setStep} />
         </div>
         <div className="col-span-8 h-max  p-8 bg-[#222222] rounded-lg mt-4 mb-4">
