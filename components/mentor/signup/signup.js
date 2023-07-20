@@ -79,7 +79,7 @@ const MentorSignupcomp = () => {
         } else {
           // Get the user document
           const user = userSnapshot.docs[0].data();
-
+          console.log(user,"this")
           if (user.role !== "mentor") {
             alert("You may be authorized for different role!");
             router.push("/");
