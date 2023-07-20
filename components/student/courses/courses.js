@@ -53,7 +53,7 @@ export default function Courses({ coursesData }) {
     },
   ];
 
-  // coursesData = dummyCourses;
+  coursesData = dummyCourses;
   const categories = useMemo(
     () => [
       "All Category",
@@ -156,7 +156,7 @@ export default function Courses({ coursesData }) {
               />
             ))}
           </div> */}
-          <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 ">
+          <div className="grid  grid-flow-col grid-rows-2 overflow-scroll scrollbar-hide  gap-10 w-full">
             {coursesData.map((course, i) => (
               <div key={i}>
                 <CourseCard

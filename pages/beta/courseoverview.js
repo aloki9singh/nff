@@ -18,7 +18,7 @@ export default function CourseOverview({ coursesData }) {
   // }
   return (
     <div className="">
-      <CoursesMain coursesData={JSON.parse(coursesData)} />
+      <CoursesMain coursesData={coursesData ? JSON.parse(coursesData) : [] } />
     </div>
   );
 }

@@ -12,7 +12,7 @@ const CourseCard = ({
 }) => {
 	const router = useRouter();
 	return (
-		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] py-[10px] px-[12px] h-[200px] md:h-[17rem] w-[250px] md:w-[355px]  md:p-5 flex flex-col ">
+		<div className="shrink-0 rounded-2xl border-2 border-white shadow-lg bg-[#141518] py-[10px] px-[12px] h-[200px] md:h-[17rem] w-[250px] md:w-[355px]  md:p-5 flex flex-col ">
 			<div className="flex justify-between ">
 				<Image
 					src={banner || "/pagesgraphics/student/coursedescription/laptop.svg"}

@@ -71,10 +71,10 @@ const firebaseConfig = {
 
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig, "baseApp");
+// const app = initializeApp(firebaseConfig, "baseApp");
 
 //  const app = initializeApp(firebaseConfig, 'neatskills-1c31c');
-//  const app = initializeApp(firebaseConfig, 'neatskills9');
+ const app = initializeApp(firebaseConfig, 'neatskills9');
 //  const app = initializeApp(firebaseConfig, 'neat-60028');
 
 
