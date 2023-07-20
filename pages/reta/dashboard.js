@@ -14,7 +14,7 @@ import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
 
-const dashboard = () => {
+const Dashboard = () => {
 
 
   // // code to check if verified to visit this page or not

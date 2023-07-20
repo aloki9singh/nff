@@ -366,13 +366,13 @@ function Videos() {
                             </button>;
                           })}
 
-                      <div key={i} className="h-fit">
+                      {/* <div key={i} className="h-fit">
                         <div
                           className="justify-between hover:bg-[#585d67] bg-[#373A41] p-3 border-b border-slate-500 flex h-fit cursor-pointer"
                           onClick={() => startVideoStream(m.video)}
                           >
                           <p>{m.name}</p>
-                          <IoIosArrowForward></IoIosArrowForward>
+                          <IoIosArrowForward></IoIosArrowForward> */}
 
                         </div>
                       </Accordion>
