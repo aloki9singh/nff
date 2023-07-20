@@ -68,7 +68,7 @@ function Videos() {
     if (course.id) {
       checkJoined();
     }
-  }, [course.id, user.uid]);
+  }, [course?.id, user.uid]);
 
   const router = useRouter();
   const title = router.query.title ? router.query.title : "Basics of C++";

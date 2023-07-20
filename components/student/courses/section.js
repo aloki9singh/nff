@@ -34,6 +34,7 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
                 .map((info, i) => (
                   <CourseCard
                     key={i}
+                    id={info.id}
                     title={info.title}
                     desc={info.desc}
                     level={info.level}
