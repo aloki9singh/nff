@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import desktop from '@/public/componentsgraphics/student/courses/header/desktopicon.svg';
-import laptop from '@/public/componentsgraphics/student/courses/header/laptopicon.svg';
+import React, { useEffect, useState } from "react";
+import desktop from "@/public/componentsgraphics/student/courses/header/desktopicon.svg";
+import laptop from "@/public/componentsgraphics/student/courses/header/laptopicon.svg";
 import { useMediaQuery } from "react-responsive";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
@@ -9,15 +9,12 @@ import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import { callUserById } from "@/lib/exportablefunctions";
 import { auth } from "@/config/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
-import Image from 'next/image';
+import Image from "next/image";
 import { db } from "@/config/firebaseconfig";
 import { useRouter } from "next/router";
-import { collection, getDocs} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
-
-export default function modifyCourses() {
-
-
+export default function ModifyCourses() {
   const router = useRouter();
 
   const [verified, setVerified] = useState();
@@ -27,43 +24,34 @@ export default function modifyCourses() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
 
-
-
-
-
-
   useEffect(() => {
-
     const getCourseData = async () => {
       try {
         const CoursesCollectionref = collection(db, "courses");
         const coursesSnapshot = await getDocs(CoursesCollectionref);
-        const coursesData = JSON.stringify(coursesSnapshot.docs.map((doc) => {
-          return ({
-            id: doc.id,
-            title: doc.data().title,
-            desc: doc.data().desc,
-            level: doc.data().level,
-            sessions: doc.data().lectures,
-            language: doc.data().language,
-            category: doc.data().category,
-            banner: doc.data().banner
+        const coursesData = JSON.stringify(
+          coursesSnapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              title: doc.data().title,
+              desc: doc.data().desc,
+              level: doc.data().level,
+              sessions: doc.data().lectures,
+              language: doc.data().language,
+              category: doc.data().category,
+              banner: doc.data().banner,
+            };
           })
-        }));
+        );
         setCourses(JSON.parse(coursesData));
       } catch (error) {
         console.error(error);
         setCourses([]);
       }
-
-    }
+    };
 
     getCourseData();
   }, []);
-
-
-
-
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -75,6 +63,7 @@ export default function modifyCourses() {
       sendSideBarState(false);
     }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log("user", user);
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
@@ -85,22 +74,20 @@ export default function modifyCourses() {
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
 
-  if (!verified) {
-    return null;
-  }
-
+  // if (!verified) {
+  //   return null;
+  // }
 
   return (
     <>
-
       <div className="h-full w-full text-base bg-[#2E3036] ">
         <div className="flex">
-
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -125,8 +112,10 @@ export default function modifyCourses() {
                   Have a New Course in Mind?
                 </h2>
 
-                <button className="bg-[#a145cd] rounded-2xl font-semibold text-sm text-white py-4 px-4"
-                onClick={() => router.push("/reta/addcourse")}>
+                <button
+                  className="bg-[#a145cd] rounded-2xl font-semibold text-sm text-white py-4 px-4"
+                  onClick={() => router.push("/reta/addcourse")}
+                >
                   Add Course
                 </button>
                 <div className="item-center">
@@ -144,12 +133,9 @@ export default function modifyCourses() {
               </div>
             </div>
             <CourseList courses={courses} />
-
-
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
-

@@ -2,7 +2,7 @@ import { transporter } from "@/config/nodemailer";
 
 export default async function sendOTP(req, res) {
   const data = req.body;
-  console.log("0",data);
+  // console.log("0",data);
   try {
     await transporter.sendMail({
       from: process.env.EMAIL,

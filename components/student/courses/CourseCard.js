@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 const CourseCard = ({
+	id,
 	title,
 	desc,
 	level,
@@ -11,8 +13,11 @@ const CourseCard = ({
 	banner,
 }) => {
 	const router = useRouter();
+
+	const isMetaModifyPage = router.pathname === '/meta/modifyCourses'
+
 	return (
-		<div className=" rounded-2xl border-2 border-white shadow-lg bg-[#141518] py-[10px] px-[12px] h-[200px] md:h-[17rem] w-[250px] md:w-[355px]  md:p-5 flex flex-col ">
+		<div className="shrink-0 rounded-2xl border-2 border-white shadow-lg bg-[#141518] py-[10px] px-[12px] h-[200px] md:h-[17rem] w-[250px] md:w-[355px]  md:p-5 flex flex-col ">
 			<div className="flex justify-between ">
 				<Image
 					src={banner || "/pagesgraphics/student/coursedescription/laptop.svg"}
@@ -40,18 +45,19 @@ const CourseCard = ({
 					</p>
 				</div>
 				<div className="flex justify-end pt-4">
-					<button
-						onClick={() => {
-							router.push({
-								pathname: "/beta/coursedetail",
-								query: { title: title },
-							});
+					<Link
+						href={isMetaModifyPage ? {
+							pathname: '/reta/addcourse',
+							query: { id }
+						} : {
+							pathname: '/beta/coursedetail',
+							query: { title }
 						}}
 						type="button"
-						className="w-[72px] h-[28[px]] md:h-[39px] max-[768px]:mt-[-15px] md:mt-[-1rem] text-white border border-pink text-xs  md:text-sm md:p-0 p-2"
+						className=" text-white border border-pink text-xs  md:text-sm px-3 py-2 hover:bg-primary hover:text-white transition-all   duration-300 ease-in-out "
 					>
-						Explore
-					</button>
+						{isMetaModifyPage ? 'Modify' : 'Explore'}
+					</Link>
 				</div>
 			</div>
 		</div>

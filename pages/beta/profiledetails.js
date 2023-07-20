@@ -31,7 +31,7 @@ export default function ProfileDetails() {
 
   useEffect(() => {
     const getInitialProfile = async () => {
-      const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+      const userRef = doc(db, "allusers", user?.uid); // searching if user exists or not
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
@@ -53,7 +53,7 @@ export default function ProfileDetails() {
     };
 
     getInitialProfile();
-  }, [user.uid, reset]);
+  }, [user?.uid, reset]);
 
   const onSubmit = async (data) => {
     console.log("data", data);
@@ -315,6 +315,7 @@ export default function ProfileDetails() {
                 <input
                   type="tel"
                   // pattern="[0-9]*"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -346,7 +347,8 @@ export default function ProfileDetails() {
               </label>
               <div className="flex flex-col">
                 <input
-                  type="text"
+                  type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -459,6 +461,7 @@ export default function ProfileDetails() {
               <div className="flex flex-col">
                 <input
                   type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 my-2 md:my-0 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -490,7 +493,8 @@ export default function ProfileDetails() {
               </label>
               <div className="flex flex-col">
                 <input
-                  type="text"
+                  type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
