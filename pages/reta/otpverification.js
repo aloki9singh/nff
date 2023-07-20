@@ -19,11 +19,9 @@ const Otpverification = () => {
   const [showMessage, setShowMessage] = useState(false);
   const { loading, setLoading } = useContext(Loading);
   const { userProfile } = useAuthContext();
-  console.log(userProfile);
   const inputRefs = useRef([]);
   const maxLength = 1; // Maximum length for each input field
   const router = useRouter();
-
   const handleKeyUp = (index, event) => {
     if (event.key === "Backspace" && event.target.value === "") {
       // Check if Backspace key was pressed and the current input value is empty

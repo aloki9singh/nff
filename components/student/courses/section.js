@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/componentsstyling/cards/coursecards.module.css";
 import CourseCard from "./CourseCard";
 
 function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
+
   const [show, setShow] = useState(3)
   const cardInfo = FilterUsed ? coursesAfterFilter : courses;
   // const handleShow = () => {
