@@ -8,14 +8,13 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { accountcleanup } from "@/pages/api/signup/index";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import ToastMessage from "@/components/student/payment/ToastMessage";
-import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const Payment = () => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
 
   const [showToast, setShowToast] = useState(false);
-  let isTrialValid = false;
+  let isTrialValid = true;
 
   if (user) {
     isTrialValid = CourseAccess(user.uid).isTrialValid;
@@ -49,7 +48,7 @@ const Payment = () => {
     if (user) {
       const trialStartDate = new Date();
       const startdate = trialStartDate.toString();
-      const trialEndDate = new Date(trialStartDate.getTime() + 5 * 60 * 1000);
+      const trialEndDate = new Date(trialStartDate.getTime() + 7 * 60 * 1000);
 
       const trialData = {
         trial: {
@@ -67,7 +66,6 @@ const Payment = () => {
         if (docSnap.exists()) {
           await updateDoc(userRef, trialData); // exist condition update the doc
         }
-
 
         handleToastMessage();
 
@@ -111,4 +109,4 @@ const Payment = () => {
   );
 };
 
-export default withStudentAuthorization(Payment);
+export default Payment;

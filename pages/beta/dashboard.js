@@ -3,7 +3,6 @@
 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 import Advertisement from "@/components/student/dashboard/adbanner";
 import Progress from "@/components/student/assignments/status";
 import ActiveComp from "@/components/student/assignments/activecomp";
