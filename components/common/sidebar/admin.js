@@ -140,7 +140,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                                 ? '#E1348B'
                                 : ''
                             }]`}>
-                            View Students/Mentors
+                           Students/Mentors
                           </span>
                         </label>
                       </Link>

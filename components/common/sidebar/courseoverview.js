@@ -54,7 +54,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                 <p className="pt-2">{user ? user.displayName : "Anonymous"}</p>
                 {userProfile && (
                   <p className="text-gray-500 text-[12px] mt-[-4px]">
-                    Roll no-{userProfile.rollNo}
+                    Roll no-{userProfile.rollNo||"N/A"}
                   </p>
                 )}
               </div>

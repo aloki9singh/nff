@@ -315,6 +315,7 @@ export default function ProfileDetails() {
                 <input
                   type="tel"
                   // pattern="[0-9]*"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -346,7 +347,8 @@ export default function ProfileDetails() {
               </label>
               <div className="flex flex-col">
                 <input
-                  type="text"
+                  type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -459,6 +461,7 @@ export default function ProfileDetails() {
               <div className="flex flex-col">
                 <input
                   type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 my-2 md:my-0 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -490,7 +493,8 @@ export default function ProfileDetails() {
               </label>
               <div className="flex flex-col">
                 <input
-                  type="text"
+                  type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
