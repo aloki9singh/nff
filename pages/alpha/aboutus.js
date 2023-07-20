@@ -160,8 +160,8 @@ const Aboutus = () => {
 			</div>
 
 			{/* Our misson */}
-			<div className="space-y-12">
-				<div className="max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
+			<div className="space-y-12 max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
+				<div className="">
 					<p>
 						<span className="text-4xl  font-extrabold text-white">Our</span>
 						<span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
@@ -214,7 +214,7 @@ const Aboutus = () => {
 				</div>
 
 				{/* Our commitmnetn */}
-				<div className="max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
+				<div className="">
 					<span className="text-4xl  font-extrabold text-white">Our</span>
 					<span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
 						Commitment
@@ -259,60 +259,60 @@ const Aboutus = () => {
 			</div>
 
 			{/* Our Team */}
-			<div className="px-4 py-4 sm:py-16">
-				<h1 className="mb-4  px-2 text-center text-2xl lg:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
+			<div className="max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16">
+				<h1 className="mb-4  px-2 text-center text-2xl md:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
 					our successful team
 				</h1>
-				<div className="mx-auto w-auto  md:w-auto">
-					<div className="">
-						<div
-							ref={scrollContainerRef}
-							className="flex-no-wrap mb-8 flex items-start overflow-x-scroll  hide-scrollbar space-x-5"
-						>
-							{mentor &&
-								mentor.map((mentor, index) => {
-									if (index < 5) {
-										return (
-											<a
-												href="#"
-												className="flex flex-col items-center
-                        shrink-0 "
-											>
-												<img
-													src={`${
-														mentor.photoURL
-															? mentor.photoURL
-															: "/componentsgraphics/common/aboutpage/team2.svg"
-													}`}
-													className="w-[95px] sm:w-[175px] md:w-[250px]  object-cover bg-transparent rounded-xl aspect-[3/4]"
-												/>
-											</a>
-											// <>
-											// 	<div className="mr-8 max-w-fit flex-none  md:pb-4">
-											// 		<a href="#" className="space-y-4">
-											// 			<div className="aspect-w-max aspect-h-ma">
-											// 				<img
-											// 					className="rounded-lg object-cover shadow-md hover:shadow-xl"
-											// 					src={
-											// 						ment.photoURL
-											// 							? ment.photoURL
-											// 							: "/componentsgraphics/common/aboutpage/team2.svg"
-											// 					}
-											// 					alt=""
-											// 					style={{ height: "28rem" }}
-											// 				/>
-											// 			</div>
-											// 			<h2 className="text-center mt-2 text-2xl text-white font-semibold">
-											// 				{extractNameFromEmail(ment.displayName)}
-											// 			</h2>
-											// 		</a>
-											// 	</div>
-											// </>
-										);
-									}
-								})}
+				<div
+					ref={scrollContainerRef}
+					className="mb-8 flex  overflow-x-scroll  hide-scrollbar space-x-5 sm:space-x-10"
+				>
+					{mentor &&
+						mentor.map((mentor, index) => {
+							return (
+								<a
+									key={index}
+									href="#"
+									className="flex flex-col items-center
+                    shrink-0 "
+								>
+									<img
+										src={`${
+											mentor.photoURL
+												? mentor.photoURL
+												: "/componentsgraphics/common/aboutpage/team2.svg"
+										}`}
+										className="w-[95px] sm:w-[140px] md:w-[200px]  object-cover bg-transparent rounded-xl aspect-[3/4]"
+									/>
+									<h2 className=" text-center mt-2 text-xs md:text-base text-white font-semibold">
+										{extractNameFromEmail(mentor.displayName)}
+									</h2>
+								</a>
+								// <>
+								// 	<div className="mr-8 max-w-fit flex-none  md:pb-4">
+								// 		<a href="#" className="space-y-4">
+								// 			<div className="aspect-w-max aspect-h-ma">
+								// 				<img
+								// 					className="rounded-lg object-cover shadow-md hover:shadow-xl"
+								// 					src={
+								// 						ment.photoURL
+								// 							? ment.photoURL
+								// 							: "/componentsgraphics/common/aboutpage/team2.svg"
+								// 					}
+								// 					alt=""
+								// 					style={{ height: "28rem" }}
+								// 				/>
+								// 			</div>
+								// 			<h2 className="text-center mt-2 text-2xl text-white font-semibold">
+								// 				{extractNameFromEmail(ment.displayName)}
+								// 			</h2>
+								// 		</a>
+								// 	</div>
+								// </>
+							);
+						})}
 
-							{/* <div className='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
+					{/* <div className='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
 
                   <a href='#' className='space-y-4'>
                     <div className='aspect-w-max aspect-h-ma'>
@@ -373,7 +373,7 @@ const Aboutus = () => {
                   </a>
                 </div> */}
 
-							{/* <div className="mr-8 max-w-fit flex-none   md:pb-4">
+					{/* <div className="mr-8 max-w-fit flex-none   md:pb-4">
 								<a href="#" className="space-y-4">
 									<div className="aspect-w-max aspect-h-ma">
 										<img
@@ -387,11 +387,9 @@ const Aboutus = () => {
 									</h2>
 								</a>
 							</div> */}
-						</div>
-					</div>
 				</div>
 
-				<div className="w-full mx-auto px-4 py-8 md:px-8 lg:px-16 xl:px-20">
+				<div className=" py-8 ">
 					<section className="max-w-screen-md mx-auto">
 						<h2 className="mb-4 text-3xl md:text-4xl lg:text-5xl tracking-tight font-extrabold text-center bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
 							Get in touch
@@ -404,7 +402,7 @@ const Aboutus = () => {
 								<input
 									type="text"
 									id="name"
-									className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-0 w-[80%] md:w-[28rem] m-auto"
+									className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-0 w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
 									placeholder="Your Name"
 									required
 								/>
@@ -413,7 +411,7 @@ const Aboutus = () => {
 								<input
 									type="email"
 									id="email"
-									className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent outline-none w-[80%] md:w-[28rem] m-auto"
+									className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent outline-none w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
 									placeholder="Company Email"
 									required
 								/>
@@ -422,7 +420,7 @@ const Aboutus = () => {
 								<input
 									type="text"
 									id="phone"
-									className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none  dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-none w-[80%] md:w-[28rem] m-auto"
+									className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none  dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-none w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
 									placeholder="Phone Number"
 									required
 								/>
@@ -431,7 +429,7 @@ const Aboutus = () => {
 								<input
 									type="text"
 									id="title"
-									className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none   bg-transparent  outline-none w-[80%] md:w-[28rem] m-auto"
+									className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none   bg-transparent  outline-none w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
 									placeholder="Title/Position"
 									required
 								/>
@@ -440,7 +438,7 @@ const Aboutus = () => {
 								<input
 									type="text"
 									id="subject"
-									className="py-2 px-3  border-0 border-b border-white  dark:text-gray-300 focus:ring-none focus:border-none da dark:focus:ring-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-transparent text-white outline-0 w-[80%] md:w-[28rem] m-auto"
+									className="py-2 px-3  border-0 border-b border-white  dark:text-gray-300 focus:ring-none focus:border-none da dark:focus:ring-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-transparent text-white outline-0 w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
 									placeholder="Subject"
 									required
 								/>
@@ -448,7 +446,7 @@ const Aboutus = () => {
 							<div className="flex justify-center items-center">
 								<button
 									type="submit"
-									className="py-3 px-8 md:px-40 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-[80%] md:w-[28rem]"
+									className="py-3 px-8 md:px-40 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-[90%] sm:w-[80%] md:w-[28rem]"
 								>
 									Connect with us
 								</button>
