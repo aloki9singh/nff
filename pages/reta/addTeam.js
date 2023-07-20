@@ -200,3 +200,6 @@ const Addteam = () => {
 }
 
 export default withAdminAuthorization(Addteam);
+
+
+//code needed to be setteled
