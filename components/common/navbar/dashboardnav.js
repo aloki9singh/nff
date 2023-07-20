@@ -27,9 +27,9 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
           <div className="flex items-center">
             <Link
               href="/beta/dashboard"
-              className="uppercase w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0"
+              className="uppercase  h-[43px]  md:h-[71px] flex-shrink-0 align-middle items-center flex"
             >
-              <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
+              <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] inline ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
                 {heading}
               </h1>
               <Image
@@ -86,10 +86,10 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                         <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
                           <Link href="/beta/profile">
                             <p className="p-2">
-                              {user.photoURL ? (
+                              {user ? (
                                 <div className="flex gap-2 items-center">
                                   <Image
-                                    src={user.photoURL}
+                                    src={user.photoURL||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
                                     height="35"
                                     width="35"
                                     className="rounded-full h-6 w-6"
@@ -100,7 +100,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                                       {user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
-                                      Class {userProfile?.class}
+                                      Class {userProfile?.class||"N/A"}
                                     </p>
                                   </div>
                                 </div>

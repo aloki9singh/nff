@@ -6,7 +6,7 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import MentorChart from "@/components/mentor/other/chart";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 

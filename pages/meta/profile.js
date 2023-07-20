@@ -16,7 +16,7 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import Image from "next/image";
 import MentorChart from "@/components/mentor/other/chart";
-import { useSelector } from "react-redux";
+
 import { FiEdit2 } from "react-icons/fi";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";

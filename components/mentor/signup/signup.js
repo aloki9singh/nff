@@ -7,8 +7,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 
 import { AiOutlineMail } from "react-icons/ai";
 import { FaLock } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../../../redux/actions/mentor.action";
+
 import { auth, db } from "../../../config/firebaseconfig";
 
 import { signUpMentor } from "@/lib/exportablefunctions";
