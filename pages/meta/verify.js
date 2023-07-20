@@ -8,6 +8,7 @@ import { auth } from "@/config/firebaseconfig";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+import Link from "next/link";
 
 const MentorVerify = () => {
   const [email, setEMail] = useState("");
@@ -93,9 +94,11 @@ const MentorVerify = () => {
             >
               {loading ? "Sending..." : "Resend Email"}
             </button>
-            <button className="p-2 m-3 border rounded-lg pr-5 pl-5 text-[#E1348B] border-[#E1348B] hover:bg-[#E1348B] hover:text-white transition-all duration-200 ">
-              Contact Support
-            </button>
+            <Link href={"/meta/contactus"}>
+              <button className="p-2 m-3 border rounded-lg pr-5 pl-5 text-[#E1348B] border-[#E1348B] hover:bg-[#E1348B] hover:text-white transition-all duration-200 ">
+                Contact Support
+              </button>
+            </Link>
           </div>
         </div>
       </div>
