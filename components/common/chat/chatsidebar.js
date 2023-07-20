@@ -13,7 +13,7 @@ const messageDetails = {
 };
 
 
-const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setChats }) => {
+const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setChats, setShowChat }) => {
   const time = chat.lastMessageTimestamp
     ?.toDate()
     .toLocaleTimeString([], {
@@ -36,7 +36,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
         setChats(prev => prev.map((chat) => {
           if (chat.isGroup) return chat;
 
-          if(!friend) return chat;
+          if (!friend) return chat;
 
           const fuid = chat.members.find(
             (uid) => uid !== auth.currentUser.uid
@@ -59,14 +59,17 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
           ? "flex active-user items-center gap-2 cursor-pointer p-2"
           : "flex items-center gap-2 cursor-pointer p-2"
       }
-      onClick={(e) => setCurrReciever(chat)}
+      onClick={(e) => {
+        setCurrReciever(chat);
+        setShowChat(true);
+      }}
     >
 
       <Avatar alt="Profile-Picture" src={chat.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
 
       <div className="flex flex-col flex-1 items-start overflow-hidden">
         <h1 className=" truncate w-4/5 " >{chat.name}</h1>
-        <p className="text-sm">{chat.lastMessage}</p>
+        <p className="text-sm text-white/50">{chat.lastMessage}</p>
       </div>
       <div className="flex flex-col justify-end items-center">
         <span className="text-[10px]">{time}</span>
@@ -81,7 +84,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
   );
 };
 
-const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
+const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }) => {
   const [activeLink, setActiveLink] = useState("all");
   const [searchUser, setSearchUser] = useState("");
   const [users, setUsers] = useState(chats);
@@ -104,7 +107,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
 
   return (
     <div
-      className="flex flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6"
+      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6`}
 
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
@@ -121,7 +124,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
           onChange={(e) => handleChange(e)}
           style={{ backgroundColor: "#505057", color: "white" }}
         />
-        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize:"25px" }} />
+        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize: "25px" }} />
       </div>
 
       <div className="sideBarContainer flex  flex-col gap-4 relative">
@@ -131,8 +134,8 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
               <button
                 className={
                   activeLink === "all"
-                    ? "active cursor-pointer px-2 py-1"
-                    : "cursor-pointer px-2 py-1"
+                    ? "active cursor-pointer px-5 py-1"
+                    : "cursor-pointer px-5 py-1"
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -147,8 +150,8 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
               <button
                 className={
                   activeLink === "students"
-                    ? "active cursor-pointer px-2 py-1"
-                    : "cursor-pointer px-2 py-1"
+                    ? "active cursor-pointer px-5 py-1"
+                    : "cursor-pointer px-5 py-1"
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -163,8 +166,8 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
               <button
                 className={
                   activeLink === "groups"
-                    ? "active cursor-pointer px-2 py-1"
-                    : "cursor-pointer px-2 py-1"
+                    ? "active cursor-pointer px-5 py-1"
+                    : "cursor-pointer px-5 py-1"
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -189,6 +192,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats }) => {
               currReciever={currReciever}
               setCurrReciever={setCurrReciever}
               setChats={setChats}
+              setShowChat={setShowChat}
             />
           ))}
         </div>

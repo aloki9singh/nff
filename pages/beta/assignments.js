@@ -22,20 +22,17 @@ function Assignments() {
   const [SideBarState, sendSideBarState] = useState(false);
 
   //yet to write logic to change course bougth or not ??
-  const [courseBuyed, setCourseBuyed] = useState(false);
 
   let [searchstate, setsearchstate] = useState("");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
-  const { user, userProfile } = useAuthContext();
+  const { user, userProfile, joinedCourses } = useAuthContext();
   if (!user || !userProfile) {
     router.push("/");
   }
 
-  if (!user || !userProfile) {
-    return null;
-  }
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -94,16 +91,21 @@ function Assignments() {
     },
   ];
 
+  if (!user || !userProfile) {
+    return null;
+  }
+
   return (
     <>
-   {!courseBuyed && <NoJoinedCoursesModal />}
+      {!joinedCourses && <NoJoinedCoursesModal message={
+        "You have not joined any course yet. Please join a course to view assignments."
+      } />}
       {/* {!courseBuyed ? <NoJoinedCoursesModal /> : null} */}
       <div className="flex">
         {isMobileScreen && (
           <div
-            className={`fixed right-0 ${
-              SideBarState ? "block" : "hidden"
-            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>

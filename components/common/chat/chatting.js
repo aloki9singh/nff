@@ -9,6 +9,8 @@ import {
   MdOutlineInsertDriveFile,
 } from "react-icons/md";
 
+import { SlArrowLeft } from 'react-icons/sl'
+
 import Avatar from "./avatar";
 import Image from "next/image";
 
@@ -152,6 +154,8 @@ const Chat = ({
   setShowUser,
   messages,
   currReciever,
+  showChat,
+  setShowChat,
 }) => {
   const handleClick = () => {
     const elem = document.querySelector(".icons-toggle");
@@ -166,7 +170,7 @@ const Chat = ({
   const lastDiv = React.useRef();
 
   useEffect(() => {
-    lastDiv.current.scrollIntoView({ behavior: "smooth" });
+    lastDiv.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const submitHandler = async (e) => {
@@ -208,9 +212,7 @@ const Chat = ({
 
   const displayReciever = () => {
     setShowUser(true);
-    // setCurrReciever(
-    //   currReciever
-    // );
+    setShowChat(false);
   };
 
   const uploadImage = async (e) => {
@@ -244,9 +246,16 @@ const Chat = ({
     });
   };
 
+  if (!currReciever)
+    return (
+      <div className="hidden md:flex items-center justify-center flex-1 flex-col">
+        <p className="text-2xl text-white">Select a chat to start messaging</p>
+      </div>
+    );
+
   return (
     <div
-      className="md:flex flex-1 flex-col justify-between w-full relative hidden"
+      className={`${showChat ? 'flex' : 'hidden md:flex'} flex flex-1 flex-col justify-between w-full relative `}
       style={{ color: "white" }}
     >
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">
@@ -256,10 +265,10 @@ const Chat = ({
         >
           <div
             className="flex flex-1 items-center gap-4 "
-            onClick={() => {
-              displayReciever();
-            }}
           >
+            <button className="text-white block md:hidden p-2 rounded-lg bg-primary" onClick={() => setCurrReciever(null)} >
+              <SlArrowLeft />
+            </button>
             <Avatar
               className="cursor-pointer"
               alt="Profile-Picture"
@@ -268,7 +277,9 @@ const Chat = ({
                 "/componentsgraphics/common/chatting/user/profile.svg"
               }
             />
-            <div className="flex flex-col items-start cursor-pointer">
+            <div onClick={() => {
+              displayReciever();
+            }} className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>
               <p
                 className="text-[12px]"
@@ -400,12 +411,17 @@ const Chat = ({
                 type="text"
                 name="message"
                 style={{
-                  background: "linear-gradient(0deg, #505057, #505057),linear-gradient(0deg, rgba(255, 255, 255, 0.43), rgba(255, 255, 255, 0.43))"
+                  background:
+                    "linear-gradient(0deg, #505057, #505057),linear-gradient(0deg, rgba(255, 255, 255, 0.43), rgba(255, 255, 255, 0.43))",
                 }}
               />
-              <div className="flex relative"  style={{
-                  background: "linear-gradient(0deg, #505057, #505057),linear-gradient(0deg, rgba(255, 255, 255, 0.43), rgba(255, 255, 255, 0.43))"
-                }}>
+              <div
+                className="flex relative"
+                style={{
+                  background:
+                    "linear-gradient(0deg, #505057, #505057),linear-gradient(0deg, rgba(255, 255, 255, 0.43), rgba(255, 255, 255, 0.43))",
+                }}
+              >
                 <div
                   onClick={() => {
                     setShowRecorder(true);

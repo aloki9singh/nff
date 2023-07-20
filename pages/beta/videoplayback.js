@@ -21,6 +21,7 @@ import {
   doc,
   arrayUnion,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseVideoPlayer from "@/components/student/courses/videoplayer";
@@ -40,14 +41,10 @@ const VideoPlayer = ({ videoUrl }) => {
 };
 
 async function checkUserJoinedCourse(courseId, userId) {
-  const groupRef = doc(db, "chatGroups", courseId);
-  const groupDoc = await getDoc(groupRef);
-  const groupData = groupDoc.data();
-  if (groupData.members.includes(userId)) {
-    return true;
-  } else {
-    return false;
-  }
+  const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
+
+  const courseDoc = await getDoc(courseRef);
+  return courseDoc.exists();
 }
 
 function Videos() {
@@ -61,7 +58,7 @@ function Videos() {
   const [videoUrl, setVideoUrl] = useState(null);
   const [isJoined, setIsJoined] = useState(false);
   const { user, userProfile } = useAuthContext();
-  const [subs, setSubs] = useState(false);
+  const [currentarray, setCurrentArray] = useState([]);
 
   useEffect(() => {
     const checkJoined = async () => {
@@ -71,7 +68,7 @@ function Videos() {
     if (course.id) {
       checkJoined();
     }
-  }, [course.id, user.uid]);
+  }, [course?.id, user.uid]);
 
   const router = useRouter();
   const title = router.query.title ? router.query.title : "Basics of C++";
@@ -97,6 +94,19 @@ function Videos() {
           });
           console.log(courseData);
           // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
+
+          const userRef = doc(db, "allusers", courseData.mentorid); // searching if user exists or not
+          const docSnap = await getDoc(userRef).then((docsnap) => {
+            if (docsnap.exists()) {
+              const userd = docsnap.data();
+              setCurrentArray(userd.joinedStudents);
+            }
+            else {
+              setCurrentArray([]);
+              console.log("user not found");
+            }
+          });
+
           setModules(courseData.modules);
           setCourse(courseData);
           setVideoUrl(courseData.modules[0].video);
@@ -114,14 +124,14 @@ function Videos() {
 
 
 
-//check and set the eligibility for the course access through context
-// useEffect(() => {
+  //check and set the eligibility for the course access through context
+  // useEffect(() => {
 
-// }, []);
+  // }, []);
 
 
 
-const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
+  const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -140,6 +150,8 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
     router.push("/");
   }
 
+
+
   async function joinCourseChat() {
     const groupRef = doc(db, "chatGroups", course.id);
 
@@ -148,14 +160,33 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
     });
 
 
-    await updateDoc(doc(collection(db, "allusers"), user.uid), {
-      joinedCourses: arrayUnion({
-        id: course.id,
-        title: course.title,
-        joinedAt: serverTimestamp()
-      })
+    await setDoc(doc(db, "allusers", user.uid, "joinedCourses", course.id), {
+      id: course.id,
+      title: course.title,
+      joinedAt: serverTimestamp(),
     })
 
+
+    const mentorRef = doc(db, "allusers", course.mentorid);
+
+    const d = {
+      courseId: course.id,
+      studentId: user.uid,
+      joinedAt: new Date(),
+    }
+
+    let joinedStudents = [];
+    currentarray.map((item) => {
+      joinedStudents.push(item);
+    })
+    joinedStudents.push(d);
+
+
+    const joindData = {
+      joinedStudents,
+    }
+
+    await updateDoc(mentorRef, joindData);
     setIsJoined(true);
   }
 
@@ -164,7 +195,10 @@ const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
     <>
 
-      {!fetchsubsdata && <NoJoinedCoursesModal />}
+
+
+    {  console.log(currentarray)}
+
       <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
         {isMobileScreen && (
           <div

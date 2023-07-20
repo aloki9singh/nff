@@ -2,6 +2,8 @@
 // side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
+
+import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -9,20 +11,22 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
-const dashboard = () => {
-  // code to check if verified to visit this page or not
-  const [isAdmin, setIsAdmin] = useState(false);
+const dashboard = ({userProfile}) => {
+
+  // // code to check if verified to visit this page or not
+  // const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+ 
   useEffect(() => {
-    const isAdmin = localStorage.getItem('isAdmin');
-    setIsAdmin(isAdmin);
-    if (!isAdmin) {
-      router.push('/');
-    }
+    // const isAdmin = localStorage.getItem('isAdmin');
+    // setIsAdmin(isAdmin);
+    // if (!isAdmin) {
+    //   router.push('/');
+    // }
   }, [router]);
 
   useEffect(() => {
@@ -36,9 +40,9 @@ const dashboard = () => {
     sendSideBarState(showSideBar);
   }
 
-  if (!isAdmin) {
-    return null;
-  }
+  // if (!isAdmin) {
+  //   return null;
+  // }
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>
@@ -60,15 +64,15 @@ const dashboard = () => {
             </div>
           )}
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
-          <AdminTopbar heading={''} toggleSideBar={toggleSideBar} />
+          <AdminTopbar heading={'Dashboard'} toggleSideBar={toggleSideBar} />
           {/* text */}
-          <div className='w-full h-screen bg-[#1E1E1E]  space-y-5 pt-[80px] '>
+          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-[80px] '>
             <div className='flex flex-col justify-center h-full'>
               <div className='flex align-middle justify-center  '>
                 <div className='text-center space-y-5 '>
                   <div className=' space-y-4 '>
                     <h1 className='text-[#A145CD] md:text-4xl text-2xl  '>
-                      Welcome Back, Raviraj !{' '}
+                      Welcome Back, {removeDomainFromEmail(userProfile?.displayName)}!{' '}
                     </h1>
                     <p className='text-white'>Select what you want to do</p>
                   </div>
@@ -97,7 +101,7 @@ const dashboard = () => {
                       </div>
                       <div
                         className='bg-[#B26ED3] md:w-[150px] w-[120px] md:h-[200px] h-[150px] rounded m-auto p-2 space-y-2 flex flex-col justify-around hover:border-[2px] cursor-pointer'
-                        onClick={() => router.replace('students')}>
+                        onClick={() => router.replace('mentors')}>
                         <div className='flex justify-center align-middle'>
                           <Image
                             alt='Icon'
@@ -150,3 +154,4 @@ const dashboard = () => {
 };
 
 export default withAdminAuthorization(dashboard);
+//  export default (dashboard);

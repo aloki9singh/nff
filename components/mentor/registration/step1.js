@@ -31,9 +31,10 @@ const MentorRegFormStep1 = ({ setRegStepCount, regStepCount }) => {
     if (
       input.firstname == "" ||
       input.email == "" ||
-      input.lastname == "" ||
+      input.pPhone == "" ||
       input.city == "" ||
-      input.country == ""
+      input.country == "" ||
+      input.address == ""
     ) {
       alert("Field Empty");
     } else {
@@ -243,9 +244,7 @@ const MentorRegFormStep1 = ({ setRegStepCount, regStepCount }) => {
                   type="text"
                   placeholder="Enter Country"
                   className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
-                >
-                
-                </input>
+                ></input>
                 {/* <select
                   name="country"
                   onChange={setData}

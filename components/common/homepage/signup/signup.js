@@ -82,6 +82,12 @@ function SignUp() {
         alert(`You are already registered not as a student.`);
         router.push("/");
         setLoading(false);
+      } else if (value.user.active == false) {
+        alert(
+          "Your request can't be processed. Please contact support@neatskills.tech"
+        );
+        setLoading(false);
+        return;
       } else {
         await callEmailApi(data);
         const studentData = {
@@ -91,6 +97,7 @@ function SignUp() {
           role: "student",
           verified: true,
           photoURL: user.photoURL,
+          active: true,
         };
 
         callSignupApi(studentData);

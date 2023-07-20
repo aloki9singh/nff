@@ -37,18 +37,18 @@ export default function ProfileDetails() {
         const data = docSnap.data();
         const initialProfile = {
           ...data,
-          studentFirstName: data.name ? data.name.first : "",
-          studentMiddleName: data.name ? data.name.middle : "",
-          studentLastName: data.name ? data.name.last : "",
-          fatherFirstName: data.name ? data.fatherName.first : "",
-          fatherMiddleName: data.name ? data.fatherName.middle : "",
-          fatherLastName: data.name ? data.fatherName.last : "",
-          motherFirstName: data.name ? data.motherName.first : "",
-          motherMiddleName: data.name ? data.motherName.middle : "",
-          motherLastName: data.name ? data.motherName.last : "",
-          ReactDatepicker: data.name ? data.dob : "",
-        };
-        reset(initialProfile);
+          studentFirstName: data.name?.first,
+          studentMiddleName: data.name?.middle,
+          studentLastName: data.name?.last,
+          fatherFirstName: data.fatherName?.first,
+          fatherMiddleName: data.fatherName?.middle,
+          fatherLastName: data.fatherName?.last,
+          motherFirstName: data.motherName?.first,
+          motherMiddleName: data.motherName?.middle,
+          motherLastName: data.motherName?.last,
+          ReactDatepicker: data?.dob,
+        }
+        reset(initialProfile)
       }
     };
 
@@ -119,7 +119,6 @@ export default function ProfileDetails() {
     if (data.profilePhoto) {
       uploadToFirebase(data.profilePhoto, (url) => {
         updateDoc(doc(db, "allusers", user.uid), {
-          displayName: getUserName(profile),
           photoURL: url,
         });
         updateProfile(auth.currentUser, {
@@ -294,7 +293,6 @@ export default function ProfileDetails() {
                     } else {
                       // If the selected date is not more than 10 years ago, reset the field value
                       field.onChange(null);
-                      alert("Please Select Valid DOB");
                     }
                   }}
                   value={field.value}
@@ -317,6 +315,7 @@ export default function ProfileDetails() {
                 <input
                   type="tel"
                   // pattern="[0-9]*"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -348,7 +347,8 @@ export default function ProfileDetails() {
               </label>
               <div className="flex flex-col">
                 <input
-                  type="text"
+                  type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -461,6 +461,7 @@ export default function ProfileDetails() {
               <div className="flex flex-col">
                 <input
                   type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 my-2 md:my-0 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
@@ -492,7 +493,8 @@ export default function ProfileDetails() {
               </label>
               <div className="flex flex-col">
                 <input
-                  type="text"
+                  type="tel"
+                  maxLength={10}
                   placeholder="Type Here"
                   className="w-full md:w-[319px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                   style={{ background: "#333333" }}
