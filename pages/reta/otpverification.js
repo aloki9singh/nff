@@ -20,7 +20,7 @@ const Otpverification = () => {
   const [showMessage, setShowMessage] = useState(false);
   const { loading, setLoading } = useContext(Loading);
   const { userProfile } = useAuthContext();
-  // console.log(userProfile)
+   console.log(userProfile)
   const inputRefs = useRef([]);
   const maxLength = 1; // Maximum length for each input field
   const router = useRouter();

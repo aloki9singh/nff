@@ -12,6 +12,7 @@ import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
 const dashboard = () => {
+  
   // // code to check if verified to visit this page or not
   // const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
@@ -71,7 +72,7 @@ const dashboard = () => {
                 <div className='text-center space-y-5 '>
                   <div className=' space-y-4 '>
                     <h1 className='text-[#A145CD] md:text-4xl text-2xl  '>
-                      Welcome Back, {removeDomainFromEmail(userProfile.displayName)}!{' '}
+                      Welcome Back, {removeDomainFromEmail(userProfile?.displayName)}!{' '}
                     </h1>
                     <p className='text-white'>Select what you want to do</p>
                   </div>
@@ -152,5 +153,5 @@ const dashboard = () => {
   );
 };
 
-export default withAdminAuthorization(dashboard);
+export default (dashboard);
 //  export default (dashboard);

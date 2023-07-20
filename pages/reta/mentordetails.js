@@ -683,6 +683,7 @@ const MentorProfile = () => {
               </div>
               <div className="max-w-full text-right">
                 <button
+
                   onClick={() => {
                     detailadd(data?.uid, {
                       courseAssigned: true,
@@ -717,4 +718,4 @@ const MentorProfile = () => {
   );
 };
 
-export default withAdminAuthorization(MentorProfile);
+export default (MentorProfile);
