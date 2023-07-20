@@ -19,9 +19,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "@/config/firebaseconfig";
+import { auth, db } from "@/config/firebaseconfig";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
+import { getDoc, doc } from "@firebase/firestore";
 
 function Adminlogin() {
   const [email, setEmail] = useState("");
@@ -64,42 +65,74 @@ function Adminlogin() {
     //   }
     // }
     //  ------------------------------------------------------------------------------------
-    // login  trycatch
+    // login  trycatch, otp };
     //open this trycatch to login admin
+      // Prev login code but it is not working properly
+        // const data = await response.json();
+    // if (response.ok) {
+    //   const otp = generateOTP(6);
+    //   const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY_FOR_OTP_ENCRYPTION;
+    //   const encryptedOTP = CryptoJS.AES.encrypt(otp, secretKey).toString();
+    //   localStorage.setItem("otp", encryptedOTP);
+    //   localStorage.setItem("email", JSON.stringify(email));
+    //   const data = { email, otp };
+    //   await sendOTP(data).then((res) => console.log(res));
+    //   router.push("/reta/otpverification");
+    //   console.log("Login Successful");
+    // } else {
+    //   if (data.error.includes("Firebase: Error (auth/wrong-password)")) {
+    //     alert("Please check Your Credentials.");
+    //   } else if (data.error.includes("Internal server error")) {
+    //     alert("Please check Your Credentials.");
+    //   } 
+    // else {
+    //     alert("Please check Your Credentials.");
+    //     console.log("Error logging in:", data.error);
+    //   }
+    // }
+    // New login method
     try {
       setLoading(true);
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password, authCode }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        const otp = generateOTP(6);
-        const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY_FOR_OTP_ENCRYPTION;
-        const encryptedOTP = CryptoJS.AES.encrypt(otp, secretKey).toString();
-        localStorage.setItem("otp", encryptedOTP);
-        localStorage.setItem("email", JSON.stringify(email));
-        const data = { email, otp };
-        await sendOTP(data).then((res) => console.log(res));
-        router.push("/reta/otpverification");
-        console.log("Login Successful");
-      } else {
-        if (data.error.includes("Firebase: Error (auth/wrong-password)")) {
-          alert("Please check Your Credentials.");
-        } else if (data.error.includes("Internal server error")) {
-          alert("Please check Your Credentials.");
-        } else {
-          alert("Please check Your Credentials.");
-          console.log("Error logging in:", data.error);
-        }
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+      // Retrieve user document from the database
+      const userDoc = await getDoc(doc(db, "allusers", user.uid));
+      const userData = userDoc.data();
+
+      if (userData.authCode !== authCode) {
+        alert({ error: "Invalid authentication code" });
       }
+
+      // Check if the user has the required role
+      if (userData.role !== "admin") {
+        alert({ error: "Unauthorized User" });
+      }
+      // Successful login
+      const otp = generateOTP(6);
+      const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY_FOR_OTP_ENCRYPTION;
+      const encryptedOTP = CryptoJS.AES.encrypt(otp, secretKey).toString();
+      localStorage.setItem("otp", encryptedOTP);
+      localStorage.setItem("email", JSON.stringify(email));
+      const data = { email, otp };
+      await sendOTP(data).then((res) => console.log(res));
+      router.push("/reta/otpverification");
+      console.log("Login Successful");
       setLoading(false);
-    } catch (error) {
-      alert("Unauthorised User");
-      console.log("Error logging in:", error.message);
+    }
+    catch (error) {
+      if (data.error.includes("Firebase: Error (auth/wrong-password)")) {
+        alert("Please check Your Credentials.");
+      } else if (data.error.includes("Internal server error")) {
+        alert("Please check Your Credentials.");
+      }
+      else {
+        alert("Please check Your Credentials.");
+        console.log("Error logging in:", data.error);
+      }
     }
   }
   useEffect(() => {
@@ -156,19 +189,16 @@ function Adminlogin() {
             </p>
             <div className="  hidden  md:flex justify-center gap-2 ">
               <div
-                className={`w-[50px] h-[7px] rounded ${
-                  blinkingIndex === 0 ? "bg-white" : "bg-gray-500"
-                }`}
+                className={`w-[50px] h-[7px] rounded ${blinkingIndex === 0 ? "bg-white" : "bg-gray-500"
+                  }`}
               ></div>
               <div
-                className={`w-[50px] h-[7px] rounded ${
-                  blinkingIndex === 1 ? "bg-white" : "bg-gray-500"
-                }`}
+                className={`w-[50px] h-[7px] rounded ${blinkingIndex === 1 ? "bg-white" : "bg-gray-500"
+                  }`}
               ></div>
               <div
-                className={`w-[50px] h-[7px] rounded ${
-                  blinkingIndex === 2 ? "bg-white" : "bg-gray-500"
-                }`}
+                className={`w-[50px] h-[7px] rounded ${blinkingIndex === 2 ? "bg-white" : "bg-gray-500"
+                  }`}
               ></div>
             </div>
           </div>

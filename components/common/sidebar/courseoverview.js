@@ -357,6 +357,7 @@ const CourseoverviewSidebar = ({ toggleSideBar }) => {
                 <button
                   onClick={() => {
                     logout(router);
+                    router.push("/beta/login")
                   }}
                   className=" bg-[#373A41]  flex  justify-center  items-center w-full  rounded   pt-2.5 pb-2 text-xs font-medium uppercase leading-normal "
                 >
