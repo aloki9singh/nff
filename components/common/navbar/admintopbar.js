@@ -33,7 +33,7 @@ export default function AdminTopbar({ heading,toggleSideBar }) {
     // return () => {
     //   unsubscribe();
     // };
-  });
+  })
 
   return (
     <nav className=' pl-2 py-2 w-full md:static  top-0 right-0 left-0 space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35] z-10'>

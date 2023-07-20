@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 // import AddTeamPage from '@/pages/reta/addteam';
 import { useEffect } from 'react';
+import withAdminandMentorAuthorization from '@/lib/HOC/withAdminandMentorAuthorization';
 
 
 const CongratsAddTeam = () => {
