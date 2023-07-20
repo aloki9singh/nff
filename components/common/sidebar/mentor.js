@@ -5,6 +5,7 @@ import { signOut } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsPersonCircle } from "react-icons/bs";
@@ -13,21 +14,24 @@ import { RxCross2 } from "react-icons/rx";
 const MentorSidebar = ({ toggleSideBar }) => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
+  const [isChecked, setIsChecked] = useState(false);
 
+  const handleCheckboxChange = () => {
+    setIsChecked((prevState) => !prevState);
+  };
   return (
     <>
       <aside className="h-screen md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between ">
         <div>
           <div>
-           
-              <Image
-                src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
-                width={150}
-                height={150}
-                alt="logo"
-                className="mb-6 md:block hidden"
-              />
-           
+            <Image
+              src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
+              width={150}
+              height={150}
+              alt="logo"
+              className="mb-6 md:block hidden"
+            />
+
             <div
               className=" flex justify-end w-full md:hidden  "
               onClick={() => toggleSideBar()}
@@ -57,7 +61,9 @@ const MentorSidebar = ({ toggleSideBar }) => {
                     ? (userProfile.displayName || user.displayName).includes(
                         "gmail"
                       )
-                      ? removeDomainFromEmail(userProfile.displayName || user.displayName)
+                      ? removeDomainFromEmail(
+                          userProfile.displayName || user.displayName
+                        )
                       : userProfile.displayName || user.displayName
                     : "None"
                 }`}
@@ -201,41 +207,37 @@ const MentorSidebar = ({ toggleSideBar }) => {
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/meta/liveclass"
-                  className="flex items-center p-2 text-base font-light text-white rounded-lg  hover:bg-pin "
-                  replace
+                <div
+                  onClick={() => router.push("https://meet.neatskills.tech/")}
+                  className="flex items-center p-2 text-base font-light text-white rounded-lg hover:bg-pin"
                 >
-                  {/* checkbox */}
                   <label className="inline-flex cursor-pointer items-center space-x-3">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "/meta/liveclass"
-                          ? "shadow-white"
-                          : ""
+                        isChecked ? "shadow-white text-white" : ""
                       }`}
                       style={{
-                        boxShadow:
-                          router.pathname === "/meta/liveclass"
-                            ? "0 0 5px #A145CD"
-                            : "none",
+                        boxShadow: isChecked ? "0 0 5px #A145CD" : "none",
                       }}
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
                     />
 
                     <span
-                      className={`${
-                        router.pathname == "/meta/liveclass"
-                          ? "text-[#E1348B]"
+                      className={`ml-3 ${
+                        isChecked === "https://meet.neatskills.tech"
+                          ? "text-#E1348B"
                           : ""
                       }`}
                     >
                       Live Class
                     </span>
                   </label>
-                </Link>
+                </div>
               </li>
+
               <li>
                 <Link
                   href="studymaterial"
