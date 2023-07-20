@@ -14,7 +14,7 @@ const CourseCard = ({
 }) => {
 	const router = useRouter();
 
-	const isMetaModifyPage = router.pathname === '/meta/modifyCourses'
+	const isMetaModifyPage = router.pathname === '/meta/modifyCourses'||router.pathname === "/reta/modifyCourses"
 
 	return (
 		<div className="shrink-0 rounded-2xl border-2 border-white shadow-lg bg-[#141518] py-[10px] px-[12px] h-[200px] md:h-[17rem] w-[250px] md:w-[355px]  md:p-5 flex flex-col ">
@@ -46,7 +46,7 @@ const CourseCard = ({
 				</div>
 				<div className="flex justify-end pt-4">
 					<Link
-						href={isMetaModifyPage ? {
+						href={router.pathname === ('/meta/modifyCourses'||'/reta/modifyCourses') ? {
 							pathname: '/reta/addcourse',
 							query: { id }
 						} : {

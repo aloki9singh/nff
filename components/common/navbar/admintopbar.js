@@ -42,14 +42,14 @@ export default function AdminTopbar({ heading,toggleSideBar }) {
           <div className='flex items-center'>
             <Link
               href='/'
-              className='uppercase hover:border-b w-[112px] h-[43px] md:w-[186px] md:h-[71px] flex-shrink-0'>
+              className='uppercase hover:border-b  h-[43px]  md:h-[71px] flex-shrink-0'>
               <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
                 {heading}
               </h1>
               <Image
                 src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
                 alt="logo"
-                className="w-full hidden max-[768px]:block h-full justify-center object-contain
+                className="w-full  hidden max-[768px]:block h-[80%] justify-center object-contain ml-[-20px]
               "
                 width={100}
                 height={100}
