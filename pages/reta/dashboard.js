@@ -2,7 +2,7 @@
 // side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
-import { useAuthContext } from '@/lib/context/AuthContext';
+
 import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
 import Image from 'next/image';
@@ -11,8 +11,8 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
-const dashboard = () => {
-  
+const dashboard = ({userProfile}) => {
+
   // // code to check if verified to visit this page or not
   // const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
@@ -20,7 +20,7 @@ const dashboard = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const {userProfile}=useAuthContext()
+ 
   useEffect(() => {
     // const isAdmin = localStorage.getItem('isAdmin');
     // setIsAdmin(isAdmin);
@@ -153,5 +153,5 @@ const dashboard = () => {
   );
 };
 
-export default (dashboard);
+export default withAdminAuthorization(dashboard);
 //  export default (dashboard);

@@ -93,8 +93,8 @@ const Payment = () => {
           />
         )}
         <style>{styles}</style>
-        <DashboardNav />
-        <div className="w-full bg-[#0D0E14] overflow-hidden">
+        <DashboardNav  heading={"Payment"}/>
+        <div className="w-full bg-[#0D0E14] overflow-hidden pt-5">
           <div className="text-center text-white text-lg">
             <h1 className="text-[2.2rem] font-bold">Subscribe</h1>
             <p className="mb-4">Join NeatSkills & Choose From The Below Plan</p>
@@ -111,4 +111,4 @@ const Payment = () => {
   );
 };
 
-export default withStudentAuthorization(Payment);
+export default (Payment);

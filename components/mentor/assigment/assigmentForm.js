@@ -5,6 +5,7 @@ import Calender from '@/components/common/calendar/mentor/calendar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
+import firebase from './firebaseConfig';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -31,13 +32,21 @@ function AddAssigmentForm() {
   const handleSubmit = e => {
     e.preventDefault();
 
+    // Validate the form data using Yup
     validationSchema
       .validate(formData, { abortEarly: false })
       .then(() => {
-        // Form data is valid, perform submission logic
-        // ...
-
-        // Reset form data
+        // Save assignment data to Firebase Firestore
+        return assignmentsCollection.add({
+          title: formData.title,
+          course: formData.course,
+          module: formData.module,
+          marks: parseFloat(formData.marks), // Convert marks to a number
+          date: new Date(formData.date) // Convert date string to a Date object
+        });
+      })
+      .then(() => {
+        // Reset form data and show success message (optional)
         setFormData({
           title: '',
           course: '',
@@ -48,12 +57,16 @@ function AddAssigmentForm() {
         setErrors({});
       })
       .catch(validationErrors => {
-        // Update errors state with validation errors
+        // Handle validation errors
         const errors = {};
         validationErrors.inner.forEach(error => {
           errors[error.path] = error.message;
         });
         setErrors(errors);
+      })
+      .catch(error => {
+        // Handle other errors (e.g., Firebase save error)
+        console.error('Error saving assignment:', error);
       });
   };
 

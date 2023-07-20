@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { auth } from "@/config/firebaseconfig";
 import LeaderBoardMentor from "@/components/mentor/dashboard/leaderboard";
 import CirProgress from "@/components/mentor/other/circularprogressbar";
-import { useSelector } from "react-redux";
+
 import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";

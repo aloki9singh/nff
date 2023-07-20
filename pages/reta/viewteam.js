@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminSidebar from "@/components/common/sidebar/admin";
 import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
