@@ -34,6 +34,8 @@ function AddAssigments() {
   const [assignedCourse, setAssignCourse] = useState([]);
   const [activeElement, setActiveElement] = useState("");
 
+  let course = [];
+
   const handleToggleElement = (element) => {
     setActiveElement(element);
   };
@@ -67,9 +69,20 @@ function AddAssigments() {
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen, dataFetched]);
 
-  if (!verified) {
-    return null;
-  }
+  // if (!verified) {
+  //   return null;
+  // }
+  const getData = async () => {
+    if (!dataFetched) {
+      const courseCollection = collection(db, "courses");
+      const courseInfo = await getDocs(courseCollection);
+      const courseData = courseInfo.docs.map((doc) => doc.data());
+      setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
+      setDataFetched(true);
+    }
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <>

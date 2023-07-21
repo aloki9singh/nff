@@ -47,10 +47,10 @@ const Contact = () => {
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col ">
           <Dashboardnav heading="Contact Us" toggleSideBar={toggleSideBar} />
-          <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
-            <div className="w-[90%] flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit p-4">
+          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
+            <div className="md:w-[90%] w-full flex md:flex-row flex-col bg-[#373A41] md:rounded-[30px] h-fit p-4">
               {/* LEFT */}
               <div className="md:flex-1 md:bg-[#141518] rounded-l-[30px]">
                 <h1 className="mb-[#728095] text-2xl border-b border-[#728095] md:px-8 py-5">
@@ -108,7 +108,10 @@ const Contact = () => {
               <div className="flex-[2_2_0%] md:px-20">
                 <h1 className="md:text-3xl  my-5">Submit a request</h1>
                 <div className="text-white">
-                  <form onSubmit={(e) => contactFn(e, formData)}>
+                  <form onSubmit={(e) =>{ contactFn(e, formData);
+                  
+                  alert("Email Sent!")
+                  }}>
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-white">
                         Your name

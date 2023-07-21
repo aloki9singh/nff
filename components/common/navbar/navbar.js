@@ -130,7 +130,7 @@ export default function Navbar({ nav, setNav }) {
                               <Link href="/beta/profile">
                                 <p className="mb-2">Profile</p>
                               </Link>
-                              <Link href="/invite">
+                              <Link href="#">
                                 <p>Invite a Friend</p>
                               </Link>
                             </div>
