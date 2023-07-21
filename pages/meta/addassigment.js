@@ -56,9 +56,9 @@ function AddAssigments() {
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
 
-  // if (!verified) {
-  //   return null;
-  // }
+  if (!verified) {
+    return null;
+  }
   const getData = async () => {
     const courseCollection = collection(db, "courses")
     const courseInfo = await getDocs(courseCollection);
