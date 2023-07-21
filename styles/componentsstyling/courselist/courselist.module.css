@@ -61,3 +61,10 @@
   width: 0vh;
   transition: 0.5s;
 }
+
+@media screen and (max-width: 760px) {
+  .mainCList {
+    border-radius: 0px 0px 0px 0px;
+    /* width: 166vh; */
+  }
+}

@@ -108,7 +108,10 @@ const Contact = () => {
               <div className="flex-[2_2_0%] md:px-20">
                 <h1 className="md:text-3xl  my-5">Submit a request</h1>
                 <div className="text-white">
-                  <form onSubmit={(e) => contactFn(e, formData)}>
+                  <form onSubmit={(e) =>{ contactFn(e, formData);
+                  
+                  alert("Email Sent!")
+                  }}>
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-white">
                         Your name

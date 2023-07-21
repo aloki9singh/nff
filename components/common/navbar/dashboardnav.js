@@ -26,7 +26,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link
-              href="/beta/dashboard"
+              href="#"
               className="uppercase  h-[43px]  md:h-[71px] flex-shrink-0 align-middle items-center flex"
             >
               <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] inline ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">

@@ -80,10 +80,11 @@ function LoginComp() {
             role: "student",
             photoURL: user.photoURL,
             active: true,
+            trialValid: true,
           };
           callSignupApi(mentorData);
           router.push("/beta/profilecontinue");
-        }  else if (res.user && res.user.verified === true) {
+        } else if (res.user && res.user.verified === true) {
           router.push("/beta/dashboard");
         } else {
           alert(
@@ -92,7 +93,6 @@ function LoginComp() {
           callVerificationEmailApi({ displayName: email, email });
         }
       }
-      
     } catch (error) {
       if (error.code === "auth/user-not-found") {
         alert("User doesn't exist! Please sign up.");
@@ -266,7 +266,9 @@ function LoginComp() {
                   className="bg-[#E1348B] md:w-[100%] w-[50%] p-2 rounded-[10px]"
                 >
                   {loading ? (
-                    <span className="text-base cursor-wait">Logging In ...</span>
+                    <span className="text-base cursor-wait">
+                      Logging In ...
+                    </span>
                   ) : (
                     "Log In"
                   )}
