@@ -63,7 +63,7 @@ function CheckClassSchedule() {
         <ToastMessage
           heading={"Nothing is Scheduled!!"}
           message={
-            "You have not joined any courses yet. Please join a course to access the study material."
+            "You have not joined any courses yet. Please join a course to access the Schedule."
           }
         />
       )}
