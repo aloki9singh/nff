@@ -52,6 +52,7 @@ function Adminlogin() {
     //     photoURL: user.photoURL,
     //     authCode: authCode,
     //     role: "admin",
+    //        verified:true
     //   };
 
     //   await callSignupApi(data);

@@ -23,7 +23,7 @@ const InActiveComp = () => {
     <div>
       {/* viewed courses by class students */}
       <div>
-        <div className="flex justify-between m-5 md:mt-2 gap-2 ">
+        <div className="flex justify-between m-5 md:mt-5 gap-2 ">
           <div className="md:text-base text-xs">
             Students can view these courses
           </div>
@@ -31,7 +31,7 @@ const InActiveComp = () => {
             <button className="border-2 p-1 text-xs w-[60px] ">View All</button>
           </div>
         </div>
-        <div className="w-[100%] flex-wrap md:grid md:grid-cols-3 rounded-[30px] md:space-y-0 space-y-5  gap-3">
+        <div className="w-[100%] flex-wrap md:grid md:grid-cols-3 rounded-[30px] md:space-y-0 space-y-5  gap-3 pt-5">
           {myCourse &&
             myCourse.slice(0, 6).map((e) => (
               <div
