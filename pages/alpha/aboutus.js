@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-
+import { useMediaQuery } from "react-responsive";
 import { db } from "@/config/firebaseconfig";
 
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
@@ -13,6 +13,7 @@ import { Carousel } from "react-responsive-carousel";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Footer from "@/components/common/footer/footer";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 
 const Aboutus = () => {
   const [mentor, setMentor] = useState([]);
@@ -100,11 +101,32 @@ const Aboutus = () => {
       return email;
     }
   };
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
   return (
     <div className="flex flex-col items-center">
-      <Dashboardnav heading="About Us" />
-
+      <Dashboardnav heading="About Us" toggleSideBar={toggleSideBar} />
+      {isMobileScreen && (
+        <div
+          className={`fixed right-0 ${
+            SideBarState ? "block" : "hidden"
+          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+        >
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
+      )}
       <div className="flex flex-col items-center mt-8 md:mt-0 ">
         <div
           className="text-center text-2xl md:text-4xl md:m-10 py-2

@@ -28,7 +28,12 @@ const InActiveComp = () => {
             Students can view these courses
           </div>
           <div>
-            <button className="border-2 p-1 text-xs w-[60px] ">View All</button>
+            <Link href={"/beta/courseoverview"}>
+              {" "}
+              <button className="border-2 p-1 text-xs w-[60px] ">
+                View All
+              </button>
+            </Link>
           </div>
         </div>
         <div className="w-[100%] flex-wrap md:grid md:grid-cols-3 rounded-[30px] md:space-y-0 space-y-5  gap-3 pt-5">
@@ -56,16 +61,20 @@ const InActiveComp = () => {
                   </div>
                 </div>
                 <div className="text-[10px] text-gray-600">COURSE</div>
-                <h1 className="text-sm overflow-hidden overflow-ellipsis md:line-clamp-1">{e.title}</h1>
+                <h1 className="text-sm overflow-hidden overflow-ellipsis md:line-clamp-1">
+                  {e.title}
+                </h1>
                 <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500 overflow-hidden overflow-ellipsis md:line-clamp-2 line-clamp-3">
                   {e.desc}
                 </p>
 
                 <div className="text-right">
-                  <Link href={{
-                    pathname: "/beta/coursedetail",
-                    query: { title: e.title }
-                  }}>
+                  <Link
+                    href={{
+                      pathname: "/beta/coursedetail",
+                      query: { title: e.title },
+                    }}
+                  >
                     <button className="mt-2 text-xs  border-pink p-2 border">
                       Explore
                     </button>
