@@ -5,8 +5,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useCallback } from 'react';
 import { storage } from '@/config/firebaseconfig';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
+import { collection } from 'firebase/firestore';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -18,10 +19,12 @@ const validationSchema = Yup.object().shape({
   date: Yup.date().required('Date is required')
 });
 
-function AddAssigmentForm({ assignedCourse}) {
+function AddAssigmentForm({ assignedCourse }) {
   const [file, setFile] = useState(null);
+  const [key, setkey] = useState(0)
   const [url, setUrl] = useState("");
   const [selectedCourse, setSelectedCourse] = useState()
+  const [progressData, setProgress] = useState()
   const [formData, setFormData] = useState({
     title: null,
     course: null,
@@ -40,6 +43,7 @@ function AddAssigmentForm({ assignedCourse}) {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        setProgress(progress)
       },
       (error) => {
         console.log(error);
@@ -49,61 +53,51 @@ function AddAssigmentForm({ assignedCourse}) {
           setUrl(downloadURL);
         });
       }
-      );
-    }, [file]);
-    
-    useEffect(()=>{
-      if (file) {
-        uploadFile();
-      }
-    },[file, uploadFile])
-    const uid = assignedCourse.filter((ele) => ele.title == formData.course)[0]?.uid
-    console.log(uid)
-    
-  const handleSubmit = e => {
-    e.preventDefault();
+    );
+  }, [file]);
 
+  useEffect(() => {
+    if (file) {
+      uploadFile();
+    }
+  }, [file, uploadFile])
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const uid = selectedCourse[0]?.mentorid
     // Validate the form data using Yup
     validationSchema
       .validate(formData, { abortEarly: false })
       .then(async () => {
-        console.log(uid)
-        const courseRef = await getDoc(doc(db, "courses", uid))
-        const courseData = courseRef.data()
-        console.log(courseData)
-        let courseassignment = {}
-        if (courseData) {
-          courseassignment = {
-            ...courseData.assignment, assignment: {
+        const courseCollection = collection(db, "courses");
+        const q = query(courseCollection, where("mentorid", "==", uid));
+        const courseSnapshot = await getDocs(q);
+        courseSnapshot.docs.filter(async (docu) => {
+          const data = docu.data();
+          const docRef = docu.ref;
+          if (data.title == formData.course) {
+            const courseInfo = {
+              assignment: [],
+            };
+            if (data.assignment){
+              (data.assignment).forEach(element => {
+                courseInfo.assignment.push(element)
+              });
+            }
+            const courseassignment = {
               title: formData.title,
               course: formData.course,
               module: formData.module,
-              marks: parseFloat(formData.marks), // Convert marks to a number
-              date: new Date(formData.date), // Convert date string to a Date object
-              url: url
-            }
+              marks: parseFloat(formData.marks),
+              date: new Date(formData.date), // Make sure "formData.date" is a valid date string
+              url: url,
+            };
+            courseInfo.assignment.push(courseassignment);
+            await updateDoc(docRef,courseInfo);
           }
-        }
-        else {
-          courseassignment = {
-            assignment: {
-              title: formData.title,
-              course: formData.course,
-              module: formData.module,
-              marks: parseFloat(formData.marks), // Convert marks to a number
-              date: new Date(formData.date), // Convert date string to a Date object
-              url: url
-            }
-          }
-        }
-        console.log(courseassignment)
-        const docRef = await updateDoc(
-          doc(db, "courses", uid),
-          courseassignment
-        );
+        });
       })
       .then(() => {
-        alert("Assignment created successfully")
         // Reset form data and show success message (optional)
         setFormData({
           title: '',
@@ -112,9 +106,12 @@ function AddAssigmentForm({ assignedCourse}) {
           marks: '',
           date: ''
         });
-        setUrl()
-        setFile()
+        setkey((prevkey)=> prevkey+1)
+        setFile('')
+        setUrl('')
+        setProgress('')
         setErrors({});
+        alert("Assignment created successfully")
       })
       .catch(validationErrors => {
         // Handle validation errors
@@ -123,6 +120,7 @@ function AddAssigmentForm({ assignedCourse}) {
           errors[error.path] = error.message;
         });
         setErrors(errors);
+        // console.log(err)
       })
       .catch(error => {
         // Handle other errors (e.g., Firebase save error)
@@ -135,11 +133,12 @@ function AddAssigmentForm({ assignedCourse}) {
     setFile(selectedFile);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedCourse(assignedCourse.filter((ele) => {
       return (ele.title == formData.course)
     }))
-  },[formData])
+  }, [formData.course])
+
   return (
     <>
       <div className='w-full h-full'>
@@ -158,7 +157,6 @@ function AddAssigmentForm({ assignedCourse}) {
               onChange={e =>
                 setFormData({ ...formData, title: e.target.value })
               }
-
             />
             {errors.title && <div className='text-red-500'>{errors.title}</div>}
           </div>
@@ -172,14 +170,14 @@ function AddAssigmentForm({ assignedCourse}) {
               name='course'
               className='w-full md:w-64 p-2 mb-2 md:mb-0 md:ml-4 text-white rounded-lg bg-[#414348]'
               value={formData.course}
-              onChange={e => 
+              onChange={e =>
                 setFormData({ ...formData, course: e.target.value })
               }
-             >
-              <option selected disabled>Select</option>
+            >
+              <option value="" selected disabled>Select</option>
               {assignedCourse ? assignedCourse.map((ele) => {
                 return (
-                  <option value={ele.title}>{ele.title}</option>
+                  <option value={ele.title} key={ele.id}>{ele.title}</option>
                 )
               }) : <option>No Course</option>}
             </select>
@@ -200,10 +198,10 @@ function AddAssigmentForm({ assignedCourse}) {
               onChange={e =>
                 setFormData({ ...formData, module: e.target.value })
               }>
-              <option selected disabled>Select</option>
+              <option value="" selected disabled>Select</option>
               {selectedCourse && selectedCourse[0]?.modules ? (selectedCourse[0]?.modules).map((ele) => {
                 return (
-                  <option value={ele.name}>{ele.name}</option>
+                  <option value={ele.name} key={ele.id}>{ele.name}</option>
                 )
               }) : <option>No modules</option>}
             </select>
@@ -252,7 +250,7 @@ function AddAssigmentForm({ assignedCourse}) {
             <div>Upload Assignment File</div>
             <div className='w-full  flex justify-center'>
               <div className='mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] '>
-                <input type='file' id='file' className='w-full h-full border-dashed border-2 rounded-xl bg-[#505057]' onChange={handleChange} hidden />
+                <input type='file' key={key} id='file' className='w-full h-full border-dashed border-2 rounded-xl bg-[#505057]' onChange={handleChange} hidden />
                 <label htmlFor='file' className='w-full h-full flex flex-col items-center justify-center'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -273,7 +271,8 @@ function AddAssigmentForm({ assignedCourse}) {
                   <p className='text-white text-center text-xs mt-1'>
                     pdf, word document (max 2-5 MB)
                   </p>
-                  {file?.name}
+                  {file?.name}<br />
+                  {progressData && `${progressData}% done`}
                 </label>
               </div>
             </div>

@@ -80,7 +80,7 @@ const Payment = () => {
   return (
     <>
       <div
-        className={`md:overflow-hidden h-screen ${
+        className={` h-screen ${
           showToast ? "blur-lg" : null
         }`}
       >

@@ -69,7 +69,7 @@ const ChoosePlan = ({ clickEvent, trial}) => {
       </h2> </div>
     </>
     }
-      <div className="flex flex-col md:flex-row justify-center w-[90%] h-[60%]">
+      <div className="flex flex-col md:flex-row justify-center w-[90%]">
         {plan.map((item, ind) => (
           <Plan
             odd={ind % 2 == 0 ? "oddcard" : "evencard"}

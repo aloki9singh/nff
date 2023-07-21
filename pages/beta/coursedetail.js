@@ -78,9 +78,7 @@ const Afterlogin = () => {
     sendSideBarState(showSideBar);
   }
 
-  const {userSubsribed, isTrialValid} = CourseAccess(userID.uid);
 
-  console.log(userSubsribed, isTrialValid)
 
   return (
     <>
@@ -127,7 +125,7 @@ const Afterlogin = () => {
                       type="button"
                       className=" md:text-base mt-10 mb-10 lg:text-base xl:text-lg rounded-xl bg-[#A145CD] px-4 py-2 font-semibold"
                     >
-                      {isTrialValid ? "Get Started for Free" : userSubsribed? "Continue Learning":"Subscribe Now"}
+                      Get Started for Free
                     </Link>
                   </div>
                   <div className="flex justify-center lg:justify-end lg:pr-8 lg:flex m-auto mt-[-20px]">
