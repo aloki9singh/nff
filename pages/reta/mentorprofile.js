@@ -702,4 +702,4 @@ const MentorProfile = () => {
   );
 };
 
-export default (MentorProfile);
+export default withAdminAuthorization(MentorProfile);

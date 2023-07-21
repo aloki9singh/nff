@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
-import Calender from '@/components/common/calendar/mentor/calendar';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
-import firebase from './firebaseConfig';
+import { useCallback } from 'react';
+import { storage } from '@/config/firebaseconfig';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/config/firebaseconfig';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -17,35 +18,92 @@ const validationSchema = Yup.object().shape({
   date: Yup.date().required('Date is required')
 });
 
-function AddAssigmentForm() {
+function AddAssigmentForm({ assignedCourse}) {
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState()
   const [formData, setFormData] = useState({
-    title: '',
-    course: '',
-    module: '',
-    marks: '',
-    date: ''
+    title: null,
+    course: null,
+    module: null,
+    marks: null,
+    date: null
   });
   const [errors, setErrors] = useState({});
-
   const router = useRouter();
-
+  const uploadFile = useCallback(async () => {
+    const storageRef = ref(storage, `newassignment/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUrl(downloadURL);
+        });
+      }
+      );
+    }, [file]);
+    
+    useEffect(()=>{
+      if (file) {
+        uploadFile();
+      }
+    },[file, uploadFile])
+    const uid = assignedCourse.filter((ele) => ele.title == formData.course)[0]?.uid
+    console.log(uid)
+    
   const handleSubmit = e => {
     e.preventDefault();
 
     // Validate the form data using Yup
     validationSchema
       .validate(formData, { abortEarly: false })
-      .then(() => {
-        // Save assignment data to Firebase Firestore
-        return assignmentsCollection.add({
-          title: formData.title,
-          course: formData.course,
-          module: formData.module,
-          marks: parseFloat(formData.marks), // Convert marks to a number
-          date: new Date(formData.date) // Convert date string to a Date object
-        });
+      .then(async () => {
+        console.log(uid)
+        const courseRef = await getDoc(doc(db, "courses", uid))
+        const courseData = courseRef.data()
+        console.log(courseData)
+        let courseassignment = {}
+        if (courseData) {
+          courseassignment = {
+            ...courseData.assignment, assignment: {
+              title: formData.title,
+              course: formData.course,
+              module: formData.module,
+              marks: parseFloat(formData.marks), // Convert marks to a number
+              date: new Date(formData.date), // Convert date string to a Date object
+              url: url
+            }
+          }
+        }
+        else {
+          courseassignment = {
+            assignment: {
+              title: formData.title,
+              course: formData.course,
+              module: formData.module,
+              marks: parseFloat(formData.marks), // Convert marks to a number
+              date: new Date(formData.date), // Convert date string to a Date object
+              url: url
+            }
+          }
+        }
+        console.log(courseassignment)
+        const docRef = await updateDoc(
+          doc(db, "courses", uid),
+          courseassignment
+        );
       })
       .then(() => {
+        alert("Assignment created successfully")
         // Reset form data and show success message (optional)
         setFormData({
           title: '',
@@ -54,6 +112,8 @@ function AddAssigmentForm() {
           marks: '',
           date: ''
         });
+        setUrl()
+        setFile()
         setErrors({});
       })
       .catch(validationErrors => {
@@ -70,6 +130,16 @@ function AddAssigmentForm() {
       });
   };
 
+  const handleChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  useEffect(()=>{
+    setSelectedCourse(assignedCourse.filter((ele) => {
+      return (ele.title == formData.course)
+    }))
+  },[formData])
   return (
     <>
       <div className='w-full h-full'>
@@ -84,9 +154,11 @@ function AddAssigmentForm() {
               name='title'
               className='w-full  md:w-64 p-2 mb-2 md:mb-0 md:ml-10 text-white rounded-lg bg-[#414348]'
               value={formData.title}
+              placeholder='title'
               onChange={e =>
                 setFormData({ ...formData, title: e.target.value })
               }
+
             />
             {errors.title && <div className='text-red-500'>{errors.title}</div>}
           </div>
@@ -100,12 +172,16 @@ function AddAssigmentForm() {
               name='course'
               className='w-full md:w-64 p-2 mb-2 md:mb-0 md:ml-4 text-white rounded-lg bg-[#414348]'
               value={formData.course}
-              onChange={e =>
+              onChange={e => 
                 setFormData({ ...formData, course: e.target.value })
-              }>
-              <option value='course1'>Course 1</option>
-              <option value='course2'>Course 2</option>
-              <option value='course3'>Course 3</option>
+              }
+             >
+              <option selected disabled>Select</option>
+              {assignedCourse ? assignedCourse.map((ele) => {
+                return (
+                  <option value={ele.title}>{ele.title}</option>
+                )
+              }) : <option>No Course</option>}
             </select>
             {errors.course && (
               <div className='text-red-500'>{errors.course}</div>
@@ -124,9 +200,12 @@ function AddAssigmentForm() {
               onChange={e =>
                 setFormData({ ...formData, module: e.target.value })
               }>
-              <option value='module1'>Module 1</option>
-              <option value='module2'>Module 2</option>
-              <option value='module3'>Module 3</option>
+              <option selected disabled>Select</option>
+              {selectedCourse && selectedCourse[0]?.modules ? (selectedCourse[0]?.modules).map((ele) => {
+                return (
+                  <option value={ele.name}>{ele.name}</option>
+                )
+              }) : <option>No modules</option>}
             </select>
             {errors.module && (
               <div className='text-red-500'>{errors.module}</div>
@@ -139,7 +218,7 @@ function AddAssigmentForm() {
                 Marks:
               </label>
               <input
-                type='text'
+                type='number'
                 id='marks'
                 name='marks'
                 className='w-full md:w-64 p-2 mb-2 md:mb-0 md:ml-6  text-white rounded-lg bg-[#414348]'
@@ -173,29 +252,29 @@ function AddAssigmentForm() {
             <div>Upload Assignment File</div>
             <div className='w-full  flex justify-center'>
               <div className='mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] '>
-                <div className='w-full h-full border-dashed border-2 rounded-xl bg-[#505057]'>
-                  <div className='w-full h-full flex flex-col items-center justify-center'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='white'
-                      strokeWidth='2'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      className='feather feather-folder w-12 h-12 mb-2'>
-                      <path d='M22 11V6c0-1.1-.9-2-2-2H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-5' />
-                      <rect x='2' y='2' width='20' height='8' rx='2' ry='2' />
-                    </svg>
+                <input type='file' id='file' className='w-full h-full border-dashed border-2 rounded-xl bg-[#505057]' onChange={handleChange} hidden />
+                <label htmlFor='file' className='w-full h-full flex flex-col items-center justify-center'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='white'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    className='feather feather-folder w-12 h-12 mb-2'>
+                    <path d='M22 11V6c0-1.1-.9-2-2-2H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-5' />
+                    <rect x='2' y='2' width='20' height='8' rx='2' ry='2' />
+                  </svg>
 
-                    <p className='text-white text-center mt-2 text-xs'>
-                      Click to Upload or drag and drop
-                    </p>
-                    <p className='text-white text-center text-xs mt-1'>
-                      pdf, word document (max 2-5 MB)
-                    </p>
-                  </div>
-                </div>
+                  <p className='text-white text-center mt-2 text-xs'>
+                    Click to Upload or drag and drop
+                  </p>
+                  <p className='text-white text-center text-xs mt-1'>
+                    pdf, word document (max 2-5 MB)
+                  </p>
+                  {file?.name}
+                </label>
               </div>
             </div>
           </div>

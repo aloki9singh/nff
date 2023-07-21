@@ -124,14 +124,14 @@ function Adminlogin() {
       setLoading(false);
     }
     catch (error) {
-      if (data.error.includes("Firebase: Error (auth/wrong-password)")) {
+      if (error.message=="Firebase: Error (auth/wrong-password)") {
         alert("Please check Your Credentials.");
-      } else if (data.error.includes("Internal server error")) {
+      } else if (error.message=="Internal server error") {
         alert("Please check Your Credentials.");
       }
       else {
         alert("Please check Your Credentials.");
-        console.log("Error logging in:", data.error);
+        console.log("Error logging in:", error);
       }
     }
   }

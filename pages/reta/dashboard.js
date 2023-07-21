@@ -2,6 +2,7 @@
 // side bar is dummy need to change side bar  front data w.r.t  admin
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
+import { useAuthContext } from '@/lib/context/AuthContext';
 
 import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
@@ -12,7 +13,9 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
-const Dashboard = ({userProfile}) => {
+
+const Dashboard = () => {
+
 
   // // code to check if verified to visit this page or not
   // const [isAdmin, setIsAdmin] = useState(false);
@@ -21,7 +24,7 @@ const Dashboard = ({userProfile}) => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
- 
+  const {userProfile} =useAuthContext()
   useEffect(() => {
     // const isAdmin = localStorage.getItem('isAdmin');
     // setIsAdmin(isAdmin);
@@ -44,6 +47,8 @@ const Dashboard = ({userProfile}) => {
   // if (!isAdmin) {
   //   return null;
   // }
+
+  console.log(userProfile)
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>
@@ -67,13 +72,13 @@ const Dashboard = ({userProfile}) => {
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
           <AdminTopbar heading={'Dashboard'} toggleSideBar={toggleSideBar} />
           {/* text */}
-          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-[80px] '>
+          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-10 '>
             <div className='flex flex-col justify-center h-full'>
               <div className='flex align-middle justify-center  '>
                 <div className='text-center space-y-5 '>
                   <div className=' space-y-4 '>
                     <h1 className='text-[#A145CD] md:text-4xl text-2xl  '>
-                      Welcome Back, {removeDomainFromEmail(userProfile?.displayName)}!{' '}
+                      Welcome Back, {removeDomainFromEmail(userProfile?.email)}!{' '}
                     </h1>
                     <p className='text-white'>Select what you want to do</p>
                   </div>
@@ -85,7 +90,7 @@ const Dashboard = ({userProfile}) => {
                       <div
                         className='bg-[#B26ED3] md:w-[150px] w-[120px] md:h-[200px] h-[150px] rounded m-auto p-2 space-y-2 hover:border-[2px] cursor-pointer'
                         >
-                        <Link href={'/meta/modifyCourses'} className='h-full flex flex-col justify-around'>
+                        <Link href={'/reta/modifyCourses'} className='h-full flex flex-col justify-around'>
                           <div className='flex justify-center align-middle'>
                             <Image
                               alt='Icon'

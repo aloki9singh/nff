@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { contactFn } from '@/lib/api';
 import { useMediaQuery } from "react-responsive";
+import MentorTopbar from '@/components/common/navbar/mentortopbar';
+import MentorSidebar from '@/components/common/sidebar/mentor';
 const Contact = () => {
   const [query, setQuery] = useState('');
 
@@ -37,20 +39,20 @@ const Contact = () => {
             className={`fixed right-0 ${SideBarState ? "block" : "hidden"
               } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
-            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+              <MentorSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
 
         {/* Second Sidebar - Visible on Desktop */}
         {!isMobileScreen && (
           <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+              <MentorSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
         <div className="w-full h-full flex flex-col">
-          <Dashboardnav heading="Contact Us" toggleSideBar={toggleSideBar} />
-          <div className="rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
-            <div className="w-[90%] flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit p-4">
+        <MentorTopbar heading="Contact Us" toggleSideBar={toggleSideBar} />
+          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
+            <div className="w-[90%] flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit p-4 ">
               {/* LEFT */}
               <div className="md:flex-1 md:bg-[#141518] rounded-l-[30px]">
                 <h1 className="mb-[#728095] text-2xl border-b border-[#728095] md:px-8 py-5">
@@ -98,7 +100,7 @@ const Contact = () => {
                     <div>
                       <h1 className="text-[#E1348B]">Location</h1>
                       <p className="text-[#AFB0B3] text-sm">
-                       India
+                        India
                       </p>
                     </div>
                   </div>
