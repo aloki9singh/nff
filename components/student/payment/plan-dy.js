@@ -46,7 +46,7 @@ export default function Plan({
         className={` ${odd} h-[24rem] w-min-[480px] md:w-[23.5%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto`}
       >
         <div className="border-b border-[#ffffffc0] px-6 pt-8 md:pt-4 pb-2">
-          <h1 className="text-2xl md:xl lg:text-2xl xl:text-4xl md:mb-2 font-medium">
+          <h1 className="text-2xl md:xl lg:text-2xl xl:text-2xl md:mb-2 font-medium">
             {title}
           </h1>
           <h1 className="text-sm md:mb-2">
