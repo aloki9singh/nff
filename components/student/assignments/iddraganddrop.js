@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { TbFileUpload } from 'react-icons/tb';
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { TbFileUpload } from "react-icons/tb";
 
-export let fileURL = '';
+export let fileURL = "";
 
 export default function IDdraganddrop({ name, setValue, onChange, onBlur }) {
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
@@ -11,7 +11,10 @@ export default function IDdraganddrop({ name, setValue, onChange, onBlur }) {
         shouldValidate: true,
       });
     },
+    accept: "image/jpeg, image/png, image/svg+xml",
+
     maxFiles: 1,
+    maxSize: 5242880, // 5MB
   });
 
   return (
@@ -20,17 +23,24 @@ export default function IDdraganddrop({ name, setValue, onChange, onBlur }) {
         {...getRootProps()}
         className={`w-full h-full px-10 py-4 md:py-6 border-dashed border-white p-4 border-[1px] mt-2 rounded-xl bg-[#333333]`}
       >
-        <input {...getInputProps({
-          onChange,
-          onBlur,
-        })} />
+        <input
+          {...getInputProps({
+            onChange,
+            onBlur,
+          })}
+          type="file"
+          accept="image/png, image/gif, image/jpeg"
+        />
         <div className="flex py-2 md:py-6 justify-center">
           <TbFileUpload size={30} />
         </div>
 
-        <p className="text-center text-lg "><span className='font-medium text-white'>Click to upload or</span> drag and drop</p>
+        <p className="text-center text-lg ">
+          <span className="font-medium text-white">Click to upload or</span>{" "}
+          drag and drop
+        </p>
         <p className="text-sm flex justify-center text-center">
-        jpeg , png, svg (max 2-5 mb)
+          jpeg , png, svg (max 2-5 mb)
         </p>
       </div>
       <div className="mt-3">

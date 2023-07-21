@@ -1,4 +1,3 @@
-
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import {
@@ -23,8 +22,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { AiOutlinePlus } from "react-icons/ai";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { generate } from "shortid";
+import { isString } from "formik";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
@@ -36,14 +36,11 @@ const categories = [
   "Others",
 ];
 
-
 const styles = `
 input {
     width: 100%;
 }
 `;
-
-
 
 const planCourseSchema = yup
   .object({
@@ -87,8 +84,9 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <input
             type="text"
             placeholder="Enter coures title"
-            className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
-              }`}
+            className={`   h-10 rounded-lg px-2 ${
+              errors.title ? "border border-red-500" : "border-none"
+            }`}
             style={{ background: "#333333" }}
             {...register("title", { required: true })}
           />
@@ -103,8 +101,9 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             placeholder="Enter course description"
-            className={`  h-28 w-full rounded-lg px-2 ${errors.desc?.message ? "border-red-500 border border-solid" : ""
-              } `}
+            className={`  h-28 w-full rounded-lg px-2 ${
+              errors.desc?.message ? "border-red-500 border border-solid" : ""
+            } `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
           />
@@ -121,8 +120,9 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <div className="flex flex-col flex-1">
             <input
               type="number"
-              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
-                }`}
+              className={`   h-10 rounded-lg px-2 ${
+                errors.title ? "border border-red-500" : "border-none"
+              }`}
               style={{ background: "#333333" }}
               placeholder="Enter duration in weeks"
               {...register("duration", { required: true, valueAsNumber: true })}
@@ -138,8 +138,9 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             <input
               type="number"
               placeholder="Enter total lectures"
-              className={`   h-10 rounded-lg px-2 ${errors.title ? "border border-red-500" : "border-none"
-                }`}
+              className={`   h-10 rounded-lg px-2 ${
+                errors.title ? "border border-red-500" : "border-none"
+              }`}
               style={{ background: "#333333" }}
               {...register("lectures", { required: true, valueAsNumber: true })}
             />
@@ -412,9 +413,7 @@ const Accordian = ({ title, children }) => {
   const [open, setOpen] = useState(false);
 
   return (
-
     <div className="bg-[#333333] p-2 px-5 rounded-md md:w-[28rem] max-w-md overflow-hidden">
-
       <h2 id="accordion-flush-heading-1">
         <button
           type="button"
@@ -468,7 +467,31 @@ const moduleSchema = yup.object().shape({
   ),
 });
 
-const ModuleForm = ({ onSubmit }) => {
+const ModuleComp = ({ module }) => (
+  <div>
+    {/* <p className="text-xs text-white/70">Module {index + 1}</p> */}
+    <Accordian title={module.name}>
+      <div className="flex flex-col gap-2 text-sm text-white/80">
+        <p className=" font-semibold">Description:</p>
+        <p className="">{module.desc}</p>
+        <p className=" font-semibold">Videos:</p>
+        <ul className="flex flex-col gap-2 list-disc	">
+          {Array.isArray(module.video) ? (
+            module.video.map((video, index) => (
+              <li key={index}>
+                <p className="text-white/80">{video}</p>
+              </li>
+            ))
+          ) : (
+            <p className="text-white/80 truncate">{module.video}</p>
+          )}
+        </ul>
+      </div>
+    </Accordian>
+  </div>
+);
+
+const ModuleForm = ({ editModule, onSubmit, setEditModule }) => {
   const {
     register,
     control,
@@ -486,6 +509,22 @@ const ModuleForm = ({ onSubmit }) => {
     control,
     name: "video",
   });
+
+  useEffect(() => {
+    if (editModule) {
+      reset({
+        ...editModule,
+        video: editModule.video.map((v) => ({ value: v })),
+      });
+      return;
+    }
+
+    reset({
+      video: [{ value: "" }],
+      name: "",
+      desc: "",
+    });
+  }, [editModule, reset]);
 
   return (
     <form
@@ -608,7 +647,7 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
         // disabled={isUploading}
         className="bg-pink text-white px-10 py-2 rounded-md disabled:cursor-not-allowed mt-2 "
       >
-        Add
+        {editModule ? "Update Module" : "Add Module"}
       </button>
     </form>
   );
@@ -616,6 +655,8 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
 
 const CourseContentForm = ({ initialModules = [], onSubmit }) => {
   const [modules, setModules] = useState(initialModules || []);
+
+  const [editModule, setEditModule] = useState(null);
 
   // const [uploadProgress, setUploadProgress] = useState(0);
   // const [isUploading, setIsUploading] = useState(false);
@@ -673,9 +714,22 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
   //     }
   //   );
   // };
-
+  console.log("editeditModule", editModule);
   const onModuleSubmit = (data) => {
     console.log("data", data);
+
+    console.log("editModule", editModule);
+
+    if (editModule) {
+      setModules((prev) =>
+        prev.map((m) => {
+          if (m.name === editModule.name) return data;
+          return m;
+        })
+      );
+      setEditModule(null);
+      return;
+    }
     setModules([...modules, data]);
   };
 
@@ -685,8 +739,11 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
       <hr className="border-x-2 border-gray-500 mb-4" />
 
       <div className="w-full flex flex-col md:flex-row items-start gap-5">
-
-        <ModuleForm onSubmit={onModuleSubmit} />
+        <ModuleForm
+          editModule={editModule}
+          setEditModule={setEditModule}
+          onSubmit={onModuleSubmit}
+        />
         <div className="flex-[2] flex flex-col ">
           <h5>Class module list</h5>
           <div className="flex-1">
@@ -699,28 +756,27 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
             ) : (
               <div className="flex flex-col mt-4 gap-y-3">
                 {modules.map((module, index) => (
-                  <div key={index}>
-                    <p className="text-xs text-white/70">Module {index + 1}</p>
-                    <Accordian title={module.name}>
-                      <div className="flex flex-col gap-2 text-sm text-white/80">
-                        <p className=" font-semibold">Description:</p>
-                        <p className="">{module.desc}</p>
-                        <p className=" font-semibold">Videos:</p>
-                        <ul className="flex flex-col gap-2 list-disc	">
-                          {Array.isArray(module.video) ? (
-                            module.video.map((video, index) => (
-                              <li key={index}>
-                                <p className="text-white/80">{video}</p>
-                              </li>
-                            ))
-                          ) : (
-                            <p className="text-white/80 truncate">
-                              {module.video}
-                            </p>
-                          )}
-                        </ul>
-                      </div>
-                    </Accordian>
+                  <div key={index} className="flex flex-row items-center gap-2">
+                    <ModuleComp module={module} />
+
+                    <button
+                      className=" transition-colors duration-150 hover:text-green-500 p-2  "
+                      onClick={() => {
+                        setEditModule(module);
+                      }}
+                    >
+                      <MdEdit className="text-lg" />
+                    </button>
+                    <button
+                      className="  transition-colors duration-150 hover:text-red-500 p-2 "
+                      onClick={() => {
+                        // show confirmation modal
+
+                        setModules(modules.filter((m, i) => i !== index));
+                      }}
+                    >
+                      <MdDelete className="text-lg" />
+                    </button>
                   </div>
                 ))}
               </div>
@@ -744,18 +800,20 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
           key={index}
         >
           <h4
-            className={`text-xl ${currentStep === index + 1
-              ? "text-primary"
-              : "text-primary/60 group-hover:text-primary/90"
-              }  font-semibold`}
+            className={`text-xl ${
+              currentStep === index + 1
+                ? "text-primary"
+                : "text-primary/60 group-hover:text-primary/90"
+            }  font-semibold`}
           >
             Step {index + 1}
           </h4>
           <p
-            className={`${currentStep === index + 1
-              ? "text-white"
-              : "text-white/60 group-hover:text-white/90"
-              }`}
+            className={`${
+              currentStep === index + 1
+                ? "text-white"
+                : "text-white/60 group-hover:text-white/90"
+            }`}
           >
             {step}
           </p>
@@ -769,38 +827,48 @@ const createCourse = async (courseDetails) => {
   const data = {
     ...courseDetails,
     createdAt: serverTimestamp(),
-    banner: "",
+    banner: courseDetails.id
+      ? isString(courseDetails.banner)
+        ? courseDetails.banner
+        : ""
+      : "",
   };
 
   console.log("data final", data);
   const courseId = courseDetails.id || generate();
 
-  await setDoc(doc(db, "courses", courseId), data, {
-    merge: true,
-  });
+  await setDoc(
+    doc(db, "courses", courseId),
+    { ...data, id: courseId },
+    {
+      merge: true,
+    }
+  );
 
-  uploadToFirebase(courseDetails.banner, (url) => {
-    setDoc(
-      doc(db, "courses", courseId),
-      {
-        banner: url,
-        id: courseId,
-      },
-      {
-        merge: true,
-      }
-    );
-    setDoc(doc(collection(db, "chatGroups"), courseId), {
-      name: courseDetails.title,
-      members: [auth.currentUser?.uid],
-      photoURL: url,
-      isGroup: true,
-      groupId: courseId,
-      lastMessage: "",
-      lastMessageTimestamp: serverTimestamp(),
-      createdAt: serverTimestamp(),
+  if (!isString(courseDetails.banner))
+    uploadToFirebase(courseDetails.banner, (url) => {
+      setDoc(
+        doc(db, "courses", courseId),
+        {
+          banner: url,
+        },
+        {
+          merge: true,
+        }
+      );
+
+      if (!courseDetails.id)
+        setDoc(doc(collection(db, "chatGroups"), courseId), {
+          name: courseDetails.title,
+          members: [auth.currentUser?.uid],
+          photoURL: url,
+          isGroup: true,
+          groupId: courseId,
+          lastMessage: "",
+          lastMessageTimestamp: serverTimestamp(),
+          createdAt: serverTimestamp(),
+        });
     });
-  });
 };
 
 const CreateCourse = ({ course }) => {
@@ -836,6 +904,8 @@ const CreateCourse = ({ course }) => {
     const courseDetails = {
       ...formData,
       modules,
+      id: course?.id,
+      banner: formData.banner || course.banner || "",
     };
     console.log("modules", modules);
 
