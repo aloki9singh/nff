@@ -1,4 +1,4 @@
-import CourseList from "./list";
+import CourseList2 from "./list";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseHeader from "./header";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";

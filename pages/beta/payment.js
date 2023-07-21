@@ -87,7 +87,7 @@ const Payment = () => {
         {showToast && (
           <ToastMessage
             heading="Trial Activated"
-            message="Learn and become your best with Neatskills"
+            message="Learn and become your best with Neatskills by getting started with course"
           />
         )}
         <style>{styles}</style>
