@@ -156,10 +156,23 @@ export default function Courses({ coursesData }) {
               />
             ))}
           </div> */}
-
           <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 ">
-
-            {coursesData.map((course, i) => (
+            {coursesData.slice(0,3).map((course, i) => (
+              <div key={i}>
+                <CourseCard
+                  key={course.id}
+                  sessions={course.lessons}
+                  title={course.title}
+                  desc={course.desc}
+                  level={course.level}
+                  icon={course.icon}
+                  banner={course.banner}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 pt-10">
+            {coursesData.slice(3,6).map((course, i) => (
               <div key={i}>
                 <CourseCard
                   key={course.id}

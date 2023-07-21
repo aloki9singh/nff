@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminSidebar from "@/components/common/sidebar/admin";
 import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
@@ -113,7 +113,7 @@ function AddMentor() {
 
             <div className="flex gap-2 mt-20 md:mt-10">
               <div
-                className="ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white cursor-pointer"
+                className="ml-8 md:ml-12 mt-7 font-semibold text-xl  md:text-4xl text-white cursor-pointer"
                 onClick={() => handleTabClick("mentor")}
               >
                 Application Pending: ({mentor?.length})
@@ -313,4 +313,4 @@ function AddMentor() {
   );
 }
 
-export default (AddMentor);
+export default withAdminAuthorization(AddMentor);

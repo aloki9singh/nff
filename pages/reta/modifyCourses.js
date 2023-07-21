@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import desktop from "@/public/componentsgraphics/student/courses/header/desktopicon.svg";
 import laptop from "@/public/componentsgraphics/student/courses/header/laptopicon.svg";
 import { useMediaQuery } from "react-responsive";
-import MentorSidebar from "@/components/common/sidebar/mentor";
-import MentorTopbar from "@/components/common/navbar/mentortopbar";
-import CourseList from "@/components/student/courses/list";
+import CourseList from "@/components/student/courses/list2";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import { callUserById } from "@/lib/exportablefunctions";
 import { auth } from "@/config/firebaseconfig";
@@ -13,8 +11,11 @@ import Image from "next/image";
 import { db } from "@/config/firebaseconfig";
 import { useRouter } from "next/router";
 import { collection, getDocs } from "firebase/firestore";
+import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import AdminSidebar from "@/components/common/sidebar/admin";
+import AdminTopbar from "@/components/common/navbar/admintopbar";
 
-export default function ModifyCourses() {
+function ModifyCourses() {
   const router = useRouter();
 
   const [verified, setVerified] = useState();
@@ -89,22 +90,19 @@ export default function ModifyCourses() {
                 SideBarState ? "block" : "hidden"
               } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+               <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
             <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+               <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
           <div className="flex-grow md:rounded-tl-[40px] w-[78%]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-              <MentorTopbar
-                heading="Add/Modify Courses"
-                toggleSideBar={toggleSideBar}
-              />
+            <AdminTopbar heading="Modify Course" toggleSideBar={toggleSideBar} />
             </div>
             <div className="text-white">
               <div className="flex flex-col items-center max-w-[630px]  mx-auto relative pt-20 pb-10 px-10">
@@ -139,3 +137,4 @@ export default function ModifyCourses() {
     </>
   );
 }
+export default withAdminAuthorization(ModifyCourses)

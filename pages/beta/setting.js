@@ -190,5 +190,5 @@ function Settings() {
   );
 }
 
-export default (Settings);
-// export default withStudentAuthorization(Settings);
+// export default (Settings);
+ export default withStudentAuthorization(Settings);

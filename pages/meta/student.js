@@ -4,7 +4,7 @@ import Link from "next/link";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 

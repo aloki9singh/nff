@@ -7,8 +7,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 
 import { AiOutlineMail } from "react-icons/ai";
 import { FaLock } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../../../redux/actions/mentor.action";
+
 import { auth, db } from "../../../config/firebaseconfig";
 
 import { signUpMentor } from "@/lib/exportablefunctions";
@@ -80,7 +79,7 @@ const MentorSignupcomp = () => {
         } else {
           // Get the user document
           const user = userSnapshot.docs[0].data();
-
+          console.log(user,"this")
           if (user.role !== "mentor") {
             alert("You may be authorized for different role!");
             router.push("/");

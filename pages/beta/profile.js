@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+
 import { FiEdit2 } from "react-icons/fi";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 
@@ -86,7 +86,7 @@ function StudentProfile() {
                   <div className="flex">
                     {" "}
                     <Image
-                      src={userProfile.photoURL}
+                      src={userProfile.photoURL||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
                       alt="proImg"
                       height={150}
                       width={150}

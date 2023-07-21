@@ -3,16 +3,20 @@
 import AdminTopbar from '@/components/common/navbar/admintopbar';
 import Sidebar from '@/components/common/sidebar/admin';
 import { useAuthContext } from '@/lib/context/AuthContext';
+
 import { removeDomainFromEmail } from '@/lib/exportablefunctions';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
-const dashboard = () => {
-  
+
+const Dashboard = () => {
+
+
   // // code to check if verified to visit this page or not
   // const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
@@ -20,7 +24,7 @@ const dashboard = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const {userProfile}=useAuthContext()
+  const {userProfile} =useAuthContext()
   useEffect(() => {
     // const isAdmin = localStorage.getItem('isAdmin');
     // setIsAdmin(isAdmin);
@@ -43,6 +47,8 @@ const dashboard = () => {
   // if (!isAdmin) {
   //   return null;
   // }
+
+  console.log(userProfile)
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>
@@ -66,13 +72,13 @@ const dashboard = () => {
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
           <AdminTopbar heading={'Dashboard'} toggleSideBar={toggleSideBar} />
           {/* text */}
-          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-[80px] '>
+          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-10 '>
             <div className='flex flex-col justify-center h-full'>
               <div className='flex align-middle justify-center  '>
                 <div className='text-center space-y-5 '>
                   <div className=' space-y-4 '>
                     <h1 className='text-[#A145CD] md:text-4xl text-2xl  '>
-                      Welcome Back, {removeDomainFromEmail(userProfile?.displayName)}!{' '}
+                      Welcome Back, {removeDomainFromEmail(userProfile?.email)}!{' '}
                     </h1>
                     <p className='text-white'>Select what you want to do</p>
                   </div>
@@ -83,8 +89,8 @@ const dashboard = () => {
                     <div className='md:flex grid  grid-cols-2    text-center justify-around gap-10   m-auto text-sm text-white  '>
                       <div
                         className='bg-[#B26ED3] md:w-[150px] w-[120px] md:h-[200px] h-[150px] rounded m-auto p-2 space-y-2 hover:border-[2px] cursor-pointer'
-                        onClick={() => router.push('addcourse')}>
-                        <div className='h-full flex flex-col justify-around'>
+                        >
+                        <Link href={'/reta/modifyCourses'} className='h-full flex flex-col justify-around'>
                           <div className='flex justify-center align-middle'>
                             <Image
                               alt='Icon'
@@ -97,11 +103,11 @@ const dashboard = () => {
                           <div className='flex align-bottom'>
                             Add/Modify Courses
                           </div>
-                        </div>
+                        </Link>
                       </div>
                       <div
                         className='bg-[#B26ED3] md:w-[150px] w-[120px] md:h-[200px] h-[150px] rounded m-auto p-2 space-y-2 flex flex-col justify-around hover:border-[2px] cursor-pointer'
-                        onClick={() => router.replace('mentors')}>
+                        onClick={() => router.push('mentors')}>
                         <div className='flex justify-center align-middle'>
                           <Image
                             alt='Icon'
@@ -153,5 +159,5 @@ const dashboard = () => {
   );
 };
 
-export default (dashboard);
+export default withAdminAuthorization(Dashboard);
 //  export default (dashboard);

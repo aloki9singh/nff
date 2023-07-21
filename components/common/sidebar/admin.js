@@ -51,7 +51,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                 <p className='pt-2'>{user ? user.displayName : 'Anonymous'}</p>
                 {userProfile && (
                   <p className='text-gray-500 text-[12px] mt-[-4px]'>
-                    Roll no-{userProfile.rollNo}
+                    {/* Roll no-{userProfile.rollNo} */}  Admin
                   </p>
                 )}
               </div>
@@ -87,27 +87,27 @@ const AdminSidebar = ({ toggleSideBar }) => {
                     </label>
                   </Link>
                   <Link
-                    href='/reta/addcourse'
+                    href='/reta/modifyCourses'
                     className='flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin'>
                     <label className='inline-flex items-center space-x-3'>
                       <input
                         id='default-checkbox'
                         type='checkbox'
                         className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === '/reta/addcourse'
+                          router.pathname === '/reta/modifyCourses'
                             ? 'shadow-white'
                             : ''
                         }`}
                         style={{
                           boxShadow:
-                            router.pathname === '/reta/addcourse'
+                            router.pathname === '/reta/modifyCourses'
                               ? '0 0 5px #A145CD'
                               : 'none'
                         }}
                       />{' '}
                       <span
                         className={`ml-3 text-[${
-                          router.pathname == '/reta/addcourse'
+                          router.pathname == '/reta/modifyCourses'
                             ? '#E1348B'
                             : ''
                         }]`}>
@@ -140,7 +140,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                                 ? '#E1348B'
                                 : ''
                             }]`}>
-                            View Students/Mentors
+                           Students/Mentors
                           </span>
                         </label>
                       </Link>

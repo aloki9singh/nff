@@ -1,5 +1,3 @@
-// Page not found in given figma , CSS needed to be rechecked.
-// This page ui is different from the figma design.
 
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
@@ -9,6 +7,7 @@ import {
   serverTimestamp,
   setDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import { auth, db, storage } from "@/config/firebaseconfig";
 import Link from "next/link";
@@ -25,6 +24,8 @@ import * as yup from "yup";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import { generate } from "shortid";
+import withAdminandMentorAuthorization from "@/lib/HOC/withAdminandMentorAuthorization";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
@@ -73,7 +74,6 @@ const PlanCourseForm = ({ state, onSubmit }) => {
     defaultValues: state,
     resolver: yupResolver(planCourseSchema),
   });
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Header currentStep={1} />
@@ -107,6 +107,17 @@ const PlanCourseForm = ({ state, onSubmit }) => {
               } `}
             style={{ background: "#333333" }}
             {...register("desc", { required: true })}
+          />
+          <p className="text-red-500 text-sm">{errors.desc?.message}</p>
+        </div>
+      </div>
+      <div className="hidden">
+        <div className="">
+          <textarea
+            type="text"
+            hidden
+              value={auth.currentUser.uid}
+            {...register("uid", { required: true })}
           />
           <p className="text-red-500 text-sm">{errors.desc?.message}</p>
         </div>
@@ -275,7 +286,7 @@ const TargetStudentsForm = ({ state, onSubmit }) => {
   } = useForm({
     defaultValues: {
       ...state,
-      learn: state?.learn?.map((l) => ({ value: l.value })) || [{ value: "" }],
+      learn: state?.learn?.map((l) => ({ value: l })) || [{ value: "" }],
     },
     resolver: yupResolver(targetStudentsSchema),
   });
@@ -408,11 +419,13 @@ const Header = ({ currentStep, onSubmit }) => {
   );
 };
 
-const Accordian = ({ title, desc }) => {
+const Accordian = ({ title, children }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className=" bg-[#333333] p-2 px-3 rounded-md">
+
+    <div className="bg-[#333333] p-2 px-5 rounded-md md:w-[28rem] max-w-md overflow-hidden">
+
       <h2 id="accordion-flush-heading-1">
         <button
           type="button"
@@ -446,9 +459,7 @@ const Accordian = ({ title, desc }) => {
         className={`${open ? "" : "hidden"}`}
         aria-labelledby="accordion-flush-heading-1"
       >
-        <div className="py-3">
-          <p className="text-white/80">{desc}</p>
-        </div>
+        <div className="py-3">{children}</div>
       </div>
     </div>
   );
@@ -482,12 +493,10 @@ const ModuleForm = ({ onSubmit }) => {
     },
   });
 
-  const { fields, append, remove, } = useFieldArray(
-    {
-      control,
-      name: "video",
-    }
-  );
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "video",
+  });
 
   return (
     <form
@@ -496,10 +505,11 @@ const ModuleForm = ({ onSubmit }) => {
         const moduleData = {
           ...data,
           video: data.video.map((v) => v.value),
-        }
-        reset()
+        };
+        onSubmit?.(moduleData);
+        reset();
       })}
-      className="flex-1 px-10 py-6  border border-[#5F6065] rounded-xl"
+      className="flex-[3] px-10 py-6  border border-[#5F6065] rounded-xl"
     >
       <div className="w-full flex flex-col gap-y-4 mb-7">
         <label className="" htmlFor="name">
@@ -574,7 +584,9 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
                     {...register(`video.${index}.value`)}
                   />
                   <p className="text-red-500 text-sm">
-                    {errors.video?.[index]?.value?.type === "url" ? 'Must be a valid url' : errors.video?.[index]?.value?.message || ''}
+                    {errors.video?.[index]?.value?.type === "url"
+                      ? "Must be a valid url"
+                      : errors.video?.[index]?.value?.message || ""}
                   </p>
                 </div>
                 <button
@@ -602,7 +614,6 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
           <p className="text-red-500 text-sm">{errors.learn?.message}</p>
         </div>
       </div>
-
       <button
         // disabled={isUploading}
         className="bg-pink text-white px-10 py-2 rounded-md disabled:cursor-not-allowed mt-2 "
@@ -613,8 +624,8 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
   );
 };
 
-const CourseContentForm = ({ onSubmit }) => {
-  const [modules, setModules] = useState([]);
+const CourseContentForm = ({ initialModules = [], onSubmit }) => {
+  const [modules, setModules] = useState(initialModules || []);
 
   // const [uploadProgress, setUploadProgress] = useState(0);
   // const [isUploading, setIsUploading] = useState(false);
@@ -682,9 +693,11 @@ const CourseContentForm = ({ onSubmit }) => {
     <>
       <Header currentStep={3} onSubmit={() => onSubmit(modules)} />
       <hr className="border-x-2 border-gray-500 mb-4" />
+
       <div className="w-full flex flex-col md:flex-row items-start gap-5">
+
         <ModuleForm onSubmit={onModuleSubmit} />
-        <div className="flex-1 flex flex-col ">
+        <div className="flex-[2] flex flex-col ">
           <h5>Class module list</h5>
           <div className="flex-1">
             {modules.length === 0 ? (
@@ -698,7 +711,26 @@ const CourseContentForm = ({ onSubmit }) => {
                 {modules.map((module, index) => (
                   <div key={index}>
                     <p className="text-xs text-white/70">Module {index + 1}</p>
-                    <Accordian title={module.name} desc={module.desc} />
+                    <Accordian title={module.name}>
+                      <div className="flex flex-col gap-2 text-sm text-white/80">
+                        <p className=" font-semibold">Description:</p>
+                        <p className="">{module.desc}</p>
+                        <p className=" font-semibold">Videos:</p>
+                        <ul className="flex flex-col gap-2 list-disc	">
+                          {Array.isArray(module.video) ? (
+                            module.video.map((video, index) => (
+                              <li key={index}>
+                                <p className="text-white/80">{video}</p>
+                              </li>
+                            ))
+                          ) : (
+                            <p className="text-white/80 truncate">
+                              {module.video}
+                            </p>
+                          )}
+                        </ul>
+                      </div>
+                    </Accordian>
                   </div>
                 ))}
               </div>
@@ -744,8 +776,6 @@ const Sidebar = ({ currentStep = 1, setStep }) => {
 };
 
 const createCourse = async (courseDetails) => {
-  courseDetails.QA.learn = courseDetails.QA.learn.map((l) => l.value);
-
   const data = {
     ...courseDetails,
     createdAt: serverTimestamp(),
@@ -753,39 +783,41 @@ const createCourse = async (courseDetails) => {
   };
 
   console.log("data final", data);
+  const courseId = courseDetails.id || generate();
 
-  const courseRef = await addDoc(collection(db, "courses"), data);
+  await setDoc(doc(db, "courses", courseId), data, {
+    merge: true,
+  });
 
   uploadToFirebase(courseDetails.banner, (url) => {
     setDoc(
-      doc(db, "courses", courseRef.id),
+      doc(db, "courses", courseId),
       {
         banner: url,
-        id: courseRef.id,
+        id: courseId,
       },
       {
         merge: true,
       }
     );
-    setDoc(doc(collection(db, "chatGroups"), courseRef.id), {
+    setDoc(doc(collection(db, "chatGroups"), courseId), {
       name: courseDetails.title,
       members: [auth.currentUser?.uid],
       photoURL: url,
       isGroup: true,
-      groupId: courseRef.id,
+      groupId: courseId,
       lastMessage: "",
       lastMessageTimestamp: serverTimestamp(),
       createdAt: serverTimestamp(),
     });
   });
-
-  return courseRef.id;
 };
 
-const CreateCourse = () => {
+const CreateCourse = ({ course }) => {
   const [currentStep, helpers] = useStep(3);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(course || {});
   const router = useRouter();
+  console.log("course", course);
 
   const { goToNextStep, goToPrevStep, setStep } = helpers;
 
@@ -797,15 +829,16 @@ const CreateCourse = () => {
     goToNextStep();
   };
 
-  const onTargetStudentFormSubmit = (data, learn) => {
+  const onTargetStudentFormSubmit = (data) => {
     setFormData({
       ...formData,
       QA: {
         ...data,
+        learn: data.learn.map((l) => l.value),
       },
     });
 
-    console.log("target students data", data, learn);
+    console.log("target students data", data);
     goToNextStep();
   };
 
@@ -876,7 +909,10 @@ const CreateCourse = () => {
           )}
 
           {currentStep === 3 && (
-            <CourseContentForm onSubmit={onCourseContentFormSubmit} />
+            <CourseContentForm
+              initialModules={course?.modules}
+              onSubmit={onCourseContentFormSubmit}
+            />
           )}
 
           {currentStep === 2 && (
@@ -891,4 +927,38 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default withAdminandMentorAuthorization(CreateCourse);
+
+export const getServerSideProps = async (ctx) => {
+  const id = ctx.query.id;
+
+  if (!id || typeof id !== "string") {
+    return {
+      props: {
+        course: null,
+      },
+    };
+  }
+  console.log("course id", id);
+
+  const courseRef = doc(db, "courses", id);
+  const courseSnap = await getDoc(courseRef);
+
+  if (!courseSnap.exists()) {
+    return {
+      props: {
+        course: null,
+      },
+    };
+  }
+
+  const course = courseSnap.data();
+  return {
+    props: {
+      course: {
+        ...course,
+        createdAt: course.createdAt.toDate().toString(),
+      },
+    },
+  };
+};

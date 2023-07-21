@@ -1,4 +1,5 @@
 import { DailyTipsCollection, db } from "@/config/firebaseconfig";
+import { useAuthContext } from "@/lib/context/AuthContext";
 import {
   addDoc,
   serverTimestamp,
@@ -19,7 +20,7 @@ function DailyTip() {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState("");
   const [lastTip, setLastTip] = useState(null);
-
+  const { userProfile } = useAuthContext();
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -33,6 +34,8 @@ function DailyTip() {
     const newTip = {
       text,
       createdAt: serverTimestamp(),
+      mentorId: userProfile?.uid,
+      mentorName: userProfile?.displayName,
     };
 
     await addDoc(DailyTipsCollection, newTip);
@@ -42,7 +45,11 @@ function DailyTip() {
   useEffect(() => {
     const fetchLastTip = async () => {
       const DailyTipsCollectionRef = collection(db, "dailytip");
-      const tipsQuery = query(DailyTipsCollectionRef, orderBy("createdAt", "desc"), limit(1));
+      const tipsQuery = query(
+        DailyTipsCollectionRef,
+        orderBy("createdAt", "desc"),
+        limit(1)
+      );
       const querySnapshot = await getDocs(tipsQuery);
 
       querySnapshot.forEach((doc) => {
@@ -81,9 +88,7 @@ function DailyTip() {
             ) : (
               <div>
                 {lastTip ? (
-                  <p
-                    className="text-l font-semibold text-center md:w-[250px]  m-auto px-2 overflow-scroll scrollbar-hide  py-5 bg-[#2E3036] rounded-[10px] md:h-40 h-auto  align-middle  scrollbar-hide "
-                  >
+                  <p className="text-l font-semibold text-center md:w-[250px]  m-auto px-2 overflow-scroll scrollbar-hide  py-5 bg-[#2E3036] rounded-[10px] md:h-40 h-auto  align-middle  scrollbar-hide ">
                     {lastTip.text}
                   </p>
                 ) : (
