@@ -106,7 +106,7 @@ function Videos() {
   const [currentarray, setCurrentArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const { userSubsribed } = CourseAccess(user.uid);
+  const { userSubsribed, isTrialValid } = CourseAccess(user.uid);
 
   useEffect(() => {
     const checkJoined = async () => {
@@ -236,6 +236,7 @@ function Videos() {
     setIsJoined(true);
   }
 
+
   return (
     <>
       {showModal && (
@@ -247,21 +248,26 @@ function Videos() {
         />
       )}
 
+      {!isTrialValid && !userSubsribed ? <ToastMessage
+        heading={"OOPS!"}
+        message={
+          "Your Trail Period has been over. Please subsribe to continue."
+        }
+      /> : null}
+
       {/* <div className={`
        ${!userSubsribed ? "blur-lg" : null }
       `}> */}
       <style>{styles}</style>
       <div>
         <div
-          className={`flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))] ${
-            showModal ? "blur-lg" : null
-          }`}
+          className={`flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))] ${showModal ? "blur-lg" : null
+            } ${!isTrialValid && !userSubsribed ? "blur-sm" : null}`}
         >
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -379,9 +385,8 @@ function Videos() {
                                       disabled={
                                         !(i <= 1 && ind == 0) && !isJoined
                                       }
-                                      className={`flex items-center text-white/80 hover:text-white  ${
-                                        (!(i <= 1 && ind == 0)&& !isJoined) ? "blur-sm" : null
-                                      }`}
+                                      className={`flex items-center text-white/80 hover:text-white  ${(!(i <= 1 && ind == 0) && !isJoined) ? "blur-sm" : null
+                                        }`}
                                       key={i}
                                     >
                                       <BsFillPlayFill className="mr-2" />
@@ -389,16 +394,14 @@ function Videos() {
                                         {module.name} video {i + 1}
                                       </p>
                                     </button>
-                                      <p
-                                        className={`absolute overflow-auto flex ${
-                                          isJoined ? "hidden" : null
-                                        } ${
-                                          i <= 1 && ind == 0 ? "hidden" : null
+                                    <p
+                                      className={`absolute overflow-auto flex ${isJoined ? "hidden" : null
+                                        } ${i <= 1 && ind == 0 ? "hidden" : null
                                         }`}
-                                      >
-                                        Join To Access
-                                        <AiOutlineLock className="text-xl mt-2 unblur" />
-                                      </p>
+                                    >
+                                      Join To Access
+                                      <AiOutlineLock className="text-xl mt-2 unblur" />
+                                    </p>
                                   </div>
                                 </>
                               );

@@ -137,7 +137,6 @@ function Homework() {
               </div>
 
               <div className='grid grid-cols-3 gap-4 m-5'>
-                
                 {activeElement === 'active' ? (
                   <>
                     <HomeWorkCard title='Course 1' desc='Description 1' />
