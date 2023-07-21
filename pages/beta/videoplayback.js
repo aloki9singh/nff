@@ -56,7 +56,7 @@ const Accordion = ({ title, children }) => {
       <h2 id="accordion-flush-heading-1">
         <button
           type="button"
-          className="flex items-center justify-between w-full py-2 font-medium text-left "
+          className="flex items-center justify-between w-[68%] overflow-hidden py-2 font-medium text-left "
           data-accordion-target="#accordion-flush-body-1"
           aria-expanded="true"
           aria-controls="accordion-flush-body-1"
@@ -363,7 +363,7 @@ function Videos() {
                     <h2>Course Content</h2>
                   </div>
 
-                  <div class="h-fit self-start w-full">
+                  <div class="h-fit self-start w-full overflow-hidden">
                     {modules?.map((module, ind) => {
                       return (
                         <Accordion key={ind} title={module.name}>
