@@ -80,7 +80,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
         displayName: input.firstname,
         photoURL: input.photoURL,
         detailSubmitted: true,
-        joinedStudents:null,
+        joinedStudents:[],
       }),
     });
 
