@@ -67,10 +67,7 @@ function AddAssigments() {
     });
     setAssignCourse(course.filter((ele)=> {return ele?.mentorid == user.uid}))
   }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  getData()
 
   return (
     <>
