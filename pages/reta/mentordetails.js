@@ -5,7 +5,15 @@ import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { detailadd, uploadToFirebase } from "@/lib/exportablefunctions";
 import { useRouter } from "next/router";
-import { collection, doc, getDoc, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Image from "next/image";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
@@ -28,19 +36,60 @@ const MentorProfile = () => {
       console.log(documentData);
     }
   };
-  //  console.log(data)
+
+  // ...
+
   const getCourse = async () => {
-    const usersCollection = collection(db, "courses");
-    const q = query(
-      usersCollection,
-      where("title", "==", data.details.interest)
-    );
-    const querySnapshot = await getDoc(q);
-    querySnapshot.forEach((doc) => {
-      const documentData = doc.data();
-      setId(documentData.uid);
-      console.log(documentData);
-    });
+    try {
+      const usersCollection = collection(db, "courses");
+      const q = query(
+        usersCollection,
+        where("title", "==", data.details.interest)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async (docSnapshot) => {
+          const documentData = docSnapshot.data();
+          console.log(documentData);
+          setId(documentData.uid);
+          console.log(documentData.uid);
+
+          // Update the MentorId field of the course document
+          const courseDocRef = doc(usersCollection, docSnapshot.id); // Get the specific course document reference
+          await updateDoc(courseDocRef, { MentorId: [uid], mentorid: uid });
+        //   console.log("courese", courseDocRef.id);
+          detailadd(uid, {
+            courseAssigned: true,
+            active: true,
+            courseid: courseDocRef.id ? courseDocRef.id : "",
+            assignedCourses: [courseDocRef.id],
+          });
+        });
+      } else {
+        console.log("No matching course found.");
+      }
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    }
+  };
+
+  const handleClick2 = () => {
+    try {
+      // Call the detailadd function with relevant parameters
+
+      // Check if the data has 'details' property and call the getCourse function
+      if (data.details) {
+        getCourse();
+      }
+      //   console.log("id",uid,data.details);
+
+      // Navigate to the "/reta/addmentor" route or page
+      router.replace("/reta/addmentor");
+    } catch (err) {
+      // If an error occurs during execution, it will be caught here
+      // You can handle the error in an appropriate way if needed
+    }
   };
 
   useEffect(() => {
@@ -49,7 +98,7 @@ const MentorProfile = () => {
       getCourse();
     }
   }, []);
-  console.log(data);
+
   const handleChange = (e) => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
@@ -79,63 +128,6 @@ const MentorProfile = () => {
     e.preventDefault();
     setEdit(!edit);
   };
-
-  // const setData = (e) => {
-  //     const { name, value, files } = e.target;
-  //     if (name === "profilephoto") {
-  //         // Handle profile photo separately
-  //         const file = files[0];
-  //         uploadToFirebase(file, (url) => {
-  //             setInput((prev) => ({
-  //                 ...prev,
-  //                 photoURL: url,
-  //             }));
-  //         });
-  //     } else {
-  //         // Handle other inputs normally
-  //         setInput((prev) => ({
-  //             ...prev,
-  //             [name]: value,
-  //         }));
-  //     }
-  // };
-
-  // detail added to  Render
-
-  // const detailadd = async () => {
-  //     setLoading(true);
-  //     const res = await fetch(`/api/signup/${uid}`, {
-  //         method: "PATCH",
-  //         headers: {
-  //             "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //             details: mentor,
-  //             displayName: input.firstname,
-  //             photoURL: input.photoURL,
-  //             detailSubmitted: true,
-  //         }),
-  //     });
-
-  //     const data = await res.json();
-  //     console.log(data)
-  //     if (res.status === 404) {
-  //         alert("error");
-  //         console.log("Error!");
-  //     } else {
-  //         console.log("Data Added Successfully");
-  //         setRegStepCount(5);
-  //     }
-  //     setLoading(false);
-  // };
-
-  // useEffect(() => {
-  //     const LSdata = JSON.parse(localStorage.getItem("userdata"));
-  //     if (typeof window !== "undefined") {
-  //         setMentor(JSON.parse(localStorage.getItem("userdata")));
-  //     }
-  //     setInput(LSdata);
-  // }, []);
 
   return (
     <div
@@ -683,15 +675,7 @@ const MentorProfile = () => {
               </div>
               <div className="max-w-full text-right">
                 <button
-
-                  onClick={() => {
-                    detailadd(data?.uid, {
-                      courseAssigned: true,
-                      active: true,
-                      courseid: id ? id : "",
-                    });
-                    router.replace("/reta/addmentor");
-                  }}
+                  onClick={() => handleClick2()}
                   className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
                 >
                   Accept
