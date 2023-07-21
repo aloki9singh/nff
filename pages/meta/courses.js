@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
 
 function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
@@ -31,12 +33,26 @@ function MentorStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [SideBarState, sendSideBarState] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
+  const [courseDetails, setDetails] = useState()
+  const [dataFetched, setDataFetched] = useState(false);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-  
+
+  // for getting course data from Databse
+  // const getData = async () => {
+  //   if (!dataFetched) {
+  //     const courseCollection = collection(db, "courses");
+  //     const courseInfo = await getDocs(courseCollection);
+  //     const courseList = courseInfo.docs.map((doc) => doc.data());
+  //     console.log(courseList)
+  //     setDetails(courseList);
+  //     setDataFetched(true);
+  //   }
+  // };
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -46,7 +62,8 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
-  }, [isMediumScreen]);
+   // getData(); //uncomment it when fetching course Data
+  }, [isMediumScreen, dataFetched]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
@@ -230,6 +247,32 @@ function MentorStudent() {
                       </tr>
                     </thead>
                     <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
+                      {/* uncomment it when using database data */}
+                      {/* {
+                        courseDetails && courseDetails.map((e, i) => {
+                          const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
+                          return (
+                            <tr
+                              className="flex space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around "
+                              key={i}
+                            >
+                              <td className="flex w-[20%] mx-4 items-center gap-2">
+                                <Image
+                                  src={e?.banner}
+                                  alt="img"
+                                  height={25}
+                                  width={25}
+                                  className="rounded-full h-8  object-contain inline"
+                                />
+                                {e?.title}
+                              </td>
+                              <td className="w-[20%]">{e?.Enrolled}</td>
+                              <td className="w-[20%]">{e?.lectures}</td>
+                              <td className="md:block hidden w-[20%]">{time && time.toLocaleString()}</td>
+                              <td className="md:block hidden w-[20%]">{e?.level}</td>
+                            </tr>)
+                        })
+                      } */}
                       {courseData &&
                         courseData.coursedata
                           .slice(initialcount, gap)
