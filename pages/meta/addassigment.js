@@ -30,7 +30,7 @@ function AddAssigments() {
   const [SideBarState, sendSideBarState] = useState(false);
   const [assignedCourse, setAssignCourse] = useState([])
   const [activeElement, setActiveElement] = useState('');
-  const course = []
+  let course = []
 
 
   const handleToggleElement = element => {
@@ -56,17 +56,18 @@ function AddAssigments() {
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
 
-  if (!verified) {
-    return null;
-  }
+  // if (!verified) {
+  //   return null;
+  // }
   const getData = async () => {
     const courseCollection = collection(db, "courses")
-    const courseInfo = await getDocs(courseCollection, user.uid);
+    const courseInfo = await getDocs(courseCollection);
     courseInfo.forEach((doc) => {
       course.push(doc.data())
     });
-    setAssignCourse(course)
+    setAssignCourse(course.filter((ele)=> {return ele?.mentorid == user.uid}))
   }
+
   useEffect(() => {
     getData()
   }, [])

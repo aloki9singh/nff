@@ -117,7 +117,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
             type="text"
             hidden
               value={auth.currentUser.uid}
-            {...register("uid", { required: true })}
+            {...register("mentorid", { required: true })}
           />
           <p className="text-red-500 text-sm">{errors.desc?.message}</p>
         </div>

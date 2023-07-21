@@ -5,8 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useCallback } from 'react';
 import { storage } from '@/config/firebaseconfig';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { updateDoc, doc } from 'firebase/firestore';
-import { db } from '@/config/firebaseconfig';
+import { updateDoc, doc, getDoc } from 'firebase/firestore';
+import { db, auth } from '@/config/firebaseconfig';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
   date: Yup.date().required('Date is required')
 });
 
-function AddAssigmentForm({ assignedCourse}) {
+function AddAssigmentForm({ assignedCourse }) {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
   const [selectedCourse, setSelectedCourse] = useState()
@@ -49,80 +49,71 @@ function AddAssigmentForm({ assignedCourse}) {
           setUrl(downloadURL);
         });
       }
-      );
-    }, [file]);
-    
-    useEffect(()=>{
-      if (file) {
-        uploadFile();
-      }
-    },[file, uploadFile])
-    const uid = assignedCourse.filter((ele) => ele.title == formData.course)[0]?.uid
-    console.log(uid)
-    
-  const handleSubmit = e => {
-    e.preventDefault();
+    );
+  }, [file]);
 
+  useEffect(() => {
+    if (file) {
+      uploadFile();
+    }
+  }, [file, uploadFile])
+  const uid = assignedCourse.filter((ele) => ele.title == formData.course)[0]?.mentorid
+
+  const handleSubmit = async e => {
+    e.preventDefault();
     // Validate the form data using Yup
+    const courseRef = await getDoc(doc(db, "courses", uid))
+    const courseData = courseRef.data()
+    const courseInfo = {
+      assignment: [],
+    };
+    if (courseData){
+      (courseData.assignment).forEach(element => {
+        courseInfo.assignment.push(element)
+      });
+    }
     validationSchema
       .validate(formData, { abortEarly: false })
       .then(async () => {
-        console.log(uid)
-        const courseRef = await getDoc(doc(db, "courses", uid))
-        const courseData = courseRef.data()
-        console.log(courseData)
-        let courseassignment = {}
-        if (courseData) {
-          courseassignment = {
-            ...courseData.assignment, assignment: {
-              title: formData.title,
-              course: formData.course,
-              module: formData.module,
-              marks: parseFloat(formData.marks), // Convert marks to a number
-              date: new Date(formData.date), // Convert date string to a Date object
-              url: url
-            }
-          }
-        }
-        else {
-          courseassignment = {
-            assignment: {
-              title: formData.title,
-              course: formData.course,
-              module: formData.module,
-              marks: parseFloat(formData.marks), // Convert marks to a number
-              date: new Date(formData.date), // Convert date string to a Date object
-              url: url
-            }
-          }
-        }
-        console.log(courseassignment)
+        const courseassignment = {
+          title: formData.title,
+          course: formData.course,
+          module: formData.module,
+          marks: parseFloat(formData.marks),
+          date: new Date(formData.date), // Make sure "formData.date" is a valid date string
+          url: url,
+        };
+        courseInfo.assignment.push(courseassignment);
         const docRef = await updateDoc(
           doc(db, "courses", uid),
-          courseassignment
+          courseInfo
         );
       })
       .then(() => {
-        alert("Assignment created successfully")
         // Reset form data and show success message (optional)
         setFormData({
-          title: '',
-          course: '',
-          module: '',
-          marks: '',
-          date: ''
+          title: "",
+          course: "",
+          module: "",
+          marks: "",
+          date: ""
         });
+        setFile(null)
+        setSelectedCourse(null)
         setUrl()
-        setFile()
         setErrors({});
+        alert("Assignment created successfully")
+        router.reload()
+        
       })
-      .catch(validationErrors => {
+      .catch(err => {
         // Handle validation errors
         const errors = {};
         validationErrors.inner.forEach(error => {
           errors[error.path] = error.message;
         });
         setErrors(errors);
+        // console.log(err)
       })
       .catch(error => {
         // Handle other errors (e.g., Firebase save error)
@@ -135,11 +126,12 @@ function AddAssigmentForm({ assignedCourse}) {
     setFile(selectedFile);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedCourse(assignedCourse.filter((ele) => {
       return (ele.title == formData.course)
     }))
-  },[formData])
+  }, [formData.course])
+
   return (
     <>
       <div className='w-full h-full'>
@@ -158,7 +150,6 @@ function AddAssigmentForm({ assignedCourse}) {
               onChange={e =>
                 setFormData({ ...formData, title: e.target.value })
               }
-
             />
             {errors.title && <div className='text-red-500'>{errors.title}</div>}
           </div>
@@ -172,14 +163,14 @@ function AddAssigmentForm({ assignedCourse}) {
               name='course'
               className='w-full md:w-64 p-2 mb-2 md:mb-0 md:ml-4 text-white rounded-lg bg-[#414348]'
               value={formData.course}
-              onChange={e => 
+              onChange={e =>
                 setFormData({ ...formData, course: e.target.value })
               }
-             >
+            >
               <option selected disabled>Select</option>
               {assignedCourse ? assignedCourse.map((ele) => {
                 return (
-                  <option value={ele.title}>{ele.title}</option>
+                  <option value={ele.title} key={ele.id}>{ele.title}</option>
                 )
               }) : <option>No Course</option>}
             </select>
@@ -203,7 +194,7 @@ function AddAssigmentForm({ assignedCourse}) {
               <option selected disabled>Select</option>
               {selectedCourse && selectedCourse[0]?.modules ? (selectedCourse[0]?.modules).map((ele) => {
                 return (
-                  <option value={ele.name}>{ele.name}</option>
+                  <option value={ele.name} key={ele.id}>{ele.name}</option>
                 )
               }) : <option>No modules</option>}
             </select>
