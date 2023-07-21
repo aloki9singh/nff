@@ -38,14 +38,14 @@ const InActiveComp = () => {
                 className="border bg-black rounded-[30px] p-5 md:py-5 "
                 key={e.id}
               >
-                <div className="flex justify-between">
+                <div className="flex ">
                   <div className="my-auto">
                     <Image
                       width={110}
                       height={110}
                       alt={"img"}
                       src={e.banner}
-                      className="w-12 h-12"
+                      className="w-12 h-12 md:w-10"
                     />
                   </div>
                   <div className="text-xs md:text-[10px] text-[#E1348B] m-auto">
@@ -56,8 +56,8 @@ const InActiveComp = () => {
                   </div>
                 </div>
                 <div className="text-[10px] text-gray-600">COURSE</div>
-                <h1 className="text-sm overflow-hidden overflow-ellipsis">{e.title}</h1>
-                <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500 overflow-hidden overflow-ellipsis line-clamp-3">
+                <h1 className="text-sm overflow-hidden overflow-ellipsis md:line-clamp-1">{e.title}</h1>
+                <p className="text-[13px] md:text-[10px] md:w-auto w-[300px] whitespace-break-spaces leading-4 text-gray-500 overflow-hidden overflow-ellipsis md:line-clamp-2 line-clamp-3">
                   {e.desc}
                 </p>
 

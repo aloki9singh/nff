@@ -56,7 +56,9 @@ const MentorProfile = () => {
           console.log(documentData.uid);
 
           // Update the MentorId field of the course document
-          const courseDocRef = doc(usersCollection, docSnapshot.id); // Get the specific course document reference
+          const courseDocRef = doc(usersCollection, docSnapshot.id);
+          
+          // Get the specific course document reference
           await updateDoc(courseDocRef, { MentorId: [uid], mentorid: uid });
         //   console.log("courese", courseDocRef.id);
           detailadd(uid, {
@@ -68,6 +70,8 @@ const MentorProfile = () => {
         });
       } else {
         console.log("No matching course found.");
+        alert("No such Course available to allot");
+        return
       }
     } catch (error) {
       console.error("Error fetching course data:", error);

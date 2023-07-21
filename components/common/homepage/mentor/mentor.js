@@ -1,4 +1,7 @@
 // import Carousel from "../Mentor/Carousel";
+import { GetAllUsers } from "@/lib/exportablefunctions";
+import { useState } from "react";
+import { useEffect } from "react";
 import CarouselComp from "../../carousel/carousel";
 import MentorCard from "./MentorCard";
 const breakPoints = [
@@ -9,28 +12,44 @@ const breakPoints = [
 ];
 
 export default function Mentor() {
-  const mentors = [
-    {
-      id: 1,
-      name: "Preeti Pathak",
-      designation: "Art Teacher",
-    },
-    {
-      id: 2,
-      name: "Preeti Pathak",
-      designation: "Art Teacher",
-    },
-    {
-      id: 3,
-      name: "Preeti Pathak",
-      designation: "Art Teacher",
-    },
-    {
-      id: 4,
-      name: "Preeti Pathak",
-      designation: "Art Teacher",
-    },
-  ];
+  // const mentors = [
+  //   {
+  //     id: 1,
+  //     name: "Preeti Pathak",
+  //     designation: "Art Teacher",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Preeti Pathak",
+  //     designation: "Art Teacher",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Preeti Pathak",
+  //     designation: "Art Teacher",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Preeti Pathak",
+  //     designation: "Art Teacher",
+  //   },
+  // ];
+
+  const [mentors,setMentors]=useState([])
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const users = await GetAllUsers();
+        const mentors = users.users.filter((user) => user.role === "mentor");
+        setMentors(mentors)
+        console.log("All users fetched:", mentors);
+      } catch (error) {
+        console.log("Error fetching users:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className="flex justify-center items-center h-screen md:h-full w-full bg-[#0D0E14] text-white font-raleway ">
@@ -49,7 +68,7 @@ export default function Mentor() {
         </div>
         <div>
           <div className="flex items-center justify-center mt-10 p-2">
-            <CarouselComp />
+            <CarouselComp mentors={mentors}  />
           </div>
         </div>
       </div>
