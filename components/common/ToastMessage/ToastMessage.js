@@ -3,13 +3,18 @@ import { useRouter } from "next/router";
 
 import React, { useState, Fragment } from "react";
 
-export default function NoJoinedCoursesModal({heading, message}) {
+export default function NoJoinedCoursesModal({heading, message , showButton=true}) {
   let [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
 
   function closeModal() {
+    if(showButton) {
     setIsOpen(false);
     router.push("/beta/payment");
+    }
+    else{
+      setIsOpen(false);
+    }
   }
 
   function openModal() {
@@ -76,13 +81,17 @@ export default function NoJoinedCoursesModal({heading, message}) {
                     >
                       Go Back
                     </button>
-                    <button
+
+                    {showButton ?
+                      <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-primary/90 px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
                       onClick={closeModal}
-                    >
+                      >
                       Subscribe
-                    </button>
+                    </button> :
+                    null
+                    }
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

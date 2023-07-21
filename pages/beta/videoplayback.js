@@ -28,7 +28,7 @@ import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
-
+import withAll from "@/lib/HOC/withAll";
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import { BsFillPlayFill } from "react-icons/bs";
@@ -232,17 +232,20 @@ function Videos() {
     <>
 
 
-      {!userSubsribed && (
+      {/* {!userSubsribed && (
         <ToastMessage
           heading={"OOPS!"}
           message={
             "You have not joined any courses yet. Please join a course to access this course."
           }
         />
-      )}
+      )} */}
 
 
-      <div className={`${!userSubsribed ? "blur-lg" : null }`}>
+      {/* <div className={`
+       ${!userSubsribed ? "blur-lg" : null }
+      `}> */}
+      <div>
 
 
       <div className="flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))]">
@@ -362,7 +365,7 @@ function Videos() {
                               setVideoUrl(video)
                             }} className="flex items-center text-white/80 hover:text-white " key={i}>
                               <BsFillPlayFill className="mr-2" />
-                              <p className="truncate max-w-[15rem]" >{video}</p>
+                              <p className="truncate max-w-[15rem]" >{module.name} video {i+1}</p>
                             </button>;
                           })}
 
@@ -436,4 +439,4 @@ function Videos() {
     </>
   );
 }
-export default Videos;
+export default withAll(Videos);
