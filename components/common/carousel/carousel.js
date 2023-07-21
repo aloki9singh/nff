@@ -9,125 +9,48 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const CarouselComp = () => {
-   const mentors = [
-      {
-         id: 1,
-         name: "Preeti Pathak",
-         designation: "Art Teacher",
-      },
-      {
-         id: 2,
-         name: "Preeti Pathak",
-         designation: "Art Teacher",
-      },
-      {
-         id: 3,
-         name: "Preeti Pathak",
-         designation: "Art Teacher",
-      },
-      {
-         id: 4,
-         name: "Preeti Pathak",
-         designation: "Art Teacher",
-      },
-   ];
-   return (
-      <>
+const CarouselComp = ({ mentors }) => {
+
+  return (
+    <>
       <Swiper
-         modules={[Navigation, Pagination, Scrollbar, A11y]}
-         spaceBetween={20}
-         slidesPerView={1}
-         navigation
-         loop={true}
-         onSwiper={(swiper) => console.log(swiper)}
-         onSlideChange={() => console.log("slide change")}
-         className="h-[217px] md:w-0 md:h-0"
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={20}
+        slidesPerView={1}
+        navigation
+        loop={true}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
+        className="h-[217px] md:w-0 md:h-0"
       >
-         <SwiperSlide>
+        {mentors.map((e) => (
+          <SwiperSlide>
             <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+              <MentorCard key={e.uid} name={e.displayName} designation={e.details.interest} src={e.photoURL} />
             </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <Swiper
-         modules={[Navigation, Pagination, Scrollbar, A11y]}
-         spaceBetween={20}
-         slidesPerView={3}
-         navigation
-         loop={true}
-         onSwiper={(swiper) => console.log(swiper)}
-         onSlideChange={() => console.log("slide change")}
-         className="h-0 w-0 md:w-auto md:h-[413px]"
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={20}
+        slidesPerView={3}
+        navigation
+        loop={true}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
+        className="h-0 w-0 md:w-auto md:h-[413px]"
       >
-         <SwiperSlide>
+        {mentors.map((e) => (
+          <SwiperSlide>
             <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
+              <MentorCard key={e.uid} name={e.displayName} designation={e.details.interest}  src={e.photoURL} />
             </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
-         <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center">
-               <MentorCard name="Preeti Pathak" designation={"Art Teacher"} />
-            </div>
-         </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
-      </>
-   );
+    </>
+  );
 };
 
 export default CarouselComp;
