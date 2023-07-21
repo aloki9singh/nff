@@ -136,21 +136,21 @@ function Homework() {
                 </div>
               </div>
 
-              <div className='grid grid-cols-3 gap-4 m-5'>
-                
+
+              <div className='grid gap-4 m-5 md:grid-cols-2 lg:grid-cols-3'>
+
+//               <div className='grid grid-cols-3 gap-4 m-5'>
+
                 {activeElement === 'active' ? (
                   <>
                     <HomeWorkCard title='Course 1' desc='Description 1' />
-                    <HomeWorkCard title='Course 1' desc='Description 1' />
-                    <HomeWorkCard title='Course 1' desc='Description 1' />
-                    <HomeWorkCard title='Course 1' desc='Description 1' />
+                  
                     <UploadCard />
                   </>
                 ) : (
                   <>
                     <HomeWorkCard title='Course 2' desc='Description 2' />
-                    <HomeWorkCard title='Course 2' desc='Description 2' />
-                    <HomeWorkCard title='Course 2' desc='Description 2' />
+
                     <UploadCard />
                   </>
                 )}
