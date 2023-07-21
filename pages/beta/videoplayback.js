@@ -106,7 +106,6 @@ function Videos() {
   const [currentarray, setCurrentArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-
   const { userSubsribed } = CourseAccess(user.uid);
 
   useEffect(() => {
@@ -127,7 +126,6 @@ function Videos() {
     // setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
     setVideoUrl(videoUrl);
   };
-
 
   const styles = `
 
@@ -186,7 +184,6 @@ function Videos() {
 
   const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
-
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -241,8 +238,6 @@ function Videos() {
 
   return (
     <>
-
-
       {showModal && (
         <ToastMessage
           heading={"OOPS!"}
@@ -252,18 +247,21 @@ function Videos() {
         />
       )}
 
-
       {/* <div className={`
        ${!userSubsribed ? "blur-lg" : null }
       `}> */}
       <style>{styles}</style>
       <div>
-
-        <div className={`flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))] ${showModal ? 'blur-lg' : null}`}>
+        <div
+          className={`flex bg-[rgb(21 22 27 / var(--tw-bg-opacity))] ${
+            showModal ? "blur-lg" : null
+          }`}
+        >
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -294,7 +292,9 @@ function Videos() {
               </div>
               <button
                 className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
-                onClick={() => { userSubsribed ? joinCourseChat() : setShowModal(true) }}
+                onClick={() => {
+                  userSubsribed ? joinCourseChat() : setShowModal(true);
+                }}
                 disabled={isJoined}
               >
                 {isJoined ? "Joined" : "Join"}
@@ -327,14 +327,12 @@ function Videos() {
               <div className="grid  grid-cols-7 md:gap-10 gap-10 w-full">
                 <div className="md:col-span-5 col-span-7 py-5">
                   {videoUrl ? (
-
                     <video
                       src={videoUrl}
                       controls
                       className="max-h-[30rem] pb-5"
                     />
                   ) : (
-
                     <div className="h-[300px] text-gray-500  items-center justify-center flex text-center">
                       <div>No video selected yet or video not found</div>
                     </div>
@@ -368,24 +366,42 @@ function Videos() {
                   <div class="h-fit self-start w-full">
                     {modules?.map((module, ind) => {
                       return (
-
                         <Accordion key={ind} title={module.name}>
                           <div className="flex flex-col gap-2 ">
                             {module.video.map((video, i) => {
-                              return <>
-                                <div className="flex">
-                                  <button onClick={() => {
-                                    setVideoUrl(video)
-                                  }} disabled={(!(i <= 1 && ind == 0) && !isJoined)}
-                                    className={`flex items-center text-white/80 hover:text-white ${!isJoined ? "blur-sm" : null} ${(i <= 1 && ind == 0) ? "blur-none" : null}`} key={i} >
-                                    <BsFillPlayFill className="mr-2" />
-                                    <p className="truncate max-w-[15rem]" >{module.name} video {i + 1}</p>
-                                  </button>
-                                  <p className={`absolute flex ${isJoined ? "hidden" : null} ${(i <= 1 && ind == 0) ? "hidden" : null}`}>Join To Access
-                                    <AiOutlineLock className="text-xl mt-2 unblur" />
-                                  </p>
-                                </div>
-                              </>
+                              return (
+                                <>
+                                  <div className="flex relative">
+                                    <button
+                                      onClick={() => {
+                                        setVideoUrl(video);
+                                      }}
+                                      disabled={
+                                        !(i <= 1 && ind == 0) && !isJoined
+                                      }
+                                      className={`flex items-center text-white/80 hover:text-white  ${
+                                        (!(i <= 1 && ind == 0)&& !isJoined) ? "blur-sm" : null
+                                      }`}
+                                      key={i}
+                                    >
+                                      <BsFillPlayFill className="mr-2" />
+                                      <p className="truncate max-w-[15rem]">
+                                        {module.name} video {i + 1}
+                                      </p>
+                                    </button>
+                                      <p
+                                        className={`absolute overflow-auto flex ${
+                                          isJoined ? "hidden" : null
+                                        } ${
+                                          i <= 1 && ind == 0 ? "hidden" : null
+                                        }`}
+                                      >
+                                        Join To Access
+                                        <AiOutlineLock className="text-xl mt-2 unblur" />
+                                      </p>
+                                  </div>
+                                </>
+                              );
                             })}
 
                             {/* <div key={i} className="h-fit">
@@ -395,7 +411,6 @@ function Videos() {
                           >
                           <p>{m.name}</p>
                           <IoIosArrowForward></IoIosArrowForward> */}
-
                           </div>
                         </Accordion>
                       );
