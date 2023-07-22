@@ -99,8 +99,8 @@ function Homework() {
                             Files
                         </div>
 
-                        <div className=' w-auto mr-10 md:ml-221px p-4 md:p-8 border border-[#5F6065] ml-20 mt-11 rounded-xl  flex flex-col  mb-5'>
-                            <div className='grid grid-cols-4 gap-4 m-5'>
+                        <div className='   w-full  p-4 md:p-8 border border-[#5F6065]  mt-11 rounded-xl  flex flex-col  mb-5'>
+                            <div className='grid md:grid-cols-4n grid-cols-1 gap-4 m-5'>
                                 <div className='shrink-0 rounded-2xl shadow-lg bg-[#141518] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col w-full md:w-auto text-white   '>
                                     <div className='flex items-center justify-between'>
                                         <div>
