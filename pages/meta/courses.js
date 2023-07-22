@@ -25,6 +25,8 @@ function MentorStudent() {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
 
+  let todayJoined = 0;
+
   let [searchstate, setsearchstate] = useState("");
   const router = useRouter();
 
@@ -120,9 +122,13 @@ function MentorStudent() {
   console.log(userProfile)
 
   userProfile.joinedStudents?.map((student)=>{
-    const joinDate = new Date(student.joinedAt.seconds * 1000);
-    console.log(joinDate.getMonth());
+    const joinDate = new Date(student.joinedAt?.seconds * 1000);
+    console.log(joinDate.getDate());
     chartData[joinDate.getMonth()]++;
+    if(joinDate.getDate() == new Date().getDate()) {
+      // console.log("today");
+      todayJoined++;
+    }
   });
 
   console.log(courseData);
@@ -177,7 +183,7 @@ function MentorStudent() {
                   className="w-[95%] h-[20%] rounded-xl md:text-base text-lg mx-auto pb-6"
                 >
                   <div className="text-white py-4 px-3 text-lg font-bold">
-                    Today 2 new students enrolled in your course.
+                    Today {todayJoined} new students enrolled in your course.
                   </div>
                   <div className="flex justify-end mx-8">
                     <button className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center">
@@ -247,7 +253,7 @@ function MentorStudent() {
               </div>
 
               {/* table */}
-              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
+              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto pb-[40rem] mb-4">
                 <div className="">
                   <table className="w-full  ">
                     <thead className="  items-center  border-b  ">
@@ -262,7 +268,7 @@ function MentorStudent() {
                     <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
                       {/* uncomment it when using database data */}
                       {
-                        courseDetails && courseDetails.map((e, i) => {
+                        courseDetails && courseDetails .slice(initialcount, gap).map((e, i) => {
                           const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
                           return (
                             <tr
@@ -315,7 +321,7 @@ function MentorStudent() {
                 </div>
 
                 {/* pagination */}
-                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
+                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4 mt-[4rem]">
                   <button
                     className="w-6 h-5 border flex justify-center items-center"
                     name="back"
