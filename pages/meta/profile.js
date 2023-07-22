@@ -67,7 +67,7 @@ function MentorProfile() {
   }, [isMediumScreen]);
 
   userData.joinedStudents?.map((student) => {
-    const joinDate = new Date(student.joinedAt?.seconds * 1000);
+    const joinDate = new Date(student.joinedAt.seconds * 1000);
     console.log(joinDate.getMonth());
     chartData[joinDate.getMonth()]++;
   });
@@ -145,8 +145,8 @@ function MentorProfile() {
               </div>
             </div>
             {/* /// */}
-            <div className="flex md:flex-row flex-col    justify-center  w-[95%] m-5  md:mt-0 text-white ">
-              <div className="lg:pr-4 ">
+            <div className="flex md:flex-row flex-col    justify-center   m-5  md:mt-0 text-white ">
+              <div className=" ">
                 <div className="lg:flex gap-2 justify-around mt-10 mb-5">
                   <div className=" lg:w-1/4 ">
                     <div>
@@ -182,7 +182,7 @@ function MentorProfile() {
                       <div className="md:ml-1 font-semibold text-base">
                         Number of students
                       </div>
-                      <div className="mt-5 md:mt-2  ">
+                      <div className="mt-5 md:mt-2 md:px-5  ">
                         <MentorChart data={chartData} />
                       </div>
                     </div>

@@ -9,7 +9,7 @@ import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function MentorStudent() {
-  const {user, userProfile} = useAuthContext();
+  const { user, userProfile } = useAuthContext();
   const [count, setCount] = useState(1);
   const [studentData, setStudentData] = useState([]);
   const [initialcount, setinitialCount] = useState(0);
@@ -24,7 +24,7 @@ function MentorStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-
+  // setId(router.query.id);
   const fetchStudentData = useCallback(() => {
     fetch("/api/signup")
       .then((response) => response.json())
@@ -349,11 +349,13 @@ function MentorStudent() {
                             alt="img"
                             height={25}
                             width={25}
-                            className="rounded-full h-8  object-contain inline"
+                            className="rounded-full h-8 w-8  object-cover inline"
                           />
                           {e.displayName}
                         </td>
-                        <td className="w-[16.6%] overflow-clip hover:overflow-visible">{e.uid}</td>
+                        <td className="w-[16.6%] overflow-clip hover:overflow-visible">
+                          {e.uid}
+                        </td>
                         <td className="w-[16.6%] text-center ">{e?.class}</td>
                         <td className="w-[16.6%] text-center md:block hidden">
                           {e?.active}
@@ -361,8 +363,16 @@ function MentorStudent() {
                         <td className="w-[16.6%] text-center md:block hidden">
                           {e?.courses}
                         </td>
-                        <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%]">
-                          <Link href="">View Profile</Link>
+                        <td
+                          className="w-[16.6%] text-right text-[#E1348B] pr-[3%]"
+                          onClick={() =>
+                            router.push({
+                              pathname: "/meta/studentprofile",
+                              query: { uid: e.uid },
+                            })
+                          }
+                        >
+                          View Profile
                         </td>
                       </tr>
                     ))}
