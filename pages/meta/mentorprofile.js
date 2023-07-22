@@ -35,16 +35,16 @@ const MentorProfile = () => {
       console.log(documentData);
     }
   };
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setData({ ...data, profilephoto: reader.result });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setData({ ...data, profilephoto: reader.result });
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
   const getCourse = async () => {
     const usersCollection = collection(db, "courses");
     const q = query(
@@ -75,22 +75,26 @@ const MentorProfile = () => {
     e.preventDefault();
     setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   };
+  console.log(data);
+const mentorData = {
+  email: data?.email,
+    
+   details: {
+    ...data.details,
 
+    pPhone: data?.details?.pPhone,
+    firstname: data?.details?.firstname,
+    dob: data?.details?.dob,
+    sPhone: data?.details?.sPhone,
+    address: data?.details?.address,
+    city: data?.details?.city,
+    postalcode: data?.details?.postalcode,
+    country: data?.details?.country,
+  },
+};
+console.log(mentorData,"Mentor");
   const updateData = async () => {
-    const mentorData = {
-      email: data?.email,
 
-      details: {
-        ...data.details,
-        pPhone: data?.details?.pPhone,
-        dob: data?.details?.dob,
-        sPhone: data?.details?.sPhone,
-        address: data?.details?.address,
-        city: data?.details?.city,
-        postalcode: data?.details?.postalcode,
-        country: data?.details?.country,
-      },
-    };
     try {
       await updateDoc(doc(db, "allusers", uid), mentorData);
       alert("Profile Updated");
@@ -169,7 +173,7 @@ const MentorProfile = () => {
                 <input
                   name="firstname"
                   value={data?.details?.firstname}
-                  //  onChange={setData}
+                  onChange={handleChange}
 
                   type="text"
                   placeholder="First Name"
@@ -183,7 +187,7 @@ const MentorProfile = () => {
                 <input
                   name="lastname"
                   value={data?.details?.lastname}
-                  //  onChange={setData}
+                  onChange={handleChange}
 
                   type="text"
                   placeholder="Last Name"
@@ -321,7 +325,7 @@ const MentorProfile = () => {
                         id="profile-photo"
                         name="profilephoto"
                         accept="image/*"
-                        onChange={handleImageChange}
+                        // onChange={handleImageChange}
                         className="hidden"
                         disabled={!edit}
                       />
