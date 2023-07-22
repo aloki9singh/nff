@@ -20,7 +20,6 @@ const MentorTopbar = ({ heading, toggleSideBar }) => {
   };
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
-  console.log(userProfile);
   return (
     <>
       <div className="flex justify-between lg:flex md:pl-5   pt-5 w-full p-2 md:py-4 py-6 md:p-0 md:bg-[#2E3036] bg-[#141518] md:rounded-tl-[40px]">
