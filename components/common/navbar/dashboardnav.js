@@ -18,7 +18,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 export default function Dashboardnav({ heading, toggleSideBar }) {
   const [profileMenu, setProfileMenu] = useState(false);
   const router = useRouter();
-  const { user,userProfile } = useAuthContext()
+  const { user, userProfile } = useAuthContext();
 
   return (
     <nav className="border-b-[1px] border-[#728095] px-0 md:py-2 w-full  md:bg-[#2E3036] bg-[#141518] py-5  ">
@@ -26,19 +26,21 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link
-              href="/beta/dashboard"
+              href="#"
               className="uppercase  h-[43px]  md:h-[71px] flex-shrink-0 align-middle items-center flex"
             >
               <h1 className="text-white my-auto max-[768px]:hidden mt-6 font-[500px] inline ml-5 md:ml-0 font-600 md:text-2xl text-[19px]">
                 {heading}
               </h1>
+            </Link>
+            <Link href={"/"}>
               <Image
                 src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
                 alt="logo"
-                className="w-full hidden max-[768px]:block h-full justify-center object-contain
+                className="w-70 ml-[-20px]  hidden max-[768px]:block h-full justify-center object-contain
               "
-                width={100}
-                height={100}
+                width={150}
+                height={150}
               />
             </Link>
           </div>
@@ -57,20 +59,26 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
             />
           </div>
 
-          {user &&  (
+          {user && (
             <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
               <IoMdNotificationsOutline className="text-3xl mr-2" />
               <div className="] h-12 w-12 flex justify-center items-center">
                 <Popover className="">
                   <Popover.Button className="outline-none ">
-                    {user.photoURL ? <Image
-                      src={user.photoURL}
-                      alt="proImg"
-                      height={48}
-                      width={48}
-                      className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
-                    />:
-                      <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>}
+                    {user.photoURL ? (
+                      <Image
+                        src={user.photoURL}
+                        alt="proImg"
+                        height={48}
+                        width={48}
+                        className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
+                      />
+                    ) : (
+                      <BsPersonCircle
+                        onClick={() => setProfileMenu(!profileMenu)}
+                        className="text-white text-4xl"
+                      />
+                    )}
                   </Popover.Button>
                   <Transition
                     as={Fragment}
@@ -89,7 +97,10 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                               {user ? (
                                 <div className="flex gap-2 items-center">
                                   <Image
-                                    src={user.photoURL||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
+                                    src={
+                                      user.photoURL ||
+                                      "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                                    }
                                     height="35"
                                     width="35"
                                     className="rounded-full h-6 w-6"
@@ -100,13 +111,16 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                                       {user.displayName}
                                     </p>
                                     <p className="text-[10px] -mt-2">
-                                      Class {userProfile?.class||"N/A"}
+                                      Class {userProfile?.class || "N/A"}
                                     </p>
                                   </div>
                                 </div>
                               ) : (
                                 <div className="flex gap-1 items-center">
-                                  <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl"/>
+                                  <BsPersonCircle
+                                    onClick={() => setProfileMenu(!profileMenu)}
+                                    className="text-white text-4xl"
+                                  />
                                   <div className="text-left">
                                     <p className="text-[13px] mb-1">Guest</p>
                                     <p className="text-[10px] -mt-2">

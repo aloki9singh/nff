@@ -112,8 +112,16 @@ function Assignments() {
         />
       )}
       {/* {!courseBuyed ? <NoJoinedCoursesModal /> : null} */}
+      {userSubsribed && (
+      <ToastMessage
+        heading={"No homework Availaible"}
+        message={"Please Continue learning..."}
+        showButton={false}
+        />
 
-      <div className={`${!userSubsribed ? "blur-lg" : null }`}>
+        )}
+
+      <div className={`blur-sm ${!userSubsribed ? "blur-lg" : null }`}>
 
       <div className="flex">
         {isMobileScreen && (
@@ -144,7 +152,7 @@ function Assignments() {
                 <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                   Modules
                 </div>
-                <div
+                {/* <div
                   className={module == 0 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(0)}
                   >
@@ -173,7 +181,7 @@ function Assignments() {
                   onClick={() => setModule(4)}
                   >
                   1. UX Case Study - studying the experience
-                </div>
+                </div> */}
               </div>
 
               {/* Assignments */}
@@ -182,7 +190,7 @@ function Assignments() {
                   Files
                 </div>
                 <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-2">
-                  {Assignments.filter(
+                  {/* {Assignments.filter(
                     (assignment) => module == assignment.module
                     ).map((assignment, index) => (
                       <AssignmentCard
@@ -191,7 +199,7 @@ function Assignments() {
                       name={assignment.name}
                       date={assignment.date}
                     />
-                  ))}
+                  ))} */}
                 </div>
               </div>
             </div>

@@ -40,7 +40,7 @@ function StudentProfile() {
     }
   }, [isMediumScreen]);
   const chartData = [0, 0, 0, 0, 0, 0, 0]; //Change this student data to show on chart, passed as prop
- ``
+  ``;
   if (!user || !userProfile) {
     router.push("/");
   }
@@ -54,9 +54,8 @@ function StudentProfile() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -86,7 +85,10 @@ function StudentProfile() {
                   <div className="flex">
                     {" "}
                     <Image
-                      src={userProfile.photoURL||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
+                      src={
+                        userProfile.photoURL ||
+                        "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                      }
                       alt="proImg"
                       height={150}
                       width={150}
@@ -96,12 +98,13 @@ function StudentProfile() {
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
                         {user.displayName}
                         <p className="text-xs ml-2">
-                          Roll no-{userProfile.rollNo ||" N/A"}
+                          Roll no-{userProfile.rollNo || " N/A"}
                         </p>
                       </div>
                       <Link href={"/beta/profiledetails"}>
-                        <div className="flex text-xs md:text-sm mt-[-25px]">
-                          Edit profile
+                        <div className="flex text-xs md:text-sm mt-[-25px] ">
+                          <div className="md:block hidden">Edit profile</div>
+                          <div className="md:hidden">Edit </div>
                           <FiEdit2 className="ml-1 mt-[2px]" />
                         </div>
                       </Link>
@@ -116,7 +119,7 @@ function StudentProfile() {
               <div className="lg:col-span-5 lg:pr-4">
                 <div className="flex justify-center align-center">
                   <div className="bg-[#373A41]   w-full mx-5   rounded-[20px] pb-5 pt-3 px-4 space-y-2 md:px-6 mt-5 flex flex-col">
-                    <div className="text-center pt-2 pb-2 px-4 font-semibold flex justify-between w-full">
+                    <div className="text-center pt-2 pb-2 px-4 font-semibold flex justify-between w-full cursor-pointer">
                       <p onClick={() => setswitchcomp("enrolled")}>
                         Enrolled courses
                       </p>
@@ -128,8 +131,8 @@ function StudentProfile() {
                     {switchcomp == "enrolled" ? (
                       <div className="mt-2 h-[200px] overflow-y-scroll scrollbar-hide py-2">
                         {enrolledcourses.length ? (
-                          enrolledcourses.map((e) => (
-                            <div className="border-l-[4px] border-pink flex mb-2 pl-4">
+                          enrolledcourses.map((e, i) => (
+                            <div key={i} className="border-l-[4px] border-pink flex mb-2 pl-4">
                               <div>
                                 <h1>{e.title}</h1>
                                 <p className="text-xs text-[#FFFFFF80] font-semibold">
@@ -147,8 +150,8 @@ function StudentProfile() {
                     ) : (
                       <div className="mt-2 h-[200px] overflow-y-scroll scrollbar-hide py-2">
                         {completedcourses.length ? (
-                          completedcourses.map((e) => (
-                            <div className="border-l-[4px] border-pink flex mb-2 pl-4">
+                          completedcourses.map((e, i) => (
+                            <div key={i} className="border-l-[4px] border-pink flex mb-2 pl-4">
                               <div>
                                 <h1>{e.title}</h1>
                                 <p className="text-xs text-[#FFFFFF80] font-semibold">
@@ -175,8 +178,8 @@ function StudentProfile() {
                     {/* Need to done using Array */}
                     <div className="mt-2 h-[175px] overflow-y-scroll scrollbar-hide py-2">
                       {certificates.length ? (
-                        certificates.map((e) => (
-                          <div className="flex mb-6 px-2 justify-between">
+                        certificates.map((e, i) => (
+                          <div key={i} className="flex mb-6 px-2 justify-between">
                             <div className="flex">
                               <div className="h-[20px] w-[20px] rounded-full mr-2 bg-[#484D58]"></div>
                               <h1 className="text-sm ">{e.coursename}</h1>
@@ -188,7 +191,7 @@ function StudentProfile() {
                         ))
                       ) : (
                         <div className="text-gray-500 flex justify-center items-center h-[130px]">
-                          You haven't earned a certificate
+                          You haven&apos;t earned a certificate
                         </div>
                       )}
                     </div>
@@ -224,7 +227,7 @@ function StudentProfile() {
                           <div className="flex justify-between px-3">
                             <span className="font-semibold">{0}</span>
                             <span className="bg-[#000] text-[12px] px-1 rounded-md py-[0.8]">
-                             {0} %
+                              {0} %
                             </span>
                           </div>
                         </div>
@@ -261,8 +264,8 @@ function StudentProfile() {
                     </div>
                     <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2 px-2">
                       {subscribed.length ? (
-                        subscribed.map((e) => (
-                          <div className="flex mb-6 px-2 justify-between border-l-[4px] border-pink">
+                        subscribed.map((e, i) => (
+                          <div key={i} className="flex mb-6 px-2 justify-between border-l-[4px] border-pink">
                             <div className="flex">
                               <h1 className="text-base">UI/UX Designer</h1>
                             </div>

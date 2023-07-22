@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/componentsstyling/cards/coursecards.module.css";
-import CourseCard from "./CourseCard";
-
+import CourseCard from "./CourseCard2";
+// import CourseCard from "./CourseCard2";
 
 function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
 
@@ -19,17 +19,17 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
     <>
       <div className={styles.secMain}>
         <div className={styles.secHead}>
-          <p>Expand your career opportunities</p>
-          <button
+          <p className="pl-5">Expand your career opportunities</p>
+          {/* <button
             className="mx-4"
             style={{ whiteSpace: "nowrap", textAlign: "center" }}
             // onClick={handleShow}
           >
             View All
-          </button>
+          </button> */}
         </div>
         <div className="overflow-scrollbar scrollbar-hide">
-          <div className={styles.mainList}>
+          <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mx-2 ">
             {cardInfo &&
               cardInfo
                 

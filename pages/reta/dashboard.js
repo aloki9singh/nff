@@ -14,7 +14,7 @@ import { useMediaQuery } from 'react-responsive';
 // #DD4A94 #B26ED3
 // #A145CD
 
-const dashboard = () => {
+const Dashboard = () => {
 
 
   // // code to check if verified to visit this page or not
@@ -72,7 +72,7 @@ const dashboard = () => {
         <div className='w-full h-[92vh] md:h-screen bg-[#1E1E1E]  md:rounded-tl-[50px]   space-y-4  '>
           <AdminTopbar heading={'Dashboard'} toggleSideBar={toggleSideBar} />
           {/* text */}
-          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-[80px] '>
+          <div className='w-full bg-[#1E1E1E]  space-y-5 pt-10 '>
             <div className='flex flex-col justify-center h-full'>
               <div className='flex align-middle justify-center  '>
                 <div className='text-center space-y-5 '>
@@ -90,7 +90,7 @@ const dashboard = () => {
                       <div
                         className='bg-[#B26ED3] md:w-[150px] w-[120px] md:h-[200px] h-[150px] rounded m-auto p-2 space-y-2 hover:border-[2px] cursor-pointer'
                         >
-                        <Link href={'/meta/modifyCourses'} className='h-full flex flex-col justify-around'>
+                        <Link href={'/reta/modifyCourses'} className='h-full flex flex-col justify-around'>
                           <div className='flex justify-center align-middle'>
                             <Image
                               alt='Icon'

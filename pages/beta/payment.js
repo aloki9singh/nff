@@ -80,14 +80,14 @@ const Payment = () => {
   return (
     <>
       <div
-        className={`md:overflow-hidden h-screen ${
+        className={` h-screen ${
           showToast ? "blur-lg" : null
         }`}
       >
         {showToast && (
           <ToastMessage
             heading="Trial Activated"
-            message="Learn and become your best with Neatskills"
+            message="Learn and become your best with Neatskills by getting started with course"
           />
         )}
         <style>{styles}</style>

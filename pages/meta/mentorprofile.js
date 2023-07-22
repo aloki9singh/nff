@@ -1,22 +1,20 @@
-// Verified by Pradhumn
 import React, { useContext, useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import { detailadd, uploadToFirebase } from "@/lib/exportablefunctions";
 import { useRouter } from "next/router";
 import {
   collection,
   doc,
   getDoc,
-  getDocs,
   query,
-  updateDoc,
   where,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Image from "next/image";
-import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization";
+import { uploadToFirebase } from "@/lib/exportablefunctions";
 
 const MentorProfile = () => {
   const { loading, setLoading } = useContext(Loading);
@@ -25,7 +23,7 @@ const MentorProfile = () => {
   const [data, setData] = useState({});
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
-  //   console.log(id)
+
   const getData = async () => {
     const usersCollection = collection(db, "allusers");
     const q = doc(usersCollection, uid);
@@ -36,64 +34,29 @@ const MentorProfile = () => {
       console.log(documentData);
     }
   };
-
-  // ...
-
-  const getCourse = async () => {
-    try {
-      const usersCollection = collection(db, "courses");
-      const q = query(
-        usersCollection,
-        where("title", "==", data.details.interest)
-      );
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        querySnapshot.forEach(async (docSnapshot) => {
-          const documentData = docSnapshot.data();
-          console.log(documentData);
-          setId(documentData.uid);
-          console.log(documentData.uid);
-
-          // Update the MentorId field of the course document
-          const courseDocRef = doc(usersCollection, docSnapshot.id);
-          
-          // Get the specific course document reference
-          await updateDoc(courseDocRef, { MentorId: [uid], mentorid: uid });
-        //   console.log("courese", courseDocRef.id);
-          detailadd(uid, {
-            courseAssigned: true,
-            active: true,
-            courseid: courseDocRef.id ? courseDocRef.id : "",
-            assignedCourses: [courseDocRef.id],
-          });
-        });
-      } else {
-        console.log("No matching course found.");
-        alert("No such Course available to allot");
-        return
-      }
-    } catch (error) {
-      console.error("Error fetching course data:", error);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      uploadToFirebase(file, (url) => {
+        setData((prevData) => ({
+          ...prevData,
+          photoURL: url,
+        }));
+      })
     }
   };
-
-  const handleClick2 = () => {
-    try {
-      // Call the detailadd function with relevant parameters
-
-      // Check if the data has 'details' property and call the getCourse function
-      if (data.details) {
-        getCourse();
-      }
-      //   console.log("id",uid,data.details);
-
-      // Navigate to the "/reta/addmentor" route or page
-      router.replace("/reta/addmentor");
-    } catch (err) {
-      // If an error occurs during execution, it will be caught here
-      // You can handle the error in an appropriate way if needed
-    }
+  const getCourse = async () => {
+    const usersCollection = collection(db, "courses");
+    const q = query(
+      usersCollection,
+      where("title", "==", data?.details?.interest)
+    );
+    const querySnapshot = await getDoc(q);
+    querySnapshot.forEach((doc) => {
+      const documentData = doc.data();
+      setId(documentData.uid);
+      console.log(documentData);
+    });
   };
 
   useEffect(() => {
@@ -103,24 +66,42 @@ const MentorProfile = () => {
     }
   }, []);
 
-  const handleChange = (e) => {
+  const handleEdit = (e) => {
     e.preventDefault();
-    setData({ ...data, [e.target.name]: e.target.value });
+    setEdit(!edit);
   };
 
-  const updateData = async () => {
-    const mentorData = {
-      email: data?.email,
+  const handleChange = (e) => {
+    e.preventDefault();
+    setData((prevData) => ({
+      ...prevData, details: {
+        ...prevData.details,
+        [e.target.name]: e.target.value
+      }
+    }));
+  };
+  // console.log(data);
+  const mentorData = {
+    email: data?.email,
+
+    details: {
+      ...data.details,
+
       pPhone: data?.details?.pPhone,
+      firstname: data?.details?.firstname,
       dob: data?.details?.dob,
       sPhone: data?.details?.sPhone,
       address: data?.details?.address,
       city: data?.details?.city,
       postalcode: data?.details?.postalcode,
       country: data?.details?.country,
-    };
+    },
+  };
+  // console.log(mentorData,"Mentor");
+  const updateData = async () => {
+
     try {
-      await updateDoc(doc(db, "allusers", uid), mentorData);
+      await updateDoc(doc(db, "allusers", uid), data);
       alert("Profile Updated");
       setEdit(false);
     } catch (e) {
@@ -128,16 +109,14 @@ const MentorProfile = () => {
     }
   };
 
-  const handleClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setEdit(!edit);
+    updateData();
   };
-
   return (
     <div
-      className={`md:p-10 bg-[#1E1E1E] ${
-        loading ? "pointer-events-none z-1" : ""
-      }`}
+      className={`md:p-10 bg-[#1E1E1E] ${loading ? "pointer-events-none z-1" : ""
+        }`}
     >
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -161,8 +140,8 @@ const MentorProfile = () => {
         {!edit ? (
           <div className="flex justify-end p-4  text-white mr-16">
             <button
-              onClick={handleClick}
-              className="w-fit bg-[#505057] p-4 rounded-[10px]"
+              onClick={handleEdit}
+              className="w-fit bg-[#505057] p-2 rounded-[10px]"
             >
               Edit Profile
             </button>
@@ -170,20 +149,20 @@ const MentorProfile = () => {
         ) : (
           <div className=" flex justify-end text-white mr-16">
             <button
-              className="w-fit bg-[#E1348B] p-4 rounded-[10px] mr-2"
-              onClick={handleClick}
+              className="w-fit bg-[#E1348B] p-2 rounded-[10px] mr-2"
+              onClick={handleSubmit}
             >
               Save
             </button>
             <button
-              className="w-fit bg-[#505057] p-4 rounded-[10px]"
-              onClick={handleClick}
+              className="w-fit bg-[#505057] p-2 rounded-[10px]"
+              onClick={handleEdit}
+              disabled={!edit}
             >
               Cancel
             </button>
           </div>
         )}
-
         {/* section form starts of preview */}
         <div className="md:mx-10 w-full">
           <form action=" " className="md:ml-10 w-full">
@@ -198,8 +177,8 @@ const MentorProfile = () => {
                 <input
                   name="firstname"
                   value={data?.details?.firstname}
-                  //  onChange={setData}
-                  readOnly
+                  onChange={handleChange}
+
                   type="text"
                   placeholder="First Name"
                   className="rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333] "
@@ -212,8 +191,8 @@ const MentorProfile = () => {
                 <input
                   name="lastname"
                   value={data?.details?.lastname}
-                  //  onChange={setData}
-                  readOnly
+                  onChange={handleChange}
+
                   type="text"
                   placeholder="Last Name"
                   className="rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%]  bg-[#333333] "
@@ -228,8 +207,7 @@ const MentorProfile = () => {
                 </label>
                 <input
                   name="email"
-                  value={data?.email}
-                  readOnly={!edit}
+                  value={data?.details?.email}
                   onChange={handleChange}
                   type="text"
                   placeholder="Email"
@@ -243,7 +221,6 @@ const MentorProfile = () => {
                 <input
                   name="pPhone"
                   value={data?.details?.pPhone}
-                  readOnly={!edit}
                   onChange={handleChange}
                   type="tel"
                   maxLength={10}
@@ -261,7 +238,6 @@ const MentorProfile = () => {
                 <input
                   name="dob"
                   value={data?.details?.dob}
-                  readOnly={!edit}
                   onChange={handleChange}
                   type="date"
                   className="rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333] "
@@ -275,7 +251,6 @@ const MentorProfile = () => {
                   name="sPhone"
                   maxLength={10}
                   value={data?.details?.sPhone}
-                  readOnly={!edit}
                   onChange={handleChange}
                   type="tel"
                   placeholder="Type here"
@@ -295,7 +270,6 @@ const MentorProfile = () => {
                   <input
                     name="address"
                     value={data?.details?.address}
-                    readOnly={!edit}
                     onChange={handleChange}
                     type="text"
                     placeholder="Apartment,Street Name"
@@ -313,7 +287,6 @@ const MentorProfile = () => {
                     name="city"
                     onChange={handleChange}
                     value={data?.details?.city}
-                    readOnly={!edit}
                     className="rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333] "
                   ></input>
                 </div>
@@ -325,7 +298,6 @@ const MentorProfile = () => {
                     name="postalcode"
                     maxLength={8}
                     value={data?.details?.postalcode}
-                    readOnly={!edit}
                     onChange={handleChange}
                     type="text"
                     placeholder="Enter Area code"
@@ -346,34 +318,37 @@ const MentorProfile = () => {
                       name="country"
                       onChange={handleChange}
                       value={data?.details?.country}
-                      readOnly={!edit}
                       type="text"
                       className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
                     ></input>
                   </div>
-                  <div className="block">
-                    <label htmlFor="" className="text-sm font-md mr-10 mt-3">
-                      Profile Photo
-                    </label>
+                </div>
+              </div>
+              <div className="my-5">
+                <label htmlFor="profile-photo" className="cursor-pointer">
+                  <p>Profile Picture</p>
+                  <input
+                    type="file"
+                    id="profile-photo"
+                    name="profilephoto"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    disabled={!edit}
+                  />
+                  <div className="md:flex items-center space-y-4">
                     <Image
                       src={
                         data?.photoURL ||
                         "/componentsgraphics/common/Anonymousimage/anonymous.png"
                       }
                       width={100}
-                      height={10000}
-                    ></Image>
-                    {/* <input
-                                            value={data?.photoURL || ""}
-                                            name="profilephoto"
-                                            //  onChange={setData}
-                                            readOnly = {!edit}
-                                            type="file"
-                                            accept="image/*"
-                                            className="input rounded focus:border-transparent focus:outline-none text-sm p-2 my-2 w-[100%] bg-[#333333]"
-                                        /> */}
+                      height={100}
+                      alt={"profile"}
+                      className="rounded-full w-24 h-24 object-cover"
+                    />
                   </div>
-                </div>
+                </label>
               </div>
             </div>
           </form>
@@ -463,154 +438,7 @@ const MentorProfile = () => {
                   value={data?.details?.interest}
                   readOnly
                 />
-                {/* <select
-                                    name="interest"
-                                    //  onChange={setData}
-                                    value={data?.details?.interest}
-                                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4  bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
-                                >
-                                    <option value="" className="text-xs">
-                                        Select from this List
-                                    </option>
-
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Web Developer"
-                                    >
-                                        Web Developer
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="C++ & DSA">
-                                        C++ & DSA
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="UI/UX Designing"
-                                    >
-                                        UI/UX Designing
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Yoga & Wellness"
-                                    >
-                                        Yoga & Wellness
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="Painting">
-                                        Painting
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Graphic Designing"
-                                    >
-                                        Graphic Designing
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Video Shooting"
-                                    >
-                                        Video Shooting
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Content Writing"
-                                    >
-                                        Content Writing
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="Marketing">
-                                        Marketing
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Basic Medical Science"
-                                    >
-                                        {" "}
-                                        Basic Medical Science{" "}
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Yoga & Wellness"
-                                    >
-                                        Yoga & Wellness
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="Sketching">
-                                        Sketching
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Financial Literacy of Planning"
-                                    >
-                                        Financial Literacy of Planning
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value=" Sound / Audio Engineering"
-                                    >
-                                        Sound / Audio Engineering
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="IOT">
-                                        IOT
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="3D Video Editing"
-                                    >
-                                        3D Video Editing
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="AI/ML">
-                                        AI/ML
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="Gaming">
-                                        Gaming
-                                    </option>
-                                    <option className="text-xs cursor-pointer" value="Poetry">
-                                        Poetry
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Thesis of Book Writing"
-                                    >
-                                        Thesis of Book Writing
-                                    </option>
-                                    <option
-                                        className="text-xs cursor-pointer"
-                                        value="Productivity of Basic Software"
-                                    >
-                                        Productivity of Basic Software
-                                    </option>
-                                </select> */}
-                {/* <select
-                                    name="interest"
-                                    //  onChange={setData}
-                                    value={data?.details?.interest}
-                                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4  bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
-                                >
-                                    <option value="" className="text-xs">
-                                                             Select from this List
-                                                           </option>
-                                                           <option value="Python" className="text-xs">
-                                                             Python
-                                                           </option>
-                                                           <option value="Java" className="text-xs">
-                                                             Java
-                                                           </option>
-                                                           <option value="MERN" className="text-xs">
-                                                             MERN
-                                                           </option>
-                                </select> */}
               </div>
-              {/* <div className="mb-10 md:flex items-center space-y-4    w-full">
-                                <label className="block text-sm font-medium text-white mt-4 mr-12 md:ml-5">
-                                    Others:
-                                </label>
-                                <input
-                                    type="text"
-                                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4  bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Type if not mention in the list"
-                                    name="others"
-                                    //  onChange={setData}
-                                    value={data?.details?.interest}
-                                    readOnly
-                                />
-                            </div> */}
             </div>
             <div className="mb-10 md:flex items-center space-y-4 w-full">
               <label className="block text-sm font-medium text-white mt-4 mr-12">
@@ -671,25 +499,17 @@ const MentorProfile = () => {
               <div className="max-w-full text-right">
                 <button
                   // onClick={detailadd}
-                  onClick={() => router.push("/reta/mentors")}
+                  onClick={() => router.push("/meta/profile")}
                   className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
                 >
                   Back
-                </button>
-              </div>
-              <div className="max-w-full text-right">
-                <button
-                  onClick={() => handleClick2()}
-                  className="p-2 mt-5 m-3 border rounded-lg pr-5 pl-5 bg-[#A145CD] "
-                >
-                  Accept
                 </button>
               </div>
             </div>
           </div>
           {/* //endsection3 */}
         </div>
-        {edit ? (
+        {/* {edit ? (
           <div className="max-w-full text-right">
             <button
               // onClick={detailadd}
@@ -700,10 +520,10 @@ const MentorProfile = () => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
       </div>
     </div>
   );
 };
 
-export default withAdminAuthorization(MentorProfile);
+export default withMentorAuthorization(MentorProfile);

@@ -6,9 +6,12 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import MentorChart from "@/components/mentor/other/chart";
 import { useRouter } from "next/router";
-
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
+
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
@@ -16,10 +19,13 @@ function MentorStudent() {
   const [count, setCount] = useState(1);
   // const { data } = useSelector((state) => state.authManagerMentor);
   const [courseData, setCourseData] = useState();
-  const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12];
+  const {user, userProfile} = useAuthContext();
+  const chartData  = new Array(11).fill(0);
   const [monthData, setMonthData] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
+
+  let todayJoined = 0;
 
   let [searchstate, setsearchstate] = useState("");
   const router = useRouter();
@@ -31,12 +37,27 @@ function MentorStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [SideBarState, sendSideBarState] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
+  const [courseDetails, setDetails] = useState()
+  const [dataFetched, setDataFetched] = useState(false);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-  
+
+  // for getting course data from Databse
+  const getData = async () => {
+    if (!dataFetched) {
+      const courseCollection = collection(db, "courses");
+      const courseInfo = await getDocs(courseCollection);
+
+      const courseList = courseInfo.docs.map((doc) => doc.data());
+      console.log("courseList", courseList,);          
+      setDetails(courseList);
+      setDataFetched(true);
+    }
+  };
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -46,20 +67,21 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
-  }, [isMediumScreen]);
+   getData(); //uncomment it when fetching course Data
+  }, [isMediumScreen, dataFetched]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
-  function getTotalEnrolled() {
-    let enrolled = 0;
-    if (courseData) {
-      courseData.coursedata.forEach((e) => {
-        enrolled += e.Enrolled;
-      });
-    }
-    return enrolled;
-  }
-  const totalEnrolled = getTotalEnrolled();
+  // function getTotalEnrolled() {
+  //   let enrolled = 0;
+  //   if (courseData) {
+  //     courseData.coursedata.forEach((e) => {
+  //       enrolled += e.Enrolled;
+  //     });
+  //   }
+  //   return enrolled;
+  // }
+  const totalEnrolled = userProfile.joinedStudents?.length;
 
   // for getting chartData
   // courseData && courseData.forEach(element => {
@@ -96,6 +118,20 @@ function MentorStudent() {
         break;
     }
   }
+
+  console.log(userProfile)
+
+  userProfile.joinedStudents?.map((student)=>{
+    const joinDate = new Date(student.joinedAt?.seconds * 1000);
+    console.log(joinDate.getDate());
+    chartData[joinDate.getMonth()]++;
+    if(joinDate.getDate() == new Date().getDate()) {
+      // console.log("today");
+      todayJoined++;
+    }
+  });
+
+  console.log(courseData);
 
   return (
     <>
@@ -147,7 +183,7 @@ function MentorStudent() {
                   className="w-[95%] h-[20%] rounded-xl md:text-base text-lg mx-auto pb-6"
                 >
                   <div className="text-white py-4 px-3 text-lg font-bold">
-                    Today 2 new students enrolled in your course.
+                    Today {todayJoined} new students enrolled in your course.
                   </div>
                   <div className="flex justify-end mx-8">
                     <button className="bg-[#E1348B] px-4 py-2 rounded-md text-sm  flex items-center justify-center">
@@ -181,7 +217,7 @@ function MentorStudent() {
                       />
                     </div>
                     <p className="font-semibold text-lg py-1">
-                      {courseData?.coursedata?.length}
+                      {userProfile.courseAssigned?.length || "0"}
                     </p>
                     <p>Total Courses</p>
                   </div>
@@ -217,7 +253,7 @@ function MentorStudent() {
               </div>
 
               {/* table */}
-              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
+              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto pb-[40rem] mb-4">
                 <div className="">
                   <table className="w-full  ">
                     <thead className="  items-center  border-b  ">
@@ -230,7 +266,33 @@ function MentorStudent() {
                       </tr>
                     </thead>
                     <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
-                      {courseData &&
+                      {/* uncomment it when using database data */}
+                      {
+                        courseDetails && courseDetails .slice(initialcount, gap).map((e, i) => {
+                          const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
+                          return (
+                            <tr
+                              className="flex space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around "
+                              key={i}
+                            >
+                              <td className="flex w-[20%] mx-4 items-center gap-2">
+                                <Image
+                                  src={e?.banner}
+                                  alt="img"
+                                  height={25}
+                                  width={25}
+                                  className="rounded-full h-8  object-contain inline"
+                                />
+                                {e?.title}
+                              </td>
+                              <td className="w-[20%]">{e?.Enrolled}</td>
+                              <td className="w-[20%]">{e?.lectures}</td>
+                              <td className="md:block hidden w-[20%]">{time && time.toLocaleString()}</td>
+                              <td className="md:block hidden w-[20%]">{e?.level}</td>
+                            </tr>)
+                        })
+                      }
+                      {/* {courseData &&
                         courseData.coursedata
                           .slice(initialcount, gap)
                           .map((e, i) => (
@@ -253,13 +315,13 @@ function MentorStudent() {
                               <td className="md:block hidden">{e.Active}</td>
                               <td className="md:block hidden">{e.Courses}</td>
                             </tr>
-                          ))}
+                          ))} */}
                     </tbody>
                   </table>
                 </div>
 
                 {/* pagination */}
-                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
+                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4 mt-[4rem]">
                   <button
                     className="w-6 h-5 border flex justify-center items-center"
                     name="back"

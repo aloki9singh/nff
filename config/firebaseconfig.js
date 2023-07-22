@@ -67,11 +67,19 @@ const firebaseConfig = {
 //   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
 //   appId: process.env.NEXT_PUBLIC_APP_ID,
 //   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+// }; const firebaseConfig = {
+//   apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
+//   authDomain: "neatskills-1c31c.firebaseapp.com",
+//   projectId: "neatskills-1c31c",
+//   storageBucket: "neatskills-1c31c.appspot.com",
+//   messagingSenderId: "713774382237",
+//   appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
+//   measurementId: "G-QWYMTLSSEK",
 // };
 
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig, "baseApp");
+// const app = initializeApp(firebaseConfig, "baseApp");
 
 //  const app = initializeApp(firebaseConfig, 'neatskills-1c31c');
 
@@ -80,7 +88,7 @@ const app = initializeApp(firebaseConfig, "baseApp");
 //  const app = initializeApp(firebaseConfig, 'neat-60028');
 
 
-// const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 export default app;
 

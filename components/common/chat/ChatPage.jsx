@@ -152,8 +152,8 @@ const Chat = () => {
 
   return (
     <>
-      <div className="flex overflow-x-hidden items-stretch min-h-screen ">
-        {chats.length === 0 && <NoJoinedCoursesModal />}
+      <div className={`flex overflow-x-hidden items-stretch min-h-screen ${userProfile.role != "mentor" ? (chats.length == 0 ? 'blur-lg':null) : null }`}>
+        {userProfile.role != "mentor" ? (chats.length === 0 && <NoJoinedCoursesModal />) :null}
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${
