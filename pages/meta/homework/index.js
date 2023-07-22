@@ -31,7 +31,7 @@ function Homework() {
     const [showSideBar, setShowSideBar] = useState(false);
     const [SideBarState, sendSideBarState] = useState(false);
     const [dataFetched, setDataFetched] = useState(false);
-    const [activeElement, setActiveElement] = useState('');
+    const [activeElement, setActiveElement] = useState('active');
     const [activeCourse, setActive] = useState()
 
     const handleToggleElement = element => {
