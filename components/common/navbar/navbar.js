@@ -26,7 +26,7 @@ export default function Navbar({ nav, setNav }) {
       setColor(false);
     }
   };
-
+  console.log(user, userProfile);
   useEffect(() => {
     window.addEventListener("scroll", changeColor);
   }, []);
@@ -34,8 +34,9 @@ export default function Navbar({ nav, setNav }) {
   return (
     <>
       <div
-        className={` w-full px-4 md:px-8 lg:px-16 py-4 ${color ? "bg-[#131313] shadow-xl" : "bg-transparent"
-          } fixed z-[100] transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
+        className={` w-full px-4 md:px-8 lg:px-16 py-4 ${
+          color ? "bg-[#131313] shadow-xl" : "bg-transparent"
+        } fixed z-[100] transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
       >
         <div className="w-full max-w-[1440px] flex justify-between items-center font-ral ">
           <Link
@@ -65,20 +66,26 @@ export default function Navbar({ nav, setNav }) {
             </ul>
           </div>
           <div className="hidden md:flex items-center">
-            {user ? (
+            {userProfile.role == "student" && user ? (
               <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
                 <IoMdNotificationsOutline className="text-3xl mr-2" />
                 <div className="] h-12 w-12 flex justify-center items-center">
                   <Popover className="">
                     <Popover.Button className="outline-none ">
-                      {user.photoURL ? <Image
-                        src={user.photoURL}
-                        alt="proImg"
-                        height={48}
-                        width={48}
-                        className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
-                      /> :
-                        <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl" />}
+                      {user.photoURL ? (
+                        <Image
+                          src={user.photoURL}
+                          alt="proImg"
+                          height={48}
+                          width={48}
+                          className="inline-block  object-cover object-center !rounded-full border-[#E1348B] aspect-square"
+                        />
+                      ) : (
+                        <BsPersonCircle
+                          onClick={() => setProfileMenu(!profileMenu)}
+                          className="text-white text-4xl"
+                        />
+                      )}
                     </Popover.Button>
                     <Transition
                       as={Fragment}
@@ -94,10 +101,13 @@ export default function Navbar({ nav, setNav }) {
                           <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
                             <Link href="/beta/profile">
                               <p className="p-2">
-                                {user ? (
+                                {userProfile.role == "student" && user ? (
                                   <div className="flex gap-2 items-center">
                                     <Image
-                                      src={user.photoURL || "/componentsgraphics/common/Anonymousimage/anonymous.png"}
+                                      src={
+                                        user.photoURL ||
+                                        "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                                      }
                                       height="35"
                                       width="35"
                                       className="rounded-full h-6 w-6"
@@ -114,7 +124,12 @@ export default function Navbar({ nav, setNav }) {
                                   </div>
                                 ) : (
                                   <div className="flex gap-1 items-center">
-                                    <BsPersonCircle onClick={() => setProfileMenu(!profileMenu)} className="text-white text-4xl" />
+                                    <BsPersonCircle
+                                      onClick={() =>
+                                        setProfileMenu(!profileMenu)
+                                      }
+                                      className="text-white text-4xl"
+                                    />
                                     <div className="text-left">
                                       <p className="text-[13px] mb-1">Guest</p>
                                       <p className="text-[10px] -mt-2">
@@ -260,38 +275,36 @@ export default function Navbar({ nav, setNav }) {
                   </div>
                 </Link>
 
-                {
-                  user ? (
-                    <Link href="/beta/profile">
+                {userProfile.role == "student" && user ? (
+                  <Link href="/beta/profile">
+                    <div
+                      onClick={() => setNav(false)}
+                      className="py-4 text-sm hover:scale-110 inline-flex items-center gap-2"
+                    >
+                      {/* <Avatar src={user.photoURL} alt="proImg" height={32} width={32} /> */}
+                      Profile
+                    </div>
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/beta/login">
                       <div
                         onClick={() => setNav(false)}
-                        className="py-4 text-sm hover:scale-110 inline-flex items-center gap-2"
+                        className="py-4 text-sm hover:scale-110"
                       >
-                        {/* <Avatar src={user.photoURL} alt="proImg" height={32} width={32} /> */}
-                        Profile
+                        Login
                       </div>
                     </Link>
-                  ) : (
-                    <>
-                      <Link href="/beta/login">
-                        <div
-                          onClick={() => setNav(false)}
-                          className="py-4 text-sm hover:scale-110"
-                        >
-                          Login
-                        </div>
-                      </Link>
-                      <Link href="/beta/signup">
-                        <div
-                          onClick={() => setNav(false)}
-                          className="py-4 text-sm hover:scale-110"
-                        >
-                          Signup
-                        </div>
-                      </Link>
-                    </>
-                  )
-                }
+                    <Link href="/beta/signup">
+                      <div
+                        onClick={() => setNav(false)}
+                        className="py-4 text-sm hover:scale-110"
+                      >
+                        Signup
+                      </div>
+                    </Link>
+                  </>
+                )}
 
                 <Link href="/alpha/contactus">
                   <div
@@ -305,10 +318,15 @@ export default function Navbar({ nav, setNav }) {
 
               <div className="">
                 <Link href={"/beta/signup"}>
-                  <button onClick={() => {
-                    signOut(auth)
-                  }} className="uppercase tracking-widest text-white text-xs px2 py-4 w-full bg-pin border-2 rounded-xl ">
-                    {user ? "Logout" : "Get Started"}
+                  <button
+                    onClick={() => {
+                      signOut(auth);
+                    }}
+                    className="uppercase tracking-widest text-white text-xs px2 py-4 w-full bg-pin border-2 rounded-xl "
+                  >
+                    {userProfile.role == "mentor" && user
+                      ? "Logout"
+                      : "Get Started"}
                   </button>
                 </Link>
               </div>
