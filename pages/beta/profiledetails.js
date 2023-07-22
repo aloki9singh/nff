@@ -143,9 +143,9 @@ export default function ProfileDetails() {
 
       <div className="w-[92%] h-max mx-auto px-4 py-8 bg-[#222222] rounded-3xl">
         {/* form */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
           {/* student name */}
-          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="w-full flex-wrap flex flex-col items-stretch md:flex-row justify-start  gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">Student Name *</label>
             <div className="flex flex-col">
               <input
@@ -188,8 +188,8 @@ export default function ProfileDetails() {
 
           {/* unique id */}
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
-            <label htmlFor="">School Unique Id *</label>
-            <div className="flex flex-col">
+            <label className=" whitespace-nowrap " htmlFor="">School Unique Id *</label>
+            <div className="flex flex-col items-stretch w-full">
               <input
                 type="text"
                 placeholder="Type Here"
@@ -202,8 +202,8 @@ export default function ProfileDetails() {
 
           {/* school Name */}
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
-            <label htmlFor="">School Name</label>
-            <div className="flex flex-col">
+            <label className="whitespace-nowrap" htmlFor="">School Name</label>
+            <div className="flex flex-col items-stretch w-full">
               <input
                 type="text"
                 placeholder="Type Here"
@@ -223,7 +223,7 @@ export default function ProfileDetails() {
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">Class</label>
             <select
-              className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[200px] "
+              className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-[200px] w-full "
               {...register("class")}
             >
               {options.map((option) => (
@@ -236,8 +236,8 @@ export default function ProfileDetails() {
 
           {/* roll no */}
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
-            <label htmlFor="">Roll no</label>
-            <div className="flex flex-col">
+            <label className="whitespace-nowrap" htmlFor="">Roll no</label>
+            <div className="flex flex-col items-stretch w-full">
               <input
                 type="text"
                 placeholder="Type Here"
@@ -294,10 +294,10 @@ export default function ProfileDetails() {
           </div>
 
           {/* contact number */}
-          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
-            <div className="flex md:items-center gap-x-4 flex-col md:flex-row">
+          <div className="w-full  flex flex-col md:flex-row justify-start items-start gap-y-4 md:gap-x-6 px-4 mb-8">
+            <div className="flex md:items-center gap-x-4 flex-col md:flex-row md:items-s items-stretch w-full">
               <label htmlFor="">Student mobile number:</label>
-              <div className="flex flex-col">
+              <div className="flex flex-col ">
                 <input
                   type="tel"
                   // pattern="[0-9]*"
@@ -327,7 +327,7 @@ export default function ProfileDetails() {
                 )}
               </div>
             </div>
-            <div className="flex md:items-center gap-x-4 md:gap-x-2 flex-col md:flex-row">
+            <div className="flex md:items-center gap-x-4 md:gap-x-2 flex-col md:flex-row items-stretch w-full">
               <label className="block text-white">
                 Alternate Phone Number:
               </label>
@@ -357,7 +357,7 @@ export default function ProfileDetails() {
           </div>
 
           {/* father's details */}
-          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className=" flex-wrap flex flex-col md:flex-row justify-start  gap-y-2 md:gap-x-6 px-4 mb-8 items-stretch w-full" >
             <label htmlFor="">{`Father's`} Name</label>
             <div className="flex flex-col">
               <input
@@ -399,7 +399,7 @@ export default function ProfileDetails() {
           </div>
 
           {/* mother's details */}
-          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start  gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-stretch   gap-y-2 md:gap-x-6 px-4 mb-8 ">
             <label htmlFor="">{`Mother's`} Name</label>
             <div className="flex flex-col">
               <input
@@ -441,7 +441,7 @@ export default function ProfileDetails() {
           </div>
 
           {/* parent's contact number */}
-          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-start gap-y-2 md:gap-x-6 px-4 mb-8">
+          <div className="w-full flex-wrap flex flex-col md:flex-row justify-start items-stretch gap-y-2 md:gap-x-6 px-4 mb-8 ">
             <div className="flex md:items-center gap-x-4 flex-col md:flex-row">
               <label htmlFor="">{`Parent's`} mobile number:</label>
               <div className="flex flex-col">
@@ -503,7 +503,7 @@ export default function ProfileDetails() {
           </div>
 
           {/* photo and identity proof */}
-          <div className="w-full flex flex-col justify-center items-center gap-y-2  px-4 mb-8">
+          <div className="w-full flex flex-col  gap-y-2  px-4 mb-8">
             <label htmlFor="" className="self-start">
               Profile Photo
             </label>

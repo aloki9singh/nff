@@ -27,7 +27,6 @@ import { generate } from "shortid";
 import { isString } from "formik";
 import withAdminandMentorAuthorization from "@/lib/HOC/withAdminandMentorAuthorization";
 
-
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
 const categories = [
@@ -57,7 +56,7 @@ const planCourseSchema = yup
     language: yup.string().required(),
     level: yup.string().required(),
     // banner can by any
-    banner: yup.mixed().required(),
+    banner: yup.string().required(),
   })
   .required();
 
@@ -68,10 +67,14 @@ const PlanCourseForm = ({ state, onSubmit }) => {
     handleSubmit,
     setValue,
     control,
+    watch,
   } = useForm({
     defaultValues: state,
     resolver: yupResolver(planCourseSchema),
   });
+
+  const banner = watch("banner");
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Header currentStep={1} />
@@ -81,7 +84,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
         <label className="w-40" htmlFor="">
           Course Title
         </label>
-        <div className="flex flex-col md:flex-row flex-col flex-1">
+        <div className="flex flex-col md:flex-row flex-1">
           <input
             type="text"
             placeholder="Enter coures title"
@@ -116,7 +119,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
           <textarea
             type="text"
             hidden
-              value={auth.currentUser.uid}
+            value={auth.currentUser.uid}
             {...register("mentorid", { required: true })}
           />
           <p className="text-red-500 text-sm">{errors.desc?.message}</p>
@@ -258,6 +261,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
                 name="banner"
                 onChange={onChange}
                 onBlur={onBlur}
+                value={banner}
               />
             )}
           />
@@ -838,11 +842,6 @@ const createCourse = async (courseDetails) => {
   const data = {
     ...courseDetails,
     createdAt: serverTimestamp(),
-    banner: courseDetails.id
-      ? isString(courseDetails.banner)
-        ? courseDetails.banner
-        : ""
-      : "",
   };
 
   console.log("data final", data);
@@ -856,29 +855,16 @@ const createCourse = async (courseDetails) => {
     }
   );
 
-  if (!isString(courseDetails.banner))
-    uploadToFirebase(courseDetails.banner, (url) => {
-      setDoc(
-        doc(db, "courses", courseId),
-        {
-          banner: url,
-        },
-        {
-          merge: true,
-        }
-      );
-
-      if (!courseDetails.id)
-        setDoc(doc(collection(db, "chatGroups"), courseId), {
-          name: courseDetails.title,
-          members: [auth.currentUser?.uid],
-          photoURL: url,
-          isGroup: true,
-          groupId: courseId,
-          lastMessage: "",
-          lastMessageTimestamp: serverTimestamp(),
-          createdAt: serverTimestamp(),
-        });
+  if (!courseDetails.id)
+    setDoc(doc(collection(db, "chatGroups"), courseId), {
+      name: courseDetails.title,
+      members: [auth.currentUser?.uid],
+      photoURL: courseDetails.banner,
+      isGroup: true,
+      groupId: courseId,
+      lastMessage: "",
+      lastMessageTimestamp: serverTimestamp(),
+      createdAt: serverTimestamp(),
     });
 };
 
@@ -916,7 +902,6 @@ const CreateCourse = ({ course }) => {
       ...formData,
       modules,
       id: course?.id,
-      banner: formData.banner || course.banner || "",
     };
     console.log("modules", modules);
 

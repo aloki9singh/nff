@@ -32,10 +32,10 @@ export default function IDdraganddrop({
   });
 
   return (
-    <div className="w-[80%] md:w-[70%] h-fit text-gray-400 p-4">
+    <div className="w-full md:w-[70%] h-fit text-gray-400 p-4">
       <div
         {...getRootProps()}
-        className={`w-full h-full px-10 py-4 md:py-6 border-dashed border-white p-4 border-[1px] mt-2 rounded-xl bg-[#333333]`}
+        className={`w-full h-full px-3 md:px-10 py-4 md:py-6 border-dashed border-white p-4 border-[1px] mt-2 rounded-xl bg-[#333333]`}
       >
         <input
           {...getInputProps({
@@ -46,7 +46,7 @@ export default function IDdraganddrop({
           accept="image/png, image/gif, image/jpeg"
         />
 
-        <div className="flex flex-row">
+        <div className="flex flex-col items-center md:flex-row gap-2">
           {value && (
             <div className="flex items-center">
               <Image
