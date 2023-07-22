@@ -128,7 +128,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
 
       {/* duration, session and language */}
       <div className="flex flex-col md:flex-row justify-start items-start  gap-x-10 md:px-4 mb-8">
-        <div className="flex flex-col md:flex-row flex-1 flex-row items-center gap-x-2">
+        <div className="flex flex-col md:flex-row flex-1  items-center gap-x-2">
           <label className="w-40" htmlFor="">
             Duration
           </label>
@@ -411,7 +411,7 @@ const Header = ({ currentStep, onSubmit }) => {
             {headingContent[currentStep - 1].desc}
           </p>
         </div>
-        <div className="flex-1 text-right">
+        <div className="flex-1 text-right ">
           <button
             onClick={() => onSubmit?.()}
             type="submit"
@@ -915,7 +915,7 @@ const CreateCourse = ({ course }) => {
   return (
     <div className="text-white flex flex-col justify-center items-center px-5">
       {/* nav bar */}
-      <div className="w-screen border-b-2 border-grey text-center">
+      {/* <div className="w-screen border-b-2 border-grey text-center">
         <div className=" flex justify-center gap-x-96 items-center">
           <Link href="/">
             <ul>
@@ -950,7 +950,7 @@ const CreateCourse = ({ course }) => {
             </ul>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-1 md:grid-cols-10 w-full">
         <div className="col-span-2 hidden md:block h-full pl-12 ">

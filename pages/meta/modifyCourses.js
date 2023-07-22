@@ -4,7 +4,7 @@ import laptop from "@/public/componentsgraphics/student/courses/header/laptopico
 import { useMediaQuery } from "react-responsive";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
-import CourseList from "@/components/student/courses/list";
+import CourseList from "@/components/student/courses/list2";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import { callUserById } from "@/lib/exportablefunctions";
 import { auth } from "@/config/firebaseconfig";
