@@ -103,7 +103,7 @@ function Videos() {
   const [videoUrl, setVideoUrl] = useState(null);
   const [isJoined, setIsJoined] = useState(false);
   const { user, userProfile } = useAuthContext();
-  const [currentarray, setCurrentArray] = useState([]);
+  const [currentarray, setCurrentArray] = useState([""]);
   const [showModal, setShowModal] = useState(false);
   const { userSubsribed, isTrialValid } = CourseAccess(user.uid);
 
@@ -213,7 +213,14 @@ function Videos() {
       joinedAt: serverTimestamp(),
     });
 
+    await setDoc(doc(db, "courses", course.id, "joinedCourses", user.uid), {
+      id: user.uid,
+      title: course.title,
+      joinedAt: serverTimestamp(),
+    });
+
     const mentorRef = doc(db, "allusers", course.mentorid);
+    // const courseRef = doc(db, "courses", course.uid);
 
     const d = {
       courseId: course.id,
@@ -222,9 +229,11 @@ function Videos() {
     };
 
     let joinedStudents = [];
-    currentarray.map((item) => {
-      joinedStudents.push(item);
-    });
+    if(currentarray.length > 0){
+      currentarray.map((item) => {
+        joinedStudents.push(item);
+      });
+    }
     joinedStudents.push(d);
 
     const joindData = {

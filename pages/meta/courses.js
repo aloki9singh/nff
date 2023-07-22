@@ -44,16 +44,19 @@ function MentorStudent() {
   }
 
   // for getting course data from Databse
-  // const getData = async () => {
-  //   if (!dataFetched) {
-  //     const courseCollection = collection(db, "courses");
-  //     const courseInfo = await getDocs(courseCollection);
-  //     const courseList = courseInfo.docs.map((doc) => doc.data());
-  //     console.log(courseList)
-  //     setDetails(courseList);
-  //     setDataFetched(true);
-  //   }
-  // };
+  const getData = async () => {
+    if (!dataFetched) {
+      const courseCollection = collection(db, "courses");
+      const courseInfo = await getDocs(courseCollection);
+
+      const courseList = courseInfo.docs.map((doc) => doc.data());
+      const studref = collection(db, "courses").document(courseList[0].id);
+      const studList = await getDocs(studref);
+      console.log("courseList", courseList, "stud", studList);          
+      setDetails(courseList);
+      setDataFetched(true);
+    }
+  };
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -64,7 +67,7 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
-   // getData(); //uncomment it when fetching course Data
+   getData(); //uncomment it when fetching course Data
   }, [isMediumScreen, dataFetched]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
@@ -260,7 +263,7 @@ function MentorStudent() {
                     </thead>
                     <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
                       {/* uncomment it when using database data */}
-                      {/* {
+                      {
                         courseDetails && courseDetails.map((e, i) => {
                           const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
                           return (
@@ -284,8 +287,8 @@ function MentorStudent() {
                               <td className="md:block hidden w-[20%]">{e?.level}</td>
                             </tr>)
                         })
-                      } */}
-                      {courseData &&
+                      }
+                      {/* {courseData &&
                         courseData.coursedata
                           .slice(initialcount, gap)
                           .map((e, i) => (
@@ -308,7 +311,7 @@ function MentorStudent() {
                               <td className="md:block hidden">{e.Active}</td>
                               <td className="md:block hidden">{e.Courses}</td>
                             </tr>
-                          ))}
+                          ))} */}
                     </tbody>
                   </table>
                 </div>
