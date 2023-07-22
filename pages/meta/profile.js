@@ -25,7 +25,7 @@ import Link from "next/link";
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
-  const chartData  = new Array(12).fill(0);
+  const chartData = new Array(12).fill(0);
   const [uid, setUid] = useState("");
   const [userData, setUserData] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -51,15 +51,12 @@ function MentorProfile() {
     return () => unsubscribe();
   }, [isMediumScreen]);
 
-
-
-  userData.joinedStudents?.map((student)=>{
+  userData.joinedStudents?.map((student) => {
     const joinDate = new Date(student.joinedAt.seconds * 1000);
     console.log(joinDate.getMonth());
     chartData[joinDate.getMonth()]++;
   });
 
-  
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] md:rounded-tl-[40px]">
@@ -98,12 +95,12 @@ function MentorProfile() {
                       src={
                         userData.photoURL
                           ? userData.photoURL
-                          : "/pagesgraphics/mentor/profile/ProfileGirlimg.svg"
+                          : "/componentsgraphics/common/Anonymousimage/anonymous.png"
                       }
                       alt="proImg"
                       height={100}
                       width={100}
-                      className="rounded-full w-[100px] object-contain mt-[-60px]"
+                      className="rounded-full w-[100px] object-cover h-[100px]  mt-[-60px]"
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-35px]">
@@ -113,12 +110,19 @@ function MentorProfile() {
                           ? userData.displayName.slice(0, 5)
                           : userData.displayName}
                       </div>
-                      <Link href={"/meta/register"}>
+                      <div
+                        onClick={() =>
+                          router.push({
+                            pathname: "/reta/mentorprofile",
+                            query: { uid: e.uid },
+                          })
+                        }
+                      >
                         <div className="flex text-xs md:text-sm mt-[-25px]">
                           Edit profile
                           <FiEdit2 className="ml-1 mt-[2px]" />
                         </div>
-                      </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -139,7 +143,9 @@ function MentorProfile() {
                           <p className="text-xs font-medium">Tutor rating</p>
                         </div>
                         <div className="bg-gradient-to-r from-[#A145CD] to-[#E1348B] rounded-2xl   p-3 my-4">
-                          <p className="text-sm font-semibold">{answeredquestions}</p>
+                          <p className="text-sm font-semibold">
+                            {answeredquestions}
+                          </p>
                           <p className="text-xs font-medium">
                             Question answered
                           </p>
@@ -323,7 +329,6 @@ function MentorProfile() {
             </div>
           </div>
         </div>
-       
       </div>
     </>
   );
