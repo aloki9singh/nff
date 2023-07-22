@@ -50,9 +50,7 @@ function MentorStudent() {
       const courseInfo = await getDocs(courseCollection);
 
       const courseList = courseInfo.docs.map((doc) => doc.data());
-      const studref = collection(db, "courses").document(courseList[0].id);
-      const studList = await getDocs(studref);
-      console.log("courseList", courseList, "stud", studList);          
+      console.log("courseList", courseList,);          
       setDetails(courseList);
       setDataFetched(true);
     }
