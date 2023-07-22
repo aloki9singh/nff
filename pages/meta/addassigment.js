@@ -44,15 +44,7 @@ function AddAssigments() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-  const getData = async () => {
-    if (!dataFetched) {
-      const courseCollection = collection(db, "courses");
-      const courseInfo = await getDocs(courseCollection);
-      const courseData = courseInfo.docs.map((doc) => doc.data());
-      setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
-      setDataFetched(true);
-    }
-  };
+ 
 
   useEffect(() => {
     if (isMediumScreen) {
