@@ -19,8 +19,8 @@ function MentorStudent() {
   const [count, setCount] = useState(1);
   // const { data } = useSelector((state) => state.authManagerMentor);
   const [courseData, setCourseData] = useState();
-  const {user, userProfile} = useAuthContext();
-  const chartData  = new Array(11).fill(0);
+  const { user, userProfile } = useAuthContext();
+  const chartData = new Array(11).fill(0);
   const [monthData, setMonthData] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
@@ -37,7 +37,7 @@ function MentorStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [SideBarState, sendSideBarState] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
-  const [courseDetails, setDetails] = useState()
+  const [courseDetails, setDetails] = useState();
   const [dataFetched, setDataFetched] = useState(false);
 
   function toggleSideBar() {
@@ -52,7 +52,7 @@ function MentorStudent() {
       const courseInfo = await getDocs(courseCollection);
 
       const courseList = courseInfo.docs.map((doc) => doc.data());
-      console.log("courseList", courseList,);          
+      console.log("courseList", courseList);
       setDetails(courseList);
       setDataFetched(true);
     }
@@ -67,7 +67,7 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
-   getData(); //uncomment it when fetching course Data
+    getData(); //uncomment it when fetching course Data
   }, [isMediumScreen, dataFetched]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
@@ -119,13 +119,13 @@ function MentorStudent() {
     }
   }
 
-  console.log(userProfile)
+  console.log(userProfile);
 
-  userProfile.joinedStudents?.map((student)=>{
+  userProfile.joinedStudents?.map((student) => {
     const joinDate = new Date(student.joinedAt?.seconds * 1000);
     console.log(joinDate.getDate());
     chartData[joinDate.getMonth()]++;
-    if(joinDate.getDate() == new Date().getDate()) {
+    if (joinDate.getDate() == new Date().getDate()) {
       // console.log("today");
       todayJoined++;
     }
@@ -140,8 +140,9 @@ function MentorStudent() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -164,9 +165,9 @@ function MentorStudent() {
               <div className="md:flex justify-end w-[100%] m-3 space-y-2">
                 <div className=" flex justify-end">
                   <button className="bg-[#E1348B] px-4 py-2 rounded-md text-lg flex items-center justify-center">
-                    <Link href="/reta/addcourse">
+                    <Link href="/reta/modifyCourses">
                       <span className="text-2xl mr-2">+</span>
-                      Add New Course
+                      Add/modify New Course
                     </Link>
                   </button>
                 </div>
@@ -217,7 +218,8 @@ function MentorStudent() {
                       />
                     </div>
                     <p className="font-semibold text-lg py-1">
-                      {userProfile.courseAssigned?.length || "0"}
+                      {/* {userProfile.courseAssigned?.length || "0"} */}
+                      {courseDetails?.length || "0"}
                     </p>
                     <p>Total Courses</p>
                   </div>
@@ -267,9 +269,12 @@ function MentorStudent() {
                     </thead>
                     <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
                       {/* uncomment it when using database data */}
-                      {
-                        courseDetails && courseDetails .slice(initialcount, gap).map((e, i) => {
-                          const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
+                      {courseDetails &&
+                        courseDetails.slice(initialcount, gap).map((e, i) => {
+                          const time = new Date(
+                            e?.createdAt.seconds * 1000 +
+                              e?.createdAt.nanoseconds / 1000000
+                          );
                           return (
                             <tr
                               className="flex space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around "
@@ -281,17 +286,21 @@ function MentorStudent() {
                                   alt="img"
                                   height={25}
                                   width={25}
-                                  className="rounded-full h-8  object-contain inline"
+                                  className="rounded-full h-8 w-8  object-cover inline"
                                 />
                                 {e?.title}
                               </td>
                               <td className="w-[20%]">{e?.Enrolled}</td>
                               <td className="w-[20%]">{e?.lectures}</td>
-                              <td className="md:block hidden w-[20%]">{time && time.toLocaleString()}</td>
-                              <td className="md:block hidden w-[20%]">{e?.level}</td>
-                            </tr>)
-                        })
-                      }
+                              <td className="md:block hidden w-[20%]">
+                                {time && time.toLocaleString()}
+                              </td>
+                              <td className="md:block hidden w-[20%]">
+                                {e?.level}
+                              </td>
+                            </tr>
+                          );
+                        })}
                       {/* {courseData &&
                         courseData.coursedata
                           .slice(initialcount, gap)
