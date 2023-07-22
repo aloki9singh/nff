@@ -1,4 +1,6 @@
 // Verified by Pradhumn
+import { db } from "@/config/firebaseconfig";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 
 const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
@@ -9,7 +11,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
     aspiring: "",
   });
   const [user, setUser] = useState([]);
-
+  const [dataFetched, setDataFetched] = useState([]);
   const [skill, setskill] = useState("");
   const [skillsArr, setskillsArr] = useState([]);
   const [id, setId] = useState("");
@@ -46,7 +48,16 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
       setRegStepCount(4);
     }
   };
-
+  const getData = async () => {
+    // if (!dataFetched) {
+    const courseCollection = collection(db, "courses");
+    const courseInfo = await getDocs(courseCollection);
+    const courseData = courseInfo.docs.map((doc) => doc.data());
+    // setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
+    setDataFetched(courseData);
+    // }
+  };
+  console.log(dataFetched);
   const deleteItem = (itemToDelete) => {
     // Create a new array excluding the item to delete
     const updatedArray = skillsArr.filter((item) => item !== itemToDelete);
@@ -59,6 +70,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
     if (typeof window !== "undefined") {
       setUser(JSON.parse(localStorage.getItem("userdata")));
     }
+    getData();
   }, []);
 
   return (
@@ -118,7 +130,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                       <label className="block text-sm font-medium text-white mt-4 mr-5">
                         Feild of Interest:
                       </label>
-                      <select
+                      {/* <select
                         name="interest"
                         onChange={setData}
                         value={input.interest}
@@ -252,6 +264,26 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                         >
                           Productivity of Basic Software
                         </option>
+                      </select> */}
+                      <select
+                        name="interest"
+                        onChange={setData}
+                        value={input.interest}
+                        className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                      >
+                        <option value="" className="text-xs">
+                          Select from this List
+                        </option>
+                        {dataFetched?.map((e) => (
+                          <option
+                            key={e.id} // Use a unique key for each option
+                            className="text-xs cursor-pointer"
+                            value={e.title}
+                          >
+                            {console.log(e.id)}
+                            {e.title}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     {/* <div className="mb-10 md:flex items-center space-y-4    w-full">
