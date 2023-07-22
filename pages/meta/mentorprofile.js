@@ -135,7 +135,7 @@ const mentorData = {
           <div className="flex justify-end p-4  text-white mr-16">
             <button
               onClick={handleEdit}
-              className="w-fit bg-[#505057] p-4 rounded-[10px]"
+              className="w-fit bg-[#505057] p-2 rounded-[10px]"
             >
               Edit Profile
             </button>
@@ -143,13 +143,13 @@ const mentorData = {
         ) : (
           <div className=" flex justify-end text-white mr-16">
             <button
-              className="w-fit bg-[#E1348B] p-4 rounded-[10px] mr-2"
+              className="w-fit bg-[#E1348B] p-2 rounded-[10px] mr-2"
               onClick={handleSubmit}
             >
               Save
             </button>
             <button
-              className="w-fit bg-[#505057] p-4 rounded-[10px]"
+              className="w-fit bg-[#505057] p-2 rounded-[10px]"
               onClick={handleEdit}
               disabled={!edit}
             >
