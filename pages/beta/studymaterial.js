@@ -86,7 +86,7 @@ function StudyMaterial() {
 
       )}
 {/* 
-    //please remove blur-sm when the content is there to show Case */}
+    please remove blur-sm when the content is there to show Case */}
 
       <div className={`flex h-screen bg-[#2D2E35] blur-sm ${!userSubsribed ? "blur-lg" : null}`}>
         {isMobileScreen && (
@@ -98,7 +98,7 @@ function StudyMaterial() {
           </div>
         )}
 
-        MentorId mentorid
+        {/* MentorId mentorid */}
         {/* Second Sidebar - Visible on Desktop */}
         {!isMobileScreen && (
           <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>

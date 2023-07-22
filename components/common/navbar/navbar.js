@@ -66,7 +66,7 @@ export default function Navbar({ nav, setNav }) {
             </ul>
           </div>
           <div className="hidden md:flex items-center">
-            {userProfile.role == "student" && user ? (
+            {userProfile?.role == "student" && user ? (
               <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
                 <IoMdNotificationsOutline className="text-3xl mr-2" />
                 <div className="] h-12 w-12 flex justify-center items-center">
@@ -275,7 +275,7 @@ export default function Navbar({ nav, setNav }) {
                   </div>
                 </Link>
 
-                {userProfile.role == "student" && user ? (
+                {userProfile?.role == "student" && user ? (
                   <Link href="/beta/profile">
                     <div
                       onClick={() => setNav(false)}
@@ -324,7 +324,7 @@ export default function Navbar({ nav, setNav }) {
                     }}
                     className="uppercase tracking-widest text-white text-xs px2 py-4 w-full bg-pin border-2 rounded-xl "
                   >
-                    {userProfile.role == "mentor" && user
+                    {userProfile?.role == "mentor" && user
                       ? "Logout"
                       : "Get Started"}
                   </button>
