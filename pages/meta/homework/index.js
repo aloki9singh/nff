@@ -31,7 +31,7 @@ function Homework() {
     const [showSideBar, setShowSideBar] = useState(false);
     const [SideBarState, sendSideBarState] = useState(false);
     const [dataFetched, setDataFetched] = useState(false);
-    const [activeElement, setActiveElement] = useState('');
+    const [activeElement, setActiveElement] = useState('active');
     const [activeCourse, setActive] = useState()
 
     const handleToggleElement = element => {
@@ -180,6 +180,29 @@ function Homework() {
                                         <UploadCard />
                                     </>
                                 )}
+                                {/* For checked Data */}
+                                {/* {activeCourse && activeCourse.map((e) => {
+                                            const data = e.assignment;
+                                            if (data.status){
+                                            return (
+                                                data && data.map((ele, i) => {
+                                                    const date = new Date(ele.date.seconds * 1000 + ele.date.nanoseconds / 1000000);
+                                                    return (
+                                                        <div className='cursor-pointer' onClick={() => { router.push(`/meta/homework/${e.id}`) }} key={ele.id}>
+                                                            <HomeWorkCard
+                                                                title={ele.title}
+                                                                desc={ele.module}
+                                                                date={date.toLocaleString().split(",")[0]}
+                                                                banner={e.banner}
+                                                                course={ele.course}
+                                                            />
+                                                        </div>
+                                                    );
+                                                })
+                                            );
+                                            }
+                                        })}
+                                        <UploadCard /> */}
                             </div>
                         </div>
                     </div>
