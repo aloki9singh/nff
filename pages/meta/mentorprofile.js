@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import { detailadd, uploadToFirebase } from "@/lib/exportablefunctions";
 import { useRouter } from "next/router";
 import {
   collection,
@@ -14,7 +13,6 @@ import {
 } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Image from "next/image";
-import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization";
 
 const MentorProfile = () => {
@@ -75,7 +73,7 @@ const MentorProfile = () => {
     e.preventDefault();
     setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   };
-  console.log(data);
+  // console.log(data);
 const mentorData = {
   email: data?.email,
     
@@ -92,7 +90,7 @@ const mentorData = {
     country: data?.details?.country,
   },
 };
-console.log(mentorData,"Mentor");
+// console.log(mentorData,"Mentor");
   const updateData = async () => {
 
     try {
