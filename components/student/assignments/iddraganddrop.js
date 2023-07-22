@@ -1,14 +1,28 @@
+import { uploadToFirebase } from "@/lib/exportablefunctions";
+import Image from "next/image";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { TbFileUpload } from "react-icons/tb";
 
-export let fileURL = "";
+export default function IDdraganddrop({
+  name,
+  setValue,
+  onChange,
+  onBlur,
+  value,
+}) {
+  const [uploading, setUploading] = useState(false);
 
-export default function IDdraganddrop({ name, setValue, onChange, onBlur }) {
+
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     onDrop: (acceptedFiles) => {
-      setValue(name, acceptedFiles[0], {
-        shouldValidate: true,
+
+      setUploading(true);
+      uploadToFirebase(acceptedFiles[0], (url) => {
+        setValue(name, url, {
+          shouldValidate: true,
+        });
+        setUploading(false);
       });
     },
     accept: "image/jpeg, image/png, image/svg+xml",
@@ -31,18 +45,38 @@ export default function IDdraganddrop({ name, setValue, onChange, onBlur }) {
           type="file"
           accept="image/png, image/gif, image/jpeg"
         />
-        <div className="flex py-2 md:py-6 justify-center">
-          <TbFileUpload size={30} />
-        </div>
 
-        <p className="text-center text-lg ">
-          <span className="font-medium text-white">Click to upload or</span>{" "}
-          drag and drop
-        </p>
-        <p className="text-sm flex justify-center text-center">
-          jpeg , png, svg (max 2-5 mb)
-        </p>
+        <div className="flex flex-row">
+          {value && (
+            <div className="flex items-center">
+              <Image
+                alt=""
+                className="rounded-full object-cover object-center w-[125px] h-[125px]"
+                src={value}
+                width={125}
+                height={125}
+              />
+            </div>
+          )}
+
+          <div className=" flex-1 ">
+            <div className="flex py-2 md:py-6 justify-center">
+              <TbFileUpload size={30} />
+            </div>
+
+            <p className="text-center text-lg ">
+              <span className="font-medium text-white">Click to upload or</span>{" "}
+              drag and drop
+            </p>
+            <p className="text-sm flex justify-center text-center">
+              jpeg , png, svg (max 2-5 mb)
+            </p>
+          </div>
+        </div>
       </div>
+
+      {uploading && <p>Loading....</p>}
+
       <div className="mt-3">
         {acceptedFiles.map((file) => (
           <div key={file.name} className="flex items-center">

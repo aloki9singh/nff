@@ -25,9 +25,15 @@ export default function ProfileDetails() {
     setValue,
     formState: { errors },
     reset,
+    watch
   } = useForm({
     defaultValues: {},
   });
+
+  const profilePhoto = watch("profilePhoto");
+  const aadhaarCard = watch("aadhaarCard");
+
+  console.log("profilePhoto", profilePhoto)
 
   useEffect(() => {
     const getInitialProfile = async () => {
@@ -47,6 +53,8 @@ export default function ProfileDetails() {
           motherMiddleName: data.motherName?.middle,
           motherLastName: data.motherName?.last,
           ReactDatepicker: data?.dob,
+          profilePhoto: data?.photoURL,
+          aadhaarCard: data?.aadhaarCard,
         }
         reset(initialProfile)
       }
@@ -94,14 +102,11 @@ export default function ProfileDetails() {
       },
       parentPhoneNo: data.parentPhoneNo,
       parentAltPhoneNo: data.parentAltPhoneNo,
-      photoURL: user.photoURL,
-      aadhaarCard: "",
+      photoURL: data.profilePhoto,
+      aadhaarCard: data.aadhaarCard,
       uid: user.uid,
-
       trialValid: true,
       courseAccess: false,
-
-      joinedCourses: [],
     };
     console.log("profile", profile);
     const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
@@ -116,31 +121,12 @@ export default function ProfileDetails() {
       });
     }
 
-    if (data.profilePhoto) {
-      uploadToFirebase(data.profilePhoto, (url) => {
-        updateDoc(doc(db, "allusers", user.uid), {
-          photoURL: url,
-        });
-        updateProfile(auth.currentUser, {
-          photoURL: url,
-        })
-          .then(() => {
-            // Profile updated!
-            // ...
-          })
-          .catch((error) => {
-            // An error occurred
-            // ...
-          });
-      });
-    }
 
-    if (data.aadhaarCard)
-      uploadToFirebase(data.aadhaarCard, (url) => {
-        updateDoc(doc(db, "allusers", user.uid), {
-          aadhaarCard: url,
-        });
-      });
+    const fullName = data.studentFirstName + " " + (data.studentLastName ?? "");
+    updateProfile(auth.currentUser, {
+      displayName: fullName,
+      photoURL: data.profilePhoto,
+    });
 
     router.push("/beta/profilecongrats");
   };
@@ -525,12 +511,13 @@ export default function ProfileDetails() {
             <Controller
               control={control}
               name="profilePhoto"
-              render={({ field: { onChange, onBlur } }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <IDdraganddrop
                   setValue={setValue}
                   name="profilePhoto"
                   onChange={onChange}
                   onBlur={onBlur}
+                  value={profilePhoto}
                 />
               )}
             />
@@ -541,12 +528,13 @@ export default function ProfileDetails() {
             <Controller
               control={control}
               name="aadhaarCard"
-              render={({ field: { onChange, onBlur } }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <IDdraganddrop
                   setValue={setValue}
                   name="aadhaarCard"
                   onChange={onChange}
                   onBlur={onBlur}
+                  value={aadhaarCard}
                 />
               )}
             />
