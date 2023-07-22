@@ -67,7 +67,7 @@ function MentorProfile() {
   }, [isMediumScreen]);
 
   userData.joinedStudents?.map((student) => {
-    const joinDate = new Date(student.joinedAt.seconds * 1000);
+    const joinDate = new Date(student.joinedAt?.seconds * 1000);
     console.log(joinDate.getMonth());
     chartData[joinDate.getMonth()]++;
   });
