@@ -14,6 +14,7 @@ import {
 import { db } from "@/config/firebaseconfig";
 import Image from "next/image";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization";
+import { uploadToFirebase } from "@/lib/exportablefunctions";
 
 const MentorProfile = () => {
   const { loading, setLoading } = useContext(Loading);
@@ -33,16 +34,17 @@ const MentorProfile = () => {
       console.log(documentData);
     }
   };
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setData({ ...data, profilephoto: reader.result });
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      uploadToFirebase(file, (url) => {
+        setData((prevData) => ({
+          ...prevData,
+          photoURL: url,
+        }));
+      })
+    }
+  };
   const getCourse = async () => {
     const usersCollection = collection(db, "courses");
     const q = query(
@@ -71,30 +73,35 @@ const MentorProfile = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
+    setData((prevData) => ({
+      ...prevData, details: {
+        ...prevData.details,
+        [e.target.name]: e.target.value
+      }
+    }));
   };
   // console.log(data);
-const mentorData = {
-  email: data?.email,
-    
-   details: {
-    ...data.details,
+  const mentorData = {
+    email: data?.email,
 
-    pPhone: data?.details?.pPhone,
-    firstname: data?.details?.firstname,
-    dob: data?.details?.dob,
-    sPhone: data?.details?.sPhone,
-    address: data?.details?.address,
-    city: data?.details?.city,
-    postalcode: data?.details?.postalcode,
-    country: data?.details?.country,
-  },
-};
-// console.log(mentorData,"Mentor");
+    details: {
+      ...data.details,
+
+      pPhone: data?.details?.pPhone,
+      firstname: data?.details?.firstname,
+      dob: data?.details?.dob,
+      sPhone: data?.details?.sPhone,
+      address: data?.details?.address,
+      city: data?.details?.city,
+      postalcode: data?.details?.postalcode,
+      country: data?.details?.country,
+    },
+  };
+  // console.log(mentorData,"Mentor");
   const updateData = async () => {
 
     try {
-      await updateDoc(doc(db, "allusers", uid), mentorData);
+      await updateDoc(doc(db, "allusers", uid), data);
       alert("Profile Updated");
       setEdit(false);
     } catch (e) {
@@ -108,9 +115,8 @@ const mentorData = {
   };
   return (
     <div
-      className={`md:p-10 bg-[#1E1E1E] ${
-        loading ? "pointer-events-none z-1" : ""
-      }`}
+      className={`md:p-10 bg-[#1E1E1E] ${loading ? "pointer-events-none z-1" : ""
+        }`}
     >
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -201,7 +207,7 @@ const mentorData = {
                 </label>
                 <input
                   name="email"
-                  value={data?.email}
+                  value={data?.details?.email}
                   onChange={handleChange}
                   type="text"
                   placeholder="Email"
@@ -316,32 +322,33 @@ const mentorData = {
                       className="input rounded   focus:border-transparent focus:outline-none text-sm p-2 md:my-2 w-[100%] bg-[#333333] "
                     ></input>
                   </div>
-                  <div className="block">
-                    <label htmlFor="profile-photo" className="cursor-pointer">
-                      <input
-                        type="file"
-                        id="profile-photo"
-                        name="profilephoto"
-                        accept="image/*"
-                        // onChange={handleImageChange}
-                        className="hidden"
-                        disabled={!edit}
-                      />
-                      <div className="md:flex items-center space-y-4">
-                        <Image
-                          src={
-                            data?.profilephoto ||
-                            "/componentsgraphics/common/Anonymousimage/anonymous.png"
-                          }
-                          width={100}
-                          height={100}
-                          alt={"profile"}
-                          className="rounded-full"
-                        />
-                      </div>
-                    </label>
-                  </div>
                 </div>
+              </div>
+              <div className="my-5">
+                <label htmlFor="profile-photo" className="cursor-pointer">
+                  <p>Profile Picture</p>
+                  <input
+                    type="file"
+                    id="profile-photo"
+                    name="profilephoto"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    disabled={!edit}
+                  />
+                  <div className="md:flex items-center space-y-4">
+                    <Image
+                      src={
+                        data?.photoURL ||
+                        "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                      }
+                      width={100}
+                      height={100}
+                      alt={"profile"}
+                      className="rounded-full w-24 h-24 object-cover"
+                    />
+                  </div>
+                </label>
               </div>
             </div>
           </form>
