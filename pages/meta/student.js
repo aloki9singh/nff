@@ -303,7 +303,7 @@ function MentorStudent() {
                           id="delete"
                           className="text-black"
                           value={id}
-                          onChange={handleChange}
+                          onChange={(e) => {setId(e.target.value)}}
                           placeholder="Enter the uid of student"
                         />
                         <button
