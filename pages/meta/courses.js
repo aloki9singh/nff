@@ -165,9 +165,9 @@ function MentorStudent() {
               <div className="md:flex justify-end w-[100%] m-3 space-y-2">
                 <div className=" flex justify-end">
                   <button className="bg-[#E1348B] px-4 py-2 rounded-md text-lg flex items-center justify-center">
-                    <Link href="/reta/modifyCourses">
+                    <Link href="/meta/modifyCourses">
                       <span className="text-2xl mr-2">+</span>
-                      Add/modify New Course
+                      Add/Modify  Course
                     </Link>
                   </button>
                 </div>
@@ -204,7 +204,7 @@ function MentorStudent() {
                       />
                     </div>
                     <p className="font-semibold text-lg py-1">
-                      {totalEnrolled}
+                      {totalEnrolled||0}
                     </p>
                     <p>Total Enrolments</p>
                   </div>
@@ -267,7 +267,7 @@ function MentorStudent() {
                         <th className="md:block hidden">Level</th>
                       </tr>
                     </thead>
-                    <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
+                    <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-5 p-2">
                       {/* uncomment it when using database data */}
                       {courseDetails &&
                         courseDetails.slice(initialcount, gap).map((e, i) => {
@@ -277,28 +277,30 @@ function MentorStudent() {
                           );
                           return (
                             <tr
-                              className="flex space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around "
-                              key={i}
-                            >
-                              <td className="flex w-[20%] mx-4 items-center gap-2">
-                                <Image
-                                  src={e?.banner}
-                                  alt="img"
-                                  height={25}
-                                  width={25}
-                                  className="rounded-full h-8 w-8  object-cover inline"
-                                />
+                            className="flex flex-col md:flex-row space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around"
+                            key={i}
+                          >
+                            <td className="flex mx-4 items-center gap-2 text-left md:w-auto w-full">
+                              <Image
+                                src={e?.banner}
+                                alt="img"
+                                height={25}
+                                width={25}
+                                className="rounded-full h-8 w-8 object-cover inline"
+                              />
+                              <div className="text-ellipsis line-clamp-1 w-full md:w-40">
                                 {e?.title}
-                              </td>
-                              <td className="w-[20%]">{e?.Enrolled}</td>
-                              <td className="w-[20%]">{e?.lectures}</td>
-                              <td className="md:block hidden w-[20%]">
-                                {time && time.toLocaleString()}
-                              </td>
-                              <td className="md:block hidden w-[20%]">
-                                {e?.level}
-                              </td>
-                            </tr>
+                              </div>
+                            </td>
+                            <td className="w-[100%] md:w-[20%]">{e?.Enrolled}</td>
+                            <td className="w-[100%] md:w-[20%]">{e?.lectures}</td>
+                            <td className="md:w-[20%] hidden md:table-cell">
+                              {time && time.toLocaleString()}
+                            </td>
+                            <td className="md:w-[20%] hidden md:table-cell">
+                              {e?.level}
+                            </td>
+                          </tr>
                           );
                         })}
                       {/* {courseData &&

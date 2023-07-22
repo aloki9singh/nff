@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
 
 function MentorStudent() {
   const { user, userProfile } = useAuthContext();
@@ -18,7 +20,7 @@ function MentorStudent() {
   const [id, setId] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [searchstate, setsearchstate] = useState("");
-
+  const [dataFetched, setDataFetched] = useState([]);
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -43,7 +45,16 @@ function MentorStudent() {
     () => filterStudentData(),
     [filterData, filterStudentData]
   );
-
+  const getData = async () => {
+    // if (!dataFetched) {
+    
+    const courseCollection = collection(db, "courses");
+    const courseInfo = await getDocs(courseCollection);
+    const courseData = courseInfo.docs.map((doc) => doc.data());
+    // setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
+    setDataFetched(courseData);
+    // }
+  };
   console.log(userProfile);
 
   useEffect(() => {
@@ -55,6 +66,7 @@ function MentorStudent() {
 
   useEffect(() => {
     fetchStudentData();
+    getData();
   }, [fetchStudentData]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
@@ -142,106 +154,19 @@ function MentorStudent() {
                 <div className="md:flex items-center rounded-lg gap-4 justify-around ">
                   <div className="flex  min-w-[200px] space-x-4">
                     <select className="block w-fit p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
-                      <option value="" selected>
-                        Select Course
+                      <option value="" className="text-xs">
+                        Select from this List
                       </option>
-                      <option value="Web Developer" className="cursor-pointer">
-                        Web Developer
-                      </option>
-                      <option value="C++ & DSA" className="cursor-pointer">
-                        C++ & DSA
-                      </option>
-                      <option
-                        value="UI/UX Designing"
-                        className="cursor-pointer"
-                      >
-                        UI/UX Designing
-                      </option>
-                      <option
-                        value="Yoga & Wellness"
-                        className="cursor-pointer"
-                      >
-                        Yoga & Wellness
-                      </option>
-                      <option value="Painting" className="cursor-pointer">
-                        Painting
-                      </option>
-                      <option
-                        value="Graphic Designing"
-                        className="cursor-pointer"
-                      >
-                        Graphic Designing
-                      </option>
-                      <option value="Video Shooting" className="cursor-pointer">
-                        Video Shooting
-                      </option>
-                      <option
-                        value="Content Writing"
-                        className="cursor-pointer"
-                      >
-                        Content Writing
-                      </option>
-                      <option value="Marketing" className="cursor-pointer">
-                        Marketing
-                      </option>
-                      <option
-                        value="Basic Medical Science"
-                        className="cursor-pointer"
-                      >
-                        {" "}
-                        Basic Medical Science{" "}
-                      </option>
-                      <option
-                        value="Yoga & Wellness"
-                        className="cursor-pointer"
-                      >
-                        Yoga & Wellness
-                      </option>
-                      <option value="Sketching" className="cursor-pointer">
-                        Sketching
-                      </option>
-                      <option
-                        value="Financial Literacy of Planning"
-                        className="cursor-pointer"
-                      >
-                        Financial Literacy of Planning
-                      </option>
-                      <option
-                        value=" Sound / Audio Engineering"
-                        className="cursor-pointer"
-                      >
-                        Sound / Audio Engineering
-                      </option>
-                      <option value="IOT" className="cursor-pointer">
-                        IOT
-                      </option>
-                      <option
-                        value="3D Video Editing"
-                        className="cursor-pointer"
-                      >
-                        3D Video Editing
-                      </option>
-                      <option value="AI/ML" className="cursor-pointer">
-                        AI/ML
-                      </option>
-                      <option value="Gaming" className="cursor-pointer">
-                        Gaming
-                      </option>
-                      <option value="Poetry" className="cursor-pointer">
-                        Poetry
-                      </option>
-                      <option
-                        value="Thesis of Book Writing"
-                        className="cursor-pointer"
-                      >
-                        Thesis of Book Writing
-                      </option>
-                      <option
-                        value="Productivity of Basic Software"
-                        className="cursor-pointer"
-                      >
-                        Productivity of Basic Software
-                      </option>
+                      {dataFetched?.map((e) => (
+                        <option
+                          key={e.id} // Use a unique key for each option
+                          className="text-xs cursor-pointer"
+                          value={e.title}
+                        >
+                          {console.log(e.id)}
+                          {e.title}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
