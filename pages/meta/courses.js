@@ -6,11 +6,12 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import MentorChart from "@/components/mentor/other/chart";
 import { useRouter } from "next/router";
-
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
+
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
@@ -18,7 +19,8 @@ function MentorStudent() {
   const [count, setCount] = useState(1);
   // const { data } = useSelector((state) => state.authManagerMentor);
   const [courseData, setCourseData] = useState();
-  const chartData = [0, 10, 20, 50, 10, 5, 20, 15, 30, 10, 11, 12];
+  const {user, userProfile} = useAuthContext();
+  const chartData  = new Array(11).fill(0);
   const [monthData, setMonthData] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
@@ -42,16 +44,17 @@ function MentorStudent() {
   }
 
   // for getting course data from Databse
-  // const getData = async () => {
-  //   if (!dataFetched) {
-  //     const courseCollection = collection(db, "courses");
-  //     const courseInfo = await getDocs(courseCollection);
-  //     const courseList = courseInfo.docs.map((doc) => doc.data());
-  //     console.log(courseList)
-  //     setDetails(courseList);
-  //     setDataFetched(true);
-  //   }
-  // };
+  const getData = async () => {
+    if (!dataFetched) {
+      const courseCollection = collection(db, "courses");
+      const courseInfo = await getDocs(courseCollection);
+
+      const courseList = courseInfo.docs.map((doc) => doc.data());
+      console.log("courseList", courseList,);          
+      setDetails(courseList);
+      setDataFetched(true);
+    }
+  };
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -62,21 +65,21 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
-   // getData(); //uncomment it when fetching course Data
+   getData(); //uncomment it when fetching course Data
   }, [isMediumScreen, dataFetched]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
-  function getTotalEnrolled() {
-    let enrolled = 0;
-    if (courseData) {
-      courseData.coursedata.forEach((e) => {
-        enrolled += e.Enrolled;
-      });
-    }
-    return enrolled;
-  }
-  const totalEnrolled = getTotalEnrolled();
+  // function getTotalEnrolled() {
+  //   let enrolled = 0;
+  //   if (courseData) {
+  //     courseData.coursedata.forEach((e) => {
+  //       enrolled += e.Enrolled;
+  //     });
+  //   }
+  //   return enrolled;
+  // }
+  const totalEnrolled = userProfile.joinedStudents?.length;
 
   // for getting chartData
   // courseData && courseData.forEach(element => {
@@ -113,6 +116,16 @@ function MentorStudent() {
         break;
     }
   }
+
+  console.log(userProfile)
+
+  userProfile.joinedStudents?.map((student)=>{
+    const joinDate = new Date(student.joinedAt.seconds * 1000);
+    console.log(joinDate.getMonth());
+    chartData[joinDate.getMonth()]++;
+  });
+
+  console.log(courseData);
 
   return (
     <>
@@ -198,7 +211,7 @@ function MentorStudent() {
                       />
                     </div>
                     <p className="font-semibold text-lg py-1">
-                      {courseData?.coursedata?.length}
+                      {userProfile.courseAssigned?.length || "0"}
                     </p>
                     <p>Total Courses</p>
                   </div>
@@ -248,7 +261,7 @@ function MentorStudent() {
                     </thead>
                     <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
                       {/* uncomment it when using database data */}
-                      {/* {
+                      {
                         courseDetails && courseDetails.map((e, i) => {
                           const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
                           return (
@@ -272,8 +285,8 @@ function MentorStudent() {
                               <td className="md:block hidden w-[20%]">{e?.level}</td>
                             </tr>)
                         })
-                      } */}
-                      {courseData &&
+                      }
+                      {/* {courseData &&
                         courseData.coursedata
                           .slice(initialcount, gap)
                           .map((e, i) => (
@@ -296,7 +309,7 @@ function MentorStudent() {
                               <td className="md:block hidden">{e.Active}</td>
                               <td className="md:block hidden">{e.Courses}</td>
                             </tr>
-                          ))}
+                          ))} */}
                     </tbody>
                   </table>
                 </div>
