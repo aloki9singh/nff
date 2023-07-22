@@ -113,8 +113,8 @@ function MentorProfile() {
                       <div
                         onClick={() =>
                           router.push({
-                            pathname: "/reta/mentorprofile",
-                            query: { uid: e.uid },
+                            pathname: "/meta/mentorprofile",
+                            query: { uid: userData.uid },
                           })
                         }
                       >
