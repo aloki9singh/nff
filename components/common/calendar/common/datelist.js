@@ -180,17 +180,19 @@ const Datelist = ({
                 onClick={dateSelect}
               >
                 {/* <p className="actualdate"> */}
-                {val[0]}
-                {}
+                {val[0] == 0 ? "" : val[0]}
+
                 {"\n"}
 
-                {getDayFromDate(
-                  currentYear +
-                    "-" +
-                    getMonthNumber(monthforCheck) +
-                    "-" +
-                    val[0]
-                ).slice(0, 3)}
+                {val[0] == 0
+                  ? ""
+                  : getDayFromDate(
+                      currentYear +
+                        "-" +
+                        getMonthNumber(monthforCheck) +
+                        "-" +
+                        val[0]
+                    ).slice(0, 3)}
               </div>
             );
           })}

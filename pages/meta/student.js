@@ -150,10 +150,10 @@ function MentorStudent() {
 
             {/* Dropdown bar */}
             <div className="gap-5 mx-8 max-[700px]:mx-4 md:mt-0  text-white">
-              <div className="flex flex-wrap items-center justify-between w-[99%] m-5 space-y-2">
+              <div className="flex flex-wrap items-center justify-between w-[99%] md:m-5 py-4 space-y-2">
                 <div className="md:flex items-center rounded-lg gap-4 justify-around ">
-                  <div className="flex  min-w-[200px] space-x-4">
-                    <select className="block w-fit p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
+                  <div className="flex  md:min-w-[200px] w-full space-x-4">
+                    <select className="block w-full p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
                       <option value="" className="text-xs">
                         Select from this List
                       </option>
@@ -170,7 +170,7 @@ function MentorStudent() {
                     </select>
                   </div>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between w-full">
                   <form className=" items-center hidden md:block ">
                     <label htmlFor="voice-search" className="sr-only">
                       Search
@@ -217,7 +217,7 @@ function MentorStudent() {
                     className="bg-[#414348] rounded-xl w-fit h-fit flex px-8 py-2.5"
                     onClick={() => setHide(!hide)}
                   >
-                    Remove a Student
+                    Remove 
                   </button>
                   {!hide && (
                     <div className="absolute right-[1%] bg-black p-4 rounded-2xl w-fit top-[18%]">
