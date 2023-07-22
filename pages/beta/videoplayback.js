@@ -105,7 +105,6 @@ function Videos() {
   const { user, userProfile } = useAuthContext();
   const [currentarray, setCurrentArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
   const { userSubsribed, isTrialValid } = CourseAccess(user.uid);
 
   useEffect(() => {
