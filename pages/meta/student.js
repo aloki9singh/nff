@@ -4,11 +4,12 @@ import Link from "next/link";
 import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
-
+import { useAuthContext } from "@/lib/context/AuthContext";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 
 function MentorStudent() {
+  const {user, userProfile} = useAuthContext();
   const [count, setCount] = useState(1);
   const [studentData, setStudentData] = useState([]);
   const [initialcount, setinitialCount] = useState(0);
@@ -42,6 +43,8 @@ function MentorStudent() {
     () => filterStudentData(),
     [filterData, filterStudentData]
   );
+
+  console.log(userProfile);
 
   useEffect(() => {
     if (isMediumScreen) {
