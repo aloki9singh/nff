@@ -9,7 +9,9 @@ const HomeWorkCard = ({
   sessions,
   language,
   category,
-  banner
+  banner,
+  date,
+  course
 }) => {
   const router = useRouter();
 
@@ -32,7 +34,7 @@ const HomeWorkCard = ({
       <div className='flex flex-col justify-between h-full overflow-hidden'>
         <div>
           <h1 className='text-[#ffffff8c] text-[14px] md:text-[14px] md:text-sm font-medium'>
-            COURSE
+            COURSE - {course}
           </h1>
           <h1 className='text-white md:text-2xl text-xl'>
             {title.length > 16 ? title.slice(0, 16) + '...' : title}
@@ -47,7 +49,7 @@ const HomeWorkCard = ({
           <div className='text-white mt-1'>submitted: 67</div>
 
           <div className='text-primary text-xs md:text-sm px-3 py-2 hover:bg-primary hover:text-white transition-all duration-300 ease-in-out'>
-            Date: 16/07/23
+            Date: {date}
           </div>
         </div>
       </div>
