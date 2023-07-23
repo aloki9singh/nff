@@ -67,7 +67,6 @@ function Assignments() {
 
   //  need from backend
   let currentCourseId = 1;
-
   const [module, setModule] = useState(0);
   let Activestyle =
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
@@ -226,7 +225,6 @@ function Assignments() {
                   <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
                     {
                       course && course.map((e) => {
-                        console.log(moduleName)
                         const assignment = e.assignment;
                         return (
                           assignment.map((ele, i) => {
@@ -234,6 +232,8 @@ function Assignments() {
                               return (
                                 <AssignmentCard
                                   key={i}
+                                  id = {ele.id}
+                                  courseid = {e.id}
                                   no={i + 1}
                                   name={ele.title}
                                   date={ele.date}

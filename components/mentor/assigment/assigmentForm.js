@@ -8,6 +8,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { updateDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 import { collection } from 'firebase/firestore';
+import { generate } from "shortid";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -91,6 +92,7 @@ function AddAssigmentForm({ assignedCourse }) {
               marks: parseFloat(formData.marks),
               date: new Date(formData.date), // Make sure "formData.date" is a valid date string
               url: url,
+              id: generate()
             };
             courseInfo.assignment.push(courseassignment);
             await updateDoc(docRef,courseInfo);
