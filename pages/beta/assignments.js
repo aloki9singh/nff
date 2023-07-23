@@ -16,6 +16,8 @@ import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
+import { collection, getDocs, doc, getDoc} from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
 
 function Assignments() {
   const router = useRouter();
@@ -23,6 +25,8 @@ function Assignments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const [course, setCourse] = useState([])
+  const [moduleName, setModuleName] = useState()
 
   //yet to write logic to change course bougth or not ??
 
@@ -35,11 +39,24 @@ function Assignments() {
     router.push("/");
   }
 
+  const getCourse = async (id) => {
+    const courseRef = doc(db, 'courses', id);
+    const courseSnapshot = await getDoc(courseRef);
+    setCourse([...course, courseSnapshot.data()])
+  }
+  const getCourseId = async () => {
+    const userRef = doc(db, 'allusers', user.uid);
+    const collectionRef = collection(userRef, 'joinedCourses');
+    const querySnapshot = await getDocs(collectionRef);
+    const data = querySnapshot.docs.map((doc) => doc.data());
+    data.map((ele) => { getCourse(ele.id) })
+  }
 
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+    getCourseId()
   }, [isMediumScreen]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -98,12 +115,12 @@ function Assignments() {
     return null;
   }
 
-  const {userSubsribed} = CourseAccess(user.uid);
+  const { userSubsribed } = CourseAccess(user.uid);
 
-
+  
   return (
     <>
-     {!userSubsribed && (
+      {!userSubsribed && (
         <ToastMessage
         heading={"OOPS!"}
           message={
@@ -123,36 +140,53 @@ function Assignments() {
 
       <div className={`blur-sm ${!userSubsribed ? "blur-lg" : null }`}>
 
-      <div className="flex">
-        {isMobileScreen && (
-          <div
-          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-              >
-            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-          </div>
-        )}
+        <div className="flex">
+          {isMobileScreen && (
+            <div
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            >
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
 
-        {/* Second Sidebar - Visible on Desktop */}
-        {!isMobileScreen && (
-          <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-          </div>
-        )}
-        <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
-          {/* <StudentTopbar heading={"My Progress"} /> */}
-          <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-            <Dashboardnav heading="My Progress" toggleSideBar={toggleSideBar} />
-          </div>
+          {/* Second Sidebar - Visible on Desktop */}
+          {!isMobileScreen && (
+            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            </div>
+          )}
+          <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
+            {/* <StudentTopbar heading={"My Progress"} /> */}
+            <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <Dashboardnav heading="My Progress" toggleSideBar={toggleSideBar} />
+            </div>
 
-          <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
-            <div className="lg:grid lg:grid-cols-11 h-full">
-              {/* Modules */}
-              <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
-                <div className="title font-medium text-xl pt-10 pb-5 pl-8">
-                  Modules
-                </div>
-                {/* <div
+            <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
+              <div className="lg:grid lg:grid-cols-11 h-full">
+                {/* Modules */}
+                <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
+                  <div className="title font-medium text-xl pt-10 pb-5 pl-8">
+                    Modules
+                  </div>
+                  {
+                    course && course.map((e) => {
+                      const modules = e.modules;
+                      return (
+                        modules.map((ele, i) => {
+                          return (
+                            <div
+                              className={module == i ? Activestyle : Inactivestyle}
+                              onClick={(e) => { setModule(i); setModuleName(ele.name) }}
+                            >
+                              {`${i + 1}. ${e.title} - ${ele.name}`}
+                            </div>
+                          )
+                        })
+                      )
+                    })
+                  }
+                  {/* <div
                   className={module == 0 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(0)}
                   >
@@ -182,15 +216,36 @@ function Assignments() {
                   >
                   1. UX Case Study - studying the experience
                 </div> */}
-              </div>
-
-              {/* Assignments */}
-              <div className="col-span-8">
-                <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
-                  Files
                 </div>
-                <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-2">
-                  {/* {Assignments.filter(
+
+                {/* Assignments */}
+                <div className="col-span-8">
+                  <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
+                    Files
+                  </div>
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
+                    {
+                      course && course.map((e) => {
+                        console.log(moduleName)
+                        const assignment = e.assignment;
+                        return (
+                          assignment.map((ele, i) => {
+                            if (ele.module == moduleName) {
+                              return (
+                                <AssignmentCard
+                                  key={i}
+                                  no={i + 1}
+                                  name={ele.title}
+                                  date={ele.date}
+                                  url={ele.url}
+                                />
+                              )
+                            }
+                          })
+                        )
+                      })
+                    }
+                    {/* {Assignments.filter(
                     (assignment) => module == assignment.module
                     ).map((assignment, index) => (
                       <AssignmentCard
@@ -200,14 +255,14 @@ function Assignments() {
                       date={assignment.date}
                     />
                   ))} */}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
         </div>
-        {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
       </div>
-                      </div>
     </>
   );
 }
