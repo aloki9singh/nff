@@ -161,7 +161,7 @@ const Chat = () => {
   return (
     <>
       <div
-        className={`flex overflow-x-hidden items-stretch min-h-screen ${
+        className={`flex overflow-hidden items-stretch max-h-screen  ${
           userProfile.role != "mentor"
             ? chats.length == 0
               ? "blur-lg"
@@ -207,7 +207,7 @@ const Chat = () => {
             </div>
           )}
           <div
-            className="md:p-4 justify-between flex-1 flex flex-row gap-4 bg-[#2f3036] "
+            className="md:p-4 items-stretch justify-between  h-[calc(100vh-80px)] flex flex-row gap-4 bg-[#2f3036] "
             // style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar

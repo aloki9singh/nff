@@ -255,7 +255,7 @@ const Chat = ({
 
   return (
     <div
-      className={`${showChat ? 'flex' : 'hidden md:flex'} flex flex-1 flex-col justify-between w-full relative `}
+      className={`${showChat ? 'flex' : 'hidden md:flex'} flex flex-1 flex-col justify-between w-full relative overflow-hidden `}
       style={{ color: "white" }}
     >
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">
@@ -306,7 +306,7 @@ const Chat = ({
           </div>
         </div>
 
-        <div className="flex flex-col mt-4 gap-4 w-full no-srollbar  overflow-y-auto flex-5">
+        <div className="flex flex-1 flex-col mt-4 px-3 gap-4 w-full no-scrollbar   overflow-y-auto flex-5">
           {messages.map((message, i) => {
             {
               if (message.type === "audio")
