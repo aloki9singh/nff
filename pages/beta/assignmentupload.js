@@ -3,7 +3,7 @@
 // upload through url not working
 // file icon missing
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import { BiBell } from 'react-icons/bi';
 import { BsPersonCircle } from 'react-icons/bs';
@@ -101,8 +101,7 @@ const Assignmentupload = () => {
           <Dashboardnav heading="Homework" toggleSideBar={toggleSideBar} />
         </div>
 
-        <hr className="hidden lg:block opacity-50 m-3"></hr>
-        <div className="h-full bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
+        <div className="md:h-screen bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {' '}
@@ -118,22 +117,12 @@ const Assignmentupload = () => {
             <div className="">
               <div className="flex space-x-5 relative">
                 <Image
-                  src={'/pagesgraphics/student/assignmentupload/folderpink.png'}
+                  src={'/componentsgraphics/mentor/FolderNotch.svg'}
                   width="100"
                   height="100"
                   alt=""
                   className="w-[60px]"
                 />
-                <Image
-                  src={
-                    '/pagesgraphics/student/assignmentupload/folderpinkarrow.png'
-                  }
-                  width="100"
-                  height="100"
-                  alt=""
-                  className="w-[30px] top-[-8px] left-[-20px] absolute"
-                />
-
                 <span className="md:text-[25px] m-auto">Assignment-4</span>
               </div>
               <div className="opacity-50 text-sm mt-5">
