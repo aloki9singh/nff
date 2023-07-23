@@ -213,34 +213,32 @@ function Videos() {
       joinedAt: serverTimestamp(),
     });
 
-    await setDoc(doc(db, "courses", course.id, "joinedCourses", user.uid), {
-      id: user.uid,
-      title: course.title,
-      joinedAt: serverTimestamp(),
+    await updateDoc(doc(db, "courses", course.id), {
+      students: arrayUnion(user.uid),
     });
 
-    const mentorRef = doc(db, "allusers", course.mentorid);
-    // const courseRef = doc(db, "courses", course.uid);
+    // const mentorRef = doc(db, "allusers", course.mentorid);
+    // // const courseRef = doc(db, "courses", course.uid);
 
-    const d = {
-      courseId: course.id,
-      studentId: user.uid,
-      joinedAt: new Date(),
-    };
+    // const d = {
+    //   courseId: course.id,
+    //   studentId: user.uid,
+    //   joinedAt: new Date(),
+    // };
 
-    let joinedStudents = [];
-    if(currentarray.length > 0){
-      currentarray.map((item) => {
-        joinedStudents.push(item);
-      });
-    }
-    joinedStudents.push(d);
+    // let joinedStudents = [];
+    // if(currentarray.length > 0){
+    //   currentarray.map((item) => {
+    //     joinedStudents.push(item);
+    //   });
+    // }
+    // joinedStudents.push(d);
 
-    const joindData = {
-      joinedStudents,
-    };
+    // const joindData = {
+    //   joinedStudents,
+    // };
 
-    await updateDoc(mentorRef, joindData);
+    // await updateDoc(mentorRef, joindData);
     setIsJoined(true);
   }
 
