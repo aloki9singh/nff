@@ -6,7 +6,7 @@ import { useState } from "react";
 import CourseCard from "@/components/student/courses/CourseCard2";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { callUserById } from "@/lib/exportablefunctions";
+import { callUserById, GetAllUsers } from "@/lib/exportablefunctions";
 import { auth, db } from "@/config/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -26,7 +26,7 @@ import { collection, getDocs, query } from "firebase/firestore";
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
-  const chartData = new Array(12).fill(0);
+  const chartData = new Array(12).fill(9);
   const [uid, setUid] = useState("");
   const [userData, setUserData] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -58,6 +58,8 @@ function MentorProfile() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+   const data= GetAllUsers()
+   console.log(data);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         callUserById(user.uid).then((data) => setUserData(data.user));
@@ -247,96 +249,98 @@ function MentorProfile() {
                   </div>
                 </div>
               </div>
-             <div className="md:mt-12">
-               <div className="">
-                <div className="bg-[#373A41] rounded-[20px] text-xl justify-center pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
-                  <div className=" text-center text-xl font-bold text-gray-500">
-                    Educator highlights
-                  </div>
-                  <div className="text-center text-lg pt-2 pb-4 font-extralight">
-                    Worked at{" "}
-                    {userData.details &&
-                      userData.details?.experience[0]?.companyname}
-                  </div>
-                  <div className="flex gap-2 text-sm font-medium line-clamp-1 text-ellipsis">
-                    {" "}
-                    <span>
-                      <Image
-                        src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
-                        width={100}
-                        height={100}
-                        alt="img"
-                        className="w-5"
-                      />{" "}
-                    </span>{" "}
-                    Studied at{" "}
-                    <span className="text-[#E1348B] text-sm font-black line-clamp-1 text-ellipsis">
+              <div className="md:mt-12">
+                <div className="">
+                  <div className="bg-[#373A41] rounded-[20px] text-xl justify-center pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
+                    <div className=" text-center text-xl font-bold text-gray-500">
+                      Educator highlights
+                    </div>
+                    <div className="text-center text-lg pt-2 pb-4 font-extralight">
+                      Worked at{" "}
                       {userData.details &&
-                        userData.details?.qualification[0]?.universityname}
-                      (
-                      {userData.details &&
-                        userData.details?.qualification[0]?.fieldOfStudy}
-                      )
-                    </span>
-                  </div>
-
-                  <p className="ml-7  font-extralight text-[0.9rem] opacity-75">
-                    {userData?.details?.qualification.map((e) => (
-                      <div key={e}>
-                        {e?.universityname} {e.fieldOfStudy}
-                        {e.cgpa} {e.grade}
-                      </div>
-                    ))}
-                  </p>
-
-                  <div className="flex gap-2 text-[0.9rem] font-medium">
-                    {" "}
-                    <span>
-                      <Image
-                        src={"/pagesgraphics/mentor/profile/location_icon.svg"}
-                        width={100}
-                        height={100}
-                        alt="img"
-                        className="w-4"
-                      />{" "}
-                    </span>{" "}
-                    Lives in{" "}
-                    <span className="text-[#E1348B] font-black line-clamp-1 text-ellipsis">
+                        userData.details?.experience[0]?.companyname}
+                    </div>
+                    <div className="flex gap-2 text-sm font-medium line-clamp-1 text-ellipsis">
                       {" "}
-                      {userData.details?.address}
-                    </span>
-                  </div>
-                  <p className="ml-7  font-extralight text-[0.9rem] opacity-75 line-clamp-2 text-ellipsis">
-                    {userData.details &&
-                      userData.details?.experience[0]?.jobtitle}{" "}
-                    since{" "}
-                    {userData.details &&
-                      userData.details?.experience[0]?.startdate}
-                  </p>
-
-                  <div className="flex gap-2 line-clamp-1 text-ellipsis">
-                    {" "}
-                    <Image
-                      src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
-                      width={100}
-                      height={100}
-                      alt="img"
-                      className="w-5 h-5"
-                    />{" "}
-                    <span className="text-[0.9rem] font-medium flex">
-                      {" "}
-                      Knows{" "}
-                      <span className="text-[#E1348B] font-black  pl-2 line-clamp-2 text-ellipsis">
+                      <span>
+                        <Image
+                          src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
+                          width={100}
+                          height={100}
+                          alt="img"
+                          className="w-5"
+                        />{" "}
+                      </span>{" "}
+                      Studied at{" "}
+                      <span className="text-[#E1348B] text-sm font-black line-clamp-1 text-ellipsis">
                         {userData.details &&
-                          userData.details?.skills.map((item) => {
-                            return <span key={item}>{item}</span>;
-                          })}
+                          userData.details?.qualification[0]?.universityname}
+                        (
+                        {userData.details &&
+                          userData.details?.qualification[0]?.fieldOfStudy}
+                        )
                       </span>
-                    </span>
+                    </div>
+
+                    <p className="ml-7  font-extralight text-[0.9rem] opacity-75">
+                      {userData?.details?.qualification.map((e) => (
+                        <div key={e}>
+                          {e?.universityname} {e.fieldOfStudy}
+                          {e.cgpa} {e.grade}
+                        </div>
+                      ))}
+                    </p>
+
+                    <div className="flex gap-2 text-[0.9rem] font-medium">
+                      {" "}
+                      <span>
+                        <Image
+                          src={
+                            "/pagesgraphics/mentor/profile/location_icon.svg"
+                          }
+                          width={100}
+                          height={100}
+                          alt="img"
+                          className="w-4"
+                        />{" "}
+                      </span>{" "}
+                      Lives in{" "}
+                      <span className="text-[#E1348B] font-black line-clamp-1 text-ellipsis">
+                        {" "}
+                        {userData.details?.address}
+                      </span>
+                    </div>
+                    <p className="ml-7  font-extralight text-[0.9rem] opacity-75 line-clamp-2 text-ellipsis">
+                      {userData.details &&
+                        userData.details?.experience[0]?.jobtitle}{" "}
+                      since{" "}
+                      {userData.details &&
+                        userData.details?.experience[0]?.startdate}
+                    </p>
+
+                    <div className="flex gap-2 line-clamp-1 text-ellipsis">
+                      {" "}
+                      <Image
+                        src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
+                        width={100}
+                        height={100}
+                        alt="img"
+                        className="w-5 h-5"
+                      />{" "}
+                      <span className="text-[0.9rem] font-medium flex">
+                        {" "}
+                        Knows{" "}
+                        <span className="text-[#E1348B] font-black  pl-2 line-clamp-2 text-ellipsis">
+                          {userData.details &&
+                            userData.details?.skills.map((item) => {
+                              return <span key={item}>{item}</span>;
+                            })}
+                        </span>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-             </div>
             </div>
           </div>
         </div>

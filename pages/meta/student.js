@@ -55,7 +55,7 @@ function MentorStudent() {
     setDataFetched(courseData);
     // }
   };
-  console.log(userProfile);
+  // console.log(userProfile);
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -163,7 +163,7 @@ function MentorStudent() {
                           className="text-xs cursor-pointer"
                           value={e.title}
                         >
-                          {console.log(e.id)}
+                          {/* {console.log(e.id)} */}
                           {e.title}
                         </option>
                       ))}
