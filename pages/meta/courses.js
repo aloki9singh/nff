@@ -255,7 +255,7 @@ function MentorStudent() {
               </div>
 
               {/* table */}
-              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto pb-[40rem] mb-4">
+              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
                 <div className="">
                   <table className="w-full  ">
                     <thead className="  items-center  border-b  ">
@@ -292,7 +292,9 @@ function MentorStudent() {
                                 {e?.title}
                               </div>
                             </td>
-                            <td className="w-[100%] md:w-[20%]">{e?.Enrolled}</td>
+
+                            {/* {console.log()} */}
+                            <td className="w-[100%] md:w-[20%]">{e.students?.length || "NA"}</td>
                             <td className="w-[100%] md:w-[20%]">{e?.lectures}</td>
                             <td className="md:w-[20%] hidden md:table-cell">
                               {time && time.toLocaleString()}
@@ -332,7 +334,7 @@ function MentorStudent() {
                 </div>
 
                 {/* pagination */}
-                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4 mt-[4rem]">
+                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4 ">
                   <button
                     className="w-6 h-5 border flex justify-center items-center"
                     name="back"
