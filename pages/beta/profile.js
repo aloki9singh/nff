@@ -6,6 +6,20 @@ import Image from "next/image";
 import { FiEdit2 } from "react-icons/fi";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  updateDoc,
+  doc,
+  arrayUnion,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+
+import {db } from "@/config/firebaseconfig";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import StudentProfileChart from "@/components/student/profile/chart";
 import StudentProfileCirProgress from "@/components/student/profile/StudentProfileCirProgress";
@@ -47,6 +61,15 @@ function StudentProfile() {
   if (!user || !userProfile) {
     return null;
   }
+
+  useEffect(async() => {
+    const userRef = doc(db, "allusers", user.uid);
+    const collectionRef = collection(userRef, "joinedCourses");
+    const querySnapshot = await getDocs(collectionRef)
+
+    const data = querySnapshot.docs.map((doc)=>doc.data());
+    setenrolledcourses(data);
+  }, [])
 
   return (
     <>
