@@ -26,7 +26,7 @@ import { collection, getDocs, query } from "firebase/firestore";
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
-  const chartData = new Array(12).fill(9);
+  const chartData = new Array(12).fill(0);
   const [uid, setUid] = useState("");
   const [userData, setUserData] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -68,8 +68,9 @@ function MentorProfile() {
     return () => unsubscribe();
   }, [isMediumScreen]);
 
+  console.log(userData);
   userData.joinedStudents?.map((student) => {
-    const joinDate = new Date(student.joinedAt.seconds * 1000);
+    const joinDate = new Date(student.joinedAt?.seconds * 1000);
     console.log(joinDate.getMonth());
     chartData[joinDate.getMonth()]++;
   });
