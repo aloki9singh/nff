@@ -3,7 +3,7 @@
 // upload through url not working
 // file icon missing
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import { BiBell } from 'react-icons/bi';
 import { BsPersonCircle } from 'react-icons/bs';
@@ -15,7 +15,12 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import withStudentAuthorization from '@/lib/HOC/withStudentAuthorization';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '@/config/firebaseconfig';
+import { useAuthContext } from '@/lib/context/AuthContext';
+import { uploadBytes } from 'firebase/storage';
 // import MobileNav from "../components/CalenderParts/MobileNav";
+import IDdraganddrop from '@/components/student/assignments/iddraganddrop';
 
 const Assignmentupload = () => {
   const router = useRouter();
@@ -28,6 +33,18 @@ const Assignmentupload = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const { id, courseid } = router.query
+  const [course, setCourse] = useState()
+  const { user } = useAuthContext()
+  const [link, setLink] = useState("")
+
+
+  const getData = async () => {
+    const userRef = doc(db, 'courses', courseid);
+    const userData = await getDoc(userRef)
+    const data = userData.data()
+    setCourse((data.assignment).filter((a) => { return a.id == id }))
+  }
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const data = {
@@ -54,15 +71,21 @@ const Assignmentupload = () => {
     //   setSubmissionDate(null);
   };
 
+  console.log(course)
   const storageRef = ref(storage, `assignment/${file.name}`);
   const uploadAssignmentFile = async () => {
-    try {
-      console.log('here');
-      uploadBytes(storageRef, file)
-        .then(() => console.log('success'))
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(err);
+    if (link.length < 1) {
+      alert("Enter a valid link")
+    }
+    else {
+      try {
+        console.log('here');
+        uploadBytes(storageRef, file)
+          .then(() => console.log('success'))
+          .catch((err) => console.log(err));
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   let [searchstate, setsearchstate] = useState('');
@@ -73,12 +96,14 @@ const Assignmentupload = () => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+    getData()
   }, [isMediumScreen]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-
+  const time = course && new Date(course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000);
+  console.log(file)
   return (
     <div className="flex">
       {isMobileScreen && (
@@ -101,15 +126,14 @@ const Assignmentupload = () => {
           <Dashboardnav heading="Homework" toggleSideBar={toggleSideBar} />
         </div>
 
-        <hr className="hidden lg:block opacity-50 m-3"></hr>
-        <div className="h-full bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
+        <div className="md:h-screen bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {' '}
-              <span>Module1</span>
+              <span>{course && course[0]?.module}</span>
               <span>{'>'}</span>
               <span>Files</span> <span>{'>'}</span>
-              <span>Assignment-4</span>
+              <span>{course && course[0]?.title}</span>
             </div>
             <hr className="hidden lg:block opacity-50 m-3"></hr>
           </div>
@@ -118,52 +142,45 @@ const Assignmentupload = () => {
             <div className="">
               <div className="flex space-x-5 relative">
                 <Image
-                  src={'/pagesgraphics/student/assignmentupload/folderpink.png'}
+                  src={'/componentsgraphics/mentor/FolderNotch.svg'}
                   width="100"
                   height="100"
                   alt=""
                   className="w-[60px]"
                 />
-                <Image
-                  src={
-                    '/pagesgraphics/student/assignmentupload/folderpinkarrow.png'
-                  }
-                  width="100"
-                  height="100"
-                  alt=""
-                  className="w-[30px] top-[-8px] left-[-20px] absolute"
-                />
-
-                <span className="md:text-[25px] m-auto">Assignment-4</span>
+                <span className="md:text-[25px] m-auto">{course && course[0]?.title}</span>
               </div>
               <div className="opacity-50 text-sm mt-5">
                 {' '}
-                Deadline : 10 February, 23 <span className="ml-2"></span> Time :
-                10 pm
+                Deadline : {time && time.toDateString()} <span className="ml-2"></span> Time : {time && time.toTimeString()}
               </div>
             </div>
             <div className="flex justify-between px-2.5 md:px-5 py-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
               <div className="mt-1 md:text-[17px] text-[12px]">
                 Assignment Pdf
               </div>
-              <button className="bg-[#505057] rounded-10 px-1.5 md:px-2 text-xs md:text-[17px] ">
+              <button className="bg-[#505057] rounded-10 px-1.5 md:px-2 text-xs md:text-[17px]" onClick={() => router.push(course[0]?.url)}>
                 Download
               </button>
             </div>
             <div>Submit Your Assignment</div>
             <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
               <div className="md:w-[60%] mx-auto md:m-auto w-[80%]">
-                {/* <Draganddrop file={file} setFile={setFile} /> */}
+                <IDdraganddrop name={file} setValue={setFile} />
+
+
                 <div className="space-y-4 ">
                   <div className="mt-3">or attach URL of work</div>
                   <div className="flex justify-between px-5 py-3 bg-[#505057] rounded-[20px] ">
                     <input
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
+                      value={link}
+                      onChange={() => setLink(e.target.value)}
                     />
                     <button
                       onClick={uploadAssignmentFile}
-                      className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm  "
+                      className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
                     >
                       Upload
                     </button>
@@ -174,10 +191,9 @@ const Assignmentupload = () => {
           </div>
         </div>
       </div>
-      {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
     </div>
   );
 };
 
-export default withStudentAuthorization( Assignmentupload);
+export default withStudentAuthorization(Assignmentupload);
 

@@ -450,9 +450,12 @@ const MentorSidebar = ({ toggleSideBar }) => {
           </div>
         </div>
         <div className="text-white space-y-5  md:block hidden mt-10">
-          <button className=" bg-[#373A41]  flex  justify-center  items-center px-5  m-auto  rounded-[10px] pt-2.5 pb-2 text-xs font-medium uppercase leading-normal gap-x-2 ">
+          <button
+            onClick={()=>router.push("/meta/setting")}
+          className=" bg-[#373A41]  flex  justify-center  items-center px-5  m-auto  rounded-[10px] pt-2.5 pb-2 text-xs font-medium uppercase leading-normal gap-x-2 ">
             <AiOutlineSetting />
             <span
+
               className={`${router.pathname == "/meta/dashboard" ? "" : ""}`}
             >
               Settings{" "}

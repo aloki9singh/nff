@@ -19,8 +19,8 @@ function MentorStudent() {
   const [count, setCount] = useState(1);
   // const { data } = useSelector((state) => state.authManagerMentor);
   const [courseData, setCourseData] = useState();
-  const {user, userProfile} = useAuthContext();
-  const chartData  = new Array(11).fill(0);
+  const { user, userProfile } = useAuthContext();
+  const chartData = new Array(11).fill(0);
   const [monthData, setMonthData] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
@@ -37,8 +37,9 @@ function MentorStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [SideBarState, sendSideBarState] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
-  const [courseDetails, setDetails] = useState()
+  const [courseDetails, setDetails] = useState();
   const [dataFetched, setDataFetched] = useState(false);
+  const [numberOfPages, setNumberOfPages] = useState();
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -50,9 +51,8 @@ function MentorStudent() {
     if (!dataFetched) {
       const courseCollection = collection(db, "courses");
       const courseInfo = await getDocs(courseCollection);
-
       const courseList = courseInfo.docs.map((doc) => doc.data());
-      console.log("courseList", courseList,);          
+      console.log("courseList", courseList);
       setDetails(courseList);
       setDataFetched(true);
     }
@@ -67,7 +67,7 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
-   getData(); //uncomment it when fetching course Data
+    getData(); //uncomment it when fetching course Data
   }, [isMediumScreen, dataFetched]);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
@@ -90,7 +90,9 @@ function MentorStudent() {
   // });
 
   function handleClick(e) {
-    const totalPage = Math.ceil(courseData.coursedata.length / 8);
+    const totalPage = Math.ceil(courseData.coursedata.length / 8)+1;
+    console.log("totalPage", totalPage);
+    setNumberOfPages(totalPage);
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
         if (count < totalPage) {
@@ -119,13 +121,18 @@ function MentorStudent() {
     }
   }
 
-  console.log(userProfile)
+  useEffect(()=>{
+    const totalPage = Math.ceil(courseData?.coursedata?.length / 8)+1;
+    setNumberOfPages(totalPage);
+  })
 
-  userProfile.joinedStudents?.map((student)=>{
+  console.log(userProfile);
+
+  userProfile.joinedStudents?.map((student) => {
     const joinDate = new Date(student.joinedAt?.seconds * 1000);
     console.log(joinDate.getDate());
     chartData[joinDate.getMonth()]++;
-    if(joinDate.getDate() == new Date().getDate()) {
+    if (joinDate.getDate() == new Date().getDate()) {
       // console.log("today");
       todayJoined++;
     }
@@ -164,9 +171,9 @@ function MentorStudent() {
               <div className="md:flex justify-end w-[100%] m-3 space-y-2">
                 <div className=" flex justify-end">
                   <button className="bg-[#E1348B] px-4 py-2 rounded-md text-lg flex items-center justify-center">
-                    <Link href="/reta/addcourse">
+                    <Link href="/meta/modifyCourses">
                       <span className="text-2xl mr-2">+</span>
-                      Add New Course
+                      Add/Modify Course
                     </Link>
                   </button>
                 </div>
@@ -203,7 +210,7 @@ function MentorStudent() {
                       />
                     </div>
                     <p className="font-semibold text-lg py-1">
-                      {totalEnrolled}
+                      {totalEnrolled || 0}
                     </p>
                     <p>Total Enrolments</p>
                   </div>
@@ -217,7 +224,8 @@ function MentorStudent() {
                       />
                     </div>
                     <p className="font-semibold text-lg py-1">
-                      {userProfile.courseAssigned?.length || "0"}
+                      {/* {userProfile.courseAssigned?.length || "0"} */}
+                      {courseDetails?.length || "0"}
                     </p>
                     <p>Total Courses</p>
                   </div>
@@ -245,7 +253,7 @@ function MentorStudent() {
                         </select>
                       </div>
                     </div>
-                    <div className="w-full max-h-[217px] py-4 flex justify-center ">
+                    <div className="w-full  flex justify-center ">
                       <MentorChart data={chartData} />
                     </div>
                   </div>
@@ -253,7 +261,7 @@ function MentorStudent() {
               </div>
 
               {/* table */}
-              <div className="w-[55%] max-[700px]:w-full h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto pb-[40rem] mb-4">
+              <div className="w-[55%] max-[700px]:w-full md:h-[650px] h-[600px] bg-[#373A41] rounded-[30px] border md:text-base text-xs mx-auto  mb-4">
                 <div className="">
                   <table className="w-full  ">
                     <thead className="  items-center  border-b  ">
@@ -265,33 +273,48 @@ function MentorStudent() {
                         <th className="md:block hidden">Level</th>
                       </tr>
                     </thead>
-                    <tbody className="flex h-[450px] flex-col items-center mt-4 space-y-6 p-2">
+                    <tbody className="flex  flex-col items-center mt-4 md:space-y-5 space-y-2 p-2">
                       {/* uncomment it when using database data */}
-                      {
-                        courseDetails && courseDetails .slice(initialcount, gap).map((e, i) => {
-                          const time = new Date(e?.createdAt.seconds * 1000 + e?.createdAt.nanoseconds / 1000000);
+                      {courseDetails &&
+                        courseDetails.slice(initialcount, gap).map((e, i) => {
+                          const time = new Date(
+                            e?.createdAt.seconds * 1000 +
+                            e?.createdAt.nanoseconds / 1000000
+                          );
                           return (
                             <tr
-                              className="flex space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around "
+                              className="flex flex-col md:flex-row space-x-4 px-4 items-center w-full font-medium text-xs text-center justify-around"
                               key={i}
                             >
-                              <td className="flex w-[20%] mx-4 items-center gap-2">
+                              <td className="flex mx-4 items-center gap-2 text-left md:w-auto w-full">
                                 <Image
                                   src={e?.banner}
                                   alt="img"
                                   height={25}
                                   width={25}
-                                  className="rounded-full h-8  object-contain inline"
+                                  className="rounded-full h-8 w-8 object-cover inline"
                                 />
-                                {e?.title}
+                                <div className="text-ellipsis line-clamp-1 w-40 md:w-40 ">
+                                  {e?.title}
+                                </div>
                               </td>
-                              <td className="w-[20%]">{e?.Enrolled}</td>
-                              <td className="w-[20%]">{e?.lectures}</td>
-                              <td className="md:block hidden w-[20%]">{time && time.toLocaleString()}</td>
-                              <td className="md:block hidden w-[20%]">{e?.level}</td>
-                            </tr>)
-                        })
-                      }
+
+                              {/* {console.log()} */}
+                              <td className="w-[100%] md:w-[20%] md:block hidden">
+                                {e.students?.length || "NA"}
+                              </td>
+                              <td className="w-[100%] md:w-[20%]">
+                                {e?.lectures}
+                              </td>
+                              <td className="md:w-[20%] hidden md:table-cell">
+                                {time && time.toLocaleString()}
+                              </td>
+                              <td className="md:w-[20%] hidden md:table-cell">
+                                {e?.level}
+                              </td>
+                            </tr>
+                          );
+                        })}
                       {/* {courseData &&
                         courseData.coursedata
                           .slice(initialcount, gap)
@@ -318,72 +341,66 @@ function MentorStudent() {
                           ))} */}
                     </tbody>
                   </table>
+
+                  {/* pagination  */}
+
+                  <div className="absolute top-[90rem] w-60 h-10 my-2 lg:bottom-0 mx-10  flex items-center space-x-4 overflow-scroll md:absolute md:top-[46rem] md:overflow-visible">
+                    <button
+                      className="w-6 h-5 border flex justify-center items-center"
+                      name="back"
+                      onClick={handleClick}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"
+                        />
+                      </svg>
+                    </button>
+
+                    {Array.from({ length: numberOfPages }, (_, index) => (
+                      <button
+                        className={`${(count == (index+1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                        `}
+                        name={index+1}
+                        onClick={handleClick}
+                      >
+                        {index+1}
+                      </button>
+                    ))}
+
+                    <button
+                      className="w-6 h-5 border flex justify-center items-center"
+                      name="fwd"
+                      onClick={handleClick}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
                 {/* pagination */}
-                <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4 mt-[4rem]">
-                  <button
-                    className="w-6 h-5 border flex justify-center items-center"
-                    name="back"
-                    onClick={handleClick}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    className={count == 1 ? activeTabClass : tabClass}
-                    name="1"
-                    onClick={handleClick}
-                  >
-                    1
-                  </button>
-                  <button
-                    className={count == 2 ? activeTabClass : tabClass}
-                    name="2"
-                    onClick={handleClick}
-                  >
-                    2
-                  </button>
-                  <button
-                    className={count == 3 ? activeTabClass : tabClass}
-                    name="3"
-                    onClick={handleClick}
-                  >
-                    3
-                  </button>
-                  <button
-                    className="w-6 h-5 border flex justify-center items-center"
-                    name="fwd"
-                    onClick={handleClick}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"
-                      />
-                    </svg>
-                  </button>
-                </div>
               </div>
             </div>
           </div>

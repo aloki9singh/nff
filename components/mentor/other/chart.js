@@ -97,13 +97,13 @@ const MentorChart = ({ data }) => {
     });
   }, [data]);
 
-  if(!data){
-    return <h1 className="text-white">Data absent</h1>
+  if (!data) {
+    return <h1 className="text-white">Data absent</h1>;
   }
 
   return (
     <>
-      <div className=" md:col-span-4 p-3 rounded-[20px] h-[30vh]  bg-[#373A41] ">
+      <div className=" md:col-span-3 p-3 rounded-[20px] h-[40vh]   bg-[#373A41] ">
         <Bar data={chartData} options={chartOptions} />
       </div>
     </>

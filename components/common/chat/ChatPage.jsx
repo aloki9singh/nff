@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import ChatSidebar from './chatsidebar'
+import React, { useState, useEffect, useMemo } from "react";
+import ChatSidebar from "./chatsidebar";
 import Chatpart from "./chatting";
 import User from "./user";
 import {
@@ -19,8 +19,8 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
-
-
+import MentorSidebar from "../sidebar/mentor";
+import MentorTopbar from "../navbar/mentortopbar";
 
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
@@ -36,6 +36,14 @@ const Chat = () => {
 
   // const user = auth.currentUser;
   const { user, loading, userProfile } = useAuthContext();
+
+  const isMentor = useMemo(() => {
+    if (userProfile.role == "mentor") {
+      return true;
+    } else {
+      return false;
+    }
+  }, [userProfile.role]);
 
   useEffect(() => {
     if (!user) {
@@ -152,32 +160,54 @@ const Chat = () => {
 
   return (
     <>
-      <div className={`flex overflow-x-hidden items-stretch min-h-screen ${userProfile.role != "mentor" ? (chats.length == 0 ? 'blur-lg':null) : null }`}>
-        {userProfile.role != "mentor" ? (chats.length === 0 && <NoJoinedCoursesModal />) :null}
+      <div
+        className={`flex overflow-hidden items-stretch max-h-screen  ${
+          userProfile.role != "mentor"
+            ? chats.length == 0
+              ? "blur-lg"
+              : null
+            : null
+        }`}
+      >
+        {userProfile.role != "mentor"
+          ? chats.length === 0 && <NoJoinedCoursesModal />
+          : null}
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${
               SideBarState ? "block" : "hidden"
             } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
-            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            {isMentor ? (
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            ) : (
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            )}
           </div>
         )}
 
         {/* Second Sidebar - Visible on Desktop */}
         {!isMobileScreen && (
-          <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          <div className={`md:block  hidden w-[281px] bg-[#141518] z-10`}>
+            {isMentor ? (
+              <MentorSidebar toggleSideBar={toggleSideBar} />
+            ) : (
+              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+            )}
           </div>
         )}
         <div className="w-full flex-col flex ">
-          <div>
-            {/* <Navbar /> */}
-            <Dashboardnav heading="Chats" toggleSideBar={toggleSideBar} />
-            {/* <hr className="hidden lg:block opacity-50 mt-3 " /> */}
-          </div>
+          {!isMentor ? (
+            <div>
+              <Dashboardnav heading="Chats" toggleSideBar={toggleSideBar} />
+            </div>
+          ) : (
+            <div className="flex justify-between md:pt-0 pt-2 md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+              <MentorTopbar heading="Chats" toggleSideBar={toggleSideBar} />
+            </div>
+          )}
           <div
-            className="md:p-4 justify-between flex-1 flex flex-row gap-4 bg-[#2f3036] "
+            className="md:p-4 items-stretch justify-between  h-[calc(100vh-80px)] flex flex-row gap-4 bg-[#2f3036] "
             // style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
@@ -204,12 +234,14 @@ const Chat = () => {
                   setShowUser={setShowUser}
                   setCurrReciever={setCurrReciever}
                   setShowChat={setShowChat}
+                  images= {messages.filter((message) => message.type === "image")}
                 />
               ) : (
                 <User
                   setShowChat={setShowChat}
                   currReciever={currReciever}
                   setShowUser={setShowUser}
+                  images={messages.filter((message) => message.type === "image")}
                 />
               ))}
           </div>
@@ -218,6 +250,5 @@ const Chat = () => {
     </>
   );
 };
-
 
 export default Chat;

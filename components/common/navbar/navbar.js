@@ -6,25 +6,24 @@ import Image from "next/dist/client/image";
 import { useAuthContext } from "@/lib/context/AuthContext";
 
 export default function Navbar({ nav, setNav }) {
-	const { user, userProfile } = useAuthContext();
-	const handleNav = () => {
-		setNav(!nav);
-	};
-	//   change navbar color when scrolling
-	const [color, setColor] = useState(false);
-
-	const changeColor = () => {
-		if (window.scrollY >= 90) {
-			setColor(true);
-		} else {
-			setColor(false);
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener("scroll", changeColor);
-		console.log({ user, userProfile });
-	}, []);
+  const handleNav = () => {
+    setNav(!nav);
+  };
+  //   change navbar color when scrolling
+  const [color, setColor] = useState(false);
+  const { user, userProfile } = useAuthContext();
+  const [profileMenu, setProfileMenu] = useState(false);
+  const changeColor = () => {
+    if (window.scrollY >= 90) {
+      setColor(true);
+    } else {
+      setColor(false);
+    }
+  };
+  console.log(user, userProfile);
+  useEffect(() => {
+    window.addEventListener("scroll", changeColor);
+  }, []);
 
 	return (
 		<>

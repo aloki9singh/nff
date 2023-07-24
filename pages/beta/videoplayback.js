@@ -43,7 +43,6 @@ const VideoPlayer = ({ videoUrl }) => {
 
 async function checkUserJoinedCourse(courseId, userId) {
   const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
-
   const courseDoc = await getDoc(courseRef);
   return courseDoc.exists();
 }
@@ -105,7 +104,7 @@ function Videos() {
   const { user, userProfile } = useAuthContext();
   const [currentarray, setCurrentArray] = useState([""]);
   const [showModal, setShowModal] = useState(false);
-  const { userSubsribed, isTrialValid } = CourseAccess(user.uid);
+  const { userSubsribed, isTrialValid } = CourseAccess(user?.uid);
 
   useEffect(() => {
     const checkJoined = async () => {
@@ -213,14 +212,9 @@ function Videos() {
       joinedAt: serverTimestamp(),
     });
 
-    await setDoc(doc(db, "courses", course.id, "joinedCourses", user.uid), {
-      id: user.uid,
-      title: course.title,
-      joinedAt: serverTimestamp(),
+    await updateDoc(doc(db, "courses", course.id), {
+      students: arrayUnion(user.uid),
     });
-
-    const mentorRef = doc(db, "allusers", course.mentorid);
-    // const courseRef = doc(db, "courses", course.uid);
 
     const d = {
       courseId: course.id,
@@ -228,19 +222,10 @@ function Videos() {
       joinedAt: new Date(),
     };
 
-    let joinedStudents = [];
-    if(currentarray.length > 0){
-      currentarray.map((item) => {
-        joinedStudents.push(item);
-      });
-    }
-    joinedStudents.push(d);
+    await updateDoc( doc(db, "allusers", course.mentorid), {
+      joinedStudents: arrayUnion(d),
+    });
 
-    const joindData = {
-      joinedStudents,
-    };
-
-    await updateDoc(mentorRef, joindData);
     setIsJoined(true);
   }
 

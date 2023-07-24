@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import { detailadd, uploadToFirebase } from "@/lib/exportablefunctions";
+import { detailadd, joinChatGroup, uploadToFirebase } from "@/lib/exportablefunctions";
 import { useRouter } from "next/router";
 import {
   collection,
@@ -57,16 +57,18 @@ const MentorProfile = () => {
 
           // Update the MentorId field of the course document
           const courseDocRef = doc(usersCollection, docSnapshot.id);
-          
+
           // Get the specific course document reference
           await updateDoc(courseDocRef, { MentorId: [uid], mentorid: uid });
-        //   console.log("courese", courseDocRef.id);
+          //   console.log("courese", courseDocRef.id);
           detailadd(uid, {
             courseAssigned: true,
             active: true,
             courseid: courseDocRef.id ? courseDocRef.id : "",
             assignedCourses: [courseDocRef.id],
           });
+
+          await joinChatGroup(courseDocRef.id, uid, documentData.title);
         });
       } else {
         console.log("No matching course found.");
@@ -135,9 +137,8 @@ const MentorProfile = () => {
 
   return (
     <div
-      className={`md:p-10 bg-[#1E1E1E] ${
-        loading ? "pointer-events-none z-1" : ""
-      }`}
+      className={`md:p-10 bg-[#1E1E1E] ${loading ? "pointer-events-none z-1" : ""
+        }`}
     >
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>

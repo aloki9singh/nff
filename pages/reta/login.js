@@ -134,6 +134,7 @@ function Adminlogin() {
         alert("Please check Your Credentials.");
         console.log("Error logging in:", error);
       }
+      setLoading(false)
     }
   }
   useEffect(() => {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { auth } from "@/config/firebaseconfig";
 
 import { useAuthContext } from "@/lib/context/AuthContext";
+import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 
 export default function Progress({ percentage }) {
   const { userProfile, user } = useAuthContext();
@@ -16,7 +17,7 @@ export default function Progress({ percentage }) {
               Welcome, {user && user.displayName}👋
             </h1>
           ) : (
-            <h1 className="text-2xl font-semibold">Welcome, Guest👋</h1>
+            <h1 className="text-2xl font-semibold">Welcome, {user && removeDomainFromEmail(user.email)}👋</h1>
           )}
           {user?.displayName ? (
             <h1 className="font-semibold">{`${percentage}`}</h1>

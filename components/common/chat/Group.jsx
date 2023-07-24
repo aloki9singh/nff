@@ -9,6 +9,22 @@ import profileImage from "@/public/componentsgraphics/common/chatting/user/profi
 import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.svg";
 import { getUserName } from "@/lib/context/AuthContext";
 
+const getCourseDescription = async (courseId) => {
+  try {
+    const docSnap = await getDoc(doc(db, "courses", courseId));
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      return docSnap.data().desc;
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  } catch (e) {
+    console.log(e);
+    return "";
+  }
+};
+
 const DescIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -31,9 +47,22 @@ const GroupDetails = ({
   setShowUser,
   setCurrReciever,
   setShowChat,
+  images,
 }) => {
   const [checked, setChecked] = useState(true);
   const [showAll, setShowAll] = useState(true);
+  const [desc, setDesc] = useState("");
+
+  useEffect(() => {
+    const getDesc = async () => {
+      const desc = await getCourseDescription(currReciever.groupId);
+      setDesc(desc);
+    };
+    getDesc();
+  }, [currReciever]);
+
+  console.log(currReciever);
+
   const user = auth.currentUser;
   useEffect(() => {
     if (Object.keys(currReciever.members).length <= 3) {
@@ -81,7 +110,7 @@ const GroupDetails = ({
 
   return (
     <div
-      className="user-container overflow-auto w-screen md:w-auto no-scrollbar md:max-w-sm"
+      className="user-container overflow-y-auto w-screen md:w-auto no-scrollbar md:max-w-xs"
       style={{
         backgroundColor: "#373A41",
         color: "white",
@@ -103,7 +132,7 @@ const GroupDetails = ({
       >
         <Avatar
           alt="Profile-Picture"
-          src={profileImage}
+          src={currReciever.photoURL || profileImage}
           // sx={{ height: 87, width: 86 }}
           height={87}
           width={86}
@@ -121,7 +150,10 @@ const GroupDetails = ({
         style={{ borderBottom: "1px solid grey" }}
       >
         <DescIcon className="text-white" />
-        <p className="text-sm opacity-90">Group Description</p>
+        {/* set line clamp 2 */}
+        <p className="text-sm line-clamp-2 ">{
+          desc || "No description available"
+        }</p>
       </div>
 
       <div
@@ -129,10 +161,20 @@ const GroupDetails = ({
         style={{ borderBottom: "1px solid grey" }}
       >
         <p className="text-xs">Media Link and Docs</p>
-        <div className="flex gap-6 p-2" style={{ backgroundColor: "#505357" }}>
-          <Image src={Img2} alt="" height={60} width={60} />
-          <Image src={Img2} alt="" height={60} width={60} />
-          <Image src={Img2} alt="" height={60} width={60} />
+        <div
+          className="flex gap-6 p-2 overflow-x-auto no-scrollbar "
+          style={{ backgroundColor: "#505357" }}
+        >
+          {images.map(({ content }, index) => (
+            <Image
+              src={content}
+              alt=""
+              height={100}
+              width={100}
+              className="w-16"
+              key={index}
+            />
+          ))}
         </div>
       </div>
 
