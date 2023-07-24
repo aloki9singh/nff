@@ -188,7 +188,7 @@ const Chat = () => {
 
         {/* Second Sidebar - Visible on Desktop */}
         {!isMobileScreen && (
-          <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+          <div className={`md:block  hidden w-[281px] bg-[#141518] z-10`}>
             {isMentor ? (
               <MentorSidebar toggleSideBar={toggleSideBar} />
             ) : (
