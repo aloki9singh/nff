@@ -28,6 +28,7 @@ function MentorStudent() {
   const [SideBarState, sendSideBarState] = useState(false);
   const [selectCourseData, setSelectCourseData] = useState("");
   const [forfilterData, setForfilterData] = useState([]);
+  const [numberOfPages, setNumberOfPages] = useState();
   // setId(router.query.id);
 
   const fetchStudentData = useCallback(() => {
@@ -125,7 +126,7 @@ function MentorStudent() {
   };
 
   const handleClick = (e) => {
-    const totalPage = Math.ceil(filterData.length / 10);
+    const totalPage = Math.ceil(studentData?.length / 10)+1;
 
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
@@ -154,6 +155,13 @@ function MentorStudent() {
         break;
     }
   };
+
+
+  useEffect(()=>{
+    const totalPage = Math.ceil(studentData?.length / 10)+1;
+    setNumberOfPages(totalPage);
+  })
+
 
   return (
     <>
@@ -298,7 +306,7 @@ function MentorStudent() {
                     {studentData.length < 1 ? 
                     <div className="text items-center">No Data Found</div>
                   :
-                    studentData.map((e, i) => (
+                    studentData.slice(initialcount, gap).map((e, i) => (
                       <tr
                       className="flex items-center w-full font-medium text-xs justify-around "
                       key={i}
@@ -345,8 +353,9 @@ function MentorStudent() {
                   </tbody>
                 </table>
               </div>
-              {/* pagination */}
-              <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
+              {/* pagination starts here*/}
+
+              <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex  items-center space-x-4 overflow-scroll md:overflow-visible">
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="back"
@@ -367,27 +376,17 @@ function MentorStudent() {
                     />
                   </svg>
                 </button>
-                <button
-                  className={count == 1 ? activeTabClass : tabClass}
-                  name="1"
-                  onClick={handleClick}
-                >
-                  1
-                </button>
-                <button
-                  className={count == 2 ? activeTabClass : tabClass}
-                  name="2"
-                  onClick={handleClick}
-                >
-                  2
-                </button>
-                <button
-                  className={count == 3 ? activeTabClass : tabClass}
-                  name="3"
-                  onClick={handleClick}
-                >
-                  3
-                </button>
+                {Array.from({ length: numberOfPages }, (_, index) => (
+                      <button
+                        className={`${(count == (index+1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                        `}
+                        name={index+1}
+                        onClick={handleClick}
+                      >
+                        {index+1}
+                      </button>
+                    ))}
+               
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="fwd"
