@@ -122,7 +122,7 @@ const ImageMessage = ({ img, userIcon, isSender = false }) => {
 
 const AudioMessage = ({ audio, userIcon, timestamp, isSender = false }) => {
   return (
-    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
+    <div className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
       <div>
         <Avatar
           alt="Profile-Picture"
@@ -157,11 +157,11 @@ const Chat = ({
   showChat,
   setShowChat,
 }) => {
-  const handleClick = () => {
-    const elem = document.querySelector(".icons-toggle");
-    if (elem.classList.contains("hide")) elem.classList.toggle("show");
-    else elem.classList.toggle("hide");
-  };
+  // const handleClick = () => {
+  //   const elem = document.querySelector(".icons-toggle");
+  //   if (elem.classList.contains("hide")) elem.classList.toggle("show");
+  //   else elem.classList.toggle("hide");
+  // };
   const user = auth.currentUser;
 
   const [message, setMessage] = useState("");
@@ -318,8 +318,6 @@ const Chat = ({
                     timestamp={message.timestamp}
                   />
                 );
-              1;
-
               if (message.type === "image") {
                 return (
                   <ImageMessage
@@ -348,13 +346,12 @@ const Chat = ({
           className="flex flex-col gap-2 p-2 rounded-[5px] absolute left-0 bottom-0"
           style={{ backgroundColor: "#373A41" }}
         >
-          <div className="hide icons-toggle z-[-0]">
+          {/* <div className="hide icons-toggle z-[-0]">
             <div
               className="rounded-[5px]"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
             // onClick={}
             >
-              {/* */}
               <label
                 for="formFileSm"
                 className="inline-block text-2xl dark:text-neutral-200 mb-0 p-1"
@@ -381,14 +378,29 @@ const Chat = ({
             >
               <MdMic />
             </div>
-          </div>
-          <div
+          </div> */}
+          <label
+            for="formFileSm"
             className="p-1 rounded-[5px] text-2xl flex items-center justify-center"
-            onClick={() => handleClick()}
+            // onClick={() => handleClick()}
             style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
           >
-            <MdMoreVert />
-          </div>
+            {/* <MdMoreVert /> */}
+            {/* <label
+              for="formFileSm"
+              className="inline-block text-2xl dark:text-neutral-200 mb-0 p-1"
+            >
+          </label> */}
+
+            <MdOutlineInsertDriveFile />
+            <input
+              className="relative hidden"
+              onChange={(e) => uploadImage(e)}
+              id="formFileSm"
+              type="file"
+              name="formFileSm"
+            />
+          </label>
         </div>
         {!showRecorder ? (
           <form
