@@ -88,7 +88,7 @@ function LoginComp() {
           router.push("/beta/dashboard");
         } else {
           alert(
-            "Please Verify emiail! An email verification has been sent to your inbox."
+            "Please Verify email! An email verification has been sent to your inbox."
           );
           callVerificationEmailApi({ displayName: email, email });
         }

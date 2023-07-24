@@ -28,12 +28,13 @@ const ProfileContinuepage = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
-        const data = { verified: true };
+        const data = { verified: true ,v:true };
         await detailadd(user.uid, data);
         await callEmailApi({
           displayName: user.email.substring(0, 5),
           email: user.email,
         });
+        console.log("updated")
       }
     });
     return () => unsubscribe(); // Cleanup the listener

@@ -96,16 +96,16 @@ function Homework() {
             </div>
           )}
 
-          <div className="flex-grow md:rounded-tl-[40px] px-5">
+          <div className="flex-grow md:rounded-tl-[40px]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
               <MentorTopbar heading="Homework" toggleSideBar={toggleSideBar} />
             </div>
 
-            <div className=" font-semibold  text-lg text-white  mt-10 ml-20">
+            <div className=" font-semibold  text-lg text-white  mt-5 ml-10">
               Assignment
             </div>
 
-            <div className="   p-4  border border-[#5F6065]  mt-11 rounded-xl  flex flex-col  mb-5">
+            <div className="   p-4  border border-[#5F6065]  mt-5 rounded-xl  flex flex-col  mb-5 ">
               <div className=" w-full h-20 text-white flex flex-row  justify-between ">
                 {/* <div className='flex ml-12 mt-5'>
                                     <div className='mr-2'>class 6</div>
