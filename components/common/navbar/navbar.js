@@ -18,7 +18,7 @@ export default function Navbar({ nav, setNav }) {
   //   change navbar color when scrolling
   const [color, setColor] = useState(false);
   const { user, userProfile } = useAuthContext();
-
+  const [profileMenu, setProfileMenu] = useState(false);
   const changeColor = () => {
     if (window.scrollY >= 90) {
       setColor(true);

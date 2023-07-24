@@ -9,10 +9,11 @@ import { callEmailApi } from "@/lib/api";
 import { HashLoader } from "react-spinners";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
 const ProfileContinuepage = () => {
   const router = useRouter();
-
+  const { userProfile, user } = useAuthContext();
   const { loading, setLoading } = useContext(Loading);
   function handleContinueClick() {
     router.push("/beta/profiledetails");
@@ -28,14 +29,15 @@ const ProfileContinuepage = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
-        const data = { verified: true ,v:true };
-        await detailadd(user.uid, data);
+        const data = { verified: true };
+        await detailadd(userProfile.uid, data);
         await callEmailApi({
           displayName: user.email.substring(0, 5),
           email: user.email,
         });
-        console.log("updated")
+        console.log("updated",userProfile);
       }
+
     });
     return () => unsubscribe(); // Cleanup the listener
   }, []);

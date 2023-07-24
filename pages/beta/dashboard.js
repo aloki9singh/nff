@@ -114,6 +114,7 @@ const Studentdashboard = () => {
             <div className="md:flex gap-2 m-3 md:mt-0  text-white">
               <div className="md:space-y-5 w-full  ">
                 <Advertisement />
+           
                 {/* //welcomebar */}
                 <Progress
                   percentage={`${workpercentage} %`}
