@@ -103,7 +103,7 @@ const SendMessage = ({ message }) => {
 
 const ImageMessage = ({ img, userIcon, isSender = false }) => {
   return (
-    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
+    <div className={`flex gap-2 ${isSender ? "ml-auto " : "mr-auto flex-row-reverse"}`}>
       <div className="flex items-center justify-center ">
         <Image
           width={300}
@@ -281,12 +281,12 @@ const Chat = ({
               displayReciever();
             }} className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>
-              <p
+              {!currReciever.isGroup && <p
                 className="text-[12px]"
                 style={{ color: "rgba(255, 255, 255, 0.45)" }}
               >
                 {status}
-              </p>
+              </p>}
             </div>
           </div>
 
