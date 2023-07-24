@@ -43,7 +43,6 @@ const VideoPlayer = ({ videoUrl }) => {
 
 async function checkUserJoinedCourse(courseId, userId) {
   const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
-
   const courseDoc = await getDoc(courseRef);
   return courseDoc.exists();
 }
@@ -217,28 +216,16 @@ function Videos() {
       students: arrayUnion(user.uid),
     });
 
-    // const mentorRef = doc(db, "allusers", course.mentorid);
-    // // const courseRef = doc(db, "courses", course.uid);
+    const d = {
+      courseId: course.id,
+      studentId: user.uid,
+      joinedAt: new Date(),
+    };
 
-    // const d = {
-    //   courseId: course.id,
-    //   studentId: user.uid,
-    //   joinedAt: new Date(),
-    // };
+    await updateDoc( doc(db, "allusers", course.mentorid), {
+      joinedStudents: arrayUnion(d),
+    });
 
-    // let joinedStudents = [];
-    // if(currentarray.length > 0){
-    //   currentarray.map((item) => {
-    //     joinedStudents.push(item);
-    //   });
-    // }
-    // joinedStudents.push(d);
-
-    // const joindData = {
-    //   joinedStudents,
-    // };
-
-    // await updateDoc(mentorRef, joindData);
     setIsJoined(true);
   }
 
