@@ -56,8 +56,8 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
     <div
       className={
         currReciever?.groupId === chat?.groupId
-          ? "flex active-user items-center gap-2 cursor-pointer p-2"
-          : "flex items-center gap-2 cursor-pointer p-2"
+          ? "flex active-user items-center gap-2 cursor-pointer p-2 px-5"
+          : "flex items-center gap-2 cursor-pointer p-2 px-5"
       }
       onClick={(e) => {
         setCurrReciever(chat);

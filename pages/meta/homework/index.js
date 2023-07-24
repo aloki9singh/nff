@@ -105,7 +105,7 @@ function Homework() {
               Assignment
             </div>
 
-            <div className="   p-4  border border-[#5F6065]  mt-5 rounded-xl  flex flex-col  mb-5 ">
+            <div className="   p-4  border border-[#5F6065]  mt-5 mx-1 rounded-xl  flex flex-col  mb-5 ">
               <div className=" w-full h-20 text-white flex flex-row  justify-between ">
                 {/* <div className='flex ml-12 mt-5'>
                                     <div className='mr-2'>class 6</div>
