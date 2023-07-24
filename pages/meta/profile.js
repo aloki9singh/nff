@@ -146,8 +146,8 @@ function MentorProfile() {
               </div>
             </div>
             {/* /// */}
-            <div className="flex md:flex-row flex-col    justify-center   m-5  md:mt-0 text-white ">
-              <div className=" ">
+            <div className="flex md:flex-row flex-col    justify-center   m-5  md:mt-0 text-white  gap-5">
+              <div className=" md:w-10/12 ">
                 <div className="lg:flex gap-2 justify-around mt-10 mb-5">
                   <div className=" lg:w-1/4 ">
                     <div>
@@ -248,7 +248,7 @@ function MentorProfile() {
                   </div>
                 </div>
               </div>
-              <div className="md:mt-12">
+              <div className="md:mt-12 md:w-[600px]">
                 <div className="">
                   <div className="bg-[#373A41] rounded-[20px] text-xl justify-center pb-9 pt-3 px-4 space-y-2 mt-5 flex flex-col">
                     <div className=" text-center text-xl font-bold text-gray-500">
@@ -259,7 +259,7 @@ function MentorProfile() {
                       {userData.details &&
                         userData.details?.experience[0]?.companyname}
                     </div>
-                    <div className="flex gap-2 text-sm font-medium line-clamp-1 text-ellipsis">
+                    <div className="flex gap-2 text-sm font-medium line-clamp-1 text-ellipsis ">
                       {" "}
                       <span>
                         <Image
@@ -270,15 +270,17 @@ function MentorProfile() {
                           className="w-5"
                         />{" "}
                       </span>{" "}
-                      Studied at{" "}
-                      <span className="text-[#E1348B] text-sm font-black line-clamp-1 text-ellipsis">
-                        {userData.details &&
-                          userData.details?.qualification[0]?.universityname}
-                        (
-                        {userData.details &&
-                          userData.details?.qualification[0]?.fieldOfStudy}
-                        )
-                      </span>
+                      <div className="flex md:flex-col">
+                        <div>Studied at </div>
+                        <span className="text-[#E1348B] text-sm font-black line-clamp-1 text-ellipsis">
+                          {userData.details &&
+                            userData.details?.qualification[0]?.universityname}
+                          (
+                          {userData.details &&
+                            userData.details?.qualification[0]?.fieldOfStudy}
+                          )
+                        </span>
+                      </div>
                     </div>
 
                     <p className="ml-7  font-extralight text-[0.9rem] opacity-75">
@@ -303,11 +305,12 @@ function MentorProfile() {
                           className="w-4"
                         />{" "}
                       </span>{" "}
-                      Lives in{" "}
-                      <span className="text-[#E1348B] font-black line-clamp-1 text-ellipsis">
-                        {" "}
-                        {userData.details?.address}
-                      </span>
+                      <div className="flex md:flex-col">
+                        <div> Lives in </div>
+                        <span className="text-[#E1348B] font-black line-clamp-1 text-ellipsis md:flex-col">
+                          {userData.details?.address}
+                        </span>
+                      </div>
                     </div>
                     <p className="ml-7  font-extralight text-[0.9rem] opacity-75 line-clamp-2 text-ellipsis">
                       {userData.details &&
@@ -326,9 +329,9 @@ function MentorProfile() {
                         alt="img"
                         className="w-5 h-5"
                       />{" "}
-                      <span className="text-[0.9rem] font-medium flex">
+                      <span className="text-[0.9rem] font-medium flex md:flex-col">
                         {" "}
-                        Knows{" "}
+                        <div>Knows </div>
                         <span className="text-[#E1348B] font-black  pl-2 line-clamp-2 text-ellipsis">
                           {userData.details &&
                             userData.details?.skills.map((item) => {

@@ -160,10 +160,11 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
               type="date"
               placeholder="date"
               onChange={handleChange}
+          
               className="bg-transparent outline-none "
             />
 
-            <div className="text-sm  flex flex-col w-full">
+            <div className="text-sm grid grid-cols-2">
               <input
                 type="time"
                 name="startTime"

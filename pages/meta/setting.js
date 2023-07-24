@@ -87,7 +87,7 @@ function Settings() {
                         className="mx-auto  w-auto md:w-40 min-w-fit rounded-2xl  py-2 text-white bg-gradient-to-r from-[#A145CD] to-[#E1348B] cursor-pointer   md:px-8 md:py-4"
                         onClick={NotificationFun}
                       >
-                        <div className=" flex justify-center text-4xl">
+                        <div className=" flex justify-center text-4xl ">
                           <BsEnvelopeOpen></BsEnvelopeOpen>
                         </div>
                         <div className="text-sm flex justify-center">
