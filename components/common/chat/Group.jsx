@@ -103,7 +103,7 @@ const GroupDetails = ({
       >
         <Avatar
           alt="Profile-Picture"
-          src={profileImage}
+          src={currReciever.photoURL || profileImage}
           // sx={{ height: 87, width: 86 }}
           height={87}
           width={86}
