@@ -353,7 +353,8 @@ function MentorStudent() {
                   </tbody>
                 </table>
               </div>
-              {/* pagination */}
+              {/* pagination starts here*/}
+
               <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex  items-center space-x-4 overflow-scroll md:overflow-visible">
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
