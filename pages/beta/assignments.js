@@ -227,7 +227,7 @@ function Assignments() {
                       course && course.map((e) => {
                         const assignment = e.assignment;
                         return (
-                          assignment.map((ele, i) => {
+                          assignment?.map((ele, i) => {
                             if (ele.module == moduleName) {
                               return (
                                 <AssignmentCard

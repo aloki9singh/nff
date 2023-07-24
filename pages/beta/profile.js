@@ -325,9 +325,6 @@ function StudentProfile() {
             </div>
           </div>
         </div>
-        {/* <div className=" ">
-          <MobileNav></MobileNav>
-        </div> */}
       </div>
     </>
   );
