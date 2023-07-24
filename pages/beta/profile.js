@@ -19,7 +19,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 
-import {db } from "@/config/firebaseconfig";
+import { db } from "@/config/firebaseconfig";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import StudentProfileChart from "@/components/student/profile/chart";
 import StudentProfileCirProgress from "@/components/student/profile/StudentProfileCirProgress";
@@ -55,21 +55,28 @@ function StudentProfile() {
   }, [isMediumScreen]);
   const chartData = [0, 0, 0, 0, 0, 0, 0]; //Change this student data to show on chart, passed as prop
   ``;
+
+
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      const userRef = doc(db, "allusers", user.uid);
+      const collectionRef = collection(userRef, "joinedCourses");
+      const querySnapshot = await getDocs(collectionRef)
+
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      console.log(data);
+      setenrolledcourses(data);
+    }
+    fetchEnrolledCourses();
+  }, [user.uid])
+
+
   if (!user || !userProfile) {
     router.push("/");
   }
   if (!user || !userProfile) {
     return null;
   }
-
-  useEffect(async() => {
-    const userRef = doc(db, "allusers", user.uid);
-    const collectionRef = collection(userRef, "joinedCourses");
-    const querySnapshot = await getDocs(collectionRef)
-
-    const data = querySnapshot.docs.map((doc)=>doc.data());
-    setenrolledcourses(data);
-  }, [])
 
   return (
     <>

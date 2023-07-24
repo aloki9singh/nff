@@ -234,12 +234,14 @@ const Chat = () => {
                   setShowUser={setShowUser}
                   setCurrReciever={setCurrReciever}
                   setShowChat={setShowChat}
+                  images= {messages.filter((message) => message.type === "image")}
                 />
               ) : (
                 <User
                   setShowChat={setShowChat}
                   currReciever={currReciever}
                   setShowUser={setShowUser}
+                  images={messages.filter((message) => message.type === "image")}
                 />
               ))}
           </div>
