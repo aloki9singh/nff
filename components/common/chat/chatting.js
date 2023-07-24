@@ -108,7 +108,7 @@ const ImageMessage = ({ img, userIcon, isSender = false }) => {
         <Image
           width={300}
           height={300}
-          className="w-[300px] h-auto"
+          className="w-[300px] h-auto max-w-[70vw]"
           src={img}
           alt=""
         />
@@ -290,7 +290,7 @@ const Chat = ({
             </div>
           </div>
 
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <div
               className="p-1 rounded-[10px] text-2xl"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
@@ -303,7 +303,7 @@ const Chat = ({
             >
               <MdVideoCall />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-1 flex-col mt-4 px-3 gap-4 w-full no-scrollbar   overflow-y-auto flex-5">

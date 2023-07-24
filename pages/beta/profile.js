@@ -62,14 +62,14 @@ function StudentProfile() {
     return null;
   }
 
-  useEffect(async() => {
-    const userRef = doc(db, "allusers", user.uid);
-    const collectionRef = collection(userRef, "joinedCourses");
-    const querySnapshot = await getDocs(collectionRef)
+  // useEffect(async() => {
+  //   const userRef = doc(db, "allusers", user.uid);
+  //   const collectionRef = collection(userRef, "joinedCourses");
+  //   const querySnapshot = await getDocs(collectionRef)
 
-    const data = querySnapshot.docs.map((doc)=>doc.data());
-    setenrolledcourses(data);
-  }, [])
+  //   const data = querySnapshot.docs.map((doc)=>doc.data());
+  //   setenrolledcourses(data);
+  // }, [])
 
   return (
     <>
