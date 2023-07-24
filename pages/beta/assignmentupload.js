@@ -15,12 +15,15 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import withStudentAuthorization from '@/lib/HOC/withStudentAuthorization';
-import { getDoc, doc } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 import { useAuthContext } from '@/lib/context/AuthContext';
 import { uploadBytes } from 'firebase/storage';
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import IDdraganddrop from '@/components/student/assignments/iddraganddrop';
+import { Controller, useForm } from 'react-hook-form';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { useCallback } from 'react';
 
 const Assignmentupload = () => {
   const router = useRouter();
@@ -37,14 +40,35 @@ const Assignmentupload = () => {
   const [course, setCourse] = useState()
   const { user } = useAuthContext()
   const [link, setLink] = useState("")
+  const [progressData, setProgress] = useState()
+  const [url, setUrl] = useState()
+  const [key, setkey] = useState()
 
+  const handleChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
 
   const getData = async () => {
-    const userRef = doc(db, 'courses', courseid);
-    const userData = await getDoc(userRef)
-    const data = userData.data()
-    setCourse((data.assignment).filter((a) => { return a.id == id }))
+    const courseRef = doc(db, "courses", courseid);
+    const courseInfo = await getDoc(courseRef);
+
+    if (courseInfo.exists()) {
+      const assignmentRef = collection(courseRef, "assignment");
+      const q = query(assignmentRef, where("id", "==", id));
+      const querySnapshot = await getDocs(q);
+
+      const arr = [];
+      querySnapshot.forEach((doc) => {
+        arr.push(doc.data());
+      });
+
+      setCourse(arr)
+    } else {
+      console.log("Course not found.");
+    }
   }
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const data = {
@@ -70,9 +94,32 @@ const Assignmentupload = () => {
     //   setMaximumMarks(null);
     //   setSubmissionDate(null);
   };
-
-  console.log(course)
   const storageRef = ref(storage, `assignment/${file.name}`);
+  const uploadFile = useCallback(async () => {
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        setProgress(progress)
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUrl(downloadURL);
+        });
+      }
+    );
+  }, [file]);
+  useEffect(() => {
+    if (file) {
+      uploadFile();
+    }
+  }, [file, uploadFile])
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
       alert("Enter a valid link")
@@ -104,6 +151,7 @@ const Assignmentupload = () => {
   }
   const time = course && new Date(course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000);
   console.log(file)
+
   return (
     <div className="flex">
       {isMobileScreen && (
@@ -166,9 +214,47 @@ const Assignmentupload = () => {
             <div>Submit Your Assignment</div>
             <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
               <div className="md:w-[60%] mx-auto md:m-auto w-[80%]">
-                <IDdraganddrop name={file} setValue={setFile} />
+                {/* <Controller
+                  control={control}
+                  name="profilePhoto"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <IDdraganddrop
+                      setValue={setValue}
+                      name="file"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={file}
+                    />
+                  )}
+                /> */}
+                <div className='w-full  flex justify-center'>
+                  <div className='mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] '>
+                    <input type='file' key={key} id='file' className='w-full h-full border-dashed border-2 rounded-xl bg-[#505057]' onChange={handleChange} hidden />
+                    <label htmlFor='file' className='w-full h-full flex flex-col items-center justify-center'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='white'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        className='feather feather-folder w-12 h-12 mb-2'>
+                        <path d='M22 11V6c0-1.1-.9-2-2-2H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-5' />
+                        <rect x='2' y='2' width='20' height='8' rx='2' ry='2' />
+                      </svg>
 
-
+                      <p className='text-white text-center mt-2 text-xs'>
+                        Click to Upload or drag and drop
+                      </p>
+                      <p className='text-white text-center text-xs mt-1'>
+                        pdf, word document (max 2-5 MB)
+                      </p>
+                      {file?.name}<br />
+                      {progressData && `${progressData}% done`}
+                    </label>
+                  </div>
+                </div>
                 <div className="space-y-4 ">
                   <div className="mt-3">or attach URL of work</div>
                   <div className="flex justify-between px-5 py-3 bg-[#505057] rounded-[20px] ">

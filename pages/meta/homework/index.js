@@ -8,12 +8,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
 
-import { useAuthContext } from "@/lib/context/AuthContext";
-import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
-import HomeWorkCard from "@/components/mentor/homework/homeworkcard";
-import UploadCard from "@/components/mentor/homework/uploadcard";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "@/config/firebaseconfig";
+import { useAuthContext } from '@/lib/context/AuthContext';
+import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
+import HomeWorkCard from '@/components/mentor/homework/homeworkcard';
+import UploadCard from '@/components/mentor/homework/uploadcard';
+import { collection, getDocs, query, where, doc } from 'firebase/firestore';
+import { db } from '@/config/firebaseconfig';
 
 function Homework() {
   //set Below two for marked homework
@@ -35,40 +35,46 @@ function Homework() {
   const [activeElement, setActiveElement] = useState("active");
   const [activeCourse, setActive] = useState();
 
-  const handleToggleElement = (element) => {
-    setActiveElement(element);
-  };
-  const getData = async () => {
-    if (!dataFetched) {
-      const courseCollection = collection(db, "courses");
-      const q = query(
-        collection(db, "courses"),
-        where("mentorid", "==", user.uid)
-      );
-      const courseInfo = await getDocs(q);
-      const courseData = courseInfo.docs.map((doc) => doc.data());
-      setActive(courseData);
-      setDataFetched(true);
+    const handleToggleElement = element => {
+        setActiveElement(element);
+    };
+    const getData = async () => {
+        if (!dataFetched) {
+            const q = query(
+                collection(db, "courses"),
+                where("MentorId", "array-contains", user.uid),
+            );
+            const courseInfo = await getDocs(q);
+            courseInfo.docs.map((doc) => console.log(doc.data()))
+            const arr = []
+            for (const doc of courseInfo.docs) {
+                const docRef = doc.ref;
+                const collectionRef = collection(docRef, 'assignment');
+                const querySnapshot = await getDocs(collectionRef);
+                arr.push(querySnapshot.docs.map((doc) => doc.data()))
+            }
+            setActive(arr);
+            setDataFetched(true);
+        }
+    };
+    function toggleSideBar() {
+        setShowSideBar(!showSideBar);
+        sendSideBarState(showSideBar);
     }
-  };
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
-  useEffect(() => {
-    if (isMediumScreen) {
-      sendSideBarState(false);
-    }
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        user.emailVerified = true;
-        const value = await callUserById(user.uid);
-        setVerified(value.user?.verified);
-      }
-    });
-    getData();
-    return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen, dataFetched]);
+    useEffect(() => {
+        if (isMediumScreen) {
+            sendSideBarState(false);
+        }
+        const unsubscribe = onAuthStateChanged(auth, async user => {
+            if (user) {
+                user.emailVerified = true;
+                const value = await callUserById(user.uid);
+                setVerified(value?.user?.verified);
+            }
+        });
+        getData()
+        return () => unsubscribe(); // Cleanup the listener
+    }, [isMediumScreen, dataFetched]);
 
   // if (!verified) {
   //   return null;
@@ -156,55 +162,36 @@ function Homework() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5">
-                {activeElement === "active" ? (
-                  <>
-                    {activeCourse &&
-                      activeCourse.map((e) => {
-                        const data = e.assignment;
-                        // {
-                        //   setNo(data.length);
-                        // }
-
-                        return (
-                          data &&
-                          data.map((ele, i) => {
-                            const date = new Date(
-                              ele.date.seconds * 1000 +
-                                ele.date.nanoseconds / 1000000
-                            );
-                            return (
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  router.push(`/meta/homework/${e.id}`);
-                                }}
-                                key={ele.id}
-                              >
-                                <HomeWorkCard
-                                  title={ele.title}
-                                  desc={ele.module}
-                                  date={date.toLocaleString().split(",")[0]}
-                                  banner={e.banner}
-                                  course={ele.course}
-                                />
-                              </div>
-                            );
-                          })
-                        );
-                      })}
-                    <UploadCard />
-                  </>
-                ) : (
-                  <>
-                    <HomeWorkCard title="Course 2" desc="Description 2" />
-                    <HomeWorkCard title="Course 2" desc="Description 2" />
-                    <HomeWorkCard title="Course 2" desc="Description 2" />
-                    <UploadCard />
-                  </>
-                )}
-                {/* For checked Data */}
-                {/* {activeCourse && activeCourse.map((e) => {
+                            <div className='grid grid-cols-3 gap-4 m-5'>
+                                {activeElement === 'active' ? (
+                                    <>
+                                        {activeCourse && activeCourse.map((e) => (
+                                            e.map((ele) => {
+                                                const date = new Date(ele.date.seconds * 1000 + ele.date.nanoseconds / 1000000);
+                                                return (
+                                                    <div className='cursor-pointer' onClick={() => { router.push(`/meta/homework/${ele.id}`) }} key={ele.id}>
+                                                        <HomeWorkCard
+                                                            title={ele.title}
+                                                            desc={ele.module}
+                                                            date={date.toLocaleString().split(",")[0]}
+                                                            course={ele.course}
+                                                        />
+                                                    </div>
+                                                )
+                                            })
+                                        ))}
+                                        <UploadCard />
+                                    </>
+                                ) : (
+                                    <>
+                                        <HomeWorkCard title='Course 2' desc='Description 2' />
+                                        <HomeWorkCard title='Course 2' desc='Description 2' />
+                                        <HomeWorkCard title='Course 2' desc='Description 2' />
+                                        <UploadCard />
+                                    </>
+                                )}
+                                {/* For checked Data */}
+                                {/* {activeCourse && activeCourse.map((e) => {
                                             const data = e.assignment;
                                             if (data.status){
                                             return (
