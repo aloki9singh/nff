@@ -39,6 +39,7 @@ function MentorStudent() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [courseDetails, setDetails] = useState();
   const [dataFetched, setDataFetched] = useState(false);
+  const [numberOfPages, setNumberOfPages] = useState();
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -50,7 +51,6 @@ function MentorStudent() {
     if (!dataFetched) {
       const courseCollection = collection(db, "courses");
       const courseInfo = await getDocs(courseCollection);
-
       const courseList = courseInfo.docs.map((doc) => doc.data());
       console.log("courseList", courseList);
       setDetails(courseList);
@@ -90,7 +90,9 @@ function MentorStudent() {
   // });
 
   function handleClick(e) {
-    const totalPage = Math.ceil(courseData.coursedata.length / 8);
+    const totalPage = Math.ceil(courseData.coursedata.length / 8)+1;
+    console.log("totalPage", totalPage);
+    setNumberOfPages(totalPage);
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
         if (count < totalPage) {
@@ -119,6 +121,11 @@ function MentorStudent() {
     }
   }
 
+  useEffect(()=>{
+    const totalPage = Math.ceil(courseData?.coursedata?.length / 8)+1;
+    setNumberOfPages(totalPage);
+  })
+
   console.log(userProfile);
 
   userProfile.joinedStudents?.map((student) => {
@@ -140,9 +147,8 @@ function MentorStudent() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -273,7 +279,7 @@ function MentorStudent() {
                         courseDetails.slice(initialcount, gap).map((e, i) => {
                           const time = new Date(
                             e?.createdAt.seconds * 1000 +
-                              e?.createdAt.nanoseconds / 1000000
+                            e?.createdAt.nanoseconds / 1000000
                           );
                           return (
                             <tr
@@ -335,7 +341,10 @@ function MentorStudent() {
                           ))} */}
                     </tbody>
                   </table>
-                  <div className="w-60 h-10 my-2 lg:bottom-0 mx-10  flex justify-center items-center space-x-4 ">
+
+                  {/* pagination  */}
+
+                  <div className="absolute top-[90rem] w-60 h-10 my-2 lg:bottom-0 mx-10  flex items-center space-x-4 overflow-scroll md:absolute md:top-[46rem] md:overflow-visible">
                     <button
                       className="w-6 h-5 border flex justify-center items-center"
                       name="back"
@@ -356,27 +365,18 @@ function MentorStudent() {
                         />
                       </svg>
                     </button>
-                    <button
-                      className={count == 1 ? activeTabClass : tabClass}
-                      name="1"
-                      onClick={handleClick}
-                    >
-                      1
-                    </button>
-                    <button
-                      className={count == 2 ? activeTabClass : tabClass}
-                      name="2"
-                      onClick={handleClick}
-                    >
-                      2
-                    </button>
-                    <button
-                      className={count == 3 ? activeTabClass : tabClass}
-                      name="3"
-                      onClick={handleClick}
-                    >
-                      3
-                    </button>
+
+                    {Array.from({ length: numberOfPages }, (_, index) => (
+                      <button
+                        className={`${(count == (index+1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                        `}
+                        name={index+1}
+                        onClick={handleClick}
+                      >
+                        {index+1}
+                      </button>
+                    ))}
+
                     <button
                       className="w-6 h-5 border flex justify-center items-center"
                       name="fwd"

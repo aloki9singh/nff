@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 
 function MentorStudent() {
@@ -26,16 +26,50 @@ function MentorStudent() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const [selectCourseData, setSelectCourseData] = useState("");
+  const [forfilterData, setForfilterData] = useState([]);
+  const [numberOfPages, setNumberOfPages] = useState();
   // setId(router.query.id);
+
   const fetchStudentData = useCallback(() => {
     fetch("/api/signup")
       .then((response) => response.json())
       .then((data) => {
+
+        console.log(data, "data");
         const students = data.users.filter((ele) => ele.role === "student");
         setFilterData(students);
         setStudentData(students);
+        setForfilterData(students);
       });
   }, []);
+
+  const getStudendDataByCourse = async (val) => {
+    console.log(val)
+    const courseRef = collection(db, "courses")
+    const querySnapshot = await getDocs(courseRef);
+    const data = querySnapshot.docs.map(doc => doc.data());
+    const course = data.find((ele) => ele.id === (val));
+    console.log("hell ", course);
+
+
+    if(course){
+      setStudentData([]);
+      course.students?.map((stud) => {
+        const newStudentData = forfilterData.filter((ele) => ele.uid == (stud));
+        console.log(newStudentData);
+        // listofStudents.push(newStudentData);
+        newStudentData.map((ele)=>{
+          setStudentData(oldArray => [...oldArray, ele]);
+        })
+        console.log(studentData);
+      })
+
+  }
+  else {
+    setStudentData([{title : "NO DATA FOUND"}]);
+  }
+  }
 
   const filterStudentData = useCallback(() => {
     return filterData.filter((ele) => ele.displayName.includes(searchstate));
@@ -47,7 +81,7 @@ function MentorStudent() {
   );
   const getData = async () => {
     // if (!dataFetched) {
-    
+
     const courseCollection = collection(db, "courses");
     const courseInfo = await getDocs(courseCollection);
     const courseData = courseInfo.docs.map((doc) => doc.data());
@@ -62,6 +96,7 @@ function MentorStudent() {
       sendSideBarState(false);
     }
     setStudentData(filteredStudentData.slice(initialcount, gap));
+    
   }, [isMediumScreen, filteredStudentData, initialcount, gap, setStudentData]);
 
   useEffect(() => {
@@ -91,7 +126,7 @@ function MentorStudent() {
   };
 
   const handleClick = (e) => {
-    const totalPage = Math.ceil(filterData.length / 10);
+    const totalPage = Math.ceil(studentData?.length / 10)+1;
 
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
@@ -121,6 +156,13 @@ function MentorStudent() {
     }
   };
 
+
+  useEffect(()=>{
+    const totalPage = Math.ceil(studentData?.length / 10)+1;
+    setNumberOfPages(totalPage);
+  })
+
+
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] ">
@@ -128,9 +170,8 @@ function MentorStudent() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -153,7 +194,10 @@ function MentorStudent() {
               <div className="flex flex-wrap items-center justify-between w-[99%] md:m-5 py-4 space-y-2">
                 <div className="md:flex items-center rounded-lg gap-4 justify-around ">
                   <div className="flex  md:min-w-[200px] w-full space-x-4">
-                    <select className="block w-full p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer">
+                    <select className="block w-full p-2  text-sm rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer" value={selectCourseData} onChange={(e) => {
+                      setSelectCourseData(e.target.value);
+                      getStudendDataByCourse(e.target.value);
+                    }}>
                       <option value="" className="text-xs">
                         Select from this List
                       </option>
@@ -161,7 +205,7 @@ function MentorStudent() {
                         <option
                           key={e.id} // Use a unique key for each option
                           className="text-xs cursor-pointer"
-                          value={e.title}
+                          value={e.id}
                         >
                           {/* {console.log(e.id)} */}
                           {e.title}
@@ -201,7 +245,7 @@ function MentorStudent() {
                       />
                     </div>
                   </form>
-                  <button className="bg-[#414348] w-fit h-fit flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl">
+                  {/* <button className="bg-[#414348] w-fit h-fit flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl">
                     <span>
                       <Image
                         src="/componentsgraphics/student/courses/list/chartbaricon.svg"
@@ -212,12 +256,12 @@ function MentorStudent() {
                       />
                     </span>
                     Filter
-                  </button>
+                  </button> */}
                   <button
                     className="bg-[#414348] rounded-xl w-fit h-fit flex px-8 py-2.5"
                     onClick={() => setHide(!hide)}
                   >
-                    Remove 
+                    Remove
                   </button>
                   {!hide && (
                     <div className="absolute right-[1%] bg-black p-4 rounded-2xl w-fit top-[18%]">
@@ -228,7 +272,7 @@ function MentorStudent() {
                           id="delete"
                           className="text-black"
                           value={id}
-                          onChange={(e) => {setId(e.target.value)}}
+                          onChange={(e) => { setId(e.target.value) }}
                           placeholder="Enter the uid of student"
                         />
                         <button
@@ -259,53 +303,59 @@ function MentorStudent() {
                     </tr>
                   </thead>
                   <tbody className="flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6">
-                    {studentData.map((e, i) => (
+                    {studentData.length < 1 ? 
+                    <div className="text items-center">No Data Found</div>
+                  :
+                    studentData.slice(initialcount, gap).map((e, i) => (
                       <tr
-                        className="flex items-center w-full font-medium text-xs justify-around "
-                        key={i}
+                      className="flex items-center w-full font-medium text-xs justify-around "
+                      key={i}
                       >
-                        <td className="flex items-center gap-2 w-[16.6%] ">
-                          <Image
-                            src={
-                              e.photoURL
-                                ? e.photoURL
-                                : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
-                            }
-                            alt="img"
-                            height={25}
-                            width={25}
-                            className="rounded-full h-8 w-8  object-cover inline"
-                          />
+                      <td className="flex items-center gap-2 w-[16.6%] ">
+                      <Image
+                      src={
+                        e.photoURL
+                        ? e.photoURL
+                        : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
+                      }
+                      alt="img"
+                      height={25}
+                      width={25}
+                      className="rounded-full h-8 w-8  object-cover inline"
+                      />
                           {e.displayName}
-                        </td>
-                        <td className="w-[16.6%] overflow-clip hover:overflow-visible">
+                          </td>
+                          <td className="w-[16.6%] overflow-clip hover:overflow-visible">
                           {e.uid}
-                        </td>
-                        <td className="w-[16.6%] text-center ">{e?.class}</td>
+                          </td>
+                          <td className="w-[16.6%] text-center ">{e?.class}</td>
+                          <td className="w-[16.6%] text-center md:block hidden">
+                          {e?.active ? "true" : "false"}
+                          </td>
                         <td className="w-[16.6%] text-center md:block hidden">
-                          {e?.active}
-                        </td>
-                        <td className="w-[16.6%] text-center md:block hidden">
-                          {e?.courses}
+                        {e?.courses}
                         </td>
                         <td
-                          className="w-[16.6%] text-right text-[#E1348B] pr-[3%]"
-                          onClick={() =>
-                            router.push({
-                              pathname: "/meta/studentprofile",
-                              query: { uid: e.uid },
-                            })
-                          }
+                        className="w-[16.6%] text-right text-[#E1348B] pr-[3%]"
+                        onClick={() =>
+                          router.push({
+                            pathname: "/meta/studentprofile",
+                            query: { uid: e.uid },
+                          })
+                        }
                         >
-                          View Profile
+                        View Profile
                         </td>
-                      </tr>
-                    ))}
+                        </tr>
+                        
+                        ))
+                      }
                   </tbody>
                 </table>
               </div>
-              {/* pagination */}
-              <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
+              {/* pagination starts here*/}
+
+              <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex  items-center space-x-4 overflow-scroll md:overflow-visible">
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="back"
@@ -326,27 +376,17 @@ function MentorStudent() {
                     />
                   </svg>
                 </button>
-                <button
-                  className={count == 1 ? activeTabClass : tabClass}
-                  name="1"
-                  onClick={handleClick}
-                >
-                  1
-                </button>
-                <button
-                  className={count == 2 ? activeTabClass : tabClass}
-                  name="2"
-                  onClick={handleClick}
-                >
-                  2
-                </button>
-                <button
-                  className={count == 3 ? activeTabClass : tabClass}
-                  name="3"
-                  onClick={handleClick}
-                >
-                  3
-                </button>
+                {Array.from({ length: numberOfPages }, (_, index) => (
+                      <button
+                        className={`${(count == (index+1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                        `}
+                        name={index+1}
+                        onClick={handleClick}
+                      >
+                        {index+1}
+                      </button>
+                    ))}
+               
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="fwd"

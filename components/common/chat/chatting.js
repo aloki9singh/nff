@@ -103,12 +103,12 @@ const SendMessage = ({ message }) => {
 
 const ImageMessage = ({ img, userIcon, isSender = false }) => {
   return (
-    <div className={`flex gap-2 ${isSender ? "ml-auto" : "mr-auto"}`}>
+    <div className={`flex gap-2 ${isSender ? "ml-auto " : "mr-auto flex-row-reverse"}`}>
       <div className="flex items-center justify-center ">
         <Image
           width={300}
           height={300}
-          className="w-[300px] h-auto"
+          className="w-[300px] h-auto max-w-[70vw]"
           src={img}
           alt=""
         />
@@ -281,16 +281,16 @@ const Chat = ({
               displayReciever();
             }} className="flex flex-col items-start cursor-pointer">
               <h1>{currReciever?.name}</h1>
-              <p
+              {!currReciever.isGroup && <p
                 className="text-[12px]"
                 style={{ color: "rgba(255, 255, 255, 0.45)" }}
               >
                 {status}
-              </p>
+              </p>}
             </div>
           </div>
 
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <div
               className="p-1 rounded-[10px] text-2xl"
               style={{ backgroundColor: "rgba(217, 217, 217, 0.29)" }}
@@ -303,7 +303,7 @@ const Chat = ({
             >
               <MdVideoCall />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-1 flex-col mt-4 px-3 gap-4 w-full no-scrollbar   overflow-y-auto flex-5">
