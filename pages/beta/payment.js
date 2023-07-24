@@ -48,7 +48,7 @@ const Payment = () => {
     if (user) {
       const trialStartDate = new Date();
       const startdate = trialStartDate.toString();
-      const trialEndDate = new Date(trialStartDate.getTime() + 7 * 60 * 1000);
+      const trialEndDate = new Date(trialStartDate.getTime() + 1 * 24 * 60 * 60 * 1000);
 
       const trialData = {
         trial: {
