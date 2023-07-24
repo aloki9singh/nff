@@ -68,10 +68,8 @@ function MentorProfile() {
     return () => unsubscribe();
   }, [isMediumScreen]);
 
-  console.log(userData);
   userData.joinedStudents?.map((student) => {
     const joinDate = new Date(student.joinedAt?.seconds * 1000);
-    console.log(joinDate.getMonth());
     chartData[joinDate.getMonth()]++;
   });
 
