@@ -190,9 +190,14 @@ const Chat = () => {
         {!isMobileScreen && (
           <div className={`md:block  hidden w-[281px] bg-[#141518] z-10`}>
             {isMentor ? (
-              <MentorSidebar toggleSideBar={toggleSideBar} />
+              <MentorSidebar
+                toggleSideBar={toggleSideBar}
+              />
             ) : (
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+              <CourseoverviewSidebar
+                className={"max-h-screen"}
+                toggleSideBar={toggleSideBar}
+              />
             )}
           </div>
         )}
@@ -234,14 +239,18 @@ const Chat = () => {
                   setShowUser={setShowUser}
                   setCurrReciever={setCurrReciever}
                   setShowChat={setShowChat}
-                  images= {messages.filter((message) => message.type === "image")}
+                  images={messages.filter(
+                    (message) => message.type === "image"
+                  )}
                 />
               ) : (
                 <User
                   setShowChat={setShowChat}
                   currReciever={currReciever}
                   setShowUser={setShowUser}
-                  images={messages.filter((message) => message.type === "image")}
+                  images={messages.filter(
+                    (message) => message.type === "image"
+                  )}
                 />
               ))}
           </div>
