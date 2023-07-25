@@ -180,14 +180,13 @@ function Assignments() {
                   </div>
                   {
                     course && course.map((e, i) => {
-                      return e.map((ele, n) => {
-                        console.log(moduleName)
+                      return e.map((ele, j) => {
                         return (
                           <div
-                            className={module == i + n ? Activestyle : Inactivestyle}
-                            onClick={(ele) => { setModule(i); setModuleName(ele.module) }}
+                            className={module === i + j ? Activestyle : Inactivestyle} // Note: Use === for comparison
+                            onClick={() => { setModuleName(ele.module); setModule(i + j) }}
                           >
-                            {`${i + n + 1}. ${ele.course} - ${ele.module}`}
+                            {`${i + j + 1}. ${ele.course} - ${ele.module}`}
                           </div>
                         )
                       })
@@ -195,7 +194,7 @@ function Assignments() {
                   }
                   {/* <div
                   className={module == 0 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(0)}
+                  onClick={() => setModule(0)}e.preventDefault() 
                   >
                   1. UX Case Study - studying the experience
                 </div>
@@ -232,20 +231,22 @@ function Assignments() {
                   </div>
                   <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
                     {
-                      course &&
-                      course.map((e, i) => {
-                        return e
-                          .map((ele, j) => (
-                            <AssignmentCard
-                              key={i}
-                              id={ele.id}
-                              no={i + 1}
-                              name={ele.title}
-                              date={ele.date}
-                              url={ele.url}
-                              courseid={ele.courseid}
-                            />
-                          ));
+                      course && course.map((e, i) => {
+                        return e.map((ele, j) => {
+                          {/* if (moduleName && (ele.module === moduleName)) { */}
+                            return (
+                              <AssignmentCard
+                                key={i}
+                                id={ele.id}
+                                no={i + 1}
+                                name={ele.title}
+                                date={ele.date}
+                                url={ele.url}
+                                courseid={ele.courseid}
+                              />
+                            );
+                          {/* } */}
+                        });
                       })
                     }
                     {/* {Assignments.filter(

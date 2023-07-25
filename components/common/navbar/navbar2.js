@@ -1,4 +1,4 @@
-const NavbarSecond = ({ title, buttonVis, titleVis }) => {
+const NavbarSecond = ({ title, buttonVis, titleVis,toggleSidebar }) => {
   return (
     <>
       <nav className="md:rounded-tl-[40px] border-b-2 border-[#728095]  py-5 bg-[#2D2E35] ">
@@ -59,6 +59,8 @@ const NavbarSecond = ({ title, buttonVis, titleVis }) => {
                 />
               </div>
               <button
+              onClick={toggleSidebar}
+
                 data-collapse-toggle="navbar-search"
                 type="button"
                 className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"

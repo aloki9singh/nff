@@ -21,7 +21,7 @@ import { uploadBytes } from 'firebase/storage';
 // import MobileNav from "../components/CalenderParts/MobileNav";
 import IDdraganddrop from '@/components/student/assignments/iddraganddrop';
 import { Controller, useForm } from 'react-hook-form';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useCallback } from 'react';
 
@@ -54,45 +54,64 @@ const Assignmentupload = () => {
     const courseInfo = await getDoc(courseRef);
 
     if (courseInfo.exists()) {
-      const assignmentRef = collection(courseRef, "assignment");
-      const q = query(assignmentRef, where("id", "==", id));
-      const querySnapshot = await getDocs(q);
+      try {
+        const assignmentRef = collection(courseRef, "assignment");
+        const q = query(assignmentRef, where("id", "==", id));
+        const querySnapshot = await getDocs(q);
+        const arr = [];
+        querySnapshot.forEach((doc) => {
+          arr.push(doc.data());
+        });
 
-      const arr = [];
-      querySnapshot.forEach((doc) => {
-        arr.push(doc.data());
-      });
-
-      setCourse(arr)
+        setCourse(arr)
+      }
+      catch (err) {
+        alert("Error occured")
+      }
     } else {
       console.log("Course not found.");
     }
   }
 
-  const onSubmitHandler = (e) => {
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
+    course[0].file = url
+    const files = []
+    if (course[0].files) {
+      course[0].files.map((ele) => { files.push((ele)) })
+    }
+    const courseRef = doc(db, "courses", courseid);
+    const courseInfo = await getDoc(courseRef);
     const data = {
-      title,
-      course: optionSelected,
-      module: optionSelected,
-      maximumMarks,
-      submissionDate,
-      fileURL,
-    };
-    //   fetch('/api/course_assignments', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       console.log(data);
-    //     });
-    //   setTitle('');
-    //   setMaximumMarks(null);
-    //   setSubmissionDate(null);
+      submittedby: user.uid,
+      file: url
+    }
+    files.push(data)
+    course[0].files = files
+
+    if (courseInfo.exists()) {
+      try {
+        const assignmentRef = collection(courseRef, "assignment");
+        const q = query(assignmentRef, where("id", "==", id));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          const docRef = doc.ref;
+          updateDoc(docRef, course[0])
+        });
+      }
+      catch (err) {
+        alert("Error Occured")
+      }
+      alert("Successfully Submitted")
+      setkey(key + 1)
+      setFile("")
+      setUrl("")
+      setProgress()
+    } else {
+      console.log("Course not found.");
+    }
+
   };
   const storageRef = ref(storage, `assignment/${file.name}`);
   const uploadFile = useCallback(async () => {
@@ -133,7 +152,7 @@ const Assignmentupload = () => {
       } catch (err) {
         console.log(err);
       }
-    }
+    } 
   };
   let [searchstate, setsearchstate] = useState('');
   let searchfun = (e) => {
@@ -150,7 +169,6 @@ const Assignmentupload = () => {
     sendSideBarState(showSideBar);
   }
   const time = course && new Date(course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000);
-  console.log(file)
 
   return (
     <div className="flex">
@@ -213,20 +231,7 @@ const Assignmentupload = () => {
             </div>
             <div>Submit Your Assignment</div>
             <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
-              <div className="md:w-[60%] mx-auto md:m-auto w-[80%]">
-                {/* <Controller
-                  control={control}
-                  name="profilePhoto"
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <IDdraganddrop
-                      setValue={setValue}
-                      name="file"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={file}
-                    />
-                  )}
-                /> */}
+              <form className="md:w-[60%] mx-auto md:m-auto w-[80%]" onSubmit={onSubmitHandler}>
                 <div className='w-full  flex justify-center'>
                   <div className='mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] '>
                     <input type='file' key={key} id='file' className='w-full h-full border-dashed border-2 rounded-xl bg-[#505057]' onChange={handleChange} hidden />
@@ -250,8 +255,10 @@ const Assignmentupload = () => {
                       <p className='text-white text-center text-xs mt-1'>
                         pdf, word document (max 2-5 MB)
                       </p>
-                      {file?.name}<br />
-                      {progressData && `${progressData}% done`}
+                      <p className='text-center'>
+                        {file?.name}<br />
+                        {progressData && `${progressData}% done`}
+                      </p>
                     </label>
                   </div>
                 </div>
@@ -272,7 +279,10 @@ const Assignmentupload = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+                <div class="flex justify-center">
+                  <button type="submit" class="md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline">Submit Assignment</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
