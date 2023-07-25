@@ -43,7 +43,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
           );
 
           if (fuid === friendUid) {
-            chat.name = friend.name.first + " " + friend.name.middle + " " + friend.name.last;
+            chat.name = friend?.name?.first + " " + friend?.name?.middle + " " + friend?.name?.last;
             chat.photoURL = friend.photoURL;
           }
           return chat;
