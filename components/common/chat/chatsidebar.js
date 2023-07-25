@@ -43,7 +43,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
           );
 
           if (fuid === friendUid) {
-            chat.name = friend.name.first + " " + friend.name.middle + " " + friend.name.last;
+            chat.name = friend.displayName;
             chat.photoURL = friend.photoURL;
           }
           return chat;
@@ -107,7 +107,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
 
   return (
     <div
-      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6`}
+      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6 overflow-hidden`}
 
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
@@ -127,7 +127,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
         <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize: "25px" }} />
       </div>
 
-      <div className="sideBarContainer flex  flex-col gap-4 relative">
+      <div className="sideBarContainer overflow-hidden flex flex-1  flex-col gap-4 relative">
         <div className=" ">
           <ul className="flex mb-6 justify-evenly">
             <li>
@@ -182,8 +182,9 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
           </ul>
         </div>
 
-        <div className="flex flex-col">
-          {/* using map dynamically populate this */}
+        {/* <div className="flex-1  overflow-auto"> */}
+        {/* using map dynamically populate this */}
+        <div className="flex flex-1 flex-col overflow-auto no-scrollbar h-full">
           {users.map((user, i) => (
             <SideBarCard
               key={user.groupId}
@@ -196,6 +197,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
             />
           ))}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

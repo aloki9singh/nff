@@ -106,7 +106,7 @@ const Chat = () => {
           (uid) => uid !== auth.currentUser.uid
         );
         const friend = newReceiver.members[friendUid];
-        newReceiver.name = friend.name.first + " " + friend.name.last;
+        newReceiver.name = friend.displayName;
         newReceiver.photoURL = friend.photoURL;
         newReceiver.username = friend.username;
         newReceiver.studentPhoneNo = friend.studentPhoneNo;
