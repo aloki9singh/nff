@@ -65,7 +65,7 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
       }}
     >
 
-      <Avatar alt="Profile-Picture" src={chat.photoURL || '/componentsgraphics/common/chatting/user/profile.svg'} />
+      <Avatar alt="Profile-Picture" src={chat.photoURL || '/componentsgraphics/common/Anonymousimage/anonymous.png'} />
 
       <div className="flex flex-col flex-1 items-start overflow-hidden">
         <h1 className=" truncate w-4/5 " >{chat.name}</h1>
@@ -107,7 +107,7 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
 
   return (
     <div
-      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6 overflow-hidden`}
+      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-xs rounded-[1rem] gap-6 overflow-hidden`}
 
       style={{ backgroundColor: "#373A41", color: "white" }}
     >

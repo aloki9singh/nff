@@ -88,8 +88,8 @@ export const AudioPlayer = ({ src }) => {
       >
         {isPlaying ? <BsPauseFill /> : <BsPlayFill />}
       </button>
-      <div id={`waveform-${randomId.current}`} className="h-10 w-32"></div>
-      <div className="text-gray-600 text-sm">{formatTime(currentTime)}</div>
+      <div id={`waveform-${randomId.current}`} className="h-10 w-20 xl:w-32"></div>
+      <div className="text-gray-600 text-xs xl:text-sm">{formatTime(currentTime)}</div>
     </div>
   );
 };
