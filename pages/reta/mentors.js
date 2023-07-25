@@ -19,7 +19,10 @@ function AdminStudent() {
   const [filterStudent, setFilterStudent] = useState();
   const [filterMentor, setFilterMentor] = useState();
   let [searchstate, setsearchstate] = useState();
+
   const router = useRouter();
+
+
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
@@ -30,6 +33,7 @@ function AdminStudent() {
   const [activeTab, setActiveTab] = useState("mentor");
   const [student, setStudent] = useState([]);
   const [mentor, setMentor] = useState([]);
+  const [numberOfPages, setNumberOfPages] = useState();
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -42,15 +46,15 @@ function AdminStudent() {
     }
     setStudent(
       filterStudent &&
-        filterStudent.filter((ele) => {
-          return ele.displayName.includes(searchstate);
-        })
+      filterStudent.filter((ele) => {
+        return ele.displayName.includes(searchstate);
+      })
     );
     setMentor(
       filterMentor &&
-        filterMentor.filter((ele) => {
-          return ele.displayName.includes(searchstate);
-        })
+      filterMentor.filter((ele) => {
+        return ele.displayName.includes(searchstate);
+      })
     );
   }, [searchstate, isMediumScreen]);
 
@@ -89,6 +93,15 @@ function AdminStudent() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   function handleClick(e) {
+
+    let totalPage;
+    if (activeTab === "student") {
+      totalPage = Math.ceil(student?.length / 10) + 1;
+    }
+    else {
+      totalPage = Math.ceil(mentor?.length / 10)+1;
+    }
+
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
         if (count < totalPage) {
@@ -116,6 +129,27 @@ function AdminStudent() {
         break;
     }
   }
+
+
+
+  const getTotalPages = ()=>{
+    let totalPage;
+    if (activeTab === "student") {
+      totalPage = Math.ceil(student?.length / 10) + 1;
+    }
+    else {
+      totalPage = Math.ceil(mentor?.length / 10)+1;
+    }
+    // console.log(totalPage, "stdunet");
+    console.log("mentor has", totalPage)
+    setNumberOfPages(totalPage)
+  }
+
+  useEffect(() => {
+    getTotalPages();   
+
+  })
+
   return (
     <>
       <div className="h-full text-base bg-[#2E3036]  ">
@@ -123,9 +157,8 @@ function AdminStudent() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -145,9 +178,8 @@ function AdminStudent() {
 
             <div className="flex gap-2 mt-10">
               <div
-                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
-                  activeTab === "mentor" ? "cursor-pointer underline" : ""
-                }`}
+                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${activeTab === "mentor" ? "cursor-pointer underline" : ""
+                  }`}
                 onClick={() => handleTabClick("mentor")}
               >
                 Mentor : {mentor?.length}
@@ -158,9 +190,8 @@ function AdminStudent() {
               </span>
 
               <div
-                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${
-                  activeTab === "student" ? "cursor-pointer underline" : ""
-                }`}
+                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${activeTab === "student" ? "cursor-pointer underline" : ""
+                  }`}
                 onClick={() => handleTabClick("student")}
               >
                 Student : {student?.length}
@@ -463,8 +494,8 @@ function AdminStudent() {
                               </p>
                             )}
                           </td>
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer" 
-                          onClick={()=> router.push({pathname: "/reta/mentorprofile", query:{uid: e.uid}})}>
+                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
+                            onClick={() => router.push({ pathname: "/reta/mentorprofile", query: { uid: e.uid } })}>
                             View Profile
                           </td>
                         </tr>
@@ -474,7 +505,7 @@ function AdminStudent() {
               </div>
 
               {/* pagination */}
-              <div className="w-60 h-10  lg:bottom-0 mx-10 my-5 flex justify-center  items-center space-x-4">
+              <div className="w-60 h-10  lg:bottom-0 mx-10 my-5 flex overflow-scroll md:overflow-visible items-center space-x-4">
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="back"
@@ -495,27 +526,20 @@ function AdminStudent() {
                     />
                   </svg>
                 </button>
-                <button
-                  className={count == 1 ? activeTabClass : tabClass}
-                  name="1"
-                  onClick={handleClick}
-                >
-                  1
-                </button>
-                <button
-                  className={count == 2 ? activeTabClass : tabClass}
-                  name="2"
-                  onClick={handleClick}
-                >
-                  2
-                </button>
-                <button
-                  className={count == 3 ? activeTabClass : tabClass}
-                  name="3"
-                  onClick={handleClick}
-                >
-                  3
-                </button>
+
+
+                {Array.from({ length: numberOfPages }, (_, index) => (
+                  <button
+                    className={`${(count == (index + 1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                        `}
+                    name={index + 1}
+                    onClick={handleClick}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+
+
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="fwd"

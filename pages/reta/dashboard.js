@@ -135,7 +135,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         className='bg-[#B26ED3] md:w-[150px] w-[120px] md:h-[200px] h-[150px] rounded m-auto p-2 space-y-2 flex flex-col justify-around hover:border-[2px] cursor-pointer'
-                        onClick={() => router.push('addTeam')}>
+                        onClick={() => router.push('addteam')}>
                         <div className='flex justify-center align-middle'>
                           <Image
                             alt='Icon'
