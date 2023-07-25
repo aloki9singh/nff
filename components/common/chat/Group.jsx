@@ -151,9 +151,9 @@ const GroupDetails = ({
       >
         <DescIcon className="text-white" />
         {/* set line clamp 2 */}
-        <p className="text-sm line-clamp-2 ">{
-          desc || "No description available"
-        }</p>
+        <p className="text-sm line-clamp-2 ">
+          {desc || "No description available"}
+        </p>
       </div>
 
       <div
@@ -199,11 +199,14 @@ const GroupDetails = ({
                 <Avatar
                   height={32}
                   width={32}
-                  src={member.photoURL || profileImage}
+                  src={
+                    member.photoURL ||
+                    "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                  }
                   alt="profile-avatar"
                 />
                 <div className="flex flex-col items-start ml-[10px]">
-                  <p className="">{getUserName(member)}</p>
+                  <p className="">{member.displayName}</p>
                   <p className="text-xs opacity-50">
                     {member.uid === user?.uid ? "You" : "Online"}
                   </p>

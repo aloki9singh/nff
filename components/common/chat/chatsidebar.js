@@ -74,7 +74,7 @@ const SideBarCard = ({
         alt="Profile-Picture"
         src={
           chat.photoURL ||
-          "/componentsgraphics/common/chatting/user/profile.svg"
+          "/componentsgraphics/common/Anonymousimage/anonymous.png"
         }
       />
 
@@ -123,7 +123,7 @@ const Sidebar = ({
     <div
       className={` ${
         currReciever ? "hidden md:flex" : "flex"
-      } flex-col w-full md:w-auto md:max-w-sm rounded-[1rem] gap-6 overflow-hidden`}
+      } flex-col w-full md:w-auto md:max-w-xs rounded-[1rem] gap-6 overflow-hidden`}
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
       <div

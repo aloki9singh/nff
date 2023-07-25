@@ -5,7 +5,7 @@ import React from "react";
 function Avatar({ src, alt, height = 40, width = 40 }) {
   return (
     <Image
-      src={src}
+      src={src || "/componentsgraphics/common/Anonymousimage/anonymous.png"}
       alt={alt}
       width={100}
       height={100}
