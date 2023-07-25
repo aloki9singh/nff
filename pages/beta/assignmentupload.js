@@ -43,6 +43,7 @@ const Assignmentupload = () => {
   const [progressData, setProgress] = useState()
   const [url, setUrl] = useState()
   const [key, setkey] = useState()
+  const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -60,6 +61,11 @@ const Assignmentupload = () => {
         const querySnapshot = await getDocs(q);
         const arr = [];
         querySnapshot.forEach((doc) => {
+          setSubmitted(doc.data().files.map((ele) => {
+            if (ele.submittedby == user.uid) {
+              return true
+            }
+          }))
           arr.push(doc.data());
         });
 
@@ -73,7 +79,6 @@ const Assignmentupload = () => {
     }
   }
 
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     course[0].file = url
@@ -85,7 +90,8 @@ const Assignmentupload = () => {
     const courseInfo = await getDoc(courseRef);
     const data = {
       submittedby: user.uid,
-      file: url
+      file: url,
+      date: new Date()
     }
     files.push(data)
     course[0].files = files
@@ -152,7 +158,7 @@ const Assignmentupload = () => {
       } catch (err) {
         console.log(err);
       }
-    } 
+    }
   };
   let [searchstate, setsearchstate] = useState('');
   let searchfun = (e) => {
@@ -280,7 +286,7 @@ const Assignmentupload = () => {
                   </div>
                 </div>
                 <div class="flex justify-center">
-                  <button type="submit" class="md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline">Submit Assignment</button>
+                  <button type="submit" class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"}] rounded-lg focus:shadow-outline`} disabled={submitted}>{submitted ? "You have already Submitted" : "Submit Assignment"}</button>
                 </div>
               </form>
             </div>
