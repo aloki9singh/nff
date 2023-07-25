@@ -12,7 +12,7 @@ import { useAuthContext } from '@/lib/context/AuthContext';
 import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
 import HomeWorkCard from '@/components/mentor/homework/homeworkcard';
 import UploadCard from '@/components/mentor/homework/uploadcard';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDoc, getDocs, doc, query, where } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 
 function Homework() {
@@ -33,16 +33,37 @@ function Homework() {
     const [dataFetched, setDataFetched] = useState(false);
     const [activeElement, setActiveElement] = useState('');
     const [activeCourse, setActive] = useState()
-
+    const { uid, courseid } = router.query
+    const [mentor, setMentor] = useState()
     const handleToggleElement = element => {
         setActiveElement(element);
     };
+    const [files, setFiles] = useState()
     const getData = async () => {
         if (!dataFetched) {
-            const courseCollection = collection(db, "courses");
-            const courseInfo = await getDocs(courseCollection);
-            const courseData = courseInfo.docs.map((doc) => doc.data());
-            console.log(courseData)
+            const courseRef = doc(db, "courses", courseid);
+            const courseInfo = await getDoc(courseRef);
+            const mentorColl = doc(db, "allusers", courseInfo.data().MentorId[0])
+            const userData = await getDoc(mentorColl)
+            setMentor(userData.data().displayName)
+            if (courseInfo.exists()) {
+                try {
+                    const assignmentRef = collection(courseRef, "assignment");
+                    const q = query(assignmentRef, where("id", "==", uid));
+                    const querySnapshot = await getDocs(q);
+                    const arr = [];
+                    querySnapshot.forEach((doc) => {
+                        arr.push(doc.data());
+                    });
+                    console.log(arr)
+                    setFiles(arr)
+                }
+                catch (err) {
+                    alert("Error occured")
+                }
+            } else {
+                console.log("Course not found.");
+            }
             // setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
             setDataFetched(true);
         }
@@ -98,13 +119,37 @@ function Homework() {
                         <div className=' font-semibold  text-lg text-white  mt-10 ml-20'>
                             Files
                         </div>
-
-                        <div className='   w-full  p-4 md:p-8 border border-[#5F6065]  mt-11 rounded-xl  flex flex-col  mb-5'>
-                            <div className='grid md:grid-cols-4n grid-cols-1 gap-4 m-5'>
-                                <div className='shrink-0 rounded-2xl shadow-lg bg-[#141518] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col w-full md:w-auto text-white   '>
+                        <div className='w-full  p-4 md:p-8 border border-[#5F6065]  mt-11 rounded-xl  flex flex-col  mb-5'>
+                            <div className='grid grid-cols-4 gap-4 m-5'>
+                                {files && files.map((ele) => {
+                                    return ele.files.map((e) => {
+                                        const time = new Date(e?.date.seconds * 1000 + e?.date.nanoseconds / 1000000);
+                                        return (
+                                            <div className='shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white' onClick={() => router.push("/meta/homework/file")}>
+                                                <div className='flex items-center justify-between'>
+                                                    <div>
+                                                        <Image src="/componentsgraphics/mentor/FolderNotch.svg" width={65} height={65} />
+                                                    </div>
+                                                    <div>
+                                                        Pending
+                                                    </div>
+                                                </div>
+                                                <div className='flex flex-col h-full justify-between overflow-hidden'>
+                                                    <div className='text-xl '>
+                                                        {ele.title}
+                                                    </div>
+                                                    <div className='flex items-center justify-between pt-4'>
+                                                        <div>{mentor}</div>
+                                                        <div className='text-[#FFFFFF85]'>{time && time.toLocaleString()}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                    {/* <div className='shrink-0 rounded-2xl shadow-lg bg-[#141518] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col w-full md:w-auto text-white   '>
                                     <div className='flex items-center justify-between'>
                                         <div>
-                                            <Image src="/componentsgraphics/mentor/FolderNotch.svg" width={65} height={65} />
+                                            <Image src="/componentsgraphics/mentor/FolderNotch.svg" width={65} height={65}/>
                                         </div>
                                         <div>
                                             Pending
@@ -119,7 +164,8 @@ function Homework() {
                                             <div className='text-[#FFFFFF85]'>Date</div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+                                })}
                             </div>
                         </div>
                     </div>
