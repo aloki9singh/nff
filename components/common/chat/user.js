@@ -39,8 +39,7 @@ const User = ({ currReciever, setShowUser, setShowChat, images }) => {
         <Avatar
           alt="Profile-Picture"
           src={
-            currReciever?.photoURL ||
-            "/componentsgraphics/common/chatting/user/profile.svg"
+            currReciever?.photoURL
           }
           sx={{ height: 76, width: 76 }}
         />
