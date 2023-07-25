@@ -199,7 +199,7 @@ const GroupDetails = ({
                 <Avatar
                   height={32}
                   width={32}
-                  src={member.photoURL}
+                  src={member.photoURL || profileImage}
                   alt="profile-avatar"
                 />
                 <div className="flex flex-col items-start ml-[10px]">

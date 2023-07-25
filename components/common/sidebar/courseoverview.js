@@ -10,13 +10,13 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { BsPersonCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
-const CourseoverviewSidebar = ({ toggleSideBar }) => {
+const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
   // console.log(userProfile)
   return (
     <>
-      <aside className="md:bg-[#141518] max-h-screen bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between overflow-auto ">
+      <aside className={`md:bg-[#141518]  bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between overflow-auto ${className} `}>
         <div>
           <div>
             <div>
