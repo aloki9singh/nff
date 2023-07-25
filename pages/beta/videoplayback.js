@@ -213,9 +213,23 @@ function Videos() {
       joinedAt: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "courses", course.id), {
-      students: arrayUnion(user.uid),
-    });
+    const courseRef = doc(db, "courses", course.id);
+
+    // Get the current course document to check if the "students" field exists
+    const courseSnapshot = await getDoc(courseRef);
+    const courseData = courseSnapshot.data();
+
+    if (courseSnapshot.exists() && courseData.students) {
+      // If the "students" field exists, use arrayUnion to add the user.uid
+      await updateDoc(courseRef, {
+        students: arrayUnion(user.uid),
+      });
+    } else {
+      // If the "students" field does not exist or is not defined, create it with the user.uid as an array
+      await setDoc(courseRef, {
+        students: [user.uid],
+      }, { merge: true }); // Use merge: true to merge with existing data if the document already exists
+    }
 
     // const mentorRef = doc(db, "allusers", course.mentorid);
     // // const courseRef = doc(db, "courses", course.uid);
