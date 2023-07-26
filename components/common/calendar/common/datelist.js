@@ -1,8 +1,6 @@
-//need rechecking
-///getMonthNumber and  getDayFromDate are function from exportable function file file (431-455)
 import { getDayFromDate, getMonthNumber } from "@/lib/exportablefunctions";
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const Datelist = ({
   selectedDate,
@@ -67,98 +65,68 @@ const Datelist = ({
       22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
     ],
   };
+  let monthforCheck = monthData || currentMonth;
+  const [finalArr, setFinalArr] = useState(() => {
+    let fileDate = currentDate - 1;
+    let dayvar = currentDate - 1;
+    let monthforCheck = monthData || currentMonth;
 
-  let day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  let arr = [];
-  // let arr2 = [];
-  let fileDate = currentDate - 1;
-  let dayvar = currentDate - 1;
-  let monthforCheck = monthData ? monthData : currentMonth;
-  // console.log(monthforCheck);
-  // console.log(months[monthforCheck]);
-  //  console.log(monthData,currentMonth,currentYear);
-  for (let i = 0; i < 14 && months[monthforCheck].length > fileDate; i++) {
-    fileDate++;
-    dayvar++;
-    if (dayvar === 7) {
-      dayvar = dayvar - 7;
-    }
-    arr = [...arr, [fileDate, dayvar]];
-  }
-  //
-  let fileDate2 = 0;
-  let monthforCheck2 = monthData ? monthData : currentMonth;
-  // for (let i = 0; months[monthforCheck2].length > fileDate2; i++) {
-  //   fileDate2++;
-  //   arr2 = [...arr2, [fileDate2]];
-  // }
-  //
-  selectedDate(currentDate);
-
-  let [finalArr, setfinalArr] = useState(arr.slice());
-  useEffect(() => {
-    setfinalArr(arr.slice());
-  }, [monthData]);
-  useEffect(() => {
-    selectedDate(currentDate);
-    document.getElementById(currentDate).style = "background: #E1348B";
-  }, [currentDate, currentMonth]);
-  let dateSelect = (e) => {
-    // console.log("This is e", e.target.id);
-    let days = document.querySelectorAll(".day");
-    e.target.style = "background: #E1348B";
-    if (document.getElementById(selectedDate)) {
-      document.getElementById(selectedDate).style = "background:none";
-    } else {
-      for (let i = 0; i < days.length; i++) {
-        days[i].style = "background:none";
+    let arr = [];
+    for (let i = 0; i < 14 && months[monthforCheck].length > fileDate; i++) {
+      fileDate++;
+      dayvar++;
+      if (dayvar === 7) {
+        dayvar = 0;
       }
+      arr.push([fileDate, dayvar]);
     }
+    return arr;
+  });
+  const memoizedSelectedDate = useCallback(selectedDate, [selectedDate]);
+
+  useEffect(() => {
+    memoizedSelectedDate(currentDate);
+    const currentElement = document.getElementById(currentDate);
+    if (currentElement) {
+      currentElement.style.background = "#E1348B";
+    }
+  }, [currentDate, currentMonth, memoizedSelectedDate]);
+
+  const dateSelect = (e) => {
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => (day.style = "background:none"));
     e.target.style = "background: #E1348B";
     selectedDate(e.target.id);
   };
-  let dateShifLeft = () => {
-    setfinalArr((prev) => {
-      let prevArr = prev.slice();
-      for (let i = 0; i < prev.length; i++) {
-        let date = prevArr[i][0] - 1;
-        let day = prevArr[i][1] - 1;
-        if (date > 0) {
-          if (day < 0) {
-            day = day + 7;
-          }
-          prevArr[i][0] = date;
-          prevArr[i][1] = day;
+
+  const dateShifLeft = () => {
+    setFinalArr((prev) =>
+      prev.map(([date, day]) => {
+        date = date - 1;
+        if (day === 0) {
+          day = 6;
         } else {
-          break;
+          day = day - 1;
         }
-      }
-      return prevArr;
-    });
+        return [date, day];
+      })
+    );
   };
 
-  let dateShifRight = () => {
-    setfinalArr((prev) => {
-      let prevArr = prev.slice();
-      let last = prevArr[prev.length - 1][0];
-
-      for (let i = 0; i < prev.length; i++) {
-        let date = prevArr[i][0] + 1;
-        let day = prevArr[i][1] + 1;
-        if (months[monthforCheck].length > last) {
-          if (day > 6) {
-            day = day - 7;
-          }
-          prevArr[i][0] = date;
-          prevArr[i][1] = day;
+  const dateShifRight = () => {
+    setFinalArr((prev) =>
+      prev.map(([date, day]) => {
+        date = date + 1;
+        if (day === 6) {
+          day = 0;
         } else {
-          break;
+          day = day + 1;
         }
-      }
-      return prevArr;
-    });
+        return [date, day];
+      })
+    );
   };
-  // console.log(day);
+
   return (
     <>
       <div className="grid grid-cols-12">
@@ -169,33 +137,34 @@ const Datelist = ({
           alt="back"
           width={30}
           height={30}
-        ></Image>
-        <div className=" flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide text-[17px] text-white">
-          {finalArr.map((val, index) => {
-            return (
-              <div
-                key={index}
-                id={val[0]}
-                className=" w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center day cursor-pointer"
-                onClick={dateSelect}
-              >
-                {/* <p className="actualdate"> */}
-                {val[0] == 0 ? "" : val[0]}
-
-                {"\n"}
-
-                {val[0] == 0
-                  ? ""
-                  : getDayFromDate(
-                      currentYear +
-                        "-" +
-                        getMonthNumber(monthforCheck) +
-                        "-" +
-                        val[0]
-                    ).slice(0, 3)}
-              </div>
-            );
-          })}
+        />
+        <div className="flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide text-[17px] text-white">
+          {finalArr.map(([date, day], index) => (
+            <div
+              key={index}
+              id={date}
+              className="w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center day cursor-pointer"
+              onClick={dateSelect}
+              style={{
+                background:
+                  date === 0
+                    ? "none"
+                    : date == currentDate
+                    ? "#E1348B"
+                    : "none",
+              }}
+            >
+              {date !== 0 && (
+                <>
+                  {date}
+                  {"\n"}
+                  {getDayFromDate(
+                    `${currentYear}-${getMonthNumber(monthforCheck)}-${date}`
+                  ).slice(0, 3)}
+                </>
+              )}
+            </div>
+          ))}
         </div>
         <Image
           className="place-self-center justify-self-center col-span-1"
@@ -204,7 +173,7 @@ const Datelist = ({
           alt="next"
           width={30}
           height={30}
-        ></Image>
+        />
       </div>
     </>
   );

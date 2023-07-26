@@ -1,4 +1,4 @@
-import { AssignmentsCollection } from '../../../config/firebaseConfig';
+import { AssignmentsCollection } from '@/config/firebaseConfig';
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref } from 'firebase/storage';
 

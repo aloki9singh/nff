@@ -1,7 +1,7 @@
 import {
     auth,
     mentorsSchedduleCollection,
-  } from "../../../config/firebaseConfig";
+  } from "@/config/firebaseConfig";
   import {
     addDoc,
     deleteDoc,
