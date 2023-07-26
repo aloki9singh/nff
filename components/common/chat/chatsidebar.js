@@ -12,18 +12,21 @@ const messageDetails = {
   time: "10:00pm",
 };
 
-
-const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setChats, setShowChat }) => {
-  const time = chat.lastMessageTimestamp
-    ?.toDate()
-    .toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
+const SideBarCard = ({
+  currReciever,
+  setCurrReciever,
+  noOfMessages,
+  chat,
+  setChats,
+  setShowChat,
+}) => {
+  const time = chat.lastMessageTimestamp?.toDate().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 
   useEffect(() => {
-
     if (chat.isGroup || chat.isGroup === undefined) {
       return;
     }
@@ -33,21 +36,24 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
         (uid) => uid !== auth.currentUser.uid
       );
       getUserProfile(friendUid).then((friend) => {
-        setChats(prev => prev.map((chat) => {
-          if (chat.isGroup) return chat;
+        setChats((prev) =>
+          prev.map((chat) => {
+            if (chat.isGroup) return chat;
 
-          if (!friend) return chat;
+            if (!friend) return chat;
 
-          const fuid = chat.members.find(
-            (uid) => uid !== auth.currentUser.uid
-          );
+            const fuid = chat.members.find(
+              (uid) => uid !== auth.currentUser.uid
+            );
 
-          if (fuid === friendUid) {
-            chat.name = friend.displayName;
-            chat.photoURL = friend.photoURL;
-          }
-          return chat;
-        }))
+            if (fuid === friendUid) {
+              chat.name = friend.displayName;
+
+              chat.photoURL = friend.photoURL;
+            }
+            return chat;
+          })
+        );
       });
     }
   }, [chat, setChats]);
@@ -64,11 +70,16 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
         setShowChat(true);
       }}
     >
-
-      <Avatar alt="Profile-Picture" src={chat.photoURL || '/componentsgraphics/common/Anonymousimage/anonymous.png'} />
+      <Avatar
+        alt="Profile-Picture"
+        src={
+          chat.photoURL ||
+          "/componentsgraphics/common/Anonymousimage/anonymous.png"
+        }
+      />
 
       <div className="flex flex-col flex-1 items-start overflow-hidden">
-        <h1 className=" truncate w-4/5 " >{chat.name}</h1>
+        <h1 className=" truncate w-4/5 ">{chat.name}</h1>
         <p className="text-sm text-white/50">{chat.lastMessage}</p>
       </div>
       <div className="flex flex-col justify-end items-center">
@@ -84,14 +95,19 @@ const SideBarCard = ({ currReciever, setCurrReciever, noOfMessages, chat, setCha
   );
 };
 
-const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }) => {
+const Sidebar = ({
+  currReciever,
+  setCurrReciever,
+  chats,
+  setChats,
+  setShowChat,
+}) => {
   const [activeLink, setActiveLink] = useState("all");
   const [searchUser, setSearchUser] = useState("");
   const [users, setUsers] = useState(chats);
   useEffect(() => {
     setUsers(chats);
   }, [chats]);
-
 
   const handleChange = (e) => {
     const val = e.target.value;
@@ -100,15 +116,14 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
       user.name?.toLowerCase().startsWith(val.toLowerCase())
     );
     if (val.length === 0) setUsers(chats);
-
     else setUsers(filteredUsers);
-
   };
 
   return (
     <div
-      className={` ${currReciever ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-auto md:max-w-xs rounded-[1rem] gap-6 overflow-hidden`}
-
+      className={` ${
+        currReciever ? "hidden md:flex" : "flex"
+      } flex-col w-full md:w-auto md:max-w-xs rounded-[1rem] gap-6 overflow-hidden`}
       style={{ backgroundColor: "#373A41", color: "white" }}
     >
       <div
@@ -124,7 +139,9 @@ const Sidebar = ({ currReciever, setCurrReciever, chats, setChats, setShowChat }
           onChange={(e) => handleChange(e)}
           style={{ backgroundColor: "#505057", color: "white" }}
         />
-        <MdSearch style={{ color: "white", marginLeft: "0.8rem", fontSize: "25px" }} />
+        <MdSearch
+          style={{ color: "white", marginLeft: "0.8rem", fontSize: "25px" }}
+        />
       </div>
 
       <div className="sideBarContainer overflow-hidden flex flex-1  flex-col gap-4 relative">

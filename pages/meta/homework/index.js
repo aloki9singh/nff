@@ -8,12 +8,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
 
-import { useAuthContext } from '@/lib/context/AuthContext';
-import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
-import HomeWorkCard from '@/components/mentor/homework/homeworkcard';
-import UploadCard from '@/components/mentor/homework/uploadcard';
-import { collection, getDocs, query, where, doc } from 'firebase/firestore';
-import { db } from '@/config/firebaseconfig';
+import { useAuthContext } from "@/lib/context/AuthContext";
+import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import HomeWorkCard from "@/components/mentor/homework/homeworkcard";
+import UploadCard from "@/components/mentor/homework/uploadcard";
+import { collection, getDocs, query, where, doc } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
 
 function Homework() {
   //set Below two for marked homework
@@ -35,7 +35,7 @@ function Homework() {
   const [activeElement, setActiveElement] = useState("active");
   const [activeCourse, setActive] = useState();
 
-  const handleToggleElement = element => {
+  const handleToggleElement = (element) => {
     setActiveElement(element);
   };
 
@@ -43,15 +43,15 @@ function Homework() {
     if (!dataFetched) {
       const q = query(
         collection(db, "courses"),
-        where("MentorId", "array-contains", user.uid),
+        where("MentorId", "array-contains", user.uid)
       );
       const courseInfo = await getDocs(q);
-      const arr = []
+      const arr = [];
       for (const doc of courseInfo.docs) {
         const docRef = doc.ref;
-        const collectionRef = collection(docRef, 'assignment');
+        const collectionRef = collection(docRef, "assignment");
         const querySnapshot = await getDocs(collectionRef);
-        arr.push(querySnapshot.docs.map((doc) => doc.data()))
+        arr.push(querySnapshot.docs.map((doc) => doc.data()));
       }
       setActive(arr);
       setDataFetched(true);
@@ -66,14 +66,14 @@ function Homework() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-    const unsubscribe = onAuthStateChanged(auth, async user => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
         setVerified(value?.user?.verified);
       }
     });
-    getData()
+    getData();
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen, dataFetched]);
 
@@ -88,7 +88,9 @@ function Homework() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden" }  h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              }  h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -121,10 +123,11 @@ function Homework() {
                   <div className="flex">
                     <div onClick={() => handleToggleElement("active")}>
                       <span
-                        className={`border-b-2 ${activeElement === "active"
+                        className={`border-b-2 ${
+                          activeElement === "active"
                             ? "border-[#E1348B]"
                             : "border-transparent"
-                          }`}
+                        }`}
                       >
                         active
                       </span>
@@ -132,7 +135,7 @@ function Homework() {
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
                         {/* {activeCourse} */}
-                        {0}
+                        {activeCourse?.length}
                       </div>
                     </div>
                   </div>
@@ -141,13 +144,14 @@ function Homework() {
                     {" "}
                     <div>
                       <span
-                        className={`border-b-2 ${activeElement === "check"
+                        className={`border-b-2 ${
+                          activeElement === "check"
                             ? "border-[#E1348B]"
                             : "border-transparent"
-                          }`}
+                        }`}
                         onClick={() => handleToggleElement("check")}
                       >
-                        check
+                        checked
                       </span>
                     </div>
                     <div className="mr-2 cursor-pointer">
@@ -159,31 +163,44 @@ function Homework() {
                 </div>
               </div>
 
-              <div className='grid grid-cols-3 gap-4 m-5'>
-                {activeElement === 'active' ? (
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5">
+                {activeElement === "active" ? (
                   <>
-                    {activeCourse && activeCourse.map((e) => (
-                      e.map((ele) => {
-                        const date = new Date(ele.date.seconds * 1000 + ele.date.nanoseconds / 1000000);
-                        return (
-                          <div className='cursor-pointer' onClick={() => { router.push({pathname:`/meta/homework/${ele.id}`, query:{courseid: ele.courseid}}) }} key={ele.id}>
-                            <HomeWorkCard
-                              title={ele.title}
-                              desc={ele.module}
-                              date={date.toLocaleString().split(",")[0]}
-                              course={ele.course}
-                            />
-                          </div>
-                        )
-                      })
-                    ))}
+                    {activeCourse &&
+                      activeCourse.map((e) =>
+                        e.map((ele) => {
+                          const date = new Date(
+                            ele.date.seconds * 1000 +
+                              ele.date.nanoseconds / 1000000
+                          );
+                          return (
+                            <div
+                              className="cursor-pointer"
+                              onClick={() => {
+                                router.push({
+                                  pathname: `/meta/homework/${ele.id}`,
+                                  query: { courseid: ele.courseid },
+                                });
+                              }}
+                              key={ele.id}
+                            >
+                              <HomeWorkCard
+                                title={ele.title}
+                                desc={ele.module}
+                                date={date.toLocaleString().split(",")[0]}
+                                course={ele.course}
+                              />
+                            </div>
+                          );
+                        })
+                      )}
                     <UploadCard />
                   </>
                 ) : (
                   <>
+                    {/* <HomeWorkCard title='Course 2' desc='Description 2' />
                     <HomeWorkCard title='Course 2' desc='Description 2' />
-                    <HomeWorkCard title='Course 2' desc='Description 2' />
-                    <HomeWorkCard title='Course 2' desc='Description 2' />
+                    <HomeWorkCard title='Course 2' desc='Description 2' /> */}
                     <UploadCard />
                   </>
                 )}
