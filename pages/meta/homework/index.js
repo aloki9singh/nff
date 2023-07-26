@@ -163,7 +163,7 @@ function Homework() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5">
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 min-h-screen ">
                 {activeElement === "active" ? (
                   <>
                     {activeCourse &&
@@ -236,4 +236,4 @@ function Homework() {
   );
 }
 
-export default Homework;
+export default withMentorAuthorization(Homework);
