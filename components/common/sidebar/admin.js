@@ -341,7 +341,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
                           />{' '}
                           <span
                             className={`ml-3 flex text-[${
-                              router.pathname == '/reta/logout' ? '#E1348B' : ''
+                              router.pathname == '' ? '#E1348B' : ''
                             }]`}>
                             Logout
                           </span>

@@ -83,43 +83,6 @@ function Assignments() {
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
-  let Assignments = [
-    {
-      no: 1,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 2,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 3,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 4,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 5,
-      module: 0,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-  ];
 
   if (!user || !userProfile) {
     return null;
@@ -172,13 +135,14 @@ function Assignments() {
             </div>
 
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
-              <div className="lg:grid lg:grid-cols-11 h-full">
+              <div className="lg:grid lg:grid-cols-11 h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
-                  {
+                 <div className="overflow-scroll scrollbar-hide">
+                 {
                     course && course.map((e, i) => {
                       return e.map((ele, j) => {
                         return (
@@ -192,6 +156,7 @@ function Assignments() {
                       })
                     })
                   }
+                 </div>
                   {/* <div
                   className={module == 0 ? Activestyle : Inactivestyle}
                   onClick={() => setModule(0)}e.preventDefault() 
@@ -229,7 +194,7 @@ function Assignments() {
                   <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
                     Files
                   </div>
-                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3 overflow-scroll scrollbar-hide">
                     {
                       course && course.map((e, i) => {
                         return e.map((ele, j) => {

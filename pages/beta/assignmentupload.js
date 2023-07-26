@@ -192,13 +192,13 @@ const Assignmentupload = () => {
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
       )}
-      <div className="flex-grow md:bg-[#2E3036] bg-[#141518]">
+      <div className="flex-grow bg-[#2E3036]">
         {/* <StudentTopbar heading={"My Progress"} /> */}
         <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
           <Dashboardnav heading="Homework" toggleSideBar={toggleSideBar} />
         </div>
 
-        <div className="md:h-screen bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
+        <div className=" bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {' '}
@@ -210,7 +210,7 @@ const Assignmentupload = () => {
             <hr className="hidden lg:block opacity-50 m-3"></hr>
           </div>
 
-          <div className="my-10 mx-8 space-y-8 md:mx-20 md:ml-30">
+          <div className="my-10 mx-8 space-y-8 md:mx-20 md:ml-30 overflow-scroll scrollbar-hide ">
             <div className="">
               <div className="flex space-x-5 relative">
                 <Image
