@@ -46,34 +46,7 @@ function Homework() {
     setActiveElement(element);
   };
   const [files, setFiles] = useState([]);
-  const getData = async () => {
-    if (!dataFetched) {
-      const courseRef = doc(db, "courses", courseid);
-      const courseInfo = await getDoc(courseRef);
-      const mentorColl = doc(db, "allusers", courseInfo.data().MentorId[0]);
-      const userData = await getDoc(mentorColl);
-      setMentor(userData.data().displayName);
-      if (courseInfo.exists()) {
-        try {
-          const assignmentRef = collection(courseRef, "assignment");
-          const q = query(assignmentRef, where("id", "==", uid));
-          const querySnapshot = await getDocs(q);
-          const arr = [];
-          querySnapshot.forEach((doc) => {
-            arr.push(doc.data());
-          });
-          console.log(arr);
-          setFiles(arr);
-        } catch (err) {
-          alert("Error occured");
-        }
-      } else {
-        console.log("Course not found.");
-      }
-      // setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
-      setDataFetched(true);
-    }
-  };
+  
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -89,9 +62,38 @@ function Homework() {
         setVerified(value.user?.verified);
       }
     });
+
+    const getData = async () => {
+      if (!dataFetched) {
+        const courseRef = doc(db, "courses", courseid);
+        const courseInfo = await getDoc(courseRef);
+        const mentorColl = doc(db, "allusers", courseInfo.data().MentorId[0]);
+        const userData = await getDoc(mentorColl);
+        setMentor(userData.data().displayName);
+        if (courseInfo.exists()) {
+          try {
+            const assignmentRef = collection(courseRef, "assignment");
+            const q = query(assignmentRef, where("id", "==", uid));
+            const querySnapshot = await getDocs(q);
+            const arr = [];
+            querySnapshot.forEach((doc) => {
+              arr.push(doc.data());
+            });
+            console.log(arr);
+            setFiles(arr);
+          } catch (err) {
+            alert("Error occured");
+          }
+        } else {
+          console.log("Course not found.");
+        }
+        // setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
+        setDataFetched(true);
+      }
+    };
     getData();
     return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen, dataFetched]);
+  }, [isMediumScreen, dataFetched, courseid, uid]);
 
   // if (!verified) {
   //   return null;
@@ -131,13 +133,14 @@ function Homework() {
               {files ? (
                 <div className="grid md:grid-cols-4  grid-cols-1 gap-4 m-5">
                   {files &&
-                    files?.map((ele) => {
+                    files?.map((ele, i) => {
                       return ele?.files?.map((e) => {
                         const time = new Date(
                           e?.date.seconds * 1000 + e?.date.nanoseconds / 1000000
                         );
                         return (
                           <div
+                            key={i}
                             className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
                             onClick={() => router.push("/meta/homework/file")}
                           >
@@ -147,6 +150,7 @@ function Homework() {
                                   src="/componentsgraphics/mentor/FolderNotch.svg"
                                   width={65}
                                   height={65}
+                                  alt="Folder "
                                 />
                               </div>
                               <div>Pending</div>

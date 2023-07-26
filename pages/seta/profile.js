@@ -18,17 +18,18 @@ function MentorProfile() {
   const router = useRouter();
   const [profile, setProfile] = useState()
   const [edit, setEdit] = useState(false)
-  const getData = async () => {
-    const usersCollection = collection(db, "allusers");
-    const q = doc(usersCollection, user.uid)
-    const querySnapshot = await getDoc(q);
-    if (!querySnapshot.empty) {
-      setProfile(querySnapshot.data());
-    }
-  }
+  
   useEffect(() => {
+    const getData = async () => {
+      const usersCollection = collection(db, "allusers");
+      const q = doc(usersCollection, user.uid)
+      const querySnapshot = await getDoc(q);
+      if (!querySnapshot.empty) {
+        setProfile(querySnapshot.data());
+      }
+    }
     getData()
-  }, [getData])
+  }, [user])
   const handleChange = (e) => {
     e.preventDefault()
     setProfile({ ...profile, [e.target.name]: e.target.value })
@@ -38,6 +39,8 @@ function MentorProfile() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const { user } = useAuthContext()
+
+  
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

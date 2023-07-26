@@ -18,37 +18,44 @@ const MentorProfile = () => {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
 
-  const getData = async () => {
-    const usersCollection = collection(db, "allusers");
-    const q = doc(usersCollection, uid);
-    const querySnapshot = await getDoc(q);
-    if (!querySnapshot.empty) {
-      const documentData = querySnapshot.data();
-      setData(documentData);
-      console.log(documentData);
-    }
-  };
 
-  const getCourse = async () => {
-    const usersCollection = collection(db, "courses");
-    const q = query(
-      usersCollection,
-      where("title", "==", data?.details.interest)
-    );
-    const querySnapshot = await getDoc(q);
-    querySnapshot.forEach((doc) => {
-      const documentData = doc.data();
-      setId(documentData.uid);
-      console.log(documentData);
-    });
-  };
+  
 
   useEffect(() => {
+
+    const getData = async () => {
+      const usersCollection = collection(db, "allusers");
+      const q = doc(usersCollection, uid);
+      const querySnapshot = await getDoc(q);
+      if (!querySnapshot.empty) {
+        const documentData = querySnapshot.data();
+        setData(documentData);
+        console.log(documentData);
+      }
+    };
+
+
+    const getCourse = async () => {
+      const usersCollection = collection(db, "courses");
+      const q = query(
+        usersCollection,
+        where("title", "==", data?.details.interest)
+      );
+      const querySnapshot = await getDoc(q);
+      querySnapshot.forEach((doc) => {
+        const documentData = doc.data();
+        setId(documentData.uid);
+        console.log(documentData);
+      });
+    };
+
+
+
     getData();
     if (data.details) {
         getCourse();
       }
-  }, []);
+  }, [data, uid]);
   console.log(data);
   const handleChange = (e) => {
     e.preventDefault();
