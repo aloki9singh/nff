@@ -128,7 +128,6 @@ function MentorStudent() {
     setNumberOfPages(totalPage);
   }, [numberOfPages, courseData])
 
-  console.log(userProfile);
 
   userProfile.joinedStudents?.map((student) => {
     const joinDate = new Date(student.joinedAt?.seconds * 1000);
@@ -140,7 +139,6 @@ function MentorStudent() {
     }
   });
 
-  console.log(courseData);
 
   return (
     <>
