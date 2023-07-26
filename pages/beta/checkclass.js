@@ -47,9 +47,13 @@ function CheckClassSchedule() {
       unsubscribe();
     };
   }, [isMediumScreen]);
-  if (!us) {
-    return null;
-  }
+
+
+//  useEffect(() => {
+//     if (!us) {
+//       return null;
+//     }
+//   }, [us, selectedDate]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -59,15 +63,23 @@ function CheckClassSchedule() {
 
   return (
     <>
-      {!userSubsribed && (
+      {/* {!userSubsribed && (
         <ToastMessage
           heading={"Nothing is Scheduled!!"}
           message={
             "You have not joined any courses yet. Please join a course to access the Schedule."
           }
         />
-      )}
-      <div className={`h-screen w-full text-base ${!userSubsribed ? "blur-lg" : null}`}>
+      )} */}
+      <div className={`h-screen w-full text-base 
+      
+    
+    
+    }`
+    
+    }
+      
+      >
         <div className="flex bg-[#141518] ">
           {isMobileScreen && (
             <div

@@ -2,7 +2,7 @@
 import { RxCounterClockwiseClock, RxCross2 } from "react-icons/rx";
 import { useEffect, useState } from "react";
 
-export default Studentschedulepop = ({ hidefun, popupValue, displayname }) => {
+const  Studentschedulepop = ({ hidefun, popupValue }) => {
   const [meeting, setMeeting] = useState({
     link: "",
     disable: false,
@@ -101,3 +101,4 @@ export default Studentschedulepop = ({ hidefun, popupValue, displayname }) => {
     </>
   );
 };
+export default Studentschedulepop
