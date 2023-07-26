@@ -10,7 +10,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import SupportCard from "@/components/common/card/supportcard";
 
-const Studentdashboard = () => {
+const Helpandsupport = () => {
 	const { user, userProfile } = useAuthContext();
 	const [_, setVerified] = useState(false);
 	const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -326,4 +326,4 @@ const Studentdashboard = () => {
 	);
 };
 
-export default withStudentAuthorization(Studentdashboard);
+export default Helpandsupport;
