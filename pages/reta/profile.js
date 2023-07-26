@@ -12,7 +12,7 @@ import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 const options = ["8", "9", "10", "11", "12"];
 
-function studentProfile() {
+function StudentProfile() {
   const router = useRouter();
   const [studentData, setstudentData] = useState([]);
   const { uid } = router.query;
@@ -602,4 +602,4 @@ function studentProfile() {
     </div>
   );
 }
-export default withAdminAuthorization(studentProfile)
+export default withAdminAuthorization(StudentProfile)

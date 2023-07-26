@@ -38,33 +38,26 @@ export default function Students() {
       .then((response) => response.json())
       .then((data) => {
         const students = data.users.filter((ele) => ele.role === "student");
-        console.log(students)
+        console.log(students);
         setFilterData(students);
         setStudents(students);
       });
   }, []);
 
-
   const filterStudentData = useCallback(() => {
     return filterData.filter((ele) => ele.displayName.includes(searchstate));
   }, [filterData, searchstate]);
 
-  const filteredStudentData = useMemo(() => filterStudentData(), [
-    filterData,
-    filterStudentData,
-  ]);
+  const filteredStudentData = useMemo(
+    () => filterStudentData(),
+    [ filterStudentData]
+  );
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
     setStudents(filteredStudentData.slice(initialcount, gap));
-  }, [
-    isMediumScreen,
-    filteredStudentData,
-    initialcount,
-    gap,
-    setStudents
-  ]);
+  }, [isMediumScreen, filteredStudentData, initialcount, gap, setStudents]);
   useEffect(() => {
     fetchStudentData();
   }, [fetchStudentData]);
@@ -105,8 +98,9 @@ export default function Students() {
       {/* First Sidebar - Visible on Mobile */}
       {isMobileScreen && (
         <div
-          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-            } w-[281px] h-screen bg-[#25262C] rounded-l-[40px] z-10`}
+          className={`fixed right-0 ${
+            SideBarState ? "block" : "hidden"
+          } w-[281px] h-screen bg-[#25262C] rounded-l-[40px] z-10`}
         >
           <Schoolsidebar toggleSideBar={toggleSideBar} />
         </div>
@@ -212,7 +206,10 @@ export default function Students() {
             </div>
           </div>
           {/* table */}
-          <div className="mx-auto h-[712px] bg-[#373A41] w-[96%] max-[776px]:w-full rounded-[30px] border md:text-base text-xs mx-auto text-white" style={{marginTop: "20px"}}>
+          <div
+            className="mx-auto h-[712px] bg-[#373A41] w-[96%] max-[776px]:w-full rounded-[30px] border md:text-base text-xs mx-auto text-white"
+            style={{ marginTop: "20px" }}
+          >
             <div className="">
               <table className="w-full">
                 <thead className="items-center border-b">
@@ -235,9 +232,11 @@ export default function Students() {
                       >
                         <td className="flex items-center gap-2 w-[16.6%]">
                           <Image
-                            src={e.photoURL
-                              ? e.photoURL
-                              : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"}
+                            src={
+                              e.photoURL
+                                ? e.photoURL
+                                : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
+                            }
                             alt="img"
                             height={25}
                             width={25}
@@ -247,8 +246,12 @@ export default function Students() {
                         </td>
                         <td className="w-[16.6%] text-left">ID : {e.uid}</td>
                         <td className="w-[16.6%] text-center">{e.class}</td>
-                        <td className="md:block text-center hidden w-[16.6%]">{e.active}</td>
-                        <td className="md:block text-center hidden w-[16.6%]">{e.courses}</td>
+                        <td className="md:block text-center hidden w-[16.6%]">
+                          {e.active}
+                        </td>
+                        <td className="md:block text-center hidden w-[16.6%]">
+                          {e.courses}
+                        </td>
                         <td className="text-[#E1348B] pl-16 max-[1340px]:pl-8 max-[850px]:pl-0 w-[16.6%]">
                           <Link href={`/students/${e.id}`}>View Profile</Link>
                         </td>
@@ -259,8 +262,11 @@ export default function Students() {
             </div>
             {/* pagination */}
             <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
-              <button className="w-6 h-5 border flex justify-center items-center" name="back"
-                onClick={handleClick}>
+              <button
+                className="w-6 h-5 border flex justify-center items-center"
+                name="back"
+                onClick={handleClick}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -276,14 +282,32 @@ export default function Students() {
                   />
                 </svg>
               </button>
-              <button className={count == 1 ? activeTabClass : tabClass} name="1"
-                onClick={handleClick}>1</button>
-              <button className={count == 2 ? activeTabClass : tabClass} name="2"
-                onClick={handleClick}>2</button>
-              <button className={count == 3 ? activeTabClass : tabClass} name="3"
-                onClick={handleClick}>3</button>
-              <button className="w-6 h-5 border flex justify-center items-center" name="fwd"
-                onClick={handleClick}>
+              <button
+                className={count == 1 ? activeTabClass : tabClass}
+                name="1"
+                onClick={handleClick}
+              >
+                1
+              </button>
+              <button
+                className={count == 2 ? activeTabClass : tabClass}
+                name="2"
+                onClick={handleClick}
+              >
+                2
+              </button>
+              <button
+                className={count == 3 ? activeTabClass : tabClass}
+                name="3"
+                onClick={handleClick}
+              >
+                3
+              </button>
+              <button
+                className="w-6 h-5 border flex justify-center items-center"
+                name="fwd"
+                onClick={handleClick}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

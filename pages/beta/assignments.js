@@ -135,13 +135,13 @@ function Assignments() {
             </div>
 
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
-              <div className="lg:grid lg:grid-cols-11 h-screen">
+              <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
-                 <div className="overflow-scroll scrollbar-hide">
+                 <div className="max-h-screen  overflow-scroll scrollbar-hide">
                  {
                     course && course.map((e, i) => {
                       return e.map((ele, j) => {
@@ -157,36 +157,7 @@ function Assignments() {
                     })
                   }
                  </div>
-                  {/* <div
-                  className={module == 0 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(0)}e.preventDefault() 
-                  >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 1 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(1)}
-                >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 2 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(2)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 3 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(3)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 4 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(4)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div> */}
+        
                 </div>
 
                 {/* Assignments */}
@@ -194,7 +165,7 @@ function Assignments() {
                   <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
                     Files
                   </div>
-                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3 overflow-scroll scrollbar-hide">
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1 min-h-screen max-h-screen  overflow-scroll scrollbar-hide">
                     {
                       course && course.map((e, i) => {
                         return e.map((ele, j) => {

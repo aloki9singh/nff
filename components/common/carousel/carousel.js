@@ -10,7 +10,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const CarouselComp = ({ mentors }) => {
-
   return (
     <>
       <Swiper
@@ -24,9 +23,14 @@ const CarouselComp = ({ mentors }) => {
         className="h-[217px] md:w-0 md:h-0"
       >
         {mentors.map((e) => (
-          <SwiperSlide>
+          <SwiperSlide key={e.uid}>
             <div className="w-full h-full flex justify-center items-center">
-              <MentorCard key={e.uid} name={e.displayName} designation={e.details.interest} src={e.photoURL} />
+              <MentorCard
+                key={e.uid}
+                name={e.displayName}
+                designation={e.details.interest}
+                src={e.photoURL}
+              />
             </div>
           </SwiperSlide>
         ))}
@@ -42,9 +46,14 @@ const CarouselComp = ({ mentors }) => {
         className="h-0 w-0 md:w-auto md:h-[413px]"
       >
         {mentors.map((e) => (
-          <SwiperSlide>
+          <SwiperSlide key={e.uid}>
             <div className="w-full h-full flex justify-center items-center">
-              <MentorCard key={e.uid} name={e.displayName} designation={e.details.interest}  src={e.photoURL} />
+              <MentorCard
+                key={e.uid}
+                name={e.displayName}
+                designation={e.details.interest}
+                src={e.photoURL}
+              />
             </div>
           </SwiperSlide>
         ))}

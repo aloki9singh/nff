@@ -28,7 +28,7 @@ function MentorProfile() {
   }
   useEffect(() => {
     getData()
-  }, [])
+  }, [getData])
   const handleChange = (e) => {
     e.preventDefault()
     setProfile({ ...profile, [e.target.name]: e.target.value })
