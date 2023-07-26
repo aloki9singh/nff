@@ -3,11 +3,10 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 import { db } from "@/config/firebaseconfig";
-
+import Image from "next/image";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 
 import Sidebar from "@/components/common/sidebar/sidebar";
-import Image from "next/image";
 import { contactFn, contactFnaboutus } from "@/lib/api";
 import { Carousel } from "react-responsive-carousel";
 
@@ -18,20 +17,23 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 const Aboutus = () => {
   const [mentor, setMentor] = useState([]);
 
-  const fetchPost = async () => {
-    const q = query(collection(db, "allusers"), where("role", "==", "mentor"));
-    const querySnapshot = await getDocs(q);
-    const newData = querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setMentor(newData);
-    console.log(mentor);
-  };
+  
 
   useEffect(() => {
+
+    const fetchPost = async () => {
+      const q = query(collection(db, "allusers"), where("role", "==", "mentor"));
+      const querySnapshot = await getDocs(q);
+      const newData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setMentor(newData);
+    };
+
+    
     fetchPost();
-  }, []);
+  }, [mentor]);
 
   const scrollContainerRef = useRef(null);
 
@@ -132,7 +134,7 @@ const Aboutus = () => {
           className="text-center text-2xl md:text-4xl md:m-10 py-2
         space-y-4 border-b-white border-b-4"
         >
-          <p className="text-white">We're here to</p>
+          <p className="text-white">We are here to</p>
           <p className=" bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   ">
             gaurantee your success
           </p>
@@ -151,9 +153,11 @@ const Aboutus = () => {
               potential clients.
             </p>
           </div>
-          <img
+          <Image
             src="/componentsgraphics/common/aboutpage/about.png"
             alt="random image"
+            width={900}
+            height={600}
             className="w-9/12 pt-3 -translate-y-[40%]  sm:-translate-y-1/3 object-cover shadow-md rounded-lg max-w-[900px]"
           />
           {/* <div
@@ -179,8 +183,10 @@ const Aboutus = () => {
               clipPath: "polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)",
             }}
           >
-            <img
+            <Image
               src="/componentsgraphics/common/aboutpage/about.png"
+              width={100}
+              height={100}
               alt="random image"
               className="w-full object-cover mt-[10rem] shadow-md transform -translate-y-16 rounded-lg"
             />
@@ -305,13 +311,16 @@ const Aboutus = () => {
                   className="flex flex-col items-center
                     shrink-0 "
                 >
-                  <img
+                  <Image
                     src={`${
                       mentor.photoURL
                         ? mentor.photoURL
                         : "/componentsgraphics/common/aboutpage/team2.svg"
                     }`}
+                    height={100}
+                    width={100}
                     className="w-[95px] sm:w-[140px] md:w-[200px]  object-cover bg-transparent rounded-xl aspect-[3/4]"
+                    alt="team memebers"
                   />
                   <h2 className=" text-center mt-2 text-xs md:text-base text-white font-semibold">
                     {extractNameFromEmail(mentor.displayName)}

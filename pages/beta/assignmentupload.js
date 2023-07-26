@@ -8,7 +8,6 @@ import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 import { BiBell } from 'react-icons/bi';
 import { BsPersonCircle } from 'react-icons/bs';
 import Image from 'next/image';
-// import Draganddrop from "../components/Student/Draganddrop";
 import { ref } from 'firebase/storage';
 import { storage } from '@/config/firebaseconfig';
 import { useRouter } from 'next/router';
