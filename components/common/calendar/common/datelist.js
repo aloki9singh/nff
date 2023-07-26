@@ -69,16 +69,14 @@ const Datelist = ({
   };
 
   let day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  
   let arr = [];
-  let arr2 = [];
+  // let arr2 = [];
   let fileDate = currentDate - 1;
   let dayvar = currentDate - 1;
   let monthforCheck = monthData ? monthData : currentMonth;
   // console.log(monthforCheck);
   // console.log(months[monthforCheck]);
   //  console.log(monthData,currentMonth,currentYear);
-
   for (let i = 0; i < 14 && months[monthforCheck].length > fileDate; i++) {
     fileDate++;
     dayvar++;
@@ -90,21 +88,21 @@ const Datelist = ({
   //
   let fileDate2 = 0;
   let monthforCheck2 = monthData ? monthData : currentMonth;
-  for (let i = 0; months[monthforCheck2].length > fileDate2; i++) {
-    fileDate2++;
-    arr2 = [...arr2, [fileDate2]];
-  }
+  // for (let i = 0; months[monthforCheck2].length > fileDate2; i++) {
+  //   fileDate2++;
+  //   arr2 = [...arr2, [fileDate2]];
+  // }
   //
   selectedDate(currentDate);
 
   let [finalArr, setfinalArr] = useState(arr.slice());
   useEffect(() => {
     setfinalArr(arr.slice());
-  }, [monthData,arr]);
+  }, [monthData]);
   useEffect(() => {
     selectedDate(currentDate);
     document.getElementById(currentDate).style = "background: #E1348B";
-  }, [selectedDate,currentDate, currentMonth]);
+  }, [currentDate, currentMonth]);
   let dateSelect = (e) => {
     // console.log("This is e", e.target.id);
     let days = document.querySelectorAll(".day");
