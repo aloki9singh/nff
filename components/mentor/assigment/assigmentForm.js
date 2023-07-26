@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useCallback } from 'react';
 import { storage } from '@/config/firebaseconfig';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { updateDoc, query, where, getDocs } from 'firebase/firestore';
+import { updateDoc, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 import { collection } from 'firebase/firestore';
 import { generate } from "shortid";
@@ -70,34 +70,62 @@ function AddAssigmentForm({ assignedCourse }) {
     validationSchema
       .validate(formData, { abortEarly: false })
       .then(async () => {
+        // const courseCollection = collection(db, "courses");
+        // const q = query(courseCollection, where("mentorid", "==", uid));
+        // const courseSnapshot = await getDocs(q);
+        // courseSnapshot.docs.filter(async (docu) => {
+        //   const data = docu.data();
+        //   const docRef = docu.ref;
+        //   if (data.title == formData.course) {
+        //     const courseInfo = {
+        //       assignment: [],
+        //     };
+        //     if (data.assignment){
+        //       (data.assignment).forEach(element => {
+        //         courseInfo.assignment.push(element)
+        //       });
+        //     }
+        //     const courseassignment = {
+        //       title: formData.title,
+        //       course: formData.course,
+        //       module: formData.module,
+        //       marks: parseFloat(formData.marks),
+        //       date: new Date(formData.date), // Make sure "formData.date" is a valid date string
+        //       url: url,
+        //       id: generate()
+        //     };
+        //     courseInfo.assignment.push(courseassignment);
+        //     await updateDoc(docRef,courseInfo);
+        //   }
+        // });
         const courseCollection = collection(db, "courses");
         const q = query(courseCollection, where("mentorid", "==", uid));
         const courseSnapshot = await getDocs(q);
-        courseSnapshot.docs.filter(async (docu) => {
+    
+        courseSnapshot.docs.forEach(async (docu) => {
           const data = docu.data();
           const docRef = docu.ref;
-          if (data.title == formData.course) {
-            const courseInfo = {
-              assignment: [],
-            };
-            if (data.assignment){
-              (data.assignment).forEach(element => {
-                courseInfo.assignment.push(element)
-              });
-            }
-            const courseassignment = {
+    
+          if (data.title === formData.course) {
+            const assignmentSubCollectionRef = collection(docRef,'assignment');
+    
+            const newAssignmentData = {
               title: formData.title,
               course: formData.course,
               module: formData.module,
               marks: parseFloat(formData.marks),
               date: new Date(formData.date), // Make sure "formData.date" is a valid date string
               url: url,
-              id: generate()
+              id: generate(), // Generating a unique ID for the new sub-collection document
+              courseid: data.id
             };
-            courseInfo.assignment.push(courseassignment);
-            await updateDoc(docRef,courseInfo);
+    
+            // Use addDoc to add a new document to the 'assignment' sub-collection
+            await addDoc(assignmentSubCollectionRef, newAssignmentData);
           }
         });
+    
+        console.log('New assignment sub-collection added successfully.')
       })
       .then(() => {
         // Reset form data and show success message (optional)
@@ -139,7 +167,7 @@ function AddAssigmentForm({ assignedCourse }) {
     setSelectedCourse(assignedCourse.filter((ele) => {
       return (ele.title == formData.course)
     }))
-  }, [formData.course])
+  }, [formData.course, assignedCourse])
 
   return (
     <>

@@ -46,17 +46,7 @@ function MentorStudent() {
     sendSideBarState(showSideBar);
   }
 
-  // for getting course data from Databse
-  const getData = async () => {
-    if (!dataFetched) {
-      const courseCollection = collection(db, "courses");
-      const courseInfo = await getDocs(courseCollection);
-      const courseList = courseInfo.docs.map((doc) => doc.data());
-      console.log("courseList", courseList);
-      setDetails(courseList);
-      setDataFetched(true);
-    }
-  };
+
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -67,6 +57,18 @@ function MentorStudent() {
       .then((data) => {
         setCourseData(data);
       });
+
+    // for getting course data from Databse
+    const getData = async () => {
+      if (!dataFetched) {
+        const courseCollection = collection(db, "courses");
+        const courseInfo = await getDocs(courseCollection);
+        const courseList = courseInfo.docs.map((doc) => doc.data());
+        console.log("courseList", courseList);
+        setDetails(courseList);
+        setDataFetched(true);
+      }
+    };
     getData(); //uncomment it when fetching course Data
   }, [isMediumScreen, dataFetched]);
 
@@ -90,7 +92,7 @@ function MentorStudent() {
   // });
 
   function handleClick(e) {
-    const totalPage = Math.ceil(courseData.coursedata.length / 8)+1;
+    const totalPage = Math.ceil(courseData.coursedata.length / 8) + 1;
     console.log("totalPage", totalPage);
     setNumberOfPages(totalPage);
     switch (e.currentTarget.getAttribute("name")) {
@@ -121,10 +123,10 @@ function MentorStudent() {
     }
   }
 
-  useEffect(()=>{
-    const totalPage = Math.ceil(courseData?.coursedata?.length / 8)+1;
+  useEffect(() => {
+    const totalPage = Math.ceil(courseData?.coursedata?.length / 8) + 1;
     setNumberOfPages(totalPage);
-  })
+  }, [numberOfPages, courseData])
 
   console.log(userProfile);
 
@@ -368,12 +370,13 @@ function MentorStudent() {
 
                     {Array.from({ length: numberOfPages }, (_, index) => (
                       <button
-                        className={`${(count == (index+1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                       key={index}
+                        className={`${(count == (index + 1)) ? activeTabClass : tabClass} px-4 overflow-sc
                         `}
-                        name={index+1}
+                        name={index + 1}
                         onClick={handleClick}
                       >
-                        {index+1}
+                        {index + 1}
                       </button>
                     ))}
 

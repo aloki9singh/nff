@@ -58,8 +58,7 @@ const RecievedMessage = ({ message }) => {
         <Avatar
           alt="Profile-Picture"
           src={
-            message.sender?.photoURL ||
-            "/componentsgraphics/common/chatting/user/profile.svg"
+            message.sender?.photoURL
           }
         />
       </div>
@@ -92,8 +91,7 @@ const SendMessage = ({ message }) => {
         <Avatar
           alt="Profile-Picture"
           src={
-            message.sender?.photoURL ||
-            "/componentsgraphics/common/chatting/user/profile.svg"
+            message.sender?.photoURL
           }
         />
       </div>
@@ -273,8 +271,7 @@ const Chat = ({
               className="cursor-pointer"
               alt="Profile-Picture"
               src={
-                currReciever?.photoURL ||
-                "/componentsgraphics/common/chatting/user/profile.svg"
+                currReciever?.photoURL
               }
             />
             <div onClick={() => {

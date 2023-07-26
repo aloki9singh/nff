@@ -12,7 +12,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import HomeWorkCard from "@/components/mentor/homework/homeworkcard";
 import UploadCard from "@/components/mentor/homework/uploadcard";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 
 function Homework() {
@@ -38,19 +38,9 @@ function Homework() {
   const handleToggleElement = (element) => {
     setActiveElement(element);
   };
-  const getData = async () => {
-    if (!dataFetched) {
-      const courseCollection = collection(db, "courses");
-      const q = query(
-        collection(db, "courses"),
-        where("mentorid", "==", user.uid)
-      );
-      const courseInfo = await getDocs(q);
-      const courseData = courseInfo.docs.map((doc) => doc.data());
-      setActive(courseData);
-      setDataFetched(true);
-    }
-  };
+
+  
+
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -63,12 +53,32 @@ function Homework() {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user?.verified);
+        setVerified(value?.user?.verified);
       }
     });
+
+    const getData = async () => {
+      if (!dataFetched) {
+        const q = query(
+          collection(db, "courses"),
+          where("MentorId", "array-contains", user.uid)
+        );
+        const courseInfo = await getDocs(q);
+        const arr = [];
+        for (const doc of courseInfo.docs) {
+          const docRef = doc.ref;
+          const collectionRef = collection(docRef, "assignment");
+          const querySnapshot = await getDocs(collectionRef);
+          arr.push(querySnapshot.docs.map((doc) => doc.data()));
+        }
+        setActive(arr);
+        setDataFetched(true);
+      }
+    };
+
     getData();
     return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen, dataFetched]);
+  }, [isMediumScreen, dataFetched, user]);
 
   // if (!verified) {
   //   return null;
@@ -105,7 +115,7 @@ function Homework() {
               Assignment
             </div>
 
-            <div className="   p-4  border border-[#5F6065]  mt-5 rounded-xl  flex flex-col  mb-5 ">
+            <div className="   p-4  border border-[#5F6065]  mt-5 mx-1 rounded-xl  flex flex-col  mb-5 ">
               <div className=" w-full h-20 text-white flex flex-row  justify-between ">
                 {/* <div className='flex ml-12 mt-5'>
                                     <div className='mr-2'>class 6</div>
@@ -128,7 +138,7 @@ function Homework() {
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
                         {/* {activeCourse} */}
-                        {0}
+                        {activeCourse?.length}
                       </div>
                     </div>
                   </div>
@@ -144,7 +154,7 @@ function Homework() {
                         }`}
                         onClick={() => handleToggleElement("check")}
                       >
-                        check
+                        checked
                       </span>
                     </div>
                     <div className="mr-2 cursor-pointer">
@@ -156,50 +166,44 @@ function Homework() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5">
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 min-h-screen ">
                 {activeElement === "active" ? (
                   <>
                     {activeCourse &&
-                      activeCourse.map((e) => {
-                        const data = e.assignment;
-                        // {
-                        //   setNo(data.length);
-                        // }
-
-                        return (
-                          data &&
-                          data.map((ele, i) => {
-                            const date = new Date(
-                              ele.date.seconds * 1000 +
-                                ele.date.nanoseconds / 1000000
-                            );
-                            return (
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  router.push(`/meta/homework/${e.id}`);
-                                }}
-                                key={ele.id}
-                              >
-                                <HomeWorkCard
-                                  title={ele.title}
-                                  desc={ele.module}
-                                  date={date.toLocaleString().split(",")[0]}
-                                  banner={e.banner}
-                                  course={ele.course}
-                                />
-                              </div>
-                            );
-                          })
-                        );
-                      })}
+                      activeCourse.map((e) =>
+                        e.map((ele) => {
+                          const date = new Date(
+                            ele.date.seconds * 1000 +
+                              ele.date.nanoseconds / 1000000
+                          );
+                          return (
+                            <div
+                              className="cursor-pointer"
+                              onClick={() => {
+                                router.push({
+                                  pathname: `/meta/homework/${ele.id}`,
+                                  query: { courseid: ele.courseid },
+                                });
+                              }}
+                              key={ele.id}
+                            >
+                              <HomeWorkCard
+                                title={ele.title}
+                                desc={ele.module}
+                                date={date.toLocaleString().split(",")[0]}
+                                course={ele.course}
+                              />
+                            </div>
+                          );
+                        })
+                      )}
                     <UploadCard />
                   </>
                 ) : (
                   <>
-                    <HomeWorkCard title="Course 2" desc="Description 2" />
-                    <HomeWorkCard title="Course 2" desc="Description 2" />
-                    <HomeWorkCard title="Course 2" desc="Description 2" />
+                    {/* <HomeWorkCard title='Course 2' desc='Description 2' />
+                    <HomeWorkCard title='Course 2' desc='Description 2' />
+                    <HomeWorkCard title='Course 2' desc='Description 2' /> */}
                     <UploadCard />
                   </>
                 )}
@@ -235,4 +239,4 @@ function Homework() {
   );
 }
 
-export default Homework;
+export default withMentorAuthorization(Homework);

@@ -3,7 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import { detailadd, joinChatGroup, uploadToFirebase } from "@/lib/exportablefunctions";
+import {
+  detailadd,
+  joinChatGroup,
+  uploadToFirebase,
+} from "@/lib/exportablefunctions";
 import { useRouter } from "next/router";
 import {
   collection,
@@ -26,17 +30,7 @@ const MentorProfile = () => {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
   //   console.log(id)
-  const getData = async () => {
-    const usersCollection = collection(db, "allusers");
-    const q = doc(usersCollection, uid);
-    const querySnapshot = await getDoc(q);
-    if (!querySnapshot.empty) {
-      const documentData = querySnapshot.data();
-      setData(documentData);
-      console.log(documentData);
-    }
-  };
-
+  
   // ...
 
   const getCourse = async () => {
@@ -73,7 +67,7 @@ const MentorProfile = () => {
       } else {
         console.log("No matching course found.");
         alert("No such Course available to allot");
-        return
+        return;
       }
     } catch (error) {
       console.error("Error fetching course data:", error);
@@ -99,11 +93,66 @@ const MentorProfile = () => {
   };
 
   useEffect(() => {
+
+    const getData = async () => {
+      const usersCollection = collection(db, "allusers");
+      const q = doc(usersCollection, uid);
+      const querySnapshot = await getDoc(q);
+      if (!querySnapshot.empty) {
+        const documentData = querySnapshot.data();
+        setData(documentData);
+        console.log(documentData);
+      }
+    };
+  
+
+    const getCours = async () => {
+      try {
+        const usersCollection = collection(db, "courses");
+        const q = query(
+          usersCollection,
+          where("title", "==", data.details.interest)
+        );
+        const querySnapshot = await getDocs(q);
+  
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach(async (docSnapshot) => {
+            const documentData = docSnapshot.data();
+            console.log(documentData);
+            setId(documentData.uid);
+            console.log(documentData.uid);
+  
+            // Update the MentorId field of the course document
+            const courseDocRef = doc(usersCollection, docSnapshot.id);
+  
+            // Get the specific course document reference
+            await updateDoc(courseDocRef, { MentorId: [uid], mentorid: uid });
+            //   console.log("courese", courseDocRef.id);
+            detailadd(uid, {
+              courseAssigned: true,
+              active: true,
+              courseid: courseDocRef.id ? courseDocRef.id : "",
+              assignedCourses: [courseDocRef.id],
+            });
+  
+            await joinChatGroup(courseDocRef.id, uid, documentData.title);
+          });
+        } else {
+          console.log("No matching course found.");
+          alert("No such Course available to allot");
+          return;
+        }
+      } catch (error) {
+        console.error("Error fetching course data:", error);
+      }
+    };
+
+
     getData();
     if (data.details) {
-      getCourse();
+      getCours();
     }
-  }, []);
+  }, [data.details, uid]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -137,8 +186,9 @@ const MentorProfile = () => {
 
   return (
     <div
-      className={`md:p-10 bg-[#1E1E1E] ${loading ? "pointer-events-none z-1" : ""
-        }`}
+      className={`md:p-10 bg-[#1E1E1E] ${
+        loading ? "pointer-events-none z-1" : ""
+      }`}
     >
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -363,6 +413,7 @@ const MentorProfile = () => {
                       }
                       width={100}
                       height={10000}
+                      alt="Anonymous image"
                     ></Image>
                     {/* <input
                                             value={data?.photoURL || ""}

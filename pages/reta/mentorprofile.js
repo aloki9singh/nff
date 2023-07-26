@@ -1,5 +1,4 @@
-// Verified by Pradhumn
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
@@ -18,53 +17,57 @@ const MentorProfile = () => {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
 
-  const getData = async () => {
-    const usersCollection = collection(db, "allusers");
-    const q = doc(usersCollection, uid);
-    const querySnapshot = await getDoc(q);
-    if (!querySnapshot.empty) {
-      const documentData = querySnapshot.data();
-      setData(documentData);
-      console.log(documentData);
-    }
-  };
-
-  const getCourse = async () => {
-    const usersCollection = collection(db, "courses");
-    const q = query(
-      usersCollection,
-      where("title", "==", data?.details.interest)
-    );
-    const querySnapshot = await getDoc(q);
-    querySnapshot.forEach((doc) => {
-      const documentData = doc.data();
-      setId(documentData.uid);
-      console.log(documentData);
-    });
-  };
-
+  // Fetch user data from Firebase and courses data once, on component mount
   useEffect(() => {
-    getData();
-    if (data.details) {
-        getCourse();
+    const fetchData = async () => {
+      try {
+        const userDoc = await getDoc(doc(db, "allusers", uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setData(userData);
+
+          if (userData.details?.interest) {
+            const coursesCollection = collection(db, "courses");
+            const q = query(
+              coursesCollection,
+              where("title", "==", userData.details.interest)
+            );
+            const querySnapshot = await getDoc(q);
+            querySnapshot.forEach((doc) => {
+              const documentData = doc.data();
+              setId(documentData.uid);
+              console.log(documentData);
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-  }, []);
+    };
+
+    fetchData();
+  }, [uid]);
+
   console.log(data);
-  const handleChange = (e) => {
+
+  // Use useCallback for handleChange to prevent recreation on each render
+  const handleChange = useCallback((e) => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
-  };
+  }, [data]);
 
   const updateData = async () => {
     const mentorData = {
       email: data?.email,
-      pPhone: data?.details?.pPhone,
-      dob: data?.details?.dob,
-      sPhone: data?.details?.sPhone,
-      address: data?.details?.address,
-      city: data?.details?.city,
-      postalcode: data?.details?.postalcode,
-      country: data?.details?.country,
+      details: {
+        pPhone: data?.details?.pPhone,
+        dob: data?.details?.dob,
+        sPhone: data?.details?.sPhone,
+        address: data?.details?.address,
+        city: data?.details?.city,
+        postalcode: data?.details?.postalcode,
+        country: data?.details?.country,
+      },
     };
     try {
       await updateDoc(doc(db, "allusers", uid), mentorData);
@@ -77,66 +80,8 @@ const MentorProfile = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setEdit(!edit);
+    setEdit((prevEdit) => !prevEdit);
   };
-
-  // const setData = (e) => {
-  //     const { name, value, files } = e.target;
-  //     if (name === "profilephoto") {
-  //         // Handle profile photo separately
-  //         const file = files[0];
-  //         uploadToFirebase(file, (url) => {
-  //             setInput((prev) => ({
-  //                 ...prev,
-  //                 photoURL: url,
-  //             }));
-  //         });
-  //     } else {
-  //         // Handle other inputs normally
-  //         setInput((prev) => ({
-  //             ...prev,
-  //             [name]: value,
-  //         }));
-  //     }
-  // };
-
-  // detail added to  Render
-
-  // const detailadd = async () => {
-  //     setLoading(true);
-  //     const res = await fetch(`/api/signup/${uid}`, {
-  //         method: "PATCH",
-  //         headers: {
-  //             "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //             details: mentor,
-  //             displayName: input.firstname,
-  //             photoURL: input.photoURL,
-  //             detailSubmitted: true,
-  //         }),
-  //     });
-
-  //     const data = await res.json();
-  //     console.log(data)
-  //     if (res.status === 404) {
-  //         alert("error");
-  //         console.log("Error!");
-  //     } else {
-  //         console.log("Data Added Successfully");
-  //         setRegStepCount(5);
-  //     }
-  //     setLoading(false);
-  // };
-
-  // useEffect(() => {
-  //     const LSdata = JSON.parse(localStorage.getItem("userdata"));
-  //     if (typeof window !== "undefined") {
-  //         setMentor(JSON.parse(localStorage.getItem("userdata")));
-  //     }
-  //     setInput(LSdata);
-  // }, []);
-
   return (
     <div
       className={`md:p-10 bg-[#1E1E1E] ${

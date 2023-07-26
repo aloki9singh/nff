@@ -21,6 +21,8 @@ function AddMentor() {
   const [mentor, setMentor] = useState([]);
   const [filterMentor, setFilterMentor] = useState();
 
+  const [numberOfPages, setNumberOfPages] = useState();
+
   function toggleSidebar() {
     setShowSidebar((prevState) => !prevState);
   }
@@ -36,7 +38,7 @@ function AddMentor() {
           return ele.displayName.includes(searchState);
         })
     );
-  }, [searchState, isMediumScreen]);
+  }, [searchState, isMediumScreen, filterMentor]);
 
   const handleTabClick = (tab) => {
     setSearchState("");
@@ -58,6 +60,7 @@ function AddMentor() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   function handleClick(e) {
+    const totalPage = Math.ceil(mentor.length / 10) + 1;
     const name = e.currentTarget.getAttribute("name");
 
     switch (name) {
@@ -87,6 +90,11 @@ function AddMentor() {
         break;
     }
   }
+
+  useEffect(() => {
+    const totalPage = Math.ceil(mentor?.length / 1) + 1;
+    setNumberOfPages(totalPage);
+  }, [mentor?.length]);
 
   return (
     <>
@@ -242,7 +250,7 @@ function AddMentor() {
               </div>
 
               {/* pagination */}
-              <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex justify-center items-center space-x-4">
+              <div className="w-60 h-10 lg:bottom-0 mx-10 my-5 flex overflow-scroll md:overflow-visible items-center space-x-4">
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="back"
@@ -263,27 +271,19 @@ function AddMentor() {
                     />
                   </svg>
                 </button>
-                <button
-                  className={count === 1 ? activeTabClass : tabClass}
-                  name="1"
-                  onClick={handleClick}
-                >
-                  1
-                </button>
-                <button
-                  className={count === 2 ? activeTabClass : tabClass}
-                  name="2"
-                  onClick={handleClick}
-                >
-                  2
-                </button>
-                <button
-                  className={count === 3 ? activeTabClass : tabClass}
-                  name="3"
-                  onClick={handleClick}
-                >
-                  3
-                </button>
+                {Array.from({ length: numberOfPages }, (_, index) => (
+                  <button
+                    key={index}
+                    className={`${
+                      count == index + 1 ? activeTabClass : tabClass
+                    } px-4 overflow-sc
+                        `}
+                    name={index + 1}
+                    onClick={handleClick}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="fwd"

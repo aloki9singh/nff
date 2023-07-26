@@ -615,7 +615,7 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
         </label>
         <div className="flex flex-col">
           <ul className="flex flex-col gap-3">
-            {fields.map((field, index) => (
+            {fields?.map((field, index) => (
               <li
                 className="flex flex-row items-center max-w-4xl gap-3"
                 key={field.id}

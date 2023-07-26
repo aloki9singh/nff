@@ -78,16 +78,16 @@ function Settings() {
             </div>
 
             <div className="flex min-h-screen rounded-2xl p-2  md:p-4 mx-2 md:mx-4 justify-between">
-              <div className="md:grid  md:grid-cols-6 md:w-full self-start">
+              <div className="md:grid  md:grid-cols-6 w-full self-start">
                 {/* self-start only for sm */}
                 <div className=" w-full  md:col-span-1 p-2 flex justify-between gap-x-3 md:block">
-                  <div className=" md:my-9 hover:opacity-80 flex-1">
+                  <div className=" my-9 hover:opacity-80 flex-1">
                     {NotificationState ? (
                       <div
-                        className="mx-auto  w-auto md:w-40 min-w-fit rounded-2xl  py-2 text-white bg-gradient-to-r from-[#A145CD] to-[#E1348B] cursor-pointer   md:px-8 md:py-4"
+                        className="mx-auto  w-automin-w-fit rounded-2xl  py-2 text-white bg-gradient-to-r from-[#A145CD] to-[#E1348B] cursor-pointer   md:px-8 md:py-4"
                         onClick={NotificationFun}
                       >
-                        <div className=" flex justify-center text-4xl">
+                        <div className=" flex justify-center text-4xl ">
                           <BsEnvelopeOpen></BsEnvelopeOpen>
                         </div>
                         <div className="text-sm flex justify-center">
@@ -96,7 +96,7 @@ function Settings() {
                       </div>
                     ) : (
                       <div
-                        className="mx-auto w-auto min-w-fit md:w-40 rounded-2xl py-2  text-white bg-[#373a41] cursor-pointer md:px-8 md:py-4"
+                        className="mx-auto w-full min-w-fitrounded-2xl py-2  text-white bg-[#373a41] cursor-pointer md:px-8 md:py-4"
                         onClick={NotificationFun}
                       >
                         <div className=" flex justify-center text-4xl">

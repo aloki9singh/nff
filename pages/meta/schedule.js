@@ -44,7 +44,7 @@ function Schedule() {
   return (
     <>
     <div className="h-full text-base bg-[#2E3036] ">
-        <div className="flex md:w-[89%] ">
+        <div className="flex md:w-[88%] ">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
@@ -68,21 +68,21 @@ function Schedule() {
               <MentorTopbar heading="Schedule" toggleSideBar={toggleSideBar} />
             </div>
 
-            <div className="md:flex gap-5 md:m-5 m-1 md:mt-5 mt-5 md:space-y-0 space-y-7 md:mb-5 mb-0 ">
-              <div className="md:w-4/6 md:mx-0 mx-3 " onClick={() => setCount(1)}>
+            <div className="md:flex gap-5 md:m-5  md:mt-5 mt-5 md:space-y-0 space-y-7 md:mb-5 mb-0 ">
+              <div className="md:w-4/6 md:mx-0 " onClick={() => setCount(1)}>
                 <Mainbodymentor />
               </div>
-              <div className=" md:mt-0 mt-[-20px] w-full md:w-2/6">
-                <div>
-                  {count == 1 && <SideBody setCount={setCount} count={count} />}
-                  {count == 2 && (
-                    <SideBodyClassSchedule setCount={setCount} count={count} />
-                  )}
-                  {count == 3 && (
-                    <SideBodyDelete setCount={setCount} count={count} />
-                  )}
+                <div className="  px-2 w-full">
+                  <div>
+                    {count == 1 && <SideBody setCount={setCount} count={count} />}
+                    {count == 2 && (
+                      <SideBodyClassSchedule setCount={setCount} count={count} />
+                    )}
+                    {count == 3 && (
+                      <SideBodyDelete setCount={setCount} count={count} />
+                    )}
+                  </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>

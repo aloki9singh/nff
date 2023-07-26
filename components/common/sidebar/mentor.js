@@ -375,7 +375,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
               </li>
               <li className="md:hidden block">
                 <Link
-                  href="/meta/settings"
+                  href="/meta/setting"
                   className="flex items-center cursor-pointer p-2 text-base font-normal text-white rounded-lg   hover:bg-pin "
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -383,13 +383,13 @@ const MentorSidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "/meta/settings"
+                        router.pathname === "/meta/setting"
                           ? "shadow-white"
                           : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === "/meta/settings"
+                          router.pathname === "/meta/setting"
                             ? "0 0 5px #A145CD"
                             : "none",
                       }}
@@ -397,7 +397,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
 
                     <span
                       className={`${
-                        router.pathname == "/meta/settings"
+                        router.pathname == "/meta/setting"
                           ? "text-[#E1348B]"
                           : ""
                       }`}

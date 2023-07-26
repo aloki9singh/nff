@@ -29,28 +29,7 @@ const Afterlogin = () => {
   const [SideBarState, sendSideBarState] = useState(false);
   const userID = useAuthContext().user;
 
-  const fetchCourseData = async () => {
-    try {
-      console.log("fetching data is on ");
-      const courseRef = collection(db, "courses");
-      const q = query(courseRef, where("title", "==", title));
-      const courseDocs = await getDocs(q);
-      console.log(courseDocs)
-      if (courseDocs.empty) {
-        setCourse("asdfjjf");
-      } else {
-        const courseDoc = await getDoc(courseDocs.docs[0].ref);
-        const courseData = courseDoc.data();
-        setCourse({
-          id: courseDoc.id,
-          ...courseData,
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching course data:", error);
-      setCourse(null);
-    }
-  };
+  
   console.log(course)
   useEffect(() => {
     if (isMediumScreen) {
@@ -62,6 +41,31 @@ const Afterlogin = () => {
     if (title) {
       console.log(title);
     }
+
+    const fetchCourseData = async () => {
+      try {
+        console.log("fetching data is on ");
+        const courseRef = collection(db, "courses");
+        const q = query(courseRef, where("title", "==", title));
+        const courseDocs = await getDocs(q);
+        console.log(courseDocs)
+        if (courseDocs.empty) {
+          setCourse("asdfjjf");
+        } else {
+          const courseDoc = await getDoc(courseDocs.docs[0].ref);
+          const courseData = courseDoc.data();
+          setCourse({
+            id: courseDoc.id,
+            ...courseData,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching course data:", error);
+        setCourse(null);
+      }
+    };
+
+    
     fetchCourseData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

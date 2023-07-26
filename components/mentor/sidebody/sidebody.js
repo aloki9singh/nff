@@ -56,7 +56,7 @@ let SideBody = ({ count, setCount }) => {
   return (
     <div className="w-full h-full  overflow-scroll-y  ">
       <div
-        className="rounded-xl p-4 px-6 text-white m-5 h-[400px] overflow-scroll scrollbar-hide "
+        className="rounded-xl p-4 px-6 text-white  h-[400px] overflow-scroll scrollbar-hide "
         style={{ background: "#33353B" }}
       >
         <div className="relative w-full bg-transparent text-xl  border-none border-gray-300 text-slate-200  text-center my-4">

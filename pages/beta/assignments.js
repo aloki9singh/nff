@@ -16,7 +16,7 @@ import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
-import { collection, getDocs, doc, getDoc} from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, query, where } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 
 function Assignments() {
@@ -25,7 +25,7 @@ function Assignments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const [course, setCourse] = useState([])
+  const [course, setCourse] = useState()
   const [moduleName, setModuleName] = useState()
 
   //yet to write logic to change course bougth or not ??
@@ -39,25 +39,39 @@ function Assignments() {
     router.push("/");
   }
 
-  const getCourse = async (id) => {
-    const courseRef = doc(db, 'courses', id);
-    const courseSnapshot = await getDoc(courseRef);
-    setCourse([...course, courseSnapshot.data()])
-  }
-  const getCourseId = async () => {
-    const userRef = doc(db, 'allusers', user.uid);
-    const collectionRef = collection(userRef, 'joinedCourses');
-    const querySnapshot = await getDocs(collectionRef);
-    const data = querySnapshot.docs.map((doc) => doc.data());
-    data.map((ele) => { getCourse(ele.id) })
-  }
-
+  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+
+    const getCourseId = async () => {
+      const userRef = doc(db, 'allusers', user.uid);
+      const collectionRef = collection(userRef, 'joinedCourses');
+      const querySnapshot = await getDocs(collectionRef);
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      const id = []
+      const arr = []
+      data.map((ele) => { id.push(ele.id) })
+      for (var i = 0; i < id.length; i++) {
+        const q = query(
+          collection(db, "courses"),
+          where("id", "==", id[i]),
+        );
+        const courseInfo = await getDocs(q);
+        for (const doc of courseInfo.docs) {
+          const docRef = doc.ref;
+          const collectionRef = collection(docRef, 'assignment');
+          const querySnapshot = await getDocs(collectionRef);
+          arr.push(querySnapshot.docs.map((doc) => doc.data()))
+        }
+      }
+      console.log(arr)
+      setCourse(arr)
+    }
+
     getCourseId()
-  }, [isMediumScreen]);
+  }, [isMediumScreen, user.uid]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -72,43 +86,6 @@ function Assignments() {
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
-  let Assignments = [
-    {
-      no: 1,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 2,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 3,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 4,
-      module: 1,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-    {
-      no: 5,
-      module: 0,
-      courseId: 1,
-      name: "Rohit Mehta",
-      date: "12/12/2021",
-    },
-  ];
 
   if (!user || !userProfile) {
     return null;
@@ -116,29 +93,28 @@ function Assignments() {
 
   const { userSubsribed } = CourseAccess(user.uid);
 
-  
+
   return (
     <>
-      {!userSubsribed && (
+      {/* {!userSubsribed && (
         <ToastMessage
         heading={"OOPS!"}
           message={
             "You have not joined any courses yet. Please join a course to access the study material."
           }
         />
-      )}
+      )} */}
       {/* {!courseBuyed ? <NoJoinedCoursesModal /> : null} */}
-      {userSubsribed && (
+      {/* {userSubsribed && (
       <ToastMessage
         heading={"No homework Availaible"}
         message={"Please Continue learning..."}
         showButton={false}
         />
 
-        )}
+        )} */}
 
-      <div className={`blur-sm ${!userSubsribed ? "blur-lg" : null }`}>
-
+      <div className={``}>
         <div className="flex">
           {isMobileScreen && (
             <div
@@ -162,59 +138,30 @@ function Assignments() {
             </div>
 
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
-              <div className="lg:grid lg:grid-cols-11 h-full">
+              <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
-                  {
-                    course && course.map((e) => {
-                      const modules = e.modules;
-                      return (
-                        modules.map((ele, i) => {
-                          return (
-                            <div
-                              className={module == i ? Activestyle : Inactivestyle}
-                              onClick={(e) => { setModule(i); setModuleName(ele.name) }}
-                            >
-                              {`${i + 1}. ${e.title} - ${ele.name}`}
-                            </div>
-                          )
-                        })
-                      )
+                 <div className="max-h-screen  overflow-scroll scrollbar-hide">
+                 {
+                    course && course.map((e, i) => {
+                      return e.map((ele, j) => {
+                        return (
+                          <div
+                          key={j}
+                            className={module === i + j ? Activestyle : Inactivestyle} // Note: Use === for comparison
+                            onClick={() => { setModuleName(ele.module); setModule(i + j) }}
+                          >
+                            {`${i + j + 1}. ${ele.course} - ${ele.module}`}
+                          </div>
+                        )
+                      })
                     })
                   }
-                  {/* <div
-                  className={module == 0 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(0)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 1 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(1)}
-                >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 2 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(2)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 3 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(3)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div>
-                <div
-                  className={module == 4 ? Activestyle : Inactivestyle}
-                  onClick={() => setModule(4)}
-                  >
-                  1. UX Case Study - studying the experience
-                </div> */}
+                 </div>
+        
                 </div>
 
                 {/* Assignments */}
@@ -222,27 +169,24 @@ function Assignments() {
                   <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
                     Files
                   </div>
-                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1 min-h-screen max-h-screen  overflow-scroll scrollbar-hide">
                     {
-                      course && course.map((e) => {
-                        const assignment = e.assignment;
-                        return (
-                          assignment?.map((ele, i) => {
-                            if (ele.module == moduleName) {
-                              return (
-                                <AssignmentCard
-                                  key={i}
-                                  id = {ele.id}
-                                  courseid = {e.id}
-                                  no={i + 1}
-                                  name={ele.title}
-                                  date={ele.date}
-                                  url={ele.url}
-                                />
-                              )
-                            }
-                          })
-                        )
+                      course && course.map((e, i) => {
+                        return e.map((ele, j) => {
+                          {/* if (moduleName && (ele.module === moduleName)) { */}
+                            return (
+                              <AssignmentCard
+                                key={i}
+                                id={ele.id}
+                                no={i + 1}
+                                name={ele.title}
+                                date={ele.date}
+                                url={ele.url}
+                                courseid={ele.courseid}
+                              />
+                            );
+                          {/* } */}
+                        });
                       })
                     }
                     {/* {Assignments.filter(

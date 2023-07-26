@@ -140,7 +140,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
             name="addTitle"
             id="AddTitle"
             // className="bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
-            className="w-auto bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
+            className="w-full bg-transparent text-xl py-2 border-none border-gray-300 text-slate-200  outline-none "
             placeholder="Add title"
             required
             value={userData.addTitle}
@@ -149,26 +149,27 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
         </div>
         <hr className="opacity-50 mt-1 mb-3"></hr>
 
-        <div className="p-1   flex my-6">
+        <div className="p-1   flex ">
           <div>
             {" "}
-            <AiOutlineClockCircle className="text-2xl mx-4"></AiOutlineClockCircle>
+            <AiOutlineClockCircle className="text-2xl mx-4 my-auto"></AiOutlineClockCircle>
           </div>
-          <div>
+          <div className="w-full">
             <input
               name="date"
               type="date"
               placeholder="date"
               onChange={handleChange}
+          
               className="bg-transparent outline-none "
             />
 
-            <div className="text-sm mt-3 flex w-auto">
+            <div className="text-sm grid grid-cols-2">
               <input
                 type="time"
                 name="startTime"
                 id="StartTime"
-                className="bg-transparent    border-none border-gray-300 text-slate-200 mr-4 outline-none"
+                className="bg-transparent    border-none border-gray-300 text-slate-200  outline-none"
                 placeholder="Start 00:00:00"
                 required
                 value={userData.startTime || "00:00"}
@@ -187,17 +188,17 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
             </div>
           </div>
         </div>
-        <div className="p-1 flex my-6">
+        <div className="p-1 flex ">
           <div>
             {" "}
-            <HiUserGroup className="text-2xl mx-4"></HiUserGroup>
+            <HiUserGroup className="text-2xl my-auto mx-4"></HiUserGroup>
           </div>
           <div className="relative w-full">
             <input
               type="text"
               name="addBatch"
               id="AddBatch"
-              className="bg-transparent text-[16px]  md:w-full    border-none border-gray-300 text-slate-200  outline-none "
+              className="bg-transparent text-[16px]  w-full    border-none border-gray-300 text-slate-200  outline-none "
               placeholder="Add Batch"
               required
               value={userData.addBatch}
@@ -205,17 +206,17 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
             />
           </div>
         </div>
-        <div className="p-1 flex my-6 ">
+        <div className="p-1 flex  ">
           <div>
             {" "}
             <CiTextAlignLeft className="text-xl mx-4 "></CiTextAlignLeft>
           </div>
-          <div className="">
+          <div className="w-full">
             <input
               type="text"
               name="description"
               id="AddDescriptionorAttachents"
-              className="bg-transparent  md:w-full  w-[70vw]   border-none border-gray-300 text-slate-200  outline-none "
+              className="bg-transparent  w-full     border-none border-gray-300 text-slate-200  outline-none "
               placeholder="Add Description"
               required
               value={userData.description}
@@ -223,15 +224,15 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
             />
           </div>
         </div>
-        <div className="p-1 flex my-6">
-          <AiOutlineCalendar className="text-2xl mx-4"></AiOutlineCalendar>
-          <div>
+        <div className=" flex w-full ">
+          <AiOutlineCalendar className="text-2xl mx-4 my-auto"></AiOutlineCalendar>
+          <div className="w-full p-2">
             {Mentorname}
             <br></br>
-            <p className="opacity-50 text-sm">Notify 30 minutes ago</p>
+            <p className="opacity-50 text-sm w-full">Notify 30 minutes ago</p>
           </div>
         </div>
-        <div className="flex mt-12 mb-10 rounded-2xl justify-evenly h-12 bg-[#575E68]">
+        <div className="flex  my-5 rounded-2xl justify-evenly h-12 bg-[#575E68]">
           <div
             className={`bg-[#2E3036] rounded-[30px] h-[50%] m-auto w-6 ${
               selectedColor === "#2E3036" ? "border-2 border-white" : ""

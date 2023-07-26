@@ -56,9 +56,9 @@ function MentorDashboard() {
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
 
-  if (!verified) {
-    return null;
-  }
+  // if (!verified) {
+  //   return null;
+  // }
 
   return (
     <>

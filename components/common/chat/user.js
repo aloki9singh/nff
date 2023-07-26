@@ -39,8 +39,7 @@ const User = ({ currReciever, setShowUser, setShowChat, images }) => {
         <Avatar
           alt="Profile-Picture"
           src={
-            currReciever?.photoURL ||
-            "/componentsgraphics/common/chatting/user/profile.svg"
+            currReciever?.photoURL
           }
           sx={{ height: 76, width: 76 }}
         />
@@ -51,15 +50,15 @@ const User = ({ currReciever, setShowUser, setShowChat, images }) => {
         className="flex justify-between p-4"
         style={{ borderBottom: "1px solid grey" }}
       >
-        <div className="flex">
+        <div className="flex-1 flex">
           <MdInfoOutline />
-          <div>
+          <div className="" >
             <p className="text-[14px]">+{currReciever?.studentPhoneNo}</p>
             <p className="text-[10px]">Mobile</p>
           </div>
         </div>
-        <div className="flex flex-col">
-          <p className="text-[14px]">@{currReciever?.username}</p>
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <p className="text-[14px] truncate">@{currReciever?.username}</p>
           <p className="text-[10px]">Username</p>
         </div>
       </div>

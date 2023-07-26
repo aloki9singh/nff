@@ -1,4 +1,4 @@
-import { mentorsCollection } from '../../../../config/firebaseConfig';
+import { mentorsCollection } from '@/config/firebaseconfig';
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export default async function handler(req, res) {

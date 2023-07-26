@@ -1,4 +1,4 @@
-import IDdraganddrop from "../../components/student/assignments/iddraganddrop";
+// import IDdraganddrop from "../../components/student/assignments/iddraganddrop";
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 const options = ["8", "9", "10", "11", "12"];
 
-function studentProfile() {
+function StudentProfile() {
   const router = useRouter();
   const [studentData, setstudentData] = useState([]);
   const { uid } = router.query;
@@ -63,7 +63,7 @@ function studentProfile() {
     };
 
     getInitialProfile();
-  }, [reset]);
+  }, [reset ,uid]);
 
   const onSubmit = async (data) => {
     // if (!user) {
@@ -111,6 +111,7 @@ function studentProfile() {
 
       // joinedCourses: [],
     };
+    
     console.log("profile", profile);
     const userRef = doc(db, "allusers", data.uid); // searching if user exists or not
     const docSnap = await getDoc(userRef);
@@ -602,4 +603,4 @@ function studentProfile() {
     </div>
   );
 }
-export default withAdminAuthorization(studentProfile)
+export default withAdminAuthorization(StudentProfile)
