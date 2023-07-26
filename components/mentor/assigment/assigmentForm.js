@@ -167,7 +167,7 @@ function AddAssigmentForm({ assignedCourse }) {
     setSelectedCourse(assignedCourse.filter((ele) => {
       return (ele.title == formData.course)
     }))
-  }, [formData.course])
+  }, [formData.course, assignedCourse])
 
   return (
     <>

@@ -3,15 +3,16 @@
 // upload through url not working
 // file icon missing
 
-import { useState, useEffect } from "react";
-import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
-import { BiBell } from "react-icons/bi";
-import { BsPersonCircle } from "react-icons/bs";
-import Image from "next/image";
-// import Draganddrop from "../components/Student/Draganddrop";
-import { ref } from "firebase/storage";
-import { storage } from "@/config/firebaseconfig";
-import { useRouter } from "next/router";
+
+import { useState, useEffect } from 'react';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import { BiBell } from 'react-icons/bi';
+import { BsPersonCircle } from 'react-icons/bs';
+import Image from 'next/image';
+import { ref } from 'firebase/storage';
+import { storage } from '@/config/firebaseconfig';
+import { useRouter } from 'next/router';
+
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";

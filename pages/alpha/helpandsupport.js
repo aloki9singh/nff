@@ -3,7 +3,7 @@ import NavbarSecond from "@/components/common/navbar/navbar2";
 import HelpAndSupportSidebar from "@/components/common/sidebar/helpandsupport";
 import { useState } from "react";
 
-const helpandsupport = () => {
+const Helpandsupport = () => {
 	const [isSidebar, setIsSidebar] = useState(true);
 	const toggleSideBar = () => {
 		setIsSidebar(!isSidebar);
@@ -40,4 +40,4 @@ const helpandsupport = () => {
 	);
 };
 
-export default helpandsupport;
+export default Helpandsupport;
