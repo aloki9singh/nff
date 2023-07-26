@@ -3,7 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import { detailadd, joinChatGroup, uploadToFirebase } from "@/lib/exportablefunctions";
+import {
+  detailadd,
+  joinChatGroup,
+  uploadToFirebase,
+} from "@/lib/exportablefunctions";
 import { useRouter } from "next/router";
 import {
   collection,
@@ -73,7 +77,7 @@ const MentorProfile = () => {
       } else {
         console.log("No matching course found.");
         alert("No such Course available to allot");
-        return
+        return;
       }
     } catch (error) {
       console.error("Error fetching course data:", error);
@@ -103,7 +107,7 @@ const MentorProfile = () => {
     if (data.details) {
       getCourse();
     }
-  }, []);
+  }, [data.details]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -137,8 +141,9 @@ const MentorProfile = () => {
 
   return (
     <div
-      className={`md:p-10 bg-[#1E1E1E] ${loading ? "pointer-events-none z-1" : ""
-        }`}
+      className={`md:p-10 bg-[#1E1E1E] ${
+        loading ? "pointer-events-none z-1" : ""
+      }`}
     >
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
