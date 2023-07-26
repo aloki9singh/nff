@@ -13,7 +13,7 @@ import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization";
 
 const options = ["8", "9", "10", "11", "12"];
 
-function studentProfile() {
+function StudentProfile() {
   const router = useRouter();
   const [studentData, setstudentData] = useState([]);
   const { uid } = router.query;
@@ -67,7 +67,7 @@ function studentProfile() {
     };
 
     getInitialProfile();
-  }, [reset]);
+  }, [reset, uid]);
 
 //   const onSubmit = async (data) => {
 //     // if (!user) {
@@ -607,4 +607,4 @@ function studentProfile() {
     </div>
   );
 }
-export default withMentorAuthorization(studentProfile)
+export default withMentorAuthorization(StudentProfile)

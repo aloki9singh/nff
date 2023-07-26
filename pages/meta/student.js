@@ -73,7 +73,7 @@ function MentorStudent() {
 
   const filteredStudentData = useMemo(
     () => filterStudentData(),
-    [filterData, filterStudentData]
+    [filterStudentData]
   );
   const getData = async () => {
     // if (!dataFetched) {
@@ -154,7 +154,7 @@ function MentorStudent() {
   useEffect(() => {
     const totalPage = Math.ceil(studentData?.length / 10) + 1;
     setNumberOfPages(totalPage);
-  });
+  }, [numberOfPages, studentData]);
 
   return (
     <>
@@ -401,6 +401,7 @@ function MentorStudent() {
                 </button>
                 {Array.from({ length: numberOfPages }, (_, index) => (
                   <button
+                  key={index}
                     className={`${
                       count == index + 1 ? activeTabClass : tabClass
                     } px-4 overflow-sc

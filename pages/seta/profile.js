@@ -18,17 +18,18 @@ function MentorProfile() {
   const router = useRouter();
   const [profile, setProfile] = useState()
   const [edit, setEdit] = useState(false)
-  const getData = async () => {
-    const usersCollection = collection(db, "allusers");
-    const q = doc(usersCollection, user.uid)
-    const querySnapshot = await getDoc(q);
-    if (!querySnapshot.empty) {
-      setProfile(querySnapshot.data());
-    }
-  }
+  
   useEffect(() => {
+    const getData = async () => {
+      const usersCollection = collection(db, "allusers");
+      const q = doc(usersCollection, user.uid)
+      const querySnapshot = await getDoc(q);
+      if (!querySnapshot.empty) {
+        setProfile(querySnapshot.data());
+      }
+    }
     getData()
-  }, [getData])
+  }, [user])
   const handleChange = (e) => {
     e.preventDefault()
     setProfile({ ...profile, [e.target.name]: e.target.value })

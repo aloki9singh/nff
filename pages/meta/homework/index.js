@@ -39,24 +39,7 @@ function Homework() {
     setActiveElement(element);
   };
 
-  const getData = async () => {
-    if (!dataFetched) {
-      const q = query(
-        collection(db, "courses"),
-        where("MentorId", "array-contains", user.uid)
-      );
-      const courseInfo = await getDocs(q);
-      const arr = [];
-      for (const doc of courseInfo.docs) {
-        const docRef = doc.ref;
-        const collectionRef = collection(docRef, "assignment");
-        const querySnapshot = await getDocs(collectionRef);
-        arr.push(querySnapshot.docs.map((doc) => doc.data()));
-      }
-      setActive(arr);
-      setDataFetched(true);
-    }
-  };
+  
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -73,9 +56,29 @@ function Homework() {
         setVerified(value?.user?.verified);
       }
     });
+
+    const getData = async () => {
+      if (!dataFetched) {
+        const q = query(
+          collection(db, "courses"),
+          where("MentorId", "array-contains", user.uid)
+        );
+        const courseInfo = await getDocs(q);
+        const arr = [];
+        for (const doc of courseInfo.docs) {
+          const docRef = doc.ref;
+          const collectionRef = collection(docRef, "assignment");
+          const querySnapshot = await getDocs(collectionRef);
+          arr.push(querySnapshot.docs.map((doc) => doc.data()));
+        }
+        setActive(arr);
+        setDataFetched(true);
+      }
+    };
+
     getData();
     return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen, dataFetched]);
+  }, [isMediumScreen, dataFetched, user]);
 
   // if (!verified) {
   //   return null;
