@@ -40,7 +40,7 @@ const ProfileContinuepage = () => {
 
     });
     return () => unsubscribe(); // Cleanup the listener
-  }, []);
+  }, [userProfile]);
 
   return (
     <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
