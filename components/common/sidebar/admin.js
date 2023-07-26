@@ -15,7 +15,7 @@ const AdminSidebar = ({ toggleSideBar }) => {
   const { user, userProfile } = useAuthContext();
   return (
     <>
-      <aside className='h-screen  md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between '>
+      <aside className='h-screen  md:bg-[#141518] bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between z-11'>
         <div>
           <div>
             <div>

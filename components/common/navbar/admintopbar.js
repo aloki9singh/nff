@@ -36,7 +36,7 @@ export default function AdminTopbar({ heading,toggleSideBar }) {
   })
 
   return (
-    <nav className=' pl-2 py-2 w-full md:static   space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35] z-10'>
+    <nav className=' pl-2 py-2 w-full md:static   space-y-4 border-b-[1px] h-[68px] bg-[#2D2E35]'>
       <div className='container md:mt-[-10px] flex flex-row md:flex-row gap-y-6 min-w-full justify-between px-10 w-full'>
         <div className='flex justify-between items-center'>
           <div className='flex items-center'>
