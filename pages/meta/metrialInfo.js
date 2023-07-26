@@ -59,10 +59,15 @@ function MetrialInfo() {
               />
             </div>
 
-            <div className=' w-full mt-20  bg-[#2D2E35] text-white grow flex items-center justify-center h-auto'>
+            <div className=' w-full  h-full pb-10 mt-20  bg-[#2D2E35] text-white grow flex items-center justify-center '>
               <div className='w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  '>
                 <div className='w-full  flex flex-col'>
+                  <div>
+
                   <div className=' m-8 ml-12 '>Introduction of c++</div>
+
+
+                  </div>
                   <div className=' border-2 border-[#5F6065] w-full '></div>
                   <div>
                     <div className='flex justify-center md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5'>
@@ -96,7 +101,7 @@ function MetrialInfo() {
                       </div>
 
                       <div className='flex justify-between items-center'>
-                        <div className='m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col '>
+                        <div className=' m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col '>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
                             viewBox='0 0 24 24'
@@ -109,7 +114,6 @@ function MetrialInfo() {
                             <circle cx='12' cy='5' r='3'></circle>
                             <circle cx='12' cy='19' r='3'></circle>
                             <line x1='12' y1='6' x2='12' y2='16'></line>
-                            
                           </svg>
 
                           <div>
