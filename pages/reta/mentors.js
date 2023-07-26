@@ -5,9 +5,11 @@ import AdminSidebar from "@/components/common/sidebar/admin";
 import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useRouter } from "next/router";
 
+import { db } from "@/config/firebaseconfig";
+import { collection, getDocs,  } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
-import { query } from "firebase/firestore";
+import { query , where} from "firebase/firestore";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 function AdminStudent() {
@@ -19,6 +21,7 @@ function AdminStudent() {
   const [filterStudent, setFilterStudent] = useState();
   const [filterMentor, setFilterMentor] = useState();
   let [searchstate, setsearchstate] = useState();
+
 
   const router = useRouter();
 
@@ -34,6 +37,7 @@ function AdminStudent() {
   const [student, setStudent] = useState([]);
   const [mentor, setMentor] = useState([]);
   const [numberOfPages, setNumberOfPages] = useState();
+  const [isActive, setIsActive] = useState(null);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -63,32 +67,59 @@ function AdminStudent() {
     setActiveTab(tab);
   };
 
-  useEffect(() => {
-    fetch("/api/signup")
-      .then((response) => response.json())
-      .then((data) => {
-        setFilterStudent(
-          data.users.filter((ele) => {
-            return ele.role == "student";
-          })
-        );
-        setStudent(
-          data.users.filter((ele) => {
-            return ele.role == "student";
-          })
-        );
-        setMentor(
-          data.users.filter((ele) => {
-            return ele.role == "mentor";
-          })
-        );
-        setFilterMentor(
-          data.users.filter((ele) => {
-            return ele.role == "mentor";
-          })
-        );
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/signup")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setFilterStudent(
+  //         data.users.filter((ele) => {
+  //           return ele.role == "student";
+  //         })
+  //       );
+  //       setStudent(
+  //         data.users.filter((ele) => {
+  //           return ele.role == "student";
+  //         })
+  //       );
+  //       setMentor(
+  //         data.users.filter((ele) => {
+  //           return ele.role == "mentor";
+  //         })
+  //       );
+  //       setFilterMentor(
+  //         data.users.filter((ele) => {
+  //           return ele.role == "mentor";
+  //         })
+  //       );
+  //     });
+
+  //     console.log(mentor, "mentor");
+  //     console.log(filterMentor, "filterMentor");
+  // }, []);
+
+  useEffect(async()=>{
+    const userRef = collection(db, "allusers");
+    const q1 = query(userRef, where("role", "==", "student"));
+    const q2 = query(userRef, where("role", "==", "mentor"));
+
+    const studentDoc = await getDocs(q1);
+    const mentorDoc = await getDocs(q2);
+
+    const studentList = studentDoc.docs.map((doc) => doc.data());
+    const mentorList = mentorDoc.docs.map((doc) => doc.data());
+
+    console.log(studentList, mentorList);
+
+
+    setFilterStudent(studentList);
+    setStudent(studentList);
+    setMentor(mentorList);
+    setFilterMentor(mentorList);
+
+  },[])
+
+
+
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
 
@@ -149,6 +180,11 @@ function AdminStudent() {
     getTotalPages();   
 
   })
+  
+  const updateButtonStatus = (isActive) => {
+    return isActive ? 'Active' : 'Inactive';
+  };
+
 
   return (
     <>
@@ -393,6 +429,7 @@ function AdminStudent() {
                             {e?.courses || "No Group"}
                           </td>
                           <td className="w-[16.6%] text-center cursor-pointer">
+
                             {!e.active ? (
                               <p
                                 className="text-red-500 "
