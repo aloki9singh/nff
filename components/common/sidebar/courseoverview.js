@@ -16,7 +16,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
   // console.log(userProfile)
   return (
     <>
-      <aside className={`md:bg-[#141518]  bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between overflow-auto ${className} `}>
+      <aside className={`md:bg-[#141518]  bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between overflow-auto no-scrollbar ${className} `}>
         <div>
           <div>
             <div>
