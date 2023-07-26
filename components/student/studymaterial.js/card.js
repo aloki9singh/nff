@@ -5,7 +5,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-// import { db } from '../../config/firebaseConfig';
+
 import { db } from "../../../config/firebaseconfig";
 import { collection, getDocs, query } from "firebase/firestore";
 

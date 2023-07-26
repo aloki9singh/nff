@@ -1,6 +1,6 @@
 
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { profileDetailscollection } from '../../../components/config/firebaseConfig';
+import { profileDetailscollection } from '@/config/firebaseconfig';
 
 export default async function handler(req, res) {
     const { uid } = req.query;

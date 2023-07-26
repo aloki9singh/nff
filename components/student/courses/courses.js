@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import CourseCard from "./CourseCard";
 import Link from "next/link";
 // import CourseCard from "./CourseCard";g
-// import { db } from '../config/firebaseConfig';
+
 // import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 export default function Courses({ coursesData }) {
