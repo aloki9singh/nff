@@ -94,7 +94,7 @@ function AddMentor() {
   useEffect(() => {
     const totalPage = Math.ceil(mentor?.length / 1) + 1;
     setNumberOfPages(totalPage);
-  }, [mentor.length]);
+  }, [mentor?.length]);
 
   return (
     <>

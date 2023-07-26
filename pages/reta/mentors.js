@@ -198,8 +198,8 @@ function AdminStudent() {
             </div>
           )}
 
-          <div className="flex-grow ">
-            <div className="flex md:pt-0 pt-2 justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
+          <div className="flex-grow">
+            <div className="flex md:pt-0  justify-between md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <AdminTopbar heading="Review" toggleSideBar={toggleSideBar} />
             </div>
 
@@ -544,7 +544,7 @@ function AdminStudent() {
               </div>
 
               {/* pagination */}
-              <div className="w-60 h-10  lg:bottom-0 mx-10 my-5 flex overflow-scroll md:overflow-visible items-center space-x-4">
+              <div className="w-60 h-10  lg:bottom-0 mx-10 my-5 flex overflow-scroll md:overflow-visible scrollbar-hide items-center space-x-4">
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="back"
