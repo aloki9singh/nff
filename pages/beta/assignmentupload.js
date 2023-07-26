@@ -59,35 +59,7 @@ const Assignmentupload = () => {
     setFile(selectedFile);
   };
 
-  const getData = async () => {
-    const courseRef = doc(db, "courses", courseid);
-    const courseInfo = await getDoc(courseRef);
-
-    if (courseInfo.exists()) {
-      try {
-        const assignmentRef = collection(courseRef, "assignment");
-        const q = query(assignmentRef, where("id", "==", id));
-        const querySnapshot = await getDocs(q);
-        const arr = [];
-        querySnapshot.forEach((doc) => {
-          setSubmitted(
-            doc.data().files.map((ele) => {
-              if (ele.submittedby == user.uid) {
-                return true;
-              }
-            })
-          );
-          arr.push(doc.data());
-        });
-
-        setCourse(arr);
-      } catch (err) {
-        alert("Error occured");
-      }
-    } else {
-      console.log("Course not found.");
-    }
-  };
+  
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -149,7 +121,8 @@ const Assignmentupload = () => {
         });
       }
     );
-  }, [file]);
+  }, [file, storageRef]);
+
   useEffect(() => {
     if (file) {
       uploadFile();
@@ -177,8 +150,38 @@ const Assignmentupload = () => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+
+    const getData = async () => {
+      const courseRef = doc(db, "courses", courseid);
+      const courseInfo = await getDoc(courseRef);
+  
+      if (courseInfo.exists()) {
+        try {
+          const assignmentRef = collection(courseRef, "assignment");
+          const q = query(assignmentRef, where("id", "==", id));
+          const querySnapshot = await getDocs(q);
+          const arr = [];
+          querySnapshot.forEach((doc) => {
+            setSubmitted(
+              doc.data().files.map((ele) => {
+                if (ele.submittedby == user.uid) {
+                  return true;
+                }
+              })
+            );
+            arr.push(doc.data());
+          });
+  
+          setCourse(arr);
+        } catch (err) {
+          alert("Error occured");
+        }
+      } else {
+        console.log("Course not found.");
+      }
+    };
     getData();
-  }, [isMediumScreen]);
+  }, [isMediumScreen, courseid, id, user.uid]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -193,9 +196,8 @@ const Assignmentupload = () => {
     <div className="flex">
       {isMobileScreen && (
         <div
-          className={`fixed right-0 ${
-            SideBarState ? "block" : "hidden"
-          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
         >
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
@@ -325,9 +327,8 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
-                      submitted ? "#505057" : "#E1348B"
-                    }] rounded-lg focus:shadow-outline`}
+                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"
+                      }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
                   >
                     {submitted ? " Submitted" : "Submit"}

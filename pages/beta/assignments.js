@@ -39,36 +39,39 @@ function Assignments() {
     router.push("/");
   }
 
-  const getCourseId = async () => {
-    const userRef = doc(db, 'allusers', user.uid);
-    const collectionRef = collection(userRef, 'joinedCourses');
-    const querySnapshot = await getDocs(collectionRef);
-    const data = querySnapshot.docs.map((doc) => doc.data());
-    const id = []
-    const arr = []
-    data.map((ele) => { id.push(ele.id) })
-    for (var i = 0; i < id.length; i++) {
-      const q = query(
-        collection(db, "courses"),
-        where("id", "==", id[i]),
-      );
-      const courseInfo = await getDocs(q);
-      for (const doc of courseInfo.docs) {
-        const docRef = doc.ref;
-        const collectionRef = collection(docRef, 'assignment');
-        const querySnapshot = await getDocs(collectionRef);
-        arr.push(querySnapshot.docs.map((doc) => doc.data()))
-      }
-    }
-    console.log(arr)
-    setCourse(arr)
-  }
+  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+
+    const getCourseId = async () => {
+      const userRef = doc(db, 'allusers', user.uid);
+      const collectionRef = collection(userRef, 'joinedCourses');
+      const querySnapshot = await getDocs(collectionRef);
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      const id = []
+      const arr = []
+      data.map((ele) => { id.push(ele.id) })
+      for (var i = 0; i < id.length; i++) {
+        const q = query(
+          collection(db, "courses"),
+          where("id", "==", id[i]),
+        );
+        const courseInfo = await getDocs(q);
+        for (const doc of courseInfo.docs) {
+          const docRef = doc.ref;
+          const collectionRef = collection(docRef, 'assignment');
+          const querySnapshot = await getDocs(collectionRef);
+          arr.push(querySnapshot.docs.map((doc) => doc.data()))
+        }
+      }
+      console.log(arr)
+      setCourse(arr)
+    }
+
     getCourseId()
-  }, [isMediumScreen]);
+  }, [isMediumScreen, user.uid]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -147,6 +150,7 @@ function Assignments() {
                       return e.map((ele, j) => {
                         return (
                           <div
+                          key={j}
                             className={module === i + j ? Activestyle : Inactivestyle} // Note: Use === for comparison
                             onClick={() => { setModuleName(ele.module); setModule(i + j) }}
                           >
