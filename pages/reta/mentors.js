@@ -6,10 +6,10 @@ import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useRouter } from "next/router";
 
 import { db } from "@/config/firebaseconfig";
-import { collection, getDocs,  } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
-import { query , where} from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 
 function AdminStudent() {
@@ -22,9 +22,7 @@ function AdminStudent() {
   const [filterMentor, setFilterMentor] = useState();
   let [searchstate, setsearchstate] = useState();
 
-
   const router = useRouter();
-
 
   let searchfun = (e) => {
     setsearchstate(e.target.value);
@@ -50,17 +48,17 @@ function AdminStudent() {
     }
     setStudent(
       filterStudent &&
-      filterStudent.filter((ele) => {
-        return ele.displayName.includes(searchstate);
-      })
+        filterStudent.filter((ele) => {
+          return ele.displayName.includes(searchstate);
+        })
     );
     setMentor(
       filterMentor &&
-      filterMentor.filter((ele) => {
-        return ele.displayName.includes(searchstate);
-      })
+        filterMentor.filter((ele) => {
+          return ele.displayName.includes(searchstate);
+        })
     );
-  }, [searchstate, isMediumScreen]);
+  }, [searchstate, isMediumScreen, filterMentor, filterStudent]);
 
   const handleTabClick = (tab) => {
     setsearchstate("");
@@ -97,40 +95,37 @@ function AdminStudent() {
   //     console.log(filterMentor, "filterMentor");
   // }, []);
 
-  useEffect(async()=>{
-    const userRef = collection(db, "allusers");
-    const q1 = query(userRef, where("role", "==", "student"));
-    const q2 = query(userRef, where("role", "==", "mentor"));
+  useEffect(() => {
+    async function getData() {
+      const userRef = collection(db, "allusers");
+      const q1 = query(userRef, where("role", "==", "student"));
+      const q2 = query(userRef, where("role", "==", "mentor"));
 
-    const studentDoc = await getDocs(q1);
-    const mentorDoc = await getDocs(q2);
+      const studentDoc = await getDocs(q1);
+      const mentorDoc = await getDocs(q2);
 
-    const studentList = studentDoc.docs.map((doc) => doc.data());
-    const mentorList = mentorDoc.docs.map((doc) => doc.data());
+      const studentList = studentDoc.docs.map((doc) => doc.data());
+      const mentorList = mentorDoc.docs.map((doc) => doc.data());
 
-    console.log(studentList, mentorList);
+      console.log(studentList, mentorList);
 
-
-    setFilterStudent(studentList);
-    setStudent(studentList);
-    setMentor(mentorList);
-    setFilterMentor(mentorList);
-
-  },[])
-
-
+      setFilterStudent(studentList);
+      setStudent(studentList);
+      setMentor(mentorList);
+      setFilterMentor(mentorList);
+    }
+    getData();
+  }, []);
 
   const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
   const tabClass = "w-10 h-10 rounded-xl";
 
   function handleClick(e) {
-
     let totalPage;
     if (activeTab === "student") {
       totalPage = Math.ceil(student?.length / 10) + 1;
-    }
-    else {
-      totalPage = Math.ceil(mentor?.length / 10)+1;
+    } else {
+      totalPage = Math.ceil(mentor?.length / 10) + 1;
     }
 
     switch (e.currentTarget.getAttribute("name")) {
@@ -161,30 +156,25 @@ function AdminStudent() {
     }
   }
 
-
-
-  const getTotalPages = ()=>{
+  const getTotalPages = () => {
     let totalPage;
     if (activeTab === "student") {
       totalPage = Math.ceil(student?.length / 10) + 1;
-    }
-    else {
-      totalPage = Math.ceil(mentor?.length / 10)+1;
+    } else {
+      totalPage = Math.ceil(mentor?.length / 10) + 1;
     }
     // console.log(totalPage, "stdunet");
-    console.log("mentor has", totalPage)
-    setNumberOfPages(totalPage)
-  }
-
-  useEffect(() => {
-    getTotalPages();   
-
-  })
-  
-  const updateButtonStatus = (isActive) => {
-    return isActive ? 'Active' : 'Inactive';
+    console.log("mentor has", totalPage);
+    setNumberOfPages(totalPage);
   };
 
+  useEffect(() => {
+    getTotalPages();
+  });
+
+  const updateButtonStatus = (isActive) => {
+    return isActive ? "Active" : "Inactive";
+  };
 
   return (
     <>
@@ -193,8 +183,9 @@ function AdminStudent() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -214,8 +205,9 @@ function AdminStudent() {
 
             <div className="flex gap-2 mt-10">
               <div
-                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${activeTab === "mentor" ? "cursor-pointer underline" : ""
-                  }`}
+                className={`ml-8 md:ml-12 mt-7 font-semibold text-xl md:text-4xl text-white ${
+                  activeTab === "mentor" ? "cursor-pointer underline" : ""
+                }`}
                 onClick={() => handleTabClick("mentor")}
               >
                 Mentor : {mentor?.length}
@@ -226,8 +218,9 @@ function AdminStudent() {
               </span>
 
               <div
-                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${activeTab === "student" ? "cursor-pointer underline" : ""
-                  }`}
+                className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${
+                  activeTab === "student" ? "cursor-pointer underline" : ""
+                }`}
                 onClick={() => handleTabClick("student")}
               >
                 Student : {student?.length}
@@ -402,7 +395,10 @@ function AdminStudent() {
                     {activeTab === "student" &&
                       student &&
                       student.slice(initialcount, gap).map((e, i) => (
-                        <tr className="flex items-center w-full font-medium text-xs justify-between ">
+                        <tr
+                          className="flex items-center w-full font-medium text-xs justify-between "
+                          key={e}
+                        >
                           <td className="flex items-center gap-2 w-[16.6%] ">
                             <Image
                               src={
@@ -429,7 +425,6 @@ function AdminStudent() {
                             {e?.courses || "No Group"}
                           </td>
                           <td className="w-[16.6%] text-center cursor-pointer">
-
                             {!e.active ? (
                               <p
                                 className="text-red-500 "
@@ -531,8 +526,15 @@ function AdminStudent() {
                               </p>
                             )}
                           </td>
-                          <td className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
-                            onClick={() => router.push({ pathname: "/reta/mentorprofile", query: { uid: e.uid } })}>
+                          <td
+                            className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
+                            onClick={() =>
+                              router.push({
+                                pathname: "/reta/mentorprofile",
+                                query: { uid: e.uid },
+                              })
+                            }
+                          >
                             View Profile
                           </td>
                         </tr>
@@ -564,10 +566,12 @@ function AdminStudent() {
                   </svg>
                 </button>
 
-
                 {Array.from({ length: numberOfPages }, (_, index) => (
                   <button
-                    className={`${(count == (index + 1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                    key={index}
+                    className={`${
+                      count == index + 1 ? activeTabClass : tabClass
+                    } px-4 overflow-sc
                         `}
                     name={index + 1}
                     onClick={handleClick}
@@ -575,7 +579,6 @@ function AdminStudent() {
                     {index + 1}
                   </button>
                 ))}
-
 
                 <button
                   className="w-6 h-5 border flex justify-center items-center"

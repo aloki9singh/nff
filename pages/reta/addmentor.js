@@ -38,7 +38,7 @@ function AddMentor() {
           return ele.displayName.includes(searchState);
         })
     );
-  }, [searchState, isMediumScreen]);
+  }, [searchState, isMediumScreen, filterMentor]);
 
   const handleTabClick = (tab) => {
     setSearchState("");
@@ -60,8 +60,7 @@ function AddMentor() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   function handleClick(e) {
-
-    const totalPage = Math.ceil(mentor.length / 10)+1;
+    const totalPage = Math.ceil(mentor.length / 10) + 1;
     const name = e.currentTarget.getAttribute("name");
 
     switch (name) {
@@ -92,11 +91,10 @@ function AddMentor() {
     }
   }
 
-
-  useEffect(()=>{
-    const totalPage = Math.ceil(mentor?.length / 1)+1;
+  useEffect(() => {
+    const totalPage = Math.ceil(mentor?.length / 1) + 1;
     setNumberOfPages(totalPage);
-  })
+  }, [mentor.length]);
 
   return (
     <>
@@ -275,7 +273,10 @@ function AddMentor() {
                 </button>
                 {Array.from({ length: numberOfPages }, (_, index) => (
                   <button
-                    className={`${(count == (index + 1)) ? activeTabClass : tabClass} px-4 overflow-sc
+                    key={index}
+                    className={`${
+                      count == index + 1 ? activeTabClass : tabClass
+                    } px-4 overflow-sc
                         `}
                     name={index + 1}
                     onClick={handleClick}
