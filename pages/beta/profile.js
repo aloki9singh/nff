@@ -8,15 +8,8 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 
 import {
   collection,
-  query,
-  where,
   getDocs,
-  getDoc,
-  updateDoc,
   doc,
-  arrayUnion,
-  serverTimestamp,
-  setDoc,
 } from "firebase/firestore";
 
 import { db } from "@/config/firebaseconfig";
@@ -68,7 +61,7 @@ function StudentProfile() {
       setenrolledcourses(data);
     }
     fetchEnrolledCourses();
-  }, [user.uid])
+  }, [user?.uid])
 
 
   if (!user || !userProfile) {
