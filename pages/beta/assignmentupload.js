@@ -109,7 +109,7 @@ const Assignmentupload = () => {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        // console.log("Upload is " + progress + "% done");
         setProgress(progress);
       },
       (error) => {
@@ -134,7 +134,7 @@ const Assignmentupload = () => {
       alert("Enter a valid link");
     } else {
       try {
-        console.log("here");
+        // console.log("here");
         uploadBytes(storageRef, file)
           .then(() => console.log("success"))
           .catch((err) => console.log(err));

@@ -14,7 +14,7 @@ export default function Terms() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-  console.log(showSideBar, SideBarState);
+  // console.log(showSideBar, SideBarState);
 
   useEffect(() => {
     if (isMediumScreen) {

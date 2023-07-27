@@ -68,7 +68,7 @@ export default function Payment() {
       checksum: "asda",
     };
     const res = await axios.post("/api/provoke", options);
-    console.log(res);
+    // console.log(res);
   };
 
   const initializeRazorpay = () => {

@@ -27,9 +27,21 @@ const firebaseConfig = {
 };
 
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
+//   authDomain: "neatskills9.firebaseapp.com",
+//   projectId: "neatskills9",
+//   storageBucket: "neatskills9.appspot.com",
+//   messagingSenderId: "952981699338",
+//   appId: "1:952981699338:web:e09b299b7e5df400e898f3",
+//   measurementId: "G-3F1WXPES83"
+// };
+
+
 // Initialize Firebase
 // const app = initializeApp(firebaseConfig, "baseApp");
   const app = initializeApp(firebaseConfig, 'neatskills-1c31c');
+  // const app = initializeApp(firebaseConfig, 'neatskills9');
 
 export default app;
 

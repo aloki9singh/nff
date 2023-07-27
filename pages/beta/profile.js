@@ -40,7 +40,7 @@ function StudentProfile() {
   }
 
   const { user, userProfile } = useAuthContext();
-  console.log(userProfile);
+  // console.log(userProfile);
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -57,7 +57,7 @@ function StudentProfile() {
       const querySnapshot = await getDocs(collectionRef)
 
       const data = querySnapshot.docs.map((doc) => doc.data());
-      console.log(data);
+      // console.log(data);
       setenrolledcourses(data);
     }
     fetchEnrolledCourses();

@@ -33,14 +33,14 @@ function CheckClassSchedule() {
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
-  console.log(auth.currentUser);
+  // console.log(auth.currentUser);
   const router = useRouter();
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+      // console.log(currentUser);
       setUser(currentUser);
     });
     return () => {

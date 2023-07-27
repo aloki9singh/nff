@@ -7,7 +7,7 @@ import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 
 export default function Progress({ percentage }) {
   const { userProfile, user } = useAuthContext();
-  console.log(user);
+  // console.log(user);
   return (
     <div className="w-full mx-auto">
       <div className="text-white  p-2">

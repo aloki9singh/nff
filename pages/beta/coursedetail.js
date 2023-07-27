@@ -30,7 +30,7 @@ const Afterlogin = () => {
   const userID = useAuthContext().user;
 
   
-  console.log(course)
+  // console.log(course)
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -39,7 +39,7 @@ const Afterlogin = () => {
 
   useEffect(() => {
     if (title) {
-      console.log(title);
+      // console.log(title);
     }
 
     const fetchCourseData = async () => {
@@ -48,7 +48,7 @@ const Afterlogin = () => {
         const courseRef = collection(db, "courses");
         const q = query(courseRef, where("title", "==", title));
         const courseDocs = await getDocs(q);
-        console.log(courseDocs)
+        // console.log(courseDocs)
         if (courseDocs.empty) {
           setCourse("asdfjjf");
         } else {
@@ -144,7 +144,7 @@ const Afterlogin = () => {
                 </div>
                 <div className="rounded-tl-[30px] rounded-tr-[30px] md:rounded-tr-[0] bg-[#373A41] flex flex-col md:flex-row ">
                   <div className="flex-col md:w-3/5 text-base space-y-10">
-                    {console.log("herrlo", course)}
+                    {/* {console.log("herrlo", course)} */}
                     {course?.QA?.learn ? (
                       <div className="w-[90%] md:w-[80%] mx-auto my-4 mt-10  bg-[#2D2E35] rounded-[30px] px-4 py-3">
                         <h1 className="text-2xl text-center my-6">

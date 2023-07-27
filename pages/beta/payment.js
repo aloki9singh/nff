@@ -22,6 +22,7 @@ const Payment = () => {
     isTrialValid = CourseAccess(user.uid).isTrialValid;
   }
 
+
   const handleToastMessage = () => {
     setShowToast(true);
   };
@@ -73,7 +74,7 @@ const Payment = () => {
         console.error("Error activating trial:", error);
       }
 
-      console.log(trialStartDate, trialEndDate);
+      // console.log(trialStartDate, trialEndDate);
     }
   };
 
