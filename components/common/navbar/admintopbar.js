@@ -23,7 +23,7 @@ export default function AdminTopbar({ heading, toggleSideBar }) {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
   const [nav, setNav] = useState(false);
-  console.log(userProfile);
+  // console.log(userProfile);
 
   useEffect(() => {
     // const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

@@ -11,7 +11,7 @@ export default async function sendEmail(req, res) {
       text: `<p>Welcome, ${data.displayName}! Thank you for signing up to NeatSkills.</p>`,
       html: `<p>Welcome, ${data.displayName}! Thank you for signing up to NeatSkills.</p>`,
     });
-    console.log("Welcome email sent successfully!", data);
+    // console.log("Welcome email sent successfully!", data);
     res.status(200).json({ success: true });
   } catch (error) {
     console.error("Failed to send welcome email:", error);

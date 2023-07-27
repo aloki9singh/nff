@@ -120,7 +120,7 @@ function Videos() {
   const title = router.query.title ? router.query.title : "Basics of C++";
 
   const startVideoStream = (videoUrl) => {
-    console.log(modules[0].video);
+    // console.log(modules[0].video);
     // setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
     setVideoUrl(videoUrl);
   };
@@ -148,7 +148,7 @@ function Videos() {
           courseDocs.forEach((doc) => {
             courseData = doc.data();
           });
-          console.log(courseData);
+          // console.log(courseData);
           // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
           setModules(courseData.modules);
           setCourse(courseData);

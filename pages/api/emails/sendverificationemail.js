@@ -33,7 +33,7 @@ export default async function sendEmail(req, res) {
       html: `<p>Please click the following button to verify your email:</p>
       <a href="${process.env.NEXT_PUBLIC_BASEURL}/beta/profilecontinue?email=${data.email}&key=${verificationKey}" style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a>`,
     });
-    console.log('verification email sent successfully!', data);
+    // console.log('verification email sent successfully!', data);
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Failed to send verification email:', error);

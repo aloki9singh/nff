@@ -64,7 +64,7 @@ function MentorStudent() {
         const courseCollection = collection(db, "courses");
         const courseInfo = await getDocs(courseCollection);
         const courseList = courseInfo.docs.map((doc) => doc.data());
-        console.log("courseList", courseList);
+        // console.log("courseList", courseList);
         setDetails(courseList);
         setDataFetched(true);
       }
@@ -93,7 +93,7 @@ function MentorStudent() {
 
   function handleClick(e) {
     const totalPage = Math.ceil(courseData.coursedata.length / 8) + 1;
-    console.log("totalPage", totalPage);
+    // console.log("totalPage", totalPage);
     setNumberOfPages(totalPage);
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
@@ -131,7 +131,7 @@ function MentorStudent() {
 
   userProfile.joinedStudents?.map((student) => {
     const joinDate = new Date(student.joinedAt?.seconds * 1000);
-    console.log(joinDate.getDate());
+    // console.log(joinDate.getDate());
     chartData[joinDate.getMonth()]++;
     if (joinDate.getDate() == new Date().getDate()) {
       // console.log("today");

@@ -25,7 +25,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
   const [user, setUser] = useState("");
 
   const { userProfile } = useAuthContext();
-  console.log(userProfile, "UserP");
+  // console.log(userProfile, "UserP");
 
   const val = date.getYear() + date.getMonth() + date.getDate();
   const Mentorname = userProfile
@@ -104,7 +104,7 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
           alert("New Class is Scheduled");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           alert("Something went wrong!");
         });
     } else {
@@ -117,14 +117,14 @@ const SideBodyClassSchedule = ({ count, setCount }) => {
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+      // console.log(currentUser);
       setUser(currentUser);
     });
     return () => {
       unsubscribe();
     };
   }, []);
-  console.log();
+
   return (
     <div className="h-full">
       <div

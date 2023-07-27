@@ -74,7 +74,7 @@ const SideBodyDelete = ({ count, setCount }) => {
       setCount(1);
       alert("Schedule is Deleted");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert("Something went wrong!");
     }
   };

@@ -38,7 +38,7 @@ export default function Students() {
       .then((response) => response.json())
       .then((data) => {
         const students = data.users.filter((ele) => ele.role === "student");
-        console.log(students);
+        students;
         setFilterData(students);
         setStudents(students);
       });
@@ -50,7 +50,7 @@ export default function Students() {
 
   const filteredStudentData = useMemo(
     () => filterStudentData(),
-    [ filterStudentData]
+    [filterStudentData]
   );
   useEffect(() => {
     if (isMediumScreen) {

@@ -30,7 +30,7 @@ export default async function receiveEmail(req, res) {
           <p><strong>Query:</strong> ${data.query}</p>
         `,
     });
-    console.log("Email sent to receiver", data);
+    // console.log("Email sent to receiver", data);
     res.status(200).json({ success: true });
   } catch (error) {
     console.error("Failed to send email:", error);
