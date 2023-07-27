@@ -121,7 +121,7 @@ const Assignmentupload = () => {
         });
       }
     );
-  }, [file]);
+  }, [file , storageRef]);
 
   useEffect(() => {
     if (file) {
