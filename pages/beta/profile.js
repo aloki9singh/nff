@@ -68,7 +68,7 @@ function StudentProfile() {
       setenrolledcourses(data);
     }
     fetchEnrolledCourses();
-  }, [user.uid])
+  }, [user?.uid])
 
 
   if (!user || !userProfile) {
