@@ -396,6 +396,7 @@ const Chat = ({
               id="formFileSm"
               type="file"
               name="formFileSm"
+              accept="image/*"
             />
           </label>
         </div>

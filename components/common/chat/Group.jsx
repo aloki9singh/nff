@@ -162,7 +162,7 @@ const GroupDetails = ({
       >
         <p className="text-xs">Media Link and Docs</p>
         <div
-          className="flex gap-6 p-2 overflow-x-auto no-scrollbar "
+          className="flex gap-4 p-2 overflow-x-auto no-scrollbar "
           style={{ backgroundColor: "#505357" }}
         >
           {images.map(({ content }, index) => (
@@ -171,7 +171,7 @@ const GroupDetails = ({
               alt=""
               height={100}
               width={100}
-              className="w-16"
+              className="w-20 h-28 object-cover"
               key={index}
             />
           ))}

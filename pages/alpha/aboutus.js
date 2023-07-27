@@ -136,7 +136,7 @@ const Aboutus = () => {
         >
           <p className="text-white">We are here to</p>
           <p className=" bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   ">
-            gaurantee your success
+            Your Skill Development Partner
           </p>
         </div>
 
@@ -146,11 +146,7 @@ const Aboutus = () => {
             style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
           >
             <p className="text-sm md:text-xl lg:text-2xl lg:px-11  ">
-              ConsultUs provides consulting services that help business owners
-              and leaders build a more valuable business. We worked with their
-              founder to build a professional, modern site that follows the
-              StoryBrand framework to clearly communicate the value it adds to
-              potential clients.
+              neatskills.tech is developed and managed by Provoke Developers Private Limited. At the core of this, we value quality and want to provide everyone with the affordable way to access any skill and explore themselves in their own way with their own lifelong learning partner.
             </p>
           </div>
           <Image
@@ -207,43 +203,37 @@ const Aboutus = () => {
 
           <div className="flex flex-col md:flex-row py-4 ">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Unmatched Service
+              We believe in
             </p>
             <p className=" text-white ">
-              Support corporate clients and financial investors with their
-              growth strategy and international development.
+              Affordability
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Specific
+              Quality
             </p>
             <p className="text-white ">
-              ConsultUs core expertise lies in the ability to support our
-              clients in understanding, analysing and executing commercial and
-              investment strategies in specific markets.
+              Skills
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Experience
+              Why We?
             </p>
             <p className="text-white">
-              Experience in working with and assisting a wide range of clients
-              from international corporations to small/medium-sized businesses,
-              from large corporate debt providers to mid-market private equity
-              investors.
+              We love to do stuffs for everyone
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Technology
+              Provoke Developers Private Limited?
             </p>
             <p className="text-white ">
-              The best combination of technology and people.
+              The parent company of neatskills.tech 
             </p>
           </div>
         </div>
@@ -252,42 +242,34 @@ const Aboutus = () => {
         <div className="">
           <span className="text-4xl  font-extrabold text-white">Our</span>
           <span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
-            Commitment
+            Love
           </span>
           <div className="md:w-[40rem] h-1 bg-white mt-2 " />
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Ethics
+              & Support
             </p>
             <p className="text-white">
-              Ethics for ConsultUs means ensuring our customers the
-              confidentiality and uniqueness of the service they are provided. A
-              client must be reassured by the fact that the service provided to
-              them is made-to-measure and will not be recycled for their
-              competitors.
+              We love you as much you do and want to stand and be with you unconditially.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Quality
+              Care
             </p>
             <p className="text-white">
-              ConsultUs is committed to ensuring that our advice and
-              recommendations are based on the best combination of methods,
-              information research, creativity and internal quality assurance.
+              We care for your future with skills & academics both.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              Continuity
+              Impact
             </p>
             <p className="text-white">
-              ConsultUs considers that the continuity of relations on the long
-              term with its clients is the guarantee of the satisfaction of
-              these and the quality of the services provided.
+              We want to create an great impact in this world with neatskills.tech by Provoke Developers Private Limiited.
             </p>
           </div>
         </div>
@@ -296,7 +278,7 @@ const Aboutus = () => {
       {/* Our Team */}
       <div className="max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16">
         <h1 className="mb-4  px-2 text-center text-2xl md:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
-          our successful team
+          The team 
         </h1>
         <div
           ref={scrollContainerRef}
