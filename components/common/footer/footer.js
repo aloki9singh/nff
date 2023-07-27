@@ -15,19 +15,19 @@ export default function Footer({background}) {
    const CompanyInformationLinks = [
       {
          title: "About Us",
-         link: "/",
+         link: "/aboutus",
       },
       {
          title: "Help",
-         link: "/",
+         link: "/helpandsupport",
       },
       {
          title: "Privacy Policy",
-         link: "/",
+         link: "/privacypolicy",
       },
       {
          title: "Terms and Conditions",
-         link: "/",
+         link: "/termsandconditions",
       },
    ];
    const PopularCoursesLink = [
