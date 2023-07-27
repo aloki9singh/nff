@@ -3,7 +3,7 @@ import { addDoc, doc, getDoc, getDocs, serverTimestamp, setDoc, updateDoc } from
 
 async function handler(req, res) {
     const { method } = req;
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', `${process.env.NEXT_PUBLIC_BASEURL}`);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     
     try {
