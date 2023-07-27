@@ -59,8 +59,6 @@ const Assignmentupload = () => {
     setFile(selectedFile);
   };
 
-  
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     course[0].file = url;
@@ -101,7 +99,9 @@ const Assignmentupload = () => {
       console.log("Course not found.");
     }
   };
+
   const storageRef = ref(storage, `assignment/${file.name}`);
+
   const uploadFile = useCallback(async () => {
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
@@ -121,13 +121,14 @@ const Assignmentupload = () => {
         });
       }
     );
-  }, [file, storageRef]);
+  }, [file]);
 
   useEffect(() => {
     if (file) {
       uploadFile();
     }
   }, [file, uploadFile]);
+
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
       alert("Enter a valid link");
@@ -150,7 +151,6 @@ const Assignmentupload = () => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-
     const getData = async () => {
       const courseRef = doc(db, "courses", courseid);
       const courseInfo = await getDoc(courseRef);
@@ -161,14 +161,16 @@ const Assignmentupload = () => {
           const q = query(assignmentRef, where("id", "==", id));
           const querySnapshot = await getDocs(q);
           const arr = [];
-          querySnapshot.forEach((doc) => {
-            setSubmitted(
-              doc.data().files.map((ele) => {
-                if (ele.submittedby == user.uid) {
-                  return true;
-                }
-              })
-            );
+          querySnapshot.docs.forEach((doc) => {
+            if (doc.data().files){
+              setSubmitted(
+                doc.data().files.map((ele) => {
+                  if (ele.submittedby == user.uid) {
+                    return true;
+                  }
+                })
+              );
+            }
             arr.push(doc.data());
           });
   
@@ -314,7 +316,8 @@ const Assignmentupload = () => {
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
                       value={link}
-                      onChange={() => setLink(e.target.value)}
+                      disabled={file?true:false}
+                      onChange={(e) => setLink(e.target.value)}
                     />
                     <button
                       onClick={uploadAssignmentFile}
