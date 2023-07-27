@@ -118,6 +118,12 @@ export default function Footer({background}) {
                <SocialLinks className={"hidden md:flex"} />
             </div>
          </div>
+
+         <div className="w-full text-white text-sm text-center pb-2">
+            <a href="https://www.provokedev.tech/team">
+            &copy; NeatSkills tech managed by Provoke Developers Private Limited
+            </a>
+             </div>
       </div>
    );
 }
