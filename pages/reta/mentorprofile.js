@@ -18,37 +18,64 @@ const MentorProfile = () => {
   const [id, setId] = useState("");
 
   // Fetch user data from Firebase and courses data once, on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userDoc = await getDoc(doc(db, "allusers", uid));
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          setData(userData);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const userDoc = await getDoc(doc(db, "allusers", uid));
+  //       if (userDoc.exists()) {
+  //         const userData = userDoc.data();
+  //         setData(userData);
 
-          if (userData.details?.interest) {
-            const coursesCollection = collection(db, "courses");
-            const q = query(
-              coursesCollection,
-              where("title", "==", userData.details.interest)
-            );
-            const querySnapshot = await getDoc(q);
-            querySnapshot.forEach((doc) => {
-              const documentData = doc.data();
-              setId(documentData.uid);
-              console.log(documentData);
-            });
-          }
+  //         if (userData.details?.interest) {
+  //           const coursesCollection = collection(db, "courses");
+  //           const q = query(
+  //             coursesCollection,
+  //             where("title", "==", userData.details.interest)
+  //           );
+  //           const querySnapshot = await getDoc(q);
+  //           querySnapshot.forEach((doc) => {
+  //             const documentData = doc.data();
+  //             setId(documentData.uid);
+  //             console.log(documentData);
+  //           });
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+  const fetchData = useCallback(async () => {
+    try {
+      const userDoc = await getDoc(doc(db, "allusers", uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setData(userData);
+
+        if (userData.details?.interest) {
+          const coursesCollection = collection(db, "courses");
+          const q = query(
+            coursesCollection,
+            where("title", "==", userData.details.interest)
+          );
+          const querySnapshot = await getDoc(q);
+          querySnapshot.forEach((doc) => {
+            const documentData = doc.data();
+            setId(documentData.uid);
+            console.log(documentData);
+          });
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
       }
-    };
-
-    fetchData();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }, [uid]);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData])
 
-  console.log(data);
 
   // Use useCallback for handleChange to prevent recreation on each render
   const handleChange = useCallback((e) => {
