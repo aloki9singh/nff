@@ -119,9 +119,9 @@ export default function Footer({background}) {
             </div>
          </div>
 
-         <div className="w-full text-white text-sm">
+         <div className="w-full text-white text-sm text-center pb-2">
             <a href="https://www.provokedev.tech/team">
-            &copy; neatskills,tech managed by Provoke Developers Private Limited
+            &copy; NeatSkills tech managed by Provoke Developers Private Limited
             </a>
              </div>
       </div>
