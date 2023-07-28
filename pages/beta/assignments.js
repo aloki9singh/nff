@@ -35,7 +35,7 @@ function Assignments() {
   const [course, setCourse] = useState()
   const [moduleName, setModuleName] = useState()
   const [uniqCourse, setUnique] = useState([])
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState()
 
   //yet to write logic to change course bougth or not ??
 
@@ -80,22 +80,17 @@ function Assignments() {
           arr[i].map((e) => {
             const data = {
               course: e.course,
-              module: e.module
+              module: e.module,
+            };
+            const isUnique = uniq.findIndex((item) => item == e.course) !== -1;
+            if (!isUnique) {
+              uniq.push(e.course);
             }
-            const isDuplicate = moduleInfo.findIndex((item) => (
-              item.course === data.course && item.module === data.module
-            )) !== -1;
-
+            const isDuplicate = moduleInfo.findIndex((item) => item.course === data.course && item.module === data.module) !== -1;
             if (!isDuplicate) {
               moduleInfo.push(data);
             }
-            const isUnique = uniq.findIndex((item) => (
-              item == e.course
-            )) !== -1;
-            if (!isUnique) {
-              uniq.push(e.course)
-            }
-          })
+          });
         }
       }
       setUnique(uniq)
@@ -104,10 +99,8 @@ function Assignments() {
     }
 
     getCourseId();
-  }, [isMediumScreen, user.uid]);
-  console.log(uniqCourse)
+  }, [isMediumScreen, user.uid, value]);
 
-  console.log(course)
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -183,7 +176,7 @@ function Assignments() {
                   </div>
                   <select
                     name="course"
-                    onChange={(e) => setValue(e.value)}
+                    onChange={(e) => setValue(e.target.value)}
                     value={value}
                     className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
                   >
@@ -199,7 +192,8 @@ function Assignments() {
                         {ele}
                       </option>
                     })}
-                    {/* {dataFetched?.map((e) => (
+                  </select>
+                  {/* {dataFetched?.map((e) => (
                       <option
                         key={e.id} // Use a unique key for each option
                         className="text-xs cursor-pointer"
@@ -209,22 +203,23 @@ function Assignments() {
                         {e.title}
                       </option>
                     ))} */}
-                  </select>
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
                   <div className="max-h-screen  overflow-scroll scrollbar-hide">
                     {
                       moduleData && moduleData.map((ele, i) => {
-                        return (
-                          <div
-                            key={i}
-                            className={module === i ? Activestyle : Inactivestyle} // Note: Use === for comparison
-                            onClick={() => { setModuleName(ele.module); setModule(i) }}
-                          >
-                            {`${i + 1}. ${ele.course} - ${ele.module}`}
-                          </div>
-                        )
+                        if (ele.course == value) {
+                          return (
+                            <div
+                              key={i}
+                              className={module === i ? Activestyle : Inactivestyle} // Note: Use === for comparison
+                              onClick={() => { setModuleName(ele.module); setModule(i) }}
+                            >
+                              {`${i + 1}. ${ele.course} - ${ele.module}`}
+                            </div>
+                          )
+                        }
                       })
                     }
                   </div>
@@ -241,7 +236,7 @@ function Assignments() {
                       course && course.map((e, i) => {
                         return e.map((ele, j) => {
                           {
-                            if (moduleName && (ele.module === moduleName)) {
+                            if (moduleName && (ele.module === moduleName) && value != "") {
                               return (
                                 <AssignmentCard
                                   key={i}
