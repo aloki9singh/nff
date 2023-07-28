@@ -13,14 +13,14 @@ const getCourseDescription = async (courseId) => {
   try {
     const docSnap = await getDoc(doc(db, "courses", courseId));
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      // console.log("Document data:", docSnap.data());
       return docSnap.data().desc;
     } else {
       // doc.data() will be undefined in this case
-      console.log("No such document!");
+      // console.log("No such document!");
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return "";
   }
 };
@@ -61,7 +61,7 @@ const GroupDetails = ({
     getDesc();
   }, [currReciever]);
 
-  console.log(currReciever);
+  // console.log(currReciever);
 
   const user = auth.currentUser;
   useEffect(() => {
@@ -76,7 +76,7 @@ const GroupDetails = ({
   };
 
   const memberClickHandler = async (member) => {
-    console.log(member);
+    // console.log(member);
 
     if (member.uid === user.uid) return;
 
@@ -88,7 +88,7 @@ const GroupDetails = ({
     // else create a new group
     const docSnap = await getDoc(doc(db, "chatGroups", id));
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      // console.log("Document data:", docSnap.data());
       setCurrReciever(docSnap.data());
       setShowUser(false);
       return;
@@ -162,7 +162,7 @@ const GroupDetails = ({
       >
         <p className="text-xs">Media Link and Docs</p>
         <div
-          className="flex gap-6 p-2 overflow-x-auto no-scrollbar "
+          className="flex gap-4 p-2 overflow-x-auto no-scrollbar "
           style={{ backgroundColor: "#505357" }}
         >
           {images.map(({ content }, index) => (
@@ -171,7 +171,7 @@ const GroupDetails = ({
               alt=""
               height={100}
               width={100}
-              className="w-16"
+              className="w-20 h-28 object-cover"
               key={index}
             />
           ))}

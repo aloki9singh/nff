@@ -123,14 +123,14 @@ const Mainbodymentor = () => {
           let arr = [];
           for (var i in docSnapshots) {
             const doc = docSnapshots[i].data();
-            console.log(doc);
+            // console.log(doc);
             arr.push(doc);
           }
           setDataFetched(arr);
           setLoading(false);
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         alert("Something went wrong!");
       }
     };

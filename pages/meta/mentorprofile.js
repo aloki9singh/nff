@@ -51,7 +51,7 @@ const MentorProfile = () => {
       querySnapshot.forEach((doc) => {
         const documentData = doc.data();
         setId(documentData.uid);
-        console.log(documentData);
+        // console.log(documentData);
       });
     };
 
@@ -62,7 +62,7 @@ const MentorProfile = () => {
       if (!querySnapshot.empty) {
         const documentData = querySnapshot.data();
         setData(documentData);
-        console.log(documentData);
+        // console.log(documentData);
       }
     };
 

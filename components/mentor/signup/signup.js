@@ -73,19 +73,19 @@ const MentorSignupcomp = () => {
         );
         const userSnapshot = await getDocs(userQuery);
 
-        console.log(userSnapshot);
+        // console.log(userSnapshot);
         if (userSnapshot.empty) {
           alert("User not found!");
         } else {
           // Get the user document
           const user = userSnapshot.docs[0].data();
-          console.log(user,"this")
+          // console.log(user,"this")
           if (user.role !== "mentor") {
             alert("You may be authorized for different role!");
             router.push("/");
           } else {
             const value = await sendPasswordResetEmail(auth, email);
-            console.log(value);
+            // console.log(value);
             alert("Password reset email sent. Please check your inbox/spam.");
           }
         }

@@ -8,7 +8,7 @@ import Image from "next/image";
 // import MentorChart from "../components/Mentor/MentorChart";
 import { setIn } from "formik";
 import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
-import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
 import { useMediaQuery } from "react-responsive";
@@ -16,31 +16,31 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 function MentorProfile() {
   const router = useRouter();
-  const [profile, setProfile] = useState()
-  const [edit, setEdit] = useState(false)
-  
+  const [profile, setProfile] = useState();
+  const [edit, setEdit] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
-      const usersCollection = collection(db, "allusers");
-      const q = doc(usersCollection, user.uid)
-      const querySnapshot = await getDoc(q);
+      if (!user) return; // Return early if user is not available
+
+      const docRef = doc(db, "allusers", user.uid);
+      const querySnapshot = await getDoc(docRef);
       if (!querySnapshot.empty) {
         setProfile(querySnapshot.data());
       }
-    }
-    getData()
-  }, [user])
+    };
+
+    getData();
+  }, [user]);
   const handleChange = (e) => {
-    e.preventDefault()
-    setProfile({ ...profile, [e.target.name]: e.target.value })
-  }
+    e.preventDefault();
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const { user } = useAuthContext()
-
-  
+  const { user } = useAuthContext();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -60,21 +60,20 @@ function MentorProfile() {
     // store to firestore
     try {
       const docRef = await updateDoc(
-        doc(db, "allusers",user.uid ),
+        doc(db, "allusers", user.uid),
         schoolProfile
       );
       // console.log("Document written with ID: ", docRef.id);
       alert("Profile Updated");
-      setEdit(false)
+      setEdit(false);
     } catch (e) {
       console.log(e);
     }
   };
 
   const handleClick = () => {
-    setEdit(!edit)
-  }
-
+    setEdit(!edit);
+  };
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -93,8 +92,9 @@ function MentorProfile() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <Schoolsidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -106,11 +106,12 @@ function MentorProfile() {
               <Schoolsidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
-          <div
-            className="col-span-5 bg-[#2E3036] w-full lg:col-span-4 "
-          >
+          <div className="col-span-5 bg-[#2E3036] w-full lg:col-span-4 ">
             <div className=" md:bg-[#2E3036] bg-[#141518] top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-              <SchoolTopbar heading="My Progress" toggleSideBar={toggleSideBar} />
+              <SchoolTopbar
+                heading="My Progress"
+                toggleSideBar={toggleSideBar}
+              />
             </div>
             <hr className="hidden lg:block opacity-50 " />
             <div className="text-white grow flex flex-col items-center justify-center h-fit md:pt-0">
@@ -132,9 +133,7 @@ function MentorProfile() {
                   </div>
                 </div>
                 <div className="w-[200px] border rounded-lg bg-slate-800 p-4 mr-4">
-                  <h1 className="text-center text-xl">
-                    {profile?.authCode}
-                  </h1>
+                  <h1 className="text-center text-xl">{profile?.authCode}</h1>
                   <br />
                   <p className="text-sm">
                     {profile?.buiding}, {profile?.city}, {profile?.district}
@@ -143,19 +142,31 @@ function MentorProfile() {
               </div>
             </div>
             {/* /// */}
-            {!edit ? <div className="flex justify-end mt-8 mr-8">
-              <button className="p-4 px-8 bg-[#505057] text-white rounded-[10px]" onClick={handleClick}>
-                Edit Profile
-              </button>
-            </div> :
+            {!edit ? (
               <div className="flex justify-end mt-8 mr-8">
-                <button className="p-4 px-8 bg-[#A145CD] text-white rounded-[10px] mr-2  " onClick={onSubmitHandler}>
+                <button
+                  className="p-4 px-8 bg-[#505057] text-white rounded-[10px]"
+                  onClick={handleClick}
+                >
+                  Edit Profile
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-end mt-8 mr-8">
+                <button
+                  className="p-4 px-8 bg-[#A145CD] text-white rounded-[10px] mr-2  "
+                  onClick={onSubmitHandler}
+                >
                   Save
                 </button>
-                <button className="p-4 px-8 bg-[#505057] text-white rounded-[10px]" onClick={handleClick}>
+                <button
+                  className="p-4 px-8 bg-[#505057] text-white rounded-[10px]"
+                  onClick={handleClick}
+                >
                   Cancel
                 </button>
-              </div>}
+              </div>
+            )}
             <div className="md:flex  gap-5 m-5  md:mt-0 text-white">
               <form
                 method="post"
@@ -168,11 +179,7 @@ function MentorProfile() {
                 </div>
 
                 <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
-                  <label
-                    htmlFor=""
-                  >
-                    Name of School
-                  </label>
+                  <label htmlFor="">Name of School</label>
                   <input
                     type="text"
                     placeholder="Type Here"
@@ -225,7 +232,6 @@ function MentorProfile() {
                       required
                     />
                   </div>
-
                 </div>
 
                 <div className="w-full md:w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8  text-white">
@@ -374,7 +380,8 @@ function MentorProfile() {
                       City
                     </label>
                     <input
-                      type="text" E
+                      type="text"
+                      E
                       placeholder="Type Here"
                       className="w-full md:w-[62%] h-10 rounded-lg px-2"
                       style={{ background: "#505057" }}
@@ -423,7 +430,12 @@ function MentorProfile() {
                     />
                   </div>
                   <div className="w-[50%] flex-col md:flex md:flex-row  justify-between md:items-center md:flex-1">
-                    <label htmlFor="" className="whitespace-nowrap md:flex-1 mr-[4.3em]">Country</label>
+                    <label
+                      htmlFor=""
+                      className="whitespace-nowrap md:flex-1 mr-[4.3em]"
+                    >
+                      Country
+                    </label>
                     <input
                       type="text"
                       placeholder="Type Here"
@@ -480,16 +492,19 @@ function MentorProfile() {
                     name="facebookLink"
                     required
                   />
-
                 </div>
-                {edit ? <div className="w-full md:w-[80%] flex flex-col md:flex-row   gap-y-2 md:gap-x-16 p-8 mb-8  text-white">
-                  <label htmlFor="" className="whitespace-nowrap">
-                    School Logo
-                  </label>
-                  <div className="border border-gray-300 rounded-10 flex justify-center items-center p-4 md:w-full">
-                    <IDdraganddrop />
+                {edit ? (
+                  <div className="w-full md:w-[80%] flex flex-col md:flex-row   gap-y-2 md:gap-x-16 p-8 mb-8  text-white">
+                    <label htmlFor="" className="whitespace-nowrap">
+                      School Logo
+                    </label>
+                    <div className="border border-gray-300 rounded-10 flex justify-center items-center p-4 md:w-full">
+                      <IDdraganddrop />
+                    </div>
                   </div>
-                </div> : ""}
+                ) : (
+                  ""
+                )}
               </form>
             </div>
           </div>

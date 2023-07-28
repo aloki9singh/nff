@@ -219,7 +219,7 @@ const Chat = ({
 
     uploadToFirebase(file, async (url) => {
       const chatGroupRef = doc(db, "chatGroups", currReciever.groupId);
-      console.log("image url", url);
+      // console.log("image url", url);
       const messagesRef = collection(chatGroupRef, "messages");
       const newMessageRef = doc(messagesRef);
 
@@ -396,6 +396,7 @@ const Chat = ({
               id="formFileSm"
               type="file"
               name="formFileSm"
+              accept="image/*"
             />
           </label>
         </div>

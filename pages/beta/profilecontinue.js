@@ -35,7 +35,7 @@ const ProfileContinuepage = () => {
           displayName: user.email.substring(0, 5),
           email: user.email,
         });
-        console.log("updated",userProfile);
+        // console.log("updated",userProfile);
       }
 
     });

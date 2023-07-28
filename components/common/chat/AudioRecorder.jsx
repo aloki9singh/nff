@@ -171,7 +171,7 @@ const AudioRecorder = ({ groupId, setShowRecorder }) => {
       timestamp: serverTimestamp(),
     };
 
-    console.log("message", message);
+    // console.log("message", message);
 
     try {
       await setDoc(newMessageRef, message);

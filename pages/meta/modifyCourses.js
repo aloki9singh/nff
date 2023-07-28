@@ -63,7 +63,7 @@ export default function ModifyCourses() {
       sendSideBarState(false);
     }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("user", user);
+      // console.log("user", user);
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);

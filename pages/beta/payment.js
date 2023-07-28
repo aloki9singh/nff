@@ -12,15 +12,16 @@ import ToastMessage from "@/components/student/payment/ToastMessage";
 const Payment = () => {
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
-
+  const [SideBarState, sendSideBarState] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(false);
   const [showToast, setShowToast] = useState(false);
+
   let isTrialValid = true;
 
   if (user) {
     isTrialValid = CourseAccess(user.uid).isTrialValid;
   }
 
-  console.log(isTrialValid);
 
   const handleToastMessage = () => {
     setShowToast(true);
@@ -73,16 +74,21 @@ const Payment = () => {
         console.error("Error activating trial:", error);
       }
 
-      console.log(trialStartDate, trialEndDate);
+      // console.log(trialStartDate, trialEndDate);
     }
   };
+
+
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
 
   return (
     <>
       <div
-        className={` h-screen ${
-          showToast ? "blur-lg" : null
-        }`}
+        className={` h-screen ${showToast ? "blur-lg" : null
+          }`}
       >
         {showToast && (
           <ToastMessage
@@ -91,7 +97,7 @@ const Payment = () => {
           />
         )}
         <style>{styles}</style>
-        <DashboardNav  heading={"Payment"}/>
+        <DashboardNav heading={"Payment"} toggleSideBar={toggleSideBar} />
         <div className="w-full bg-[#0D0E14] overflow-hidden pt-5">
           <div className="text-center text-white text-lg">
             <h1 className="text-[2.2rem] font-bold">Subscribe</h1>

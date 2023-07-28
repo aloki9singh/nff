@@ -8,15 +8,8 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 
 import {
   collection,
-  query,
-  where,
   getDocs,
-  getDoc,
-  updateDoc,
   doc,
-  arrayUnion,
-  serverTimestamp,
-  setDoc,
 } from "firebase/firestore";
 
 import { db } from "@/config/firebaseconfig";
@@ -47,7 +40,7 @@ function StudentProfile() {
   }
 
   const { user, userProfile } = useAuthContext();
-  console.log(userProfile);
+  // console.log(userProfile);
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -64,11 +57,11 @@ function StudentProfile() {
       const querySnapshot = await getDocs(collectionRef)
 
       const data = querySnapshot.docs.map((doc) => doc.data());
-      console.log(data);
+      // console.log(data);
       setenrolledcourses(data);
     }
     fetchEnrolledCourses();
-  }, [user.uid])
+  }, [user?.uid])
 
 
   if (!user || !userProfile) {

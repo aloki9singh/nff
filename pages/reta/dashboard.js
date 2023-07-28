@@ -48,7 +48,7 @@ const Dashboard = () => {
   //   return null;
   // }
 
-  console.log(userProfile)
+  // console.log(userProfile)
   return (
     <div>
       <div className='flex h-full md:h-screen  md:rounded-tl-[50px]  '>

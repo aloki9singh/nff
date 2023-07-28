@@ -63,7 +63,7 @@ const Chat = () => {
       let arr = [];
       querySnapshot.forEach(async (doc, i) => {
         let chat = doc.data();
-        console.log("chatGroup ", i, chat);
+        // console.log("chatGroup ", i, chat);
         arr.push(chat);
       });
       setChats(arr);

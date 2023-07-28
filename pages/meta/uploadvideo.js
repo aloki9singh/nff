@@ -50,7 +50,7 @@ function Uploadvideo() {
         const modulesData = querySnapshot.docs[0].data().modules.map((d) => d.title);
         setCourseModuleLists(modulesData);
         setId(querySnapshot.docs[0].id);
-        console.log("modules", querySnapshot.docs[0].data().modules)
+        // console.log("modules", querySnapshot.docs[0].data().modules)
       }
     } catch (error) {
       console.log("Error fetching course: ", error);
@@ -71,19 +71,19 @@ function Uploadvideo() {
       (snapshot) => {
         // Handle progress updates here
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
+        // console.log('Upload is ' + progress + '% done');
         setUploadProgress(progress);
       },
       (error) => {
         console.error('Error uploading file:', error);
       },
       async () => {
-        console.log('File uploaded successfully');
+        // console.log('File uploaded successfully');
         setUploadProgress(0);
         setShowSuccessMessage(true);
 
         const downloadURL = await getDownloadURL(storageRef);
-        console.log(downloadURL)
+        // console.log(downloadURL)
         // Get the document reference
         const courseRef = doc(db, "courses", id);
 
@@ -95,9 +95,9 @@ function Uploadvideo() {
               video: downloadURL
             })
           });
-          console.log("Module updated successfully");
+          // console.log("Module updated successfully");
         } catch (error) {
-          console.log("Error updating module:", error);
+          // console.log("Error updating module:", error);
         }
       }
     );
