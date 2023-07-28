@@ -2,10 +2,13 @@ import StudyMaterialCard from '@/components/mentor/studymetrial/card';
 import MentorSidebar from '@/components/common/sidebar/mentor';
 import MentorTopbar from '@/components/common/navbar/mentortopbar';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
 import MetrialInfo from '@/components/mentor/studymetrial/metrialinfo';
+import { useAuthContext } from '@/lib/context/AuthContext';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '@/config/firebaseconfig';
 
 function StudyMaterial() {
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -45,10 +48,42 @@ function StudyMaterial() {
     // return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
 
-  const handleCardClick = () => {
-    setShowStudyMaterialCard(false); // Hide the StudyMaterialCard component
-    setShowMetrailInfo(true); // Show the MetrialInfo component
+  const handleCardClick = (module) => {
+    setSelectedModule(module); // Set the selected module
   };
+
+
+  const { userProfile } = useAuthContext();
+
+  console.log("userProfile", userProfile);
+
+  const courseID = userProfile?.assignedCourses[0]
+
+  const [courseData, setCourseData] = useState(null);
+  const [selectedModule, setSelectedModule] = useState(null);
+  console.log("selectedModule", selectedModule)
+
+  console.log("courseData", courseData)
+  useEffect(() => {
+
+    if (!courseID) {
+      return
+    }
+
+    const sub = onSnapshot(doc(db, "courses", courseID), (doc) => {
+      setCourseData(doc.data())
+    })
+
+
+    return sub;
+
+  }, [courseID])
+
+  if (!courseData) {
+    return <div>Loading...</div>
+  }
+
+
 
   return (
     <div className='flex w-full'>
@@ -57,9 +92,8 @@ function StudyMaterial() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? 'block' : 'hidden'
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
+              className={`fixed right-0 ${SideBarState ? 'block' : 'hidden'
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
@@ -108,16 +142,20 @@ function StudyMaterial() {
                 </div>
               </div>
             )} */}
-            {showStudyMaterialCard && (
-              <div className='bg-[#2D2E35] text-white grow flex items-center justify-center h-full'>
+            {!selectedModule && courseData.modules.map((module, index) => (
+
+              <div key={index} className='bg-[#2D2E35] text-white grow flex items-center justify-center h-full'>
                 <div className='w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  '>
                   <div className='flex justify-center md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5'>
-                    <StudyMaterialCard onClick={handleCardClick} />
+                    <StudyMaterialCard module={module} onClick={() => {
+                      handleCardClick(module)
+                    }} />
                   </div>
                 </div>
               </div>
-            )}
-            {showMetrailInfo && <MetrialInfo />}
+
+            ))}
+            {selectedModule && <MetrialInfo module={selectedModule} />}
           </div>
         </div>
       </div>

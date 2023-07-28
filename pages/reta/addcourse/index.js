@@ -745,7 +745,13 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
       setEditModule(null);
       return;
     }
-    setModules([...modules, data]);
+    setModules([
+      ...modules,
+      data.map((m) => ({
+        ...m,
+        id: generate(),
+      })),
+    ]);
   };
 
   return (

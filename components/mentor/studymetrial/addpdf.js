@@ -1,13 +1,15 @@
-import MentorSidebar from '@/components/common/sidebar/mentor';
-import MentorTopbar from '@/components/common/navbar/mentortopbar';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
-import Video from '@/components/mentor/studymetrial/videos';
-import ShareLink from '@/components/mentor/studymetrial/shareLink';
-import Pdf from '@/components/mentor/studymetrial/pdf';
+import MentorSidebar from "@/components/common/sidebar/mentor";
+import MentorTopbar from "@/components/common/navbar/mentortopbar";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import Video from "@/components/mentor/studymetrial/videos";
+import ShareLink from "@/components/mentor/studymetrial/shareLink";
+import Pdf from "@/components/mentor/studymetrial/pdf";
+import { useDropzone } from "react-dropzone";
+import { uploadToFirebase } from "@/lib/exportablefunctions";
 
-function MetrialInfo() {
+function AddPdf() {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -43,27 +45,28 @@ function MetrialInfo() {
     }
   }, [query]);
 
-  const [selectedModule, setSelectedModule] = useState('Module 1');
-  const [fileName, setFileName] = useState('File Name: Module 1');
+  const [selectedModule, setSelectedModule] = useState("Module 1");
+  const [fileName, setFileName] = useState("File Name: Module 1");
+  const [pdfUrl, setPdfUrl] = useState(null);
 
-  const handleModuleChange = event => {
+  const handleModuleChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedModule(selectedValue);
     setFileName(`File Name: ${selectedValue}`);
   };
 
   return (
-    <div className='w-full  flex flex-col'>
-      <div className='flex items-center p-10'>
-        <div className='mr-3'>File Name:</div>
+    <div className="w-full  flex flex-col">
+      <div className="flex items-center p-10">
+        <div className="mr-3">File Name:</div>
         <input
-          type='text'
-          className='border rounded px-2 py-1 bg-inherit'
-          // Add any additional props or event handlers to the input as needed
+          type="text"
+          className="border rounded px-2 py-1 bg-inherit"
+        // Add any additional props or event handlers to the input as needed
         />
       </div>
 
-      <div className='flex items-center  p-10 '>
+      {/* <div className='flex items-center  p-10 '>
         <div className='mr-3'>
           <label htmlFor='moduleSelect'>Select Module:</label>
           <select
@@ -80,21 +83,18 @@ function MetrialInfo() {
             <option value='Module 3' className=' bg-inherit'>
               Module 3
             </option>
-            {/* Add more modules as needed */}
           </select>
         </div>
+      </div> */}
+
+      <div className=" border-[#5F6065] border rounded-2xl py-8 mx-8 ">
+      <DropZone setUrl={setPdfUrl} />
       </div>
 
-      <div className=' w-full flex items-center  ml-48 mt-10'>
-        <div className=' w-[70%]  h-48 flex items-center border-2 p-10 border-[#5F6065] rounded-lg'>
-          <div className=' border-2 border-white w-full h-full border-dashed flex items-center justify-center '>
-            upload pdf
-          </div>
-        </div>
-      </div>
-
-      <div className='w-full flex flex-row-reverse '>
-        <button className=' mt-12 w-[10%] h-10  mr-10 bg-[#AA2769]'>
+      <div className="w-full flex flex-row-reverse ">
+        <button onClick={()=>{
+          
+        }} className=" mt-12 w-[10%] h-10  mr-10 bg-[#AA2769]">
           Add Pdf
         </button>
       </div>
@@ -102,4 +102,99 @@ function MetrialInfo() {
   );
 }
 
-export default MetrialInfo;
+const baseStyle = {
+  flex: 1,
+  maxWidth: 580,
+  height: 120,
+  margin: "0 auto",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "20px",
+  borderWidth: 2,
+  borderRadius: 20,
+  borderColor: "#eeeeee",
+  borderStyle: "dashed",
+  backgroundColor: "#505057",
+  color: "#bdbdbd",
+  outline: "none",
+  transition: "border .24s ease-in-out",
+};
+
+const focusedStyle = {
+  borderColor: "#2196f3",
+};
+
+const acceptStyle = {
+  borderColor: "#00e676",
+};
+
+const rejectStyle = {
+  borderColor: "#ff1744",
+};
+
+function DropZone({ setUrl }) {
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
+    useDropzone({
+      accept: {
+        "application/pdf": [".pdf"],
+      },
+      onDrop: (acceptedFiles) => {
+        uploadToFirebase(acceptedFiles[0], (url) => {
+          setUrl(url);
+        });
+      },
+    });
+
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isFocused, isDragAccept, isDragReject]
+  );
+
+  return (
+    <div className="container">
+      <div {...getRootProps({ style })}>
+        <input  {...getInputProps()}  accept="application/pdf" />
+        <div className="flex flex-col items-center" >
+          <FileIcon />
+          <p>Click to upload or drag and drop</p>
+          <p>pdf , word document (max 2-5 mb)
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const FileIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={31}
+    height={34}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="#ADADB0"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M24.219 29.266H6.78a.934.934 0 0 1-.685-.306 1.089 1.089 0 0 1-.284-.739V5.226c0-.277.103-.543.284-.74a.934.934 0 0 1 .685-.305h11.625l6.782 7.316v16.724c0 .277-.103.543-.284.74a.934.934 0 0 1-.685.305Z"
+    />
+    <path
+      stroke="#ADADB0"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M18.406 4.18v7.317h6.782M12.11 19.337l3.39-3.658 3.39 3.658M15.5 24.04V15.68"
+    />
+  </svg>
+)
+
+export default AddPdf;
