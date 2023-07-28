@@ -63,7 +63,7 @@ function Assignments() {
       let arr = []
       const moduleInfo = []
       const uniq = []
-      data.map((ele) => { id.push(ele.id) })
+      data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
         const courseInfo = await getDocs(q);
@@ -78,6 +78,7 @@ function Assignments() {
       if (arr) {
         for (let i = 0; i < arr.length; i++) {
           arr[i].map((e) => {
+            console.log(e)
             const data = {
               course: e.course,
               module: e.module,

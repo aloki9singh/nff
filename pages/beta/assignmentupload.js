@@ -127,7 +127,7 @@ const Assignmentupload = () => {
     if (file) {
       uploadFile();
     }
-  }, [file, uploadFile]);
+  }, [file]);
 
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
