@@ -11,7 +11,6 @@ import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { BsPersonCircle } from "react-icons/bs";
-
 import { useAuthContext } from "@/lib/context/AuthContext";
 
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
@@ -271,7 +270,7 @@ const Afterlogin = () => {
                               className="mr-4"
                             />
                           </span>
-                          Online at your own pace
+                          Learn at your own pace
                         </p>
                         <p className="flex my-3">
                           <span>
@@ -304,9 +303,9 @@ const Afterlogin = () => {
                               <p className="text-sm mx-[-12px] leading-10">{course.category} Professor</p>
                             </div>
                           </div>
-                          <div className="mb-10 font-medium tracking-wide text-xs">
+                          {/* <div className="mb-10 font-medium tracking-wide text-xs">
                             SHARE THIS COURSE
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
