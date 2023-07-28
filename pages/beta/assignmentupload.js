@@ -3,15 +3,14 @@
 // upload through url not working
 // file icon missing
 
-
-import { useState, useEffect } from 'react';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import { BiBell } from 'react-icons/bi';
-import { BsPersonCircle } from 'react-icons/bs';
-import Image from 'next/image';
-import { ref } from 'firebase/storage';
-import { storage } from '@/config/firebaseconfig';
-import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import { BiBell } from "react-icons/bi";
+import { BsPersonCircle } from "react-icons/bs";
+import Image from "next/image";
+import { ref } from "firebase/storage";
+import { storage } from "@/config/firebaseconfig";
+import { useRouter } from "next/router";
 
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
@@ -121,7 +120,7 @@ const Assignmentupload = () => {
         });
       }
     );
-  }, [file , storageRef]);
+  }, [file, storageRef]);
 
   useEffect(() => {
     if (file) {
@@ -154,7 +153,7 @@ const Assignmentupload = () => {
     const getData = async () => {
       const courseRef = doc(db, "courses", courseid);
       const courseInfo = await getDoc(courseRef);
-  
+
       if (courseInfo.exists()) {
         try {
           const assignmentRef = collection(courseRef, "assignment");
@@ -162,7 +161,7 @@ const Assignmentupload = () => {
           const querySnapshot = await getDocs(q);
           const arr = [];
           querySnapshot.docs.forEach((doc) => {
-            if (doc.data().files){
+            if (doc.data().files) {
               setSubmitted(
                 doc.data().files.map((ele) => {
                   if (ele.submittedby == user.uid) {
@@ -173,7 +172,7 @@ const Assignmentupload = () => {
             }
             arr.push(doc.data());
           });
-  
+
           setCourse(arr);
         } catch (err) {
           alert("Error occured");
@@ -198,8 +197,9 @@ const Assignmentupload = () => {
     <div className="flex">
       {isMobileScreen && (
         <div
-          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          className={`fixed right-0 ${
+            SideBarState ? "block" : "hidden"
+          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
         >
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
@@ -257,6 +257,7 @@ const Assignmentupload = () => {
               <button
                 className="bg-[#505057] rounded-10 px-1.5 md:px-2 text-xs md:text-[17px]"
                 onClick={() => router.push(course[0]?.url)}
+                target="_blank"
               >
                 Download
               </button>
@@ -316,7 +317,7 @@ const Assignmentupload = () => {
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
                       value={link}
-                      disabled={file?true:false}
+                      disabled={file ? true : false}
                       onChange={(e) => setLink(e.target.value)}
                     />
                     <button
@@ -330,8 +331,9 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"
-                      }] rounded-lg focus:shadow-outline`}
+                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
+                      submitted ? "#505057" : "#E1348B"
+                    }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
                   >
                     {submitted ? " Submitted" : "Submit"}
