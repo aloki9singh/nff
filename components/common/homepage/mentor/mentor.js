@@ -42,7 +42,7 @@ export default function Mentor() {
         const users = await GetAllUsers();
         const mentors = users.users.filter((user) => user.role === "mentor");
         setMentors(mentors)
-        console.log("All users fetched:", mentors);
+        // console.log("All users fetched:", mentors);
       } catch (error) {
         console.log("Error fetching users:", error);
       }

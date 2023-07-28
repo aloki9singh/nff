@@ -5,7 +5,7 @@ import { getLinkById } from "@/lib/exportablefunctions";
 const CardUserPop = ({ hidefun, popupValue, id }) => {
   const [isWithinRange, setIsWithinRange] = useState(false);
   const [link, setLink] = useState("");
-  console.log("link", link);
+  // console.log("link", link);
   const handleJoinClick = () => {
     // Redirect to the link when the "Join" button is clicked
     // window.location.href = link;
@@ -29,10 +29,10 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
       const currentMinutes = currentTime.getMinutes();
       const currentHours = currentTime.getHours();
 
-      console.log("Current Time:", currentHours, ":", currentMinutes);
+      // console.log("Current Time:", currentHours, ":", currentMinutes);
 
       const startTime = popupValue?.startTime;
-      console.log("Start Time:", startTime);
+      // console.log("Start Time:", startTime);
 
       const [startHours, startMinutes] = startTime.split(":");
       const startDateTime = new Date();
@@ -43,7 +43,7 @@ const CardUserPop = ({ hidefun, popupValue, id }) => {
       const startTimeMs = startDateTime.getTime();
       const differenceInMinutes = (startTimeMs - currentTimeMs) / (1000 * 60);
 
-      console.log("Time Difference (minutes):", differenceInMinutes);
+      // console.log("Time Difference (minutes):", differenceInMinutes);
 
       setIsWithinRange(differenceInMinutes <= 5);
     };

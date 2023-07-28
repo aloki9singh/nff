@@ -29,7 +29,7 @@ async function handleLogin(req, res) {
     if (error.code === "auth/invalid-email") {
       return res.status(400).json({ error: "Invalid user" });
     } else {
-      console.log("Error logging in:", error.message);
+      // console.log("Error logging in:", error.message);
       return res.status(500).json({ error: "Internal server error" });
     }
   }

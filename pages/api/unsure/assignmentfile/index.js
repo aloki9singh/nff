@@ -16,7 +16,7 @@ const handler = async (req, res) => {
                     for (const item of assignmentList.items) {
                         const url = await getDownloadURL(item);
                         assignmentUrls.push(url);
-                        console.log(url);
+                        // console.log(url);
                     }
                     res.status(200).json({ url: assignmentUrls });
             } catch (error) {

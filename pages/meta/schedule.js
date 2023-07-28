@@ -39,7 +39,7 @@ function Schedule() {
     }
 
   }, [isMediumScreen,count]);
-  console.log(isMediumScreen,showSideBar)
+  // console.log(isMediumScreen,showSideBar)
 
   return (
     <>

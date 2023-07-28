@@ -33,7 +33,7 @@ export default function ProfileDetails() {
   const profilePhoto = watch("profilePhoto");
   const aadhaarCard = watch("aadhaarCard");
 
-  console.log("profilePhoto", profilePhoto)
+  // console.log("profilePhoto", profilePhoto)
 
   useEffect(() => {
     const getInitialProfile = async () => {
@@ -64,7 +64,7 @@ export default function ProfileDetails() {
   }, [user?.uid, reset]);
 
   const onSubmit = async (data) => {
-    console.log("data", data);
+    // console.log("data", data);
 
     if (!user) {
       return;
@@ -108,7 +108,7 @@ export default function ProfileDetails() {
       trialValid: true,
       courseAccess: false,
     };
-    console.log("profile", profile);
+    // console.log("profile", profile);
     const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
     const docSnap = await getDoc(userRef);
 
@@ -131,7 +131,7 @@ export default function ProfileDetails() {
     router.push("/beta/profilecongrats");
   };
 
-  console.log("errors", errors);
+  // console.log("errors", errors);
   return (
     <div className="w-full text-white flex flex-col space-y-8 overflow-x-hidden">
       {/* text */}
