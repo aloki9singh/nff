@@ -407,7 +407,7 @@ const Header = ({ currentStep, onSubmit }) => {
 			<style>{styles}</style>
 			<div className="w-full flex-col md:flex-row flex items-center justify-between lg:p-2 pb-5 mb-2 space-x-5 space-y-5">
 				<div className="flex-[4]">
-					<h3 className="text-3xl font-medium tracking-wide pb-2">
+					<h3 className="text-xl sm:text-3xl font-medium tracking-wide pb-2">
 						{headingContent[currentStep - 1].title}
 					</h3>
 					<p className="text-sm text-white/60">
@@ -432,7 +432,7 @@ const Accordian = ({ title, children }) => {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<div className="bg-[#333333] p-2 px-5 rounded-md md:w-[28rem] max-w-md overflow-hidden">
+		<div className="bg-[#333333] p-2 px-5 rounded-md w-full md:w-[20rem] max-w-md overflow-hidden">
 			<h2 id="accordion-flush-heading-1">
 				<button
 					type="button"
@@ -487,7 +487,7 @@ const moduleSchema = yup.object().shape({
 });
 
 const ModuleComp = ({ module }) => (
-	<div>
+	<div className="w-full">
 		{/* <p className="text-xs text-white/70">Module {index + 1}</p> */}
 		<Accordian title={module.name}>
 			<div className="flex flex-col gap-2 text-sm text-white/80">
@@ -556,7 +556,7 @@ const ModuleForm = ({ editModule, onSubmit, setEditModule }) => {
 				onSubmit?.(moduleData);
 				reset();
 			})}
-			className="flex-[3] px-10 py-6  border border-[#5F6065] rounded-xl"
+			className="flex-[3] px-4 py-4 md:px-10 md:py-6  border border-[#5F6065] rounded-xl w-full"
 		>
 			<div className="w-full flex flex-col gap-y-4 mb-7">
 				<label className="" htmlFor="name">
@@ -652,7 +652,7 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
 						onClick={() => {
 							append({ value: "" });
 						}}
-						className=" text-white flex items-center text-center mt-3 rounded-md py-2 self-end hover:bg-gray-800 px-4 transition-colors duration-150 "
+						className=" text-white flex items-center text-center mt-3 rounded-md py-2 self-end hover:bg-gray-800 transition-colors duration-150 w-full"
 					>
 						<AiOutlinePlus className="mr-2" />
 						Add another video
@@ -756,25 +756,25 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
 			<Header currentStep={3} onSubmit={() => onSubmit(modules)} />
 			<hr className="border-x-2 border-gray-500 mb-4" />
 
-			<div className="w-full flex flex-col md:flex-row items-start gap-5">
+			<div className="w-full flex flex-col lg:flex-row items-start  gap-5">
 				<ModuleForm
 					editModule={editModule}
 					setEditModule={setEditModule}
 					onSubmit={onModuleSubmit}
 				/>
-				<div className="flex-[2] flex flex-col ">
+				<div className="flex-[2] flex flex-col w-full md:w-auto">
 					<h5>Class module list</h5>
-					<div className="flex-1">
+					<div className="flex-1 w-full md:w-auto">
 						{modules.length === 0 ? (
-							<div className="flex h-full items-center justify-center">
+							<div className="flex h-full items-center justify-center py-10">
 								<p className="text-center text-white/60 text-lg">
 									No added module
 								</p>
 							</div>
 						) : (
-							<div className="flex flex-col mt-4 gap-y-3">
+							<div className="w-full flex flex-col mt-4 gap-y-3">
 								{modules.map((module, index) => (
-									<div key={index} className="flex flex-row items-center gap-2">
+									<div key={index} className="flex flex-row items-center w-full gap-2">
 										<ModuleComp module={module} />
 
 										<button
