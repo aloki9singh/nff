@@ -27,7 +27,7 @@ export default function StudyMaterialCard() {
   }, []);
   const menuItems = [...new Set(material.map((Val) => Val.title))];
 
-  console.log(menuItems);
+
   const filteredMaterial = selectedOption
     ? material.filter((item) => item.title === selectedOption)
     : material;

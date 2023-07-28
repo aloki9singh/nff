@@ -10,10 +10,10 @@ export default async function sendOTP(req, res) {
       subject: "OTP Verification",
       text: `Your OTP is: ${data.otp}`,
     });
-    console.log("OTP sent:");
+    // console.log("OTP sent:");
     res.status(200).json({ success: true });
   } catch (error) {
-    console.log("Error sending OTP:", error);
+    // console.log("Error sending OTP:", error);
     res.status(500).json({ success: false });
   }
 }

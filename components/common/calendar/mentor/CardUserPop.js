@@ -13,7 +13,7 @@ const updateLink = async (docId, newLink) => {
       link: newLink,
     });
      alert("Link updated successfully!")
-    console.log("Link updated successfully!");
+    // console.log("Link updated successfully!");
   } catch (err) {
     console.error("Error updating link:", err);
   }

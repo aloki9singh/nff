@@ -73,7 +73,7 @@ let SideBody = ({ count, setCount }) => {
                 onClick={() => {
                   setCount(3);
                   setScheduleSelect({ e: e });
-                  console.log(e,"seeit");
+                
                 }}
               >
                 <div

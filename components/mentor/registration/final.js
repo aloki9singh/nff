@@ -88,9 +88,9 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
 
     if (res.status === 404) {
       alert("error");
-      console.log("Error!");
+      // console.log("Error!");
     } else {
-      console.log("Data Added Successfully");
+      // console.log("Data Added Successfully");
       setRegStepCount(5);
     }
     setLoading(false);

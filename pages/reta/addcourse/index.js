@@ -545,7 +545,7 @@ const ModuleForm = ({ editModule, onSubmit, setEditModule }) => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log(data);
+        // console.log(data);
         const moduleData = {
           ...data,
           video: data.video.map((v) => v.value),

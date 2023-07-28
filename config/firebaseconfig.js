@@ -26,6 +26,7 @@ import { getAnalytics } from "firebase/analytics";
 //   measurementId: "G-QWYMTLSSEK",
 // };
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
   authDomain: "neatskills9.firebaseapp.com",
@@ -42,12 +43,12 @@ const firebaseConfig = {
 
 const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 
+
 export default app;
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
-
 export const AssignmentsCollection = collection(db, "assignment");
 export const courseAssignmentCollection = collection(db, "course_assignments");
 export const profileDetailscollection = collection(db, "users");

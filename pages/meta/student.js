@@ -35,7 +35,7 @@ function MentorStudent() {
     fetch("/api/signup")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         const students = data.users.filter((ele) => ele.role === "student");
         setFilterData(students);
         setStudentData(students);
@@ -44,23 +44,23 @@ function MentorStudent() {
   }, []);
 
   const getStudendDataByCourse = async (val) => {
-    console.log(val);
+    // console.log(val);
     const courseRef = collection(db, "courses");
     const querySnapshot = await getDocs(courseRef);
     const data = querySnapshot.docs.map((doc) => doc.data());
     const course = data.find((ele) => ele.id === val);
-    console.log("hell ", course);
+    // console.log("hell ", course);
 
     if (course) {
       setStudentData([]);
       course.students?.map((stud) => {
         const newStudentData = forfilterData.filter((ele) => ele.uid == stud);
-        console.log(newStudentData);
+        // console.log(newStudentData);
         // listofStudents.push(newStudentData);
         newStudentData.map((ele) => {
           setStudentData((oldArray) => [...oldArray, ele]);
         });
-        console.log(studentData);
+        // console.log(studentData);
       });
     } else {
       setStudentData([{ title: "NO DATA FOUND" }]);

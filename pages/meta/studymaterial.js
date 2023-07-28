@@ -24,7 +24,7 @@ function StudyMaterial() {
 
   const menuItems = [...new Set(material.map(Val => Val.title))];
 
-  console.log(menuItems);
+  // console.log(menuItems);
   const filteredMaterial = selectedOption
     ? material.filter(item => item.title === selectedOption)
     : material;

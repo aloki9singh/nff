@@ -38,7 +38,7 @@ export default function Students() {
       .then((response) => response.json())
       .then((data) => {
         const students = data.users.filter((ele) => ele.role === "student");
-        console.log(students);
+        students;
         setFilterData(students);
         setStudents(students);
       });
@@ -50,7 +50,7 @@ export default function Students() {
 
   const filteredStudentData = useMemo(
     () => filterStudentData(),
-    [ filterStudentData]
+    [filterStudentData]
   );
   useEffect(() => {
     if (isMediumScreen) {
@@ -207,7 +207,7 @@ export default function Students() {
           </div>
           {/* table */}
           <div
-            className="mx-auto h-[712px] bg-[#373A41] w-[96%] max-[776px]:w-full rounded-[30px] border md:text-base text-xs mx-auto text-white"
+            className="mx-auto h-[712px] bg-[#373A41] w-[96%] max-[776px]:w-full rounded-[30px] border md:text-base text-xs  text-white"
             style={{ marginTop: "20px" }}
           >
             <div className="">
