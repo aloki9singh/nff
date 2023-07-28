@@ -27,18 +27,18 @@ function SchoolSignupComp() {
             const querySnapshot = await getDocs(q);   
             //If user is previously logged in
             if (!querySnapshot.empty) {
-                console.log("User is already signed up earlier")
+                // console.log("User is already signed up earlier")
                 const documentSnapshot = querySnapshot.docs[0];
                 const documentData = documentSnapshot.data();
 
                 // For checking the user in School Profile
                 if(documentData.authCode){
-                    console.log("User has submitted the form")
+                    // console.log("User has submitted the form")
                     alert("You have already submitted the form");
                 }
                 else{
                     // if not submitted
-                    console.log("User has not submitted the form")
+                    // console.log("User has not submitted the form")
                     const userCredential = await signInWithEmailAndPassword(
                         auth,
                         email,
@@ -53,7 +53,7 @@ function SchoolSignupComp() {
             }
             else {
                 // If user does not exist then signup and routing
-                console.log("New user")
+                // console.log("New user")
                 const userCredential = await createUserWithEmailAndPassword(
                     auth,
                     email,
@@ -74,7 +74,7 @@ function SchoolSignupComp() {
                 })
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             alert(error);
         }
     };
@@ -92,7 +92,7 @@ function SchoolSignupComp() {
         try {
             await signup(email, password);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 

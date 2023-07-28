@@ -10,7 +10,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 const HelpAndSupportSidebar = ({ toggleSideBar, isSidebarOpen }) => {
 	const router = useRouter();
 	const [width, setWidth] = useState(window.screen.width);
-	console.log(width);
+	// console.log(width);
 	const { user, userProfile } = useAuthContext();
 	const [isChecked, setIsChecked] = useState(false);
 
@@ -21,7 +21,7 @@ const HelpAndSupportSidebar = ({ toggleSideBar, isSidebarOpen }) => {
 
 		// TODO Add a debounce function to increase effeciency
 		const checkWidth = () => {
-			console.log("uea");
+			// console.log("uea");
 			setWidth(window.screen.width);
 		};
 

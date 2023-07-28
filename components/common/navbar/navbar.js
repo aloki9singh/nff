@@ -26,7 +26,7 @@ export default function Navbar({ nav, setNav }) {
       setColor(false);
     }
   };
-  console.log(user, userProfile);
+  // console.log(user, userProfile);
   useEffect(() => {
     window.addEventListener("scroll", changeColor);
   }, []);

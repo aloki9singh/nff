@@ -11,7 +11,7 @@ const Createcategory = () => {
 
   function handleLogin(e) {
     e.preventDefault();
-    console.log(category);
+    // console.log(category);
     //reset the form
     setCategory("");
   }

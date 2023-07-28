@@ -88,7 +88,7 @@ function Homework() {
     var inactive = 0
     course && course.map((ele)=>{
       ele.map((e)=>{
-        console.log(e.date)
+        // console.log(e.date)
         const date = new Date(e.date.seconds * 1000 + e.date.nanoseconds / 1000000)
         if (date < new Date()){
           inactive+=1

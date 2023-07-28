@@ -18,7 +18,12 @@ const CarouselComp = ({ mentors }) => {
         slidesPerView={1}
         navigation
         loop={true}
-        onSwiper={(swiper) => console.log(swiper)}
+        onSwiper={(swiper) =>
+          
+          
+          console.log(swiper)
+        
+        }
         onSlideChange={() => console.log("slide change")}
         className="h-[217px] md:w-0 md:h-0"
       >

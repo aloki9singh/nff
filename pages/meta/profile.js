@@ -59,7 +59,7 @@ function MentorProfile() {
       sendSideBarState(false);
     }
     const data = GetAllUsers();
-    console.log(data);
+    // console.log(data);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         callUserById(user.uid).then((data) => setUserData(data.user));

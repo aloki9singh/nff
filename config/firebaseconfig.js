@@ -49,6 +49,28 @@ const firebaseConfig = {
 //   measurementId: "G-QWYMTLSSEK",
 // };
 
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
+//   authDomain: "neatskills9.firebaseapp.com",
+//   projectId: "neatskills9",
+//   storageBucket: "neatskills9.appspot.com",
+//   messagingSenderId: "952981699338",
+//   appId: "1:952981699338:web:e09b299b7e5df400e898f3",
+//   measurementId: "G-3F1WXPES83"
+// };
+
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
+//   authDomain: "neatskills-1c31c.firebaseapp.com",
+//   projectId: "neatskills-1c31c",
+//   storageBucket: "neatskills-1c31c.appspot.com",
+//   messagingSenderId: "713774382237",
+//   appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
+//   measurementId: "G-QWYMTLSSEK",
+// };
+
 // const firebaseConfig = {
 //   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
 //   authDomain: "neatskills9.firebaseapp.com",
@@ -70,14 +92,11 @@ const firebaseConfig = {
 // };
 
 // Initialize Firebase
-// const app = initializeApp(firebaseConfig, 'baseApp');
-//  const app = initializeApp(firebaseConfig, 'neatskills-1c31c');
-//  const app = initializeApp(firebaseConfig, 'neatskills9');
-//  const app = initializeApp(firebaseConfig, 'neat-60028');
 
 
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+
 
 
 

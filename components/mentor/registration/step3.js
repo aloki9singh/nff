@@ -57,7 +57,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
     setDataFetched(courseData);
     // }
   };
-  console.log(dataFetched);
+  // console.log(dataFetched);
   const deleteItem = (itemToDelete) => {
     // Create a new array excluding the item to delete
     const updatedArray = skillsArr.filter((item) => item !== itemToDelete);

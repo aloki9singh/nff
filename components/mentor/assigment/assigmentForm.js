@@ -43,7 +43,7 @@ function AddAssigmentForm({ assignedCourse }) {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        // console.log("Upload is " + progress + "% done");
         setProgress(progress)
       },
       (error) => {
@@ -125,7 +125,7 @@ function AddAssigmentForm({ assignedCourse }) {
           }
         });
     
-        console.log('New assignment sub-collection added successfully.')
+        // console.log('New assignment sub-collection added successfully.')
       })
       .then(() => {
         // Reset form data and show success message (optional)

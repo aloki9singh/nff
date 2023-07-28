@@ -33,7 +33,7 @@ async function handler(req, res) {
                 return res.status(405).json({ success: false, msg: 'Method not allowed' });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(500).json({ success: false, msg: 'Internal Server Error' });
     }
 }
