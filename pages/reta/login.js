@@ -38,33 +38,33 @@ function Adminlogin() {
     //  signup trycatch
     // open this trycatch to register admin
 
-    // try {
-    //   const userCredential = await createUserWithEmailAndPassword(
-    //     auth,
-    //     email,
-    //     password
-    //   );
-    //   const { user } = userCredential;
-    //   const data = {
-    //     uid: user.uid,
-    //     displayName: user.email,
-    //     email: user.email,
-    //     photoURL: user.photoURL,
-    //     authCode: authCode,
-    //     role: "admin",
-    //        verified:true
-    //   };
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+      const data = {
+        uid: user.uid,
+        displayName: user.email,
+        email: user.email,
+        photoURL: user.photoURL,
+        authCode: authCode,
+        role: "admin",
+           verified:true
+      };
 
-    //   await callSignupApi(data);
-    //   console.log("Success");
-    // } catch (error) {
-    //   if (error.message == "Firebase: Error (auth/email-already-in-use).") {
-    //     signInWithEmailAndPassword(auth, email, password);
-    //     console.log("Success Logged");
-    //   } else {
-    //     console.log(error);
-    //   }
-    // }
+      await callSignupApi(data);
+      console.log("Success");
+    } catch (error) {
+      if (error.message == "Firebase: Error (auth/email-already-in-use).") {
+        signInWithEmailAndPassword(auth, email, password);
+        console.log("Success Logged");
+      } else {
+        console.log(error);
+      }
+    }
     //  ------------------------------------------------------------------------------------
     // login  trycatch, otp };
     //open this trycatch to login admin
@@ -92,50 +92,50 @@ function Adminlogin() {
     //   }
     // }
     // New login method
-    try {
-      setLoading(true);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const { user } = userCredential;
-      // Retrieve user document from the database
-      const userDoc = await getDoc(doc(db, "allusers", user.uid));
-      const userData = userDoc.data();
+    // try {
+    //   setLoading(true);
+    //   const userCredential = await signInWithEmailAndPassword(
+    //     auth,
+    //     email,
+    //     password
+    //   );
+    //   const { user } = userCredential;
+    //   // Retrieve user document from the database
+    //   const userDoc = await getDoc(doc(db, "allusers", user.uid));
+    //   const userData = userDoc.data();
 
-      if (userData.authCode !== authCode) {
-        alert({ error: "Invalid authentication code" });
-      }
+    //   if (userData.authCode !== authCode) {
+    //     alert({ error: "Invalid authentication code" });
+    //   }
 
-      // Check if the user has the required role
-      if (userData.role !== "admin") {
-        alert({ error: "Unauthorized User" });
-      }
-      // Successful login
-      const otp = generateOTP(6);
-      const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY_FOR_OTP_ENCRYPTION;
-      const encryptedOTP = CryptoJS.AES.encrypt(otp, secretKey).toString();
-      localStorage.setItem("otp", encryptedOTP);
-      localStorage.setItem("email", JSON.stringify(email));
-      const data = { email, otp };
-      await sendOTP(data).then((res) => console.log(res));
-      router.push("/reta/otpverification");
-      console.log("Login Successful");
-      setLoading(false);
-    }
-    catch (error) {
-      if (error.message=="Firebase: Error (auth/wrong-password)") {
-        alert("Please check Your Credentials.");
-      } else if (error.message=="Internal server error") {
-        alert("Please check Your Credentials.");
-      }
-      else {
-        alert("Please check Your Credentials.");
-        console.log("Error logging in:", error);
-      }
-      setLoading(false)
-    }
+    //   // Check if the user has the required role
+    //   if (userData.role !== "admin") {
+    //     alert({ error: "Unauthorized User" });
+    //   }
+    //   // Successful login
+    //   const otp = generateOTP(6);
+    //   const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY_FOR_OTP_ENCRYPTION;
+    //   const encryptedOTP = CryptoJS.AES.encrypt(otp, secretKey).toString();
+    //   localStorage.setItem("otp", encryptedOTP);
+    //   localStorage.setItem("email", JSON.stringify(email));
+    //   const data = { email, otp };
+    //   await sendOTP(data).then((res) => console.log(res));
+    //   router.push("/reta/otpverification");
+    //   console.log("Login Successful");
+    //   setLoading(false);
+    // }
+    // catch (error) {
+    //   if (error.message=="Firebase: Error (auth/wrong-password)") {
+    //     alert("Please check Your Credentials.");
+    //   } else if (error.message=="Internal server error") {
+    //     alert("Please check Your Credentials.");
+    //   }
+    //   else {
+    //     alert("Please check Your Credentials.");
+    //     console.log("Error logging in:", error);
+    //   }
+    //   setLoading(false)
+    // }
   }
   useEffect(() => {
     localStorage.setItem("isAdmin", JSON.stringify(false));
