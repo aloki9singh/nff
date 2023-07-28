@@ -90,4 +90,6 @@ export const courseAssignmentCollection = collection(db, "course_assignments");
 export const profileDetailscollection = collection(db, "users");
 export const mentorsdetailCollection = collection(db, "mentorsdetail");
 export const mentorsCollection = collection(db, "mentors");
+export const usersCollection = collection(db, "allusers");
 export const mentorsSchedduleCollection = collection(db, "mentorsSchedule");
+export const DailyTipsCollection = collection(db, "dailytip");
