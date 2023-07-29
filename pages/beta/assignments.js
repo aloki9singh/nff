@@ -32,10 +32,12 @@ function Assignments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+
   const [course, setCourse] = useState()
   const [moduleName, setModuleName] = useState()
   const [uniqCourse, setUnique] = useState([])
   const [value, setValue] = useState()
+
 
   //yet to write logic to change course bougth or not ??
 
@@ -59,11 +61,13 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
+
       const id = []
       let arr = []
       const moduleInfo = []
       const uniq = []
       data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
+
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
         const courseInfo = await getDocs(q);
@@ -72,6 +76,7 @@ function Assignments() {
           const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
           arr.push(querySnapshot.docs.map((doc) => doc.data()));
+
         }
       }
 
@@ -101,6 +106,7 @@ function Assignments() {
 
     getCourseId();
   }, [isMediumScreen, user.uid, value]);
+
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -146,8 +152,9 @@ function Assignments() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -167,6 +174,7 @@ function Assignments() {
                 toggleSideBar={toggleSideBar}
               />
             </div>
+
 
 
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
@@ -240,6 +248,7 @@ function Assignments() {
                           {
                             if (moduleName && (ele.module === moduleName) && value != "") {
 
+
                               return (
                                 <AssignmentCard
                                   key={i}
@@ -251,15 +260,17 @@ function Assignments() {
                                   courseid={ele.courseid}
                                 />
                               );
+
                             }
                           }
                         });
                       })
                     }
+
                   </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
         {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}

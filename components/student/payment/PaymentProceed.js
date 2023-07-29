@@ -3,13 +3,16 @@ import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
 
+
 const PaymentProceed = ({price}) => {
   const [activeTab, setActiveTab] = useState("card");
+
 
     
 
 
     const handleReq = async () => {  
+
 
       const requestBody = {
         price: price*100,
@@ -17,6 +20,7 @@ const PaymentProceed = ({price}) => {
       };
         
         await fetch('/api/payment', {method: 'POST',body:JSON.stringify(requestBody)},)
+
           .then(response => response.json())
           .then(response => {
               console.log(response)
@@ -30,7 +34,9 @@ const PaymentProceed = ({price}) => {
   return (
     <>
       <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
+
         <div className="hidden md:inline left m-12">
+
           <h1 className="py-2">Payment Method</h1>
 
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 py-4">

@@ -1,3 +1,7 @@
+// <<<<<<< testing
+// async function handler(req, res) {
+//     const { method } = req;
+// =======
 function encodeToBase64(str) {
   return btoa(str);
 }
@@ -40,16 +44,19 @@ async function handler(req, res) {
     const shaVerify = shaData+"###1";
 
 
+
     try {
             const options = {
                 method: 'POST',
                 headers: {
                   accept: 'application/json',
                   'Content-Type': 'application/json',
+
                   'X-VERIFY': shaVerify,
                 },
                 body: JSON.stringify({
                   request: encodedData
+
                 })
               };
         
@@ -58,6 +65,7 @@ async function handler(req, res) {
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
+
                 })
                 .catch(err => console.error(err));
 

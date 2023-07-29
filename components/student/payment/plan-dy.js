@@ -10,8 +10,10 @@ export default function Plan({
   updatePage,
   odd,
   trial,
+
   updateHook,
   updatePrice
+
 }) {
 
 

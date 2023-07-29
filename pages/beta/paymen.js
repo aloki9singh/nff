@@ -8,7 +8,9 @@ import { accountcleanup } from "@/pages/api/signup/index";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import ToastMessage from "@/components/student/payment/ToastMessage";
 
+
 const Payment = ({updatePage, updatePrice}) => {
+
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
   const [SideBarState, sendSideBarState] = useState(false);
@@ -99,7 +101,9 @@ const Payment = ({updatePage, updatePrice}) => {
             <ChoosePlan
               clickEvent={(e) => handleClickFreeTrail(e)}
               trial={isTrialValid}
+
               updatePrice = {updatePrice}
+
               updatePage = {(e) => updatePage(e)}
             />
           </div>
