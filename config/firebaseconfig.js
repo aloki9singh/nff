@@ -14,6 +14,9 @@ const firebaseConfig = {
   appId: '1:745615461354:web:8be587f1d7e23229694093',
   measurementId: 'G-9ZEE56FQQF',
 };
+
+
+
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCCQYP1zEjLAuGU9g_P2fATrAx-VtlIlYc",
 //   authDomain: "neat-60028.firebaseapp.com",
