@@ -63,10 +63,8 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
-
-
       const id = []
-      let arr = []
+      var arr = []
       const moduleInfo = []
       const uniq = []
       data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
@@ -79,7 +77,9 @@ function Assignments() {
           const docRef = doc.ref;
           const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
+          console.log(arr);
           arr.push(querySnapshot.docs.map((doc) => doc.data()));
+          console.log(arr);
 
         }
       }
@@ -87,7 +87,7 @@ function Assignments() {
       if (arr) {
         for (let i = 0; i < arr.length; i++) {
           arr[i].map((e) => {
-            console.log(e);
+
             const data = {
               course: e.course,
               module: e.module,
@@ -160,9 +160,8 @@ function Assignments() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -182,9 +181,6 @@ function Assignments() {
               />
 
             </div>
-
-
-
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
@@ -208,83 +204,63 @@ function Assignments() {
                         value={ele}
                       >
                         {ele}
-      </option>
-                      {uniqCourse &&
-                        uniqCourse.map((ele, i) => {
-                          return (
-                            <option
-                              key={i}
-                              className="text-sm cursor-pointer"
-                              value={ele}
-                            >
-                              {ele}
-                            </option>
-                          );
-                        })}
-                    </select>
-                    {/* {dataFetched?.map((e) => (
-                      <option
-                        key={e.id} // Use a unique key for each option
-                        className="text-xs cursor-pointer"
-                        value={e.title}
-                      >
-                        {console.log(e.id)}
-                        {e.title}
                       </option>
-                    ))} */}
-                    <div className="title font-medium text-xl pt-10 pb-5 pl-8">
-                      Modules
-                    </div>
-                    <div className="max-h-screen  overflow-scroll scrollbar-hide">
-                      {moduleData &&
-                        moduleData.map((ele, i) => {
-                          if (ele.course == value) {
-                            return (
-                              <div
-                                key={i}
-                                className={
-                                  module === i ? Activestyle : Inactivestyle
-                                } // Note: Use === for comparison
-                                onClick={() => {
-                                  setModuleName(ele.module);
-                                  setModule(i);
-                                }}
-                              >
-                                {`${i + 1}. ${ele.course} - ${ele.module}`}
-                              </div>
-                            );
-                          }
-                        })}
-                    </div>
+                    })}
+                  </select>
+                  <div className="title font-medium text-xl pt-10 pb-5 pl-8">
+                    Modules
                   </div>
-
-
-                              return (
-                                <AssignmentCard
-                                  key={i}
-                                  id={ele.id}
-                                  no={i + 1}
-                                  name={ele.title}
-                                  date={ele.date}
-                                  url={ele.url}
-                                  courseid={ele.courseid}
-                                />
-                              );
-
-                            }
-                          }
-                        });
+                  <div className="max-h-screen  overflow-scroll scrollbar-hide">
+                    {
+                      moduleData && moduleData.map((ele, i) => {
+                        if (ele.course == value) {
+                          return (
+                            <div
+                              key={i}
+                              className={module === i ? Activestyle : Inactivestyle} // Note: Use === for comparison
+                              onClick={() => { setModuleName(ele.module); setModule(i) }}
+                            >
+                              {`${i + 1}. ${ele.course} - ${ele.module}`}
+                            </div>
+                          )
+                        }
                       })
                     }
+                  </div>
 
+                </div>
+
+                {/* Assignments */}
+                <div className="col-span-8">
+                  <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
+                    Files
+                  </div>
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
+                    {course &&
+                      course.map((courseData, i) => {
+                        return courseData.map((assignment, j) => {
+                          console.log(assignment)
+                          if (moduleName && (assignment.module == moduleName) && (assignment.course == value) && (value !== "")) {
+                            return (
+                              <AssignmentCard
+                                key={`${i}-${j}`}
+                                id={assignment.id}
+                                no={i + 1}
+                                name={assignment.title}
+                                date={assignment.date}
+                                url={assignment.url}
+                                courseid={assignment.courseid}
+                              />
+                            );
+                          }
+                        });
+                      })}
                   </div>
                 </div>
-              </>
-
-            )}
+              </div>
+            </div>
           </div>
         </div>
-        {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
       </div>
     </>
   );
