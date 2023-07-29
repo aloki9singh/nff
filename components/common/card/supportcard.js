@@ -17,7 +17,8 @@ const SupportCard = ({ className, img, text, icon, href }) => {
           className="
 				h-6 sm:h-9
 				w-6 sm:w-9
-				"
+				
+        "
         />
       ) : (
         // TODO Here will be the deafult image if the image is not working or not provided. Or for development purpose while you dont want to enter a logo explicitly
