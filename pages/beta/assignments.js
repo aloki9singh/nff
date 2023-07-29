@@ -168,6 +168,7 @@ function Assignments() {
               />
             </div>
 
+
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
@@ -238,6 +239,7 @@ function Assignments() {
                         return e.map((ele, j) => {
                           {
                             if (moduleName && (ele.module === moduleName) && value != "") {
+
                               return (
                                 <AssignmentCard
                                   key={i}
