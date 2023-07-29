@@ -38,10 +38,10 @@ const CourseCard = ({
 						COURSE
 					</h1>
 					<h1 className="text-white  md:text-2xl text-xl">
-						{title.length > 16 ? title.slice(0, 16) + "..." : title}
+						{title?.length > 16 ? title.slice(0, 16) + "..." : title}
 					</h1>
 					<p className="font-raleway text-left text-white text-[15px] md:text-[0.8rem]  overflow-hidden overflow-ellipsis leading-normal tracking-wide md:line-clamp-2 line-clamp-2">
-						{desc.split(" ").length > 10 ? desc.split(" ").slice(0, 10).join(" ") + "..." : desc}
+						{desc?.split(" ").length > 10 ? desc?.split(" ").slice(0, 10).join(" ") + "..." : desc}
 					</p>
 				</div>
 				<div className="flex justify-end pt-4">

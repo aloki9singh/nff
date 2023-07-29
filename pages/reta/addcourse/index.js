@@ -1,3 +1,6 @@
+// TODO: Restructure according to component based structure
+// TODO: To be adjusted according to Figma later on but currenlty is fully responsive.
+
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import {
@@ -253,7 +256,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
 				<label className="md:w-32 lg:w-40" htmlFor="">
 					Upload Banner Image
 				</label>
-				<div className="flex flex-col flex-1 w-full max-w-xl">
+				<div className="flex flex-col flex-1 w-full items-center justify-center">
 					<Controller
 						control={control}
 						name="banner"

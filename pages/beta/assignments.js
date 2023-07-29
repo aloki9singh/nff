@@ -32,10 +32,14 @@ function Assignments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const [course, setCourse] = useState();
-  const [moduleName, setModuleName] = useState();
-  const [uniqCourse, setUnique] = useState([]);
-  const [value, setValue] = useState();
+
+
+  const [course, setCourse] = useState()
+  const [moduleName, setModuleName] = useState()
+  const [uniqCourse, setUnique] = useState([])
+  const [value, setValue] = useState()
+
+
 
   //yet to write logic to change course bougth or not ??
 
@@ -59,14 +63,15 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
-      const id = [];
-      let arr = [];
-      const moduleInfo = [];
-      const uniq = [];
-      data.map((ele) => {
-        id.push(ele.id);
-        uniq.push(ele.title);
-      });
+
+
+      const id = []
+      let arr = []
+      const moduleInfo = []
+      const uniq = []
+      data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
+
+
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
         const courseInfo = await getDocs(q);
@@ -75,6 +80,7 @@ function Assignments() {
           const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
           arr.push(querySnapshot.docs.map((doc) => doc.data()));
+
         }
       }
     console.log(arr);
@@ -108,6 +114,7 @@ function Assignments() {
 
     getCourseId();
   }, [isMediumScreen, user.uid, value]);
+
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -173,28 +180,35 @@ function Assignments() {
                 heading="My Progress"
                 toggleSideBar={toggleSideBar}
               />
-            </div>{" "}
-            {!course ? (
-              <>
-                <Nodata title={"Courses"} value={"No Courses"} />
-              </>
-            ) : (
-              <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
-                <div className="lg:grid lg:grid-cols-11 min-h-screen">
-                  {/* Modules */}
-                  <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
-                    <div className="title font-medium text-xl pt-10 pb-5 pl-8">
-                      Courses
-                    </div>
-                    <select
-                      name="course"
-                      onChange={(e) => setValue(e.target.value)}
-                      value={value}
-                      className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#37383F] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      <option value="" className="text-sm">
-                        Select course from List
-                      </option>
+
+            </div>
+
+
+
+            <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
+              <div className="lg:grid lg:grid-cols-11 min-h-screen">
+                {/* Modules */}
+                <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
+                  <div className="title font-medium text-xl pt-10 pb-5 pl-8">
+                    Courses
+                  </div>
+                  <select
+                    name="course"
+                    onChange={(e) => setValue(e.target.value)}
+                    value={value}
+                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="" className="text-sm">
+                      Select from this List
+                    </option>
+                    {uniqCourse && uniqCourse.map((ele, i) => {
+                      return <option
+                        key={i}
+                        className="text-sm cursor-pointer"
+                        value={ele}
+                      >
+                        {ele}
+      </option>
                       {uniqCourse &&
                         uniqCourse.map((ele, i) => {
                           return (
@@ -244,43 +258,29 @@ function Assignments() {
                     </div>
                   </div>
 
-                  {/* Assignments */}
-                  <div className="col-span-8">
-                    <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
-                      Files
-                    </div>
-                    <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1 min-h-screen max-h-screen  overflow-scroll scrollbar-hide">
-                      {course &&
-                        course.map((e, i) => {
-                          return e.map((ele, j) => {
-                            {
-                              if (
-                                moduleName &&
-                                ele.module === moduleName &&
-                                value != ""
-                              ) {
-                                return (
-                                  <AssignmentCard
-                                    key={i}
-                                    id={ele.id}
-                                    no={i + 1}
-                                    name={ele.title}
-                                    date={ele.date}
-                                    url={ele.url}
-                                    courseid={ele.courseid}
-                                  />
-                                );
-                              }
-                              // else{
-                              // return  <Nodata title={"Homework"} value={"No Homework"} />
-                              // }
+
+                              return (
+                                <AssignmentCard
+                                  key={i}
+                                  id={ele.id}
+                                  no={i + 1}
+                                  name={ele.title}
+                                  date={ele.date}
+                                  url={ele.url}
+                                  courseid={ele.courseid}
+                                />
+                              );
+
                             }
-                          });
-                        })}
-                    </div>
+                          }
+                        });
+                      })
+                    }
+
                   </div>
                 </div>
-              </div>
+              </>
+
             )}
           </div>
         </div>

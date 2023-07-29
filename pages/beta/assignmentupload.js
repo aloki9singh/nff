@@ -3,15 +3,14 @@
 // upload through url not working
 // file icon missing
 
-
-import { useState, useEffect } from 'react';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import { BiBell } from 'react-icons/bi';
-import { BsPersonCircle } from 'react-icons/bs';
-import Image from 'next/image';
-import { ref } from 'firebase/storage';
-import { storage } from '@/config/firebaseconfig';
-import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import { BiBell } from "react-icons/bi";
+import { BsPersonCircle } from "react-icons/bs";
+import Image from "next/image";
+import { ref } from "firebase/storage";
+import { storage } from "@/config/firebaseconfig";
+import { useRouter } from "next/router";
 
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
@@ -198,8 +197,9 @@ const Assignmentupload = () => {
     <div className="flex">
       {isMobileScreen && (
         <div
-          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          className={`fixed right-0 ${
+            SideBarState ? "block" : "hidden"
+          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
         >
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
@@ -254,12 +254,14 @@ const Assignmentupload = () => {
               <div className="mt-1 md:text-[17px] text-[12px]">
                 Assignment Pdf
               </div>
+
               <a
                 className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
                 href={course && course[0]?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 download
+
               >
                 Download
               </a>
@@ -334,9 +336,12 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"
-                      }] rounded-lg focus:shadow-outline`}
-                    disabled={submitted ||progressData!==100}
+
+                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
+                      submitted ? "#505057" : "#E1348B"
+                    }] rounded-lg focus:shadow-outline`}
+                    disabled={submitted}
+
                   >
                     {submitted ? " Submitted" : "Submit"}
                   </button>
