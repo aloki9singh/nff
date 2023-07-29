@@ -6,8 +6,14 @@ import { useMediaQuery } from "react-responsive";
 import Video from "@/components/mentor/studymetrial/videos";
 import ShareLink from "@/components/mentor/studymetrial/shareLink";
 import Pdf from "@/components/mentor/studymetrial/pdf";
+import { setDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/config/firebaseconfig";
+import { addPdfStudyMaterial } from "@/lib/exportablefunctions";
 
-function MetrialInfo({ module }) {
+
+
+
+function MetrialInfo({ module, modules, courseID }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -19,6 +25,36 @@ function MetrialInfo({ module }) {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+
+  const addPdfHandler = async ({ name, url, size }) => {
+    try {
+      console.log("courseID", courseID);
+      console.log("module", module);
+      console.log("modules", modules);
+      console.log("new pdf", {
+        name,
+        url,
+        size,
+      });
+
+      const newPdf = {
+        name,
+        url,
+        size,
+      };
+
+      // Assuming you have the necessary declarations for courseID, module, and modules array.
+      await addPdfStudyMaterial(courseID, module.id, newPdf)
+
+      console.log("Document successfully updated!");
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
+  };
+
+
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -192,7 +228,7 @@ function MetrialInfo({ module }) {
                 {selectedCard === "Shared Link" && (
                   <ShareLink links={module.link ?? []} />
                 )}
-                {selectedCard === "Pdf" && <Pdf pdfs={module.pdf ?? []} />}
+                {selectedCard === "Pdf" && <Pdf addPdfHandler={addPdfHandler} pdfs={module.pdf ?? []} />}
               </div>
             )}
           </div>

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import AddPdf from '@/components/mentor/studymetrial/addpdf';
 
-function PdfList({ pdfs, addPdf }) {
+function PdfList({ pdfs, addPdfHandler }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -39,7 +39,7 @@ function PdfList({ pdfs, addPdf }) {
   return (
     <div>
       {showAddPdf ? (
-        <AddPdf />
+        <AddPdf addPdfHandler={addPdfHandler} />
       ) : (
         <div>
           <div className=' w-full  flex  flex-row-reverse '>
@@ -93,7 +93,7 @@ const PdfListItem = ({ pdf }) => {
         </svg>
 
         {/* Title */}
-        <div className='text-xl font-bold'>{pdf.title}</div>
+        <div className='text-xl font-bold'>{pdf.name}</div>
       </div>
 
       {/* Date Text */}

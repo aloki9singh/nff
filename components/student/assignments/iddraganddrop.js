@@ -25,7 +25,9 @@ export default function IDdraganddrop({
         setUploading(false);
       });
     },
-    accept: "image/jpeg, image/png, image/svg+xml",
+    accept: {
+      "image/*": []
+    },
 
     maxFiles: 1,
     maxSize: 5242880, // 5MB

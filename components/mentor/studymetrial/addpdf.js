@@ -9,7 +9,7 @@ import Pdf from "@/components/mentor/studymetrial/pdf";
 import { useDropzone } from "react-dropzone";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 
-function AddPdf() {
+function AddPdf({ addPdfHandler }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -46,8 +46,9 @@ function AddPdf() {
   }, [query]);
 
   const [selectedModule, setSelectedModule] = useState("Module 1");
-  const [fileName, setFileName] = useState("File Name: Module 1");
+  const [fileName, setFileName] = useState("");
   const [pdfUrl, setPdfUrl] = useState(null);
+  const [size, setSize] = useState(null);
 
   const handleModuleChange = (event) => {
     const selectedValue = event.target.value;
@@ -62,7 +63,9 @@ function AddPdf() {
         <input
           type="text"
           className="border rounded px-2 py-1 bg-inherit"
-        // Add any additional props or event handlers to the input as needed
+          // Add any additional props or event handlers to the input as needed
+          value={fileName}
+          onChange={(e) => setFileName(e.target.value)}
         />
       </div>
 
@@ -88,12 +91,19 @@ function AddPdf() {
       </div> */}
 
       <div className=" border-[#5F6065] border rounded-2xl py-8 mx-8 ">
-      <DropZone setUrl={setPdfUrl} />
+        <DropZone setSize={setSize} setUrl={setPdfUrl} />
       </div>
 
       <div className="w-full flex flex-row-reverse ">
-        <button onClick={()=>{
-          
+        <button onClick={async () => {
+          console.log("pdfUrl", pdfUrl)
+          await addPdfHandler({
+            name: fileName,
+            url: pdfUrl,
+            size: size,
+          })
+          setPdfUrl(null)
+          // router.reload()
         }} className=" mt-12 w-[10%] h-10  mr-10 bg-[#AA2769]">
           Add Pdf
         </button>
@@ -134,15 +144,20 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-function DropZone({ setUrl }) {
-  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
+function DropZone({ setUrl, setSize }) {
+
+  const [loading, setLoading] = useState(false);
+  const { getRootProps, acceptedFiles, getInputProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
       accept: {
         "application/pdf": [".pdf"],
       },
       onDrop: (acceptedFiles) => {
+        setLoading(true);
+        setSize(acceptedFiles[0].size);
         uploadToFirebase(acceptedFiles[0], (url) => {
           setUrl(url);
+          setLoading(false);
         });
       },
     });
@@ -157,10 +172,16 @@ function DropZone({ setUrl }) {
     [isFocused, isDragAccept, isDragReject]
   );
 
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
-        <input  {...getInputProps()}  accept="application/pdf" />
+        <input  {...getInputProps()} accept="application/pdf" />
         <div className="flex flex-col items-center" >
           <FileIcon />
           <p>Click to upload or drag and drop</p>
@@ -168,6 +189,11 @@ function DropZone({ setUrl }) {
           </p>
         </div>
       </div>
+      <aside>
+        <h4>Accepted files</h4>
+        <ul>{acceptedFileItems}</ul>
+      </aside>
+      {loading && <div className="text-white">Uploading...</div>}
     </div>
   );
 }
