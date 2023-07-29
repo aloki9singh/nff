@@ -407,7 +407,7 @@ function Videos() {
                                         }`}
                                     >
                                       Join To Access
-                                      <AiOutlineLock className="text-xl mt-2 unblur" />
+                                      <AiOutlineLock className="text-xl unblur" />
                                     </p>
                                   </div>
                                 </>

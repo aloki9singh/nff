@@ -13,11 +13,18 @@ import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
-
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
-import { collection, getDocs, doc, getDoc, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
+import Nodata from "@/components/common/nodata/nodata";
 
 function Assignments() {
   const router = useRouter();
@@ -27,6 +34,8 @@ function Assignments() {
   const [SideBarState, sendSideBarState] = useState(false);
   const [course, setCourse] = useState()
   const [moduleName, setModuleName] = useState()
+  const [uniqCourse, setUnique] = useState([])
+  const [value, setValue] = useState()
 
   //yet to write logic to change course bougth or not ??
 
@@ -38,40 +47,61 @@ function Assignments() {
   if (!user || !userProfile) {
     router.push("/");
   }
+  const [moduleData, setModuleData] = useState()
 
-  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
 
     const getCourseId = async () => {
-      const userRef = doc(db, 'allusers', user.uid);
-      const collectionRef = collection(userRef, 'joinedCourses');
+      const userRef = doc(db, "allusers", user.uid);
+      const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
       const id = []
-      const arr = []
-      data.map((ele) => { id.push(ele.id) })
+      let arr = []
+      const moduleInfo = []
+      const uniq = []
+      data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
       for (var i = 0; i < id.length; i++) {
-        const q = query(
-          collection(db, "courses"),
-          where("id", "==", id[i]),
-        );
+        const q = query(collection(db, "courses"), where("id", "==", id[i]));
         const courseInfo = await getDocs(q);
         for (const doc of courseInfo.docs) {
           const docRef = doc.ref;
-          const collectionRef = collection(docRef, 'assignment');
+          const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
-          arr.push(querySnapshot.docs.map((doc) => doc.data()))
+          arr.push(querySnapshot.docs.map((doc) => doc.data()));
         }
       }
-      console.log(arr)
+
+      if (arr) {
+        for (let i = 0; i < arr.length; i++) {
+          arr[i].map((e) => {
+            console.log(e)
+            const data = {
+              course: e.course,
+              module: e.module,
+            };
+            const isUnique = uniq.findIndex((item) => item == e.course) !== -1;
+            if (!isUnique) {
+              uniq.push(e.course);
+            }
+            const isDuplicate = moduleInfo.findIndex((item) => item.course === data.course && item.module === data.module) !== -1;
+            if (!isDuplicate) {
+              moduleInfo.push(data);
+            }
+          });
+        }
+      }
+      setUnique(uniq)
+      setModuleData(moduleInfo)
       setCourse(arr)
     }
 
-    getCourseId()
-  }, [isMediumScreen, user.uid]);
+    getCourseId();
+  }, [isMediumScreen, user.uid, value]);
+
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -86,13 +116,11 @@ function Assignments() {
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
-
   if (!user || !userProfile) {
     return null;
   }
 
   const { userSubsribed } = CourseAccess(user.uid);
-
 
   return (
     <>
@@ -134,34 +162,70 @@ function Assignments() {
           <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
             {/* <StudentTopbar heading={"My Progress"} /> */}
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
-              <Dashboardnav heading="My Progress" toggleSideBar={toggleSideBar} />
+              <Dashboardnav
+                heading="My Progress"
+                toggleSideBar={toggleSideBar}
+              />
             </div>
+
 
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
+                    Courses
+                  </div>
+                  <select
+                    name="course"
+                    onChange={(e) => setValue(e.target.value)}
+                    value={value}
+                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="" className="text-sm">
+                      Select from this List
+                    </option>
+                    {uniqCourse && uniqCourse.map((ele, i) => {
+                      return <option
+                        key={i}
+                        className="text-sm cursor-pointer"
+                        value={ele}
+                      >
+                        {ele}
+                      </option>
+                    })}
+                  </select>
+                  {/* {dataFetched?.map((e) => (
+                      <option
+                        key={e.id} // Use a unique key for each option
+                        className="text-xs cursor-pointer"
+                        value={e.title}
+                      >
+                        {console.log(e.id)}
+                        {e.title}
+                      </option>
+                    ))} */}
+                  <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
-                 <div className="max-h-screen  overflow-scroll scrollbar-hide">
-                 {
-                    course && course.map((e, i) => {
-                      return e.map((ele, j) => {
-                        return (
-                          <div
-                          key={j}
-                            className={module === i + j ? Activestyle : Inactivestyle} // Note: Use === for comparison
-                            onClick={() => { setModuleName(ele.module); setModule(i + j) }}
-                          >
-                            {`${i + j + 1}. ${ele.course} - ${ele.module}`}
-                          </div>
-                        )
+                  <div className="max-h-screen  overflow-scroll scrollbar-hide">
+                    {
+                      moduleData && moduleData.map((ele, i) => {
+                        if (ele.course == value) {
+                          return (
+                            <div
+                              key={i}
+                              className={module === i ? Activestyle : Inactivestyle} // Note: Use === for comparison
+                              onClick={() => { setModuleName(ele.module); setModule(i) }}
+                            >
+                              {`${i + 1}. ${ele.course} - ${ele.module}`}
+                            </div>
+                          )
+                        }
                       })
-                    })
-                  }
-                 </div>
-        
+                    }
+                  </div>
+
                 </div>
 
                 {/* Assignments */}
@@ -173,39 +237,32 @@ function Assignments() {
                     {
                       course && course.map((e, i) => {
                         return e.map((ele, j) => {
-                          {/* if (moduleName && (ele.module === moduleName)) { */}
-                            return (
-                              <AssignmentCard
-                                key={i}
-                                id={ele.id}
-                                no={i + 1}
-                                name={ele.title}
-                                date={ele.date}
-                                url={ele.url}
-                                courseid={ele.courseid}
-                              />
-                            );
-                          {/* } */}
+                          {
+                            if (moduleName && (ele.module === moduleName) && value != "") {
+
+                              return (
+                                <AssignmentCard
+                                  key={i}
+                                  id={ele.id}
+                                  no={i + 1}
+                                  name={ele.title}
+                                  date={ele.date}
+                                  url={ele.url}
+                                  courseid={ele.courseid}
+                                />
+                              );
+                            }
+                          }
                         });
                       })
                     }
-                    {/* {Assignments.filter(
-                    (assignment) => module == assignment.module
-                    ).map((assignment, index) => (
-                      <AssignmentCard
-                      key={index}
-                      no={index + 1}
-                      name={assignment.name}
-                      date={assignment.date}
-                    />
-                  ))} */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
         </div>
+        {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
       </div>
     </>
   );
@@ -213,4 +270,3 @@ function Assignments() {
 
 // export default withStudentAuthorization(Assignments);
 export default withStudentAuthorization(Assignments);
-
