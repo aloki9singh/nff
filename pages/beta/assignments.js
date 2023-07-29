@@ -32,8 +32,10 @@ function Assignments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const [course, setCourse] = useState();
-  const [moduleName, setModuleName] = useState();
+  const [course, setCourse] = useState()
+  const [moduleName, setModuleName] = useState()
+  const [uniqCourse, setUnique] = useState([])
+  const [value, setValue] = useState()
 
   //yet to write logic to change course bougth or not ??
 
@@ -45,6 +47,7 @@ function Assignments() {
   if (!user || !userProfile) {
     router.push("/");
   }
+  const [moduleData, setModuleData] = useState()
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -56,11 +59,11 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
-      const id = [];
-      const arr = [];
-      data.map((ele) => {
-        id.push(ele.id);
-      });
+      const id = []
+      let arr = []
+      const moduleInfo = []
+      const uniq = []
+      data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
         const courseInfo = await getDocs(q);
@@ -71,12 +74,34 @@ function Assignments() {
           arr.push(querySnapshot.docs.map((doc) => doc.data()));
         }
       }
-      console.log(arr);
-      setCourse(arr);
-    };
+
+      if (arr) {
+        for (let i = 0; i < arr.length; i++) {
+          arr[i].map((e) => {
+            console.log(e)
+            const data = {
+              course: e.course,
+              module: e.module,
+            };
+            const isUnique = uniq.findIndex((item) => item == e.course) !== -1;
+            if (!isUnique) {
+              uniq.push(e.course);
+            }
+            const isDuplicate = moduleInfo.findIndex((item) => item.course === data.course && item.module === data.module) !== -1;
+            if (!isDuplicate) {
+              moduleInfo.push(data);
+            }
+          });
+        }
+      }
+      setUnique(uniq)
+      setModuleData(moduleInfo)
+      setCourse(arr)
+    }
 
     getCourseId();
-  }, [isMediumScreen, user.uid]);
+  }, [isMediumScreen, user.uid, value]);
+
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
@@ -121,9 +146,8 @@ function Assignments() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -143,58 +167,79 @@ function Assignments() {
                 toggleSideBar={toggleSideBar}
               />
             </div>
-            {!true ? (
-              <>
-                <Nodata title={"Homework"} value={"No Homework"} />
-              </>
-            ) : (
-              <>
-                <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
-                  <div className="lg:grid lg:grid-cols-11 min-h-screen">
-                    {/* Modules */}
-                    <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
-                      <div className="title font-medium text-xl pt-10 pb-5 pl-8">
-                        Modules
-                      </div>
-                      <div className="max-h-screen  overflow-scroll scrollbar-hide">
-                        {course &&
-                          course.map((e, i) => {
-                            return e.map((ele, j) => {
-                              return (
-                                <div
-                                  key={j}
-                                  className={
-                                    module === i + j
-                                      ? Activestyle
-                                      : Inactivestyle
-                                  } // Note: Use === for comparison
-                                  onClick={() => {
-                                    setModuleName(ele.module);
-                                    setModule(i + j);
-                                  }}
-                                >
-                                  {`${i + j + 1}. ${ele.course} - ${
-                                    ele.module
-                                  }`}
-                                </div>
-                              );
-                            });
-                          })}
-                      </div>
-                    </div>
 
-                    {/* Assignments */}
-                    <div className="col-span-8">
-                      <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
-                        Files
-                      </div>
-                      <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1 min-h-screen max-h-screen  overflow-scroll scrollbar-hide">
-                        {course &&
-                          course.map((e, i) => {
-                            return e.map((ele, j) => {
-                              {
-                                /* if (moduleName && (ele.module === moduleName)) { */
-                              }
+
+            <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
+              <div className="lg:grid lg:grid-cols-11 min-h-screen">
+                {/* Modules */}
+                <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
+                  <div className="title font-medium text-xl pt-10 pb-5 pl-8">
+                    Courses
+                  </div>
+                  <select
+                    name="course"
+                    onChange={(e) => setValue(e.target.value)}
+                    value={value}
+                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="" className="text-sm">
+                      Select from this List
+                    </option>
+                    {uniqCourse && uniqCourse.map((ele, i) => {
+                      return <option
+                        key={i}
+                        className="text-sm cursor-pointer"
+                        value={ele}
+                      >
+                        {ele}
+                      </option>
+                    })}
+                  </select>
+                  {/* {dataFetched?.map((e) => (
+                      <option
+                        key={e.id} // Use a unique key for each option
+                        className="text-xs cursor-pointer"
+                        value={e.title}
+                      >
+                        {console.log(e.id)}
+                        {e.title}
+                      </option>
+                    ))} */}
+                  <div className="title font-medium text-xl pt-10 pb-5 pl-8">
+                    Modules
+                  </div>
+                  <div className="max-h-screen  overflow-scroll scrollbar-hide">
+                    {
+                      moduleData && moduleData.map((ele, i) => {
+                        if (ele.course == value) {
+                          return (
+                            <div
+                              key={i}
+                              className={module === i ? Activestyle : Inactivestyle} // Note: Use === for comparison
+                              onClick={() => { setModuleName(ele.module); setModule(i) }}
+                            >
+                              {`${i + 1}. ${ele.course} - ${ele.module}`}
+                            </div>
+                          )
+                        }
+                      })
+                    }
+                  </div>
+
+                </div>
+
+                {/* Assignments */}
+                <div className="col-span-8">
+                  <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
+                    Files
+                  </div>
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1 min-h-screen max-h-screen  overflow-scroll scrollbar-hide">
+                    {
+                      course && course.map((e, i) => {
+                        return e.map((ele, j) => {
+                          {
+                            if (moduleName && (ele.module === moduleName) && value != "") {
+
                               return (
                                 <AssignmentCard
                                   key={i}
@@ -206,30 +251,18 @@ function Assignments() {
                                   courseid={ele.courseid}
                                 />
                               );
-                              {
-                                /* } */
-                              }
-                            });
-                          })}
-                        {/* {Assignments.filter(
-                    (assignment) => module == assignment.module
-                    ).map((assignment, index) => (
-                      <AssignmentCard
-                      key={index}
-                      no={index + 1}
-                      name={assignment.name}
-                      date={assignment.date}
-                    />
-                  ))} */}
-                      </div>
-                    </div>
+                            }
+                          }
+                        });
+                      })
+                    }
                   </div>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
           </div>
-          {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
         </div>
+        {/* <MobileNav className="fixed bottom-0 left-0 w-full" /> */}
       </div>
     </>
   );
