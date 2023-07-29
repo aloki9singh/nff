@@ -1,15 +1,55 @@
+function encodeToBase64(str) {
+  return btoa(str);
+}
+
+async function sha256(input) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
 async function handler(req, res) {
     const { method } = req;
+
+    const body = JSON.parse(req.body);
+
+
+    const paymentData =
+  {
+    "merchantId": "PGTESTPAYUAT",
+    "merchantTransactionId": "MTST50590068188178",
+    "merchantUserId": "MUID409",
+    "amount": body.price,
+    "redirectUrl": "http://localhost:3000/beta/dashboard",
+    "redirectMode": "POST",
+    "callbackUrl": "https://webhook.site/callback-url",
+    "mobileNumber": "9999999999",
+    "paymentInstrument": {
+      "type": "PAY_PAGE"
+    }
+  }
+
+  const saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399"
+
+    const encodedData = encodeToBase64(JSON.stringify(paymentData));
+    const shaFormula = encodedData+"/pg/v1/pay"+saltKey;
+    const shaData = await sha256(shaFormula);
+    const shaVerify = shaData+"###1";
+
+
     try {
             const options = {
                 method: 'POST',
                 headers: {
                   accept: 'application/json',
                   'Content-Type': 'application/json',
-                  'X-VERIFY': 'bb865e6c6b4fd565d4ff604b7cea8f2bbdc01be7f9ca20f4050b5b1962161a95###1'
+                  'X-VERIFY': shaVerify,
                 },
                 body: JSON.stringify({
-                  request: 'ewogICJtZXJjaGFudElkIjogIlBHVEVTVFBBWVVBVCIsCiAgIm1lcmNoYW50VHJhbnNhY3Rpb25JZCI6ICJNVDc4NTA1OTAwNjgxODgxNzgiLAogICJtZXJjaGFudFVzZXJJZCI6ICJNVUlENDAzIiwKICAiYW1vdW50IjogMTAwLAogICJyZWRpcmVjdFVybCI6ICJodHRwczovL3dlYmhvb2suc2l0ZS9yZWRpcmVjdC11cmwiLAogICJyZWRpcmVjdE1vZGUiOiAiUE9TVCIsCiAgImNhbGxiYWNrVXJsIjogImh0dHBzOi8vd2ViaG9vay5zaXRlL2NhbGxiYWNrLXVybCIsCiAgIm1vYmlsZU51bWJlciI6ICI5OTk5OTk5OTk5IiwKICAicGF5bWVudEluc3RydW1lbnQiOiB7CiAgICAidHlwZSI6ICJQQVlfUEFHRSIKICB9Cn0='
+                  request: encodedData
                 })
               };
         
@@ -18,7 +58,6 @@ async function handler(req, res) {
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
-                    // window.location.href =  response.data.instrumentResponse.redirectInfo.url;
                 })
                 .catch(err => console.error(err));
 
