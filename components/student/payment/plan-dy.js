@@ -9,15 +9,16 @@ export default function Plan({
   to,
   updatePage,
   odd,
-  trial
+  trial,
+  updateHook,
+  updatePrice
 }) {
 
 
 
   const paymentFuction = (e) => {
     e.preventDefault();
-
-    alert("Payment Function");
+    updateHook(1);
   }
 
 
@@ -98,7 +99,10 @@ export default function Plan({
               <>
                 <button
                   className="bg-[#A145CD] flex items-center m-auto justify-center text-sm w-full p-[12px] mt-[2rem] rounded-xl"
-                  onClick={(e) => paymentFuction(e)}
+                  onClick={(e) => {
+                    paymentFuction(e);
+                    updatePrice(price);
+                  }}
                 >
                   Subscribe Now
                   <svg
