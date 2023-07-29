@@ -139,7 +139,7 @@ function StudentProfile() {
 
             {/* /// */}
 
-            {userSubsribed ? (
+            {!userSubsribed ? (
               <>
               <Nodata title={"Subscription"} value={"No Subsciption"}/>
               </>

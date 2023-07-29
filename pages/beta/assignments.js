@@ -75,10 +75,9 @@ function Assignments() {
           const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
           arr.push(querySnapshot.docs.map((doc) => doc.data()));
-         
         }
       }
-
+    console.log(arr);
       if (arr) {
         for (let i = 0; i < arr.length; i++) {
           arr[i].map((e) => {
@@ -103,7 +102,6 @@ function Assignments() {
         }
       }
       setUnique(uniq);
-      console.log(moduleInfo,"arr");
       setModuleData(moduleInfo);
       setCourse(arr);
     };
@@ -175,8 +173,7 @@ function Assignments() {
                 heading="My Progress"
                 toggleSideBar={toggleSideBar}
               />
-            </div>
-            //{" "}
+            </div>{" "}
             {!course ? (
               <>
                 <Nodata title={"Courses"} value={"No Courses"} />
@@ -244,7 +241,6 @@ function Assignments() {
                             );
                           }
                         })}
-                        
                     </div>
                   </div>
 
@@ -281,7 +277,6 @@ function Assignments() {
                             }
                           });
                         })}
-                        
                     </div>
                   </div>
                 </div>
