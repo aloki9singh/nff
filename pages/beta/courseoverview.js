@@ -1,3 +1,5 @@
+// TODO: Can be modified for better view
+
 
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import CoursesMain from "@/components/student/courses";
