@@ -9,15 +9,15 @@ export default function Plan({
   to,
   updatePage,
   odd,
-  trial
+  trial,
+  updateHook
 }) {
 
 
 
   const paymentFuction = (e) => {
     e.preventDefault();
-
-    alert("Payment Function");
+    updateHook(1);
   }
 
 
