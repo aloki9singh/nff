@@ -143,7 +143,7 @@ function Assignments() {
                 toggleSideBar={toggleSideBar}
               />
             </div>
-            {true ? (
+            {!true ? (
               <>
                 <Nodata title={"Homework"} value={"No Homework"} />
               </>
