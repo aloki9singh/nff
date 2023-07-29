@@ -327,6 +327,7 @@ const Assignmentupload = () => {
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
+                      disabled={progressData!==100}
                     >
                       Upload
                     </button>
@@ -335,10 +336,12 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
+
                     class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
                       submitted ? "#505057" : "#E1348B"
                     }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
+
                   >
                     {submitted ? " Submitted" : "Submit"}
                   </button>

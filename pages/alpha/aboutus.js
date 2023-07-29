@@ -17,12 +17,12 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 const Aboutus = () => {
   const [mentor, setMentor] = useState([]);
 
-  
-
   useEffect(() => {
-
     const fetchPost = async () => {
-      const q = query(collection(db, "allusers"), where("role", "==", "mentor"));
+      const q = query(
+        collection(db, "allusers"),
+        where("role", "==", "mentor")
+      );
       const querySnapshot = await getDocs(q);
       const newData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -31,7 +31,6 @@ const Aboutus = () => {
       setMentor(newData);
     };
 
-    
     fetchPost();
   }, [mentor]);
 
@@ -146,7 +145,11 @@ const Aboutus = () => {
             style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
           >
             <p className="text-sm md:text-xl lg:text-2xl lg:px-11  ">
-              neatskills.tech is developed and managed by Provoke Developers Private Limited. At the core of this, we value quality and want to provide everyone with the affordable way to access any skill and explore themselves in their own way with their own lifelong learning partner.
+              neatskills.tech is developed and managed by Provoke Developers
+              Private Limited. At the core of this, we value quality and want to
+              provide everyone with the affordable way to access any skill and
+              explore themselves in their own way with their own lifelong
+              learning partner.
             </p>
           </div>
           <Image
@@ -191,6 +194,7 @@ const Aboutus = () => {
       </div>
 
       {/* Our misson */}
+      
       <div className="space-y-12 max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
         <div className="">
           <p>
@@ -205,36 +209,28 @@ const Aboutus = () => {
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
               We believe in
             </p>
-            <p className=" text-white ">
-              Affordability
-            </p>
+            <p className=" text-white ">Affordability</p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
               Quality
             </p>
-            <p className="text-white ">
-              Skills
-            </p>
+            <p className="text-white ">Skills</p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
               Why We?
             </p>
-            <p className="text-white">
-              We love to do stuffs for everyone
-            </p>
+            <p className="text-white">We love to do stuffs for everyone</p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
             <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
               Provoke Developers Private Limited?
             </p>
-            <p className="text-white ">
-              The parent company of neatskills.tech 
-            </p>
+            <p className="text-white ">The parent company of neatskills.tech</p>
           </div>
         </div>
 
@@ -251,7 +247,8 @@ const Aboutus = () => {
               & Support
             </p>
             <p className="text-white">
-              We love you as much you do and want to stand and be with you unconditially.
+              We love you as much you do and want to stand and be with you
+              unconditially.
             </p>
           </div>
 
@@ -269,16 +266,18 @@ const Aboutus = () => {
               Impact
             </p>
             <p className="text-white">
-              We want to create an great impact in this world with neatskills.tech by Provoke Developers Private Limiited.
+              We want to create an great impact in this world with
+              neatskills.tech by Provoke Developers Private Limiited.
             </p>
           </div>
         </div>
       </div>
 
       {/* Our Team */}
+
       <div className="max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16">
         <h1 className="mb-4  px-2 text-center text-2xl md:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
-          The team 
+          The team
         </h1>
         <div
           ref={scrollContainerRef}
