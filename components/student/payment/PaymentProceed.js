@@ -2,9 +2,43 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
+
 const PaymentProceed = () => {
   const [activeTab, setActiveTab] = useState("card");
 
+
+  // const paymentData =
+  // {
+  //   "merchantId": "PGTESTPAYUAT",
+  //   "merchantTransactionId": "MTST50590068188178",
+  //   "merchantUserId": "MUID409",
+  //   "amount": 100,
+  //   "redirectUrl": "http://localhost:3000/beta/dashboard",
+  //   "redirectMode": "POST",
+  //   "callbackUrl": "https://webhook.site/callback-url",
+  //   "mobileNumber": "9999999999",
+  //   "paymentInstrument": {
+  //     "type": "PAY_PAGE"
+  //   }
+
+  // }
+
+    
+
+
+    const handleReq = async () => {  
+        
+        await fetch('/api/payment', {method: 'GET'})
+          .then(response => response.json())
+          .then(response => {
+              console.log(response)
+              window.location.href =  response.data.instrumentResponse.redirectInfo.url;
+          })
+          .catch(err => console.error(err));
+  
+      }
+      
+  
   return (
     <>
       <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
@@ -14,36 +48,32 @@ const PaymentProceed = () => {
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 py-4">
             <li className="mr-2" role="presentation">
               <button
-                className={`flex border border-[#717378] py-[7.418px] px-[30px] items-center rounded-lg ${
-                  activeTab == "card" ? "border-[#E1348B]" : null
-                }`}
+                className={`flex border border-[#717378] py-[7.418px] px-[30px] items-center rounded-lg ${activeTab == "card" ? "border-[#E1348B]" : null
+                  }`}
                 onClick={() => setActiveTab("card")}
               >
                 <BsPatchCheckFill
-                  className={`${
-                    activeTab == "card" ? "text-[#E1348B]" : "text-white"
-                  }`}
+                  className={`${activeTab == "card" ? "text-[#E1348B]" : "text-white"
+                    }`}
                 />
                 <p className="mx-4">Debit/Credit</p>
                 <Image
                   src="/pagesgraphics/student/payment/card.png"
                   width={57}
                   height={30}
-                  alt="Picture of the author"
+                  alt="Picture of the Course"
                 />
               </button>
             </li>
             <li className="mr-2" role="presentation">
               <button
-                className={`flex border border-[#717378]  items-center py-[1.418px] px-[45px] rounded-lg ${
-                  activeTab == "upi" ? "border-[#E1348B]" : null
-                }`}
+                className={`flex border border-[#717378]  items-center py-[1.418px] px-[45px] rounded-lg ${activeTab == "upi" ? "border-[#E1348B]" : null
+                  }`}
                 onClick={() => setActiveTab("upi")}
               >
                 <BsPatchCheckFill
-                  className={`${
-                    activeTab == "upi" ? "text-[#E1348B]" : "text-white"
-                  }`}
+                  className={`${activeTab == "upi" ? "text-[#E1348B]" : "text-white"
+                    }`}
                 />
                 <p className="mx-4">UPI ID</p>
                 <Image
@@ -204,7 +234,7 @@ const PaymentProceed = () => {
             <h2>Rs 1899</h2>
           </div>
 
-          <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 ">
+          <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={handleReq}>
             Pay Now
           </button>
         </div>
@@ -214,3 +244,9 @@ const PaymentProceed = () => {
 };
 
 export default PaymentProceed;
+
+
+
+//salt == 099eb0cd-02cf-4e2a-8aca-3e6c6aff0399;
+//merchantId = PGTESTPAYUAT
+

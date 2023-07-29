@@ -1,6 +1,6 @@
 import Plan from './plan-dy';
 
-const ChoosePlan = ({ clickEvent, trial}) => {
+const ChoosePlan = ({ clickEvent, trial, updatePage}) => {
 
   const plan = [
     {
@@ -83,6 +83,7 @@ const ChoosePlan = ({ clickEvent, trial}) => {
             updatePage={(e) => clickEvent(e)}
             ind={ind}
             trial={trial}
+            updateHook={(e)=>updatePage(e)}
           />
         ))}
       </div>
