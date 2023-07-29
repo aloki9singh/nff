@@ -3,32 +3,24 @@ import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
 
-const PaymentProceed = () => {
+
+const PaymentProceed = ({price}) => {
   const [activeTab, setActiveTab] = useState("card");
 
-
-  // const paymentData =
-  // {
-  //   "merchantId": "PGTESTPAYUAT",
-  //   "merchantTransactionId": "MTST50590068188178",
-  //   "merchantUserId": "MUID409",
-  //   "amount": 100,
-  //   "redirectUrl": "http://localhost:3000/beta/dashboard",
-  //   "redirectMode": "POST",
-  //   "callbackUrl": "https://webhook.site/callback-url",
-  //   "mobileNumber": "9999999999",
-  //   "paymentInstrument": {
-  //     "type": "PAY_PAGE"
-  //   }
-
-  // }
 
     
 
 
     const handleReq = async () => {  
+
+
+      const requestBody = {
+        price: price*100,
         
-        await fetch('/api/payment', {method: 'GET'})
+      };
+        
+        await fetch('/api/payment', {method: 'POST',body:JSON.stringify(requestBody)},)
+
           .then(response => response.json())
           .then(response => {
               console.log(response)
@@ -42,7 +34,9 @@ const PaymentProceed = () => {
   return (
     <>
       <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
-        <div className="left m-12">
+
+        <div className="hidden md:inline left m-12">
+
           <h1 className="py-2">Payment Method</h1>
 
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 py-4">
@@ -215,23 +209,23 @@ const PaymentProceed = () => {
 
           <h2 className="font-bold">Order details</h2>
           <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
-            <p>Subtotal</p>
-            <p>Rs 1899</p>
+            <p>Price</p>
+            <p>Rs {price}</p>
+          </div>
+          <div className="flex text-sm gap-[3rem] flex-row md:gap-[6rem]">
+            <h2>Discount</h2>
+            <h2 className="text-red-500">-Rs 0</h2>
           </div>
           <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
-            <h2>Subtotal</h2>
-            <h2>Rs 1899</h2>
-          </div>
-          <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
-            <h2>Subtotal</h2>
-            <h2>Rs 1899</h2>
+            <h2>GST</h2>
+            <h2 className="text-green-400">+Rs 0</h2>
           </div>
 
           <hr class="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
           <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
             <h2>Subtotal</h2>
-            <h2>Rs 1899</h2>
+            <h2>Rs {price}</h2>
           </div>
 
           <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={handleReq}>

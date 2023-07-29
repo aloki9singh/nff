@@ -10,7 +10,10 @@ export default function Plan({
   updatePage,
   odd,
   trial,
-  updateHook
+
+  updateHook,
+  updatePrice
+
 }) {
 
 
@@ -98,7 +101,10 @@ export default function Plan({
               <>
                 <button
                   className="bg-[#A145CD] flex items-center m-auto justify-center text-sm w-full p-[12px] mt-[2rem] rounded-xl"
-                  onClick={(e) => paymentFuction(e)}
+                  onClick={(e) => {
+                    paymentFuction(e);
+                    updatePrice(price);
+                  }}
                 >
                   Subscribe Now
                   <svg

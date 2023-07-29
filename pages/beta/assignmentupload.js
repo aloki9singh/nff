@@ -126,7 +126,7 @@ const Assignmentupload = () => {
     if (file) {
       uploadFile();
     }
-  }, [file, uploadFile]);
+  }, [file]);
 
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
@@ -221,9 +221,9 @@ const Assignmentupload = () => {
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {" "}
-              <span>{course && course[0]?.module}</span>
+              <span className='cursor-pointer' onClick={() => { router.push("/beta/assignments") }}>{course && course[0]?.module}</span>
               <span>{">"}</span>
-              <span>Files</span> <span>{">"}</span>
+              <span className='cursor-pointer' onClick={() => { router.push("/beta/assignments") }}>Files</span> <span>{">"}</span>
               <span>{course && course[0]?.title}</span>
             </div>
             <hr className="hidden lg:block opacity-50 m-3"></hr>
@@ -254,13 +254,17 @@ const Assignmentupload = () => {
               <div className="mt-1 md:text-[17px] text-[12px]">
                 Assignment Pdf
               </div>
-              <button
-                className="bg-[#505057] rounded-10 px-1.5 md:px-2 text-xs md:text-[17px]"
-                onClick={() => router.push(course[0]?.url)}
+
+              <a
+                className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
+                href={course && course[0]?.url}
                 target="_blank"
+                rel="noopener noreferrer"
+                download
+
               >
                 Download
-              </button>
+              </a>
             </div>
             <div>Submit Your Assignment</div>
             <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
