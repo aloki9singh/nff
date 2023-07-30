@@ -94,7 +94,7 @@ const Assignmentupload = () => {
         } catch (err) {
           alert("Error Occured");
         }
-        router.push("/beta/assigments")
+        router.push("/beta/assignments")
         setkey(key + 1);
         setFile("");
         setUrl("");
@@ -341,6 +341,7 @@ const Assignmentupload = () => {
                       disabled={submitted || link ? true : false}
                       className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
                       onChange={handleChange}
+                      accept="application/pdf, application/msword"
                       hidden
                     />
                     <label
