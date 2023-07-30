@@ -1,5 +1,5 @@
 // in mobile screen whole ui is according to figma design
-
+// to make it understandable comments needed for later
 import { BiBell } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import { useEffect, useState } from "react";
