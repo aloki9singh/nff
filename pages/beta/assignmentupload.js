@@ -317,8 +317,7 @@ const Assignmentupload = () => {
 
               <Link
                 className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
-                // href={course && course[0]?.url}
-                href={"Hi"}
+                href={course && course[0]?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 download
