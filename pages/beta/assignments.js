@@ -33,12 +33,10 @@ function Assignments() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
 
-
   const [course, setCourse] = useState()
   const [moduleName, setModuleName] = useState()
   const [uniqCourse, setUnique] = useState([])
   const [value, setValue] = useState()
-
 
 
   //yet to write logic to change course bougth or not ??
@@ -51,7 +49,7 @@ function Assignments() {
   if (!user || !userProfile) {
     router.push("/");
   }
-  const [moduleData, setModuleData] = useState();
+  const [moduleData, setModuleData] = useState()
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -63,12 +61,12 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
+
       const id = []
       var arr = []
       const moduleInfo = []
       const uniq = []
       data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
-
 
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
@@ -83,7 +81,7 @@ function Assignments() {
 
         }
       }
-    console.log(arr);
+
       if (arr) {
         for (let i = 0; i < arr.length; i++) {
           arr[i].map((e) => {
@@ -96,21 +94,17 @@ function Assignments() {
             if (!isUnique) {
               uniq.push(e.course);
             }
-            const isDuplicate =
-              moduleInfo.findIndex(
-                (item) =>
-                  item.course === data.course && item.module === data.module
-              ) !== -1;
+            const isDuplicate = moduleInfo.findIndex((item) => item.course === data.course && item.module === data.module) !== -1;
             if (!isDuplicate) {
               moduleInfo.push(data);
             }
           });
         }
       }
-      setUnique(uniq);
-      setModuleData(moduleInfo);
-      setCourse(arr);
-    };
+      setUnique(uniq)
+      setModuleData(moduleInfo)
+      setCourse(arr)
+    }
 
     getCourseId();
   }, [isMediumScreen, user.uid, value]);
@@ -174,12 +168,12 @@ function Assignments() {
             </div>
           )}
           <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
+            {/* <StudentTopbar heading={"My Progress"} /> */}
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <Dashboardnav
                 heading="My Progress"
                 toggleSideBar={toggleSideBar}
               />
-
             </div>
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
@@ -192,7 +186,7 @@ function Assignments() {
                     name="course"
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
-                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#37383F] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
                   >
                     <option value="" className="text-sm">
                       Select from this List
@@ -207,6 +201,7 @@ function Assignments() {
                       </option>
                     })}
                   </select>
+
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
@@ -229,6 +224,7 @@ function Assignments() {
                   </div>
 
                 </div>
+
 
                 {/* Assignments */}
                 <div className="col-span-8">
@@ -268,9 +264,3 @@ function Assignments() {
 
 // export default withStudentAuthorization(Assignments);
 export default withStudentAuthorization(Assignments);
-
-// {!true ? (
-//   <>
-//     <Nodata title={"Homework"} value={"No Homework"} />
-//   </>
-// ) : (
