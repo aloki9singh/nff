@@ -57,7 +57,7 @@ const Assignmentupload = () => {
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-    setUrl(null); 
+    setUrl(null);
   };
 
   const onSubmitHandler = async (e) => {
@@ -103,8 +103,6 @@ const Assignmentupload = () => {
 
   // const storageRef = ref(storage, `assignment/${file.name}`);
 
-  
-
   // const uploadFile = useCallback(async () => {
   //   const uploadTask = uploadBytesResumable(storageRef, file);
   //   uploadTask.on(
@@ -126,7 +124,7 @@ const Assignmentupload = () => {
   //   );
   // }, [file]);
 
-  const uploadFile = async () => {
+  const uploadFile = useCallback(async () => {
     if (!file) {
       alert("Please select a file before uploading.");
       return;
@@ -138,7 +136,8 @@ const Assignmentupload = () => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setUploadProgress(progress);
         },
         (error) => {
@@ -152,13 +151,13 @@ const Assignmentupload = () => {
     } catch (error) {
       console.error("Error during upload:", error);
     }
-  };
+  }, [file]);
 
   useEffect(() => {
     if (file) {
       uploadFile();
     }
-  }, [file]);
+  }, [file, uploadFile]);
 
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
@@ -260,9 +259,24 @@ const Assignmentupload = () => {
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {" "}
-              <span className='cursor-pointer' onClick={() => { router.push("/beta/assignments") }}>{course && course[0]?.module}</span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/beta/assignments");
+                }}
+              >
+                {course && course[0]?.module}
+              </span>
               <span>{">"}</span>
-              <span className='cursor-pointer' onClick={() => { router.push("/beta/assignments") }}>Files</span> <span>{">"}</span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/beta/assignments");
+                }}
+              >
+                Files
+              </span>{" "}
+              <span>{">"}</span>
               <span>{course && course[0]?.title}</span>
             </div>
             <hr className="hidden lg:block opacity-50 m-3"></hr>
@@ -313,14 +327,16 @@ const Assignmentupload = () => {
               >
                 <div className="w-full  flex justify-center">
                   <div className="mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] ">
-                    {!file && <input
-                      type="file"
-                      key={key}
-                      id="file"
-                      className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
-                      onChange={handleChange}
-                      hidden
-                    />}
+                    {!file && (
+                      <input
+                        type="file"
+                        key={key}
+                        id="file"
+                        className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
+                        onChange={handleChange}
+                        hidden
+                      />
+                    )}
                     <label
                       htmlFor="file"
                       className="w-full h-full flex flex-col items-center justify-center"
@@ -350,9 +366,16 @@ const Assignmentupload = () => {
                         <br />
                         {progressData && `${progressData}% done`}
                       </p>
-                     {file && <p>
-                        <button className="border bg-grey p-2 rounded-[10px]" onClick={handleCancel}>Remove</button>
-                      </p>}
+                      {file && (
+                        <p>
+                          <button
+                            className="border bg-grey p-2 rounded-[10px]"
+                            onClick={handleCancel}
+                          >
+                            Remove
+                          </button>
+                        </p>
+                      )}
                     </label>
                   </div>
                 </div>
@@ -369,7 +392,7 @@ const Assignmentupload = () => {
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
-                      disabled={progressData!==100}
+                      disabled={progressData !== 100}
                     >
                       Upload
                     </button>
@@ -378,12 +401,10 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-
                     class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
                       submitted ? "#505057" : "#E1348B"
                     }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
-
                   >
                     {submitted ? " Submitted" : "Submit"}
                   </button>
