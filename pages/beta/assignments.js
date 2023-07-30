@@ -1,7 +1,7 @@
 // Hard Coded top-Navbar
 // In mobile screen dropdown is missing of modules.
 // file icon missing
-
+  //yet to write logic to change course bougth or not ??
 import { useState, useEffect } from "react";
 // import MobileNav from '../components/CalenderParts/MobileNav';
 import AssignmentCard from "@/components/student/assignments/foldercard";
@@ -39,7 +39,7 @@ function Assignments() {
   const [value, setValue] = useState()
 
 
-  //yet to write logic to change course bougth or not ??
+
 
   let [searchstate, setsearchstate] = useState("");
   let searchfun = (e) => {
@@ -231,7 +231,7 @@ function Assignments() {
                   <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
                     Files
                   </div>
-                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1">
                     {course &&
                       course.map((courseData, i) => {
                         return courseData.map((assignment, j) => {
