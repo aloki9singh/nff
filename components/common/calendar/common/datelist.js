@@ -126,8 +126,9 @@ const Datelist = ({
   const dateSelect = (e) => {
     const days = document.querySelectorAll(".day");
     days.forEach((day) => (day.style.background = "none"));
-    e.target.style.background = "#E1348B";
-    selectedDate(e.target.id);
+    e.target.style.background = "#E1348B";  //on select date
+    const selectedDateId = e.target.id;
+    selectedDate(selectedDateId);
   };
   // Function to shift the dates to the left (previous dates within the selected month)
   const dateShiftLeft = () => {
@@ -183,7 +184,7 @@ const Datelist = ({
   // console.log(finalArr);
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 w-full">
         <Image
           className="justify-self-center place-self-center col-span-1"
           onClick={dateShiftLeft}
@@ -198,7 +199,7 @@ const Datelist = ({
               key={index}
               id={date}
               className={`w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center day cursor-pointer ${
-                date === 0 ? "" : date == currentDate ? "selected" : ""
+                date === 0 ? "" : selectedDate === date ? "selected" : ""
               }`}
               onClick={dateSelect}
             >
