@@ -10,6 +10,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { getStudyMaterial } from "@/lib/exportablefunctions";
+import { StudyMaterialProvider, useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
 
 function StudyMaterial() {
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -17,86 +18,34 @@ function StudyMaterial() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
 
-  const [material, setMaterial] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const {
+    modules,
+    selectedModule,
+    setSelectedModule,
+    loading,
+    courseID
+  } = useStudyMaterialContext();
 
-  const [showStudyMaterialCard, setShowStudyMaterialCard] = useState(true);
-  const [showMetrailInfo, setShowMetrailInfo] = useState(false);
-  const [modules, setModules] = useState(null);
 
 
-  const menuItems = [...new Set(material.map((Val) => Val.title))];
-
-  // console.log(menuItems);
-  const filteredMaterial = selectedOption
-    ? material.filter((item) => item.title === selectedOption)
-    : material;
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     user.emailVerified = true;
-    //     const value = await callUserById(user.uid);
-    //     setVerified(value.user.verified);
-    //   }
-    // });
-
-    // return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen]);
 
   const handleCardClick = (module) => {
-    setSelectedModule(module); // Set the selected module
+    setSelectedModule(module);
   };
 
-  const { userProfile } = useAuthContext();
-
-  console.log("userProfile", userProfile);
-
-  const courseID = userProfile?.assignedCourses[0];
-
-  const [courseData, setCourseData] = useState(null);
-  const [selectedModule, setSelectedModule] = useState(null);
   console.log("selectedModule", selectedModule);
 
-  console.log("courseData", courseData);
-  useEffect(() => {
-    if (!courseID) {
-      return;
-    }
-
-    const sub = onSnapshot(doc(db, "courses", courseID), (doc) => {
-      setCourseData(doc.data());
-    });
-
-    return sub;
-  }, [courseID]);
-
-  useEffect(() => {
-
-    const getModules = async () => {
-      const data = await getStudyMaterial(courseID);
-      setModules(data)
-    };
-
-    if (!courseID) {
-      return;
-    }
-
-    getModules();
-  }, [courseID]);
-
-  console.log("modules", modules)
-
-  if (!courseData || !modules) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="flex w-full">
@@ -135,11 +84,11 @@ function StudyMaterial() {
                 <option disabled selected hidden>
                   Select an option
                 </option>
-                {menuItems.map((item) => (
+                {/* {menuItems?.map((item) => (
                   <option className="p-4" key={item} value={item}>
                     {item}
                   </option>
-                ))}
+                ))} */}
               </select>
             </div>
 
@@ -181,7 +130,7 @@ function StudyMaterial() {
               )}
             {selectedModule && (
               <MetrialInfo
-                modules={courseData.modules}
+                modules={modules}
                 courseID={courseID}
                 module={selectedModule}
               />
@@ -193,4 +142,15 @@ function StudyMaterial() {
   );
 }
 
-export default withMentorAuthorization(StudyMaterial);
+const MainStudyMaterial = () => {
+
+  return (
+    <StudyMaterialProvider>
+      <StudyMaterial />
+    </StudyMaterialProvider>
+  )
+
+}
+
+
+export default withMentorAuthorization(MainStudyMaterial);

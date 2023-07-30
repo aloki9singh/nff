@@ -8,14 +8,40 @@ import ShareLink from "@/components/mentor/studymetrial/shareLink";
 import Pdf from "@/components/mentor/studymetrial/pdf";
 import { useDropzone } from "react-dropzone";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
+import { useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
 
-function AddPdf({ addPdfHandler }) {
+
+const Loading = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    aria-hidden="true"
+    viewBox="0 0 100 101"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      d="M100 50.59c0 27.615-22.386 50.001-50 50.001s-50-22.386-50-50 22.386-50 50-50 50 22.386 50 50Zm-90.919 0c0 22.6 18.32 40.92 40.919 40.92 22.599 0 40.919-18.32 40.919-40.92 0-22.598-18.32-40.918-40.919-40.918-22.599 0-40.919 18.32-40.919 40.919Z"
+    />
+    <path
+      fill="#1C64F2"
+      d="M93.968 39.04c2.425-.636 3.894-3.128 3.04-5.486A50 50 0 0 0 41.735 1.279c-2.474.414-3.922 2.919-3.285 5.344.637 2.426 3.12 3.849 5.6 3.484a40.916 40.916 0 0 1 44.131 25.769c.902 2.34 3.361 3.802 5.787 3.165Z"
+    />
+  </svg>
+)
+
+function AddPdf({ closeForm }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+
+  const { addPdf } = useStudyMaterialContext();
+  const [loading, setLoading] = useState(false);
+
+
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -54,6 +80,32 @@ function AddPdf({ addPdfHandler }) {
     const selectedValue = event.target.value;
     setSelectedModule(selectedValue);
     setFileName(`File Name: ${selectedValue}`);
+  };
+
+  const addPdfHandler = async () => {
+    try {
+
+
+      if (!fileName || !pdfUrl || !size) {
+        alert("Please fill all the fields");
+        return;
+      }
+
+      const newPdf = {
+        name: fileName,
+        url: pdfUrl,
+        size,
+      };
+      setLoading(true);
+      await addPdf(newPdf);
+
+      setLoading(false);
+      closeForm();
+
+      console.log("Document successfully updated!");
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
   };
 
   return (
@@ -95,16 +147,13 @@ function AddPdf({ addPdfHandler }) {
       </div>
 
       <div className="w-full flex flex-row-reverse ">
-        <button onClick={async () => {
-          console.log("pdfUrl", pdfUrl)
-          await addPdfHandler({
-            name: fileName,
-            url: pdfUrl,
-            size: size,
-          })
-          setPdfUrl(null)
-          // router.reload()
-        }} className=" mt-12 w-[10%] h-10  mr-10 bg-[#AA2769]">
+        <button
+          onClick={addPdfHandler}
+          type="button"
+          disabled={loading}
+          className="py-2.5 px-5 text-sm font-medium text-white bg-primary rounded-lg transition-colors duration-100 cursor-pointer border-gray-200 hover:bg-[#b42a6f] focus:z-10 focus:ring-2    inline-flex items-center mr-10 mt-12 "
+        >
+          {loading && <Loading className="inline w-4 h-4 mr-3  animate-spin " />}
           Add Pdf
         </button>
       </div>
@@ -145,22 +194,27 @@ const rejectStyle = {
 };
 
 function DropZone({ setUrl, setSize }) {
-
   const [loading, setLoading] = useState(false);
-  const { getRootProps, acceptedFiles, getInputProps, isFocused, isDragAccept, isDragReject } =
-    useDropzone({
-      accept: {
-        "application/pdf": [".pdf"],
-      },
-      onDrop: (acceptedFiles) => {
-        setLoading(true);
-        setSize(acceptedFiles[0].size);
-        uploadToFirebase(acceptedFiles[0], (url) => {
-          setUrl(url);
-          setLoading(false);
-        });
-      },
-    });
+  const {
+    getRootProps,
+    acceptedFiles,
+    getInputProps,
+    isFocused,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    accept: {
+      "application/pdf": [".pdf"],
+    },
+    onDrop: (acceptedFiles) => {
+      setLoading(true);
+      setSize(acceptedFiles[0].size);
+      uploadToFirebase(acceptedFiles[0], (url) => {
+        setUrl(url);
+        setLoading(false);
+      });
+    },
+  });
 
   const style = useMemo(
     () => ({
@@ -172,7 +226,7 @@ function DropZone({ setUrl, setSize }) {
     [isFocused, isDragAccept, isDragReject]
   );
 
-  const acceptedFileItems = acceptedFiles.map(file => (
+  const acceptedFileItems = acceptedFiles.map((file) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
@@ -181,16 +235,15 @@ function DropZone({ setUrl, setSize }) {
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
-        <input  {...getInputProps()} accept="application/pdf" />
-        <div className="flex flex-col items-center" >
+        <input {...getInputProps()} accept="application/pdf" />
+        <div className="flex flex-col items-center">
           <FileIcon />
           <p>Click to upload or drag and drop</p>
-          <p>pdf , word document (max 2-5 mb)
-          </p>
+          <p>pdf , word document (max 2-5 mb)</p>
         </div>
       </div>
       <aside>
-        <h4>Accepted files</h4>
+        {/* <h4>Accepted files</h4> */}
         <ul>{acceptedFileItems}</ul>
       </aside>
       {loading && <div className="text-white">Uploading...</div>}
@@ -221,6 +274,6 @@ const FileIcon = (props) => (
       d="M18.406 4.18v7.317h6.782M12.11 19.337l3.39-3.658 3.39 3.658M15.5 24.04V15.68"
     />
   </svg>
-)
+);
 
 export default AddPdf;

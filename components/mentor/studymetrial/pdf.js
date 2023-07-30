@@ -1,11 +1,13 @@
 import MentorSidebar from '@/components/common/sidebar/mentor';
 import MentorTopbar from '@/components/common/navbar/mentortopbar';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import AddPdf from '@/components/mentor/studymetrial/addpdf';
+import { useStudyMaterialContext } from '@/lib/context/StudyMaterialContext';
+import Button from '@/components/common/button/primary-button';
 
-function PdfList({ pdfs, addPdfHandler }) {
+function PdfList({ pdfs }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -17,6 +19,8 @@ function PdfList({ pdfs, addPdfHandler }) {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -39,18 +43,23 @@ function PdfList({ pdfs, addPdfHandler }) {
   return (
     <div>
       {showAddPdf ? (
-        <AddPdf addPdfHandler={addPdfHandler} />
+        <AddPdf closeForm={() => {
+          setShowAddPdf(false)
+        }} />
       ) : (
         <div>
           <div className=' w-full  flex  flex-row-reverse '>
-            <div
-              className=' w-[10%] h-10 bg-[#AA2769] flex items-center justify-center'
-              onClick={toggleShowAddPdf}>
-              Add Pdf
-            </div>
+
           </div>
           <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
-            <div className=' ml-3'>Module 1</div>
+            <div className=' ml-3 flex items-center justify-between self-stretch'>
+              <p>Module 1</p>
+              <Button
+                // className='m-2'
+                onClick={toggleShowAddPdf}>
+                Add Pdf
+              </Button>
+            </div>
 
             <div className=' w-full flex flex-col items-center gap-5  '>
               {

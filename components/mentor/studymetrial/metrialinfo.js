@@ -9,11 +9,27 @@ import Pdf from "@/components/mentor/studymetrial/pdf";
 import { setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { addPdfStudyMaterial } from "@/lib/exportablefunctions";
+import { useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
+
+const ArrowIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    {...props}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="m13 5 7 7-7 7M5 5l7 7-7 7"
+    />
+  </svg>
+)
 
 
-
-
-function MetrialInfo({ module, modules, courseID }) {
+function MetrialInfo({ }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -21,39 +37,14 @@ function MetrialInfo({ module, modules, courseID }) {
   const [SideBarState, sendSideBarState] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
+  const { selectedModule: module, setSelectedModule } = useStudyMaterialContext();
+
+  console.log("module", module);
+
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-
-
-  const addPdfHandler = async ({ name, url, size }) => {
-    try {
-      console.log("courseID", courseID);
-      console.log("module", module);
-      console.log("modules", modules);
-      console.log("new pdf", {
-        name,
-        url,
-        size,
-      });
-
-      const newPdf = {
-        name,
-        url,
-        size,
-      };
-
-      // Assuming you have the necessary declarations for courseID, module, and modules array.
-      await addPdfStudyMaterial(courseID, module.id, newPdf)
-
-      console.log("Document successfully updated!");
-    } catch (error) {
-      console.error("Error updating document:", error);
-    }
-  };
-
-
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -85,26 +76,19 @@ function MetrialInfo({ module, modules, courseID }) {
         <div className="w-full  flex flex-col">
           <div className="w-full flex flex-col">
             <div className="flex items-center">
-              <div className="m-8 ml-12" onClick={() => setSelectedCard(null)}>
+              <div className="m-8 ml-12 cursor-pointer hover:underline " onClick={() => setSelectedModule(null)}>
+                All Modules
+              </div>
+              
+              <ArrowIcon className="w-6 h-6 text-white" />
+
+              <div className="m-8 ml-12 cursor-pointer hover:underline" onClick={() => setSelectedCard(null)}>
                 {module.name}
               </div>
-              <svg
-                className="w-6 h-6 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                ></path>
-              </svg>
+              <ArrowIcon className="w-6 h-6  text-white" />
               <div className="ml-2">
                 {selectedCard && (
-                  <span className="ml-2 text-[#DA2E8B]">{selectedCard}</span>
+                  <span className="ml-2 cursor-pointer hover:underline text-[#DA2E8B]">{selectedCard}</span>
                 )}
               </div>
             </div>
@@ -228,7 +212,7 @@ function MetrialInfo({ module, modules, courseID }) {
                 {selectedCard === "Shared Link" && (
                   <ShareLink links={module.link ?? []} />
                 )}
-                {selectedCard === "Pdf" && <Pdf addPdfHandler={addPdfHandler} pdfs={module.pdf ?? []} />}
+                {selectedCard === "Pdf" && <Pdf pdfs={module.pdf ?? []} />}
               </div>
             )}
           </div>

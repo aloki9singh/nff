@@ -42,7 +42,7 @@ const StudyMaterialCard = ({ module, onClick }) => {
               height={60}
               alt='image'
             />
-            <h1 className='text-white text-base font-medium text-center'>
+            <h1 className='text-white text-base font-medium text-center line-clamp-2'>
               {module?.name}
             </h1>
           </div>
