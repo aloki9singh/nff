@@ -57,54 +57,58 @@ const Assignmentupload = () => {
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-    setUrl(null); 
+    setUrl(null);
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    course[0].file = url;
-    const files = [];
-    if (course[0].files) {
-      course[0].files.map((ele) => {
-        files.push(ele);
-      });
-    }
-    const courseRef = doc(db, "courses", courseid);
-    const courseInfo = await getDoc(courseRef);
-    const data = {
-      submittedby: user.uid,
-      file: url,
-      date: new Date(),
-    };
-    files.push(data);
-    course[0].files = files;
 
-    if (courseInfo.exists()) {
-      try {
-        const assignmentRef = collection(courseRef, "assignment");
-        const q = query(assignmentRef, where("id", "==", id));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const docRef = doc.ref;
-          updateDoc(docRef, course[0]);
+    if (link || url) {
+      course[0].file = url ? url : link;
+      const files = [];
+      if (course[0].files) {
+        course[0].files.map((ele) => {
+          files.push(ele);
         });
-      } catch (err) {
-        alert("Error Occured");
       }
-      alert("Successfully Submitted");
-      setkey(key + 1);
-      setFile("");
-      setUrl("");
-      setProgress();
-    } else {
-      console.log("Course not found.");
+      const courseRef = doc(db, "courses", courseid);
+      const courseInfo = await getDoc(courseRef);
+      const data = {
+        submittedby: user.uid,
+        file: url ? url : link,
+        date: new Date(),
+      };
+      files.push(data);
+      course[0].files = files;
+
+      if (courseInfo.exists()) {
+        try {
+          const assignmentRef = collection(courseRef, "assignment");
+          const q = query(assignmentRef, where("id", "==", id));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            const docRef = doc.ref;
+            updateDoc(docRef, course[0]);
+          });
+          alert("Successfully Submitted");
+        } catch (err) {
+          alert("Error Occured");
+        }
+        router.push("/beta/assigments")
+        setkey(key + 1);
+        setFile("");
+        setUrl("");
+        setProgress();
+      } else {
+        console.log("Course not found.");
+      }
+    }
+    else {
+      alert("Enter a valid File")
     }
   };
 
   // const storageRef = ref(storage, `assignment/${file.name}`);
-
-  
-
   // const uploadFile = useCallback(async () => {
   //   const uploadTask = uploadBytesResumable(storageRef, file);
   //   uploadTask.on(
@@ -126,20 +130,20 @@ const Assignmentupload = () => {
   //   );
   // }, [file]);
 
-  const uploadFile = async () => {
+  const uploadFile = useCallback(async () => {
     if (!file) {
       alert("Please select a file before uploading.");
       return;
     }
 
     try {
+      const storageRef = ref(storage, `assignment/${file.name}`)
       const uploadTask = uploadBytesResumable(storageRef, file);
-
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
+          setProgress(progress);
         },
         (error) => {
           console.error("Upload error:", error);
@@ -152,23 +156,25 @@ const Assignmentupload = () => {
     } catch (error) {
       console.error("Error during upload:", error);
     }
-  };
+  }, [file]);
 
   useEffect(() => {
     if (file) {
       uploadFile();
     }
-  }, [file]);
+  }, [file, uploadFile]);
 
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
-      alert("Enter a valid link");
+      console.log("Invalid Link")
     } else {
       try {
         // console.log("here");
-        uploadBytes(storageRef, file)
+        const storageRef = ref(storage, `assignment/`)
+        uploadBytes(storageRef, link)
           .then(() => console.log("success"))
           .catch((err) => console.log(err));
+
       } catch (err) {
         console.log(err);
       }
@@ -232,13 +238,14 @@ const Assignmentupload = () => {
       course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000
     );
 
+    console.log(course)
+
   return (
     <div className="flex">
       {isMobileScreen && (
         <div
-          className={`fixed right-0 ${
-            SideBarState ? "block" : "hidden"
-          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
         >
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
@@ -260,9 +267,24 @@ const Assignmentupload = () => {
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {" "}
-              <span className='cursor-pointer' onClick={() => { router.push("/beta/assignments") }}>{course && course[0]?.module}</span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/beta/assignments");
+                }}
+              >
+                {course && course[0]?.module}
+              </span>
               <span>{">"}</span>
-              <span className='cursor-pointer' onClick={() => { router.push("/beta/assignments") }}>Files</span> <span>{">"}</span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/beta/assignments");
+                }}
+              >
+                Files
+              </span>{" "}
+              <span>{">"}</span>
               <span>{course && course[0]?.title}</span>
             </div>
             <hr className="hidden lg:block opacity-50 m-3"></hr>
@@ -296,11 +318,10 @@ const Assignmentupload = () => {
 
               <Link
                 className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
-                // href={course && course[0]?.url}
-                href={"Hi"}
+                href={""}
                 target="_blank"
                 rel="noopener noreferrer"
-                download
+                download ={course && `${course[0].title}.pdf`}
               >
                 Download
               </Link>
@@ -313,14 +334,15 @@ const Assignmentupload = () => {
               >
                 <div className="w-full  flex justify-center">
                   <div className="mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] ">
-                    {!file && <input
+                    <input
                       type="file"
                       key={key}
                       id="file"
+                      disabled={submitted || link ? true : false}
                       className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
                       onChange={handleChange}
                       hidden
-                    />}
+                    />
                     <label
                       htmlFor="file"
                       className="w-full h-full flex flex-col items-center justify-center"
@@ -348,11 +370,18 @@ const Assignmentupload = () => {
                       <p className="text-center">
                         {file?.name}
                         <br />
-                        {progressData && `${progressData}% done`}
+                        {progressData && progressData != 0 && `${progressData}% done`}
                       </p>
-                     {file && <p>
-                        <button className="border bg-grey p-2 rounded-[10px]" onClick={handleCancel}>Remove</button>
-                      </p>}
+                      {file && (
+                        <p>
+                          <button
+                            className="border bg-grey p-2 rounded-[10px]"
+                            onClick={handleCancel}
+                          >
+                            Remove
+                          </button>
+                        </p>
+                      )}
                     </label>
                   </div>
                 </div>
@@ -363,13 +392,13 @@ const Assignmentupload = () => {
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
                       value={link}
-                      disabled={file ? true : false}
+                      disabled={file || submitted ? true : false}
                       onChange={(e) => setLink(e.target.value)}
                     />
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
-                      disabled={progressData!==100}
+                      disabled={file || submitted ? true : false}
                     >
                       Upload
                     </button>
@@ -378,12 +407,9 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-
-                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
-                      submitted ? "#505057" : "#E1348B"
-                    }] rounded-lg focus:shadow-outline`}
+                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"
+                      }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
-
                   >
                     {submitted ? " Submitted" : "Submit"}
                   </button>

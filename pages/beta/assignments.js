@@ -1,7 +1,7 @@
 // Hard Coded top-Navbar
 // In mobile screen dropdown is missing of modules.
 // file icon missing
-
+  //yet to write logic to change course bougth or not ??
 import { useState, useEffect } from "react";
 // import MobileNav from '../components/CalenderParts/MobileNav';
 import AssignmentCard from "@/components/student/assignments/foldercard";
@@ -32,16 +32,15 @@ function Assignments() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-
-
+  const [moduleData, setModuleData] = useState();
   const [course, setCourse] = useState()
   const [moduleName, setModuleName] = useState()
   const [uniqCourse, setUnique] = useState([])
   const [value, setValue] = useState()
+  const [module, setModule] = useState(0);
 
 
 
-  //yet to write logic to change course bougth or not ??
 
   let [searchstate, setsearchstate] = useState("");
   let searchfun = (e) => {
@@ -51,7 +50,6 @@ function Assignments() {
   if (!user || !userProfile) {
     router.push("/");
   }
-  const [moduleData, setModuleData] = useState();
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -63,31 +61,28 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
+
       const id = []
       var arr = []
       const moduleInfo = []
       const uniq = []
       data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
 
-
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
         const courseInfo = await getDocs(q);
-        for (const doc of courseInfo.docs) {
+        const promises = courseInfo.docs.map(async (doc) => {
           const docRef = doc.ref;
           const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
-          console.log(arr);
-          arr.push(querySnapshot.docs.map((doc) => doc.data()));
-          console.log(arr);
-
-        }
+          return querySnapshot.docs.map((doc) => doc.data());
+        });
+        const assignmentDataArrays = await Promise.all(promises);
+        assignmentDataArrays.forEach((assignmentDataArray) => arr.push(...assignmentDataArray));
       }
-    console.log(arr);
       if (arr) {
         for (let i = 0; i < arr.length; i++) {
-          arr[i].map((e) => {
-
+          arr.map((e) => {
             const data = {
               course: e.course,
               module: e.module,
@@ -96,25 +91,25 @@ function Assignments() {
             if (!isUnique) {
               uniq.push(e.course);
             }
-            const isDuplicate =
-              moduleInfo.findIndex(
-                (item) =>
-                  item.course === data.course && item.module === data.module
-              ) !== -1;
+            const isDuplicate = moduleInfo.findIndex((item) => item.course === data.course && item.module === data.module) !== -1;
             if (!isDuplicate) {
               moduleInfo.push(data);
             }
           });
         }
       }
-      setUnique(uniq);
-      setModuleData(moduleInfo);
-      setCourse(arr);
-    };
+      setUnique(uniq)
+      setModuleData(moduleInfo)
+      setCourse(arr)
+    }
 
     getCourseId();
-  }, [isMediumScreen, user.uid, value]);
+  }, [isMediumScreen, user.uid]);
 
+  useEffect(() => {
+    setModuleName(moduleData && moduleData[0].module)
+    setValue(moduleData && moduleData[0].course)
+  }, [moduleData])
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -125,7 +120,6 @@ function Assignments() {
 
   //  need from backend
   let currentCourseId = 1;
-  const [module, setModule] = useState(0);
   let Activestyle =
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
@@ -135,7 +129,6 @@ function Assignments() {
   }
 
   const { userSubsribed } = CourseAccess(user.uid);
-
   return (
     <>
       {/* {!userSubsribed && (
@@ -174,12 +167,12 @@ function Assignments() {
             </div>
           )}
           <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
+            {/* <StudentTopbar heading={"My Progress"} /> */}
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
               <Dashboardnav
                 heading="My Progress"
                 toggleSideBar={toggleSideBar}
               />
-
             </div>
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
@@ -192,11 +185,11 @@ function Assignments() {
                     name="course"
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
-                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                    className="focus:outline-none text-white text-sm rounded-lg block w-full p-4 bg-[#37383F] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
                   >
-                    <option value="" className="text-sm">
+                    {/* <option value="" className="text-sm">
                       Select from this List
-                    </option>
+                    </option> */}
                     {uniqCourse && uniqCourse.map((ele, i) => {
                       return <option
                         key={i}
@@ -207,6 +200,7 @@ function Assignments() {
                       </option>
                     })}
                   </select>
+
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
@@ -227,8 +221,13 @@ function Assignments() {
                       })
                     }
                   </div>
-
+                  {moduleData && moduleData.every(ele => ele.course !== value) && (
+                    <div className="">
+                      <Nodata title="Module" value="No Module" />
+                    </div>
+                  )}
                 </div>
+
 
                 {/* Assignments */}
                 <div className="col-span-8">
@@ -236,26 +235,30 @@ function Assignments() {
                     Files
                   </div>
                   <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
-                    {course &&
-                      course.map((courseData, i) => {
-                        return courseData.map((assignment, j) => {
-                          console.log(assignment)
-                          if (moduleName && (assignment.module == moduleName) && (assignment.course == value) && (value !== "")) {
-                            return (
-                              <AssignmentCard
-                                key={`${i}-${j}`}
-                                id={assignment.id}
-                                no={i + 1}
-                                name={assignment.title}
-                                date={assignment.date}
-                                url={assignment.url}
-                                courseid={assignment.courseid}
-                              />
-                            );
-                          }
-                        });
-                      })}
+                    {course && moduleName && (
+                      course.map((assignment, i) => {
+                        if (assignment.module === moduleName && assignment.course === value) {
+                          return (
+                            <AssignmentCard
+                              key={i}
+                              id={assignment.id}
+                              no={i + 1}
+                              name={assignment.title}
+                              date={assignment.date}
+                              url={assignment.url}
+                              courseid={assignment.courseid}
+                            />
+                          );
+                        }
+                        return null;
+                      })
+                    )}
                   </div>
+                  {course && moduleName && course.every(assignment => assignment.module !== moduleName || assignment.course !== value) && (
+                    <div className="-mt-8">
+                      <Nodata title="Homework" value="No Homework" />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -268,9 +271,3 @@ function Assignments() {
 
 // export default withStudentAuthorization(Assignments);
 export default withStudentAuthorization(Assignments);
-
-// {!true ? (
-//   <>
-//     <Nodata title={"Homework"} value={"No Homework"} />
-//   </>
-// ) : (

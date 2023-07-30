@@ -5,75 +5,31 @@ import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
-//   authDomain: 'neatskill.firebaseapp.com',
-//   databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
-//   projectId: 'neatskill',
-//   storageBucket: 'neatskill.appspot.com',
-//   messagingSenderId: '745615461354',
-//   appId: '1:745615461354:web:8be587f1d7e23229694093',
-//   measurementId: 'G-9ZEE56FQQF',
-// };
-
-
-
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
-//   authDomain: 'neatskill.firebaseapp.com',
-//   databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
-//   projectId: 'neatskill',
-//   storageBucket: 'neatskill.appspot.com',
-//   messagingSenderId: '745615461354',
-//   appId: '1:745615461354:web:8be587f1d7e23229694093',
-//   measurementId: 'G-9ZEE56FQQF',
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCCQYP1zEjLAuGU9g_P2fATrAx-VtlIlYc",
-//   authDomain: "neat-60028.firebaseapp.com",
-//   projectId: "neat-60028",
-//   storageBucket: "neat-60028.appspot.com",
-//   messagingSenderId: "250714772468",
-//   appId: "1:250714772468:web:ca3e5dc3d86337ffbedfa1",
-//   measurementId: "G-K0EGT2Y6RZ"
-// };
-// latest config
-// 
-// =======
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw",
-//   authDomain: "neatskill.firebaseapp.com",
-//   databaseURL: "https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app",
-//   projectId: "neatskill",
-//   storageBucket: "neatskill.appspot.com",
-//   messagingSenderId: "745615461354",
-//   appId: "1:745615461354:web:8be587f1d7e23229694093",
-//   measurementId: "G-9ZEE56FQQF"
-// };
-// 
-
-
 const firebaseConfig = {
-  apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
-  authDomain: "neatskills-1c31c.firebaseapp.com",
-  projectId: "neatskills-1c31c",
-  storageBucket: "neatskills-1c31c.appspot.com",
-  messagingSenderId: "713774382237",
-  appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
-  measurementId: "G-QWYMTLSSEK",
+  apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
+  authDomain: 'neatskill.firebaseapp.com',
+  databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'neatskill',
+  storageBucket: 'neatskill.appspot.com',
+  messagingSenderId: '745615461354',
+  appId: '1:745615461354:web:8be587f1d7e23229694093',
+  measurementId: 'G-9ZEE56FQQF',
 };
 
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
-//   authDomain: "neatskills9.firebaseapp.com",
-//   projectId: "neatskills9",
-//   storageBucket: "neatskills9.appspot.com",
-//   messagingSenderId: "952981699338",
-//   appId: "1:952981699338:web:e09b299b7e5df400e898f3",
-//   measurementId: "G-3F1WXPES83"
-// };
+// 1st main config
 
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
+//   authDomain: 'neatskill.firebaseapp.com',
+//   databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
+//   projectId: 'neatskill',
+//   storageBucket: 'neatskill.appspot.com',
+//   messagingSenderId: '745615461354',
+//   appId: '1:745615461354:web:8be587f1d7e23229694093',
+//   measurementId: 'G-9ZEE56FQQF',
+
+// 2nd config
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
@@ -84,6 +40,8 @@ const firebaseConfig = {
 //   appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
 //   measurementId: "G-QWYMTLSSEK",
 // };
+
+// 3rd config
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
