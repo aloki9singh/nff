@@ -3,10 +3,10 @@ import React from "react";
 
 const Nodata = ({ title, value }) => {
   return (
-    <div className="flex justify-center align-middle items-center w-full md:h-[90vh] min-h-[80vh]">
-      <div className="flex bg-[#37383F] mx-5 mt-5 py-7 px-2 rounded-[30px] w-[80%] text-white space-y-6 justify-center items-center  ">
+    <div className="flex justify-center align-middle items-center w-full">
+      <div className="flex bg-[#37383F] mx-5 py-7 px-2 rounded-[30px] w-[80%] text-white space-y-6 justify-center items-center  ">
         <div className="space-y-5 ">
-          <h1 className="text-center text-2xl "> {title}</h1>
+          <h1 className="text-center text-2xl"> {title}</h1>
           <Image
             alt="Image"
             width={100}

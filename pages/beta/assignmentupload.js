@@ -62,47 +62,53 @@ const Assignmentupload = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    course[0].file = url;
-    const files = [];
-    if (course[0].files) {
-      course[0].files.map((ele) => {
-        files.push(ele);
-      });
-    }
-    const courseRef = doc(db, "courses", courseid);
-    const courseInfo = await getDoc(courseRef);
-    const data = {
-      submittedby: user.uid,
-      file: url,
-      date: new Date(),
-    };
-    files.push(data);
-    course[0].files = files;
-
-    if (courseInfo.exists()) {
-      try {
-        const assignmentRef = collection(courseRef, "assignment");
-        const q = query(assignmentRef, where("id", "==", id));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const docRef = doc.ref;
-          updateDoc(docRef, course[0]);
+    
+    if (link || url){
+      course[0].file = url?url:link;
+      const files = [];
+      if (course[0].files) {
+        course[0].files.map((ele) => {
+          files.push(ele);
         });
-      } catch (err) {
-        alert("Error Occured");
       }
-      alert("Successfully Submitted");
-      setkey(key + 1);
-      setFile("");
-      setUrl("");
-      setProgress();
-    } else {
-      console.log("Course not found.");
+      const courseRef = doc(db, "courses", courseid);
+      const courseInfo = await getDoc(courseRef);
+      const data = {
+        submittedby: user.uid,  
+        file: url?url:link,
+        date: new Date(),
+      };
+      files.push(data);
+      course[0].files = files;
+  
+      if (courseInfo.exists()) {
+        try {
+          const assignmentRef = collection(courseRef, "assignment");
+          const q = query(assignmentRef, where("id", "==", id));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            const docRef = doc.ref;
+            updateDoc(docRef, course[0]);
+          });
+          alert("Successfully Submitted");
+        } catch (err) {
+          alert("Error Occured");
+        }
+        router.push("/beta/assigments")
+        setkey(key + 1);
+        setFile("");
+        setUrl("");
+        setProgress();
+      } else {
+        console.log("Course not found.");
+      }
+    }
+    else{
+      alert("Enter a valid File")
     }
   };
 
   // const storageRef = ref(storage, `assignment/${file.name}`);
-
   // const uploadFile = useCallback(async () => {
   //   const uploadTask = uploadBytesResumable(storageRef, file);
   //   uploadTask.on(
@@ -131,14 +137,13 @@ const Assignmentupload = () => {
     }
 
     try {
+      const storageRef = ref(storage, `assignment/${file.name}`)
       const uploadTask = uploadBytesResumable(storageRef, file);
-
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
         },
         (error) => {
           console.error("Upload error:", error);
@@ -161,13 +166,15 @@ const Assignmentupload = () => {
 
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
-      alert("Enter a valid link");
+      console.log("Invalid Link")
     } else {
       try {
         // console.log("here");
-        uploadBytes(storageRef, file)
+        const storageRef = ref(storage, `assignment/`)
+        uploadBytes(storageRef, link)
           .then(() => console.log("success"))
           .catch((err) => console.log(err));
+
       } catch (err) {
         console.log(err);
       }
@@ -327,16 +334,15 @@ const Assignmentupload = () => {
               >
                 <div className="w-full  flex justify-center">
                   <div className="mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] ">
-                    {!file && (
-                      <input
-                        type="file"
-                        key={key}
-                        id="file"
-                        className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
-                        onChange={handleChange}
-                        hidden
-                      />
-                    )}
+                  <input
+                      type="file"
+                      key={key}
+                      id="file"
+                      disabled={submitted || link?true: false}
+                      className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
+                      onChange={handleChange}
+                      hidden
+                    />
                     <label
                       htmlFor="file"
                       className="w-full h-full flex flex-col items-center justify-center"
@@ -364,7 +370,7 @@ const Assignmentupload = () => {
                       <p className="text-center">
                         {file?.name}
                         <br />
-                        {progressData && `${progressData}% done`}
+                        {progressData && progressData!=0 && `${progressData}% done`}
                       </p>
                       {file && (
                         <p>
@@ -386,13 +392,13 @@ const Assignmentupload = () => {
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
                       value={link}
-                      disabled={file ? true : false}
+                      disabled={file || submitted ? true : false}
                       onChange={(e) => setLink(e.target.value)}
                     />
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
-                      disabled={progressData !== 100}
+                      disabled={file || submitted ?true:false}
                     >
                       Upload
                     </button>
