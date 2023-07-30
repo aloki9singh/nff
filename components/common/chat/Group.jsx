@@ -8,6 +8,7 @@ import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import profileImage from "@/public/componentsgraphics/common/chatting/user/profile.svg";
 import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.svg";
 import { getUserName } from "@/lib/context/AuthContext";
+import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 
 const getCourseDescription = async (courseId) => {
   try {
@@ -119,7 +120,7 @@ const GroupDetails = ({
       }}
     >
       <div
-        className="flex p-6 pt-8 justify-between"
+        className="flex p-6 pt-8 justify-between sticky top-0 z-10 bg-[#373A41]"
         style={{ borderBottom: "1px solid grey" }}
       >
         <h1 className="text-[20px]">Group Info</h1>
@@ -185,12 +186,12 @@ const GroupDetails = ({
         <p className="text-sm opacity-50">
           {Object.keys(currReciever.members).length} participants
         </p>
-        <div className="flex flex-col items-stretch ">
+        <div className="flex flex-col items-stretch max-h-40 lg:max-h-64 no-scrollbar overflow-auto ">
           {/* participants */}
           {Object.values(currReciever.members).map((member) => (
             <div
               key={member.uid}
-              className="flex flex-row justify-between  items-center py-2"
+              className="flex flex-row justify-between  items-center py-2  "
             >
               <button
                 onClick={() => memberClickHandler(member)}
@@ -206,7 +207,7 @@ const GroupDetails = ({
                   alt="profile-avatar"
                 />
                 <div className="flex flex-col items-start ml-[10px]">
-                  <p className="">{member.displayName}</p>
+                  <p className="">{removeDomainFromEmail(member.displayName)}</p>
                   <p className="text-xs opacity-50">
                     {member.uid === user?.uid ? "You" : "Online"}
                   </p>
