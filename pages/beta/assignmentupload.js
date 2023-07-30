@@ -62,9 +62,9 @@ const Assignmentupload = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    
-    if (link || url){
-      course[0].file = url?url:link;
+
+    if (link || url) {
+      course[0].file = url ? url : link;
       const files = [];
       if (course[0].files) {
         course[0].files.map((ele) => {
@@ -74,13 +74,13 @@ const Assignmentupload = () => {
       const courseRef = doc(db, "courses", courseid);
       const courseInfo = await getDoc(courseRef);
       const data = {
-        submittedby: user.uid,  
-        file: url?url:link,
+        submittedby: user.uid,
+        file: url ? url : link,
         date: new Date(),
       };
       files.push(data);
       course[0].files = files;
-  
+
       if (courseInfo.exists()) {
         try {
           const assignmentRef = collection(courseRef, "assignment");
@@ -103,7 +103,7 @@ const Assignmentupload = () => {
         console.log("Course not found.");
       }
     }
-    else{
+    else {
       alert("Enter a valid File")
     }
   };
@@ -238,13 +238,14 @@ const Assignmentupload = () => {
       course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000
     );
 
+    console.log(course)
+
   return (
     <div className="flex">
       {isMobileScreen && (
         <div
-          className={`fixed right-0 ${
-            SideBarState ? "block" : "hidden"
-          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+          className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
         >
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
@@ -317,10 +318,10 @@ const Assignmentupload = () => {
 
               <Link
                 className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
-                href={course && course[0]?.url}
+                href={""}
                 target="_blank"
                 rel="noopener noreferrer"
-                download
+                download ={course && `${course[0].title}.pdf`}
               >
                 Download
               </Link>
@@ -333,11 +334,11 @@ const Assignmentupload = () => {
               >
                 <div className="w-full  flex justify-center">
                   <div className="mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] ">
-                  <input
+                    <input
                       type="file"
                       key={key}
                       id="file"
-                      disabled={submitted || link?true: false}
+                      disabled={submitted || link ? true : false}
                       className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
                       onChange={handleChange}
                       hidden
@@ -369,7 +370,7 @@ const Assignmentupload = () => {
                       <p className="text-center">
                         {file?.name}
                         <br />
-                        {progressData && progressData!=0 && `${progressData}% done`}
+                        {progressData && progressData != 0 && `${progressData}% done`}
                       </p>
                       {file && (
                         <p>
@@ -397,7 +398,7 @@ const Assignmentupload = () => {
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
-                      disabled={file || submitted ?true:false}
+                      disabled={file || submitted ? true : false}
                     >
                       Upload
                     </button>
@@ -406,9 +407,8 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
-                      submitted ? "#505057" : "#E1348B"
-                    }] rounded-lg focus:shadow-outline`}
+                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"
+                      }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
                   >
                     {submitted ? " Submitted" : "Submit"}
