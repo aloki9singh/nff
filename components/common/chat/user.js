@@ -16,7 +16,7 @@ const User = ({ currReciever, setShowUser, setShowChat, images }) => {
 
   return (
     <div
-      className="user-container w-screen md:w-auto no-scrollbar md:max-w-xs"
+      className="user-container w-screen md:w-auto no-scrollbar md:max-w-xs top-0 z-10 bg-[#373A41]"
       style={{
         backgroundColor: "#373A41",
         color: "white",
