@@ -32,10 +32,11 @@ import {
 } from "firebase/firestore";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useCallback } from "react";
+import Link from "next/link";
 
 const Assignmentupload = () => {
   const router = useRouter();
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [uploadState, setUploadState] = useState("neutral");
   const [title, setTitle] = useState("");
   const [maximumMarks, setMaximumMarks] = useState(null);
@@ -56,6 +57,7 @@ const Assignmentupload = () => {
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
+    setUrl(null); 
   };
 
   const onSubmitHandler = async (e) => {
@@ -99,28 +101,58 @@ const Assignmentupload = () => {
     }
   };
 
-  const storageRef = ref(storage, `assignment/${file.name}`);
+  // const storageRef = ref(storage, `assignment/${file.name}`);
 
-  const uploadFile = useCallback(async () => {
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        // console.log("Upload is " + progress + "% done");
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  
+
+  // const uploadFile = useCallback(async () => {
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const progress =
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       // console.log("Upload is " + progress + "% done");
+  //       setProgress(progress);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         setUrl(downloadURL);
+  //       });
+  //     }
+  //   );
+  // }, [file]);
+
+  const uploadFile = async () => {
+    if (!file) {
+      alert("Please select a file before uploading.");
+      return;
+    }
+
+    try {
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+        },
+        (error) => {
+          console.error("Upload error:", error);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setUrl(downloadURL);
-        });
-      }
-    );
-  }, [file, storageRef]);
+        }
+      );
+    } catch (error) {
+      console.error("Error during upload:", error);
+    }
+  };
 
   useEffect(() => {
     if (file) {
@@ -187,6 +219,13 @@ const Assignmentupload = () => {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+  const handleCancel = () => {
+    setFile(null);
+    setUrl(null);
+    setProgress(0);
+  };
+
   const time =
     course &&
     new Date(
@@ -255,16 +294,16 @@ const Assignmentupload = () => {
                 Assignment Pdf
               </div>
 
-              <a
+              <Link
                 className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
-                href={course && course[0]?.url}
+                // href={course && course[0]?.url}
+                href={"Hi"}
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-
               >
                 Download
-              </a>
+              </Link>
             </div>
             <div>Submit Your Assignment</div>
             <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
@@ -274,14 +313,14 @@ const Assignmentupload = () => {
               >
                 <div className="w-full  flex justify-center">
                   <div className="mt-10 flex items-center p-8 w-[80%]  h-48 rounded-lg border-2 border-[#5F6065] ">
-                    <input
+                    {!file && <input
                       type="file"
                       key={key}
                       id="file"
                       className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
                       onChange={handleChange}
                       hidden
-                    />
+                    />}
                     <label
                       htmlFor="file"
                       className="w-full h-full flex flex-col items-center justify-center"
@@ -311,6 +350,9 @@ const Assignmentupload = () => {
                         <br />
                         {progressData && `${progressData}% done`}
                       </p>
+                     {file && <p>
+                        <button className="border bg-grey p-2 rounded-[10px]" onClick={handleCancel}>Remove</button>
+                      </p>}
                     </label>
                   </div>
                 </div>
@@ -327,6 +369,7 @@ const Assignmentupload = () => {
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
+                      disabled={progressData!==100}
                     >
                       Upload
                     </button>
@@ -335,10 +378,12 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
+
                     class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${
                       submitted ? "#505057" : "#E1348B"
                     }] rounded-lg focus:shadow-outline`}
                     disabled={submitted}
+
                   >
                     {submitted ? " Submitted" : "Submit"}
                   </button>

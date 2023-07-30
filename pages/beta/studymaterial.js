@@ -12,7 +12,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
-
+import Nodata from "@/components/common/nodata/nodata";
 
 function StudyMaterial() {
   const router = useRouter();
@@ -26,8 +26,6 @@ function StudyMaterial() {
   const { user, userProfile } = useAuthContext();
   //yet to write logic to change course bougth or not ??
   const [courseBuyed, setCourseBuyed] = useState(false);
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,15 +64,8 @@ function StudyMaterial() {
   // console.log(userSubsribed);
   return (
     <>
-
-
       {!userSubsribed && (
-        <ToastMessage
-          heading={"OOPS!"}
-          message={
-            "You have not joined any courses yet. Please join a course to access the study material."
-          }
-        />
+        <Nodata title={"Subscription"} value={"No Subscription"} />
       )}
 
       {userSubsribed && (
@@ -83,16 +74,20 @@ function StudyMaterial() {
           message={"Please Continue learning..."}
           showButton={false}
         />
-
       )}
-{/* 
+      {/* 
     please remove blur-sm when the content is there to show Case */}
 
-      <div className={`flex h-screen bg-[#2D2E35] blur-sm ${!userSubsribed ? "blur-lg" : null}`}>
+      <div
+        className={`flex h-screen bg-[#2D2E35] blur-sm ${
+          !userSubsribed ? "blur-lg" : null
+        }`}
+      >
         {isMobileScreen && (
           <div
-            className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            className={`fixed right-0 ${
+              SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
@@ -129,7 +124,11 @@ function StudyMaterial() {
           <div className="bg-[#2D2E35] text-white grow flex items-center justify-center h-[screen]">
             <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
               <div className="flex justify-center flex-wrap md:grid md:grid-cols-3 gap-x-20 gap-y-10 m-5">
-                {func.length == 0 ? <div className='flex w-[80vw] text-gray-500 h-full items-center justify-center text-center'>No Material Found </div> :
+                {func.length == 0 ? (
+                  <div className="flex w-[80vw] text-gray-500 h-full items-center justify-center text-center">
+                    No Material Found{" "}
+                  </div>
+                ) : (
                   func.map((study) => (
                     <Link key={study.id} href="/studyMaterial">
                       <div className="rounded-2xl border-2 border-white shadow-lg bg-[#37393D]  max-w-sm md:gap-6">
@@ -202,7 +201,7 @@ function StudyMaterial() {
                       </div>
                     </Link>
                   ))
-                }
+                )}
               </div>
             </div>
           </div>

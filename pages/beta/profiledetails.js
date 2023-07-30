@@ -256,39 +256,31 @@ export default function ProfileDetails() {
           {/* dob */}
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">DOB</label>
-            <Controller
-              control={control}
-              name="ReactDatepicker"
-              rules={{
-                required: true,
-              }}
-              render={({ field }) => (
-                <input
-                  type="date"
-                  placeholder="DD/MM/YYYY"
-                  className="w-full md:w-40 h-10 rounded-lg px-2 bg-[#333333] focus:outline-none placeholder:pl-2"
-                  onChange={(e) => {
-                    const selectedDate = new Date(e.target.value);
-                    const currentDate = new Date();
-                    const minDate = new Date();
-                    minDate.setFullYear(currentDate.getFullYear() - 10);
+            <input
+              type="date"
+              placeholder="DD/MM/YYYY"
+              className="w-full md:w-40 h-10 rounded-lg px-2 bg-[#333333] focus:outline-none placeholder:pl-2"
+              {...register("ReactDatepicker", {
+                required: {
+                  value: true,
+                  message: "DOB is required",
+                },
+                validate: (value) => {
+                  const date = new Date(value);
+                  const currentDate = new Date();
+                  const age = currentDate.getFullYear() - date.getFullYear();
+                  if (age < 10) {
+                    return "You must be 10 years old or above";
+                  } else
+                    return true;
+                },
+              }
 
-                    // Check if the selected date is more than 10 years ago
-                    if (selectedDate < minDate) {
-                      field.onChange(e.target.value);
-                    } else {
-                      // If the selected date is not more than 10 years ago, reset the field value
-                      field.onChange(null);
-                    }
-                  }}
-                  value={field.value}
-                  onBlur={field.onBlur}
-                />
               )}
             />
-            {errors.ReactDatepicker?.type === "required" && (
+            {errors.ReactDatepicker && (
               <p className="text-red-400 text-xs" role="alert">
-                DOB is required
+                {errors.ReactDatepicker.message}
               </p>
             )}
           </div>
@@ -521,6 +513,11 @@ export default function ProfileDetails() {
                 />
               )}
             />
+            {errors.profilePhoto?.type === "required" && (
+              <p className="text-red-400 text-xs" role="alert">
+                Profile photo is required
+              </p>
+            )}
 
             <label htmlFor="" className="self-start my-2">
               Aadhaar Card
@@ -528,6 +525,7 @@ export default function ProfileDetails() {
             <Controller
               control={control}
               name="aadhaarCard"
+              rules={{ required: true }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <IDdraganddrop
                   setValue={setValue}
@@ -538,6 +536,13 @@ export default function ProfileDetails() {
                 />
               )}
             />
+
+            {errors.aadhaarCard?.type === "required" && (
+              <p className="text-red-400 text-xs" role="alert">
+                Aadhaar card is required
+              </p>
+            )}
+
           </div>
 
           {/* submit button */}
