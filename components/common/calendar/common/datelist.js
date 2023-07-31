@@ -9,11 +9,6 @@ const Datelist = ({
   currentDate,
   monthData,
 }) => {
-  console.log( currentYear, currentMonth, currentDate, monthData);
-  const today = new Date();
-
-  const [colourid, setColourid] = useState(today.getDate());
-
   // console.log(currentYear); // ... The rest of the component ...
   let months = useMemo(() => {
     return {
@@ -24,13 +19,13 @@ const Datelist = ({
       February:
         currentYear % 4 === 0
           ? [
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-            ]
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+          ]
           : [
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20, 21, 22, 23, 24, 25, 26, 27, 28,
-            ],
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28,
+          ],
       March: [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
@@ -77,123 +72,177 @@ const Datelist = ({
 
   const [finalArr, setFinalArr] = useState(() => {
     let fileDate = currentDate - 1;
-
+    let dayvar = currentDate - 1;
     let monthforCheck = monthData || currentMonth;
-    const currentMonthDates = months[monthforCheck];
-
+    console.log(monthforCheck);
     let arr = [];
-    for (let i = 0; i < 14; i++) {
-      if (fileDate >= 0 && fileDate < currentMonthDates.length) {
-        const date = currentMonthDates[fileDate];
-        arr.push([date]);
-      } else {
-        // If the fileDate is outside the range of the current month,
-        // fill the array with 0 (to maintain a fixed length of 14)
-        arr.push([0]);
-      }
+    for (let i = 0; i < 14 && months[monthforCheck].length > fileDate; i++) {
       fileDate++;
+      dayvar++;
+      if (dayvar === 7) {
+        dayvar = 0;
+      }
+      arr.push([fileDate, dayvar]);
     }
     return arr;
   });
 
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const updateFinalArr = useCallback(
+    (selectedMonth) => {
+      console.log("updateFinalArr");
+      let fileDate = currentDate - 1;
+      let dayvar = currentDate - 1;
+
+      let arr = [];
+      for (let i = 0; i < 14 && months[selectedMonth].length > fileDate; i++) {
+        fileDate++;
+        dayvar++;
+        if (dayvar === 7) {
+          dayvar = 0;
+        }
+        const date = months[selectedMonth][fileDate - 1]; // get date from months
+        if (date) {
+          arr.push([date, dayvar]);
+        }
+      }
+      setFinalArr(arr);
+    },
+    [currentDate, months]
+  );
+  //removing the above currentDate deppendancy will work fine but it is throwing build warning and adding dependency is creating  seleciton error in schedule
+
+
+  //iska kya kaam hai???
   const memoizedSelectedDate = useCallback(selectedDate, [selectedDate]);
-  //useEffect1
+  // console.log(memoizedSelectedDate)
+
   useEffect(() => {
     memoizedSelectedDate(currentDate);
-    // const currentElement = document.getElementById(currentDate);
-    // if (currentElement && currentElement == 0) {
-    //   currentElement.style.background = "#E1348B";
-    // }
-  }, [currentDate, memoizedSelectedDate, finalArr, monthforCheck, months]);
+    const currentElement = document.getElementById(currentDate);
+    if (currentElement && currentElement == 0) {
+      currentElement.style.background = "#E1348B";
+    }
+  }, [currentDate, memoizedSelectedDate]);
+
 
   useEffect(() => {
     setMonthforCheck(monthData || currentMonth);
-    // Whenever the selected month changes, update the `finalArr` state.
-    const currentMonthDates = months[monthforCheck];
-    let fileDate = currentDate - 1;
-    let arr = [];
-    for (let i = 0; i < 14; i++) {
-      if (fileDate >= 0 && fileDate < currentMonthDates.length) {
-        const date = currentMonthDates[fileDate];
-        arr.push([date]);
-      } else {
-        arr.push([0]);
-      }
-      fileDate++;
-    }
-    setFinalArr(arr);
-  }, [currentMonth, monthData, months]);
+    // ... Update finalArr based on the new month ...
+    updateFinalArr(monthData || currentMonth);
+  }, [currentMonth, monthData, updateFinalArr]);
 
+
+  //selecting date Function here 
   const dateSelect = (e) => {
     const days = document.querySelectorAll(".day");
-    // days.forEach((day) => (day.style.background = "none"));
-    // e.target.style.background = "#E1348B"; //on select date
-
+    days.forEach((day) => {
+      (day.style.background = "none")
+    });
+    // e.target.style.background = "#E1348B";  //on select date
+    // console.log(selectedDateId);
     const selectedDateId = e.target.id;
-    console.log(selectedDateId, "id");
-    setColourid(selectedDateId);
+    const day = document.getElementById(selectedDateId);
+    // console.log(day);
+    if (day) {
+      day.style.background = "#E1348B"; //on select date
+    }
     selectedDate(selectedDateId);
   };
 
-  // Function to shift the dates to the left or right
-  
-  const shiftDates = (direction) => {
+
+  // Function to shift the dates to the left (previous dates within the selected month)
+
+  const dateShiftLeft = () => {
+
+    console.log("dateShiftLeft");
+
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => {
+      (day.style.background = "none")
+    });
+
     setFinalArr((prev) =>
       prev.map(([date, day]) => {
-        if (direction === "left") {
-          date = date - 1;
-        } else if (direction === "right") {
-          date = date + 1;
-        }
-
-        const currentMonthDates = months[monthforCheck];
-        // Check if the date falls within the current month range
-        if (currentMonthDates.includes(date)) {
-          return [date];
+        date = date - 1;
+        if (day === 0) {
+          day = 6;
         } else {
-          if (direction === "left") {
-            // If date is out of range on the left, get the last date of the current month
-            const lastDate = currentMonthDates[currentMonthDates.length - 1];
-            return [lastDate];
-          } else if (direction === "right") {
-            // If date is out of range on the right, set to the first date of the current month
-            const firstDate = currentMonthDates[0];
-            const firstDateDay = getDayFromDate(
-              `${currentYear}-${getMonthNumber(monthforCheck)}-${firstDate}`
-            );
-            return [firstDate, firstDateDay];
-          }
+          day = day - 1;
+        }
+        // Check if the date falls within the current month range
+        const currentMonthDates = months[monthforCheck];
+        if (currentMonthDates.includes(date)) {
+          return [date, day];
+        } else {
+          // If date is out of range, get the last date of the current month
+          const lastDate = currentMonthDates[currentMonthDates.length - 1];
+          const lastDateDay = getDayFromDate(
+            `${currentYear}-${getMonthNumber(monthforCheck)}-${lastDate}`
+          );
+          return [lastDate, lastDateDay];
         }
       })
     );
   };
 
-  console.log(finalArr);
+  // Function to shift the dates to the right (next dates within the selected month)
+  const dateShiftRight = () => {
+
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => {
+      (day.style.background = "none")
+    });
+    console.log("dateShiftRight");
+
+    setFinalArr((prev) =>
+      prev.map(([date, day]) => {
+        date = date + 1;
+        const currentMonthDates = months[monthforCheck];
+        // Check if the date falls within the current month range
+        if (currentMonthDates.includes(date)) {
+          if (day === 6) {
+            day = 0;
+          } else {
+            day = day + 1;
+          }
+        } else {
+          // If date is out of range, set to the first date of the current month
+          const firstDate = currentMonthDates[0];
+          const firstDateDay = getDayFromDate(
+            `${currentYear}-${getMonthNumber(monthforCheck)}-${firstDate}`
+          );
+          return [firstDate, firstDateDay];
+        }
+        return [date, day];
+      })
+    );
+  };
+  // console.log(finalArr);
   return (
     <>
       <div className="grid grid-cols-12 w-full">
         <Image
           className="justify-self-center place-self-center col-span-1"
-          onClick={() => shiftDates("left")}
+          onClick={dateShiftLeft}
           src="/componentsgraphics/common/calendar/datelist/caretcircleleft.svg"
           alt="back"
           width={30}
           height={30}
         />
         <div className="flex col-span-10 lg:bg-inherit p-3 overflow-scroll scrollbar-hide text-[17px] text-white">
-          {finalArr.map(([date], index) => (
+          {finalArr.map(([date, day], index) => (
             <div
               key={index}
               id={date}
-              className={`w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center  cursor-pointer 
-                   ${colourid == date ? "bg-[#E1348B]" : ""}
-              `}
-              onClick={dateSelect}
+              className={`w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center day cursor-pointer 
+             `}
+              onClick={(e) => dateSelect(e)}
             >
               {date !== 0 && (
                 <>
-                  {date}
-                  <br />
+                  <p> {date}</p>
                   {"\n"}
                   {getDayFromDate(
                     `${currentYear}-${getMonthNumber(
@@ -207,7 +256,7 @@ const Datelist = ({
         </div>
         <Image
           className="place-self-center justify-self-center col-span-1"
-          onClick={() => shiftDates("right")}
+          onClick={dateShiftRight}
           src="/componentsgraphics/common/calendar/datelist/caretcircleright.svg"
           alt="next"
           width={30}
