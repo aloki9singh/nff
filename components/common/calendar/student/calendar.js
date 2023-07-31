@@ -78,11 +78,11 @@ const Calendar = () => {
 
       setSchedules(arr);
     });
-  }, [currentMonth, currentDate, date]);
+  }, [currentMonth, currentDate,date]);
   // console.log(schedules);
   return (
     <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5 ">
-      <div className=" text-xl  ">
+      <div className="grid grid-cols text-xl md:space-y-2 w-full">
         <div className="text-sm">
           <MonthSelector
             currentDate={currentDate}
@@ -99,7 +99,6 @@ const Calendar = () => {
             currentYear={currentYear}
             currentMonth={selectedMonth}
             currentDate={currentDate}
-            monthData={selectedMonth}
           />
         </div>
 
