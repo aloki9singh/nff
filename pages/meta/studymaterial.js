@@ -44,7 +44,6 @@ function StudyMaterial() {
     setSelectedModule(module);
   };
 
-  console.log("selectedModule", selectedModule);
 
 
   return (
