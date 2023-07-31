@@ -30,7 +30,9 @@ const months = [
 const Mainbody = () => {
   const fulldate = new Date();
   const [popupvalue, setPopupvalue] = useState({});
+
   const [currentDate, selectedDate] = useState(fulldate.getDay());
+
   const [id, setId] = useState('');
   const { setdate } = useContext(adddate);
   const monthValue = months[fulldate.getMonth()];
