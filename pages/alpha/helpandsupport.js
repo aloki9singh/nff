@@ -51,9 +51,8 @@ const Helpandsupport = () => {
 				<div className="flex">
 					{isMobileScreen && (
 						<div
-							className={`fixed right-0 ${
-								SideBarState ? "block" : "hidden"
-							} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+							className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+								} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
 						>
 							<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
 						</div>
@@ -81,7 +80,7 @@ const Helpandsupport = () => {
 									<p className="my-4 font-Inter text-xs md:text-base">
 										If you are visiting from{" "}
 										<a href="https://neatskills.tech" className="text-pink">
-											Neatskills.com
+											neatskills.tech
 										</a>{" "}
 										you are in the right place!
 									</p>
@@ -168,9 +167,9 @@ const Helpandsupport = () => {
 											Getting Started Guide
 										</h5>
 										<p className="w-full md:w-6/12 lg:w-7/12 text-start text-base lg:text-xl font-Inter leading-[150%] tracking-wider">
-											If you&apos;re new to the platform&lsquo; start by reading
+											If you&apos;re new to the platform start by reading
 											our comprehensive guide that will walk you through the
-											registration process&lsquo; setting up your profile&lsquo;
+											registration process setting up your profile
 											and exploring the available courses and resources.
 										</p>
 									</div>
@@ -190,28 +189,28 @@ const Helpandsupport = () => {
 											<li className="font-Inter leading-[150%] tracking-wider">
 												Browse the Course Catalog: Explore the course catalog to
 												discover the available courses. You can search by
-												category&lsquo; subject&lsquo; or use keywords to find
+												category subject or use keywords to find
 												specific courses of interest.
 											</li>
 											<li className="font-Inter leading-[150%] ">
 												Course Selection: Read the course descriptions and click
 												on a course to access more details. Take note of the
-												course duration&lsquo; format&lsquo; and
-												prerequisites&lsquo; if any. Make sure the course aligns
+												course duration format and
+												prerequisites if any. Make sure the course aligns
 												with your learning goals and fits your schedule.
 											</li>
 
 											<li className="font-Inter leading-[150%] ">
-												Create an Account: If you haven&apos;t already&lsquo;
+												Create an Account: If you haven&apos;t already
 												create an account on our learning platform. Provide the
-												necessary information to register&lsquo; including your
-												name&lsquo; email address&lsquo; and password. You may
+												necessary information to register including your
+												name email address and password. You may
 												also have the option to sign up using your social media
 												accounts.
 											</li>
 
 											<li className="font-Inter leading-[150%] ">
-												Login to Your Account: After creating an account&lsquo;
+												Login to Your Account: After creating an account
 												log in using your credentials. This will grant you
 												access to the platform&apos;s features and allow you to
 												enroll in courses.
@@ -219,15 +218,15 @@ const Helpandsupport = () => {
 
 											<li className="font-Inter leading-[150%] ">
 												Enroll in the Course: Once you&apos;ve chosen a
-												course&lsquo; click on the &quot;Enroll&quot; or
-												&quot;Buy Now&quot; button. If the course is free&lsquo;
-												you may be enrolled immediately. For paid courses&lsquo;
+												course click on the &quot;Enroll&quot; or
+												&quot;Buy Now&quot; button. If the course is free
+												you may be enrolled immediately. For paid courses
 												you&apos;ll be prompted to select a payment method and
 												complete the transaction.
 											</li>
 
 											<li className="font-Inter leading-[150%] ">
-												Payment and Discounts: If applicable&lsquo; enter any
+												Payment and Discounts: If applicable enter any
 												discount codes during the payment process to avail
 												yourself of special offers or promotions. The system
 												will calculate the discounted price before finalizing
@@ -236,7 +235,7 @@ const Helpandsupport = () => {
 
 											<li className="font-Inter leading-[150%] ">
 												Confirmation and Access: After successful
-												enrollment&lsquo; you&apos;ll receive a confirmation
+												enrollment you&apos;ll receive a confirmation
 												message or email. The course will now appear in your
 												enrolled courses or dashboard. Click on the course title
 												to access its materials and start your learning journey.
@@ -256,7 +255,7 @@ const Helpandsupport = () => {
 											Email Support
 										</h5>
 										<p className="w-full md:w-6/12 lg:w-7/12 text-start text-base lg:text-xl font-Inter leading-[150%] tracking-wider">
-											If you prefer to communicate via email&lsquo; you can
+											If you prefer to communicate via email you can
 											reach out to our support team at{" "}
 											<a
 												href="mailto:support@neatskills.tech"
@@ -281,7 +280,7 @@ const Helpandsupport = () => {
 										</h5>
 										<p className="w-full md:w-6/12 lg:w-7/12 text-start text-base lg:text-xl font-Inter leading-[150%] tracking-wider">
 											Keep an eye on our platform&apos;s news section for the
-											latest updates&lsquo; new features&lsquo; and
+											latest updates new features and
 											announcements. This section is a great place to stay
 											informed about any changes that may affect your learning
 											experience.
@@ -300,7 +299,7 @@ const Helpandsupport = () => {
 											Frequently Asked Questions
 										</h5>
 										<p className="w-full md:w-6/12 lg:w-7/12 text-start text-base lg:text-xl font-Inter leading-[150%] tracking-wider">
-											Check out our FAQ section&lsquo; where we have compiled
+											Check out our FAQ section where we have compiled
 											answers to common queries from learners like you. You may
 											find solutions to your questions here without the need to
 											reach out to support.
