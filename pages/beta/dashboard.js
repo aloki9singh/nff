@@ -7,7 +7,6 @@ import Advertisement from "@/components/student/dashboard/adbanner";
 import Progress from "@/components/student/assignments/status";
 import ActiveComp from "@/components/student/assignments/activecomp";
 import InActiveComp from "@/components/student/assignments/inactivecomp";
-
 import Calendar from "@/components/common/calendar/student/calendar";
 import LeaderBoardStudent from "@/components/student/dashboard/leaderboard";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
