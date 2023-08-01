@@ -4,33 +4,37 @@ import { BsPatchCheckFill } from "react-icons/bs";
 
 
 
-const PaymentProceed = ({price}) => {
+const PaymentProceed = ({ price, updatePage }) => {
   const [activeTab, setActiveTab] = useState("card");
 
 
+  const paymentFuction = (e) => {
+    e.preventDefault();
+    updatePage(2);
+  }
+
+
+  const handleReq = async (e) => {
+
+    const requestBody = {
+      price: price * 100,
+    };
+
+    await fetch('/api/payment', { method: 'POST', body: JSON.stringify(requestBody) },)
+      .then(response => response.json())
+      .then(response => {
+        console.log(response)
+        window.location.href = response.data.instrumentResponse.redirectInfo.url;
+      })
+      .catch(err => console.error(err));
+
+
     
+      paymentFuction(e)
+
+  }
 
 
-    const handleReq = async () => {  
-
-
-      const requestBody = {
-        price: price*100,
-        
-      };
-        
-        await fetch('/api/payment', {method: 'POST',body:JSON.stringify(requestBody)},)
-
-          .then(response => response.json())
-          .then(response => {
-              console.log(response)
-              window.location.href =  response.data.instrumentResponse.redirectInfo.url;
-          })
-          .catch(err => console.error(err));
-  
-      }
-      
-  
   return (
     <>
       <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
@@ -228,7 +232,10 @@ const PaymentProceed = ({price}) => {
             <h2>Rs {price}</h2>
           </div>
 
-          <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={handleReq}>
+          <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={(e) => {
+            handleReq(e);
+          }}
+          >
             Pay Now
           </button>
         </div>

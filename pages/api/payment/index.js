@@ -1,7 +1,4 @@
-// <<<<<<< testing
-// async function handler(req, res) {
-//     const { method } = req;
-// =======
+
 function encodeToBase64(str) {
   return btoa(str);
 }
@@ -16,7 +13,6 @@ async function sha256(input) {
 }
 
 async function handler(req, res) {
-    const { method } = req;
 
     const body = JSON.parse(req.body);
 
@@ -27,7 +23,7 @@ async function handler(req, res) {
     "merchantTransactionId": "MTST50590068188178",
     "merchantUserId": "MUID409",
     "amount": body.price,
-    "redirectUrl": "http://localhost:3000/beta/dashboard",
+    "redirectUrl": "http://localhost:3000/beta/payment",
     "redirectMode": "POST",
     "callbackUrl": "https://webhook.site/callback-url",
     "mobileNumber": "9999999999",
