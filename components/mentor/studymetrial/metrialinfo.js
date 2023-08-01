@@ -6,10 +6,10 @@ import { useMediaQuery } from "react-responsive";
 import Video from "@/components/mentor/studymetrial/videos";
 import ShareLink from "@/components/mentor/studymetrial/shareLink";
 import Pdf from "@/components/mentor/studymetrial/pdf";
-import { setDoc, updateDoc } from "firebase/firestore";
-import { db } from "@/config/firebaseconfig";
-import { addPdfStudyMaterial } from "@/lib/exportablefunctions";
 import { useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
+import Button from "@/components/common/button/primary-button";
+import AddVideo from "./addVideo";
+import AddPdf from "./addpdf";
 
 const ArrowIcon = (props) => (
   <svg
@@ -26,18 +26,19 @@ const ArrowIcon = (props) => (
       d="m13 5 7 7-7 7M5 5l7 7-7 7"
     />
   </svg>
-)
+);
 
-
-function MetrialInfo({ }) {
+function MetrialInfo({}) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
-  const { selectedModule: module, setSelectedModule } = useStudyMaterialContext();
+  const { selectedModule: module, setSelectedModule } =
+    useStudyMaterialContext();
 
   console.log("module", module);
 
@@ -74,24 +75,37 @@ function MetrialInfo({ }) {
     <div className=" w-full  h-full pb-10  bg-[#2D2E35] text-white grow flex items-center justify-center ">
       <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
         <div className="w-full  flex flex-col">
-          <div className="w-full flex flex-col">
+          <div className="w-full flex items-center justify-between">
             <div className="flex items-center">
-              <div className="m-8 ml-12 cursor-pointer hover:underline " onClick={() => setSelectedModule(null)}>
+              <div
+                className="m-8 ml-12 cursor-pointer hover:underline "
+                onClick={() => setSelectedModule(null)}
+              >
                 All Modules
               </div>
-              
+
               <ArrowIcon className="w-6 h-6 text-white" />
 
-              <div className="m-8 ml-12 cursor-pointer hover:underline" onClick={() => setSelectedCard(null)}>
+              <div
+                className="m-8 ml-12 cursor-pointer hover:underline"
+                onClick={() => setSelectedCard(null)}
+              >
                 {module.name}
               </div>
               <ArrowIcon className="w-6 h-6  text-white" />
               <div className="ml-2">
                 {selectedCard && (
-                  <span className="ml-2 cursor-pointer hover:underline text-[#DA2E8B]">{selectedCard}</span>
+                  <span className="ml-2 cursor-pointer hover:underline text-[#DA2E8B]">
+                    {selectedCard}
+                  </span>
                 )}
               </div>
             </div>
+            {selectedCard && !showForm && (
+              <Button onClick={() => setShowForm(true)} className={"mr-4"}>
+                Add {selectedCard}
+              </Button>
+            )}
           </div>
           <div className=" border-2 border-[#5F6065] w-full "></div>
           <div>
@@ -207,12 +221,44 @@ function MetrialInfo({ }) {
             ) : (
               <div>
                 {selectedCard === "Video" && (
-                  <Video videos={module.video ?? []} />
+                  <>
+                    {!showForm ? (
+                      <Video videos={module.video ?? []} />
+                    ) : (
+                      <AddVideo
+                        closeForm={() => {
+                          setShowForm(false);
+                        }}
+                      />
+                    )}
+                  </>
                 )}
                 {selectedCard === "Shared Link" && (
-                  <ShareLink links={module.link ?? []} />
+                  <>
+                    {!showForm ? (
+                      <ShareLink links={module.link ?? []} />
+                    ) : (
+                      <AddVideo
+                        closeForm={() => {
+                          setShowForm(false);
+                        }}
+                      />
+                    )}
+                  </>
                 )}
-                {selectedCard === "Pdf" && <Pdf pdfs={module.pdf ?? []} />}
+                {selectedCard === "Pdf" && (
+                  <>
+                    {!showForm ? (
+                      <Pdf pdfs={module.pdf ?? []} />
+                    ) : (
+                      <AddPdf
+                        closeForm={() => {
+                          setShowForm(false);
+                        }}
+                      />
+                    )}
+                  </>
+                )}
               </div>
             )}
           </div>

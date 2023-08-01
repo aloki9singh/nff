@@ -54,11 +54,6 @@ function PdfList({ pdfs }) {
           <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
             <div className=' ml-3 flex items-center justify-between self-stretch'>
               <p>Module 1</p>
-              <Button
-                // className='m-2'
-                onClick={toggleShowAddPdf}>
-                Add Pdf
-              </Button>
             </div>
 
             <div className=' w-full flex flex-col items-center gap-5  '>
