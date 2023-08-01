@@ -85,6 +85,8 @@ function StudyMaterial() {
         />
 
       )}
+      
+
 {/* 
     please remove blur-sm when the content is there to show Case */}
 
