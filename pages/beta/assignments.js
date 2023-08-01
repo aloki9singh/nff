@@ -1,7 +1,7 @@
 // Hard Coded top-Navbar
 // In mobile screen dropdown is missing of modules.
 // file icon missing
-  //yet to write logic to change course bougth or not ??
+//yet to write logic to change course bougth or not ??
 import { useState, useEffect } from "react";
 // import MobileNav from '../components/CalenderParts/MobileNav';
 import AssignmentCard from "@/components/student/assignments/foldercard";
@@ -33,12 +33,13 @@ function Assignments() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const [moduleData, setModuleData] = useState();
-  const [course, setCourse] = useState()
-  const [moduleName, setModuleName] = useState()
-  const [uniqCourse, setUnique] = useState([])
-  const [value, setValue] = useState()
+  const [course, setCourse] = useState();
+  const [moduleName, setModuleName] = useState();
+  const [uniqCourse, setUnique] = useState([]);
+  const [value, setValue] = useState();
   const [module, setModule] = useState(0);
   let [searchstate, setsearchstate] = useState("");
+  console.log(course,"course");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
@@ -58,11 +59,14 @@ function Assignments() {
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
 
-      const id = []
-      var arr = []
-      const moduleInfo = []
-      const uniq = []
-      data.map((ele) => { id.push(ele.id); uniq.push(ele.title) })
+      const id = [];
+      var arr = [];
+      const moduleInfo = [];
+      const uniq = [];
+      data.map((ele) => {
+        id.push(ele.id);
+        uniq.push(ele.title);
+      });
 
       for (var i = 0; i < id.length; i++) {
         const q = query(collection(db, "courses"), where("id", "==", id[i]));
@@ -74,7 +78,9 @@ function Assignments() {
           return querySnapshot.docs.map((doc) => doc.data());
         });
         const assignmentDataArrays = await Promise.all(promises);
-        assignmentDataArrays.forEach((assignmentDataArray) => arr.push(...assignmentDataArray));
+        assignmentDataArrays.forEach((assignmentDataArray) =>
+          arr.push(...assignmentDataArray)
+        );
       }
       if (arr) {
         for (let i = 0; i < arr.length; i++) {
@@ -87,25 +93,29 @@ function Assignments() {
             if (!isUnique) {
               uniq.push(e.course);
             }
-            const isDuplicate = moduleInfo.findIndex((item) => item.course === data.course && item.module === data.module) !== -1;
+            const isDuplicate =
+              moduleInfo.findIndex(
+                (item) =>
+                  item.course === data.course && item.module === data.module
+              ) !== -1;
             if (!isDuplicate) {
               moduleInfo.push(data);
             }
           });
         }
       }
-      setUnique(uniq)
-      setModuleData(moduleInfo)
-      setCourse(arr)
-    }
+      setUnique(uniq);
+      setModuleData(moduleInfo);
+      setCourse(arr);
+    };
 
     getCourseId();
   }, [isMediumScreen, user.uid]);
 
   useEffect(() => {
-    setModuleName(moduleData && moduleData[0].module)
-    setValue(moduleData && moduleData[0].course)
-  }, [moduleData])
+    setModuleName(moduleData && moduleData[0]?.module);
+    setValue(moduleData && moduleData[0]?.course);
+  }, [moduleData]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -149,8 +159,9 @@ function Assignments() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -186,44 +197,52 @@ function Assignments() {
                     {/* <option value="" className="text-sm">
                       Select from this List
                     </option> */}
-                    {uniqCourse && uniqCourse.map((ele, i) => {
-                      return <option
-                        key={i}
-                        className="text-sm cursor-pointer"
-                        value={ele}
-                      >
-                        {ele}
-                      </option>
-                    })}
+                    {uniqCourse &&
+                      uniqCourse.map((ele, i) => {
+                        return (
+                          <option
+                            key={i}
+                            className="text-sm cursor-pointer "
+                            value={ele}
+                          >
+                            {ele}
+                          </option>
+                        );
+                      })}
                   </select>
 
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>
                   <div className="max-h-screen  overflow-scroll scrollbar-hide">
-                    {
-                      moduleData && moduleData.map((ele, i) => {
+                    {moduleData &&
+                      moduleData.map((ele, i) => {
                         if (ele.course == value) {
                           return (
                             <div
                               key={i}
-                              className={module === i ? Activestyle : Inactivestyle} // Note: Use === for comparison
-                              onClick={() => { setModuleName(ele.module); setModule(i) }}
+                              className={
+                                module === i ? Activestyle : Inactivestyle
+                              } // Note: Use === for comparison
+                              onClick={() => {
+                                setModuleName(ele.module);
+                                setModule(i);
+                              }}
                             >
                               {`${i + 1}. ${ele.course} - ${ele.module}`}
                             </div>
-                          )
+                          );
                         }
-                      })
-                    }
+                      })}
                   </div>
-                  {moduleData && moduleData.every(ele => ele.course !== value) && (
-                    <div className="">
-                      <Nodata title="Module" value="No Module" />
-                    </div>
-                  )}
+                  {moduleData &&
+                    moduleData.every((ele) => ele.course !== value) && (
+                      <div className=" flex text-center justify-center items-center text-gray-500 h-[50%]">
+                        {/* <Nodata title="Module" value="No Module" /> */}
+                        No modules available
+                      </div>
+                    )}
                 </div>
-
 
                 {/* Assignments */}
                 <div className="col-span-8">
@@ -231,9 +250,13 @@ function Assignments() {
                     Files
                   </div>
                   <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1">
-                    {course && moduleName && (
+                    {course &&
+                      moduleName &&
                       course.map((assignment, i) => {
-                        if (assignment.module === moduleName && assignment.course === value) {
+                        if (
+                          assignment.module === moduleName &&
+                          assignment.course === value
+                        ) {
                           return (
                             <AssignmentCard
                               key={i}
@@ -247,12 +270,22 @@ function Assignments() {
                           );
                         }
                         return null;
-                      })
-                    )}
+                      })}
                   </div>
-                  {course && moduleName && course.every(assignment => assignment.module !== moduleName || assignment.course !== value) && (
+                  {course &&
+                    moduleName &&
+                    course.every(
+                      (assignment) =>
+                        assignment.module !== moduleName ||
+                        assignment.course !== value
+                    ) && (
+                      <div className="-mt-8">
+                        <Nodata title="Homework" value="No Homework" />
+                      </div>
+                    )}
+                  {course?.length==0 && (
                     <div className="-mt-8">
-                      <Nodata title="Homework" value="No Homework" />
+                      <Nodata title="Course" value="No Course available" />
                     </div>
                   )}
                 </div>
