@@ -11,7 +11,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebaseconfig";
 import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
-import { studentsArr } from "@/lib/arraytomap";
+
 import { useMediaQuery } from "react-responsive";
 
 export default function Students() {
