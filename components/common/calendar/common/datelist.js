@@ -109,7 +109,8 @@ const Datelist = ({
       }
       setFinalArr(arr);
     },
-    [currentDate, months]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [months]
   );
   //removing the above currentDate deppendancy will work fine but it is throwing build warning and adding dependency is creating  seleciton error in schedule
 
