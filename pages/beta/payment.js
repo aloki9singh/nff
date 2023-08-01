@@ -29,10 +29,10 @@ const Paynow = () => {
   }
 
   return (
-    <>
+    <div className='h-screen'>
 
       <DashboardNav heading={"Payment"} toggleSideBar={toggleSideBar} />
-      <div className={`flex flex-col items-center  text-white font-Inter ${currentStep==0? "bg-[#0D0E14]" : "bg-[#2D2E35] md:h-screen"}`}>
+      <div className={`flex flex-col items-center  text-white font-Inter ${currentStep==0? "bg-[#0D0E14]" : "bg-[#2D2E35] "}`}>
         <StepProgress currentStep={currentStep} />
         {currentStep == 2 && <PaymentCompleted />}
 
@@ -40,7 +40,7 @@ const Paynow = () => {
       </div>
         {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
 
-    </>
+    </div>
   )
 }
 
