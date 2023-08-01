@@ -675,6 +675,7 @@ dark:file:bg-gray-700 dark:file:text-gray-400"
 };
 
 const CourseContentForm = ({ initialModules = [], onSubmit }) => {
+
 	const [modules, setModules] = useState(initialModules || []);
 
 	const [editModule, setEditModule] = useState(null);
@@ -807,6 +808,7 @@ const CourseContentForm = ({ initialModules = [], onSubmit }) => {
 			</div>
 		</>
 	);
+
 };
 
 const Sidebar = ({ currentStep = 1, setStep }) => {
