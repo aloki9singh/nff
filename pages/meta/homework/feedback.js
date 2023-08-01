@@ -125,11 +125,10 @@ function Homework() {
             }
         });
         return () => unsubscribe(); // Cleanup the listener
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMediumScreen, maxMarks]);
 
-    // if (!verified) {
-    //   return null;
-    // }
+ 
 
     return (
         <>

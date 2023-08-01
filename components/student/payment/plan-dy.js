@@ -27,17 +27,22 @@ export default function Plan({
   const styles = `
 .oddcard{
   position:relative;
-  top:5rem;
+  top:2rem;
 
 }
 
 .evencard{
-  margin-top:9rem;
+  margin-top:5rem;
 }
 
 @media screen and (min-width: 768px) {
   .evencard{
-    margin-top:0;
+    margin-top:0rem;
+  }
+  .oddcard{
+   
+    top:4rem;
+  
   }
 }
 `;
@@ -46,21 +51,21 @@ export default function Plan({
     <>
       <style>{styles}</style>
       <div
-        className={` ${odd} h-[24rem] w-min-[480px] md:w-[23.5%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto`}
+        className={` ${odd}  w-min-[480px] md:w-[23.5%] border-[1.3px] rounded-2xl md:mx-4 bg-gradient-to-b ${from} ${to} mt-6 md:mt-0 mx-auto h-full`}
       >
         <div className="border-b border-[#ffffffc0] px-6 pt-8 md:pt-4 pb-2">
-          <h1 className="text-2xl md:xl lg:text-2xl xl:text-2xl md:mb-2 font-medium">
+          <h1 className="text-xl   md:mb-2 font-medium">
             {title}
           </h1>
-          <h1 className="text-sm md:mb-2">
+          <h1 className="text-xs md:mb-2">
             <span className="text-base font-medium">&#8377;</span>
             <span className="text-base font-medium">{price}</span>/
             {`${duration}`}
           </h1>
           <h1 className="text-[10px] text-[#ffffff8f]">One time payment</h1>
         </div>
-        <div className="px-6 pb-2.5 mt-10 md:mt-8 w-full">
-          <div className="mb-10 md:mb-28 w-full">
+        <div className="px-6  mt-10 md:mt-8 w-full">
+          <div className="mb-5  w-full">
             {description.map((item, ind) => (
               <div key={ind} className="flex items-center mt-4">
                 <Image
@@ -70,7 +75,7 @@ export default function Plan({
                   height={10}
                   className="h-5 w-5 mr-2"
                 />
-                <p className="text-sm">{item}</p>
+                <p className="text-xs">{item}</p>
               </div>
             ))}
 
