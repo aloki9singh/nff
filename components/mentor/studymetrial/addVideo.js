@@ -1,11 +1,6 @@
-import MentorSidebar from "@/components/common/sidebar/mentor";
-import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import Video from "@/components/mentor/studymetrial/videos";
-import ShareLink from "@/components/mentor/studymetrial/shareLink";
-import Pdf from "@/components/mentor/studymetrial/pdf";
 import { useDropzone } from "react-dropzone";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 import { useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
@@ -30,7 +25,7 @@ const Loading = (props) => (
   </svg>
 )
 
-function AddPdf({ closeForm }) {
+function AddVideo({ closeForm }) {
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -38,7 +33,7 @@ function AddPdf({ closeForm }) {
   const [SideBarState, sendSideBarState] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const { addPdf } = useStudyMaterialContext();
+  const { addVideo } = useStudyMaterialContext();
   const [loading, setLoading] = useState(false);
 
 
@@ -66,31 +61,28 @@ function AddPdf({ closeForm }) {
 
   const [selectedModule, setSelectedModule] = useState("Module 1");
   const [fileName, setFileName] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [pdfUrl, setPdfUrl] = useState(null);
   const [size, setSize] = useState(null);
 
-  const handleModuleChange = (event) => {
-    const selectedValue = event.target.value;
-    setSelectedModule(selectedValue);
-    setFileName(`File Name: ${selectedValue}`);
-  };
 
-  const addPdfHandler = async () => {
+  const addVideoHandler = async () => {
     try {
 
 
-      if (!fileName || !pdfUrl || !size) {
+      if (!fileName || !pdfUrl || !subtitle) {
         alert("Please fill all the fields");
         return;
       }
 
-      const newPdf = {
+      const newVideo = {
         name: fileName,
         url: pdfUrl,
         size,
+        subtitle,
       };
       setLoading(true);
-      await addPdf(newPdf);
+      await addVideo(newVideo);
 
       setLoading(false);
       closeForm();
@@ -103,51 +95,40 @@ function AddPdf({ closeForm }) {
 
   return (
     <div className="w-full  flex flex-col">
-      <div className="flex items-center p-10">
-        <div className="mr-3">File Name:</div>
+      <div className="flex items-center px-10 py-3">
+        <div className="mr-1 w-24">Video Title:</div>
         <input
           type="text"
           className="border rounded px-2 py-1 bg-inherit"
           // Add any additional props or event handlers to the input as needed
           value={fileName}
+          // placeholder="Add File Name"
           onChange={(e) => setFileName(e.target.value)}
         />
       </div>
-
-      {/* <div className='flex items-center  p-10 '>
-        <div className='mr-3'>
-          <label htmlFor='moduleSelect'>Select Module:</label>
-          <select
-            id='moduleSelect'
-            className='border rounded  ml-2 px-2 py-1 bg-inherit text-white '
-            value={selectedModule}
-            onChange={handleModuleChange}>
-            <option value='Module 1' className=' bg-inherit'>
-              Module 1
-            </option>
-            <option value='Module 2' className=' bg-inherit'>
-              Module 2
-            </option>
-            <option value='Module 3' className=' bg-inherit'>
-              Module 3
-            </option>
-          </select>
-        </div>
-      </div> */}
-
+      <div className="flex items-center px-10 py-3">
+        <div className="mr-1 w-24">Subtitle:</div>
+        <input
+          type="text"
+          className="border rounded px-2 py-1 bg-inherit"
+          // Add any additional props or event handlers to the input as needed
+          value={subtitle}
+          onChange={(e) => setSubtitle(e.target.value)}
+        />
+      </div>
       <div className=" border-[#5F6065] border rounded-2xl py-8 mx-8 ">
-        <DropZone setSize={setSize} setUrl={setPdfUrl} />
+        <DropZone accept={"video"} setSize={setSize} setUrl={setPdfUrl} />
       </div>
 
       <div className="w-full flex flex-row-reverse ">
         <button
-          onClick={addPdfHandler}
+          onClick={addVideoHandler}
           type="button"
           disabled={loading}
           className="py-2.5 px-5 text-sm font-medium text-white bg-primary rounded-lg transition-colors duration-100 cursor-pointer border-gray-200 hover:bg-[#b42a6f] focus:z-10 focus:ring-2    inline-flex items-center mr-10 mt-12 "
         >
           {loading && <Loading className="inline w-4 h-4 mr-3  animate-spin " />}
-          Add Pdf
+          Upload
         </button>
       </div>
     </div>
@@ -186,7 +167,20 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-function DropZone({ setUrl, setSize }) {
+
+const fileAccept = {
+  "video": {
+    "video/*": []
+  },
+  "pdf": {
+    "application/pdf": [".pdf"]
+  },
+  "image": {
+    "image/*": []
+  }
+}
+
+function DropZone({ setUrl, setSize, accept }) {
   const [loading, setLoading] = useState(false);
   const {
     getRootProps,
@@ -196,9 +190,7 @@ function DropZone({ setUrl, setSize }) {
     isDragAccept,
     isDragReject,
   } = useDropzone({
-    accept: {
-      "application/pdf": [".pdf"],
-    },
+    accept: fileAccept[accept] || {},
     onDrop: (acceptedFiles) => {
       setLoading(true);
       setSize(acceptedFiles[0].size);
@@ -228,11 +220,17 @@ function DropZone({ setUrl, setSize }) {
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
-        <input {...getInputProps()} accept="application/pdf" />
+        <input {...getInputProps()}  />
         <div className="flex flex-col items-center">
           <FileIcon />
           <p>Click to upload or drag and drop</p>
-          <p>pdf , word document (max 2-5 mb)</p>
+          <p>
+            {
+              accept === "video" ? "mp4, mkv, mov, avi, flv, webm (max 2-5 mb)" :
+                accept === "pdf" ? "pdf (max 2-5 mb)" :
+                  accept === "image" ? "jpeg , png, svg (max 2-5 mb)" : ""
+            }
+          </p>
         </div>
       </div>
       <aside>
@@ -269,4 +267,4 @@ const FileIcon = (props) => (
   </svg>
 );
 
-export default AddPdf;
+export default AddVideo;
