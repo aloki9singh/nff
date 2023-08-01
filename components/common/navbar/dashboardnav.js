@@ -141,7 +141,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                             </Link>
                           </div>
                           <div className="text-[13px] p-2">
-                            <Link href="/alpha/contactus">
+                            <Link href="/alpha/helpandsupport">
                               <p className="mb-2">Neat Skills Help Centre</p>
                             </Link>
                             <Link href="/alpha/termsandconditions">

@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const PaymentCompleted = () => {
+
   return (
     <>
       <div className="container md:flex ">
-        <div className="order-last md:order-1 data-conatiner w-full block md:flex md:w-[660px] md:h-[481px] rounded-[34px] bg-[#373A41] md:m-8 md:mx-16 ">
+        <div className="order-first md:order-1 data-conatiner w-full block md:flex md:w-[660px] md:h-[481px] rounded-[34px] bg-[#373A41] md:m-8 md:mx-16 ">
           <div className="left md:w-[340px] p-[1rem] md:mt-4">
             <div className="sec1 md:m-4">
               <h2>Payment completed</h2>
@@ -49,13 +51,15 @@ const PaymentCompleted = () => {
               <h2>Rs 1899</h2>
             </div>
 
-            <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 ">
+            <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={() => {
+              localStorage.removeItem('currentPage');
+            }}>
               Download Receipt
             </button>
           </div>
         </div>
 
-        <div className="order-first md:order-2  graphics-conatainer w-full md:w-[490px] m-4 md:mx-16 ">
+        <div className="order-last md:order-2  graphics-conatainer w-full md:w-[490px] m-4 md:mx-16 ">
           <Image
             src="/pagesgraphics/student/payment/GroupPayment.svg"
             width={460}

@@ -81,8 +81,8 @@ const Calendar = () => {
   }, [currentMonth, currentDate,date]);
   // console.log(schedules);
   return (
-    <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5">
-      <div className="flex flex-col text-xl md:space-y-2">
+    <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5 ">
+      <div className="grid grid-cols text-xl md:space-y-2 w-full">
         <div className="text-sm">
           <MonthSelector
             currentDate={currentDate}
@@ -93,7 +93,7 @@ const Calendar = () => {
           />
         </div>
 
-        <div className="md:w-[25vw] m-auto">
+        <div className="md:w-[25vw]">
           <Datelist
             selectedDate={selectedDate}
             currentYear={currentYear}

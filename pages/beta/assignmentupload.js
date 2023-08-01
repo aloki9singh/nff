@@ -3,15 +3,14 @@
 // upload through url not working
 // file icon missing
 
-
-import { useState, useEffect } from 'react';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import { BiBell } from 'react-icons/bi';
-import { BsPersonCircle } from 'react-icons/bs';
-import Image from 'next/image';
-import { ref } from 'firebase/storage';
-import { storage } from '@/config/firebaseconfig';
-import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import { BiBell } from "react-icons/bi";
+import { BsPersonCircle } from "react-icons/bs";
+import Image from "next/image";
+import { ref } from "firebase/storage";
+import { storage } from "@/config/firebaseconfig";
+import { useRouter } from "next/router";
 
 import { useMediaQuery } from "react-responsive";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
@@ -33,10 +32,11 @@ import {
 } from "firebase/firestore";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useCallback } from "react";
+import Link from "next/link";
 
 const Assignmentupload = () => {
   const router = useRouter();
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [uploadState, setUploadState] = useState("neutral");
   const [title, setTitle] = useState("");
   const [maximumMarks, setMaximumMarks] = useState(null);
@@ -57,71 +57,106 @@ const Assignmentupload = () => {
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
+    setUrl(null);
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    course[0].file = url;
-    const files = [];
-    if (course[0].files) {
-      course[0].files.map((ele) => {
-        files.push(ele);
-      });
-    }
-    const courseRef = doc(db, "courses", courseid);
-    const courseInfo = await getDoc(courseRef);
-    const data = {
-      submittedby: user.uid,
-      file: url,
-      date: new Date(),
-    };
-    files.push(data);
-    course[0].files = files;
 
-    if (courseInfo.exists()) {
-      try {
-        const assignmentRef = collection(courseRef, "assignment");
-        const q = query(assignmentRef, where("id", "==", id));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const docRef = doc.ref;
-          updateDoc(docRef, course[0]);
+    if (link || url) {
+      course[0].file = url ? url : link;
+      const files = [];
+      if (course[0].files) {
+        course[0].files.map((ele) => {
+          files.push(ele);
         });
-      } catch (err) {
-        alert("Error Occured");
       }
-      alert("Successfully Submitted");
-      setkey(key + 1);
-      setFile("");
-      setUrl("");
-      setProgress();
-    } else {
-      console.log("Course not found.");
+      const courseRef = doc(db, "courses", courseid);
+      const courseInfo = await getDoc(courseRef);
+      const data = {
+        submittedby: user.uid,
+        file: url ? url : link,
+        date: new Date(),
+      };
+      files.push(data);
+      course[0].files = files;
+
+      if (courseInfo.exists()) {
+        try {
+          const assignmentRef = collection(courseRef, "assignment");
+          const q = query(assignmentRef, where("id", "==", id));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            const docRef = doc.ref;
+            updateDoc(docRef, course[0]);
+          });
+          alert("Successfully Submitted");
+        } catch (err) {
+          alert("Error Occured");
+        }
+        router.push("/beta/assignments")
+        setkey(key + 1);
+        setFile("");
+        setUrl("");
+        setProgress();
+      } else {
+        console.log("Course not found.");
+      }
+    }
+    else {
+      alert("Enter a valid File")
     }
   };
 
-  const storageRef = ref(storage, `assignment/${file.name}`);
+  // const storageRef = ref(storage, `assignment/${file.name}`);
+  // const uploadFile = useCallback(async () => {
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const progress =
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       // console.log("Upload is " + progress + "% done");
+  //       setProgress(progress);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         setUrl(downloadURL);
+  //       });
+  //     }
+  //   );
+  // }, [file]);
 
   const uploadFile = useCallback(async () => {
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        // console.log("Upload is " + progress + "% done");
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    if (!file) {
+      alert("Please select a file before uploading.");
+      return;
+    }
+
+    try {
+      const storageRef = ref(storage, `assignment/${file.name}`)
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (error) => {
+          console.error("Upload error:", error);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setUrl(downloadURL);
-        });
-      }
-    );
-  }, [file , storageRef]);
+        }
+      );
+    } catch (error) {
+      console.error("Error during upload:", error);
+    }
+  }, [file]);
 
   useEffect(() => {
     if (file) {
@@ -131,13 +166,15 @@ const Assignmentupload = () => {
 
   const uploadAssignmentFile = async () => {
     if (link.length < 1) {
-      alert("Enter a valid link");
+      console.log("Invalid Link")
     } else {
       try {
         // console.log("here");
-        uploadBytes(storageRef, file)
+        const storageRef = ref(storage, `assignment/`)
+        uploadBytes(storageRef, link)
           .then(() => console.log("success"))
           .catch((err) => console.log(err));
+
       } catch (err) {
         console.log(err);
       }
@@ -154,7 +191,7 @@ const Assignmentupload = () => {
     const getData = async () => {
       const courseRef = doc(db, "courses", courseid);
       const courseInfo = await getDoc(courseRef);
-  
+
       if (courseInfo.exists()) {
         try {
           const assignmentRef = collection(courseRef, "assignment");
@@ -162,7 +199,7 @@ const Assignmentupload = () => {
           const querySnapshot = await getDocs(q);
           const arr = [];
           querySnapshot.docs.forEach((doc) => {
-            if (doc.data().files){
+            if (doc.data().files) {
               setSubmitted(
                 doc.data().files.map((ele) => {
                   if (ele.submittedby == user.uid) {
@@ -173,7 +210,7 @@ const Assignmentupload = () => {
             }
             arr.push(doc.data());
           });
-  
+
           setCourse(arr);
         } catch (err) {
           alert("Error occured");
@@ -188,11 +225,20 @@ const Assignmentupload = () => {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+  const handleCancel = () => {
+    setFile(null);
+    setUrl(null);
+    setProgress(0);
+  };
+
   const time =
     course &&
     new Date(
       course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000
     );
+
+    console.log(course)
 
   return (
     <div className="flex">
@@ -221,9 +267,24 @@ const Assignmentupload = () => {
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
               {" "}
-              <span>{course && course[0]?.module}</span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/beta/assignments");
+                }}
+              >
+                {course && course[0]?.module}
+              </span>
               <span>{">"}</span>
-              <span>Files</span> <span>{">"}</span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("/beta/assignments");
+                }}
+              >
+                Files
+              </span>{" "}
+              <span>{">"}</span>
               <span>{course && course[0]?.title}</span>
             </div>
             <hr className="hidden lg:block opacity-50 m-3"></hr>
@@ -254,12 +315,16 @@ const Assignmentupload = () => {
               <div className="mt-1 md:text-[17px] text-[12px]">
                 Assignment Pdf
               </div>
-              <button
-                className="bg-[#505057] rounded-10 px-1.5 md:px-2 text-xs md:text-[17px]"
-                onClick={() => router.push(course[0]?.url)}
+
+              <Link
+                className="bg-[#505057] rounded-10 pt-2 px-1.5 md:px-2 text-xs md:text-[17px]"
+                href={""}
+                target="_blank"
+                rel="noopener noreferrer"
+                download ={course && `${course[0].title}.pdf`}
               >
                 Download
-              </button>
+              </Link>
             </div>
             <div>Submit Your Assignment</div>
             <div className=" justify-between  p-5 border border-solid border-[#505057] border-opacity-80 rounded-[20px] ">
@@ -273,8 +338,10 @@ const Assignmentupload = () => {
                       type="file"
                       key={key}
                       id="file"
+                      disabled={submitted || link ? true : false}
                       className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
                       onChange={handleChange}
+                      accept="application/pdf, application/msword"
                       hidden
                     />
                     <label
@@ -304,8 +371,18 @@ const Assignmentupload = () => {
                       <p className="text-center">
                         {file?.name}
                         <br />
-                        {progressData && `${progressData}% done`}
+                        {progressData && progressData != 0 && `${progressData}% done`}
                       </p>
+                      {file && (
+                        <p>
+                          <button
+                            className="border bg-grey p-2 rounded-[10px]"
+                            onClick={handleCancel}
+                          >
+                            Remove
+                          </button>
+                        </p>
+                      )}
                     </label>
                   </div>
                 </div>
@@ -316,12 +393,13 @@ const Assignmentupload = () => {
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
                       value={link}
-                      disabled={file?true:false}
+                      disabled={file || submitted ? true : false}
                       onChange={(e) => setLink(e.target.value)}
                     />
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
+                      disabled={file || submitted ? true : false}
                     >
                       Upload
                     </button>
