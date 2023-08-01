@@ -33,7 +33,8 @@ const StudyMaterialCard = ({ module, onClick }) => {
       {' '}
       {/* {filteredMaterial.map(study => (
         <Link  href='studyMaterial'> */}
-      <div className='rounded-2xl border-2 w-[280px] border-white shadow-lg bg-[#37393D]  max-w-sm md:gap-6' onClick={onClick}>
+        {/* on hover shadow should be on right and bottom sides */}
+      <div className='rounded-2xl border-2 cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500   w-[280px] border-white bg-[#37393D]  max-w-sm md:gap-6' onClick={onClick}>
         <div className='flex gap-2 items-center '>
           <div className='m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] w-36 flex flex-col items-center justify-between '>
             <Image
@@ -92,7 +93,7 @@ const StudyMaterialCard = ({ module, onClick }) => {
                   d='M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244'
                 />
               </svg>
-              {module?.links?.length ?? 0} links
+              {module?.link?.length ?? 0} links
             </p>
           </div>
         </div>

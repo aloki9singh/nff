@@ -75,7 +75,7 @@ function StudyMaterial() {
               />
             </div>
 
-            <div className="w-fit p-8">
+            {/* <div className="w-fit p-8">
               <select
                 className="bg-[#A145CD] text-white rounded-xl px-12"
                 onChange={(e) => setSelectedOption(e.target.value)}
@@ -83,13 +83,13 @@ function StudyMaterial() {
                 <option disabled selected hidden>
                   Select an option
                 </option>
-                {/* {menuItems?.map((item) => (
+                {menuItems?.map((item) => (
                   <option className="p-4" key={item} value={item}>
                     {item}
                   </option>
-                ))} */}
+                ))}
               </select>
-            </div>
+            </div> */}
 
             {/* {filteredMaterial.length == 0 ? (
               <div className='text-gray-500 md:h-[55vh] h-screen w-full justify-center flex items-center'>
@@ -108,7 +108,7 @@ function StudyMaterial() {
             {!selectedModule &&
               (
                 <div
-                  className="bg-[#2D2E35] text-white grow flex items-center justify-center h-full"
+                  className="bg-[#2D2E35] mt-6 text-white grow flex items-center justify-center h-full"
                 >
                   <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
                     <div className="flex justify-center items-stretch md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">

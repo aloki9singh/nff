@@ -10,6 +10,7 @@ import { useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
 import Button from "@/components/common/button/primary-button";
 import AddVideo from "./addVideo";
 import AddPdf from "./addpdf";
+import AddLink from "./addLink";
 
 const ArrowIcon = (props) => (
   <svg
@@ -111,8 +112,11 @@ function MetrialInfo({}) {
           <div>
             {selectedCard === null ? (
               <div className="flex justify-center md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">
-                <div className="flex justify-between items-center">
-                  <div className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col ">
+                <div className="flex justify-between items-center ">
+                  <div
+                    onClick={() => setSelectedCard("Pdf")}
+                    className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500 "
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -128,10 +132,7 @@ function MetrialInfo({}) {
                     </svg>
 
                     <div>
-                      <h1
-                        className="text-white text-base font-medium "
-                        onClick={() => setSelectedCard("Pdf")}
-                      >
+                      <h1 className="text-white text-base font-medium ">
                         {module.pdf?.length ?? 0} pdf
                       </h1>
                       <div className=" flex flex-row  justify-between gap-3">
@@ -145,7 +146,10 @@ function MetrialInfo({}) {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <div className=" m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col ">
+                  <div
+                    onClick={() => setSelectedCard("Shared Link")}
+                    className=" m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500 "
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -162,10 +166,7 @@ function MetrialInfo({}) {
                     </svg>
 
                     <div>
-                      <h1
-                        className="text-white text-base font-medium "
-                        onClick={() => setSelectedCard("Shared Link")}
-                      >
+                      <h1 className="text-white text-base font-medium ">
                         {module.link?.length ?? 0} shared link
                       </h1>
                       <div className=" flex flex-row  justify-between gap-3">
@@ -179,7 +180,10 @@ function MetrialInfo({}) {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <div className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col ">
+                  <div
+                    onClick={() => setSelectedCard("Video")}
+                    className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500 "
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -202,10 +206,7 @@ function MetrialInfo({}) {
                     </svg>
 
                     <div>
-                      <h1
-                        className="text-white text-base font-medium "
-                        onClick={() => setSelectedCard("Video")}
-                      >
+                      <h1 className="text-white text-base font-medium ">
                         {module.video?.length ?? 0} video
                       </h1>
                       <div className=" flex flex-row  justify-between gap-3">
@@ -238,7 +239,7 @@ function MetrialInfo({}) {
                     {!showForm ? (
                       <ShareLink links={module.link ?? []} />
                     ) : (
-                      <AddVideo
+                      <AddLink
                         closeForm={() => {
                           setShowForm(false);
                         }}
