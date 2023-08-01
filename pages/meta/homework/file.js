@@ -7,7 +7,7 @@ import { auth } from '@/config/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import { callUserById } from '@/lib/exportablefunctions';
 import { useMediaQuery } from 'react-responsive';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDoc, doc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 
 function Homework() {
@@ -15,7 +15,9 @@ function Homework() {
     const [verified, setVerified] = useState();
     let [searchstate, setsearchstate] = useState('');
     const router = useRouter()
-
+    const { id, courseid, submitid } = router.query
+    const [course, setCourse] = useState()
+    const [studentName, setStudent] = useState()
     let searchfun = e => {
         setsearchstate(e.target.value);
     };
@@ -24,6 +26,32 @@ function Homework() {
     const [showSideBar, setShowSideBar] = useState(false);
     const [SideBarState, sendSideBarState] = useState(false);
 
+    const getData = async () => {
+        const studentRef = doc(db, "allusers", submitid)
+        const studentInfo = await getDoc(studentRef)
+        setStudent(studentInfo.data().displayName)
+        const courseRef = doc(db, "courses", courseid);
+        const courseInfo = await getDoc(courseRef);
+        if (courseInfo.exists()) {
+            try {
+                const assignmentRef = collection(courseRef, "assignment");
+                const q = query(assignmentRef, where("id", "==", id));
+                const querySnapshot = await getDocs(q);
+                setCourse(querySnapshot.docs.map((doc) => {
+                    return doc.data().files.filter((data) => {
+                        return data.submittedby == submitid
+                    })
+                }))
+            } catch (err) {
+                // alert("Error occured", err);
+                console.log(err)
+            }
+        } else {
+            console.log("Course not found.");
+        }
+    };
+
+    // console.log(course[0][0].file)
     function toggleSideBar() {
         setShowSideBar(!showSideBar);
         sendSideBarState(showSideBar);
@@ -32,6 +60,7 @@ function Homework() {
         if (isMediumScreen) {
             sendSideBarState(false);
         }
+        getData()
         const unsubscribe = onAuthStateChanged(auth, async user => {
             if (user) {
                 user.emailVerified = true;
@@ -72,11 +101,12 @@ function Homework() {
                         </div>
                         <div className='w-[90%] mx-auto mt-8 border rounded-[10px] my-4'>
                             <div className='text-2xl font-semibold text-white p-10'>
-                                File - {"Student Name"}
+                                File - {studentName}
                             </div>
                             <hr />
-                            <div className="flex justify-end mx-8 my-8">
-                                <button type className="bg-[#E1348B] text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center" onClick={()=>{router.push("/meta/homework/feedback")}}>
+                            <iframe src={course && course[0][0].file} width="100%" height="600"></iframe>
+                            <div className="flex justify-end mx-8 my-8" allowfullscreen>
+                                <button type className="bg-[#E1348B] text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center" onClick={() => router.push({ pathname: "/meta/homework/feedback", query: { courseid: courseid, id: id, submitid: submitid } })}>
                                     Feedback
                                 </button>
                             </div>
