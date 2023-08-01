@@ -26,7 +26,7 @@ const Paynow = () => {
     if (pg) {
       setCurrentStep(pg);
     }
-  })
+  },[])
 
   const updatePrice = (price) => {
     setPrice(price);
