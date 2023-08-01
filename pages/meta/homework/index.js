@@ -34,6 +34,7 @@ function Homework() {
   const [dataFetched, setDataFetched] = useState(false);
   const [activeElement, setActiveElement] = useState("active");
   const [activeCourse, setActive] = useState();
+  const [checked, setChecked] = useState()
 
   const handleToggleElement = (element) => {
     setActiveElement(element);
@@ -75,7 +76,6 @@ function Homework() {
         setDataFetched(true);
       }
     };
-
     getData();
     return () => unsubscribe(); // Cleanup the listener
   }, [isMediumScreen, dataFetched, user]);
@@ -86,16 +86,19 @@ function Homework() {
   const activeInactive = (course) =>{
     var active = 0
     var inactive = 0
+    var checked = 0
     course && course.map((ele)=>{
       ele.map((e)=>{
-        // console.log(e.date)
+        e.files.map((data) => {if(data.checked){
+          checked ++
+        }})
         const date = new Date(e.date.seconds * 1000 + e.date.nanoseconds / 1000000)
         if (date < new Date()){
           inactive+=1
         }
         else if(date > new Date()){
           active+=1
-        }
+        }    
       })
     })
     return {active: active, inactive: inactive}
@@ -189,11 +192,12 @@ function Homework() {
                           }`}
                         onClick={() => handleToggleElement("check")}
                       >
-                        checked
+                        Checked
                       </span>
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
+                        {/* {checked && checked} */}
                         {0}
                       </div>
                     </div>

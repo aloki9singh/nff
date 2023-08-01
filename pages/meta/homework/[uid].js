@@ -130,7 +130,7 @@ function Homework() {
               Files
             </div>
             <div className="w-full  p-4 md:p-8 border border-[#5F6065]  mt-11 rounded-xl  flex flex-col h-screen  mb-5">
-              {files ? (
+              {files ? (  
                 <div className="grid md:grid-cols-4  grid-cols-1 gap-4 m-5">
                   {files &&
                     files?.map((ele, i) => {
@@ -138,11 +138,12 @@ function Homework() {
                         const time = new Date(
                           e?.date.seconds * 1000 + e?.date.nanoseconds / 1000000
                         );
+                      console.log(e)
                         return (
                           <div
                             key={i}
                             className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                            onClick={() => router.push("/meta/homework/file")}
+                            onClick={() => router.push({pathname: "/meta/homework/file", query:{courseid:ele.courseid, id:ele.id, submitid: e.submittedby}})}
                           >
                             <div className="flex items-center justify-between">
                               <div>
@@ -150,7 +151,7 @@ function Homework() {
                                   src="/componentsgraphics/mentor/FolderNotch.svg"
                                   width={65}
                                   height={65}
-                                  alt="Folder "
+                                  alt="Folder"
                                 />
                               </div>
                               <div>Pending</div>
@@ -192,7 +193,6 @@ function Homework() {
                 </div>
               ) : (
                 <div className=" text-gray-500 flex justify-center items-center h-[50vh]">
-                 
                   No submitted Assignment
                 </div>
               )}
