@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const PaymentCompleted = () => {
+
   return (
     <>
       <div className="container md:flex ">
@@ -49,7 +51,9 @@ const PaymentCompleted = () => {
               <h2>Rs 1899</h2>
             </div>
 
-            <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 ">
+            <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={() => {
+              localStorage.removeItem('currentPage');
+            }}>
               Download Receipt
             </button>
           </div>

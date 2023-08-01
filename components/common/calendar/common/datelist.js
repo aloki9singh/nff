@@ -19,13 +19,13 @@ const Datelist = ({
       February:
         currentYear % 4 === 0
           ? [
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-            ]
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+          ]
           : [
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20, 21, 22, 23, 24, 25, 26, 27, 28,
-            ],
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28,
+          ],
       March: [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
@@ -87,8 +87,11 @@ const Datelist = ({
     return arr;
   });
 
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateFinalArr = useCallback(
     (selectedMonth) => {
+      console.log("updateFinalArr");
       let fileDate = currentDate - 1;
       let dayvar = currentDate - 1;
 
@@ -108,8 +111,12 @@ const Datelist = ({
     },
     [currentDate, months]
   );
+  //removing the above currentDate deppendancy will work fine but it is throwing build warning and adding dependency is creating  seleciton error in schedule
 
+
+  //iska kya kaam hai???
   const memoizedSelectedDate = useCallback(selectedDate, [selectedDate]);
+  // console.log(memoizedSelectedDate)
 
   useEffect(() => {
     memoizedSelectedDate(currentDate);
@@ -118,20 +125,44 @@ const Datelist = ({
       currentElement.style.background = "#E1348B";
     }
   }, [currentDate, memoizedSelectedDate]);
+
+
   useEffect(() => {
     setMonthforCheck(monthData || currentMonth);
     // ... Update finalArr based on the new month ...
     updateFinalArr(monthData || currentMonth);
   }, [currentMonth, monthData, updateFinalArr]);
+
+
+  //selecting date Function here 
   const dateSelect = (e) => {
     const days = document.querySelectorAll(".day");
-    days.forEach((day) => (day.style.background = "none"));
-    e.target.style.background = "#E1348B";  //on select date
+    days.forEach((day) => {
+      (day.style.background = "none")
+    });
+    // e.target.style.background = "#E1348B";  //on select date
+    // console.log(selectedDateId);
     const selectedDateId = e.target.id;
+    const day = document.getElementById(selectedDateId);
+    // console.log(day);
+    if (day) {
+      day.style.background = "#E1348B"; //on select date
+    }
     selectedDate(selectedDateId);
   };
+
+
   // Function to shift the dates to the left (previous dates within the selected month)
+
   const dateShiftLeft = () => {
+
+    console.log("dateShiftLeft");
+
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => {
+      (day.style.background = "none")
+    });
+
     setFinalArr((prev) =>
       prev.map(([date, day]) => {
         date = date - 1;
@@ -158,6 +189,13 @@ const Datelist = ({
 
   // Function to shift the dates to the right (next dates within the selected month)
   const dateShiftRight = () => {
+
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => {
+      (day.style.background = "none")
+    });
+    console.log("dateShiftRight");
+
     setFinalArr((prev) =>
       prev.map(([date, day]) => {
         date = date + 1;
@@ -198,14 +236,13 @@ const Datelist = ({
             <div
               key={index}
               id={date}
-              className={`w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center day cursor-pointer ${
-                date === 0 ? "" : selectedDate === date ? "selected" : ""
-              }`}
-              onClick={dateSelect}
+              className={`w-auto px-2 py-1 mx-5 rounded-[5px] lg:rounded-lg text-center day cursor-pointer 
+             `}
+              onClick={(e) => dateSelect(e)}
             >
               {date !== 0 && (
                 <>
-                 <p> {date}</p>
+                  <p> {date}</p>
                   {"\n"}
                   {getDayFromDate(
                     `${currentYear}-${getMonthNumber(
