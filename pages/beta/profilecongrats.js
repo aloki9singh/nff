@@ -1,13 +1,12 @@
-// unsername showing undefined check required
-
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { getUserName, useAuthContext } from '@/lib/context/AuthContext';
+import {useAuthContext } from '@/lib/context/AuthContext';
 
 const ProfileCongratulation = () => {
-  const router = useRouter();
 
+  const router = useRouter();
+//redirecting to dashboard after 3 secs
   useEffect(() => {
     const interval = setTimeout(() => {
       router.push('/beta/dashboard');
