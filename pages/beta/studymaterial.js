@@ -82,7 +82,10 @@ function StudyMaterial() {
         />
 
       )}
-      {/* 
+
+
+{/* 
+
     please remove blur-sm when the content is there to show Case */}
 
       <div className={`flex h-screen bg-[#2D2E35] blur-sm ${!userSubsribed ? "blur-lg" : null}`}>

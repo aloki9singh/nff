@@ -34,13 +34,11 @@ function Homework() {
   const [dataFetched, setDataFetched] = useState(false);
   const [activeElement, setActiveElement] = useState("active");
   const [activeCourse, setActive] = useState();
-  const [checked, setChecked] = useState()
+  const [checked, setChecked] = useState();
 
   const handleToggleElement = (element) => {
     setActiveElement(element);
   };
-
-
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -83,26 +81,30 @@ function Homework() {
   // if (!verified) {
   //   return null;
   // }
-  const activeInactive = (course) =>{
-    var active = 0
-    var inactive = 0
-    var checked = 0
-    course && course.map((ele)=>{
-      ele.map((e)=>{
-        e.files.map((data) => {if(data.checked){
-          checked ++
-        }})
-        const date = new Date(e.date.seconds * 1000 + e.date.nanoseconds / 1000000)
-        if (date < new Date()){
-          inactive+=1
-        }
-        else if(date > new Date()){
-          active+=1
-        }    
-      })
-    })
-    return {active: active, inactive: inactive}
-  }
+  const activeInactive = (course) => {
+    var active = 0;
+    var inactive = 0;
+    var checked = 0;
+    course &&
+      course.map((ele) => {
+        ele.map((e) => {
+          e?.files?.map((data) => {
+            if (data.checked) {
+              checked++;
+            }
+          });
+          const date = new Date(
+            e.date.seconds * 1000 + e.date.nanoseconds / 1000000
+          );
+          if (date < new Date()) {
+            inactive += 1;
+          } else if (date > new Date()) {
+            active += 1;
+          }
+        });
+      });
+    return { active: active, inactive: inactive };
+  };
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] w-full">
@@ -110,8 +112,9 @@ function Homework() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                }  h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              }  h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -132,7 +135,12 @@ function Homework() {
               <div className=" font-semibold  text-lg text-white ml-10">
                 Assignment
               </div>
-              <div className=" bg-[#E1348B] px-4 py-2 rounded-md cursor-pointer text-lg flex items-center justify-center text-white mr-5" onClick={() => { router.push("/meta/addassigment") }}>
+              <div
+                className=" bg-[#E1348B] px-4 py-2 rounded-md cursor-pointer text-lg flex items-center justify-center text-white mr-5"
+                onClick={() => {
+                  router.push("/meta/addassigment");
+                }}
+              >
                 Add Assignment
               </div>
             </div>
@@ -148,10 +156,11 @@ function Homework() {
                   <div className="flex">
                     <div onClick={() => handleToggleElement("active")}>
                       <span
-                        className={`border-b-2 ${activeElement === "active"
-                          ? "border-[#E1348B]"
-                          : "border-transparent"
-                          }`}
+                        className={`border-b-2 ${
+                          activeElement === "active"
+                            ? "border-[#E1348B]"
+                            : "border-transparent"
+                        }`}
                       >
                         active
                       </span>
@@ -166,10 +175,11 @@ function Homework() {
                   <div className="flex">
                     <div onClick={() => handleToggleElement("inactive")}>
                       <span
-                        className={`border-b-2 ${activeElement === "inactive"
-                          ? "border-[#E1348B]"
-                          : "border-transparent"
-                          }`}
+                        className={`border-b-2 ${
+                          activeElement === "inactive"
+                            ? "border-[#E1348B]"
+                            : "border-transparent"
+                        }`}
                       >
                         Inactive
                       </span>
@@ -186,10 +196,11 @@ function Homework() {
                     {" "}
                     <div>
                       <span
-                        className={`border-b-2 ${activeElement === "check"
-                          ? "border-[#E1348B]"
-                          : "border-transparent"
-                          }`}
+                        className={`border-b-2 ${
+                          activeElement === "check"
+                            ? "border-[#E1348B]"
+                            : "border-transparent"
+                        }`}
                         onClick={() => handleToggleElement("check")}
                       >
                         Checked
@@ -205,7 +216,7 @@ function Homework() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5">
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 max-h-screen overflow-scroll scrollbar-hide">
                 {activeElement === "active" ? (
                   <>
                     {activeCourse &&
@@ -213,7 +224,7 @@ function Homework() {
                         e.map((ele) => {
                           const date = new Date(
                             ele.date.seconds * 1000 +
-                            ele.date.nanoseconds / 1000000
+                              ele.date.nanoseconds / 1000000
                           );
                           if (date > new Date()) {
                             return (
@@ -247,7 +258,7 @@ function Homework() {
                         e.map((ele) => {
                           const date = new Date(
                             ele.date.seconds * 1000 +
-                            ele.date.nanoseconds / 1000000
+                              ele.date.nanoseconds / 1000000
                           );
                           if (date < new Date()) {
                             return (

@@ -147,7 +147,8 @@ function StudentProfile() {
 
             {!userSubsribed ? (
               <>
-              <Nodata title={"Subscription"} value={"No Subsciption"}/>
+              <Nodata title={"Subscription"} value={"No Subsciption"}
+              onClick={() => {router.push("/beta/payment")}}/>
               </>
             ) : (
               <div className="lg:grid lg:grid-cols-11   m-5  md:mt-0 text-white justify-between">
