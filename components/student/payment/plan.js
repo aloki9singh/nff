@@ -39,7 +39,7 @@ const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
       price: '3599',
       from: 'from-[#000000]',
       to: 'to-[#000000]',
-      duration: 'Year',
+      duration: 'Yearly',
       description: [
         'Get Access To All The Courses',
         'Live Classes With Mentors',
@@ -52,15 +52,17 @@ const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
 
     {trial ? <>
 
-    <div className={`relative text-wrapper text-center mb-[10px]`}>
+    <div className={`relative text-wrapper text-center `}>
 
-      <h1 className="text-xl md:text-4xl font-semibold ">
+      <h1 className="text-xl md:text-xl font-semibold ">
         Try 1 week <span className="text-[#E1348B]">
            Free
           </span>
       </h1>
-    
-      <p className="text-[9px] md:text-[14px]">
+
+   
+      <p className="text-[9px] p-1">
+
         Cancel Anytime
       </p>
       
@@ -71,7 +73,7 @@ const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
       </h2> </div>
     </>
     }
-      <div className="flex flex-col md:flex-row justify-center w-[90%]">
+      <div className="flex flex-col md:flex-row justify-center w-[90%] pb-20">
         {plan.map((item, ind) => (
           <Plan
             odd={ind % 2 == 0 ? "oddcard" : "evencard"}

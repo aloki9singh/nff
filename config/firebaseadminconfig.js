@@ -9,6 +9,9 @@ if (!admin.apps.length) {
   });
 }
 export const adminAuth = admin.auth();
+export const adminDb = admin.firestore();
+export const adminStorage = admin.storage();
+
 
 //here used service Accountkey  file will be changed on changing firebase config
 // you have to generate it from fire base  in json format from your project and put it here

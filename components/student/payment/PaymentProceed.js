@@ -176,7 +176,7 @@ const PaymentProceed = ({ price, updatePage }) => {
             <div className="mb-4 flex">
               <div className="">
                 <label
-                  className="block text-white text-sm font-bold mb-2 block"
+                  className="block text-white text-sm font-bold mb-2"
                   for="Card Holder Name"
                 >
                   Expiry Date

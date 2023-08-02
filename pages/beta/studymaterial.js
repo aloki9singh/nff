@@ -106,7 +106,7 @@ function StudyMaterial() {
             heading="Study Material"
             toggleSideBar={toggleSideBar}
           />
-          <div className="lg:w-64 w-80 items-center lg:ml-16 ml-9 rounded-lg m-auto">
+          {/* <div className="lg:w-64 w-80 items-center lg:ml-16 ml-9 rounded-lg m-auto">
             <select
               onChange={(e) => setSelectedOption(e.target.value)}
               className="block w-full p-2 text-base rounded-md focus:outline-none bg-[#A145CD] text-white cursor-pointer"
@@ -120,7 +120,7 @@ function StudyMaterial() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="bg-[#2D2E35] text-white grow flex items-center justify-center h-[screen]">
             <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">

@@ -7,11 +7,12 @@ import { auth } from '@/config/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import { callUserById } from '@/lib/exportablefunctions';
 import { useMediaQuery } from 'react-responsive';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, updateDoc, where, doc, getDoc } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 
 function Homework() {
     //set Below two for marked homework
+    const router = useRouter()
     const [verified, setVerified] = useState();
     let [searchstate, setsearchstate] = useState('');
 
@@ -25,15 +26,97 @@ function Homework() {
     const [comment, setComment] = useState()
     const [teacher, setTeacher] = useState()
     const [marks, setMarks] = useState()
+    const [maxMarks, setMaxMarks] = useState()
+    const [course, setCourse] = useState()
+    const { id, courseid, submitid } = router.query
 
     function toggleSideBar() {
         setShowSideBar(!showSideBar);
         sendSideBarState(showSideBar);
     }
+
+    const getMarks = async () => {
+        const courseRef = doc(db, "courses", courseid);
+        const courseInfo = await getDoc(courseRef);
+        if (courseInfo.exists()) {
+            try {
+                const assignmentRef = collection(courseRef, "assignment");
+                const q = query(assignmentRef, where("id", "==", id));
+                const querySnapshot = await getDocs(q);
+
+                const assignmentDoc = querySnapshot.docs[0];
+                if (!assignmentDoc) {
+                    console.log("Assignment not found.");
+                    return;
+                }
+                const assignmentData = assignmentDoc.data();
+                setMaxMarks(assignmentData.marks)
+            } catch (err) {
+                alert("Error occurred", err);
+            }
+        }
+
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (marks>maxMarks){
+            alert("Enter valid Marks")
+        }
+        else if(!marks){
+            alert("Enter marks")
+        }
+        else if(!teacher){
+            alert("Enter valid Teacher Name")
+        }
+        else{
+            const courseRef = doc(db, "courses", courseid);
+            const courseInfo = await getDoc(courseRef);
+            if (courseInfo.exists()) {
+                try {
+                    const assignmentRef = collection(courseRef, "assignment");
+                    const q = query(assignmentRef, where("id", "==", id));
+                    const querySnapshot = await getDocs(q);
+    
+                    const assignmentDoc = querySnapshot.docs[0];
+                    if (!assignmentDoc) {
+                        console.log("Assignment not found.");
+                        return;
+                    }
+                    const assignmentData = assignmentDoc.data();
+                    console.log(assignmentData)
+                    setMaxMarks(assignmentData.marks)
+                    const updatedFiles = assignmentData.files.map((data) => {
+                        if (data.submittedby === submitid) {
+                            return {
+                                ...data,
+                                obtMarks: marks,
+                                comment: comment ? comment : "No comment",
+                                checkedBy: teacher,
+                                checked: true
+                            };
+                        }
+                        return data;
+                    });
+    
+                    // Update the specific assignment document using the update method
+                    await updateDoc(doc(assignmentRef, assignmentDoc.id), { files: updatedFiles });
+                    alert("Assignment Checked");
+                    router.push("/meta/homework")
+                } catch (err) {
+                    alert("Error occurred", err);
+                }
+            } else {
+                console.log("Course not found.");
+            }
+        }
+    };
+
     useEffect(() => {
         if (isMediumScreen) {
             sendSideBarState(false);
         }
+        getMarks()
         const unsubscribe = onAuthStateChanged(auth, async user => {
             if (user) {
                 user.emailVerified = true;
@@ -42,15 +125,10 @@ function Homework() {
             }
         });
         return () => unsubscribe(); // Cleanup the listener
-    }, [isMediumScreen]);
+           // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMediumScreen, maxMarks]);
 
-    // if (!verified) {
-    //   return null;
-    // }
-    const handleSubmit = () => {
-        // logic to save the assignment feedback
-        router.push("/meta/homework")
-    }
+ 
 
     return (
         <>
@@ -88,22 +166,21 @@ function Homework() {
                                             <div>
                                                 Maximum marks:
                                             </div>
-                                            <input type="text" value={"10"} disbaled name="total" id="total" className='border-white bg-transparent m-2 w-[25%]'/>
+                                            <input type="text" value={maxMarks} disbaled name="total" id="total" className='border-white bg-transparent m-2 w-[25%]' />
                                         </div>
                                         <div className='flex items-center'>
                                             <div>
                                                 Given marks:
                                             </div>
-                                            <input type="number" className='border-white w-[25%] ml-2 max-[694px]:ml-10 bg-transparent' value={marks} onChange={(e) => setMarks(e.target.value)} />
-
+                                            <input type="number" className='border-white w-[25%] ml-2 max-[694px]:ml-10 bg-transparent' value={marks} onChange={(e) => { e.preventDefault(); setMarks(e.target.value) }} />
                                         </div>
                                     </div>
                                     <div className="w-[95%] text-white mx-auto h-[127px] m-4 rounded-[10px]">
-                                        <input type="text" placeholder='Add Comment' value={comment} onChange={(e)=>setComment(e.target.value)} className='w-full h-[127px] bg-[#474A50] rounded-[10px]' />
+                                        <input type="text" placeholder='Add Comment' value={comment} onChange={(e) => { e.preventDefault(); setComment(e.target.value) }} className='w-full h-[127px] bg-[#474A50] rounded-[10px]' />
                                     </div>
                                     <div className='w-[95%] max-[500px]:flex-col mx-auto flex md:items-center text-white justify-end'>
                                         <div>Teacher Name:</div>
-                                        <input type="text" placeholder='Type' value={teacher} onChange={(e) => setTeacher(e.target.value)} className=' bg-[#474A50] rounded-[10px] ml-2' />
+                                        <input type="text" placeholder='Type' value={teacher} onChange={(e) => { e.preventDefault(); setTeacher(e.target.value) }} className=' bg-[#474A50] rounded-[10px] ml-2' />
                                     </div>
                                 </div>
                                 <div className="flex justify-end mx-8 my-8">
@@ -112,10 +189,7 @@ function Homework() {
                                     </button>
                                 </div>
                             </form>
-
                         </div>
-
-
                     </div>
                 </div>
             </div>

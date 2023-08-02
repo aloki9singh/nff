@@ -38,10 +38,6 @@ function Assignments() {
   const [uniqCourse, setUnique] = useState([])
   const [value, setValue] = useState()
   const [module, setModule] = useState(0);
-
-
-
-
   let [searchstate, setsearchstate] = useState("");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
@@ -234,7 +230,7 @@ function Assignments() {
                   <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
                     Files
                   </div>
-                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-3">
+                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1">
                     {course && moduleName && (
                       course.map((assignment, i) => {
                         if (assignment.module === moduleName && assignment.course === value) {
