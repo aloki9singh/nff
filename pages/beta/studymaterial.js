@@ -77,18 +77,17 @@ function StudyMaterial() {
         />
       )}
 
-      {userSubsribed && (
+      {/* {userSubsribed && (
         <ToastMessage
           heading={"No Material Availaible"}
           message={"Please Continue learning..."}
           showButton={false}
         />
-
-      )}
+      )} */}
 {/* 
     please remove blur-sm when the content is there to show Case */}
 
-      <div className={`flex h-screen bg-[#2D2E35] blur-sm ${!userSubsribed ? "blur-lg" : null}`}>
+      <div className={`flex h-screen bg-[#2D2E35]  ${!userSubsribed ? "blur-lg" : null}`}>
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${SideBarState ? "block" : "hidden"

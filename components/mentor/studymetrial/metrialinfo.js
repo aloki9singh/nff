@@ -29,48 +29,15 @@ const ArrowIcon = (props) => (
   </svg>
 );
 
-function MetrialInfo({}) {
-  const router = useRouter();
-  const isMediumScreen = useMediaQuery({ minWidth: 768 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
+function MetrialInfo({ }) {
   const [selectedCard, setSelectedCard] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  const { selectedModule: module, setSelectedModule } =
+  const { selectedModule: module, setSelectedModule, isMentor } =
     useStudyMaterialContext();
 
-  console.log("module", module);
 
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
 
-  useEffect(() => {
-    if (isMediumScreen) {
-      sendSideBarState(false);
-    }
-    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     user.emailVerified = true;
-    //     const value = await callUserById(user.uid);
-    //     setVerified(value.user.verified);
-    //   }
-    // });
-
-    // return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen]);
-
-  const { query } = router;
-
-  useEffect(() => {
-    const { selectedCard } = query;
-    if (selectedCard) {
-      setSelectedCard(decodeURIComponent(selectedCard));
-    }
-  }, [query]);
 
   return (
     <div className=" w-full  h-full pb-10  bg-[#2D2E35] text-white grow flex items-center justify-center ">
@@ -102,7 +69,7 @@ function MetrialInfo({}) {
                 )}
               </div>
             </div>
-            {selectedCard && !showForm && (
+            {selectedCard && !showForm && isMentor && (
               <Button onClick={() => setShowForm(true)} className={"mr-4"}>
                 Add {selectedCard}
               </Button>
