@@ -176,7 +176,7 @@ function Homework() {
                                         </div>
                                     </div>
                                     <div className="w-[95%] text-white mx-auto h-[127px] m-4 rounded-[10px]">
-                                        <input type="text" placeholder='Add Comment' value={comment} onChange={(e) => { e.preventDefault(); setComment(e.target.value) }} className='w-full h-[127px] bg-[#474A50] rounded-[10px]' />
+                                        <input type="text" placeholder='Add Comment' value={comment} onChange={(e) => { e.preventDefault(); setComment(e.target.value) }} className='w-full h-[127px] bg-[#474A50] rounded-[10px]  placeholder:text-center' />
                                     </div>
                                     <div className='w-[95%] max-[500px]:flex-col mx-auto flex md:items-center text-white justify-end'>
                                         <div>Teacher Name:</div>
