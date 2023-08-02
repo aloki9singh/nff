@@ -10,7 +10,10 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { getStudyMaterial } from "@/lib/exportablefunctions";
-import { StudyMaterialProvider, useStudyMaterialContext } from "@/lib/context/StudyMaterialContext";
+import {
+  StudyMaterialProvider,
+  useStudyMaterialContext,
+} from "@/lib/context/StudyMaterialContext";
 
 function StudyMaterial() {
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -18,16 +21,8 @@ function StudyMaterial() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
 
-  const {
-    modules,
-    selectedModule,
-    setSelectedModule,
-    loading,
-    courseID
-  } = useStudyMaterialContext();
-
-
-
+  const { modules, selectedModule, setSelectedModule, loading, courseID } =
+    useStudyMaterialContext();
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -44,8 +39,6 @@ function StudyMaterial() {
     setSelectedModule(module);
   };
 
-
-
   return (
     <div className="flex w-full">
       <div className="h-full w-full text-base bg-[#2E3036] ">
@@ -53,8 +46,9 @@ function StudyMaterial() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -105,35 +99,24 @@ function StudyMaterial() {
                 </div>
               </div>
             )} */}
-            {!selectedModule &&
-              (
-                <div
-                  className="bg-[#2D2E35] mt-6 text-white grow flex items-center justify-center h-full"
-                >
-                  <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
-                    <div className="flex justify-center items-stretch md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">
-                      {
-                        modules.map((module, index) => (
-                          <StudyMaterialCard
-                            key={index}
-                            module={module}
-                            onClick={() => {
-                              handleCardClick(module);
-                            }}
-                          />
-                        ))
-                      }
-                    </div>
+            {!selectedModule && (
+              <div className="bg-[#2D2E35] mt-6 text-white grow flex items-center justify-center h-full">
+                <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
+                  <div className="flex justify-center items-stretch md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">
+                    {modules.map((module, index) => (
+                      <StudyMaterialCard
+                        key={index}
+                        module={module}
+                        onClick={() => {
+                          handleCardClick(module);
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
-              )}
-            {selectedModule && (
-              <MetrialInfo
-                modules={modules}
-                courseID={courseID}
-                module={selectedModule}
-              />
+              </div>
             )}
+            {selectedModule && <MetrialInfo />}
           </div>
         </div>
       </div>
@@ -142,14 +125,11 @@ function StudyMaterial() {
 }
 
 const MainStudyMaterial = () => {
-
   return (
     <StudyMaterialProvider>
       <StudyMaterial />
     </StudyMaterialProvider>
-  )
-
-}
-
+  );
+};
 
 export default withMentorAuthorization(MainStudyMaterial);
