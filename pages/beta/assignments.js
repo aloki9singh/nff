@@ -39,7 +39,7 @@ function Assignments() {
   const [value, setValue] = useState();
   const [module, setModule] = useState(0);
   let [searchstate, setsearchstate] = useState("");
-  console.log(course,"course");
+  console.log(course, "course");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
@@ -110,7 +110,7 @@ function Assignments() {
     };
 
     getCourseId();
-  }, [isMediumScreen, user.uid]);
+  }, [isMediumScreen, user?.uid]);
 
   useEffect(() => {
     setModuleName(moduleData && moduleData[0]?.module);
@@ -283,11 +283,19 @@ function Assignments() {
                         <Nodata title="Homework" value="No Homework" />
                       </div>
                     )}
-                  {course?.length==0 && (
+                  {console.log(uniqCourse)}
+                  {uniqCourse.length == 0 && (
                     <div className="-mt-8">
                       <Nodata title="Course" value="No Course available" />
                     </div>
                   )}
+                  {moduleData &&
+                    moduleData.every((ele) => ele.course !== value) && (
+                      <div className=" ">
+                        <Nodata title="Homework" value="No Homework available" />
+                       
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
