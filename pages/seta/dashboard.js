@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import MonthSelector from "../../components/common/calendar/common/monthselector";
 import Datelist from "@/components/common/calendar/common/datelist";
 import DonutInProfile from "@/components/school/dashboard/circularpfp";
-import { callStudentDataApi } from "@/lib/setaapi"; // Import the API function
 import Calendar from "@/components/common/calendar/school/calendar";
 import { useMediaQuery } from "react-responsive";
 

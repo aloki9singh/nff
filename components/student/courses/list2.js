@@ -16,7 +16,7 @@ function CourseList({courses}) {
     <>
       <div className={styles.mainCList}>
         <div className={styles.listHeader}>
-          <div className='text-white md:text-4xl text-xl align-middle flex items-end pl-10 pt-10'>ALL COURSES</div>
+          <div className='text-white md:text-4xl text-xl align-middle flex items-end pl-10 pt-10 '>ALL COURSES</div>
           {/* <button onClick={openFilter}>
             Filter
             <span>

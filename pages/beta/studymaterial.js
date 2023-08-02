@@ -9,26 +9,24 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import { useAuthContext } from "@/lib/context/AuthContext";
-
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 
 
 function StudyMaterial() {
   const router = useRouter();
+  //material array
   const [material, setMaterial] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
+  //sccreen check
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
   const { joinedCourses } = useAuthContext();
   const { user, userProfile } = useAuthContext();
-  //yet to write logic to change course bougth or not ??
-  const [courseBuyed, setCourseBuyed] = useState(false);
 
-
-
+  //fetching data of study materials 
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, "studyMaterial"));
@@ -42,9 +40,12 @@ function StudyMaterial() {
     fetchData();
   }, []);
 
+
+  //Dropdown items
   const menuItems = [...new Set(material.map((Val) => Val.title))];
   menuItems[0] = "All courses";
 
+  // for filtering 
   const filteredMaterial = selectedOption
     ? material.filter((item) => item.title === selectedOption)
     : material;
@@ -60,14 +61,10 @@ function StudyMaterial() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-
   const { userSubsribed } = CourseAccess(user.uid);
 
-  // console.log(userSubsribed);
   return (
     <>
-
-
       {!userSubsribed && (
         <ToastMessage
           heading={"OOPS!"}
@@ -84,7 +81,9 @@ function StudyMaterial() {
           showButton={false}
         />
       )} */}
+
 {/* 
+
     please remove blur-sm when the content is there to show Case */}
 
       <div className={`flex h-screen bg-[#2D2E35]  ${!userSubsribed ? "blur-lg" : null}`}>
@@ -97,7 +96,6 @@ function StudyMaterial() {
           </div>
         )}
 
-        {/* MentorId mentorid */}
         {/* Second Sidebar - Visible on Desktop */}
         {!isMobileScreen && (
           <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>

@@ -300,7 +300,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                       onChange={setData2}
                       name="working"
                       checked={experience.working}
-                      className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block mr-3 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                      className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block mr-3 bg-[#AA2769] border border-[#5F6065] placeholder-[#AA2769] focus:ring-blue-500 focus:border-blue-500 focus:text-[#AA2769] selection:text-[#AA2769]"
                     />
                     <label className="block text-sm font-medium text-white w-[100%]">
                       I am currently Working in this role
@@ -316,7 +316,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                       onChange={setData2}
                       name="location"
                       value={experience.location}
-                      className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block w-full p-2.5 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
+                      className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block w-full p-2.5 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500 "
                       placeholder="Type here"
                     />
                   </div>{" "}
@@ -348,7 +348,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
 
               {/* //End of model 2 which i put at this another place */}
               {/* main div Top section */}
-              <div className="flex-[2_2_0%]  px-9 space-y-10  bg-[#222222] rounded-[30px] ml-[-18px] ">
+              <div className="flex-[2_2_0%] px-[12rem] space-y-10  bg-[#222222] rounded-[30px] ml-[-18px] ">
                 <div className=" flex justify-between text-xl mt-10 mb-[-20px]  ">
                   <div>
                     <button
@@ -395,7 +395,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                 {/* Qualification Section with popup and respective data */}
                 <h2 className="">Qualification</h2>
                 <div
-                  className="mb-64 relative flex flex-col items-center justify-center w-full space-x-4 space-y-5  border border-[#5F6065] rounded p-10 "
+                  className="mb-64 relative flex flex-col items-center justify-center w-full space-x-4 space-y-5  border border-[#5F6065] p-10 rounded-2xl py-12 "
                   ref={ref}
                 >
                   <div className="flex space-x-4 items-center justify-center">
@@ -560,7 +560,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                 {/* Work Experience Section with popup and respective data */}
 
                 <h2 className="">Work Experience</h2>
-                <div className="mb-64 relative flex flex-col items-center justify-center w-full space-x-4 space-y-4  border border-[#5F6065] rounded p-10 ">
+                <div className="mb-64 relative flex flex-col items-center justify-center w-full space-x-4 space-y-4  border border-[#5F6065] rounded-2xl p-10 py-12">
                   <div className="flex space-x-4 items-center justify-center">
                     {" "}
                     <div

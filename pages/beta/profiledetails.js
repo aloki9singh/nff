@@ -1,23 +1,25 @@
-import IDdraganddrop from "../../components/student/assignments/iddraganddrop";
-import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
+import IDdraganddrop from "@/components/student/assignments/iddraganddrop";
+import React, { useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { getUserName, useAuthContext } from "@/lib/context/AuthContext";
-import { uploadToFirebase } from "@/lib/exportablefunctions";
+import { updateProfile } from "firebase/auth";
+import { useAuthContext } from "@/lib/context/AuthContext";
 
+
+//class options
 const options = ["8", "9", "10", "11", "12"];
 
 export default function ProfileDetails() {
   const router = useRouter();
 
+  // context for userData 
   const { user } = useAuthContext();
 
+
+  // default form template and values /
   const {
     register,
     handleSubmit,
@@ -30,14 +32,17 @@ export default function ProfileDetails() {
     defaultValues: {},
   });
 
+  //var for profile phot and aadhar card
   const profilePhoto = watch("profilePhoto");
   const aadhaarCard = watch("aadhaarCard");
 
-  // console.log("profilePhoto", profilePhoto)
+
+  // checks wheateher the use is already registered if  then gets the data and preview in form 
 
   useEffect(() => {
     const getInitialProfile = async () => {
-      const userRef = doc(db, "allusers", user?.uid); // searching if user exists or not
+      // searching if user exists or not
+      const userRef = doc(db, "allusers", user?.uid);
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
@@ -63,13 +68,12 @@ export default function ProfileDetails() {
     getInitialProfile();
   }, [user?.uid, reset]);
 
-  const onSubmit = async (data) => {
-    // console.log("data", data);
 
+  //submting is handled
+  const onSubmit = async (data) => {
     if (!user) {
       return;
     }
-
     const username =
       data.studentFirstName[0] +
       (data.studentLastName[0] || "") +
@@ -108,12 +112,12 @@ export default function ProfileDetails() {
       trialValid: true,
       courseAccess: false,
     };
-    // console.log("profile", profile);
     const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
     const docSnap = await getDoc(userRef);
 
     if (docSnap.exists()) {
-      await updateDoc(userRef, profile); // exist condition update the doc
+      // exist condition update the doc
+      await updateDoc(userRef, profile); 
     } else {
       // taking same user reference trying to add user
       await setDoc(userRef, {
@@ -131,7 +135,7 @@ export default function ProfileDetails() {
     router.push("/beta/profilecongrats");
   };
 
-  // console.log("errors", errors);
+  
   return (
     <div className="w-full text-white flex flex-col space-y-8 overflow-x-hidden">
       {/* text */}
