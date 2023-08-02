@@ -1,11 +1,8 @@
 import Image from "next/image";
 import laptop from "@/public/pagesgraphics/student/videoplayback/Group 11.svg";
-import { AiFillLock, AiOutlineLock } from "react-icons/ai";
-import {
-	CircularProgressbar,
-	CircularProgressbarWithChildren,
-	buildStyles,
-} from "react-circular-progressbar";
+
+import { AiOutlineLock } from "react-icons/ai";
+
 import "react-circular-progressbar/dist/styles.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -23,16 +20,16 @@ import {
 	setDoc,
 } from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
-import CourseVideoPlayer from "@/components/student/courses/videoplayer";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import withAll from "@/lib/HOC/withAll";
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import { BsFillPlayFill } from "react-icons/bs";
 
+
+//yet not in use anywhere
 const VideoPlayer = ({ videoUrl }) => {
 	return (
 		<video controls>
@@ -41,12 +38,16 @@ const VideoPlayer = ({ videoUrl }) => {
 	);
 };
 
+
+// /fetches data of all joined courses by a user 
 async function checkUserJoinedCourse(courseId, userId) {
 	const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
 	const courseDoc = await getDoc(courseRef);
 	return courseDoc.exists();
 }
 
+
+//accordion
 const Accordion = ({ title, children }) => {
 	const [open, setOpen] = useState(false);
 
@@ -92,40 +93,41 @@ const Accordion = ({ title, children }) => {
 };
 
 function Videos() {
-	const [course, setCourse] = useState(null);
-	const [modules, setModules] = useState([]);
-	// const [currentModule, setCurrentModule] = useState(null);
-	const isMediumScreen = useMediaQuery({ minWidth: 768 });
-	const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-	const [showSideBar, setShowSideBar] = useState(false);
-	const [SideBarState, sendSideBarState] = useState(false);
-	const [videoUrl, setVideoUrl] = useState(null);
-	const [isJoined, setIsJoined] = useState(false);
-	const { user, userProfile } = useAuthContext();
-	const [currentarray, setCurrentArray] = useState([""]);
-	const [showModal, setShowModal] = useState(false);
-	const { userSubsribed, isTrialValid } = CourseAccess(user?.uid);
+  const [course, setCourse] = useState(null);
+  const [modules, setModules] = useState([]);
+  const isMediumScreen = useMediaQuery({ minWidth: 768 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(null);
+  const [isJoined, setIsJoined] = useState(false);
+  const { user, userProfile } = useAuthContext();
+  const [currentarray, setCurrentArray] = useState([""]);
+  const [showModal, setShowModal] = useState(false);
+  const { userSubsribed, isTrialValid } = CourseAccess(user?.uid);
 
-	useEffect(() => {
-		const checkJoined = async () => {
-			const isJoined = await checkUserJoinedCourse(course.id, user.uid);
-			setIsJoined(isJoined);
-		};
-		if (course?.id) {
-			checkJoined();
-		}
-	}, [course?.id, user.uid]);
+  // checkes the user has already joined or not 
+  useEffect(() => {
+    const checkJoined = async () => {
+      const isJoined = await checkUserJoinedCourse(course.id, user.uid);
+      setIsJoined(isJoined);
+    };
+    if (course?.id) {
+      checkJoined();
+    }
+  }, [course?.id, user.uid]);
 
-	const router = useRouter();
-	const title = router.query.title ? router.query.title : "Basics of C++";
+  const router = useRouter();
+  const title = router.query.title ? router.query.title : "Basics of C++";
 
-	const startVideoStream = (videoUrl) => {
-		// console.log(modules[0].video);
-		// setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
-		setVideoUrl(videoUrl);
-	};
+  // yet not in use 
+  const startVideoStream = (videoUrl) => {
+    // console.log(modules[0].video);
+    // setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
+    setVideoUrl(videoUrl);
+  };
 
-	const styles = `
+  const styles = `
 
   .lockedClass{
     filter:blur(1.4px);
@@ -135,122 +137,115 @@ function Videos() {
   }
 `;
 
-	useEffect(() => {
-		const fetchCourseData = async () => {
-			try {
-				const courseRef = collection(db, "courses");
-				const q = query(courseRef, where("title", "==", title));
-				const courseDocs = await getDocs(q);
-				if (courseDocs.empty) {
-					setCourse(null);
-				} else {
-					var courseData;
-					courseDocs.forEach((doc) => {
-						courseData = doc.data();
-					});
-					// console.log(courseData);
-					// const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
-					setModules(courseData.modules);
-					setCourse(courseData);
-					setVideoUrl(courseData.modules[0].video[0]);
-					const userRef = doc(db, "allusers", courseData.mentorid); // searching if user exists or not
-					const docSnap = await getDoc(userRef).then((docsnap) => {
-						if (docsnap.exists()) {
-							const userd = docsnap.data();
-							setCurrentArray(userd.joinedStudents);
-						} else {
-							setCurrentArray([]);
-							console.log("user not found");
-						}
-					});
-				}
-			} catch (error) {
-				console.error("Error fetching course data:", error);
-				// setCourse(null);
-			}
-		};
 
-		if (title) {
-			fetchCourseData();
-		}
-	}, [title]);
+  // find a particular course using title from firestore 
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        const courseRef = collection(db, "courses");
+        const q = query(courseRef, where("title", "==", title));
+        const courseDocs = await getDocs(q);
+        if (courseDocs.empty) {
+          setCourse(null);
+        } else {
+          var courseData;
+          courseDocs.forEach((doc) => {
+            courseData = doc.data();
+          });
+          // console.log(courseData);
+          // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
+          setModules(courseData.modules);
+          setCourse(courseData);
+          setVideoUrl(courseData.modules[0].video[0]);
+          const userRef = doc(db, "allusers", courseData.mentorid); // searching if user exists or not
+          const docSnap = await getDoc(userRef).then((docsnap) => {
+            if (docsnap.exists()) {
+              const userd = docsnap.data();
+              setCurrentArray(userd.joinedStudents);
+            } else {
+              setCurrentArray([]);
+              console.log("user not found");
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching course data:", error);
+        // setCourse(null);
+      }
+    };
 
-	//check and set the eligibility for the course access through context
-	// useEffect(() => {
+    if (title) {
+      fetchCourseData();
+    }
+  }, [title]);
 
-	// }, []);
 
-	const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
+  function toggleSideBar() {
+    setShowSideBar(!showSideBar);
+    sendSideBarState(showSideBar);
+  }
 
-	function toggleSideBar() {
-		setShowSideBar(!showSideBar);
-		sendSideBarState(showSideBar);
-	}
+  useEffect(() => {
+    if (isMediumScreen) {
+      sendSideBarState(false);
+    }
+  }, [isMediumScreen]);
 
-	useEffect(() => {
-		if (isMediumScreen) {
-			sendSideBarState(false);
-		}
-	}, [isMediumScreen]);
+  //securedroute
+  if (!user || !userProfile) {
+    router.push("/");
+  }
 
-	//securedroute
 
-	if (!user || !userProfile) {
-		router.push("/");
-	}
+  // function for joining chat and adding user in course and mentor 
+  async function joinCourseChat() {
+    const groupRef = doc(db, "chatGroups", course.id);
+    await updateDoc(doc(collection(db, "chatGroups"), course.id), {
+      members: arrayUnion(user.uid),
+    });
 
-	async function joinCourseChat() {
-		const groupRef = doc(db, "chatGroups", course.id);
+    await setDoc(doc(db, "allusers", user.uid, "joinedCourses", course.id), {
+      id: course.id,
+      title: course.title,
+      joinedAt: serverTimestamp(),
+    });
 
-		await updateDoc(doc(collection(db, "chatGroups"), course.id), {
-			members: arrayUnion(user.uid),
-		});
+    const courseRef = doc(db, "courses", course.id);
 
-		await setDoc(doc(db, "allusers", user.uid, "joinedCourses", course.id), {
-			id: course.id,
-			title: course.title,
-			joinedAt: serverTimestamp(),
-		});
+    // Get the current course document to check if the "students" field exists
+    const courseSnapshot = await getDoc(courseRef);
+    const courseData = courseSnapshot.data();
 
-		const courseRef = doc(db, "courses", course.id);
+    if (courseSnapshot.exists() && courseData.students) {
+      // If the "students" field exists, use arrayUnion to add the user.uid
+      await updateDoc(courseRef, {
+        students: arrayUnion(user.uid),
+      });
+    } else {
+      // If the "students" field does not exist or is not defined, create it with the user.uid as an array
+      await setDoc(courseRef, {
+        students: [user.uid],
+      }, { merge: true }); // Use merge: true to merge with existing data if the document already exists
+    }
 
-		// Get the current course document to check if the "students" field exists
-		const courseSnapshot = await getDoc(courseRef);
-		const courseData = courseSnapshot.data();
+    const d = {
+      courseId: course.id,
+      studentId: user.uid,
+      joinedAt: new Date(),
+    };
 
-		if (courseSnapshot.exists() && courseData.students) {
-			// If the "students" field exists, use arrayUnion to add the user.uid
-			await updateDoc(courseRef, {
-				students: arrayUnion(user.uid),
-			});
-		} else {
-			// If the "students" field does not exist or is not defined, create it with the user.uid as an array
-			await setDoc(
-				courseRef,
-				{
-					students: [user.uid],
-				},
-				{ merge: true }
-			); // Use merge: true to merge with existing data if the document already exists
-		}
+    await updateDoc(doc(db, "allusers", course.mentorid), {
+      joinedStudents: arrayUnion(d),
+    });
 
-		const d = {
-			courseId: course.id,
-			studentId: user.uid,
-			joinedAt: new Date(),
-		};
+    setIsJoined(true);
+  }
 
-		await updateDoc(doc(db, "allusers", course.mentorid), {
-			joinedStudents: arrayUnion(d),
-		});
 
-		setIsJoined(true);
-	}
+  return (
+    <>
+      {showModal && (
 
-	return (
-		<>
-      {/* TOREVERT */}
-			{/* {showModal && (
         <ToastMessage
           heading={"OOPS!"}
           message={

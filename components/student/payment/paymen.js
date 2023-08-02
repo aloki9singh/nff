@@ -9,7 +9,7 @@ import CourseAccess from "@/lib/context/AccessCourseContext";
 import ToastMessage from "@/components/student/payment/ToastMessage";
 
 
-const Payment = ({updatePage, updatePrice}) => {
+const Payment = ({ updatePage, updatePrice }) => {
 
   const router = useRouter();
   const { user, userProfile } = useAuthContext();
@@ -17,13 +17,15 @@ const Payment = ({updatePage, updatePrice}) => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
+  // for trial button 
   let isTrialValid = true;
 
+  //checking trial validity
   if (user) {
     isTrialValid = CourseAccess(user.uid).isTrialValid;
   }
 
-
+  // toast message handler 
   const handleToastMessage = () => {
     setShowToast(true);
   };
@@ -37,6 +39,8 @@ const Payment = ({updatePage, updatePrice}) => {
     }
   `;
 
+
+  // handling onclick the trial button 
   const handleClickFreeTrail = async (e) => {
     e.preventDefault();
     if (!user || !userProfile) {
@@ -60,17 +64,16 @@ const Payment = ({updatePage, updatePrice}) => {
         trialValid: false,
         courseAccess: true,
       };
-
+      
       try {
-        const userRef = doc(db, "allusers", user.uid); // searching if user exists or not
+        // searching if user exists or not
+        const userRef = doc(db, "allusers", user.uid);
         const docSnap = await getDoc(userRef);
-
         if (docSnap.exists()) {
-          await updateDoc(userRef, trialData); // exist condition update the doc
+          // exist condition update the doc
+          await updateDoc(userRef, trialData);
         }
-
         handleToastMessage();
-
       } catch (error) {
         console.error("Error activating trial:", error);
       }
@@ -91,8 +94,10 @@ const Payment = ({updatePage, updatePrice}) => {
           />
         )}
         <style>{styles}</style>
+
         
         <div className="w-full bg-[#0D0E14] ">
+
           <div className="text-center text-white text-lg">
             <h1 className="text-[2rem] font-bold">Subscribe</h1>
             <p className="mb-4 text-xs pt-5">Join NeatSkills & Choose From The Below Plan</p>
@@ -102,9 +107,9 @@ const Payment = ({updatePage, updatePrice}) => {
               clickEvent={(e) => handleClickFreeTrail(e)}
               trial={isTrialValid}
 
-              updatePrice = {updatePrice}
+              updatePrice={updatePrice}
 
-              updatePage = {(e) => updatePage(e)}
+              updatePage={(e) => updatePage(e)}
             />
           </div>
         </div>

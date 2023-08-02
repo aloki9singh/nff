@@ -4,6 +4,8 @@ import Plan from './plan-dy';
 const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
 
 
+
+  //plans
   const plan = [
     {
       id: 1,
@@ -57,10 +59,10 @@ const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
            Free
           </span>
       </h1>
-      {/* <h2 className="text-base md:text-xl mb-2 font-semibold">
-        Transparent <span className="text-[#A145CD]">Pricing</span> For You
-      </h2> */}
+
+   
       <p className="text-[9px] p-1">
+
         Cancel Anytime
       </p>
       

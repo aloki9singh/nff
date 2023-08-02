@@ -13,11 +13,17 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 const ProfileContinuepage = () => {
   const router = useRouter();
+
+  //context for user data and loading
   const { userProfile, user } = useAuthContext();
   const { loading, setLoading } = useContext(Loading);
+
+  //refers to profile details page
   function handleContinueClick() {
     router.push("/beta/profiledetails");
   }
+
+  //checking wether the email address is verified or not
   useEffect(() => {
     const isEmailVerified =
       new URLSearchParams(window.location.search).get("mode") === "verifyEmail";
@@ -26,6 +32,7 @@ const ProfileContinuepage = () => {
       alert("Your email has been verified. You can now log in.");
     }
 
+    // verification on firebase for the user 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
@@ -35,7 +42,6 @@ const ProfileContinuepage = () => {
           displayName: user.email.substring(0, 5),
           email: user.email,
         });
-        // console.log("updated",userProfile);
       }
 
     });

@@ -1,27 +1,25 @@
-import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 import { useEffect, useState } from "react";
-import { MdOutlinePersonOutline } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsEnvelopeOpen } from "react-icons/bs";
-import Profile from "@/components/student/setting/profile";
 import { MdOutlinePrivacyTip } from "react-icons/md";
-// import Subscription from "../components/settingspart/subscription";
 import SubscriptionData from "@/components/student/subscription";
 import Notification from "@/components/student/setting/notification";
 import Privacy from "@/components/student/setting/privacy";
-import Sidebar from "@/components/common/sidebar/school";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
-import { useAuthContext } from "@/lib/context/AuthContext";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 function Settings() {
   const router = useRouter();
+  // hook for privacy state management 
   let [PrivacyState, setPrivacyState] = useState(false);
+  //hook for subscription state
   let [SubscriptionState, setSubscriptionState] = useState(false);
   let [NotificationState, setNotificationState] = useState(true);
+
+  //medium screen and navbar states 
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
@@ -54,24 +52,16 @@ function Settings() {
     setNotificationState(false);
     setSubscriptionState(false);
   };
-  // securedroute
-  // const { user, userProfile } = useAuthContext();
-  // if (!user || !userProfile) {
-  //   router.push("/");
-  // }
-
-  // if (!user || !userProfile) {
-  //   return null;
-  // }
+ 
+  
   return (
     <>
       <div className=" h-full text-base bg-black">
         <div className="flex overflow-y-hidden">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -191,4 +181,4 @@ function Settings() {
 }
 
 // export default (Settings);
- export default withStudentAuthorization(Settings);
+export default withStudentAuthorization(Settings);

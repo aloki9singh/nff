@@ -1,13 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import Image from "next/image";
-
 import { FiEdit2 } from "react-icons/fi";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
-
 import { collection, getDocs, doc } from "firebase/firestore";
-
 import { db } from "@/config/firebaseconfig";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import StudentProfileChart from "@/components/student/profile/chart";
@@ -19,37 +15,46 @@ import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import Nodata from "@/components/common/nodata/nodata";
 
-//returning some backed error
 
 function StudentProfile() {
-  const router = useRouter();
 
+  const router = useRouter();
+  //hooks for media queries
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  //hooks for sidebar
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  //state for enroll course, completed course, certificate
   const [enrolledcourses, setenrolledcourses] = useState([]);
   const [completedcourses, setcompletedcourses] = useState([]);
   const [certificates, setCertificates] = useState([]);
+  //subscribe is for course list
   const [subscribed, setSubscribed] = useState([]);
   const [switchcomp, setswitchcomp] = useState("enrolled");
+
+  //for toggling
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
 
+  // import usedata and course access from contexts 
   const { user, userProfile } = useAuthContext();
   const { userSubsribed } = CourseAccess(user.uid);
 
-  // console.log(userProfile);
+  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
   }, [isMediumScreen]);
-  const chartData = [0, 0, 0, 0, 0, 0, 0]; //Change this student data to show on chart, passed as prop
+
+  //Change this student data to show on chart, passed as prop
+  const chartData = [0, 0, 0, 0, 0, 0, 0];
   ``;
 
+  //effect for fetching enrolled courses
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       const userRef = doc(db, "allusers", user.uid);
@@ -63,6 +68,7 @@ function StudentProfile() {
     fetchEnrolledCourses();
   }, [user?.uid]);
 
+  // sending back to home if user not found 
   if (!user || !userProfile) {
     router.push("/");
   }
