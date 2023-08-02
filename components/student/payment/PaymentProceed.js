@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
-
-
 const PaymentProceed = ({ price, updatePage }) => {
 
   // tab selector 
   const [activeTab, setActiveTab] = useState("card");
-
 
   // update page for stepper 
   const paymentFuction = (e) => {
