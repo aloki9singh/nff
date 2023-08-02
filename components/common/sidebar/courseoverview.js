@@ -40,7 +40,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
               <div className="md:hidden block p-2 text-white">
                 <div>
                   {user && userProfile && user.photoURL ? (
-                    <Link href={"/meta/profile"}>
+                    <Link href={"/beta/profile"}>
                       <Image
                         src={user.photoURL}
                         alt="proImg"
