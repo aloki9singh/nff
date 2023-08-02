@@ -18,6 +18,7 @@ export default function Plan({
 
 
 
+  //page update
   const paymentFuction = (e) => {
     e.preventDefault();
     updateHook(1);

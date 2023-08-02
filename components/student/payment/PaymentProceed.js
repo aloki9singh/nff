@@ -5,15 +5,18 @@ import { BsPatchCheckFill } from "react-icons/bs";
 
 
 const PaymentProceed = ({ price, updatePage }) => {
+
+  // tab selector 
   const [activeTab, setActiveTab] = useState("card");
 
 
+  // update page for stepper 
   const paymentFuction = (e) => {
     e.preventDefault();
     updatePage(2);
   }
 
-
+//api call for payment 
   const handleReq = async (e) => {
 
     const requestBody = {
@@ -28,9 +31,7 @@ const PaymentProceed = ({ price, updatePage }) => {
       })
       .catch(err => console.error(err));
 
-
-    
-      paymentFuction(e)
+    paymentFuction(e)
 
   }
 

@@ -1,11 +1,6 @@
 import Image from "next/image";
 import laptop from "@/public/pagesgraphics/student/videoplayback/Group 11.svg";
-import { AiFillLock, AiOutlineLock } from "react-icons/ai";
-import {
-  CircularProgressbar,
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
+import { AiOutlineLock } from "react-icons/ai";
 import "react-circular-progressbar/dist/styles.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -23,16 +18,16 @@ import {
   setDoc,
 } from "firebase/firestore";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
-import CourseVideoPlayer from "@/components/student/courses/videoplayer";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useAuthContext } from "@/lib/context/AuthContext";
-import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import withAll from "@/lib/HOC/withAll";
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import { BsFillPlayFill } from "react-icons/bs";
 
+
+//yet not in use anywhere
 const VideoPlayer = ({ videoUrl }) => {
   return (
     <video controls>
@@ -41,12 +36,16 @@ const VideoPlayer = ({ videoUrl }) => {
   );
 };
 
+
+// /fetches data of all joined courses by a user 
 async function checkUserJoinedCourse(courseId, userId) {
   const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
   const courseDoc = await getDoc(courseRef);
   return courseDoc.exists();
 }
 
+
+//accordion
 const Accordion = ({ title, children }) => {
   const [open, setOpen] = useState(false);
 
@@ -94,7 +93,6 @@ const Accordion = ({ title, children }) => {
 function Videos() {
   const [course, setCourse] = useState(null);
   const [modules, setModules] = useState([]);
-  // const [currentModule, setCurrentModule] = useState(null);
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
@@ -106,6 +104,7 @@ function Videos() {
   const [showModal, setShowModal] = useState(false);
   const { userSubsribed, isTrialValid } = CourseAccess(user?.uid);
 
+  // checkes the user has already joined or not 
   useEffect(() => {
     const checkJoined = async () => {
       const isJoined = await checkUserJoinedCourse(course.id, user.uid);
@@ -119,6 +118,7 @@ function Videos() {
   const router = useRouter();
   const title = router.query.title ? router.query.title : "Basics of C++";
 
+  // yet not in use 
   const startVideoStream = (videoUrl) => {
     // console.log(modules[0].video);
     // setCurrentModule(<VideoPlayer videoUrl={videoUrl} />);
@@ -135,6 +135,8 @@ function Videos() {
   }
 `;
 
+
+  // find a particular course using title from firestore 
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -175,12 +177,6 @@ function Videos() {
     }
   }, [title]);
 
-  //check and set the eligibility for the course access through context
-  // useEffect(() => {
-
-  // }, []);
-
-  const fetchsubsdata = CourseAccess(user.uid).userSubsribed;
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -194,14 +190,14 @@ function Videos() {
   }, [isMediumScreen]);
 
   //securedroute
-
   if (!user || !userProfile) {
     router.push("/");
   }
 
+
+  // function for joining chat and adding user in course and mentor 
   async function joinCourseChat() {
     const groupRef = doc(db, "chatGroups", course.id);
-
     await updateDoc(doc(collection(db, "chatGroups"), course.id), {
       members: arrayUnion(user.uid),
     });
@@ -236,7 +232,7 @@ function Videos() {
       joinedAt: new Date(),
     };
 
-    await updateDoc( doc(db, "allusers", course.mentorid), {
+    await updateDoc(doc(db, "allusers", course.mentorid), {
       joinedStudents: arrayUnion(d),
     });
 
