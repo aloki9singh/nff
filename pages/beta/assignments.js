@@ -113,9 +113,10 @@ function Assignments() {
   }, [isMediumScreen, user?.uid]);
 
   useEffect(() => {
-    setModuleName(moduleData && moduleData[0]?.module);
-    setValue(moduleData && moduleData[0]?.course);
-  }, [moduleData]);
+
+    setModuleName(moduleData && moduleData[0]?.module)
+    setValue(moduleData && moduleData[0]?.course)
+  }, [moduleData])
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -156,7 +157,9 @@ function Assignments() {
         )} */}
 
       <div className={``}>
+        {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
+          {/* Mobile Sidebar */}
           {isMobileScreen && (
             <div
               className={`fixed right-0 ${
@@ -173,6 +176,8 @@ function Assignments() {
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
+          
+          {/* Main page */}
           <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
             {/* <StudentTopbar heading={"My Progress"} /> */}
             <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
@@ -181,10 +186,16 @@ function Assignments() {
                 toggleSideBar={toggleSideBar}
               />
             </div>
+
+            {/* Div under Topbar with the main content */}
+
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
+              {/* Main content (Assignments ) */}
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
+
+                  {/* Course Select */}
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Courses
                   </div>
@@ -211,6 +222,7 @@ function Assignments() {
                       })}
                   </select>
 
+                  {/* Modules of the selected course */}
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Modules
                   </div>

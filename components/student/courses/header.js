@@ -32,7 +32,7 @@ export default function CourseHeader() {
           <Image
             src={search}
             alt="search"
-            className="absolute left-16 bottom-11 w-10"
+            className="absolute left-10 md:left-16 bottom-11 w-10"
           />
           <Image
             src={laptop}
