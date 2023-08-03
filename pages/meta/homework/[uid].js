@@ -9,6 +9,7 @@ import { callUserById } from "@/lib/exportablefunctions";
 import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Nodata from "@/components/common/nodata/nodata";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import HomeWorkCard from "@/components/mentor/homework/homeworkcard";
 import UploadCard from "@/components/mentor/homework/uploadcard";
@@ -41,11 +42,11 @@ function Homework() {
   const [activeElement, setActiveElement] = useState("uncheck");
   const { uid, courseid } = router.query;
   const [mentor, setMentor] = useState();
+  const [files, setFiles] = useState();
 
   const handleToggleElement = (element) => {
     setActiveElement(element);
   };
-  const [files, setFiles] = useState([]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -69,7 +70,7 @@ function Homework() {
         const courseInfo = await getDoc(courseRef);
         const mentorColl = doc(db, "allusers", courseInfo.data().MentorId[0]);
         const userData = await getDoc(mentorColl);
-        setMentor(userData.data().displayName);
+        setMentor(userData.data()?.displayName);
         if (courseInfo.exists()) {
           try {
             const assignmentRef = collection(courseRef, "assignment");
@@ -79,7 +80,6 @@ function Homework() {
             querySnapshot.forEach((doc) => {
               arr.push(doc.data());
             });
-            console.log(arr);
             setFiles(arr);
           } catch (err) {
             alert("Error occured");
@@ -189,107 +189,107 @@ function Homework() {
                   </div>
                 </div>
               </div>
-              {files ? (
-                <div className="grid md:grid-cols-4  grid-cols-1 gap-4 m-5">
-                  {files &&
-                    files?.map((ele, i) => {
-                      return ele?.files?.map((e) => {
-                        const time = new Date(
-                          e?.date.seconds * 1000 + e?.date.nanoseconds / 1000000
+              <div className="grid md:grid-cols-4  grid-cols-1 gap-4 m-5">
+                {files &&
+                  files?.map((ele, i) => {
+                    return ele?.files?.map((e) => {
+                      const time = new Date(
+                        e?.date.seconds * 1000 + e?.date.nanoseconds / 1000000
+                      );
+                      if (!e.checked && activeElement == "uncheck") {
+                        return (
+                          <div
+                            key={i}
+                            className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <Image
+                                  src="/componentsgraphics/mentor/FolderNotch.svg"
+                                  width={65}
+                                  height={65}
+                                  alt="Folder"
+                                />
+                              </div>
+                              <div>
+                                Pending
+                              </div>
+                            </div>
+                            <div className="flex flex-col h-full justify-between overflow-hidden">
+                              <div className="text-xl ">{ele.title}</div>
+                              <div className="flex items-center justify-between pt-4">
+                                <div>{mentor}</div>
+                                <div className="text-[#FFFFFF85]">
+                                  {time && time.toLocaleString()}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         );
-                        if (!e.checked && activeElement == "uncheck") {
-                          return (
-                            <div
-                              key={i}
-                              className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                              onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
-                            >
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <Image
-                                    src="/componentsgraphics/mentor/FolderNotch.svg"
-                                    width={65}
-                                    height={65}
-                                    alt="Folder"
-                                  />
-                                </div>
-                                <div>
-                                  Pending
-                                </div>
-                              </div>
-                              <div className="flex flex-col h-full justify-between overflow-hidden">
-                                <div className="text-xl ">{ele.title}</div>
-                                <div className="flex items-center justify-between pt-4">
-                                  <div>{mentor}</div>
-                                  <div className="text-[#FFFFFF85]">
-                                    {time && time.toLocaleString()}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        }
-                        else if (activeElement == "check" && e.checked) {
-                          return (
-                            <div
-                              key={i}
-                              className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                              onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
-                            >
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <Image
-                                    src="/componentsgraphics/mentor/FolderNotch.svg"
-                                    width={65}
-                                    height={65}
-                                    alt="Folder"
-                                  />
-                                </div>
-                                <div>
-                                  <Image src="/componentsgraphics/mentor/tick.svg" width="25" height="25" alt="Checked"></Image>
-                                </div>
-                              </div>
-                              <div className="flex flex-col h-full justify-between overflow-hidden">
-                                <div className="text-xl ">{ele.title}</div>
-                                <div className="flex items-center justify-between pt-4">
-                                  <div>{mentor}</div>
-                                  <div className="text-[#FFFFFF85]">
-                                    {time && time.toLocaleString()}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        }
-                      });
-                      {
-                        /* <div className='shrink-0 rounded-2xl shadow-lg bg-[#141518] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col w-full md:w-auto text-white   '>
-                                    <div className='flex items-center justify-between'>
-                                        <div>
-                                            <Image src="/componentsgraphics/mentor/FolderNotch.svg" width={65} height={65}/>
-                                        </div>
-                                        <div>
-                                            Pending
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col h-full justify-between overflow-hidden'>
-                                        <div className='text-xl '>
-                                            Assignment name
-                                        </div>
-                                        <div className='flex items-center justify-between pt-4'>
-                                            <div>Instructor name</div>
-                                            <div className='text-[#FFFFFF85]'>Date</div>
-                                        </div>
-                                    </div>
-                                </div> */
                       }
-                    })}
-                </div>
-              ) : (
-                <div className=" text-gray-500 flex justify-center items-center h-[50vh]">
-                  No submitted Assignment
-                </div>
-              )}
+                      else if (activeElement == "check" && e.checked) {
+                        return (
+                          <div
+                            key={i}
+                            className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <Image
+                                  src="/componentsgraphics/mentor/FolderNotch.svg"
+                                  width={65}
+                                  height={65}
+                                  alt="Folder"
+                                />
+                              </div>
+                              <div>
+                                <Image src="/componentsgraphics/mentor/tick.svg" width="25" height="25" alt="Checked"></Image>
+                              </div>
+                            </div>
+                            <div className="flex flex-col h-full justify-between overflow-hidden">
+                              <div className="text-xl ">{ele.title}</div>
+                              <div className="flex items-center justify-between pt-4">
+                                <div>{mentor}</div>
+                                <div className="text-[#FFFFFF85]">
+                                  {time && time.toLocaleString()}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      }
+                    });
+                    {
+                      /* <div className='shrink-0 rounded-2xl shadow-lg bg-[#141518] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col w-full md:w-auto text-white   '>
+                                  <div className='flex items-center justify-between'>
+                                      <div>
+                                          <Image src="/componentsgraphics/mentor/FolderNotch.svg" width={65} height={65}/>
+                                      </div>
+                                      <div>
+                                          Pending
+                                      </div>
+                                  </div>
+                                  <div className='flex flex-col h-full justify-between overflow-hidden'>
+                                      <div className='text-xl '>
+                                          Assignment name
+                                      </div>
+                                      <div className='flex items-center justify-between pt-4'>
+                                          <div>Instructor name</div>
+                                          <div className='text-[#FFFFFF85]'>Date</div>
+                                      </div>
+                                  </div>
+                              </div> */
+                    }
+                  })}
+              </div>
+              {files && ((activeElement == "uncheck" && activeInactive(files).unchecked == 0) || (activeElement == "check" && activeInactive(files).checked == 0)) ?
+                <div className="w-fit mx-auto">
+                  <div className="">
+                    <Nodata value="Nothing to show here" />
+                  </div>
+                </div> : ""}
             </div>
           </div>
         </div>
