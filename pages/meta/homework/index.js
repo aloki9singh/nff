@@ -14,6 +14,7 @@ import HomeWorkCard from "@/components/mentor/homework/homeworkcard";
 import UploadCard from "@/components/mentor/homework/uploadcard";
 import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
+import Nodata from "@/components/common/nodata/nodata";
 
 function Homework() {
   //set Below two for marked homework
@@ -71,11 +72,21 @@ function Homework() {
           const querySnapshot = await getDocs(collectionRef);
           querySnapshot.docs.map((doc) => arr.push(doc.data()))
         }
-        arr.map(ele =>{
-          if (ele.checked){
-            
+        const check = []
+        arr.map(ele => {
+          var count = 0
+          if (ele.files) {
+            ele.files.map((e) => {
+              if (e.checked) {
+                count += 1
+              }
+            })
+            if (count != 0 && ele.files.length == count) {
+              check.push(ele)
+            }
           }
-        } )
+        })
+        setChecked(check)
         setActive(arr)
         setDataFetched(true);
       }
@@ -93,18 +104,20 @@ function Homework() {
     var inactive = 0
     var checked = 0
     course && course.map((e) => {
+      if (e.files){
         e.files.map((data) => {
           if (data.checked) {
             checked += 1
           }
         })
-        const date = new Date(e.date.seconds * 1000 + e.date.nanoseconds / 1000000)
-        if (date < new Date()) {
-          inactive += 1
-        }
-        else if (date > new Date()) {
-          active += 1
-        }
+      }
+      const date = new Date(e.date.seconds * 1000 + e.date.nanoseconds / 1000000)
+      if (date < new Date()) {
+        inactive += 1
+      }
+      else if (date > new Date()) {
+        active += 1
+      }
     })
     return { active: active, inactive: inactive, checked: checked }
   }
@@ -115,9 +128,8 @@ function Homework() {
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              }  h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                }  h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -154,11 +166,10 @@ function Homework() {
                   <div className="flex">
                     <div onClick={() => handleToggleElement("active")}>
                       <span
-                        className={`border-b-2 ${
-                          activeElement === "active"
-                            ? "border-[#E1348B]"
-                            : "border-transparent"
-                        }`}
+                        className={`border-b-2 ${activeElement === "active"
+                          ? "border-[#E1348B]"
+                          : "border-transparent"
+                          }`}
                       >
                         active
                       </span>
@@ -173,11 +184,10 @@ function Homework() {
                   <div className="flex">
                     <div onClick={() => handleToggleElement("inactive")}>
                       <span
-                        className={`border-b-2 ${
-                          activeElement === "inactive"
-                            ? "border-[#E1348B]"
-                            : "border-transparent"
-                        }`}
+                        className={`border-b-2 ${activeElement === "inactive"
+                          ? "border-[#E1348B]"
+                          : "border-transparent"
+                          }`}
                       >
                         Inactive
                       </span>
@@ -194,11 +204,10 @@ function Homework() {
                     {" "}
                     <div>
                       <span
-                        className={`border-b-2 ${
-                          activeElement === "check"
-                            ? "border-[#E1348B]"
-                            : "border-transparent"
-                        }`}
+                        className={`border-b-2 ${activeElement === "check"
+                          ? "border-[#E1348B]"
+                          : "border-transparent"
+                          }`}
                         onClick={() => handleToggleElement("check")}
                       >
                         Checked
@@ -206,7 +215,7 @@ function Homework() {
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                        {activeCourse && activeInactive(activeCourse).checked}
+                        {checked && activeInactive(checked).checked}
                       </div>
                     </div>
                   </div>
@@ -216,12 +225,11 @@ function Homework() {
               <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 max-h-screen overflow-scroll scrollbar-hide">
                 {activeCourse &&
                   activeCourse.map((ele) => {
-                    console.log
                     const date = new Date(
                       ele.date.seconds * 1000 +
                       ele.date.nanoseconds / 1000000
                     );
-                    if (date > new Date() && activeElement == "active") {
+                    if (date > new Date() && activeElement == "active" && activeInactive(activeCourse).active != 0) {
                       return (
                         <div
                           className="cursor-pointer"
@@ -239,6 +247,7 @@ function Homework() {
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
                             submit={ele.files.length}
+                            checked={checked && checked.includes(ele) ? "true" : "false"}
                           />
                         </div>
                       );
@@ -260,17 +269,52 @@ function Homework() {
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
-                            submit={ele.files.length}
+                            submit={ele.files ? ele.files.length : 0}
+                            checked={checked && checked.includes(ele) ? "true" : "false"}
                           />
                         </div>
                       );
                     }
-                    else if (activeElement == "check"){
-
-                    }
-                 } )}
+                  })
+                }
                 {/* <UploadCard /> */}
+                {checked &&
+                  checked.map((ele) => {
+                    const date = new Date(
+                      ele.date.seconds * 1000 +
+                      ele.date.nanoseconds / 1000000
+                    );
+                    if (activeElement == "check") {
+                      return (
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            router.push({
+                              pathname: `/meta/homework/${ele.id}`,
+                              query: { courseid: ele.courseid },
+                            });
+                          }}
+                          key={ele.id}
+                        >
+                          <HomeWorkCard
+                            title={ele.title}
+                            desc={ele.module}
+                            date={date.toLocaleString().split(",")[0]}
+                            course={ele.course}
+                            submit={ele.files.length}
+                            checked="true"
+                          />
+                        </div>
+                      );
+                    }
+                  })}
               </div>
+              {activeCourse && checked && ((activeElement == "active" && activeInactive(activeCourse).active == 0) || (activeElement == "inactive" && activeInactive(activeCourse).inactive == 0) || (activeElement == "check" && activeInactive(checked).checked == 0)) ?
+                <div className="flex justify-center items-center">
+                  <div className="">
+                    <Nodata value="Nothing to show here" />
+                  </div>
+                </div> : ""}
             </div>
           </div>
         </div>

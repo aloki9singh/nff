@@ -43,7 +43,14 @@ function Homework() {
                 const assignmentRef = collection(courseRef, "assignment");
                 const q = query(assignmentRef, where("id", "==", id));
                 const querySnapshot = await getDocs(q);
-
+                const data = querySnapshot.docs.map((doc) => {
+                    return doc.data().files.filter((data) => {
+                        return data.submittedby == submitid;
+                    });
+                })
+                setComment(data && data[0][0].comment)
+                setMarks(data && data[0][0].obtMarks)
+                setTeacher(data && data[0][0].checkedBy)
                 const assignmentDoc = querySnapshot.docs[0];
                 if (!assignmentDoc) {
                     console.log("Assignment not found.");
@@ -60,16 +67,16 @@ function Homework() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (marks>maxMarks){
+        if (marks > maxMarks) {
             alert("Enter valid Marks")
         }
-        else if(!marks){
+        else if (!marks) {
             alert("Enter marks")
         }
-        else if(!teacher){
+        else if (!teacher) {
             alert("Enter valid Teacher Name")
         }
-        else{
+        else {
             const courseRef = doc(db, "courses", courseid);
             const courseInfo = await getDoc(courseRef);
             if (courseInfo.exists()) {
@@ -77,14 +84,13 @@ function Homework() {
                     const assignmentRef = collection(courseRef, "assignment");
                     const q = query(assignmentRef, where("id", "==", id));
                     const querySnapshot = await getDocs(q);
-    
+
                     const assignmentDoc = querySnapshot.docs[0];
                     if (!assignmentDoc) {
                         console.log("Assignment not found.");
                         return;
                     }
                     const assignmentData = assignmentDoc.data();
-                    console.log(assignmentData)
                     setMaxMarks(assignmentData.marks)
                     const updatedFiles = assignmentData.files.map((data) => {
                         if (data.submittedby === submitid) {
@@ -98,7 +104,7 @@ function Homework() {
                         }
                         return data;
                     });
-    
+
                     // Update the specific assignment document using the update method
                     await updateDoc(doc(assignmentRef, assignmentDoc.id), { files: updatedFiles });
                     alert("Assignment Checked");
@@ -125,10 +131,10 @@ function Homework() {
             }
         });
         return () => unsubscribe(); // Cleanup the listener
-           // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMediumScreen, maxMarks]);
 
- 
+
 
     return (
         <>

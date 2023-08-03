@@ -36,7 +36,7 @@ function Homework() {
   const getData = async () => {
     const studentRef = doc(db, "allusers", submitid);
     const studentInfo = await getDoc(studentRef);
-    setStudent(studentInfo.data().displayName);
+    setStudent(studentInfo.data()?.displayName);
     const courseRef = doc(db, "courses", courseid);
     const courseInfo = await getDoc(courseRef);
     if (courseInfo.exists()) {
