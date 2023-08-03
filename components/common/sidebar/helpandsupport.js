@@ -280,7 +280,7 @@ const HelpAndSupportSidebar = ({ toggleSideBar, isSidebarOpen }) => {
 						</li>
 						<li>
 							<Link
-								href="/meta/homework"
+								href="/meta/assignments"
 								className="flex items-center p-2 text-base font-light text-white rounded-lg    hover:bg-pin "
 								replace
 							>
@@ -289,11 +289,11 @@ const HelpAndSupportSidebar = ({ toggleSideBar, isSidebarOpen }) => {
 										id="default-checkbox"
 										type="checkbox"
 										className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-											router.pathname === "/meta/homework" ? "shadow-white" : ""
+											router.pathname === "/meta/assignments" ? "shadow-white" : ""
 										}`}
 										style={{
 											boxShadow:
-												router.pathname === "/meta/homework"
+												router.pathname === "/meta/assignments"
 													? "0 0 5px #A145CD"
 													: "none",
 										}}
@@ -301,12 +301,12 @@ const HelpAndSupportSidebar = ({ toggleSideBar, isSidebarOpen }) => {
 
 									<span
 										className={`${
-											router.pathname == "/meta/homework"
+											router.pathname == "/meta/assignments"
 												? "text-[#E1348B]"
 												: ""
 										}`}
 									>
-										Homework
+										Assignments
 									</span>
 								</label>
 							</Link>

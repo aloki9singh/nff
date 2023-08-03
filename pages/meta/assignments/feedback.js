@@ -108,7 +108,7 @@ function Homework() {
                     // Update the specific assignment document using the update method
                     await updateDoc(doc(assignmentRef, assignmentDoc.id), { files: updatedFiles });
                     alert("Assignment Checked");
-                    router.push("/meta/homework")
+                    router.push("/meta/assignments")
                 } catch (err) {
                     alert("Error occurred", err);
                 }
