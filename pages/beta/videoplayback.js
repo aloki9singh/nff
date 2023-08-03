@@ -194,6 +194,8 @@ function Videos() {
 
   // function for joining chat and adding user in course and mentor
   async function joinCourseChat() {
+
+    console.log("join called");
     const groupRef = doc(db, "chatGroups", course.id);
     await updateDoc(doc(collection(db, "chatGroups"), course.id), {
       members: arrayUnion(user.uid),
