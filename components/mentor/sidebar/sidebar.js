@@ -108,7 +108,7 @@ const MentorSidebar = ({ pathname }) => {
                   </label>
                 </Link>
                 <Link
-                  href="/meta/homework"
+                  href="/meta/assignments"
                   className="text-sm flex items-center p-2 font-normal text-white rounded-lg    hover:bg-pin"
                 >
                   <label className="inline-flex items-center">

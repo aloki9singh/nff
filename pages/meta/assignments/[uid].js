@@ -148,9 +148,9 @@ function Homework() {
             </div>
 
             <div className="w-full  p-4 md:p-8 border border-[#5F6065]  mt-11 rounded-xl  flex flex-col h-screen  mb-5">
-              <div className="w-full h-20 text-white flex flex-row  justify-between ">
+              <div className="w-full h-20 text-white flex flex-row justify-between">
                 <div className="flex ml-12 mt-5 mr-16 gap-4">
-                  <div className=" flex">
+                  <div className="flex">
                     <div>
                       <span
                         className={`border-b-2 ${activeElement === "check"
@@ -201,7 +201,7 @@ function Homework() {
                           <div
                             key={i}
                             className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                            onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">
                               <div>
@@ -233,7 +233,7 @@ function Homework() {
                           <div
                             key={i}
                             className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                            onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">
                               <div>
