@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import AddTeamPage from '@/pages/reta/addteam';
 import { useEffect } from 'react';
-import AddAssigments from './addassigment';
+import AddAssigments from './addassignment';
 
 const CongratsAddAssigment = () => {
   const glass = {
