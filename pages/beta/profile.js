@@ -14,10 +14,9 @@ import Link from "next/link";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import Nodata from "@/components/common/nodata/nodata";
-
+import Layout from "@/components/common/Layout/Layout";
 
 function StudentProfile() {
-
   const router = useRouter();
   //hooks for media queries
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -39,11 +38,10 @@ function StudentProfile() {
     sendSideBarState(showSideBar);
   }
 
-  // import usedata and course access from contexts 
+  // import usedata and course access from contexts
   const { user, userProfile } = useAuthContext();
   const { userSubsribed } = CourseAccess(user.uid);
 
-  
   useEffect(() => {
     if (isMediumScreen) {
       sendSideBarState(false);
@@ -68,7 +66,7 @@ function StudentProfile() {
     fetchEnrolledCourses();
   }, [user?.uid]);
 
-  // sending back to home if user not found 
+  // sending back to home if user not found
   if (!user || !userProfile) {
     router.push("/");
   }
@@ -77,7 +75,7 @@ function StudentProfile() {
   }
 
   return (
-    <>
+    <Layout pageTitle=" Profile">
       <div className="md:h-screen h-full  text-base bg-[#15161B]">
         <div className="flex">
           {isMobileScreen && (
@@ -147,8 +145,13 @@ function StudentProfile() {
 
             {!userSubsribed ? (
               <>
-              <Nodata title={"Subscription"} value={"No Subsciption"}
-              onClick={() => {router.push("/beta/payment")}}/>
+                <Nodata
+                  title={"Subscription"}
+                  value={"No Subsciption"}
+                  onClick={() => {
+                    router.push("/beta/payment");
+                  }}
+                />
               </>
             ) : (
               <div className="lg:grid lg:grid-cols-11   m-5  md:mt-0 text-white justify-between">
@@ -347,7 +350,7 @@ function StudentProfile() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 export default withStudentAuthorization(StudentProfile);

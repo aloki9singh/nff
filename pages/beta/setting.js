@@ -10,6 +10,7 @@ import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 function Settings() {
   const router = useRouter();
@@ -55,7 +56,7 @@ function Settings() {
  
   
   return (
-    <>
+    <Layout pageTitle="Settings">
       <div className=" h-full text-base bg-black">
         <div className="flex overflow-y-hidden">
           {isMobileScreen && (
@@ -176,7 +177,7 @@ function Settings() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

@@ -7,6 +7,7 @@ import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Layout from "@/components/common/Layout/Layout";
 
 
 //class options
@@ -137,6 +138,7 @@ export default function ProfileDetails() {
 
   
   return (
+    <Layout pageTitle="Profile Details">
     <div className="w-full text-white flex flex-col space-y-8 overflow-x-hidden">
       {/* text */}
       <div className="w-[92%] mx-auto pt-16">
@@ -561,5 +563,6 @@ export default function ProfileDetails() {
         </form>
       </div>
     </div>
+    </Layout>
   );
 }

@@ -4,6 +4,7 @@ import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function Terms() {
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -22,7 +23,7 @@ export default function Terms() {
     }
   }, [isMediumScreen]);
   return (
-    <div>
+    <Layout pageTitle="Terms & Conditions">
       <div className="flex">
         {isMobileScreen && (
           <div
@@ -181,6 +182,6 @@ export default function Terms() {
         </div>
       </div>
       <Footer background="bg-[#2D2E35]" />
-    </div>
+    </Layout>
   );
 }
