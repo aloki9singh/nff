@@ -214,7 +214,6 @@ const Chat = () => {
           )}
           <div
             className="md:p-4 items-stretch justify-between  h-[calc(100vh-80px)] flex flex-row gap-4 bg-[#2f3036] "
-            // style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
               currReciever={currReciever}
