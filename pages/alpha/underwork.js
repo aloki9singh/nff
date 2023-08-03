@@ -1,8 +1,12 @@
 //main body CSS and nav bar needed to be fixed with responsiveness
 
-
-import UnderProgress from '../../components/common/underconstruction/underconstruction';
+import Layout from "@/components/common/Layout/Layout";
+import UnderProgress from "../../components/common/underconstruction/underconstruction";
 
 export default function Under() {
-  return <UnderProgress />;
+  return (
+    <Layout pageTitle="Under Progress">
+      <UnderProgress />
+    </Layout>
+  );
 }

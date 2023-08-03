@@ -17,6 +17,7 @@ import InfoSection from '@/components/common/aboutus/infosection';
 import GetInTouch from '@/components/common/aboutus/getInTouch';
 import OurMissionSection from '@/components/common/aboutus/ourmission';
 import OurLoveSection from '@/components/common/aboutus/ourLove';
+import Layout from '@/components/common/Layout/Layout';
 
 const Aboutus = () => {
   const [mentor, setMentor] = useState([]);
@@ -121,6 +122,7 @@ const Aboutus = () => {
     sendSideBarState(showSideBar);
   }
   return (
+    <Layout pageTitle="About Us">
     <div className='flex flex-col items-center'>
       <Dashboardnav heading='About Us' toggleSideBar={toggleSideBar} />
       {isMobileScreen && (
@@ -305,6 +307,7 @@ const Aboutus = () => {
       </div>
       <Footer />
     </div>
+    </Layout>
   );
 };
 

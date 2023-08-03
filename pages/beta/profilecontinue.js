@@ -10,6 +10,7 @@ import { HashLoader } from "react-spinners";
 import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Layout from "@/components/common/Layout/Layout";
 
 const ProfileContinuepage = () => {
   const router = useRouter();
@@ -49,6 +50,7 @@ const ProfileContinuepage = () => {
   }, [userProfile]);
 
   return (
+    <Layout pageTitle="Profile Continue">
     <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -135,6 +137,7 @@ const ProfileContinuepage = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

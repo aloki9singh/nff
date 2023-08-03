@@ -25,6 +25,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Nodata from "@/components/common/nodata/nodata";
+import Layout from "@/components/common/Layout/Layout";
 
 function Assignments() {
   const router = useRouter();
@@ -137,7 +138,7 @@ function Assignments() {
 
   const { userSubsribed } = CourseAccess(user.uid);
   return (
-    <>
+    <Layout pageTitle="Assignments">
       {/* {!userSubsribed && (
         <ToastMessage
         heading={"OOPS!"}
@@ -314,7 +315,7 @@ function Assignments() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 
