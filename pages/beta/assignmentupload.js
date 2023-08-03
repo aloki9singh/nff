@@ -33,6 +33,7 @@ import {
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useCallback } from "react";
 import Link from "next/link";
+import Layout from "@/components/common/Layout/Layout";
 
 const Assignmentupload = () => {
   const router = useRouter();
@@ -241,6 +242,9 @@ const Assignmentupload = () => {
     console.log(course)
 
   return (
+
+    <Layout pageTitle="Assignment Upload">
+      {/* Make  <Layout pageTitle="Assignment Upload"> this dynamic by passing dynamic title */}
     <div className="flex">
       {isMobileScreen && (
         <div
@@ -421,6 +425,7 @@ const Assignmentupload = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 
