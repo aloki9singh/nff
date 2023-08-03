@@ -128,24 +128,24 @@ const Aboutus = () => {
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
       )}
-      <div className="flex flex-col items-center mt-8 md:mt-0 ">
+      <div className="flex flex-col items-center px-4 mt-8 md:mt-0 ">
         <div
-          className="text-center text-2xl md:text-4xl md:m-10 py-2
+          className="text-center text-2xl md:text-4xl md:m-10 py-2 
         space-y-4 border-b-white border-b-4"
         >
-          <p className="text-white">We are here to</p>
+          <p className=" text-white">We are here to</p>
           <p className=" bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   ">
-            Your Skill Development Partner
+          guarantee your success
           </p>
         </div>
 
         <div className="relative w-full flex flex-col items-center px-4 md:px-20 ">
           <div
-            className="w-full pb-20 sm:pb-20  md:pb-32 max-w-[1440px] mt-11 px- p-10 rounded-[50px] bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-white"
+            className="w-full pb-20 sm:pb-20  md:pb-32 max-w-[1440px] mt-11 px- p-10 rounded-[50px] bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-sm md:text-base text-white"
             style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
           >
             <p className="text-sm md:text-xl lg:text-2xl lg:px-11  ">
-              neatskills.tech is developed and managed by Provoke Developers
+              <a href="https://neatskills.tech" className="font-semibold">Neatskills.tech</a> is developed and managed by Provoke Developers
               Private Limited. At the core of this, we value quality and want to
               provide everyone with the affordable way to access any skill and
               explore themselves in their own way with their own lifelong
@@ -206,66 +206,66 @@ const Aboutus = () => {
           <div className=" md:w-[40rem] h-1 bg-white mt-2" />
 
           <div className="flex flex-col md:flex-row py-4 ">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
               We believe in
             </p>
-            <p className=" text-white ">Affordability</p>
+            <p className="text-sm md:text-base text-white ">Affordability</p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
               Quality
             </p>
-            <p className="text-white ">Skills</p>
+            <p className="text-sm md:text-base text-white ">Skills</p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
               Why We?
             </p>
-            <p className="text-white">We love to do stuffs for everyone</p>
+            <p className="text-sm md:text-base text-white">We love to do stuffs for everyone</p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
               Provoke Developers Private Limited?
             </p>
-            <p className="text-white ">The parent company of neatskills.tech</p>
+            <p className="text-sm md:text-base text-white ">The parent company of neatskills.tech</p>
           </div>
         </div>
 
         {/* Our commitmnetn */}
         <div className="">
-          <span className="text-4xl  font-extrabold text-white">Our</span>
+          <span className="text-4xl  font-extrabold  text-white">Our</span>
           <span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
             Love
           </span>
           <div className="md:w-[40rem] h-1 bg-white mt-2 " />
 
           <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
-              & Support
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
+              Support
             </p>
-            <p className="text-white">
+            <p className="text-sm md:text-base text-white">
               We love you as much you do and want to stand and be with you
-              unconditially.
+              unconditionally.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
               Care
             </p>
-            <p className="text-white">
+            <p className="text-sm md:text-base text-white">
               We care for your future with skills & academics both.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-4 md:mb-0 md:w-[240px] lg:w-[370px]  shrink-0">
+            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
               Impact
             </p>
-            <p className="text-white">
+            <p className="text-sm md:text-base text-white">
               We want to create an great impact in this world with
               neatskills.tech by Provoke Developers Private Limiited.
             </p>
@@ -479,7 +479,7 @@ const Aboutus = () => {
                   type="submit"
                   className="py-3 px-8 md:px-40 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-[90%] sm:w-[80%] md:w-[28rem]"
                 >
-                  Connect with us
+                  Connect With Us
                 </button>
               </div>
             </form>

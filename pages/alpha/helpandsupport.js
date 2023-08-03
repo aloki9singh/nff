@@ -192,7 +192,7 @@ const Helpandsupport = () => {
 												category subject or use keywords to find
 												specific courses of interest.
 											</li>
-											<li className="font-Inter leading-[150%] ">
+											<li className="font-Inter leading-[150%] tracking-wider ">
 												Course Selection: Read the course descriptions and click
 												on a course to access more details. Take note of the
 												course duration format and
@@ -200,7 +200,7 @@ const Helpandsupport = () => {
 												with your learning goals and fits your schedule.
 											</li>
 
-											<li className="font-Inter leading-[150%] ">
+											<li className="font-Inter leading-[150%] tracking-wider ">
 												Create an Account: If you haven&apos;t already
 												create an account on our learning platform. Provide the
 												necessary information to register including your
@@ -209,14 +209,14 @@ const Helpandsupport = () => {
 												accounts.
 											</li>
 
-											<li className="font-Inter leading-[150%] ">
+											<li className="font-Inter leading-[150%] tracking-wider ">
 												Login to Your Account: After creating an account
 												log in using your credentials. This will grant you
 												access to the platform&apos;s features and allow you to
 												enroll in courses.
 											</li>
 
-											<li className="font-Inter leading-[150%] ">
+											<li className="font-Inter leading-[150%] tracking-wider ">
 												Enroll in the Course: Once you&apos;ve chosen a
 												course click on the &quot;Enroll&quot; or
 												&quot;Buy Now&quot; button. If the course is free
@@ -225,7 +225,7 @@ const Helpandsupport = () => {
 												complete the transaction.
 											</li>
 
-											<li className="font-Inter leading-[150%] ">
+											<li className="font-Inter leading-[150%] tracking-wider ">
 												Payment and Discounts: If applicable enter any
 												discount codes during the payment process to avail
 												yourself of special offers or promotions. The system
@@ -233,7 +233,7 @@ const Helpandsupport = () => {
 												the payment.
 											</li>
 
-											<li className="font-Inter leading-[150%] ">
+											<li className="font-Inter leading-[150%] tracking-wider ">
 												Confirmation and Access: After successful
 												enrollment you&apos;ll receive a confirmation
 												message or email. The course will now appear in your

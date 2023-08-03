@@ -47,17 +47,19 @@ const Contact = () => {
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
+
+
         <div className="w-full h-full flex flex-col ">
           <Dashboardnav heading="Contact Us" toggleSideBar={toggleSideBar} />
-          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center">
-            <div className="md:w-[90%] w-full flex md:flex-row flex-col bg-[#373A41] md:rounded-[30px] h-fit p-4">
+          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center px-6 sm:px-[34px]">
+            <div className="md:w-full w-full flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit max-w-5xl p-5 sm:p-8 md:p-0">
               {/* LEFT */}
-              <div className="md:flex-1 md:bg-[#141518] rounded-l-[30px]">
-                <h1 className="mb-[#728095] text-2xl border-b border-[#728095] md:px-8 py-5">
+              <div className="md:bg-[#141518] rounded-[30px] shrink-0">
+                <h1 className="mb-[#728095] text-2xl border-b border-[#728095] px-5 lg:px-8 py-5">
                   Contact Us
                 </h1>
                 <div className="flex flex-col gap-6">
-                  <div className="flex items-start md:px-8 mt-6">
+                  <div className="flex items-start md:px-5 lg:px-8 mt-6">
                     <Image
                       src="/pagesgraphics/common/contactus/mail.svg"
                       alt="mail"
@@ -72,7 +74,7 @@ const Contact = () => {
                       </p>
                     </div>
                   </div>
-                  {/* <div className="flex items-start md:px-8">
+                  {/* <div className="flex items-start md:px-5 lg:px-8">
                     <Image
                       src="/pagesgraphics/common/contactus/call.svg"
                       alt="phone"
@@ -87,7 +89,7 @@ const Contact = () => {
                       </p>
                     </div>
                   </div> */}
-                  <div className="flex items-start md:px-8">
+                  <div className="flex items-start md:px-5 lg:px-8">
                     <Image
                       src="/pagesgraphics/common/contactus/MapPin.svg"
                       alt="phone"
@@ -105,7 +107,7 @@ const Contact = () => {
                 </div>
               </div>
               {/* RIGHT */}
-              <div className="flex-[2_2_0%] md:px-20">
+              <div className="lg:px-[100px] md:px-8 w-full">
                 <h1 className="md:text-3xl  my-5">Submit a request</h1>
                 <div className="text-white">
                   <form onSubmit={(e) =>{ contactFn(e, formData);
@@ -171,7 +173,7 @@ const Contact = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="text-white bg-[#AA2769] focus:ring-4 focus:outline-none font-sm rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] focus:ring-blue-800 my-8"
+                        className="text-white bg-[#AA2769] focus:ring-4 focus:outline-none font-sm rounded-lg text-sm w-full md:w-auto px-5 py-2.5 text-center hover:bg-[#93225a] focus:ring-blue-800 my-8"
                       >
                         Submit
                       </button>

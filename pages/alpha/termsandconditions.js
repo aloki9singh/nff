@@ -4,6 +4,7 @@ import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import Link from "next/link";
 
 export default function Terms() {
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -46,7 +47,7 @@ export default function Terms() {
             toggleSideBar={toggleSideBar}
           />
           <div className="lg:mx-14 md:mx-10 max-w-[1440px] self-center  font-Inter py-5 px-[25px]">
-            <h1 className="font-Inter font-semibold md:text-5xl text-2xl text-white text-center mb-2">
+            <h1 className="font-Inter font-semibold md:text-5xl text-2xl text-white text-center mb-2 md:mt-5">
               Terms & Conditions
             </h1>
 
@@ -176,6 +177,17 @@ export default function Terms() {
                   to use
                 </p>
               </div>
+              <div className="text-xs  md:text-lg text-white  font-Inter text-justify my-11">
+							<p>
+								If you have any questions or concerns about our Terms and Conditions, please contact our support team at{" "}
+								<span className="font-semibold">
+									<Link href="mailto:support@skilldevelopmentplatform.com">
+										support@skilldevelopmentplatform.com
+									</Link>
+								</span>
+								. We are always here to help.
+							</p>
+						</div>
             </div>
           </div>
         </div>
