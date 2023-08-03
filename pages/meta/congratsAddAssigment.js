@@ -55,7 +55,7 @@ const CongratsAddAssigment = () => {
 
               <button
                 className='d-flex text-white sm:m-4 h-11 px-6 justify-center items-center gap-2 rounded-xl bg-[#E1348B] my-4'
-                onClick={() => router.push('addassigment')}>
+                onClick={() => router.push('addassignment')}>
                 Create another Assigment
               </button>
             </div>

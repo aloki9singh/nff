@@ -21,6 +21,7 @@ import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import MentorSidebar from "../sidebar/mentor";
 import MentorTopbar from "../navbar/mentortopbar";
+import Layout from "../Layout/Layout";
 
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
@@ -159,7 +160,7 @@ const Chat = () => {
   }
 
   return (
-    <>
+    <Layout pageTitle="Chats">
       <div
         className={`flex overflow-hidden items-stretch max-h-screen  ${
           userProfile.role != "mentor"
@@ -256,7 +257,7 @@ const Chat = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

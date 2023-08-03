@@ -85,7 +85,7 @@ const Sidebar = ({ pathname }) => {
                 </Link>
     
                 <Link
-                  href="/beta/homework"
+                  href="/beta/assignments"
                   className="flex items-center p-2 text-base font-normal text-white rounded-lg    hover:bg-pin"
                 >
                   <label className="inline-flex items-center space-x-3">
@@ -94,7 +94,7 @@ const Sidebar = ({ pathname }) => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600"
                     />{" "}
-                    <span>Homework</span>
+                    <span>Assignment</span>
                   </label>
                 </Link>
                 <hr className="h-px  my-8 bg-gray-500 border-0 w-[90%] m-auto "></hr>

@@ -16,6 +16,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
+import Layout from "@/components/common/Layout/Layout";
 
 function CheckClassSchedule() {
   const [count, setCount] = useState(1);
@@ -62,7 +63,7 @@ function CheckClassSchedule() {
   const { userSubsribed } = CourseAccess(user.uid);
 
   return (
-    <>
+    <Layout pageTitle="Schedule">
       {/* {!userSubsribed && (
         <ToastMessage
           heading={"Nothing is Scheduled!!"}
@@ -117,7 +118,7 @@ function CheckClassSchedule() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 export default withStudentAuthorization(CheckClassSchedule);

@@ -14,6 +14,7 @@ import HomepageActivities from "@/components/common/homepage/activities/Homepage
 import SignUp from "@/components/common/homepage/HomeSignupComp/HomeSignupComp";
 import { useState } from "react";
 import useHoverOutside from "@/components/common/homepage/useHoverOutside/useHoverOutside";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function Home({ coursesData }) {
   const [nav, setNav] = useState(false);
@@ -23,7 +24,7 @@ export default function Home({ coursesData }) {
   const ref = useHoverOutside(handleClickOutside);
 
   return (
-    <div>
+    <Layout pageTitle="Home Page">
       <Navbar nav={nav} setNav={setNav} />
       <div ref={ref}>
         <HomePage />
@@ -36,7 +37,7 @@ export default function Home({ coursesData }) {
         <SignUp />
         <Footer />
       </div>
-    </div>
+    </Layout>
   );
 }
 

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { contactFn } from '@/lib/api';
 import { useMediaQuery } from "react-responsive";
+import Layout from '@/components/common/Layout/Layout';
 const Contact = () => {
   const [query, setQuery] = useState('');
 
@@ -30,7 +31,7 @@ const Contact = () => {
   }
 
   return (
-    <>
+    <Layout pageTitle="Contact Us">
       <div className="flex h-screen">
         {isMobileScreen && (
           <div
@@ -183,7 +184,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 
