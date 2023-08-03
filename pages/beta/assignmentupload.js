@@ -53,6 +53,7 @@ const Assignmentupload = () => {
   const [url, setUrl] = useState();
   const [key, setkey] = useState();
   const [submitted, setSubmitted] = useState(false);
+  const [deadline, setDeadline] = useState(false)
 
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -210,7 +211,14 @@ const Assignmentupload = () => {
             }
             arr.push(doc.data());
           });
-
+          const currentDate = new Date() 
+          const assignmnetDeadline = new Date(arr[0]?.date.seconds * 1000 + arr[0]?.date.nanoseconds / 1000000)
+          if(currentDate>assignmnetDeadline){
+            setDeadline(true)
+          }
+          else{
+            setDeadline(false)
+          }
           setCourse(arr);
         } catch (err) {
           alert("Error occured");
@@ -238,8 +246,6 @@ const Assignmentupload = () => {
       course[0]?.date.seconds * 1000 + course[0]?.date.nanoseconds / 1000000
     );
 
-    console.log(course)
-
   return (
     <div className="flex">
       {isMobileScreen && (
@@ -262,7 +268,6 @@ const Assignmentupload = () => {
         <div className="flex justify-between  top-0 md:border-b-[1px] border-b-[2px] border-[#717378]">
           <Dashboardnav heading="Homework" toggleSideBar={toggleSideBar} />
         </div>
-
         <div className=" bg-[#37383F] m-5 rounded-[30px] text-white space-y-6 pb-20">
           <div className="text-left  p-5  ">
             <div className="ml-5 space-x-3 text-sm md:text-lg">
@@ -338,7 +343,7 @@ const Assignmentupload = () => {
                       type="file"
                       key={key}
                       id="file"
-                      disabled={submitted || link ? true : false}
+                      disabled={submitted || link || deadline ? true : false}
                       className="w-full h-full border-dashed border-2 rounded-xl bg-[#505057]"
                       onChange={handleChange}
                       accept="application/pdf, application/msword"
@@ -393,13 +398,13 @@ const Assignmentupload = () => {
                       className="outline-none bg-[#505057] w-full md:text-[16px] text-[14px]"
                       placeholder="Add file URL"
                       value={link}
-                      disabled={file || submitted ? true : false}
+                      disabled={(file || submitted || deadline)? true : false}
                       onChange={(e) => setLink(e.target.value)}
                     />
                     <button
                       onClick={uploadAssignmentFile}
                       className="bg-[#373A41] rounded-10 p-2 text-xs md:text-sm"
-                      disabled={file || submitted ? true : false}
+                      disabled={file || submitted || deadline ? true : false}
                     >
                       Upload
                     </button>
@@ -408,11 +413,13 @@ const Assignmentupload = () => {
                 <div class="flex justify-center">
                   <button
                     type="submit"
-                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${submitted ? "#505057" : "#E1348B"
+                    class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${(submitted || deadline )? "#505057" : "#E1348B"
                       }] rounded-lg focus:shadow-outline`}
-                    disabled={submitted}
+                    disabled={submitted || deadline}
                   >
-                    {submitted ? " Submitted" : "Submit"}
+                    {submitted ? " Submitted" : ""}
+                    {(!submitted && deadline) ? "Deadline Over": "" }
+                    {(!submitted && !deadline?"Submit": "")}
                   </button>
                 </div>
               </form>
