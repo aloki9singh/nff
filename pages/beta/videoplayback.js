@@ -307,9 +307,9 @@ function Videos() {
                 <button
                   className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
                   //TO REVERT
-                  // onClick={() => {
-                  //   userSubsribed ? joinCourseChat() : setShowModal(true);
-                  // }}
+                  onClick={() => {
+                    userSubsribed ? joinCourseChat() : setShowModal(true);
+                  }}
                   disabled={isJoined}
                 >
                   {isJoined ? "Joined" : "Join"}
