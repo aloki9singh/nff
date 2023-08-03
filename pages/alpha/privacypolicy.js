@@ -7,6 +7,7 @@ import Footer from "@/components/common/footer/footer";
 import Link from "next/link";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useMediaQuery } from "react-responsive";
+import Layout from "@/components/common/Layout/Layout";
 
 
 export default function Privacy() {
@@ -24,7 +25,7 @@ export default function Privacy() {
     sendSideBarState(showSideBar);
   }
   return (
-    <div>
+    <Layout pageTitle="Privacy Policy">
       <div className="flex">
       {isMobileScreen && (
             <div
@@ -195,6 +196,6 @@ export default function Privacy() {
         </div>
       </div>
       <Footer background="bg-[#2D2E35]" />
-    </div>
+    </Layout>
   );
 }

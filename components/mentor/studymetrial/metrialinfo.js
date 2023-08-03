@@ -40,8 +40,8 @@ function MetrialInfo({ }) {
 
 
   return (
-    <div className=" w-full  h-full pb-10  bg-[#2D2E35] text-white grow flex items-center justify-center ">
-      <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
+    <div className=" max-w-6xl  h-full pb-6  bg-[#2D2E35] text-white grow flex items-center justify-center overflow-hidden ">
+      <div className="w-full min-h-[30rem] flex md:bg-[#373A41] rounded-[30px] h-full  ">
         <div className="w-full  flex flex-col">
           <div className="w-full flex items-center justify-between">
             <div className="flex items-center">

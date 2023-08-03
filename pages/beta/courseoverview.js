@@ -6,6 +6,7 @@ import CoursesMain from "@/components/student/courses";
 import { db } from "@/config/firebaseconfig";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useRouter } from "next/router";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function CourseOverview({ coursesData }) {
 
@@ -19,9 +20,9 @@ export default function CourseOverview({ coursesData }) {
   //   return null;
   // }
   return (
-    <div className="">
+    <Layout pageTitle="Courses">
       <CoursesMain coursesData={coursesData ? JSON.parse(coursesData) : [] } />
-    </div>
+    </Layout>
   );
 }
 

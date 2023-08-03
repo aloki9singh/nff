@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import {useAuthContext } from '@/lib/context/AuthContext';
+import Layout from '@/components/common/Layout/Layout';
 
 const ProfileCongratulation = () => {
 
@@ -17,6 +18,7 @@ const ProfileCongratulation = () => {
 
   const { userProfile } = useAuthContext();
   return (
+    <Layout pageTitle="Profile Congratulations">
     <div className="flex  ">
       {/* <Sidebar /> */}
       <div className="w-full md:h-screen h-[75vh] flex flex-col ">
@@ -70,6 +72,7 @@ const ProfileCongratulation = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

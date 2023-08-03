@@ -4,6 +4,7 @@ import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function Terms() {
 	const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -21,7 +22,7 @@ export default function Terms() {
 		sendSideBarState(showSideBar);
 	  }
 	return (
-		<div>
+		<Layout pageTitle="Refund Policy">
 			<div className="flex">
 				{isMobileScreen && (
 					<div
@@ -172,8 +173,8 @@ export default function Terms() {
 							<p>If you have any questions or concerns about our Refund and Return
 								Policy, please contact our support team at {" "}
 								<span className="font-semibold">
-									<Link href="mailto:support@skilldevelopmentplatform.com">
-										support@skilldevelopmentplatform.com
+									<Link href="mailto:support@neatskills.tech">
+										support@neatskills.tech
 									</Link>
 								</span>
 								. We are always here to help.</p>
@@ -182,6 +183,6 @@ export default function Terms() {
 				</div>
 			</div>
 			<Footer background="bg-[#2D2E35]" />
-		</div>
+		</Layout>
 	);
 }

@@ -4,6 +4,7 @@ import PaymentCompleted from "@/components/student/payment/paymentdone";
 import PaymentProceed from '@/components/student/payment/PaymentProceed';
 import DashboardNav from "@/components/common/navbar/dashboardnav";
 import Payment from '@/components/student/payment/paymen';
+import Layout from '@/components/common/Layout/Layout';
 
 const Paynow = () => {
 
@@ -46,6 +47,7 @@ const Paynow = () => {
   }
 
   return (
+    <Layout pageTitle="Payment">
     <div className='h-screen'>
 
       <DashboardNav heading={"Payment"} toggleSideBar={toggleSideBar} />
@@ -60,6 +62,7 @@ const Paynow = () => {
       {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
 
     </div>
+    </Layout>
   )
 }
 
