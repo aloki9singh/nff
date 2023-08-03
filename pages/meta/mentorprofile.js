@@ -15,6 +15,7 @@ import { db } from "@/config/firebaseconfig";
 import Image from "next/image";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
+import Layout from "@/components/common/Layout/Layout";
 
 const MentorProfile = () => {
   const { loading, setLoading } = useContext(Loading);
@@ -121,6 +122,7 @@ const MentorProfile = () => {
     updateData();
   };
   return (
+    <Layout pageTitle="Profile">
     <div
       className={`md:p-10 bg-[#1E1E1E] ${loading ? "pointer-events-none z-1" : ""
         }`}
@@ -530,6 +532,7 @@ const MentorProfile = () => {
         )} */}
       </div>
     </div>
+    </Layout>
   );
 };
 

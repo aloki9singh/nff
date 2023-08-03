@@ -11,6 +11,7 @@ import { getDocs } from "firebase/firestore";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import AssigmentForm from "@/components/mentor/assigment/assigmentForm";
 import { collection, doc } from "firebase/firestore";
+import Layout from "@/components/common/Layout/Layout";
 
 function AddAssigments() {
   const [count, setCount] = useState(1);
@@ -75,7 +76,7 @@ function AddAssigments() {
 
 
   return (
-    <>
+    <Layout pageTitle="Add Assignment">
       <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex   flex-row-reverse">
           {/* First Sidebar - Visible on Mobile */}
@@ -118,7 +119,7 @@ function AddAssigments() {
           )}
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

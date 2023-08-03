@@ -9,6 +9,7 @@ import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import { collection, getDocs, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
+import Layout from "@/components/common/Layout/Layout";
 
 function MentorStudent() {
   const { user, userProfile } = useAuthContext();
@@ -157,7 +158,7 @@ function MentorStudent() {
   }, [numberOfPages, studentData]);
 
   return (
-    <>
+    <Layout pageTitle="Students">
       <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -439,7 +440,7 @@ function MentorStudent() {
         </div>
         <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
-    </>
+    </Layout>
   );
 }
 
