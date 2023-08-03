@@ -10,6 +10,7 @@ import StepProgress from "@/components/student/payment/stepprogress";
 import PaymentCompleted from "@/components/student/payment/paymentdone";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { useRouter } from "next/router";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function Payment() {
   const [currentStep, setCurrentStep] = useState(0); //to manage the current step of the payment process
@@ -111,6 +112,7 @@ export default function Payment() {
 // 
 const Hero = ({ onClick }) => {
   return (
+    <Layout pageTitle="Payment">
     <div className="relative z-10 flex flex-col md:flex-row mt-10 items-center  max-w-6xl justify-evenly mx-auto">
       <div className="md:w-1/3 mb-20 md:mb-0 mx-10">
         <h1 className=" text-white font-bold text-5xl mb-10">
@@ -135,5 +137,6 @@ const Hero = ({ onClick }) => {
         src="/payments.svg"
       /> */}
     </div>
+    </Layout>
   );
 };

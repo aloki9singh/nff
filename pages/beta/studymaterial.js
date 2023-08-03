@@ -69,7 +69,7 @@ function StudyMaterial() {
         <ToastMessage
           heading={"OOPS!"}
           message={
-            "You have not joined any courses yet. Please join a course to access the study material."
+            "Subscribe to access  study material."
           }
         />
       )}
