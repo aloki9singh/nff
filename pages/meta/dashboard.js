@@ -19,6 +19,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import { CiEdit } from "react-icons/ci";
 import DailyTip from "@/components/mentor/dashboard/DailyTip";
+import Layout from "@/components/common/Layout/Layout";
 
 function MentorDashboard() {
   const [count, setCount] = useState(1);
@@ -61,7 +62,7 @@ function MentorDashboard() {
   // }
 
   return (
-    <>
+    <Layout pageTitle="Dashboard">
       <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -136,7 +137,7 @@ function MentorDashboard() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

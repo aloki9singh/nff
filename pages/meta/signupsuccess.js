@@ -10,6 +10,7 @@ import withAuth from "@/lib/context/mentorcontext"
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
 import { detailadd } from "@/lib/exportablefunctions";
+import Layout from "@/components/common/Layout/Layout";
 
 
 const MentorSignupSuccess = () => {
@@ -44,7 +45,7 @@ const MentorSignupSuccess = () => {
   //   return null; // Don't render the user if not verified
   // }
   return (
-    <>
+    <Layout pageTitle="Signup Success">
     <div className="m-7">
     <Image alt="Icon" src="/pagesgraphics/mentor/signupsuccess/Neatskills.svg" width={150} height={150} />
   </div>
@@ -93,7 +94,7 @@ const MentorSignupSuccess = () => {
       </div>
       </div>   
     </div>
-    </>
+    </Layout>
   );
 };
 
