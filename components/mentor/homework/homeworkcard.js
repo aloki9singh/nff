@@ -11,7 +11,8 @@ const HomeWorkCard = ({
   category,
   banner,
   date,
-  course
+  course,
+  submit
 }) => {
   const router = useRouter();
 
@@ -46,7 +47,7 @@ const HomeWorkCard = ({
           </p>
         </div>
         <div className='flex justify-between pt-4'>
-          <div className='text-white mt-1'>submitted: 67</div>
+          <div className='text-white mt-1'>submitted: {submit}</div>
 
           <div className='text-primary text-xs md:text-sm px-3 py-2 hover:bg-primary hover:text-white transition-all duration-300 ease-in-out'>
             Date: {date}

@@ -252,7 +252,7 @@ function Videos() {
             "You have not joined any courses yet. Please join a course to access this course."
           }
         />
-      )} */}
+      )} 
 			{/* 
       {!isTrialValid && !userSubsribed ? <ToastMessage
         heading={"OOPS!"}

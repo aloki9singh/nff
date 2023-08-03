@@ -64,13 +64,19 @@ function Homework() {
         );
         const courseInfo = await getDocs(q);
         const arr = [];
+        const files = []
         for (const doc of courseInfo.docs) {
           const docRef = doc.ref;
           const collectionRef = collection(docRef, "assignment");
           const querySnapshot = await getDocs(collectionRef);
-          arr.push(querySnapshot.docs.map((doc) => doc.data()));
+          querySnapshot.docs.map((doc) => arr.push(doc.data()))
         }
-        setActive(arr);
+        arr.map(ele =>{
+          if (ele.checked){
+            
+          }
+        } )
+        setActive(arr)
         setDataFetched(true);
       }
     };
@@ -81,30 +87,27 @@ function Homework() {
   // if (!verified) {
   //   return null;
   // }
+
   const activeInactive = (course) => {
-    var active = 0;
-    var inactive = 0;
-    var checked = 0;
-    course &&
-      course.map((ele) => {
-        ele.map((e) => {
-          e?.files?.map((data) => {
-            if (data.checked) {
-              checked++;
-            }
-          });
-          const date = new Date(
-            e.date.seconds * 1000 + e.date.nanoseconds / 1000000
-          );
-          if (date < new Date()) {
-            inactive += 1;
-          } else if (date > new Date()) {
-            active += 1;
+    var active = 0
+    var inactive = 0
+    var checked = 0
+    course && course.map((e) => {
+        e.files.map((data) => {
+          if (data.checked) {
+            checked += 1
           }
-        });
-      });
-    return { active: active, inactive: inactive };
-  };
+        })
+        const date = new Date(e.date.seconds * 1000 + e.date.nanoseconds / 1000000)
+        if (date < new Date()) {
+          inactive += 1
+        }
+        else if (date > new Date()) {
+          active += 1
+        }
+    })
+    return { active: active, inactive: inactive, checked: checked }
+  }
   return (
     <>
       <div className="h-full text-base bg-[#2E3036] w-full">
@@ -147,11 +150,6 @@ function Homework() {
 
             <div className="h-screen p-4  border border-[#5F6065]  mt-5 mx-1 rounded-xl  flex flex-col  mb-5 ">
               <div className="w-full h-20 text-white flex flex-row  justify-between ">
-                {/* <div className='flex ml-12 mt-5'>
-                                    <div className='mr-2'>class 6</div>
-                                    <div>Group-A</div>
-                                </div> */}
-
                 <div className="flex ml-12 mt-5 mr-16 gap-4">
                   <div className="flex">
                     <div onClick={() => handleToggleElement("active")}>
@@ -208,8 +206,7 @@ function Homework() {
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                        {/* {checked && checked} */}
-                        {0}
+                        {activeCourse && activeInactive(activeCourse).checked}
                       </div>
                     </div>
                   </div>
@@ -217,101 +214,62 @@ function Homework() {
               </div>
 
               <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 max-h-screen overflow-scroll scrollbar-hide">
-                {activeElement === "active" ? (
-                  <>
-                    {activeCourse &&
-                      activeCourse.map((e) =>
-                        e.map((ele) => {
-                          const date = new Date(
-                            ele.date.seconds * 1000 +
-                              ele.date.nanoseconds / 1000000
-                          );
-                          if (date > new Date()) {
-                            return (
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  router.push({
-                                    pathname: `/meta/homework/${ele.id}`,
-                                    query: { courseid: ele.courseid },
-                                  });
-                                }}
-                                key={ele.id}
-                              >
-                                <HomeWorkCard
-                                  title={ele.title}
-                                  desc={ele.module}
-                                  date={date.toLocaleString().split(",")[0]}
-                                  course={ele.course}
-                                />
-                              </div>
-                            );
-                          }
-                        })
-                      )}
-                    {/* <UploadCard /> */}
-                  </>
-                ) : (
-                  <>
-                    {activeCourse &&
-                      activeCourse.map((e) =>
-                        e.map((ele) => {
-                          const date = new Date(
-                            ele.date.seconds * 1000 +
-                              ele.date.nanoseconds / 1000000
-                          );
-                          if (date < new Date()) {
-                            return (
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  router.push({
-                                    pathname: `/meta/homework/${ele.id}`,
-                                    query: { courseid: ele.courseid },
-                                  });
-                                }}
-                                key={ele.id}
-                              >
-                                <HomeWorkCard
-                                  title={ele.title}
-                                  desc={ele.module}
-                                  date={date.toLocaleString().split(",")[0]}
-                                  course={ele.course}
-                                />
-                              </div>
-                            );
-                          }
-                        })
-                      )}
-                    {/* <HomeWorkCard title='Course 2' desc='Description 2' />
-                    <HomeWorkCard title='Course 2' desc='Description 2' />
-                    <HomeWorkCard title='Course 2' desc='Description 2' /> */}
-                    {/* <UploadCard /> */}
-                  </>
-                )}
-                {/* For checked Data */}
-                {/* {activeCourse && activeCourse.map((e) => {
-                                            const data = e.assignment;
-                                            if (data.status){
-                                            return (
-                                                data && data.map((ele, i) => {
-                                                    const date = new Date(ele.date.seconds * 1000 + ele.date.nanoseconds / 1000000);
-                                                    return (
-                                                        <div className='cursor-pointer' onClick={() => { router.push(`/meta/homework/${e.id}`) }} key={ele.id}>
-                                                            <HomeWorkCard
-                                                                title={ele.title}
-                                                                desc={ele.module}
-                                                                date={date.toLocaleString().split(",")[0]}
-                                                                banner={e.banner}
-                                                                course={ele.course}
-                                                            />
-                                                        </div>
-                                                    );
-                                                })
-                                            );
-                                            }
-                                        })}
-                                        <UploadCard /> */}
+                {activeCourse &&
+                  activeCourse.map((ele) => {
+                    console.log
+                    const date = new Date(
+                      ele.date.seconds * 1000 +
+                      ele.date.nanoseconds / 1000000
+                    );
+                    if (date > new Date() && activeElement == "active") {
+                      return (
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            router.push({
+                              pathname: `/meta/homework/${ele.id}`,
+                              query: { courseid: ele.courseid },
+                            });
+                          }}
+                          key={ele.id}
+                        >
+                          <HomeWorkCard
+                            title={ele.title}
+                            desc={ele.module}
+                            date={date.toLocaleString().split(",")[0]}
+                            course={ele.course}
+                            submit={ele.files.length}
+                          />
+                        </div>
+                      );
+                    }
+                    else if (date < new Date() && activeElement == "inactive") {
+                      return (
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            router.push({
+                              pathname: `/meta/homework/${ele.id}`,
+                              query: { courseid: ele.courseid },
+                            });
+                          }}
+                          key={ele.id}
+                        >
+                          <HomeWorkCard
+                            title={ele.title}
+                            desc={ele.module}
+                            date={date.toLocaleString().split(",")[0]}
+                            course={ele.course}
+                            submit={ele.files.length}
+                          />
+                        </div>
+                      );
+                    }
+                    else if (activeElement == "check"){
+
+                    }
+                 } )}
+                {/* <UploadCard /> */}
               </div>
             </div>
           </div>
