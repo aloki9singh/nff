@@ -22,9 +22,9 @@ async function handler(req, res) {
     "merchantTransactionId": "MTST50590068188178",
     "merchantUserId": "MUID409",
     "amount": body.price,
-    "redirectUrl": "http://localhost:3001/beta/payment",
+    "redirectUrl": "http://localhost:3000/beta/payment",
     "redirectMode": "GET",
-    "callbackUrl": "http://localhost:3001/api/payment/serverToServer",
+    "callbackUrl": "http://localhost:3000/api/payment/serverToServer",
     "mobileNumber": "9999999999",
     "paymentInstrument": {
       "type": "PAY_PAGE"
