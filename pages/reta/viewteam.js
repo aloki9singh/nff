@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 function ViewTeam() {
   const [count, setCount] = useState(1);
@@ -89,7 +90,7 @@ function ViewTeam() {
   }
 
   return (
-    <>
+    <Layout pageTitle="View Team">
       <div className="h-full text-base bg-[#2E3036]">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -300,7 +301,7 @@ function ViewTeam() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

@@ -29,6 +29,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { generate } from "shortid";
 import { isString } from "formik";
 import withAdminandMentorAuthorization from "@/lib/HOC/withAdminandMentorAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 const numOfMentors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const mentorLists = ["Dinesh Saini", "Rahul", "Raj", "Ravi"];
@@ -79,6 +80,7 @@ const PlanCourseForm = ({ state, onSubmit }) => {
 	const banner = watch("banner");
 
 	return (
+
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Header currentStep={1} />
 			<hr className="border-x-2 border-gray-500 mb-4" />
@@ -921,6 +923,7 @@ const CreateCourse = ({ course }) => {
 	};
 
 	return (
+		<Layout pageTitle="Add Course">
 		<div className="text-white flex flex-col justify-center items-center">
 			{/* nav bar */}
 			{/* <div className="w-screen border-b-2 border-grey text-center">
@@ -990,6 +993,7 @@ const CreateCourse = ({ course }) => {
 				</div>
 			</div>
 		</div>
+		</Layout>
 	);
 };
 

@@ -13,6 +13,7 @@ import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
 import { useMediaQuery } from "react-responsive";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Layout from "@/components/common/Layout/Layout";
 
 function MentorProfile() {
   const router = useRouter();
@@ -86,7 +87,7 @@ function MentorProfile() {
   }, [isMediumScreen]);
 
   return (
-    <>
+    <Layout pageTitle="Profile">
       <div className="md:h-screen h-full text-base">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -510,7 +511,7 @@ function MentorProfile() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 export default MentorProfile;
