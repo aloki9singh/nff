@@ -2,34 +2,42 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
-const PaymentProceed = ({ price, updatePage }) => {
+import { useAuthContext } from "@/lib/context/AuthContext";
 
+const PaymentProceed = ({ price, updatePage }) => {
+  
+  const { user, userProfile } = useAuthContext();
   // tab selector 
   const [activeTab, setActiveTab] = useState("card");
+  const [loading, setLoading] = useState(null);
 
   // update page for stepper 
-  const paymentFuction = (e) => {
-    e.preventDefault();
+  const paymentFuction = () => {
     updatePage(2);
   }
 
 //api call for payment 
-  const handleReq = async (e) => {
-
+  const handleReq = (e) => {
+    e.preventDefault();
+    setLoading(true);
     const requestBody = {
       price: price * 100,
+      useruid:user.uid,
     };
 
-    await fetch('/api/payment', { method: 'POST', body: JSON.stringify(requestBody) },)
+    fetch('/api/payment', { method: 'POST', body: JSON.stringify(requestBody) },)
       .then(response => response.json())
       .then(response => {
-        console.log(response)
+        console.log(response);
+        setLoading(false);
         window.location.href = response.data.instrumentResponse.redirectInfo.url;
       })
       .catch(err => console.error(err));
+  
+  }
 
-    paymentFuction(e)
-
+  if(loading != null && loading == false) {
+    paymentFuction();
   }
 
 
@@ -37,7 +45,7 @@ const PaymentProceed = ({ price, updatePage }) => {
     <>
       <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
 
-        <div className="hidden md:inline left m-12">
+        <div className="hidden left m-12">
 
           <h1 className="py-2">Payment Method</h1>
 
@@ -233,6 +241,7 @@ const PaymentProceed = ({ price, updatePage }) => {
           <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={(e) => {
             handleReq(e);
           }}
+          disabled={loading}
           >
             Pay Now
           </button>
