@@ -48,8 +48,8 @@ function AddMentor() {
     fetch("/api/signup")
       .then((response) => response.json())
       .then((data) => {
-        const filteredMentors = data.users.filter((ele) => {
-          return ele.role === "mentor" && ele.courseAssigned == false;
+        const filteredMentors = data?.users?.filter((ele) => {
+          return ele?.role === "mentor" && ele?.courseAssigned == false;
         });
         setMentor(filteredMentors);
         setFilterMentor(filteredMentors);
@@ -60,7 +60,7 @@ function AddMentor() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   function handleClick(e) {
-    const totalPage = Math.ceil(mentor.length / 10) + 1;
+    const totalPage = Math.ceil(mentor?.length / 10) + 1;
     const name = e.currentTarget.getAttribute("name");
 
     switch (name) {

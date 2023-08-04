@@ -12,6 +12,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Layout from "@/components/common/Layout/Layout";
 
 function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
@@ -141,7 +142,7 @@ function MentorStudent() {
 
 
   return (
-    <>
+    <Layout pageTitle="Courses">
       <div className="w-full text-base bg-[#2E3036]">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -407,7 +408,7 @@ function MentorStudent() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 export default withMentorAuthorization(MentorStudent);

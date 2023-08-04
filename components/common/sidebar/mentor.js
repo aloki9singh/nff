@@ -275,7 +275,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
               </li>
               <li>
                 <Link
-                  href="/meta/homework"
+                  href="/meta/assignments"
                   className="flex items-center p-2 text-base font-light text-white rounded-lg    hover:bg-pin "
                   replace
                 >
@@ -284,13 +284,13 @@ const MentorSidebar = ({ toggleSideBar }) => {
                       id="default-checkbox"
                       type="checkbox"
                       className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                        router.pathname === "/meta/homework"
+                        router.pathname === "/meta/assignments"
                           ? "shadow-white"
                           : ""
                       }`}
                       style={{
                         boxShadow:
-                          router.pathname === "/meta/homework"
+                          router.pathname === "/meta/assignments"
                             ? "0 0 5px #A145CD"
                             : "none",
                       }}
@@ -298,12 +298,12 @@ const MentorSidebar = ({ toggleSideBar }) => {
 
                     <span
                       className={`${
-                        router.pathname == "/meta/homework"
+                        router.pathname == "/meta/assignments"
                           ? "text-[#E1348B]"
                           : ""
                       }`}
                     >
-                      Homework
+                      Assignment
                     </span>
                   </label>
                 </Link>
@@ -312,7 +312,7 @@ const MentorSidebar = ({ toggleSideBar }) => {
               <li>
                 <Link
                   href="/meta/chats"
-                  className="flex items-center p-2 text-base font-light text-white rounded-lg   hover:bg-pin "
+                  className="flex items-center p-2 text-base font-light text-white rounded-lg hover:bg-pin "
                 >
                   <label className="inline-flex cursor-pointer items-center space-x-3">
                     <input

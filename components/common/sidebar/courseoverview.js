@@ -249,11 +249,11 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                                 : ""
                             }]`}
                           >
-                            Homework
+                            Assignment
                           </span>
                         </label>
                       </Link>
-                      <hr className="h-px  my-1 md:my-4 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+                      <hr className="h-px  my-1 md:my-4 bg-gray-500 border-0 w-[90%] m-auto"></hr>
                       <Link
                         href="/beta/chats"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"

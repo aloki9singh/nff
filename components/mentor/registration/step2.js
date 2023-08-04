@@ -300,7 +300,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                       onChange={setData2}
                       name="working"
                       checked={experience.working}
-                      className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block mr-3 bg-[#AA2769] border border-[#5F6065] placeholder-[#AA2769] focus:ring-blue-500 focus:border-blue-500 focus:text-[#AA2769] selection:text-[#AA2769]"
+                      className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block mr-3 bg-[#AA2769] border border-[#5F6065]   "
                     />
                     <label className="block text-sm font-medium text-white w-[100%]">
                       I am currently Working in this role
@@ -522,7 +522,6 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                           <option value="D">D</option>
                           <option value="D-">D-</option>
                           <option value="E">E</option>
-
                         </select>
                         <input
                           onChange={setData}
@@ -531,8 +530,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                           placeholder="CGPA"
                           className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block w-full p-2.5 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
                           type="number"
-                          min="0"
-                          max="10"
+                          maxLength="2"
                         />
 
                         <input
@@ -542,8 +540,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                           placeholder="percentage"
                           className="text-white focus:border-transparent focus:outline-none text-sm rounded-lg block w-full p-2.5 bg-[#333333] border border-[#5F6065] placeholder-[#5F6065] focus:ring-blue-500 focus:border-blue-500"
                           type="number"
-                          min="0"
-                          max="100"
+                          maxLength="3"
                         />
                       </div>
                       <button

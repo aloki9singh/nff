@@ -15,6 +15,7 @@ import UploadCard from "@/components/mentor/homework/uploadcard";
 import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Nodata from "@/components/common/nodata/nodata";
+import Layout from "@/components/common/Layout/Layout";
 
 function Homework() {
   //set Below two for marked homework
@@ -122,7 +123,7 @@ function Homework() {
     return { active: active, inactive: inactive, checked: checked }
   }
   return (
-    <>
+    <Layout pageTitle="Assignments">
       <div className="h-full text-base bg-[#2E3036] w-full">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -153,7 +154,7 @@ function Homework() {
               <div
                 className=" bg-[#E1348B] px-4 py-2 rounded-md cursor-pointer text-lg flex items-center justify-center text-white mr-5"
                 onClick={() => {
-                  router.push("/meta/addassigment");
+                  router.push("/meta/addassignment");
                 }}
               >
                 Add Assignment
@@ -235,7 +236,7 @@ function Homework() {
                           className="cursor-pointer"
                           onClick={() => {
                             router.push({
-                              pathname: `/meta/homework/${ele.id}`,
+                              pathname: `/meta/assignments/${ele.id}`,
                               query: { courseid: ele.courseid },
                             });
                           }}
@@ -258,7 +259,7 @@ function Homework() {
                           className="cursor-pointer"
                           onClick={() => {
                             router.push({
-                              pathname: `/meta/homework/${ele.id}`,
+                              pathname: `/meta/assignments/${ele.id}`,
                               query: { courseid: ele.courseid },
                             });
                           }}
@@ -290,7 +291,7 @@ function Homework() {
                           className="cursor-pointer"
                           onClick={() => {
                             router.push({
-                              pathname: `/meta/homework/${ele.id}`,
+                              pathname: `/meta/assignments/${ele.id}`,
                               query: { courseid: ele.courseid },
                             });
                           }}
@@ -319,7 +320,7 @@ function Homework() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

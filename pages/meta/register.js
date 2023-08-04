@@ -10,6 +10,7 @@ import Congratulations from "@/components/mentor/registration/congrats";
 
 import withAuth from "@/lib/context/mentorcontext"
 import { useRouter } from "next/router";
+import Layout from "@/components/common/Layout/Layout";
 
 const MentorRegForm = () => {
   const [regStepCount, setRegStepCount] = useState(1);
@@ -24,7 +25,7 @@ const MentorRegForm = () => {
   //   return null; // Don't render the user if not verified
   // }
   return (
-    <>
+    <Layout pageTitle="Register">
       {regStepCount == 1 && (
         <MentorRegFormStep1
           setRegStepCount={setRegStepCount}
@@ -50,7 +51,7 @@ const MentorRegForm = () => {
         />
       )}
       {regStepCount == 5 && <Congratulations />}
-    </>
+    </Layout>
   );
 };
 

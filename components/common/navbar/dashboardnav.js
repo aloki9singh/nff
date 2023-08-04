@@ -37,8 +37,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
               <Image
                 src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg"
                 alt="logo"
-                className="w-70 ml-[-20px]  hidden max-[768px]:block h-full justify-center object-contain
-              "
+                className="w-70 ml-[-20px]  hidden max-[768px]:block h-full justify-center object-contain"
                 width={150}
                 height={150}
               />

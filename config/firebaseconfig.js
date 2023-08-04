@@ -32,16 +32,19 @@ import { getAnalytics } from "firebase/analytics";
 
 // 3rd config
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
   authDomain: "neatskills9.firebaseapp.com",
   databaseURL: "https://neatskills9-default-rtdb.firebaseio.com",
+
   projectId: "neatskills9",
   storageBucket: "neatskills9.appspot.com",
   messagingSenderId: "952981699338",
   appId: "1:952981699338:web:e09b299b7e5df400e898f3",
   measurementId: "G-3F1WXPES83"
 };
+
 
 // const firebaseConfig = {
 //   apiKey: process.env.NEXT_PUBLIC_API_KEY,
