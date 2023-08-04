@@ -6,6 +6,7 @@ import { contactFn } from '@/lib/api';
 import { useMediaQuery } from "react-responsive";
 import MentorTopbar from '@/components/common/navbar/mentortopbar';
 import MentorSidebar from '@/components/common/sidebar/mentor';
+import Layout from '@/components/common/Layout/Layout';
 const Contact = () => {
   const [query, setQuery] = useState('');
 
@@ -32,7 +33,7 @@ const Contact = () => {
   }
 
   return (
-    <>
+    <Layout pageTitle="Contact Us">
       <div className="flex h-screen">
         {isMobileScreen && (
           <div
@@ -182,7 +183,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

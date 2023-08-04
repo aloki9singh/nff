@@ -3,6 +3,7 @@ import MentorTopbar from '@/components/common/navbar/mentortopbar';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import Layout from '@/components/common/Layout/Layout';
 
 function MetrialInfo() {
   const router = useRouter();
@@ -31,6 +32,7 @@ function MetrialInfo() {
   }, [isMediumScreen]);
 
   return (
+    <Layout pageTitle="Material Info">
     <div className='flex w-full'>
       <div className='h-full w-full text-base bg-[#2E3036] '>
         <div className='flex w-full'>
@@ -173,6 +175,7 @@ function MetrialInfo() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
 

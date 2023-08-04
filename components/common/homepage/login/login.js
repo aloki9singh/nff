@@ -81,6 +81,7 @@ function LoginComp() {
             photoURL: user.photoURL,
             active: true,
             trialValid: true,
+            
           };
           callSignupApi(mentorData);
           router.push("/beta/profilecontinue");

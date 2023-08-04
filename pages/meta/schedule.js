@@ -15,6 +15,7 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import Layout from "@/components/common/Layout/Layout";
 
 // import MobileNav from "../components/CalenderParts/MobileNav";
 function Schedule() {
@@ -37,13 +38,12 @@ function Schedule() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-
-  }, [isMediumScreen,count]);
+  }, [isMediumScreen, count]);
   // console.log(isMediumScreen,showSideBar)
 
   return (
-    <>
-    <div className="h-full text-base bg-[#2E3036] ">
+    <Layout pageTitle="Schedule">
+      <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex md:w-[88%] ">
           {/* First Sidebar - Visible on Mobile */}
           {isMobileScreen && (
@@ -72,23 +72,23 @@ function Schedule() {
               <div className="md:w-4/6 md:mx-0 " onClick={() => setCount(1)}>
                 <Mainbodymentor />
               </div>
-                <div className="  px-2 w-full">
-                  <div>
-                    {count == 1 && <SideBody setCount={setCount} count={count} />}
-                    {count == 2 && (
-                      <SideBodyClassSchedule setCount={setCount} count={count} />
-                    )}
-                    {count == 3 && (
-                      <SideBodyDelete setCount={setCount} count={count} />
-                    )}
-                  </div>
+              <div className="  px-2 w-full">
+                <div>
+                  {count == 1 && <SideBody setCount={setCount} count={count} />}
+                  {count == 2 && (
+                    <SideBodyClassSchedule setCount={setCount} count={count} />
+                  )}
+                  {count == 3 && (
+                    <SideBodyDelete setCount={setCount} count={count} />
+                  )}
                 </div>
+              </div>
             </div>
           </div>
         </div>
         {/* <div className=" "><MobileNav></MobileNav></div> */}
       </div>
-    </>
+    </Layout>
   );
 }
-export default withMentorAuthorization(Schedule)
+export default withMentorAuthorization(Schedule);
