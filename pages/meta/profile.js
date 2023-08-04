@@ -22,6 +22,7 @@ import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
 import Link from "next/link";
 import { collection, getDocs, query } from "firebase/firestore";
+import Layout from "@/components/common/Layout/Layout";
 
 function MentorProfile() {
   const router = useRouter();
@@ -74,7 +75,7 @@ function MentorProfile() {
   });
 
   return (
-    <>
+    <Layout pageTitle="Profile">
       <div className="h-full text-base bg-[#2E3036] md:rounded-tl-[40px]">
         <div className="flex md:rounded-tl-[40px]">
           {/* First Sidebar - Visible on Mobile */}
@@ -347,7 +348,7 @@ function MentorProfile() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 export default withMentorAuthorization(MentorProfile);

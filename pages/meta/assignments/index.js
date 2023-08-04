@@ -15,6 +15,7 @@ import UploadCard from "@/components/mentor/homework/uploadcard";
 import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Nodata from "@/components/common/nodata/nodata";
+import Layout from "@/components/common/Layout/Layout";
 
 function Homework() {
   //set Below two for marked homework
@@ -122,7 +123,7 @@ function Homework() {
     return { active: active, inactive: inactive, checked: checked }
   }
   return (
-    <>
+    <Layout pageTitle="Assignments">
       <div className="h-full text-base bg-[#2E3036] w-full">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -319,7 +320,7 @@ function Homework() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

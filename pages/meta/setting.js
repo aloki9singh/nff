@@ -12,6 +12,7 @@ import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
 import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
+import Layout from "@/components/common/Layout/Layout";
 
 function Settings() {
   const router = useRouter();
@@ -51,7 +52,7 @@ function Settings() {
     setSubscriptionState(false);
   };
   return (
-    <>
+    <Layout pageTitle="Settings">
       <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -176,7 +177,7 @@ function Settings() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

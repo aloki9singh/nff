@@ -102,12 +102,12 @@ function MetrialInfo({ }) {
                       <h1 className="text-white text-base font-medium ">
                         {module.pdf?.length ?? 0} pdf
                       </h1>
-                      <div className=" flex flex-row  justify-between gap-3">
+                      {/* <div className=" flex flex-row  justify-between gap-3">
                         <p className="text-white text-sm ">aditya</p>
-                        {/* <div className="text-sm text-white pr-2 space-y-6">
+                        <div className="text-sm text-white pr-2 space-y-6">
                           20/11/2000
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -136,12 +136,12 @@ function MetrialInfo({ }) {
                       <h1 className="text-white text-base font-medium ">
                         {module.link?.length ?? 0} shared link
                       </h1>
-                      <div className=" flex flex-row  justify-between gap-3">
+                      {/* <div className=" flex flex-row  justify-between gap-3">
                         <p className="text-white text-sm ">aditya</p>
-                        {/* <div className="text-sm text-white pr-2 space-y-6">
+                        <div className="text-sm text-white pr-2 space-y-6">
                           20/11/2000
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -176,12 +176,12 @@ function MetrialInfo({ }) {
                       <h1 className="text-white text-base font-medium ">
                         {module.video?.length ?? 0} video
                       </h1>
-                      <div className=" flex flex-row  justify-between gap-3">
+                      {/* <div className=" flex flex-row  justify-between gap-3">
                         <p className="text-white text-sm ">aditya</p>
-                        {/* <div className="text-sm text-white pr-2 space-y-6">
+                        <div className="text-sm text-white pr-2 space-y-6">
                           20/11/2000
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

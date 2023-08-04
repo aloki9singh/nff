@@ -194,6 +194,8 @@ function Videos() {
 
   // function for joining chat and adding user in course and mentor
   async function joinCourseChat() {
+
+    console.log("join called");
     const groupRef = doc(db, "chatGroups", course.id);
     await updateDoc(doc(collection(db, "chatGroups"), course.id), {
       members: arrayUnion(user.uid),
@@ -307,9 +309,9 @@ function Videos() {
                 <button
                   className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
                   //TO REVERT
-                  // onClick={() => {
-                  //   userSubsribed ? joinCourseChat() : setShowModal(true);
-                  // }}
+                  onClick={() => {
+                    userSubsribed ? joinCourseChat() : setShowModal(true);
+                  }}
                   disabled={isJoined}
                 >
                   {isJoined ? "Joined" : "Join"}
@@ -373,12 +375,12 @@ function Videos() {
                     </div>
                   </div>
 
-                  <div className="lg:col-span-2 col-span-7  rounded-2xl bg-[#373A41] text-white text-center scrollbar-hide overflow-y-scroll max-h-[450px] h-full">
-                    <div className="bg-[#E1348B] p-2 text-xl py-5">
+                  <div className="lg:col-span-2 col-span-7  rounded-2xl bg-[#373A41] text-white text-center  max-h-[450px] h-full">
+                    <div className="bg-[#E1348B] p-2 text-xl py-5 rounded-t-2xl ">
                       <h2>Course Content</h2>
                     </div>
 
-                    <div class="h-fit self-start w-full overflow-y-scroll pb-10">
+                    <div class="h-fit self-start w-full  pb-10 scrollbar-hide overflow-y-scroll max-h-[360px]">
                       {modules?.map((module, ind) => {
                         return (
                           <Accordion key={ind} title={module.name}>
@@ -402,19 +404,19 @@ function Videos() {
                                         key={i}
                                       >
                                         <BsFillPlayFill className="mr-2" />
-                                        <p className="truncate max-w-[15rem]">
+                                        <p className="truncate max-w-[11rem]">
                                           {module.name} video {i + 1}
                                         </p>
                                       </button>
                                       <p
-                                        className={`absolute overflow-auto flex ${
+                                        className={`absolute overflow-auto   items-center w-full justify-center flex ${
                                           isJoined ? "hidden" : null
                                         } ${
                                           i <= 1 && ind == 0 ? "hidden" : null
                                         }`}
                                       >
                                         Join To Access
-                                        <AiOutlineLock className="text-xl unblur" />
+                                        <AiOutlineLock className="text-xl ml-5 unblur" />
                                       </p>
                                     </div>
                                   </>
