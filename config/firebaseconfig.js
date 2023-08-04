@@ -32,6 +32,7 @@ import { getAnalytics } from "firebase/analytics";
 
 // 3rd config
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
   authDomain: "neatskills9.firebaseapp.com",
@@ -41,6 +42,7 @@ const firebaseConfig = {
   appId: "1:952981699338:web:e09b299b7e5df400e898f3",
   measurementId: "G-3F1WXPES83"
 };
+
 
 // const firebaseConfig = {
 //   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -69,8 +71,6 @@ const firebaseConfig = {
 
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-
-
 
 
 export const db = getFirestore(app);
