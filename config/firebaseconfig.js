@@ -36,6 +36,8 @@ import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
   authDomain: "neatskills9.firebaseapp.com",
+  databaseURL: "https://neatskills9-default-rtdb.firebaseio.com",
+
   projectId: "neatskills9",
   storageBucket: "neatskills9.appspot.com",
   messagingSenderId: "952981699338",
