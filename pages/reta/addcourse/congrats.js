@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import withAdminandMentorAuthorization from "@/lib/HOC/withAdminandMentorAuthorization";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Layout from "@/components/common/Layout/Layout";
 
 const CongratsAddTeam = () => {
   const glass = {
@@ -31,7 +32,7 @@ const CongratsAddTeam = () => {
   }, []);
 
   return (
-    <>
+    <Layout pageTitle="Add course Congrats">
       <div className="w-screen h-screen flex items-center justify-center bg-[#222222]">
         <div
           className="d-flex items-center justify-center w-[85%] sm:w-[1350px] h-[724px] rounded-xl bg-[#1E1E1E] m-12"
@@ -76,7 +77,7 @@ const CongratsAddTeam = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

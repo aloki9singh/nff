@@ -11,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import { query, where } from "firebase/firestore";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -146,7 +147,7 @@ function AdminStudent() {
   };
 
   return (
-    <>
+    <Layout pageTitle="Mentors">
       <div className="h-full text-base bg-[#2E3036]  ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -572,7 +573,7 @@ function AdminStudent() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

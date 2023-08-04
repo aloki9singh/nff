@@ -132,7 +132,7 @@ const Afterlogin = () => {
                       type="button"
                       className=" md:text-base mt-10  lg:text-base xl:text-lg rounded-xl bg-[#A145CD] px-4 py-2 font-semibold"
                     >
-                      Get Started for Free
+                      Get Started 
                     </Link>
                   </div>
                   <div className="flex justify-center lg:justify-end lg:pr-8 lg:flex ">
