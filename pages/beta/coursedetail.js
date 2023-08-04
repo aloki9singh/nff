@@ -114,9 +114,9 @@ const Afterlogin = () => {
                       {course.title}
                     </div>
                     <div className="text-xl md:text-[22px] mt-4">
-                      {course.desc.split(" ").length < 20
+                      {course.desc?.split(" ").length < 20
                         ? course.desc
-                        : course.desc.split(" ").slice(0, 21).join(" ") + "..."}
+                        : course.desc?.split(" ").slice(0, 21).join(" ") + "..."}
                     </div>
                     <Link
                       href={

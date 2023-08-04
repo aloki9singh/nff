@@ -18,26 +18,25 @@ async function handler(req, res) {
 
     const paymentData =
   {
-    "merchantId": "PGTESTPAYUAT93",
+    "merchantId": "PROVOKEONLINE",
     "merchantTransactionId": "MTST50590068188178",
     "merchantUserId": "MUID409",
     "amount": body.price,
-    "redirectUrl": "http://localhost:3001/beta/payment",
+    "redirectUrl": "http://localhost:3000/beta/payment",
     "redirectMode": "GET",
-    "callbackUrl": "http://localhost:3001/api/payment/serverToServer",
+    "callbackUrl": "http://localhost:3000/api/payment/serverToServer",
     "mobileNumber": "9999999999",
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }
   }
 
-  const saltKey = "875126e4-5a13-4dae-ad60-5b8c8b629035"
+  const saltKey = "dfa46632-ebc7-4494-aae1-9ef522083b98"
 
     const encodedData = encodeToBase64(JSON.stringify(paymentData));
     const shaFormula = encodedData+"/pg/v1/pay"+saltKey;
     const shaData = await sha256(shaFormula);
     const shaVerify = shaData+"###1";
-
 
 
     try {
