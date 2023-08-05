@@ -153,7 +153,7 @@ const MentorProfile = () => {
     if (data.details) {
       getCours();
     }
-  }, [data.details, uid]);
+  }, [data?.details, uid]);
 
   const handleChange = (e) => {
     e.preventDefault();

@@ -145,12 +145,12 @@ function Homework() {
 
           <div className="flex-grow md:rounded-tl-[40px]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-              <MentorTopbar heading="Homework" toggleSideBar={toggleSideBar} />
+              <MentorTopbar heading="Assignment" toggleSideBar={toggleSideBar} />
             </div>
-            <div className="flex items-center justify-between mt-5">
-              <div className=" font-semibold  text-lg text-white ml-10">
+            <div className="flex items-center justify-end mt-5">
+              {/* <div className=" font-semibold  text-lg text-white ml-10">
                 Assignment
-              </div>
+              </div> */}
               <div
                 className=" bg-[#E1348B] px-4 py-2 rounded-md cursor-pointer text-lg flex items-center justify-center text-white mr-5"
                 onClick={() => {
@@ -247,7 +247,7 @@ function Homework() {
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
-                            submit={ele.files.length}
+                            submit={ele?.files?.length}
                             checked={checked && checked.includes(ele) ? "true" : "false"}
                           />
                         </div>
