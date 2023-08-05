@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import MentorSidebar from '@/components/common/sidebar/mentor';
-import MentorTopbar from '@/components/common/navbar/mentortopbar';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { auth } from '@/config/firebaseconfig';
@@ -10,6 +8,8 @@ import { useMediaQuery } from 'react-responsive';
 import { collection, getDocs, query, updateDoc, where, doc, getDoc } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 import Layout from '@/components/common/Layout/Layout';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
 
 function Homework() {
     //set Below two for marked homework
@@ -146,24 +146,27 @@ function Homework() {
                         <div
                             className={`fixed right-0 ${SideBarState ? 'block' : 'hidden'
                                 } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
-                            <MentorSidebar toggleSideBar={toggleSideBar} />
+                            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
                         </div>
                     )}
 
                     {/* Second Sidebar - Visible on Desktop */}
                     {!isMobileScreen && (
                         <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-                            <MentorSidebar toggleSideBar={toggleSideBar} />
+                            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
                         </div>
                     )}
 
                     <div className='flex-grow md:rounded-tl-[40px] w-full'>
                         <div className='flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]'>
-                            <MentorTopbar heading='Homework' toggleSideBar={toggleSideBar} />
+                            <Dashboardnav
+                                heading="Assignment"
+                                toggleSideBar={toggleSideBar}
+                            />
                         </div>
                         <div className='w-[90%] mx-auto mt-8 border rounded-[10px] my-4'>
                             <div className='text-2xl font-semibold text-white p-10'>
-                                Give Feedback
+                                Feedback
                             </div>
                             <hr />
                             <form action="">
@@ -183,7 +186,7 @@ function Homework() {
                                         </div>
                                     </div>
                                     <div className="w-[95%] text-white mx-auto h-[127px] m-4 rounded-[10px]">
-                                        <input type="text" placeholder='Add Comment' value={comment} className='w-full h-[127px] bg-[#474A50] rounded-[10px]  placeholder:text-center' disabled/>
+                                        <input type="text" placeholder='Add Comment' value={comment} className='w-full h-[127px] bg-[#474A50] rounded-[10px]  placeholder:text-center' disabled />
                                     </div>
                                     <div className='w-[95%] max-[500px]:flex-col mx-auto flex md:items-center text-white justify-end m-4'>
                                         <div>Teacher Name:</div>

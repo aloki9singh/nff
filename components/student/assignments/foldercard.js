@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/lib/context/AuthContext';
 
-const AssignmentCard = ({ id, name, date, url, courseid, checked, active, no }) => {
+const AssignmentCard = ({ id, name, date, url, courseid, checked, active, no, submit }) => {
   const router = useRouter()
   const {user} = useAuthContext()
   const time = new Date(date.seconds * 1000 + date.nanoseconds / 1000000);
@@ -32,7 +32,7 @@ const AssignmentCard = ({ id, name, date, url, courseid, checked, active, no }) 
                 <Image src="/componentsgraphics/mentor/tick.svg" width="25" height="25" alt="Checked"></Image>
               </div>
               :
-              "Pending"}</span>
+              submit ? "Submitted" : "Pending"}</span>
           </div>
         </div>
         <h5 className="text-base font-medium mt-4">{`Assignment - ${no}`}</h5>
