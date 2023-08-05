@@ -18,15 +18,15 @@ import { getAnalytics } from "firebase/analytics";
 
 
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
-//   authDomain: "neatskills-1c31c.firebaseapp.com",
-//   projectId: "neatskills-1c31c",
-//   storageBucket: "neatskills-1c31c.appspot.com",
-//   messagingSenderId: "713774382237",
-//   appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
-//   measurementId: "G-QWYMTLSSEK",
-// }; 
+const firebaseConfig = {
+  apiKey: "AIzaSyAtAA2o79XeKRBPp61TuM4ok7t6Ng4UYH0",
+  authDomain: "neatskills-1c31c.firebaseapp.com",
+  projectId: "neatskills-1c31c",
+  storageBucket: "neatskills-1c31c.appspot.com",
+  messagingSenderId: "713774382237",
+  appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
+  measurementId: "G-QWYMTLSSEK",
+}; 
 
 
 
