@@ -64,14 +64,14 @@ function CheckClassSchedule() {
 
   return (
     <Layout pageTitle="Schedule">
-      {/* {!userSubsribed && (
+      {!userSubsribed && (
         <ToastMessage
           heading={"Nothing is Scheduled!!"}
           message={
             "You have not joined any courses yet. Please join a course to access the Schedule."
           }
         />
-      )} */}
+      )}
       <div className={`h-screen w-full text-base 
       
     
