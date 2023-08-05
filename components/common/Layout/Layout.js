@@ -7,7 +7,7 @@ const Layout = ({ children, pageTitle }) => {
     <div>
       <Head>
         <title>{pageTitle}</title>
-        <link rel="icon" href="/neatskills.svg" />
+        <link rel="icon" href="/NS-icon.svg" />
       </Head>
 
       <main>{children}</main>
