@@ -105,7 +105,7 @@ function Homework() {
     var inactive = 0
     var checked = 0
     course && course.map((e) => {
-      if (e.files){
+      if (e.files) {
         e.files.map((data) => {
           if (data.checked) {
             checked += 1
@@ -177,7 +177,6 @@ function Homework() {
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                        {/* {activeCourse} */}
                         {activeCourse && activeInactive(activeCourse).active}
                       </div>
                     </div>
@@ -195,7 +194,6 @@ function Homework() {
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                        {/* {activeCourse} */}
                         {activeCourse && activeInactive(activeCourse).inactive}
                       </div>
                     </div>
@@ -225,7 +223,7 @@ function Homework() {
 
               <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 max-h-screen overflow-scroll scrollbar-hide">
                 {activeCourse &&
-                  activeCourse.map((ele) => {
+                  activeCourse.map((ele, i) => {
                     const date = new Date(
                       ele.date.seconds * 1000 +
                       ele.date.nanoseconds / 1000000
@@ -243,11 +241,15 @@ function Homework() {
                           key={ele.id}
                         >
                           <HomeWorkCard
+                            key={i}
+                            no={i + 1}
                             title={ele.title}
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
-                            submit={ele?.files?.length}
+
+                            submit={ele.files ? ele.files.length : 0}
+
                             checked={checked && checked.includes(ele) ? "true" : "false"}
                           />
                         </div>
@@ -266,6 +268,8 @@ function Homework() {
                           key={ele.id}
                         >
                           <HomeWorkCard
+                            key={i}
+                            no={i + 1}
                             title={ele.title}
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
@@ -280,7 +284,7 @@ function Homework() {
                 }
                 {/* <UploadCard /> */}
                 {checked &&
-                  checked.map((ele) => {
+                  checked.map((ele, i) => {
                     const date = new Date(
                       ele.date.seconds * 1000 +
                       ele.date.nanoseconds / 1000000
@@ -298,11 +302,13 @@ function Homework() {
                           key={ele.id}
                         >
                           <HomeWorkCard
+                            key={i}
+                            no={i + 1}
                             title={ele.title}
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
-                            submit={ele.files.length}
+                            submit={ele.files ? ele.files.length : 0}
                             checked="true"
                           />
                         </div>

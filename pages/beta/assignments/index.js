@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 // import MobileNav from '../components/CalenderParts/MobileNav';
 import AssignmentCard from "@/components/student/assignments/foldercard";
 import { useRouter } from "next/router";
-import assignmentupload from "./assignmentupload";
 import { useMediaQuery } from "react-responsive";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
@@ -39,7 +38,9 @@ function Assignments() {
   const [uniqCourse, setUnique] = useState([]);
   const [value, setValue] = useState();
   const [module, setModule] = useState(0);
+  const [checked, setChecked] = useState()
   let [searchstate, setsearchstate] = useState("");
+  const [activeElement, setActiveElement] = useState("total");
   console.log(course, "course");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
@@ -48,6 +49,10 @@ function Assignments() {
   if (!user || !userProfile) {
     router.push("/");
   }
+
+  const handleToggleElement = (element) => {
+    setActiveElement(element);
+  };
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -59,11 +64,11 @@ function Assignments() {
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
       const data = querySnapshot.docs.map((doc) => doc.data());
-
       const id = [];
       var arr = [];
       const moduleInfo = [];
       const uniq = [];
+      const check = []
       data.map((ele) => {
         id.push(ele.id);
         uniq.push(ele.title);
@@ -105,6 +110,16 @@ function Assignments() {
           });
         }
       }
+      arr.map((ele) => {
+        if (ele.files) {
+          ele.files.map((e) => {
+            if (e.submittedby == user.uid) {
+              check.push(ele)
+            }
+          })
+        }
+      })
+      setChecked(check)
       setUnique(uniq);
       setModuleData(moduleInfo);
       setCourse(arr);
@@ -163,9 +178,8 @@ function Assignments() {
           {/* Mobile Sidebar */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -177,7 +191,7 @@ function Assignments() {
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
-          
+
           {/* Main page */}
           <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
             {/* <StudentTopbar heading={"My Progress"} /> */}
@@ -259,31 +273,73 @@ function Assignments() {
 
                 {/* Assignments */}
                 <div className="col-span-8">
-                  <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-b-[1px] border-gray-500">
-                    Files
+                  <div className="w-full h-20 text-white flex flex-row  justify-between border-b-[1px]">
+                    <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-gray-500">
+                      Files
+                    </div>
+                    <div className="flex ml-12 mt-5 mr-16 gap-4">
+                      <div className=" flex">
+                        {" "}
+                        <div>
+                          <span
+                            className={`border-b-2 ${activeElement === "total"
+                              ? "border-[#E1348B]"
+                              : "border-transparent"
+                              }`}
+                            onClick={() => handleToggleElement("total")}
+                          >
+                            Total
+                          </span>
+                        </div>
+                        <div className="mr-2 cursor-pointer">
+                          <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
+                            {/* {checked && activeInactive(checked).checked} */}
+                            {course && course.length}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div onClick={() => handleToggleElement("check")}>
+                          <span
+                            className={`border-b-2 ${activeElement === "check"
+                              ? "border-[#E1348B]"
+                              : "border-transparent"
+                              }`}
+                          >
+                            Checked
+                          </span>
+                        </div>
+                        <div className="mr-2 cursor-pointer">
+                          <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
+                            {checked && checked.length}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1">
-                    {course &&
-                      moduleName &&
-                      course.map((assignment, i) => {
-                        if (
-                          assignment.module === moduleName &&
-                          assignment.course === value
-                        ) {
-                          return (
-                            <AssignmentCard
-                              key={i}
-                              id={assignment.id}
-                              no={i + 1}
-                              name={assignment.title}
-                              date={assignment.date}
-                              url={assignment.url}
-                              courseid={assignment.courseid}
-                            />
-                          );
-                        }
-                        return null;
-                      })}
+                    {course && moduleName && course.map((assignment, i) => {
+                      if (assignment.module === moduleName && assignment.course === value) {
+                        const isActiveCheck = activeElement === "check" && checked.includes(assignment);
+                        const isActiveTotal = activeElement === "total";
+
+                        return isActiveCheck || isActiveTotal ? (
+                          <AssignmentCard
+                            key={i}
+                            id={assignment.id}
+                            no={i + 1}
+                            name={assignment.title}
+                            date={assignment.date}
+                            url={assignment.url}
+                            courseid={assignment.courseid}
+                            checked={checked.includes(assignment)}
+                            active={activeElement}
+                          />
+                        ) : null;
+                      }
+
+                      return null;
+                    })}
                   </div>
                   {course &&
                     moduleName &&
@@ -296,7 +352,6 @@ function Assignments() {
                         <Nodata title="Homework" value="No Homework" />
                       </div>
                     )}
-                  {console.log(uniqCourse)}
                   {uniqCourse.length == 0 && (
                     <div className="-mt-8">
                       <Nodata title="Course" value="No Course available" />
@@ -306,7 +361,6 @@ function Assignments() {
                     moduleData.every((ele) => ele.course !== value) && (
                       <div className=" ">
                         <Nodata title="Homework" value="No Homework available" />
-                       
                       </div>
                     )}
                 </div>
