@@ -5,16 +5,16 @@ import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
-//   authDomain: 'neatskill.firebaseapp.com',
-//   databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
-//   projectId: 'neatskill',
-//   storageBucket: 'neatskill.appspot.com',
-//   messagingSenderId: '745615461354',
-//   appId: '1:745615461354:web:8be587f1d7e23229694093',
-//   measurementId: 'G-9ZEE56FQQF',
-// };
+const firebaseConfig = {
+  apiKey: 'AIzaSyBv6TnKcKz_0Jr7Rx2Z2hVS0tyxrseatAw',
+  authDomain: 'neatskill.firebaseapp.com',
+  databaseURL: 'https://neatskill-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'neatskill',
+  storageBucket: 'neatskill.appspot.com',
+  messagingSenderId: '745615461354',
+  appId: '1:745615461354:web:8be587f1d7e23229694093',
+  measurementId: 'G-9ZEE56FQQF',
+};
 
 
 
@@ -31,7 +31,6 @@ const firebaseConfig = {
 
 
 // 3rd config
-
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
