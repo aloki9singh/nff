@@ -60,7 +60,7 @@ function CheckClassSchedule() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-
+  const { userSubsribed } = CourseAccess(user.uid);
 
   return (
     <Layout pageTitle="Schedule">

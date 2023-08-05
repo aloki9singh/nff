@@ -49,7 +49,7 @@ function StudyMaterialMain() {
               isClearable={false}
               isSearchable={false}
               name="course"
-              options={joinedCourses.map((course) => ({
+              options={joinedCourses?.map((course) => ({
                 value: course.id,
                 label: course.title,
               }))}
@@ -101,7 +101,7 @@ function StudyMaterialMain() {
           <div className="mx-auto mt-6 text-white grow flex items-center  ">
             <div className=" flex md:bg-[#373A41] rounded-[30px] h-full  ">
               <div className="flex justify-center items-stretch   flex-wrap md:grid md:gap-x-20 md:gap-y-10 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">
-                {modules.map((module, index) => (
+                {modules?.map((module, index) => (
                   <StudyMaterialCard
                     key={index}
                     module={module}

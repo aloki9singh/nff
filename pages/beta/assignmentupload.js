@@ -53,12 +53,16 @@ const Assignmentupload = () => {
   const [deadline, setDeadline] = useState(false)
   const [dataFetched, setDataFetched] = useState(false)
 
+  // Function to handle the file Upload component
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
     setUrl(null);
   };
+
+  // Submit handler whicch checks for URL given, file uploaded, Course Info exists/
   const onSubmitHandler = async (e) => {
+
     e.preventDefault();
 
     if (link || url) {
@@ -107,6 +111,7 @@ const Assignmentupload = () => {
 
 
 
+  // Upload FIle Callback ran after 
   const uploadFile = useCallback(async () => {
     if (!file) {
       alert("Please select a file before uploading.");
