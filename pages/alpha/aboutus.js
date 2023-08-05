@@ -1,64 +1,65 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import { useMediaQuery } from 'react-responsive';
-import { db } from '@/config/firebaseconfig';
-import Image from 'next/image';
-import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import React, { useEffect, useRef, useState } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useMediaQuery } from "react-responsive";
+import { db } from "@/config/firebaseconfig";
+import Image from "next/image";
+import Dashboardnav from "@/components/common/navbar/dashboardnav";
 
-import Sidebar from '@/components/common/sidebar/sidebar';
-import { contactFn, contactFnaboutus } from '@/lib/api';
-import { Carousel } from 'react-responsive-carousel';
+import Sidebar from "@/components/common/sidebar/sidebar";
+import { contactFn, contactFnaboutus } from "@/lib/api";
+import { Carousel } from "react-responsive-carousel";
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Footer from '@/components/common/footer/footer';
-import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
-import InfoSection from '@/components/common/aboutus/infosection';
-import GetInTouch from '@/components/common/aboutus/getInTouch';
-import OurMissionSection from '@/components/common/aboutus/ourmission';
-import OurLoveSection from '@/components/common/aboutus/ourLove';
-import Layout from '@/components/common/Layout/Layout';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Footer from "@/components/common/footer/footer";
+import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import Description from "@/components/common/aboutus/description";
+import Title from "@/components/common/aboutus/title";
+import OurMissionSection from "@/components/common/aboutus/ourmission";
+import OurLoveSection from "@/components/common/aboutus/ourLove";
+import TeamSection from "@/components/common/aboutus/team";
+import GetInTouch from "@/components/common/aboutus/getInTouch";
 
 const Aboutus = () => {
-  const [mentor, setMentor] = useState([]);
+	const [mentor, setMentor] = useState([]);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      const q = query(
-        collection(db, 'allusers'),
-        where('role', '==', 'mentor')
-      );
-      const querySnapshot = await getDocs(q);
-      const newData = querySnapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-      }));
-      setMentor(newData);
-    };
+	useEffect(() => {
+		const fetchPost = async () => {
+			const q = query(
+				collection(db, "allusers"),
+				where("role", "==", "mentor")
+			);
+			const querySnapshot = await getDocs(q);
+			const newData = querySnapshot.docs.map((doc) => ({
+				...doc.data(),
+				id: doc.id,
+			}));
+			setMentor(newData);
+		};
 
-    fetchPost();
-  }, [mentor]);
+		fetchPost();
+	}, [mentor]);
 
-  const scrollContainerRef = useRef(null);
+	const scrollContainerRef = useRef(null);
 
-  const scrollBackward = () => {
-    scrollContainerRef.current.scrollBy({
-      left: -200, // Adjust the scroll amount as per your requirements
-      behavior: 'smooth'
-    });
-  };
+	const scrollBackward = () => {
+		scrollContainerRef.current.scrollBy({
+			left: -200, // Adjust the scroll amount as per your requirements
+			behavior: "smooth",
+		});
+	};
 
-  const scrollForward = () => {
-    scrollContainerRef.current.scrollBy({
-      left: 200, // Adjust the scroll amount as per your requirements
-      behavior: 'smooth'
-    });
-  };
+	const scrollForward = () => {
+		scrollContainerRef.current.scrollBy({
+			left: 200, // Adjust the scroll amount as per your requirements
+			behavior: "smooth",
+		});
+	};
 
-  const style = document.createElement('style');
+	const style = document.createElement("style");
 
-  // Set the CSS code as the inner text of the <style> element
-  style.innerText = `
+	// Set the CSS code as the inner text of the <style> element
+	style.innerText = `
   .hide-scrollbar {
     overflow-x: auto;
     scrollbar-width: none; /* Firefox */
@@ -75,395 +76,117 @@ const Aboutus = () => {
   }
 `;
 
-  document.head.appendChild(style);
+	document.head.appendChild(style);
 
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [phoneNo, setPhoneNo] = useState('');
-  const [title, setTitle] = useState('');
-  const [subject, setSubject] = useState('');
-  const formData = { title, email, name, phoneNo, subject };
+	const [email, setEmail] = useState("");
+	const [name, setName] = useState("");
+	const [phoneNo, setPhoneNo] = useState("");
+	const [title, setTitle] = useState("");
+	const [subject, setSubject] = useState("");
+	const formData = { title, email, name, phoneNo, subject };
 
-  const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 550, itemsToShow: 2 },
-    { width: 768, itemsToShow: 3 },
-    { width: 1200, itemsToShow: 4 }
-  ];
-  const clearFormFields = () => {
-    setEmail('');
-    setName('');
-    setPhoneNo('');
-    setTitle('');
-    setSubject('');
-  };
-  const extractNameFromEmail = email => {
-    const atIndex = email.indexOf('@');
+	const OurMissionData = [
+		{
+			title: "Affordability",
+			desc: "Our mission is to offer a highly affordable and accessible learning platform, ensuring education is accessible to all. Transparent pricing and financial accessibility drive our commitment to make neatskills.tech, neatlabs, and neatworld available to every student, fostering inclusivity and personalized support. ",
+		},
+		{
+			title: "Quality",
+			desc: "At Provoke Developers, we prioritize excellence in every aspect of our platforms. Dedicated teams verify content, ensuring world-class quality for our learners. From industry-grade mentors to hands-on experiences, we empower users with the best resources to thrive.",
+		},
+		{
+			title: "Practicality",
+			desc: "We emphasize hands-on learning and real-world application, preparing learners for dynamic challenges. Through neatlabs and neatworld, practical implementation rewards curiosity and innovation, bridging the gap between theory and practice.",
+		},
+		{
+			title: "Innovation",
+			desc: "Innovation fuels our journey, driving us to explore new domains and develop groundbreaking projects. Our platforms incorporate cutting-edge technology and interactive features to keep learners engaged and updated.",
+		},
+	];
 
-    if (atIndex !== -1) {
-      const name = email.substring(0, atIndex);
-      return name;
-    } else {
-      return email;
-    }
-  };
-  const isMediumScreen = useMediaQuery({ minWidth: 768 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
-  useEffect(() => {
-    if (isMediumScreen) {
-      sendSideBarState(false);
-    }
-  }, [isMediumScreen]);
+	const OurLoveData = [
+		{
+			title: "Inclusivity",
+			desc: "Inclusivity is our core value. We create a welcoming space for learners from diverse backgrounds, offering affordable pricing, language support, and personalized paths. Our mentorship programs cater to unique challenges and aspirations.",
+		},
+		{
+			title: "Access of Everything",
+			desc: "We ensure unparalleled quality across all educational platforms. Neatskills.tech, neatlabs, and neatworld undergo rigorous verification to empower learners with top-notch resources and tools.",
+		},
+		{
+			title: "23/7 Help and Support",
+			desc: "At Neatskills.tech, we are dedicated to empowering learners with personalized guidance, a vibrant community, and 24/7 assistance. We create a resilient learning environment, fostering growth, innovation, and inclusivity. Welcome to the Neatskills.tech family, where learning becomes an inspiring adventure.",
+		},
+	];
 
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
-  return (
-    <div className='flex flex-col items-center'>
-      <Dashboardnav heading='About Us' toggleSideBar={toggleSideBar} />
-      {isMobileScreen && (
-        <div
-          className={`fixed right-0 ${
-            SideBarState ? 'block' : 'hidden'
-          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
-          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-        </div>
-      )}
-      <div className="flex flex-col items-center px-4 mt-8 md:mt-0 ">
-        <div
-          className="text-center text-2xl md:text-4xl md:m-10 py-2 
-        space-y-4 border-b-white border-b-4"
-        >
-          <p className=" text-white">We are here to</p>
-          <p className=" bg-gradient-to-r from-[#A134CD] to-[#E1348B] bg-clip-text  text-transparent   ">
-          guarantee your success
-          </p>
-        </div>
+	const breakPoints = [
+		{ width: 1, itemsToShow: 1 },
+		{ width: 550, itemsToShow: 2 },
+		{ width: 768, itemsToShow: 3 },
+		{ width: 1200, itemsToShow: 4 },
+	];
+	const clearFormFields = () => {
+		setEmail("");
+		setName("");
+		setPhoneNo("");
+		setTitle("");
+		setSubject("");
+	};
+	const extractNameFromEmail = (email) => {
+		const atIndex = email.indexOf("@");
 
-        <div className="relative w-full flex flex-col items-center px-4 md:px-20 ">
-          <div
-            className="w-full pb-20 sm:pb-20  md:pb-32 max-w-[1440px] mt-11 px- p-10 rounded-[50px] bg-gradient-to-b from-[#A134CD] to-[#E1348B] flex  text-sm md:text-base text-white"
-            style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
-          >
-            <p className="text-sm md:text-xl lg:text-2xl lg:px-11  ">
-              <a href="https://neatskills.tech" className="font-semibold">Neatskills.tech</a> is developed and managed by Provoke Developers
-              Private Limited. At the core of this, we value quality and want to
-              provide everyone with the affordable way to access any skill and
-              explore themselves in their own way with their own lifelong
-              learning partner.
-            </p>
-          </div>
-          <Image
-            src="/componentsgraphics/common/aboutpage/about.png"
-            alt="random image"
-            width={900}
-            height={600}
-            className="w-9/12 pt-3 -translate-y-[40%]  sm:-translate-y-1/3 object-cover shadow-md rounded-lg max-w-[900px]"
-          />
-          {/* <div
-							className="absolute
-              top-full left-1/2
-              rounded-lg overflow-hidden bg-red-200"
-							// style={{
-							// 	clipPath:
-							// 		"polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)",
-							// }}
-						>
-							<img
-								src="/componentsgraphics/common/aboutpage/about.png"
-								alt="random image"
-								className="w-full object-cover shadow-md rounded-lg"
-							/>
-						</div> */}
-      </div>
+		if (atIndex !== -1) {
+			const name = email.substring(0, atIndex);
+			return name;
+		} else {
+			return email;
+		}
+	};
+	const isMediumScreen = useMediaQuery({ minWidth: 768 });
+	const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+	const [showSideBar, setShowSideBar] = useState(false);
+	const [SideBarState, sendSideBarState] = useState(false);
+	useEffect(() => {
+		if (isMediumScreen) {
+			sendSideBarState(false);
+		}
+	}, [isMediumScreen]);
 
-      {/* Our misson */}
+	function toggleSideBar() {
+		setShowSideBar(!showSideBar);
+		sendSideBarState(showSideBar);
+	}
+	return (
+		<div className="flex flex-col items-center">
+			<Dashboardnav heading="About Us" toggleSideBar={toggleSideBar} />
+			{isMobileScreen && (
+				<div
+					className={`fixed right-0 ${
+						SideBarState ? "block" : "hidden"
+					} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+				>
+					<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+				</div>
+			)}
+			<div className="flex flex-col items-center px-4 mt-8 md:mt-0 ">
+				<Title />
+				<Description className={"w-full px-2 sm:px-4 md:px-20 "} />
+			</div>
 
-          <div className="flex flex-col md:flex-row py-4 ">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              We believe in
-            </p>
-            <p className="text-sm md:text-base text-white ">Affordability</p>
-          </div>
+			{/* Our misson */}
+			<div className="space-y-12 max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
+				<OurMissionSection data={OurMissionData} />
+				<OurLoveSection data={OurLoveData} />
+			</div>
 
-          <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              Quality
-            </p>
-            <p className="text-sm md:text-base text-white ">Skills</p>
-          </div>
-
-          <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              Why We?
-            </p>
-            <p className="text-sm md:text-base text-white">We love to do stuffs for everyone</p>
-          </div>
-
-          <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              Provoke Developers Private Limited?
-            </p>
-            <p className="text-sm md:text-base text-white ">The parent company of neatskills.tech</p>
-          </div>
-        </div>
-
-        {/* Our commitmnetn */}
-        <div className="">
-          <span className="text-4xl  font-extrabold  text-white">Our</span>
-          <span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
-            Love
-          </span>
-          <div className="md:w-[40rem] h-1 bg-white mt-2 " />
-
-          <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              Support
-            </p>
-            <p className="text-sm md:text-base text-white">
-              We love you as much you do and want to stand and be with you
-              unconditionally.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              Care
-            </p>
-            <p className="text-sm md:text-base text-white">
-              We care for your future with skills & academics both.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row py-4">
-            <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
-              Impact
-            </p>
-            <p className="text-sm md:text-base text-white">
-              We want to create an great impact in this world with
-              neatskills.tech by Provoke Developers Private Limiited.
-            </p>
-          </div>
-        </div>
-      
-
-      {/* Our Team */}
-
-      <div className='max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16'>
-        <h1 className='mb-4  px-2 text-center text-2xl md:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl'>
-          The team
-        </h1>
-        <div
-          ref={scrollContainerRef}
-          className='mb-8 flex  overflow-x-scroll  hide-scrollbar space-x-5 sm:space-x-10'>
-          {mentor &&
-            mentor.map((mentor, index) => {
-              return (
-                <a
-                  key={index}
-                  href='#'
-                  className='flex flex-col items-center
-                    shrink-0 '>
-                  <Image
-                    src={`${
-                      mentor.photoURL
-                        ? mentor.photoURL
-                        : "/componentsgraphics/common/Anonymousimage/anonymous.png"
-                    }`}
-                    height={100}
-                    width={100}
-                    className='w-[95px] sm:w-[140px] md:w-[200px]  object-cover bg-transparent rounded-xl aspect-[3/4]'
-                    alt='team memebers'
-                  />
-                  <h2 className=' text-center mt-2 text-xs md:text-base text-white font-semibold'>
-                    {extractNameFromEmail(mentor.displayName)}
-                  </h2>
-                </a>
-                // <>
-                // 	<div className="mr-8 max-w-fit flex-none  md:pb-4">
-                // 		<a href="#" className="space-y-4">
-                // 			<div className="aspect-w-max aspect-h-ma">
-                // 				<img
-                // 					className="rounded-lg object-cover shadow-md hover:shadow-xl"
-                // 					src={
-                // 						ment.photoURL
-                // 							? ment.photoURL
-                // 							: "/componentsgraphics/common/aboutpage/team2.svg"
-                // 					}
-                // 					alt=""
-                // 					style={{ height: "28rem" }}
-                // 				/>
-                // 			</div>
-                // 			<h2 className="text-center mt-2 text-2xl text-white font-semibold">
-                // 				{extractNameFromEmail(ment.displayName)}
-                // 			</h2>
-                // 		</a>
-                // 	</div>
-                // </>
-              );
-            })}
-
-          {/* <div className='mr-8 max-w-fit flex-none rounded-lg md:pb-4'>
-
-                  <a href='#' className='space-y-4'>
-                    <div className='aspect-w-max aspect-h-ma'>
-                      <img
-                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
-                        src='/componentsgraphics/common/aboutpage/team1.svg'
-                        alt=''
-                      />
-                    </div>
-                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
-                      Jenny Wilson
-                    </h2>
-                  </a>
-                </div>
-
-                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' className='space-y-4'>
-                    <div className='aspect-w-max aspect-h-ma'>
-                      <img
-                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
-                        src='/componentsgraphics/common/aboutpage/team2.svg'
-                        alt=''
-                      />
-                    </div>
-                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
-                      Eleanor Pena
-                    </h2>
-                  </a>
-                </div>
-
-                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' className='space-y-4'>
-                    <div className='aspect-w-max aspect-h-ma'>
-                      <img
-                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
-                        src='/componentsgraphics/common/aboutpage/team3.svg'
-                        alt=''
-                      />
-                    </div>
-                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
-                      Robert Fox{' '}
-                    </h2>
-                  </a>
-                </div>
-
-                <div className='mr-8 max-w-fit flex-none   md:pb-4'>
-                  <a href='#' className='space-y-4'>
-                    <div className='aspect-w-max aspect-h-ma'>
-                      <img
-                        className='rounded-lg object-cover shadow-md hover:shadow-xl'
-                        src='/componentsgraphics/common/aboutpage/team1.svg'
-                        alt=''
-                      />
-                    </div>
-                    <h2 className='text-center mt-2 text-2xl text-white font-semibold'>
-                      Robert Fox{' '}
-                    </h2>
-                  </a>
-                </div> */}
-
-          {/* <div className="mr-8 max-w-fit flex-none   md:pb-4">
-								<a href="#" className="space-y-4">
-									<div className="aspect-w-max aspect-h-ma">
-										<img
-											className="rounded-lg object-cover shadow-md hover:shadow-xl"
-											src="/componentsgraphics/common/aboutpage/team3.svg"
-											alt=""
-										/>
-									</div>
-									<h2 className="text-center mt-2 text-2xl text-white font-semibold">
-										Eleanor Pena
-									</h2>
-								</a>
-							</div> */}
-        </div>
-
-        <div className=" py-8 ">
-          <section className="max-w-screen-md mx-auto">
-            <h2 className="mb-4 text-3xl md:text-4xl lg:text-5xl tracking-tight font-extrabold text-center bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
-              Get in touch
-            </h2>
-            <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 md:text-xl">
-              We’d love to hear from you. Please fill out this form.
-            </p>
-            <form className="space-y-6">
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  id="name"
-                  onChange={(e) => setName(e.target.value)}
-                  className="py-2 md:px-3 align-start border-0 border-b border-white text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-0 w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="email"
-                  id="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent outline-none w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
-                  placeholder="Company Email"
-                  required
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="tel"
-                  maxLength={10}
-                  id="phone"
-                  onChange={(e) => setPhoneNo(e.target.value)}
-                  className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none  dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none  bg-transparent  outline-none w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
-                  placeholder="Phone Number"
-                  required
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  onChange={(e) => setTitle(e.target.value)}
-                  id="title"
-                  className="py-2 px-3  border-0 border-b border-white   text-white dark:text-gray-300 focus:ring-none focus:border-none   dark:focus:ring-none dark:focus:border-none dark:bg-transparent dark:border-white dark:focus:ring-none   bg-transparent  outline-none w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
-                  placeholder="Title/Position"
-                  required
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  onChange={(e) => setSubject(e.target.value)}
-                  id="subject"
-                  className="py-2 px-3  border-0 border-b border-white  dark:text-gray-300 focus:ring-none focus:border-none da dark:focus:ring-none dark:bg-transparent dark:border-white dark:focus:ring-none dark:focus:border-none bg-transparent text-white outline-0 w-[90%] sm:w-[80%] md:w-[28rem] m-auto"
-                  placeholder="Subject"
-                  required
-                />
-              </div>
-              <div className="flex justify-center items-center">
-                <button
-                  onClick={(e) => {
-                    contactFnaboutus(e, formData);
-
-                    alert("Message Sent!");
-                    clearFormFields();
-                  }}
-                  type="submit"
-                  className="py-3 px-8 md:px-40 text-sm font-medium text-center bg-[#E1348B] text-white rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-[90%] sm:w-[80%] md:w-[28rem]"
-                >
-                  Connect With Us
-                </button>
-              </div>
-            </form>
-          </section>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
+			{/* Our Team */}
+			<div className="max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16">
+				<TeamSection />
+				<GetInTouch />
+			</div>
+			<Footer />
+		</div>
+	);
 };
 
 export default Aboutus;
