@@ -96,7 +96,7 @@ function MentorDashboard() {
     });
 
     return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen]);
+  }, [isMediumScreen, dataFetched, user?.uid]);
 
   // if (!verified) {
   //   return null;
