@@ -14,7 +14,7 @@ const UploadCard = ({
     <div
       className='shrink-0 rounded-2xl border-2  justify-center border-white border-dashed shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0    md:p-5 flex flex-col '
       onClick={() => {
-        window.location.href = 'addassigment';
+        window.location.href = 'addassignment';
       }}>
       <div className='flex flex-col items-center justify-center space-y-4'>
         <svg

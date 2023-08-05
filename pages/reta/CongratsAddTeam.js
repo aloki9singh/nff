@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import AddTeamPage from '@/pages/reta/addteam';
 import { useEffect } from 'react';
 import withAdminAuthorization from '@/lib/HOC/withAdminAuthorization';
+import Layout from '@/components/common/Layout/Layout';
 
 
 const CongratsAddTeam = () => {
@@ -31,7 +32,7 @@ const CongratsAddTeam = () => {
   }, []);
 
   return (
-    <>
+    <Layout pageTitle="Congrats Add Team">
       <div className='w-screen h-screen flex items-center justify-center'>
       <div
         className='d-flex items-center justify-center w-[85%] sm:w-[1350px] h-[724px] rounded-xl bg-[#1E1E1E] m-12'
@@ -68,7 +69,7 @@ const CongratsAddTeam = () => {
         </div>
       </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

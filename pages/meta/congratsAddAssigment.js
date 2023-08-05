@@ -2,7 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import AddTeamPage from '@/pages/reta/addteam';
 import { useEffect } from 'react';
-import AddAssigments from './addassigment';
+import AddAssigments from './addassignment';
+import Layout from '@/components/common/Layout/Layout';
 
 const CongratsAddAssigment = () => {
   const glass = {
@@ -30,7 +31,7 @@ const CongratsAddAssigment = () => {
   }, []);
 
   return (
-    <>
+    <Layout pageTitle="Congrats Add Assignment">
       <div className='w-screen h-screen flex items-center justify-center'>
         <div
           className='d-flex items-center justify-center w-[85%] sm:w-[1350px] h-[724px] rounded-xl bg-[#1E1E1E] m-12'
@@ -55,14 +56,14 @@ const CongratsAddAssigment = () => {
 
               <button
                 className='d-flex text-white sm:m-4 h-11 px-6 justify-center items-center gap-2 rounded-xl bg-[#E1348B] my-4'
-                onClick={() => router.push('addassigment')}>
+                onClick={() => router.push('addassignment')}>
                 Create another Assigment
               </button>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

@@ -6,6 +6,7 @@ import Datelist from "@/components/common/calendar/common/datelist";
 import DonutInProfile from "@/components/school/dashboard/circularpfp";
 import Calendar from "@/components/common/calendar/school/calendar";
 import { useMediaQuery } from "react-responsive";
+import Layout from "@/components/common/Layout/Layout";
 
 const months = [
   "January",
@@ -143,6 +144,7 @@ export default function Studentdetails() {
   }, [currentMonth]);
 
   return (
+    <Layout pageTitle="Dashboard">
     <div className="flex h-screen">
       {isMobileScreen && (
         <div
@@ -236,5 +238,6 @@ export default function Studentdetails() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }

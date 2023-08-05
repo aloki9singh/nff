@@ -21,6 +21,7 @@ import {
 import { db } from "@/config/firebaseconfig";
 import Image from "next/image";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 const MentorProfile = () => {
   const { loading, setLoading } = useContext(Loading);
@@ -152,7 +153,7 @@ const MentorProfile = () => {
     if (data.details) {
       getCours();
     }
-  }, [data.details, uid]);
+  }, [data?.details, uid]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -185,6 +186,7 @@ const MentorProfile = () => {
   };
 
   return (
+    <Layout pageTitle="Mentor Details">
     <div
       className={`md:p-10 bg-[#1E1E1E] ${
         loading ? "pointer-events-none z-1" : ""
@@ -755,6 +757,7 @@ const MentorProfile = () => {
         )}
       </div>
     </div>
+    </Layout>
   );
 };
 

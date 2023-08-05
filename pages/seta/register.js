@@ -12,6 +12,7 @@ import { doc, setDoc,updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import { generate } from "shortid";
 import { useMediaQuery } from "react-responsive";
+import Layout from "@/components/common/Layout/Layout";
 
 function SchoolRegister() {
     const router = useRouter();
@@ -102,7 +103,7 @@ function SchoolRegister() {
     }, [isMediumScreen]);
 
     return (
-        <>
+        <Layout pageTitle="Register">
             <div className="md:h-screen h-full text-base">
                 <div className="flex">
                     {/* First Sidebar - Visible on Mobile */}
@@ -438,7 +439,7 @@ function SchoolRegister() {
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     );
 }
 export default SchoolRegister;

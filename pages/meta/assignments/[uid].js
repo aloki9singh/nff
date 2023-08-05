@@ -22,6 +22,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
+import Layout from "@/components/common/Layout/Layout";
 
 function Homework() {
   //set Below two for marked homework
@@ -118,7 +119,7 @@ function Homework() {
   // }
 
   return (
-    <>
+    <Layout pageTitle="Assignment">
       <div className="h-full text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -148,9 +149,9 @@ function Homework() {
             </div>
 
             <div className="w-full  p-4 md:p-8 border border-[#5F6065]  mt-11 rounded-xl  flex flex-col h-screen  mb-5">
-              <div className="w-full h-20 text-white flex flex-row  justify-between ">
+              <div className="w-full h-20 text-white flex flex-row justify-between">
                 <div className="flex ml-12 mt-5 mr-16 gap-4">
-                  <div className=" flex">
+                  <div className="flex">
                     <div>
                       <span
                         className={`border-b-2 ${activeElement === "check"
@@ -189,7 +190,7 @@ function Homework() {
                   </div>
                 </div>
               </div>
-              <div className="grid md:grid-cols-4  grid-cols-1 gap-4 m-5">
+              <div className="grid md:grid-cols-3  grid-cols-1 gap-3 m-5">
                 {files &&
                   files?.map((ele, i) => {
                     return ele?.files?.map((e) => {
@@ -198,10 +199,11 @@ function Homework() {
                       );
                       if (!e.checked && activeElement == "uncheck") {
                         return (
+                          <>
                           <div
                             key={i}
-                            className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                            onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                            className="rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">
                               <div>
@@ -220,12 +222,51 @@ function Homework() {
                               <div className="text-xl ">{ele.title}</div>
                               <div className="flex items-center justify-between pt-4">
                                 <div>{mentor}</div>
-                                <div className="text-[#FFFFFF85]">
-                                  {time && time.toLocaleString()}
+                                <div className="text-[#FFFFFF85] flex flex-wrap justify-end">
+                                  <div>
+                                    {time && time.toLocaleDateString()}, 
+                                  </div>
+                                  <div >
+                                    {time && time.toLocaleTimeString()}
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            key={i}
+                            className="rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <Image
+                                  src="/componentsgraphics/mentor/FolderNotch.svg"
+                                  width={65}
+                                  height={65}
+                                  alt="Folder"
+                                />
+                              </div>
+                              <div>
+                                Pending
+                              </div>
+                            </div>
+                            <div className="flex flex-col h-full justify-between overflow-hidden">
+                              <div className="text-xl ">{ele.title}</div>
+                              <div className="flex items-center justify-between pt-4">
+                                <div>{mentor}</div>
+                                <div className="text-[#FFFFFF85] flex flex-wrap justify-end">
+                                  <div>
+                                    {time && time.toLocaleDateString()}, 
+                                  </div>
+                                  <div >
+                                    {time && time.toLocaleTimeString()}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          </>
                         );
                       }
                       else if (activeElement == "check" && e.checked) {
@@ -233,7 +274,7 @@ function Homework() {
                           <div
                             key={i}
                             className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                            onClick={() => router.push({ pathname: "/meta/homework/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">
                               <div>
@@ -253,7 +294,7 @@ function Homework() {
                               <div className="flex items-center justify-between pt-4">
                                 <div>{mentor}</div>
                                 <div className="text-[#FFFFFF85]">
-                                  {time && time.toLocaleString()}
+                                  {time && time.toLocaleString().slice(0, 10)}
                                 </div>
                               </div>
                             </div>
@@ -294,7 +335,7 @@ function Homework() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

@@ -10,6 +10,7 @@ import { updateProfile } from "firebase/auth";
 import { uploadToFirebase } from "@/lib/exportablefunctions";
 import Image from "next/image";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 const options = ["8", "9", "10", "11", "12"];
 
@@ -158,6 +159,7 @@ function StudentProfile() {
 
   console.log("errors", errors);
   return (
+    <Layout pageTitle="Profile">
     <div className="w-full text-white flex flex-col space-y-8 overflow-x-hidden">
       {/* text */}
       <div className="w-[92%] mx-auto pt-16">
@@ -602,6 +604,7 @@ function StudentProfile() {
         </form>
       </div>
     </div>
+    </Layout>
   );
 }
 export default withAdminAuthorization(StudentProfile)

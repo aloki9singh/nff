@@ -110,27 +110,7 @@ const Assignmentupload = () => {
     }
   };
 
-  // const storageRef = ref(storage, `assignment/${file.name}`);
-  // const uploadFile = useCallback(async () => {
-  //   const uploadTask = uploadBytesResumable(storageRef, file);
-  //   uploadTask.on(
-  //     "state_changed",
-  //     (snapshot) => {
-  //       const progress =
-  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //       // console.log("Upload is " + progress + "% done");
-  //       setProgress(progress);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     },
-  //     () => {
-  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //         setUrl(downloadURL);
-  //       });
-  //     }
-  //   );
-  // }, [file]);
+ 
 
   const uploadFile = useCallback(async () => {
     if (!file) {
@@ -203,6 +183,7 @@ const Assignmentupload = () => {
           querySnapshot.docs.forEach((doc) => {
             if (doc.data().files) {
               setSubmitted(
+               
                 doc.data().files.map((ele) => {
                   if (ele.submittedby == user.uid) {
                     return true;
@@ -229,7 +210,7 @@ const Assignmentupload = () => {
       }
     };
     getData();
-  }, [isMediumScreen, courseid, id, user.uid]);
+  }, [isMediumScreen, courseid, id, user?.uid]);
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);

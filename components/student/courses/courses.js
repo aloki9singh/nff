@@ -8,51 +8,6 @@ import Link from "next/link";
 export default function Courses({ coursesData }) {
   const [activeClass, setActiveClass] = useState("All Category");
 
-  const dummyCourses = [
-    {
-      lessons: 8,
-      title: "Introduction to C++",
-      desc: "Learn the basics of C++ programming language.",
-      level: "Beginner",
-      icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
-    },
-    {
-      lessons: 12,
-      title: "Responsive Web Design",
-      desc: "Master the art of creating responsive web layouts.",
-      level: "Intermediate",
-      icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
-    },
-    {
-      lessons: 10,
-      title: "Python for Data Analysis",
-      desc: "Explore data manipulation and analysis using Python.",
-      level: "Intermediate",
-      icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
-    },
-    {
-      lessons: 18,
-      title: "Full-Stack Web Dev",
-      desc: "Become proficient in front-end and back-end web development.",
-      level: "Expert",
-      icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
-    },
-    {
-      lessons: 6,
-      title: "Introduction to AI",
-      desc: "Discover the basics of Artificial Intelligence and its applications.",
-      level: "Intermediate",
-      icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
-    },
-    {
-      lessons: 15,
-      title: "Database Management",
-      desc: "Learn the essentials of designing and managing databases.",
-      level: "Intermediate",
-      icon: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
-    },
-  ];
-
   // coursesData = dummyCourses;
   const categories = useMemo(
     () => [
@@ -157,7 +112,7 @@ export default function Courses({ coursesData }) {
             ))}
           </div> */}
           <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 ">
-            {coursesData.slice(0,3).map((course, i) => (
+            {coursesData?.slice(0,3).map((course, i) => (
               <div key={i}>
                 <CourseCard
                   key={course.id}

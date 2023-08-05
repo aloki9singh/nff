@@ -8,6 +8,7 @@ import {
   StudyMaterialProvider,
 } from "@/lib/context/StudyMaterialContext";
 import StudyMaterialMain from "@/components/mentor/studymetrial/studyMaterial";
+import Layout from "@/components/common/Layout/Layout";
 
 function StudyMaterial() {
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
@@ -29,6 +30,7 @@ function StudyMaterial() {
   
 
   return (
+    <Layout pageTitle="Study Material">
     <div className="flex w-full">
       <div className="h-full w-full text-base bg-[#2E3036] ">
         <div className="flex w-full">
@@ -93,6 +95,7 @@ function StudyMaterial() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
 

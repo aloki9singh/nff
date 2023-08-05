@@ -191,7 +191,7 @@ const Aboutus = () => {
                     src={`${
                       mentor.photoURL
                         ? mentor.photoURL
-                        : '/componentsgraphics/common/aboutpage/team2.svg'
+                        : "/componentsgraphics/common/Anonymousimage/anonymous.png"
                     }`}
                     height={100}
                     width={100}

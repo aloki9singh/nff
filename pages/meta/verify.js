@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
 import Link from "next/link";
+import Layout from "@/components/common/Layout/Layout";
 
 const MentorVerify = () => {
   const [email, setEMail] = useState("");
@@ -43,6 +44,7 @@ const MentorVerify = () => {
     return null; // Don't render the user if not verified
   }
   return (
+    <Layout pageTitle="Verify">
     <div className={`${loading ? "pointer-events-none z-1" : "mx-3 "}`}>
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -103,6 +105,7 @@ const MentorVerify = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

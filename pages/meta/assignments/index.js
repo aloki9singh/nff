@@ -15,6 +15,7 @@ import UploadCard from "@/components/mentor/homework/uploadcard";
 import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from "@/config/firebaseconfig";
 import Nodata from "@/components/common/nodata/nodata";
+import Layout from "@/components/common/Layout/Layout";
 
 function Homework() {
   //set Below two for marked homework
@@ -104,7 +105,7 @@ function Homework() {
     var inactive = 0
     var checked = 0
     course && course.map((e) => {
-      if (e.files){
+      if (e.files) {
         e.files.map((data) => {
           if (data.checked) {
             checked += 1
@@ -122,7 +123,7 @@ function Homework() {
     return { active: active, inactive: inactive, checked: checked }
   }
   return (
-    <>
+    <Layout pageTitle="Assignments">
       <div className="h-full text-base bg-[#2E3036] w-full">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -144,16 +145,16 @@ function Homework() {
 
           <div className="flex-grow md:rounded-tl-[40px]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-              <MentorTopbar heading="Homework" toggleSideBar={toggleSideBar} />
+              <MentorTopbar heading="Assignment" toggleSideBar={toggleSideBar} />
             </div>
-            <div className="flex items-center justify-between mt-5">
-              <div className=" font-semibold  text-lg text-white ml-10">
+            <div className="flex items-center justify-end mt-5">
+              {/* <div className=" font-semibold  text-lg text-white ml-10">
                 Assignment
-              </div>
+              </div> */}
               <div
                 className=" bg-[#E1348B] px-4 py-2 rounded-md cursor-pointer text-lg flex items-center justify-center text-white mr-5"
                 onClick={() => {
-                  router.push("/meta/addassigment");
+                  router.push("/meta/addassignment");
                 }}
               >
                 Add Assignment
@@ -176,7 +177,6 @@ function Homework() {
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                        {/* {activeCourse} */}
                         {activeCourse && activeInactive(activeCourse).active}
                       </div>
                     </div>
@@ -194,7 +194,6 @@ function Homework() {
                     </div>
                     <div className="mr-2 cursor-pointer">
                       <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                        {/* {activeCourse} */}
                         {activeCourse && activeInactive(activeCourse).inactive}
                       </div>
                     </div>
@@ -224,7 +223,7 @@ function Homework() {
 
               <div className="grid md:grid-cols-3 grid-cols-1 gap-4 m-5 max-h-screen overflow-scroll scrollbar-hide">
                 {activeCourse &&
-                  activeCourse.map((ele) => {
+                  activeCourse.map((ele, i) => {
                     const date = new Date(
                       ele.date.seconds * 1000 +
                       ele.date.nanoseconds / 1000000
@@ -235,18 +234,22 @@ function Homework() {
                           className="cursor-pointer"
                           onClick={() => {
                             router.push({
-                              pathname: `/meta/homework/${ele.id}`,
+                              pathname: `/meta/assignments/${ele.id}`,
                               query: { courseid: ele.courseid },
                             });
                           }}
                           key={ele.id}
                         >
                           <HomeWorkCard
+                            key={i}
+                            no={i + 1}
                             title={ele.title}
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
-                            submit={ele.files.length}
+
+                            submit={ele.files ? ele.files.length : 0}
+
                             checked={checked && checked.includes(ele) ? "true" : "false"}
                           />
                         </div>
@@ -258,13 +261,15 @@ function Homework() {
                           className="cursor-pointer"
                           onClick={() => {
                             router.push({
-                              pathname: `/meta/homework/${ele.id}`,
+                              pathname: `/meta/assignments/${ele.id}`,
                               query: { courseid: ele.courseid },
                             });
                           }}
                           key={ele.id}
                         >
                           <HomeWorkCard
+                            key={i}
+                            no={i + 1}
                             title={ele.title}
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
@@ -279,7 +284,7 @@ function Homework() {
                 }
                 {/* <UploadCard /> */}
                 {checked &&
-                  checked.map((ele) => {
+                  checked.map((ele, i) => {
                     const date = new Date(
                       ele.date.seconds * 1000 +
                       ele.date.nanoseconds / 1000000
@@ -290,18 +295,20 @@ function Homework() {
                           className="cursor-pointer"
                           onClick={() => {
                             router.push({
-                              pathname: `/meta/homework/${ele.id}`,
+                              pathname: `/meta/assignments/${ele.id}`,
                               query: { courseid: ele.courseid },
                             });
                           }}
                           key={ele.id}
                         >
                           <HomeWorkCard
+                            key={i}
+                            no={i + 1}
                             title={ele.title}
                             desc={ele.module}
                             date={date.toLocaleString().split(",")[0]}
                             course={ele.course}
-                            submit={ele.files.length}
+                            submit={ele.files ? ele.files.length : 0}
                             checked="true"
                           />
                         </div>
@@ -319,7 +326,7 @@ function Homework() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

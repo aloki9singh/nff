@@ -9,6 +9,7 @@ import { callUserById } from '@/lib/exportablefunctions';
 import { useMediaQuery } from 'react-responsive';
 import { collection, getDocs, query, updateDoc, where, doc, getDoc } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
+import Layout from '@/components/common/Layout/Layout';
 
 function Homework() {
     //set Below two for marked homework
@@ -108,7 +109,7 @@ function Homework() {
                     // Update the specific assignment document using the update method
                     await updateDoc(doc(assignmentRef, assignmentDoc.id), { files: updatedFiles });
                     alert("Assignment Checked");
-                    router.push("/meta/homework")
+                    router.push("/meta/assignments")
                 } catch (err) {
                     alert("Error occurred", err);
                 }
@@ -137,7 +138,7 @@ function Homework() {
 
 
     return (
-        <>
+        <Layout pageTitle="Feedback">
             <div className='h-full text-base bg-[#2E3036] '>
                 <div className='flex'>
                     {/* First Sidebar - Visible on Mobile */}
@@ -165,41 +166,36 @@ function Homework() {
                                 Give Feedback
                             </div>
                             <hr />
-                            <form action="" onSubmit={handleSubmit}>
+                            <form action="">
                                 <div className=''>
                                     <div className='flex my-2 text-white w-[95%] p-4 mx-auto max-[705px]:flex-col'>
                                         <div className='flex items-center '>
                                             <div>
                                                 Maximum marks:
                                             </div>
-                                            <input type="text" value={maxMarks} disbaled name="total" id="total" className='border-white bg-transparent m-2 w-[25%]' />
+                                            <input type="text" value={maxMarks} disbaled name="total" id="total" className='border-white bg-transparent m-2 w-[25%]' disabled />
                                         </div>
                                         <div className='flex items-center'>
                                             <div>
                                                 Given marks:
                                             </div>
-                                            <input type="number" className='border-white w-[25%] ml-2 max-[694px]:ml-10 bg-transparent' value={marks} onChange={(e) => { e.preventDefault(); setMarks(e.target.value) }} />
+                                            <input type="number" className='border-white w-[25%] ml-2 max-[694px]:ml-10 bg-transparent' value={marks} disabled />
                                         </div>
                                     </div>
                                     <div className="w-[95%] text-white mx-auto h-[127px] m-4 rounded-[10px]">
-                                        <input type="text" placeholder='Add Comment' value={comment} onChange={(e) => { e.preventDefault(); setComment(e.target.value) }} className='w-full h-[127px] bg-[#474A50] rounded-[10px]  placeholder:text-center' />
+                                        <input type="text" placeholder='Add Comment' value={comment} className='w-full h-[127px] bg-[#474A50] rounded-[10px]  placeholder:text-center' disabled/>
                                     </div>
-                                    <div className='w-[95%] max-[500px]:flex-col mx-auto flex md:items-center text-white justify-end'>
+                                    <div className='w-[95%] max-[500px]:flex-col mx-auto flex md:items-center text-white justify-end m-4'>
                                         <div>Teacher Name:</div>
-                                        <input type="text" placeholder='Type' value={teacher} onChange={(e) => { e.preventDefault(); setTeacher(e.target.value) }} className=' bg-[#474A50] rounded-[10px] ml-2' />
+                                        <input type="text" placeholder='Type' value={teacher} className=' bg-[#474A50] rounded-[10px] ml-2' disabled />
                                     </div>
-                                </div>
-                                <div className="flex justify-end mx-8 my-8">
-                                    <button type="submit" className="bg-[#E1348B] text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center">
-                                        Submit
-                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     );
 }
 
