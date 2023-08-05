@@ -28,7 +28,7 @@ async function handler(req, res) {
     "amount": body.price,
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
-    "callbackUrl": baseUrl + "/api/payment/serverToServer",
+    "callbackUrl": baseUrl +"/api/payment/serverToServer",
     "mobileNumber": "9999999999",
     "paymentInstrument": {
       "type": "PAY_PAGE"
