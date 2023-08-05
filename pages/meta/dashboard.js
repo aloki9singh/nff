@@ -7,7 +7,8 @@ import MentorSidebar from "@/components/common/sidebar/mentor";
 import MentorTopbar from "@/components/common/navbar/mentortopbar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { auth } from "@/config/firebaseconfig";
+import { auth, db } from "@/config/firebaseconfig";
+import { where, query, collection, getDocs  } from "firebase/firestore";
 import LeaderBoardMentor from "@/components/mentor/dashboard/leaderboard";
 import CirProgress from "@/components/mentor/other/circularprogressbar";
 
@@ -30,6 +31,8 @@ function MentorDashboard() {
   let [searchstate, setsearchstate] = useState("");
   const { user, userProfile } = useAuthContext();
   const router = useRouter();
+  const [checked, setChecked] = useState()
+  const [assignment , setAssignment] = useState()
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
@@ -37,6 +40,7 @@ function MentorDashboard() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false)
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -46,6 +50,43 @@ function MentorDashboard() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+
+    const getData = async () => {
+      if (!dataFetched) {
+        const q = query(
+          collection(db, "courses"),
+          where("MentorId", "array-contains", user.uid)
+        );
+        const courseInfo = await getDocs(q);
+        const arr = [];
+        const files = []
+        for (const doc of courseInfo.docs) {
+          const docRef = doc.ref;
+          const collectionRef = collection(docRef, "assignment");
+          const querySnapshot = await getDocs(collectionRef);
+          querySnapshot.docs.map((doc) => arr.push(doc.data()))
+        }
+        const check = []
+        arr.map(ele => {
+          var count = 0
+          if (ele.files) {
+            ele.files.map((e) => {
+              if (e.checked) {
+                count += 1
+              }
+            })
+            if (count != 0 && ele.files.length == count) {
+              check.push(ele)
+            }
+          }
+        })
+        setChecked(check)
+        setAssignment(arr)
+        setDataFetched(true);
+      }
+    };
+    getData()
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         user.emailVerified = true;
@@ -93,7 +134,7 @@ function MentorDashboard() {
 
             <div className="md:flex gap-5 m-5 md:mb-0 md:mt-0 ">
               <div className="md:w-5/6 ">
-                <BasicDetails />
+                <BasicDetails checked={checked && checked.length}/>
 
                 <div className="md:flex gap-5">
                   <div className="md:w-1/2">
@@ -104,13 +145,13 @@ function MentorDashboard() {
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
                           <div>To be Marked</div>
                           <div className="border border-[#A145CD] rounded-[5px] px-1">
-                            {toBeMarked}
+                            {checked && assignment && assignment.length - checked.length}
                           </div>
                         </div>
                         <div className="flex justify-between px-5 py-3 bg-[#2E3036] rounded-[10px]">
                           <div>Marked</div>
                           <div className="border border-[#A145CD] rounded-[5px] px-1">
-                            {marked}
+                            {checked && checked.length}
                           </div>
                         </div>
                       </div>
