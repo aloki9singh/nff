@@ -68,7 +68,7 @@ function ModifyCourses() {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user.verified);
+        setVerified(value?.user?.verified);
       }
     });
 
@@ -90,19 +90,22 @@ function ModifyCourses() {
                 SideBarState ? "block" : "hidden"
               } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
-               <AdminSidebar toggleSideBar={toggleSideBar} />
+              <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
             <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-               <AdminSidebar toggleSideBar={toggleSideBar} />
+              <AdminSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
           <div className="flex-grow md:rounded-tl-[40px] w-[78%]">
-            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-            <AdminTopbar heading="Modify Course" toggleSideBar={toggleSideBar} />
+            <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0  top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
+              <AdminTopbar
+                heading="Modify Course"
+                toggleSideBar={toggleSideBar}
+              />
             </div>
             <div className="text-white">
               <div className="flex flex-col items-center max-w-[630px]  mx-auto relative pt-20 pb-10 px-10">
@@ -137,4 +140,4 @@ function ModifyCourses() {
     </Layout>
   );
 }
-export default withAdminAuthorization(ModifyCourses)
+export default withAdminAuthorization(ModifyCourses);
