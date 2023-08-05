@@ -203,13 +203,11 @@ function Assignments() {
             </div>
 
             {/* Div under Topbar with the main content */}
-
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               {/* Main content (Assignments ) */}
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
-
                   {/* Course Select */}
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Courses
