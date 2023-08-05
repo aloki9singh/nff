@@ -72,7 +72,7 @@ const Assignmentupload = () => {
       const courseRef = doc(db, "courses", courseid);
       const courseInfo = await getDoc(courseRef);
       const data = {
-        submittedby: auth.currentUser.uid,
+        submittedby: user.uid,
         file: url ? url : link,
         date: new Date(),
       };

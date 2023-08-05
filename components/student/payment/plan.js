@@ -65,7 +65,6 @@ const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
 
         Cancel Anytime
       </p>
-      
       </div>
     </> : <> 
     <div> <h2 className="text-base md:text-xl mb-2 font-semibold">
