@@ -45,7 +45,7 @@ export default function Privacy() {
           )}
         <div className="w-full h-full flex flex-col bg-[#2D2E35] space-y-4 max-[768px]:rounded-none ">
           <Dashboardnav heading="Privacy Policy" toggleSideBar={toggleSideBar}/>
-          <div className=" justify-start items-center text-center text-white ">
+          <div className=" justify-start items-center text-center text-white pt-10">
             <h1 className="text-center w-full font-semibold text-5xl max-[565px]:text-4xl">
               Privacy Policy
             </h1>
@@ -53,7 +53,7 @@ export default function Privacy() {
               Last updated on 7th of May 2023
             </h1>
           </div>
-          <div className="mx-24 max-[1140px]:mx-6">
+          <div className="mx-24 max-[1140px]:mx-6 pb-10">
             <div className="md:m-6 m-3 text-white space-y-4">
               <p className="text-[#FFFFFFCC]">
                 This Privacy Policy {`("Policy")`} governs the manner in which we
