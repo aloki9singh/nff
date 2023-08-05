@@ -99,7 +99,7 @@ function Homework() {
 
           {/* Second Sidebar - Visible on Desktop */}
           {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+            <div className={`md:block w-[261px]  hidden w-[221px] bg-[#141518] z-10`}>
               <MentorSidebar toggleSideBar={toggleSideBar} />
             </div>
           )}
