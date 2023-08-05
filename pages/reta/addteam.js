@@ -5,9 +5,11 @@ import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 const AddEmployeeForm = () => {
   return (
+    <Layout pageTitle="Add Team">
     <div className="main_form_container">
       <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
       <h4>Employee</h4>
@@ -38,6 +40,7 @@ const AddEmployeeForm = () => {
         />
       </div>
     </div>
+    </Layout>
   );
 };
 

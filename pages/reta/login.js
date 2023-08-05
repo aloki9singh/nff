@@ -23,6 +23,7 @@ import { auth, db } from "@/config/firebaseconfig";
 import { Loading } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
 import { getDoc, doc } from "@firebase/firestore";
+import Layout from "@/components/common/Layout/Layout";
 
 function Adminlogin() {
   const [email, setEmail] = useState("");
@@ -148,6 +149,7 @@ function Adminlogin() {
   }, []);
 
   return (
+    <Layout pageTitle="Login">
     <div className={`${loading ? "pointer-events-none z-1" : ""}`}>
       {loading && (
         <div style={{ pointerEvents: "none", zIndex: 1 }}>
@@ -312,6 +314,7 @@ function Adminlogin() {
         </div>
       </main>
     </div>
+    </Layout>
   );
 }
 

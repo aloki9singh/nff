@@ -13,6 +13,7 @@ import Schoolsidebar from "@/components/common/sidebar/school";
 import SchoolTopbar from "@/components/common/navbar/schooltopbar";
 
 import { useMediaQuery } from "react-responsive";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function Students() {
   const [count, setCount] = useState(1);
@@ -94,6 +95,7 @@ export default function Students() {
   };
 
   return (
+    <Layout pageTitle="Students">
     <div className="flex">
       {/* First Sidebar - Visible on Mobile */}
       {isMobileScreen && (
@@ -328,5 +330,6 @@ export default function Students() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }

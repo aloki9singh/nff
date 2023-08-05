@@ -190,7 +190,7 @@ function Homework() {
                   </div>
                 </div>
               </div>
-              <div className="grid md:grid-cols-4  grid-cols-1 gap-4 m-5">
+              <div className="grid md:grid-cols-3  grid-cols-1 gap-3 m-5">
                 {files &&
                   files?.map((ele, i) => {
                     return ele?.files?.map((e) => {
@@ -199,9 +199,10 @@ function Homework() {
                       );
                       if (!e.checked && activeElement == "uncheck") {
                         return (
+                          <>
                           <div
                             key={i}
-                            className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            className="rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
                             onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">
@@ -221,12 +222,51 @@ function Homework() {
                               <div className="text-xl ">{ele.title}</div>
                               <div className="flex items-center justify-between pt-4">
                                 <div>{mentor}</div>
-                                <div className="text-[#FFFFFF85]">
-                                  {time && time.toLocaleString()}
+                                <div className="text-[#FFFFFF85] flex flex-wrap justify-end">
+                                  <div>
+                                    {time && time.toLocaleDateString()}, 
+                                  </div>
+                                  <div >
+                                    {time && time.toLocaleTimeString()}
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            key={i}
+                            className="rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <Image
+                                  src="/componentsgraphics/mentor/FolderNotch.svg"
+                                  width={65}
+                                  height={65}
+                                  alt="Folder"
+                                />
+                              </div>
+                              <div>
+                                Pending
+                              </div>
+                            </div>
+                            <div className="flex flex-col h-full justify-between overflow-hidden">
+                              <div className="text-xl ">{ele.title}</div>
+                              <div className="flex items-center justify-between pt-4">
+                                <div>{mentor}</div>
+                                <div className="text-[#FFFFFF85] flex flex-wrap justify-end">
+                                  <div>
+                                    {time && time.toLocaleDateString()}, 
+                                  </div>
+                                  <div >
+                                    {time && time.toLocaleTimeString()}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          </>
                         );
                       }
                       else if (activeElement == "check" && e.checked) {
@@ -254,7 +294,7 @@ function Homework() {
                               <div className="flex items-center justify-between pt-4">
                                 <div>{mentor}</div>
                                 <div className="text-[#FFFFFF85]">
-                                  {time && time.toLocaleString()}
+                                  {time && time.toLocaleString().slice(0, 10)}
                                 </div>
                               </div>
                             </div>
