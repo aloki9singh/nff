@@ -32,7 +32,6 @@ const firebaseConfig = {
 
 // 3rd config
 
-
 // const firebaseConfig = {
 //   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
 //   authDomain: "neatskills9.firebaseapp.com",
