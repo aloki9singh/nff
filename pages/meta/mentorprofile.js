@@ -88,6 +88,7 @@ const MentorProfile = () => {
     if (data?.details?.interest) {
       getCourse();
     }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateData = async () => {
