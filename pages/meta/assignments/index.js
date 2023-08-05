@@ -82,7 +82,7 @@ function Homework() {
                 count += 1
               }
             })
-            if (count != 0 && ele.files.length == count) {
+            if (count != 0 && ele?.files?.length == count) {
               check.push(ele)
             }
           }
