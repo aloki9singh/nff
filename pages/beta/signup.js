@@ -1,13 +1,14 @@
 
 import SignUp from '@/components/common/homepage/signup/signup';
+import Layout from '@/components/common/Layout/Layout';
 import React from 'react';
 
 function Signup() {
   
   return (
-    <div>
+    <Layout pageTitle="Sign Up">
       <SignUp/>
-    </div>
+    </Layout>
   );
 }
 

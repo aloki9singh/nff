@@ -4,8 +4,11 @@ import PaymentCompleted from "@/components/student/payment/paymentdone";
 import PaymentProceed from '@/components/student/payment/PaymentProceed';
 import DashboardNav from "@/components/common/navbar/dashboardnav";
 import Payment from '@/components/student/payment/paymen';
+import Layout from '@/components/common/Layout/Layout';
+import {useRouter} from 'next/router';
 
 const Paynow = () => {
+  const router = useRouter();
 
   //to manage the current step of the payment process
   const [currentStep, setCurrentStep] = useState(0);
@@ -16,21 +19,21 @@ const Paynow = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
 
+
+  useEffect(() => {
+  const {val} = router.query;
+  if(val){
+    const payloadData = JSON.parse(atob(val));
+    setCurrentStep(payloadData.page)
+  }
+}, [router.query]);
+
+
   //stores the page number to the localhost (till now its a jugaad)
   const updatePage = (page) => {
     setCurrentStep(page);
-    localStorage.setItem('currentPage', page);
   };
 
-  //get the page number stored in localStorage
-  useEffect(() => {
-    const pg = localStorage.getItem('currentPage');
-    console.log(pg);
-
-    if (pg) {
-      setCurrentStep(pg);
-    }
-  }, [currentStep])
 
 
   //update the value of price hook according to passed into props
@@ -46,6 +49,7 @@ const Paynow = () => {
   }
 
   return (
+    <Layout pageTitle="Payment">
     <div className='h-screen'>
 
       <DashboardNav heading={"Payment"} toggleSideBar={toggleSideBar} />
@@ -55,11 +59,12 @@ const Paynow = () => {
         <StepProgress currentStep={currentStep} />
         {currentStep == 2 && <PaymentCompleted />}
 
-        {currentStep == 1 && <PaymentProceed updatePage={updatePage} price={price} />}
+        {currentStep == 1 && <PaymentProceed price={price} />}
       </div>
       {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
 
     </div>
+    </Layout>
   )
 }
 

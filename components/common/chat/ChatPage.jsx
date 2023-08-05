@@ -11,6 +11,8 @@ import {
   where,
 } from "firebase/firestore";
 
+import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
+
 import { auth, db } from "../../../config/firebaseconfig";
 import GroupDetails from "./Group";
 import { useRouter } from "next/router";
@@ -21,6 +23,9 @@ import { useMediaQuery } from "react-responsive";
 import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import MentorSidebar from "../sidebar/mentor";
 import MentorTopbar from "../navbar/mentortopbar";
+import Layout from "../Layout/Layout";
+import CourseAccess from "@/lib/context/AccessCourseContext";
+
 
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
@@ -34,8 +39,12 @@ const Chat = () => {
   const router = useRouter();
   const [showChat, setShowChat] = useState(false);
 
+
+  
   // const user = auth.currentUser;
   const { user, loading, userProfile } = useAuthContext();
+  
+  const { userSubsribed } = CourseAccess(user.uid);
 
   const isMentor = useMemo(() => {
     if (userProfile.role == "mentor") {
@@ -159,7 +168,7 @@ const Chat = () => {
   }
 
   return (
-    <>
+    <Layout pageTitle="Chats">
       <div
         className={`flex overflow-hidden items-stretch max-h-screen  ${
           userProfile.role != "mentor"
@@ -169,8 +178,18 @@ const Chat = () => {
             : null
         }`}
       >
+
+
+         {!userSubsribed && (
+        <ToastMessage
+        heading={"OOPS!"}
+          message={
+            "You have not joined any courses yet. Please join a course to access the study material."
+          }
+        />
+      )}
         {userProfile.role != "mentor"
-          ? chats.length === 0 && <NoJoinedCoursesModal />
+          ? chats.length === 0 && userSubsribed && <NoJoinedCoursesModal />
           : null}
         {isMobileScreen && (
           <div
@@ -213,7 +232,6 @@ const Chat = () => {
           )}
           <div
             className="md:p-4 items-stretch justify-between  h-[calc(100vh-80px)] flex flex-row gap-4 bg-[#2f3036] "
-            // style={{ height: "calc(90vh  )" }}
           >
             <ChatSidebar
               currReciever={currReciever}
@@ -256,7 +274,7 @@ const Chat = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 

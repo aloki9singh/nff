@@ -14,25 +14,27 @@ async function sha256(input) {
 
 async function handler(req, res) {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const merchantId = process.env.NEXT_MERCHANT_ID;
+  const saltKey = process.env.NEXT_SALT_KEY;
+
+
     const body = JSON.parse(req.body);
-
-
     const paymentData =
-  {
-    "merchantId": "PGTESTPAYUAT",
+    {
+    "merchantId": merchantId,
     "merchantTransactionId": "MTST50590068188178",
     "merchantUserId": "MUID409",
     "amount": body.price,
-    "redirectUrl": "http://localhost:3000/beta/payment",
-    "redirectMode": "POST",
-    "callbackUrl": "https://webhook.site/callback-url",
+    "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
+    "redirectMode": "GET",
+    "callbackUrl": baseUrl +"/api/payment/serverToServer",
     "mobileNumber": "9999999999",
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }
   }
 
-  const saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399"
 
     const encodedData = encodeToBase64(JSON.stringify(paymentData));
     const shaFormula = encodedData+"/pg/v1/pay"+saltKey;
@@ -47,7 +49,6 @@ async function handler(req, res) {
                 headers: {
                   accept: 'application/json',
                   'Content-Type': 'application/json',
-
                   'X-VERIFY': shaVerify,
                 },
                 body: JSON.stringify({
@@ -61,7 +62,6 @@ async function handler(req, res) {
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
-
                 })
                 .catch(err => console.error(err));
 

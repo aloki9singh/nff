@@ -29,52 +29,19 @@ const ArrowIcon = (props) => (
   </svg>
 );
 
-function MetrialInfo({}) {
-  const router = useRouter();
-  const isMediumScreen = useMediaQuery({ minWidth: 768 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
+function MetrialInfo({ }) {
   const [selectedCard, setSelectedCard] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  const { selectedModule: module, setSelectedModule } =
+  const { selectedModule: module, setSelectedModule, isMentor } =
     useStudyMaterialContext();
 
-  console.log("module", module);
 
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
 
-  useEffect(() => {
-    if (isMediumScreen) {
-      sendSideBarState(false);
-    }
-    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     user.emailVerified = true;
-    //     const value = await callUserById(user.uid);
-    //     setVerified(value.user.verified);
-    //   }
-    // });
-
-    // return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen]);
-
-  const { query } = router;
-
-  useEffect(() => {
-    const { selectedCard } = query;
-    if (selectedCard) {
-      setSelectedCard(decodeURIComponent(selectedCard));
-    }
-  }, [query]);
 
   return (
-    <div className=" w-full  h-full pb-10  bg-[#2D2E35] text-white grow flex items-center justify-center ">
-      <div className="w-[90%] flex md:bg-[#373A41] rounded-[30px] h-full  ">
+    <div className=" max-w-6xl  h-full pb-6  bg-[#2D2E35] text-white grow flex items-center justify-center overflow-hidden ">
+      <div className="w-full min-h-[30rem] flex md:bg-[#373A41] rounded-[30px] h-full  ">
         <div className="w-full  flex flex-col">
           <div className="w-full flex items-center justify-between">
             <div className="flex items-center">
@@ -102,7 +69,7 @@ function MetrialInfo({}) {
                 )}
               </div>
             </div>
-            {selectedCard && !showForm && (
+            {selectedCard && !showForm && isMentor && (
               <Button onClick={() => setShowForm(true)} className={"mr-4"}>
                 Add {selectedCard}
               </Button>
@@ -135,12 +102,12 @@ function MetrialInfo({}) {
                       <h1 className="text-white text-base font-medium ">
                         {module.pdf?.length ?? 0} pdf
                       </h1>
-                      <div className=" flex flex-row  justify-between gap-3">
+                      {/* <div className=" flex flex-row  justify-between gap-3">
                         <p className="text-white text-sm ">aditya</p>
-                        {/* <div className="text-sm text-white pr-2 space-y-6">
+                        <div className="text-sm text-white pr-2 space-y-6">
                           20/11/2000
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -169,12 +136,12 @@ function MetrialInfo({}) {
                       <h1 className="text-white text-base font-medium ">
                         {module.link?.length ?? 0} shared link
                       </h1>
-                      <div className=" flex flex-row  justify-between gap-3">
+                      {/* <div className=" flex flex-row  justify-between gap-3">
                         <p className="text-white text-sm ">aditya</p>
-                        {/* <div className="text-sm text-white pr-2 space-y-6">
+                        <div className="text-sm text-white pr-2 space-y-6">
                           20/11/2000
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -209,12 +176,12 @@ function MetrialInfo({}) {
                       <h1 className="text-white text-base font-medium ">
                         {module.video?.length ?? 0} video
                       </h1>
-                      <div className=" flex flex-row  justify-between gap-3">
+                      {/* <div className=" flex flex-row  justify-between gap-3">
                         <p className="text-white text-sm ">aditya</p>
-                        {/* <div className="text-sm text-white pr-2 space-y-6">
+                        <div className="text-sm text-white pr-2 space-y-6">
                           20/11/2000
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

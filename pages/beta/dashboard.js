@@ -19,6 +19,7 @@ import { useAuthContext } from "@/lib/context/AuthContext";
 
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import Layout from "@/components/common/Layout/Layout";
 
 const Studentdashboard = () => {
   const [active, setActive] = useState(false);
@@ -45,7 +46,7 @@ const Studentdashboard = () => {
       if (user) {
         user.emailVerified = true;
         const value = await callUserById(user.uid);
-        setVerified(value.user.verified);
+        setVerified(value.user?.verified);
       }
     });
     const fetchLastTip = async () => {
@@ -80,7 +81,7 @@ const Studentdashboard = () => {
   }
 
   return (
-    <>
+    <Layout pageTitle="Dashboard">
       <div className="md:h-screen h-full text-base md:w-full ">
         <div className="flex">
           {isMobileScreen && (
@@ -150,7 +151,7 @@ const Studentdashboard = () => {
         </div>
         <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
-    </>
+    </Layout>
   );
 };
 

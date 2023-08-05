@@ -7,10 +7,11 @@ import { auth, db, storage } from "../../config/firebaseconfig";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { useAuthContext } from "@/lib/context/AuthContext";
+import Layout from "@/components/common/Layout/Layout";
 
 
 //class options
-const options = ["8", "9", "10", "11", "12"];
+const options = ["8", "9", "10", "11", "12","N/A"];
 
 export default function ProfileDetails() {
   const router = useRouter();
@@ -137,6 +138,7 @@ export default function ProfileDetails() {
 
   
   return (
+    <Layout pageTitle="Profile Details">
     <div className="w-full text-white flex flex-col space-y-8 overflow-x-hidden">
       {/* text */}
       <div className="w-[92%] mx-auto pt-16">
@@ -227,7 +229,7 @@ export default function ProfileDetails() {
           <div className="w-full md:w-screen flex flex-col md:flex-row justify-start items-start md:items-center gap-y-2 md:gap-x-6 px-4 mb-8">
             <label htmlFor="">Class</label>
             <select
-              className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-[200px] w-full "
+              className="border pl-5 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 bg-[#333333] border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-[100px] w-full py-2"
               {...register("class")}
             >
               {options.map((option) => (
@@ -244,8 +246,8 @@ export default function ProfileDetails() {
             <div className="flex flex-col items-stretch w-full">
               <input
                 type="text"
-                placeholder="Type Here"
-                className="w-full md:w-36 h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
+                placeholder="Your School RollNo"
+                className="w-full md:w-[200px] h-10 rounded-lg px-2 focus:outline-none placeholder:pl-2"
                 style={{ background: "#333333" }}
                 {...register("rollNo", { required: true })}
               />
@@ -561,5 +563,6 @@ export default function ProfileDetails() {
         </form>
       </div>
     </div>
+    </Layout>
   );
 }

@@ -14,6 +14,7 @@ import HomepageActivities from "@/components/common/homepage/activities/Homepage
 import SignUp from "@/components/common/homepage/HomeSignupComp/HomeSignupComp";
 import { useState } from "react";
 import useHoverOutside from "@/components/common/homepage/useHoverOutside/useHoverOutside";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function Home({ coursesData }) {
   const [nav, setNav] = useState(false);
@@ -23,7 +24,7 @@ export default function Home({ coursesData }) {
   const ref = useHoverOutside(handleClickOutside);
 
   return (
-    <div>
+    <Layout pageTitle="Home Page">
       <Navbar nav={nav} setNav={setNav} />
       <div ref={ref}>
         <HomePage />
@@ -36,7 +37,7 @@ export default function Home({ coursesData }) {
         <SignUp />
         <Footer />
       </div>
-    </div>
+    </Layout>
   );
 }
 
@@ -44,15 +45,15 @@ export async function getStaticProps() {
   try {
     const CoursesCollectionref = collection(db, "courses");
     const coursesSnapshot = await getDocs(CoursesCollectionref, limit(6));
-    const coursesData = coursesSnapshot.docs.map((doc) => ({
+    const coursesData = coursesSnapshot?.docs?.map((doc) => ({
       id: doc.id,
-      title: doc.data().title,
-      desc: doc.data().desc,
-      level: doc.data().level,
-      lessons: doc.data().lectures,
-      language: doc.data().language,
-      category: doc.data().category,
-      banner: doc.data().banner
+      title: doc.data().title||"",
+      desc: doc.data().desc || "",
+      level: doc.data().level || "",
+      lessons: doc.data().lectures || "",
+      language: doc.data().language || "",
+      category: doc.data().category || "",
+      banner: doc.data().banner || "",
     }));
     return {
       props: {

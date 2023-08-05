@@ -10,6 +10,7 @@ import { Loading, userLogger } from "@/lib/context/contextprovider";
 import { HashLoader } from "react-spinners";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import { onAuthStateChanged } from "firebase/auth";
+import Layout from "@/components/common/Layout/Layout";
 
 const Otpverification = () => {
   const [otp, setOtp] = useState("");
@@ -110,6 +111,7 @@ const Otpverification = () => {
   }, []);
 
   return (
+    <Layout pageTitle="OTP Verification">
     <div
       className={`${loading ? "pointer-events-none z-1" : ""}`}
       style={{ overflow: "hidden" }} // Fix mobile view scrolling issue
@@ -183,6 +185,7 @@ const Otpverification = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

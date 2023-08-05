@@ -1,13 +1,14 @@
 // TODO: Signup and login neded to be seperated, was unavailable in FIGMA seperately
 
+import Layout from "@/components/common/Layout/Layout";
 import MentorSignupcomp from "@/components/mentor/signup/signup";
 import React from "react";
 
 function Signup() {
 	return (
-		<div>
+		<Layout pageTitle="Signup/Login">
 			<MentorSignupcomp />
-		</div>
+		</Layout>
 	);
 }
 

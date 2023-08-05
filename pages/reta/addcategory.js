@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import NeatS from "/public/componentsgraphics/schools/login/neatskillslogosample.svg";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 const Createcategory = () => {
   const [category, setCategory] = useState("");
@@ -16,6 +17,7 @@ const Createcategory = () => {
     setCategory("");
   }
   return (
+    <Layout pageTitle="Add Category">
     <div className="w-screen h-screen flex p-5">
       <div
         className="md:w-3/4 h-3/4 m-auto rounded-2xl w-full p-5 "
@@ -51,6 +53,7 @@ const Createcategory = () => {
         </div>
       </div>
     </div>
+    </Layout >
   );
 };
 

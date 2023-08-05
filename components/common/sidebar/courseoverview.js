@@ -249,11 +249,11 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                                 : ""
                             }]`}
                           >
-                            Homework
+                            Assignment
                           </span>
                         </label>
                       </Link>
-                      <hr className="h-px  my-1 md:my-4 bg-gray-500 border-0 w-[90%] m-auto "></hr>
+                      <hr className="h-px  my-1 md:my-4 bg-gray-500 border-0 w-[90%] m-auto"></hr>
                       <Link
                         href="/beta/chats"
                         className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
@@ -348,11 +348,11 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                                 Discord Community
                               </div>
                             </h1>
-                            <p>150 members</p>
-                            <button className="inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline ">
+                            {/* <p>150 members</p> */}
+                            <Link className="inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline " href="https://discord.gg/q7ARXUQcbx" target="_blank">
                               <span>Join</span>
                               <AiOutlineArrowRight />
-                            </button>
+                            </Link>
                           </div>
                         </div>
                       ) : (

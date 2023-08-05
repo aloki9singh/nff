@@ -2,45 +2,45 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
+import { useAuthContext } from "@/lib/context/AuthContext";
 
-
-const PaymentProceed = ({ price, updatePage }) => {
-
+const PaymentProceed = ({ price }) => {
+  
+  const { user, userProfile } = useAuthContext();
   // tab selector 
   const [activeTab, setActiveTab] = useState("card");
+  const [loading, setLoading] = useState();
 
 
-  // update page for stepper 
-  const paymentFuction = (e) => {
-    e.preventDefault();
-    updatePage(2);
-  }
 
 //api call for payment 
-  const handleReq = async (e) => {
-
+  const handleReq = (e) => {
+    e.preventDefault();
+    setLoading(true);
     const requestBody = {
       price: price * 100,
+      useruid:user.uid,
     };
 
-    await fetch('/api/payment', { method: 'POST', body: JSON.stringify(requestBody) },)
+    fetch('/api/payment', { method: 'POST', body: JSON.stringify(requestBody) },)
       .then(response => response.json())
       .then(response => {
-        console.log(response)
+        console.log(response);
+        setLoading(false);
         window.location.href = response.data.instrumentResponse.redirectInfo.url;
       })
       .catch(err => console.error(err));
-
-    paymentFuction(e)
-
+  
   }
+
+ 
 
 
   return (
     <>
-      <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
+      <div className={`flex container w-[1068px] h-[500px] bg-[#373A41] rounded-[33px] mb-16 ${loading == true ? "blur-sm" : null}`}>
 
-        <div className="hidden md:inline left m-12">
+        <div className="hidden left m-12">
 
           <h1 className="py-2">Payment Method</h1>
 
@@ -205,7 +205,7 @@ const PaymentProceed = ({ price, updatePage }) => {
           </div>
         </div>
 
-        <div className="right flex md:w-[331px] pt-[26px] pb-[18px] px-[26px] flex-col items-start gap-[5px] border border-white rounded-[11px] ml-2 md:ml-0 mr-2 md:mr-8 my-8">
+        <div className="right flex md:w-[331px] pt-[26px] pb-[18px] px-[26px] flex-col items-start gap-[5px] border border-white rounded-[11px] ml-2 md:ml-0 mr-2 md:mr-8 my-8" style={{margin:"auto"}}>
           <h2>Order Summary</h2>
           <h1 className="text-xl mt-2 mb-4">
             Subscription Plan{" "}
@@ -236,6 +236,7 @@ const PaymentProceed = ({ price, updatePage }) => {
           <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={(e) => {
             handleReq(e);
           }}
+          disabled={loading == true}
           >
             Pay Now
           </button>

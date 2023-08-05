@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 function AddMentor() {
   const [count, setCount] = useState(1);
@@ -48,8 +49,8 @@ function AddMentor() {
     fetch("/api/signup")
       .then((response) => response.json())
       .then((data) => {
-        const filteredMentors = data.users.filter((ele) => {
-          return ele.role === "mentor" && ele.courseAssigned == false;
+        const filteredMentors = data?.users?.filter((ele) => {
+          return ele?.role === "mentor" && ele?.courseAssigned == false;
         });
         setMentor(filteredMentors);
         setFilterMentor(filteredMentors);
@@ -60,7 +61,7 @@ function AddMentor() {
   const tabClass = "w-10 h-10 rounded-xl";
 
   function handleClick(e) {
-    const totalPage = Math.ceil(mentor.length / 10) + 1;
+    const totalPage = Math.ceil(mentor?.length / 10) + 1;
     const name = e.currentTarget.getAttribute("name");
 
     switch (name) {
@@ -97,7 +98,7 @@ function AddMentor() {
   }, [mentor?.length]);
 
   return (
-    <>
+    <Layout pageTitle="Add Mentor">
       <div className="h-full text-base bg-[#2E3036]">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -309,7 +310,7 @@ function AddMentor() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

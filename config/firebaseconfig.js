@@ -26,7 +26,7 @@ const firebaseConfig = {
 //   messagingSenderId: "713774382237",
 //   appId: "1:713774382237:web:10b5a3c85d22f4d859a874",
 //   measurementId: "G-QWYMTLSSEK",
-// };
+// }; 
 
 
 
@@ -35,12 +35,15 @@ const firebaseConfig = {
 // const firebaseConfig = {
 //   apiKey: "AIzaSyA2u0xg4KVAMz_GAjzm3DdVsqXvCIzsbM4",
 //   authDomain: "neatskills9.firebaseapp.com",
+//   databaseURL: "https://neatskills9-default-rtdb.firebaseio.com",
+
 //   projectId: "neatskills9",
 //   storageBucket: "neatskills9.appspot.com",
 //   messagingSenderId: "952981699338",
 //   appId: "1:952981699338:web:e09b299b7e5df400e898f3",
 //   measurementId: "G-3F1WXPES83"
 // };
+
 
 // const firebaseConfig = {
 //   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -71,12 +74,9 @@ const firebaseConfig = {
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 
-
-
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
-
 export const AssignmentsCollection = collection(db, "assignment");
 export const courseAssignmentCollection = collection(db, "course_assignments");
 export const profileDetailscollection = collection(db, "users");

@@ -23,7 +23,7 @@ export default function Terms() {
     }
   }, [isMediumScreen]);
   return (
-    <div>
+    <Layout pageTitle="Terms & Conditions">
       <div className="flex">
         {isMobileScreen && (
           <div
@@ -193,6 +193,6 @@ export default function Terms() {
         </div>
       </div>
       <Footer background="bg-[#2D2E35]" />
-    </div>
+    </Layout>
   );
 }

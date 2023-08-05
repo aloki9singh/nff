@@ -63,10 +63,12 @@ const RecievedMessage = ({ message }) => {
         />
       </div>
       <div
-        className="p-2 py-3 max-w-[80%] rounded-[10px] flex flex-col"
+        className="p-2 py-3 max-w-[80%] md:max-w-sm rounded-[10px] flex flex-col"
         style={{ backgroundColor: " #717378" }}
       >
-        {message.content}
+        <p className=" break-words " >
+          {message.content}
+        </p>
         <span className="text-[9px] bg-black p-1 rounded-[8px] mr-auto text-left">
           {formatTimePassed(message.timestamp)}
         </span>
@@ -79,10 +81,12 @@ const SendMessage = ({ message }) => {
   return (
     <div className="flex  justify-end gap-2">
       <div
-        className="p-2 py-3 max-w-[80%] rounded-[10px]  flex flex-col"
+        className="p-2 py-3 max-w-[80%] md:max-w-sm rounded-[10px]  flex flex-col"
         style={{ backgroundColor: "#505057" }}
       >
-        {message.content}
+        <p className=" break-words " >
+          {message.content}
+        </p>
         <span className="text-[9px] bg-black p-1 rounded-[8px] ml-auto text-right">
           {formatTimePassed(message.timestamp)}
         </span>

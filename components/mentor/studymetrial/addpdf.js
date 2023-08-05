@@ -235,7 +235,7 @@ function DropZone({ setUrl, setSize }) {
           <p>pdf , word document (max 2-5 mb)</p>
         </div>
       </div>
-      <aside>
+      <aside className=" max-w-[580px] mx-auto mt-1 " >
         {/* <h4>Accepted files</h4> */}
         <ul>{acceptedFileItems}</ul>
       </aside>

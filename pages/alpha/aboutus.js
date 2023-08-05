@@ -1,18 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { useMediaQuery } from "react-responsive";
-import { db } from "@/config/firebaseconfig";
-import Image from "next/image";
-import Dashboardnav from "@/components/common/navbar/dashboardnav";
+import React, { useEffect, useRef, useState } from 'react';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { useMediaQuery } from 'react-responsive';
+import { db } from '@/config/firebaseconfig';
+import Image from 'next/image';
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
 
-import Sidebar from "@/components/common/sidebar/sidebar";
-import { contactFn, contactFnaboutus } from "@/lib/api";
-import { Carousel } from "react-responsive-carousel";
+import Sidebar from '@/components/common/sidebar/sidebar';
+import { contactFn, contactFnaboutus } from '@/lib/api';
+import { Carousel } from 'react-responsive-carousel';
 
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Footer from "@/components/common/footer/footer";
-import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Footer from '@/components/common/footer/footer';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import InfoSection from '@/components/common/aboutus/infosection';
+import GetInTouch from '@/components/common/aboutus/getInTouch';
+import OurMissionSection from '@/components/common/aboutus/ourmission';
+import OurLoveSection from '@/components/common/aboutus/ourLove';
+import Layout from '@/components/common/Layout/Layout';
 
 const Aboutus = () => {
   const [mentor, setMentor] = useState([]);
@@ -20,13 +25,13 @@ const Aboutus = () => {
   useEffect(() => {
     const fetchPost = async () => {
       const q = query(
-        collection(db, "allusers"),
-        where("role", "==", "mentor")
+        collection(db, 'allusers'),
+        where('role', '==', 'mentor')
       );
       const querySnapshot = await getDocs(q);
-      const newData = querySnapshot.docs.map((doc) => ({
+      const newData = querySnapshot.docs.map(doc => ({
         ...doc.data(),
-        id: doc.id,
+        id: doc.id
       }));
       setMentor(newData);
     };
@@ -39,18 +44,18 @@ const Aboutus = () => {
   const scrollBackward = () => {
     scrollContainerRef.current.scrollBy({
       left: -200, // Adjust the scroll amount as per your requirements
-      behavior: "smooth",
+      behavior: 'smooth'
     });
   };
 
   const scrollForward = () => {
     scrollContainerRef.current.scrollBy({
       left: 200, // Adjust the scroll amount as per your requirements
-      behavior: "smooth",
+      behavior: 'smooth'
     });
   };
 
-  const style = document.createElement("style");
+  const style = document.createElement('style');
 
   // Set the CSS code as the inner text of the <style> element
   style.innerText = `
@@ -72,28 +77,28 @@ const Aboutus = () => {
 
   document.head.appendChild(style);
 
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [title, setTitle] = useState("");
-  const [subject, setSubject] = useState("");
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [title, setTitle] = useState('');
+  const [subject, setSubject] = useState('');
   const formData = { title, email, name, phoneNo, subject };
 
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2 },
     { width: 768, itemsToShow: 3 },
-    { width: 1200, itemsToShow: 4 },
+    { width: 1200, itemsToShow: 4 }
   ];
   const clearFormFields = () => {
-    setEmail("");
-    setName("");
-    setPhoneNo("");
-    setTitle("");
-    setSubject("");
+    setEmail('');
+    setName('');
+    setPhoneNo('');
+    setTitle('');
+    setSubject('');
   };
-  const extractNameFromEmail = (email) => {
-    const atIndex = email.indexOf("@");
+  const extractNameFromEmail = email => {
+    const atIndex = email.indexOf('@');
 
     if (atIndex !== -1) {
       const name = email.substring(0, atIndex);
@@ -117,14 +122,13 @@ const Aboutus = () => {
     sendSideBarState(showSideBar);
   }
   return (
-    <div className="flex flex-col items-center">
-      <Dashboardnav heading="About Us" toggleSideBar={toggleSideBar} />
+    <div className='flex flex-col items-center'>
+      <Dashboardnav heading='About Us' toggleSideBar={toggleSideBar} />
       {isMobileScreen && (
         <div
           className={`fixed right-0 ${
-            SideBarState ? "block" : "hidden"
-          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-        >
+            SideBarState ? 'block' : 'hidden'
+          } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}>
           <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
         </div>
       )}
@@ -174,36 +178,9 @@ const Aboutus = () => {
 								className="w-full object-cover shadow-md rounded-lg"
 							/>
 						</div> */}
-        </div>
-        <div className="relative">
-          <div
-            className="absolute w-full h-[28rem] ml-10 md:ml-44  -bottom-48 rounded-lg overflow-hidden"
-            style={{
-              clipPath: "polygon(50% 32%, 100% 30%, 100% 100%, 0 100%, 0% 38%)",
-            }}
-          >
-            <Image
-              src="/componentsgraphics/common/aboutpage/about.png"
-              width={100}
-              height={100}
-              alt="random image"
-              className="w-full object-cover mt-[10rem] shadow-md transform -translate-y-16 rounded-lg"
-            />
-          </div>
-        </div>
       </div>
 
       {/* Our misson */}
-      
-      <div className="space-y-12 max-w-[1440px] mx-4 sm:mx-8 md:mx-16">
-        <div className="">
-          <p>
-            <span className="text-4xl  font-extrabold text-white">Our</span>
-            <span className="text-4xl  font-extrabold ml-2 bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text">
-              Mission
-            </span>
-          </p>
-          <div className=" md:w-[40rem] h-1 bg-white mt-2" />
 
           <div className="flex flex-col md:flex-row py-4 ">
             <p className="text-white mb-3 md:mb-0 md:w-[240px] lg:w-[370px] text-sm md:text-base font-semibold md:font-normal shrink-0">
@@ -271,39 +248,37 @@ const Aboutus = () => {
             </p>
           </div>
         </div>
-      </div>
+      
 
       {/* Our Team */}
 
-      <div className="max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16">
-        <h1 className="mb-4  px-2 text-center text-2xl md:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl">
+      <div className='max-w-[1440px] w-full px-4 sm:px-8 md:px-16 my-16'>
+        <h1 className='mb-4  px-2 text-center text-2xl md:text-5xl font-extrabold uppercase bg-gradient-to-r from-[#A134CD] to-[#E1348B] text-transparent bg-clip-text lg:6xl'>
           The team
         </h1>
         <div
           ref={scrollContainerRef}
-          className="mb-8 flex  overflow-x-scroll  hide-scrollbar space-x-5 sm:space-x-10"
-        >
+          className='mb-8 flex  overflow-x-scroll  hide-scrollbar space-x-5 sm:space-x-10'>
           {mentor &&
             mentor.map((mentor, index) => {
               return (
                 <a
                   key={index}
-                  href="#"
-                  className="flex flex-col items-center
-                    shrink-0 "
-                >
+                  href='#'
+                  className='flex flex-col items-center
+                    shrink-0 '>
                   <Image
                     src={`${
                       mentor.photoURL
                         ? mentor.photoURL
-                        : "/componentsgraphics/common/aboutpage/team2.svg"
+                        : "/componentsgraphics/common/Anonymousimage/anonymous.png"
                     }`}
                     height={100}
                     width={100}
-                    className="w-[95px] sm:w-[140px] md:w-[200px]  object-cover bg-transparent rounded-xl aspect-[3/4]"
-                    alt="team memebers"
+                    className='w-[95px] sm:w-[140px] md:w-[200px]  object-cover bg-transparent rounded-xl aspect-[3/4]'
+                    alt='team memebers'
                   />
-                  <h2 className=" text-center mt-2 text-xs md:text-base text-white font-semibold">
+                  <h2 className=' text-center mt-2 text-xs md:text-base text-white font-semibold'>
                     {extractNameFromEmail(mentor.displayName)}
                   </h2>
                 </a>

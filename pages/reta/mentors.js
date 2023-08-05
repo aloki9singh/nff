@@ -11,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import { query, where } from "firebase/firestore";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
+import Layout from "@/components/common/Layout/Layout";
 
 function AdminStudent() {
   const [count, setCount] = useState(1);
@@ -64,36 +65,6 @@ function AdminStudent() {
     setsearchstate("");
     setActiveTab(tab);
   };
-
-  // useEffect(() => {
-  //   fetch("/api/signup")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setFilterStudent(
-  //         data.users.filter((ele) => {
-  //           return ele.role == "student";
-  //         })
-  //       );
-  //       setStudent(
-  //         data.users.filter((ele) => {
-  //           return ele.role == "student";
-  //         })
-  //       );
-  //       setMentor(
-  //         data.users.filter((ele) => {
-  //           return ele.role == "mentor";
-  //         })
-  //       );
-  //       setFilterMentor(
-  //         data.users.filter((ele) => {
-  //           return ele.role == "mentor";
-  //         })
-  //       );
-  //     });
-
-  //     console.log(mentor, "mentor");
-  //     console.log(filterMentor, "filterMentor");
-  // }, []);
 
   useEffect(() => {
     async function getData() {
@@ -163,21 +134,21 @@ function AdminStudent() {
     } else {
       totalPage = Math.ceil(mentor?.length / 10) + 1;
     }
-    // console.log(totalPage, "stdunet");
-    console.log("mentor has", totalPage);
+
     setNumberOfPages(totalPage);
   };
 
   useEffect(() => {
     getTotalPages();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const updateButtonStatus = (isActive) => {
     return isActive ? "Active" : "Inactive";
   };
 
   return (
-    <>
+    <Layout pageTitle="Mentors">
       <div className="h-full text-base bg-[#2E3036]  ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -228,7 +199,6 @@ function AdminStudent() {
             </div>
 
             {/* filter bar */}
-
             <div className="gap-5  mx-8 max-[700px]:mx-4 md:mt-0 mt-5 text-white">
               {activeTab == "mentor" && (
                 <div className=" flex   justify-between">
@@ -285,7 +255,6 @@ function AdminStudent() {
                       </div>
                     </div>
                   </div>
-
                   {/* {/student/} */}
                   <div>
                     <button className="bg-[#414348] w-fit h-fit mt-4 flex px-8 py-2.5 max-[585px]:mx-0 max-[585px]:mr-2 items-center justify-center mx-2 rounded-xl mr-14">
@@ -303,7 +272,6 @@ function AdminStudent() {
                   </div>
                 </div>
               )}
-
               {activeTab === "student" && (
                 <div className="gap-5  mx-8 max-[700px]:mx-4 md:mt-0  mt-5 text-white">
                   <div className="flex flex-wrap items-center justify-between w-[100%] m-5 space-y-2">
@@ -360,7 +328,6 @@ function AdminStudent() {
             </div>
 
             {/* table */}
-
             <div className=" ms-[2%] me-[2%] h-[712px]  max-[700px]:mx-4 rounded-[30px] border md:text-base text-xs mx-auto mb-4 text-white">
               <div className="">
                 <table className="w-full ">
@@ -397,7 +364,7 @@ function AdminStudent() {
                       student.slice(initialcount, gap).map((e, i) => (
                         <tr
                           className="flex items-center w-full font-medium text-xs justify-between "
-                          key={e}
+                          key={e.id + `${i}`}
                         >
                           <td className="flex items-center gap-2 w-[16.6%] ">
                             <Image
@@ -411,7 +378,6 @@ function AdminStudent() {
                               width={25}
                               className="rounded-full h-8 w-8 object-cover inline"
                             />
-                            {console.log(e)}
                           </td>
                           <td className="w-[16.6%] ">
                             {removeDomainFromEmail(e.displayName)}
@@ -451,7 +417,6 @@ function AdminStudent() {
                               </p>
                             )}
                           </td>
-
                           <td
                             className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
                             onClick={() =>
@@ -470,7 +435,7 @@ function AdminStudent() {
                       mentor.slice(initialcount, gap).map((e, i) => (
                         <tr
                           className="flex items-center w-full font-medium text-xs justify-around "
-                          key={i}
+                          key={e.id + `${i}`}
                         >
                           <td className="flex items-center gap-2 w-[16.6%] ">
                             <Image
@@ -565,21 +530,20 @@ function AdminStudent() {
                     />
                   </svg>
                 </button>
-
-                {Array.from({ length: numberOfPages }, (_, index) => (
+                {Array.from({ length: numberOfPages }, (_, i) => (
                   <button
-                    key={index}
-                    className={`${
-                      count == index + 1 ? activeTabClass : tabClass
-                    } px-4 overflow-sc
-                        `}
-                    name={index + 1}
+                    key={i}
+                    className={`w-6 h-5  flex justify-center items-center ${
+                      i + 1 === count
+                        ? "border-none bg-[#E1348B] text-white rounded-md"
+                        : "border"
+                    }`}
+                    name={i + 1}
                     onClick={handleClick}
                   >
-                    {index + 1}
+                    {i + 1}
                   </button>
                 ))}
-
                 <button
                   className="w-6 h-5 border flex justify-center items-center"
                   name="fwd"
@@ -596,7 +560,12 @@ function AdminStudent() {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"
+                      d="M3 7.189c0-.864.933-1.405 1.683-.977L11.79 11.25a1.125 1.125 0 010 1.953L4.683 16.211A1.125 1.125 0 013 15.234V7.11z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.75 7.189c0-.864.933-1.405 1.683-.977l6.108 3.488a1.125 1.125 0 010 1.953l-6.108 3.488a1.125 1.125 0 01-1.683-.977V7.11z"
                     />
                   </svg>
                 </button>
@@ -604,9 +573,9 @@ function AdminStudent() {
             </div>
           </div>
         </div>
-        <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
-    </>
+    </Layout>
   );
 }
+
 export default withAdminAuthorization(AdminStudent);

@@ -199,6 +199,7 @@ function DropZone({ setUrl, setSize, accept }) {
         setLoading(false);
       });
     },
+    maxSize: 5000000, // 5mb
   });
 
   const style = useMemo(
@@ -220,7 +221,7 @@ function DropZone({ setUrl, setSize, accept }) {
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
-        <input {...getInputProps()}  />
+        <input {...getInputProps()} />
         <div className="flex flex-col items-center">
           <FileIcon />
           <p>Click to upload or drag and drop</p>
@@ -233,11 +234,11 @@ function DropZone({ setUrl, setSize, accept }) {
           </p>
         </div>
       </div>
-      <aside>
+      <aside className=" max-w-[580px] mx-auto mt-1 " >
         {/* <h4>Accepted files</h4> */}
         <ul>{acceptedFileItems}</ul>
+        {loading && <div className="text-white">Uploading...</div>}
       </aside>
-      {loading && <div className="text-white">Uploading...</div>}
     </div>
   );
 }

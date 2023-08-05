@@ -111,7 +111,7 @@ const GroupDetails = ({
 
   return (
     <div
-      className="user-container overflow-y-auto w-screen md:w-auto no-scrollbar md:max-w-xs"
+      className="user-container overflow-y-auto w-screen  no-scrollbar md:w-[20rem]"
       style={{
         backgroundColor: "#373A41",
         color: "white",

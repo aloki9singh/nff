@@ -13,6 +13,7 @@ import Image from "next/image";
 import { db } from "@/config/firebaseconfig";
 import { useRouter } from "next/router";
 import { collection, getDocs } from "firebase/firestore";
+import Layout from "@/components/common/Layout/Layout";
 
 export default function ModifyCourses() {
   const router = useRouter();
@@ -79,7 +80,7 @@ export default function ModifyCourses() {
   // }
 
   return (
-    <>
+    <Layout pageTitle="Modify Courses">
       <div className="h-full w-full text-base bg-[#2E3036] ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -136,6 +137,6 @@ export default function ModifyCourses() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }

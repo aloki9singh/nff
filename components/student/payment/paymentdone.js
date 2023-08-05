@@ -1,8 +1,107 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const PaymentCompleted = () => {
+  const router = useRouter();
+  const [payData, setPayData] = useState();
+
+
+  
+    const [items, setItems] = useState([
+      { name: 'Amount', price: 0 },
+      { name: 'Discount', price: 0 },
+      { name: 'GST', price:0 },
+    ]);
+
+  useEffect(() => {
+    const {val} = router.query;
+    if(val){
+      const payloadData = JSON.parse(atob(val));
+      setPayData(payloadData);
+      setItems([{ name: 'Amount', price: payloadData?.amount/100 },
+      { name: 'Discount', price: payloadData?.discount || 0 },
+      { name: 'GST', price: payloadData?.gst || 0 }])
+    }
+    else{
+      router.push("/beta/payment");
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query]);
+
+
+  const totalAmount = items.reduce((total, item) => total + item.price, 0);
+
+
+
+  const generatePDF = () => {
+    const receiptContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Receipt</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+          }
+          .receipt {
+            width: 250px;
+            margin: 0 auto;
+            padding: 10px;
+          }
+          .title {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+          .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+          }
+          .itemName {
+            flex: 1;
+          }
+          .itemPrice {
+            flex-basis: 50px;
+          }
+          .total {
+            font-weight: bold;
+            margin-top: 10px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="receipt">
+          <div class="title">Receipt</div>
+          ${items
+            .map(
+              item => `
+                <div class="item">
+                  <div class="itemName">${item.name}</div>
+                  <div class="itemPrice">Rs${Number(item.price)?.toFixed(2)}</div>
+                </div>
+              `
+            )
+            .join('')}
+          <div class="total">Total: Rs${Number(totalAmount)?.toFixed(2)}</div>
+        </div>
+      </body>
+      </html>
+    `;
+    const printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write(receiptContent);
+    printWindow.document.close();
+    printWindow.print();
+
+    router.push("/beta/dashboard");
+  };
+
+
+
+ 
 
   return (
     <>
@@ -11,15 +110,13 @@ const PaymentCompleted = () => {
           <div className="left md:w-[340px] p-[1rem] md:mt-4">
             <div className="sec1 md:m-4">
               <h2>Payment completed</h2>
-              <p>4656 5664 6564 8338</p>
+              {/* <p>4656 5664 6564 8338</p> */}
             </div>
 
             <div className="sec2 md:m-4">
-              <h2>Billing address</h2>
+              <h2>Transaction Id</h2>
               <p className="text-[14px]">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Aspernatur laboriosam placeat vero id accusantium magni ut,
-                tempore commodi nihil libero ratione quibusdam ullam.
+                {payData?.transactionId}
               </p>
             </div>
           </div>
@@ -27,32 +124,32 @@ const PaymentCompleted = () => {
             <h2>Order Summary</h2>
             <h1 className="text-xl mt-2 mb-4">
               Subscription Plan{" "}
-              <span className="text-[#A145CD] font-bold">Quarterly</span>
+              <span className="text-[#A145CD] font-bold">{payData?.plan == 1 ? "Monthly" : payData?.plan == 12 ? "Yearly" : "Quarterly" }</span>
             </h1>
 
             <h2 className="font-bold">Order details</h2>
             <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
-              <p>Subtotal</p>
-              <p>Rs 1899</p>
+              <p>Amount</p>
+              <p>Rs {payData?.amount/100}</p>
             </div>
             <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
-              <h2>Subtotal</h2>
-              <h2>Rs 1899</h2>
+              <h2>Discount</h2>
+              <h2>Rs 0</h2>
             </div>
-            <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
-              <h2>Subtotal</h2>
-              <h2>Rs 1899</h2>
+            <div className="flex text-sm gap-[4rem] flex-row md:gap-[10rem]">
+              <h2>GST</h2>
+              <h2>Rs 0</h2>
             </div>
 
             <hr class="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
             <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
               <h2>Subtotal</h2>
-              <h2>Rs 1899</h2>
+              <h2>Rs {payData?.amount/100}</h2>
             </div>
 
             <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={() => {
-              localStorage.removeItem('currentPage');
+              generatePDF();
             }}>
               Download Receipt
             </button>
@@ -75,6 +172,12 @@ const PaymentCompleted = () => {
             Congratulations you have bought the trial/subscription successfully
             ! Explore and start your first course today
           </p>
+
+          <button className="w-full rounded-[11px] bg-[#E1348B] py-[5px] px-[10px] mt-4 " onClick={() => {
+              router.push("/beta/courseoverview");
+            }}>
+              Let&aposs Go
+            </button>
         </div>
       </div>
     </>

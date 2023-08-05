@@ -101,7 +101,13 @@ const PdfListItem = ({ pdf }) => {
       </div>
 
       {/* Date Text */}
-      <div className='text-sm text-white'>{pdf.createdAt}</div>
+      <div className='text-sm text-white'>{pdf.createdAt?.toDate().
+        toLocaleDateString('en-IN', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+        }) ?? ''
+      }</div>
 
       <div className=' flex flex-row  md:mr-20 gap-3'>
         {/* Size Text */}
