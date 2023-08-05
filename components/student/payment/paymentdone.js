@@ -27,6 +27,7 @@ const PaymentCompleted = () => {
     else{
       router.push("/beta/payment");
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
 
@@ -175,7 +176,7 @@ const PaymentCompleted = () => {
           <button className="w-full rounded-[11px] bg-[#E1348B] py-[5px] px-[10px] mt-4 " onClick={() => {
               router.push("/beta/courseoverview");
             }}>
-              Let's Go
+              Let&aposs Go
             </button>
         </div>
       </div>
