@@ -118,7 +118,7 @@ const PaymentProceed = ({ price }) => {
               <button className="bg-[#A145CD] py-2 flex px-12 text-center items-center rounded-lg">
                 Verify
                 <svg
-                  class="w-3.5 h-3.5 ml-2"
+                  className="w-3.5 h-3.5 ml-2"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -226,7 +226,7 @@ const PaymentProceed = ({ price }) => {
             <h2 className="text-green-400">+Rs 0</h2>
           </div>
 
-          <hr class="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
+          <hr className="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
           <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
             <h2>Subtotal</h2>
