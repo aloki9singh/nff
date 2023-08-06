@@ -111,7 +111,7 @@ function StudyMaterialMain() {
           <div className="md:mx-auto mt-6 text-white grow flex items-center">
           <div className="flex bg-[#373A41] rounded-[30px] h-full justify-center">
             <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 m-8">
-              {modules.map((module, index) => (
+              {modules?.map((module, index) => (
                 <StudyMaterialCard
                   key={index}
                   module={module}

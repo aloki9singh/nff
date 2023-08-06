@@ -135,9 +135,9 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                             <Link href="/beta/profile">
                               <p className="mb-2">Profile</p>
                             </Link>
-                            <Link href="/invite">
+                            {/* <Link href="#">
                               <p>Invite a Friend</p>
-                            </Link>
+                            </Link> */}
                           </div>
                           <div className="text-[13px] p-2">
                             <Link href="/alpha/helpandsupport">
