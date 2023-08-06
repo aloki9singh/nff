@@ -21,10 +21,10 @@ const Card = ({ lessons, level, title, desc }) => {
             </div>
           </div>
           <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light"></a>
-          <div class="px-4">
-            <h1 class="text-slate-400 text-[8px] font-medium">COURSE</h1>
+          <div className="px-4">
+            <h1 className="text-slate-400 text-[8px] font-medium">COURSE</h1>
             <h1 className="text-white text-md font-medium">{title}</h1>
-            <p class="text-white text-[10px] mb-4">{desc}</p>
+            <p className="text-white text-[10px] mb-4">{desc}</p>
             <div className="flex justify-end">
               <button
                 type="button"

@@ -58,7 +58,7 @@ export default function Mentor() {
           <div className=" text-2xl md:text-3xl flex flex-col items-center bg-[url('/pink_rect.png')] bg-bottom bg-contain bg-no-repeat">
             <h1>Meet Our</h1>
             <h1>Mentors</h1>
-            <div class="bg-[#DA2C84] transform -rotate-2 w-full origin-bottom-right h-1 mt-[-10px] ml-[10px]"></div>
+            <div className="bg-[#DA2C84] transform -rotate-2 w-full origin-bottom-right h-1 mt-[-10px] ml-[10px]"></div>
           </div>
           <div className="text-sm md:text-base md:w-1/2 pt-4 px-4 md:pl-8">
             Neat Skills offers the world&rsquo;s best classes from the

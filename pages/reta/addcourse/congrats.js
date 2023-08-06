@@ -47,7 +47,7 @@ const CongratsAddTeam = () => {
           >
             <div className="d-flex justify-center">
               <div className="text-container text-center">
-                <h5 class="mb-3 text-4xl font-bold tracking-tight text-white dark:text-white">
+                <h5 className="mb-3 text-4xl font-bold tracking-tight text-white dark:text-white">
                   Congratulations
                 </h5>
                 <h6 className="text-white font-normal text-lg max-w-lg">
