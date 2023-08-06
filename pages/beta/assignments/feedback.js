@@ -30,6 +30,7 @@ function Homework() {
     const [maxMarks, setMaxMarks] = useState()
     const [course, setCourse] = useState()
     const { id, courseid, submitid } = router.query
+    const [file, setFile] = useState()
 
     function toggleSideBar() {
         setShowSideBar(!showSideBar);
@@ -52,6 +53,7 @@ function Homework() {
                 setComment(data && data[0][0].comment)
                 setMarks(data && data[0][0].obtMarks)
                 setTeacher(data && data[0][0].checkedBy)
+                setFile(data && data[0][0].file)
                 const assignmentDoc = querySnapshot.docs[0];
                 if (!assignmentDoc) {
                     console.log("Assignment not found.");
@@ -65,59 +67,6 @@ function Homework() {
         }
 
     }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (marks > maxMarks) {
-            alert("Enter valid Marks")
-        }
-        else if (!marks) {
-            alert("Enter marks")
-        }
-        else if (!teacher) {
-            alert("Enter valid Teacher Name")
-        }
-        else {
-            const courseRef = doc(db, "courses", courseid);
-            const courseInfo = await getDoc(courseRef);
-            if (courseInfo.exists()) {
-                try {
-                    const assignmentRef = collection(courseRef, "assignment");
-                    const q = query(assignmentRef, where("id", "==", id));
-                    const querySnapshot = await getDocs(q);
-
-                    const assignmentDoc = querySnapshot.docs[0];
-                    if (!assignmentDoc) {
-                        console.log("Assignment not found.");
-                        return;
-                    }
-                    const assignmentData = assignmentDoc.data();
-                    setMaxMarks(assignmentData.marks)
-                    const updatedFiles = assignmentData.files.map((data) => {
-                        if (data.submittedby === submitid) {
-                            return {
-                                ...data,
-                                obtMarks: marks,
-                                comment: comment ? comment : "No comment",
-                                checkedBy: teacher,
-                                checked: true
-                            };
-                        }
-                        return data;
-                    });
-
-                    // Update the specific assignment document using the update method
-                    await updateDoc(doc(assignmentRef, assignmentDoc.id), { files: updatedFiles });
-                    alert("Assignment Checked");
-                    router.push("/meta/assignments")
-                } catch (err) {
-                    alert("Error occurred", err);
-                }
-            } else {
-                console.log("Course not found.");
-            }
-        }
-    };
 
     useEffect(() => {
         if (isMediumScreen) {
@@ -152,7 +101,7 @@ function Homework() {
 
                     {/* Second Sidebar - Visible on Desktop */}
                     {!isMobileScreen && (
-                        <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+                        <div className={`md:block h-screen hidden w-[221px] bg-[#141518] z-10`}>
                             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
                         </div>
                     )}
@@ -165,8 +114,15 @@ function Homework() {
                             />
                         </div>
                         <div className='w-[90%] mx-auto mt-8 border rounded-[10px] my-4'>
-                            <div className='text-2xl font-semibold text-white p-10'>
+                        <div className='flex justify-between items-center p-10'>
+                            <div className='text-2xl font-semibold text-white '>
                                 Feedback
+                            </div>
+                            <div>
+                            <button className='bg-[#E1348B] rounded-2xl font-semibold text-sm text-white py-4 px-4' onClick={()=>{router.push(file && file)}}>
+                                View Submitted File
+                            </button>
+                            </div>
                             </div>
                             <hr />
                             <form action="">
