@@ -104,7 +104,7 @@ export default function Advertisement() {
                 <span className="whitespace-normal ">
                   Get unlimited access to all materials just from
                 </span>
-                <span className="font-medium font-inter">{` ₹400/mo `}</span>
+                <span className="font-medium font-inter">{` ₹299/mo `}</span>
               </div>
             </div>
           </div>
