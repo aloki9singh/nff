@@ -5,6 +5,7 @@ import Avatar from "./avatar";
 import Img2 from "@/public/componentsgraphics/common/chatting/chattingarea/Img2.svg";
 import { Switch } from "@headlessui/react";
 import Image from "next/image";
+import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 
 const User = ({ currReciever, setShowUser, setShowChat, images }) => {
   const [checked, setChecked] = useState(true);
@@ -43,22 +44,26 @@ const User = ({ currReciever, setShowUser, setShowChat, images }) => {
           }
           sx={{ height: 76, width: 76 }}
         />
-        {currReciever?.name}
+        {
+          removeDomainFromEmail(currReciever?.name)
+        }
       </div>
 
       <div
         className="flex justify-between p-4"
         style={{ borderBottom: "1px solid grey" }}
       >
-        <div className="flex-1 flex">
+        <div className="flex-1 flex items-start gap-1">
           <MdInfoOutline />
-          <div className="" >
-            <p className="text-[14px]">+{currReciever?.studentPhoneNo}</p>
+          <div className="flex items-baseline flex-col" >
+            <p className="text-[14px]">{currReciever?.studentPhoneNo ? "+91" + currReciever.studentPhoneNo : "NA"}</p>
             <p className="text-[10px]">Mobile</p>
           </div>
         </div>
         <div className="flex flex-col flex-1 overflow-hidden">
-          <p className="text-[14px] truncate">@{currReciever?.username}</p>
+          <p className="text-[14px] truncate">
+            {currReciever?.username ? `@${currReciever?.username}` : "NA"}
+          </p>
           <p className="text-[10px]">Username</p>
         </div>
       </div>

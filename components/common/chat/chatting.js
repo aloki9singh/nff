@@ -22,7 +22,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../../config/firebaseconfig";
-import { uploadToFirebase } from "@/lib/exportablefunctions";
+import { removeDomainFromEmail, uploadToFirebase } from "@/lib/exportablefunctions";
 import AudioRecorder, { AudioPlayer } from "./AudioRecorder";
 
 function formatTimePassed(messageTimestamp) {
@@ -281,7 +281,9 @@ const Chat = ({
             <div onClick={() => {
               displayReciever();
             }} className="flex flex-col items-start cursor-pointer">
-              <h1>{currReciever?.name}</h1>
+              <h1>{
+                removeDomainFromEmail(currReciever?.name)
+              }</h1>
               {!currReciever.isGroup && <p
                 className="text-[12px]"
                 style={{ color: "rgba(255, 255, 255, 0.45)" }}
