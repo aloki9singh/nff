@@ -88,7 +88,7 @@ const Studentdashboard = () => {
             <div
               className={`fixed right-0 ${
                 SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10 `}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -111,7 +111,7 @@ const Studentdashboard = () => {
             {/* <hr className="hidden lg:block opacity-50 mt-3 "></hr> */}
 
             {/* /// */}
-            <div className="md:flex gap-2 m-3 md:mt-0  text-white">
+            <div className="flex flex-col lg:flex-row gap-2 m-3 md:mt-0 min-h-screen text-white">
               <div className="md:space-y-5 w-full  ">
                 <Advertisement />
            
@@ -125,7 +125,7 @@ const Studentdashboard = () => {
                   {active ? <ActiveComp percent={0} /> : <InActiveComp />}
                 </div>
               </div>
-              <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 ">
+              <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 pb-3 lg:pb-0">
                 <div>
                   <Calendar />
                 </div>

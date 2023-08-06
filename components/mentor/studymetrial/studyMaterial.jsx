@@ -6,6 +6,7 @@ import {
 import React, { useMemo } from "react";
 import MetrialInfo from "@/components/mentor/studymetrial/metrialinfo";
 import Select from "react-select";
+import Nodata from "@/components/common/nodata/nodata";
 
 function StudyMaterialMain() {
   const {
@@ -30,10 +31,19 @@ function StudyMaterialMain() {
     };
   }, [courseID, joinedCourses]);
 
-  console.log("selectedCourseName", selectedCourse);
+  console.log("selectedCourseName", selectedCourse.value === undefined);
 
+  if (selectedCourse.value === undefined) {
+    return (
+      <div className=" flex items-center justify-center w-full h-screen mb-5">
+        <Nodata title="Course" value="No Course available" />
+      </div>
+    );
+  }
   return (
-    <div className="mt-5 mx-8 " >
+
+    <div className="mt-5 mx-8 w-full">
+
       {!selectedModule && (
         <>
           {!isMentor && (
