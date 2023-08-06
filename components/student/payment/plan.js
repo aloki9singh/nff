@@ -10,7 +10,7 @@ const ChoosePlan = ({ clickEvent, trial, updatePage, updatePrice}) => {
     {
       id: 1,
       title: 'Monthly Plan',
-      price: '299',
+      price: '1',
       from: 'from-[#000000]',
       to: 'to-[#000000]',
       duration: 'Month',
