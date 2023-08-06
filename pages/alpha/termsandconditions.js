@@ -1,4 +1,4 @@
-
+import Layout from "@/components/common/Layout/Layout";
 import Footer from "@/components/common/footer/footer";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useEffect, useState } from "react";

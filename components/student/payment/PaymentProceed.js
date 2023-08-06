@@ -38,7 +38,7 @@ const PaymentProceed = ({ price }) => {
 
   return (
     <>
-      <div className={`flex container w-[1068px] h-[500px] bg-[#373A41] rounded-[33px] mb-16 ${loading == true ? "blur-sm" : null}`}>
+      <div className={`flex container h-[500px] bg-[#373A41] rounded-[33px] mb-16 ${loading == true ? "blur-sm" : null}`}>
 
         <div className="hidden left m-12">
 
