@@ -62,7 +62,7 @@ function StudyMaterial() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-  const { userSubsribed } = CourseAccess(user.uid);
+  const { userSubsribed } = CourseAccess(user?.uid);
 
   return (
     <>
