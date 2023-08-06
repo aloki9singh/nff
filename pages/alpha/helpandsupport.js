@@ -184,63 +184,66 @@ const Helpandsupport = () => {
                       className="w-full md:w-6/12 lg:w-5/12 text-start md:pr-12
 									text-2xl
 								 lg:text-3xl font-semibold"
-                    >
-                      Enroll In Course
-                    </h5>
-                    <ul className="w-full md:w-6/12 lg:w-7/12 text-start text-base lg:text-xl list-decimal space-y-1">
-                      <li className="font-Inter leading-[150%] tracking-wider">
-                        Browse the Course Catalog: Explore the course catalog to
-                        discover the available courses. You can search by
-                        category subject or use keywords to find specific
-                        courses of interest.
-                      </li>
-                      <li className="font-Inter leading-[150%] ">
-                        Course Selection: Read the course descriptions and click
-                        on a course to access more details. Take note of the
-                        course duration format and prerequisites if any. Make
-                        sure the course aligns with your learning goals and fits
-                        your schedule.
-                      </li>
+										>
+											Enroll In Course
+										</h5>
+										<ul className="w-full md:w-6/12 lg:w-7/12 text-start text-base lg:text-xl list-decimal space-y-1">
+											<li className="font-Inter leading-[150%] tracking-wider">
+												Browse the Course Catalog: Explore the course catalog to
+												discover the available courses. You can search by
+												category subject or use keywords to find
+												specific courses of interest.
+											</li>
+											<li className="font-Inter leading-[150%] tracking-wider ">
+												Course Selection: Read the course descriptions and click
+												on a course to access more details. Take note of the
+												course duration format and
+												prerequisites if any. Make sure the course aligns
+												with your learning goals and fits your schedule.
+											</li>
 
-                      <li className="font-Inter leading-[150%] ">
-                        Create an Account: If you haven&apos;t already create an
-                        account on our learning platform. Provide the necessary
-                        information to register including your name email
-                        address and password. You may also have the option to
-                        sign up using your social media accounts.
-                      </li>
+											<li className="font-Inter leading-[150%] tracking-wider ">
+												Create an Account: If you haven&apos;t already
+												create an account on our learning platform. Provide the
+												necessary information to register including your
+												name email address and password. You may
+												also have the option to sign up using your social media
+												accounts.
+											</li>
 
-                      <li className="font-Inter leading-[150%] ">
-                        Login to Your Account: After creating an account log in
-                        using your credentials. This will grant you access to
-                        the platform&apos;s features and allow you to enroll in
-                        courses.
-                      </li>
+											<li className="font-Inter leading-[150%] tracking-wider ">
+												Login to Your Account: After creating an account
+												log in using your credentials. This will grant you
+												access to the platform&apos;s features and allow you to
+												enroll in courses.
+											</li>
 
-                      <li className="font-Inter leading-[150%] ">
-                        Enroll in the Course: Once you&apos;ve chosen a course
-                        click on the &quot;Enroll&quot; or &quot;Buy Now&quot;
-                        button. If the course is free you may be enrolled
-                        immediately. For paid courses you&apos;ll be prompted to
-                        select a payment method and complete the transaction.
-                      </li>
+											<li className="font-Inter leading-[150%] tracking-wider ">
+												Enroll in the Course: Once you&apos;ve chosen a
+												course click on the &quot;Enroll&quot; or
+												&quot;Buy Now&quot; button. If the course is free
+												you may be enrolled immediately. For paid courses
+												you&apos;ll be prompted to select a payment method and
+												complete the transaction.
+											</li>
 
-                      <li className="font-Inter leading-[150%] ">
-                        Payment and Discounts: If applicable enter any discount
-                        codes during the payment process to avail yourself of
-                        special offers or promotions. The system will calculate
-                        the discounted price before finalizing the payment.
-                      </li>
+											<li className="font-Inter leading-[150%] tracking-wider ">
+												Payment and Discounts: If applicable enter any
+												discount codes during the payment process to avail
+												yourself of special offers or promotions. The system
+												will calculate the discounted price before finalizing
+												the payment.
+											</li>
 
-                      <li className="font-Inter leading-[150%] ">
-                        Confirmation and Access: After successful enrollment
-                        you&apos;ll receive a confirmation message or email. The
-                        course will now appear in your enrolled courses or
-                        dashboard. Click on the course title to access its
-                        materials and start your learning journey.
-                      </li>
-                    </ul>
-                  </div>
+											<li className="font-Inter leading-[150%] tracking-wider ">
+												Confirmation and Access: After successful
+												enrollment you&apos;ll receive a confirmation
+												message or email. The course will now appear in your
+												enrolled courses or dashboard. Click on the course title
+												to access its materials and start your learning journey.
+											</li>
+										</ul>
+									</div>
 
                   <div
                     id="EmailSupport"

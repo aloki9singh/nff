@@ -49,7 +49,7 @@ function StudyMaterialMain() {
               isClearable={false}
               isSearchable={false}
               name="course"
-              options={joinedCourses.map((course) => ({
+              options={joinedCourses?.map((course) => ({
                 value: course.id,
                 label: course.title,
               }))}

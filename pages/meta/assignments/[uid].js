@@ -141,7 +141,7 @@ function Homework() {
 
           <div className="flex-grow md:rounded-tl-[40px]">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-              <MentorTopbar heading="Homework" toggleSideBar={toggleSideBar} />
+              <MentorTopbar heading="Assignment" toggleSideBar={toggleSideBar} />
             </div>
 
             <div className=" font-semibold  text-lg text-white  mt-10 ml-20">
@@ -202,40 +202,7 @@ function Homework() {
                           <>
                           <div
                             key={i}
-                            className="rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
-                            onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <Image
-                                  src="/componentsgraphics/mentor/FolderNotch.svg"
-                                  width={65}
-                                  height={65}
-                                  alt="Folder"
-                                />
-                              </div>
-                              <div>
-                                Pending
-                              </div>
-                            </div>
-                            <div className="flex flex-col h-full justify-between overflow-hidden">
-                              <div className="text-xl ">{ele.title}</div>
-                              <div className="flex items-center justify-between pt-4">
-                                <div>{mentor}</div>
-                                <div className="text-[#FFFFFF85] flex flex-wrap justify-end">
-                                  <div>
-                                    {time && time.toLocaleDateString()}, 
-                                  </div>
-                                  <div >
-                                    {time && time.toLocaleTimeString()}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            key={i}
-                            className="rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            className="rounded-2xl shadow-lg bg-[#505057] py-3 px-4 h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white overflow-scroll scrollbar-hide"
                             onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">
@@ -267,13 +234,13 @@ function Homework() {
                             </div>
                           </div>
                           </>
-                        );
+                        )
                       }
                       else if (activeElement == "check" && e.checked) {
                         return (
                           <div
                             key={i}
-                            className="shrink-0 rounded-2xl shadow-lg bg-[#505057] py-[10px] px-[12px] h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white"
+                            className="rounded-2xl shadow-lg bg-[#505057] py-3 px-4 h-[250px] md:h-[17rem] mx-2 ml-0 md:p-5 flex flex-col text-white overflow-scroll scrollbar-hide"
                             onClick={() => router.push({ pathname: "/meta/assignments/file", query: { courseid: ele.courseid, id: ele.id, submitid: e.submittedby } })}
                           >
                             <div className="flex items-center justify-between">

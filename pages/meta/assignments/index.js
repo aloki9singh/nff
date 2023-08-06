@@ -82,7 +82,7 @@ function Homework() {
                 count += 1
               }
             })
-            if (count != 0 && ele.files.length == count) {
+            if (count != 0 && ele?.files?.length == count) {
               check.push(ele)
             }
           }
@@ -161,8 +161,8 @@ function Homework() {
               </div>
             </div>
 
-            <div className="h-screen p-4  border border-[#5F6065]  mt-5 mx-1 rounded-xl  flex flex-col  mb-5 ">
-              <div className="w-full h-20 text-white flex flex-row  justify-between ">
+            <div className="h-screen p-4 border border-[#5F6065]  mt-5 mx-1 rounded-xl  flex flex-col  mb-5 ">
+              <div className="w-full h-20 text-white flex flex-row justify-between ">
                 <div className="flex ml-12 mt-5 mr-16 gap-4">
                   <div className="flex">
                     <div onClick={() => handleToggleElement("active")}>
@@ -172,7 +172,7 @@ function Homework() {
                           : "border-transparent"
                           }`}
                       >
-                        active
+                        Active
                       </span>
                     </div>
                     <div className="mr-2 cursor-pointer">

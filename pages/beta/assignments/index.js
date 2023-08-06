@@ -38,10 +38,10 @@ function Assignments() {
   const [uniqCourse, setUnique] = useState([]);
   const [value, setValue] = useState();
   const [module, setModule] = useState(0);
+  const [submitted, setSubmit] = useState()
   const [checked, setChecked] = useState()
   let [searchstate, setsearchstate] = useState("");
   const [activeElement, setActiveElement] = useState("total");
-  console.log(course, "course");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
@@ -68,7 +68,8 @@ function Assignments() {
       var arr = [];
       const moduleInfo = [];
       const uniq = [];
-      const check = []
+      const check = [];
+      const submit = [];
       data.map((ele) => {
         id.push(ele.id);
         uniq.push(ele.title);
@@ -113,12 +114,16 @@ function Assignments() {
       arr.map((ele) => {
         if (ele.files) {
           ele.files.map((e) => {
-            if (e.submittedby == user.uid) {
+            if ((e.submittedby == user.uid) && e.checked) {
               check.push(ele)
+            }
+            else if (e.submittedby == user.uid) {
+              submit.push(ele)
             }
           })
         }
       })
+      setSubmit(submit)
       setChecked(check)
       setUnique(uniq);
       setModuleData(moduleInfo);
@@ -127,7 +132,6 @@ function Assignments() {
 
     getCourseId();
   }, [isMediumScreen, user?.uid]);
-
   useEffect(() => {
 
     setModuleName(moduleData && moduleData[0]?.module)
@@ -203,13 +207,11 @@ function Assignments() {
             </div>
 
             {/* Div under Topbar with the main content */}
-
             <div className=" bg-[#37383F] mx-5 mt-5 rounded-[30px] text-white space-y-6">
               {/* Main content (Assignments ) */}
               <div className="lg:grid lg:grid-cols-11 min-h-screen">
                 {/* Modules */}
                 <div className="col-span-3 lg:border-r-[1px] lg:border-gray-500 ">
-
                   {/* Course Select */}
                   <div className="title font-medium text-xl pt-10 pb-5 pl-8">
                     Courses
@@ -244,23 +246,23 @@ function Assignments() {
                   <div className="max-h-screen  overflow-scroll scrollbar-hide">
                     {moduleData &&
                       moduleData.map((ele, i) => {
-                        if (ele.course == value) {
+                        if (ele.course === value) {
                           return (
                             <div
                               key={i}
-                              className={
-                                module === i ? Activestyle : Inactivestyle
-                              } // Note: Use === for comparison
+                              className={module === i ? Activestyle : Inactivestyle}
                               onClick={() => {
                                 setModuleName(ele.module);
                                 setModule(i);
                               }}
                             >
-                              {`${i + 1}. ${ele.course} - ${ele.module}`}
+                              {`${i + 1}. ${ele.module}`}
                             </div>
                           );
                         }
+                        return null;
                       })}
+
                   </div>
                   {moduleData &&
                     moduleData.every((ele) => ele.course !== value) && (
@@ -277,8 +279,8 @@ function Assignments() {
                     <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-gray-500">
                       Files
                     </div>
-                    <div className="flex ml-12 mt-5 mr-16 gap-4">
-                      <div className=" flex">
+                    <div className="flex  items-center justify-end mr-16 gap-4">
+                      <div className=" flex items-center">
                         {" "}
                         <div>
                           <span
@@ -293,12 +295,11 @@ function Assignments() {
                         </div>
                         <div className="mr-2 cursor-pointer">
                           <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                            {/* {checked && activeInactive(checked).checked} */}
                             {course && course.length}
                           </div>
                         </div>
                       </div>
-                      <div className="flex">
+                      <div className="flex items-center">
                         <div onClick={() => handleToggleElement("check")}>
                           <span
                             className={`border-b-2 ${activeElement === "check"
@@ -334,10 +335,10 @@ function Assignments() {
                             courseid={assignment.courseid}
                             checked={checked.includes(assignment)}
                             active={activeElement}
+                            submit={submitted && submitted.includes(assignment)}
                           />
                         ) : null;
                       }
-
                       return null;
                     })}
                   </div>
@@ -349,7 +350,7 @@ function Assignments() {
                         assignment.course !== value
                     ) && (
                       <div className="-mt-8">
-                        <Nodata title="Homework" value="No Homework" />
+                        <Nodata title="Assignment" value="No Assignment" />
                       </div>
                     )}
                   {uniqCourse.length == 0 && (
@@ -357,12 +358,6 @@ function Assignments() {
                       <Nodata title="Course" value="No Course available" />
                     </div>
                   )}
-                  {moduleData &&
-                    moduleData.every((ele) => ele.course !== value) && (
-                      <div className=" ">
-                        <Nodata title="Homework" value="No Homework available" />
-                      </div>
-                    )}
                 </div>
               </div>
             </div>

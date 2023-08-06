@@ -4,17 +4,14 @@ import { BsPatchCheckFill } from "react-icons/bs";
 
 import { useAuthContext } from "@/lib/context/AuthContext";
 
-const PaymentProceed = ({ price, updatePage }) => {
+const PaymentProceed = ({ price }) => {
   
   const { user, userProfile } = useAuthContext();
   // tab selector 
   const [activeTab, setActiveTab] = useState("card");
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState();
 
-  // update page for stepper 
-  const paymentFuction = () => {
-    updatePage(2);
-  }
+
 
 //api call for payment 
   const handleReq = (e) => {
@@ -36,14 +33,12 @@ const PaymentProceed = ({ price, updatePage }) => {
   
   }
 
-  if(loading != null && loading == false) {
-    paymentFuction();
-  }
+ 
 
 
   return (
     <>
-      <div className="flex container w-[1068px] h-[590px] bg-[#373A41] rounded-[33px] mb-16">
+      <div className={`flex container h-[500px] bg-[#373A41] rounded-[33px] mb-16 ${loading == true ? "blur-sm" : null}`}>
 
         <div className="hidden left m-12">
 
@@ -123,7 +118,7 @@ const PaymentProceed = ({ price, updatePage }) => {
               <button className="bg-[#A145CD] py-2 flex px-12 text-center items-center rounded-lg">
                 Verify
                 <svg
-                  class="w-3.5 h-3.5 ml-2"
+                  className="w-3.5 h-3.5 ml-2"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -210,7 +205,7 @@ const PaymentProceed = ({ price, updatePage }) => {
           </div>
         </div>
 
-        <div className="right flex md:w-[331px] pt-[26px] pb-[18px] px-[26px] flex-col items-start gap-[5px] border border-white rounded-[11px] ml-2 md:ml-0 mr-2 md:mr-8 my-8">
+        <div className="right flex md:w-[331px] pt-[26px] pb-[18px] px-[26px] flex-col items-start gap-[5px] border border-white rounded-[11px] ml-2 md:ml-0 mr-2 md:mr-8 my-8" style={{margin:"auto"}}>
           <h2>Order Summary</h2>
           <h1 className="text-xl mt-2 mb-4">
             Subscription Plan{" "}
@@ -231,7 +226,7 @@ const PaymentProceed = ({ price, updatePage }) => {
             <h2 className="text-green-400">+Rs 0</h2>
           </div>
 
-          <hr class="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
+          <hr className="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
           <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
             <h2>Subtotal</h2>
@@ -241,7 +236,7 @@ const PaymentProceed = ({ price, updatePage }) => {
           <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={(e) => {
             handleReq(e);
           }}
-          disabled={loading}
+          disabled={loading == true}
           >
             Pay Now
           </button>
