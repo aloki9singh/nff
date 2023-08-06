@@ -23,7 +23,7 @@ const MonthSelector = ({
   handleNextClick,
 }) => {
   return (
-    <div className="flex items-center justify-between mb-1 text-white">
+    <div className="flex items-center justify-between mb-4 text-white">
       <button className="w-8 h-8" onClick={handlePrevClick}>
         <Image
           src="/componentsgraphics/mentor/monthselector/caretcircleleft.svg"
