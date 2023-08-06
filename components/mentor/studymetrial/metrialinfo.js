@@ -92,7 +92,7 @@ function MetrialInfo({ }) {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      class="w-16 h-16"
+                      className="w-16 h-16"
                     >
                       <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
                       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8l6 6v10a2 2 0 0 1-2 2h-4"></path>
@@ -125,7 +125,7 @@ function MetrialInfo({ }) {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      class="w-16 h-16 "
+                      className="w-16 h-16 "
                     >
                       <circle cx="12" cy="5" r="3"></circle>
                       <circle cx="12" cy="19" r="3"></circle>
@@ -159,7 +159,7 @@ function MetrialInfo({ }) {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      class="w-16 h-16"
+                      className="w-16 h-16"
                     >
                       <polygon points="23 7 16 12 23 17 23 7"></polygon>
                       <rect

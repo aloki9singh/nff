@@ -88,7 +88,7 @@ export default function Plan({
               >
                 Start Free Trial Now
                 <svg
-                  class="w-3.5 h-3.5 ml-2"
+                  className="w-3.5 h-3.5 ml-2"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -114,7 +114,7 @@ export default function Plan({
                 >
                   Subscribe Now
                   <svg
-                    class="w-3.5 h-3.5 ml-2"
+                    className="w-3.5 h-3.5 ml-2"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
