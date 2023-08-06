@@ -7,7 +7,7 @@ const MentorCard = ({ name, designation ,src}) => {
   return (
     <div className="h-full w-[147px] md:w-[291px] relative rounded-10 overflow-hidden border-2 border-white flex justify-center items-end">
       <Image
-        src={src||"/componentsgraphics/mentor/mentorcard/mentorpfpsample.svg"}
+        src={src||"/componentsgraphics/common/Anonymousimage/anonymous.png"}
         width={291}
         height={413}
         className="absolute top-0 left-0 h-full w-full object-cover"
