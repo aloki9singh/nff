@@ -13,6 +13,7 @@ import { useMediaQuery } from "react-responsive";
 import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 import { useAuthContext } from "@/lib/context/AuthContext";
 
+
 import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import Layout from "@/components/common/Layout/Layout";
@@ -48,11 +49,12 @@ function CheckClassSchedule() {
     };
   }, [isMediumScreen]);
 
-  //  useEffect(() => {
-  //     if (!us) {
-  //       return null;
-  //     }
-  //   }, [us, selectedDate]);
+
+//  useEffect(() => {
+//     if (!us) {
+//       return null;
+//     }
+//   }, [us, selectedDate]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -70,16 +72,20 @@ function CheckClassSchedule() {
           }
         />
       )}
-      <div
-        className={`h-screen w-full text-base 
-    }`}
+      <div className={`h-screen w-full text-base 
+      
+    
+    
+    }`
+    
+    }
+      
       >
         <div className="flex bg-[#141518] ">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -116,3 +122,4 @@ function CheckClassSchedule() {
   );
 }
 export default withStudentAuthorization(CheckClassSchedule);
+
