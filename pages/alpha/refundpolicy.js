@@ -13,21 +13,22 @@ export default function Terms() {
 	const [SideBarState, sendSideBarState] = useState(false);
 	useEffect(() => {
 		if (isMediumScreen) {
-		  sendSideBarState(false);
+			sendSideBarState(false);
 		}
-	  }, [isMediumScreen]);
+	}, [isMediumScreen]);
 
 	function toggleSideBar() {
 		setShowSideBar(!showSideBar);
 		sendSideBarState(showSideBar);
-	  }
+	}
 	return (
 		<Layout pageTitle="Refund Policy">
 			<div className="flex">
 				{isMobileScreen && (
 					<div
-						className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-							} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+						className={`fixed right-0 ${
+							SideBarState ? "block" : "hidden"
+						} w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
 					>
 						<CourseoverviewSidebar toggleSideBar={toggleSideBar} />
 					</div>
@@ -40,9 +41,12 @@ export default function Terms() {
 					</div>
 				)}
 				<div className="w-full h-full min-h-screen flex flex-col bg-[#2D2E35] space-y-4 pb-10">
-					<Dashboardnav heading="Return and refund policy" toggleSideBar={toggleSideBar} />
+					<Dashboardnav
+						heading="Return and refund policy"
+						toggleSideBar={toggleSideBar}
+					/>
 					<div className="lg:mx-14 md:mx-10 max-w-[1440px] self-center  font-Inter py-5 px-[25px]">
-						<h1 className="font-Inter font-semibold md:text-5xl text-2xl text-white text-center mb-2">
+						<h1 className="font-Inter font-semibold md:text-5xl text-2xl text-white text-center mb-2 md:mt-5">
 							Return & refund policy
 						</h1>
 
@@ -78,21 +82,6 @@ export default function Terms() {
 									business days. Please note that refunds will be issued to the
 									original payment method.
 								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									1.2. By using our web-app, you represent and warrant that you
-									have the legal capacity to enter into these Terms.
-								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									1.3. We reserve the right to modify, suspend, or discontinue
-									any part of our web-app at any time without prior notice or
-									liability.
-								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									1.4. You are solely responsible for obtaining and maintaining
-									any equipment or ancillary services necessary to access and
-									use our web-app, including without limitation, internet
-									access, hardware, software, and telecommunications equipment.
-								</p>
 							</div>
 							<div className="text-white  font-Inter text-justify">
 								<h1 className="font-semibold md:text-[30px] text-xl mb-5">
@@ -108,17 +97,7 @@ export default function Terms() {
 									we do not offer refunds or returns for any services rendered
 									during a trial or free period.
 								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									2.2. You agree to notify us immediately of any unauthorized
-									use of your account or any other breach of security. We will
-									not be liable for any loss or damage arising from your failure
-									to comply with this provision.
-								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									2.3. We reserve the right to terminate your account at any
-									time and for any reason, in our sole discretion, without
-									notice or liability.
-								</p>
+								
 							</div>
 							<div className="text-white  font-Inter text-justify">
 								<h1 className="font-semibold md:text-[30px] text-xl mb-5">
@@ -142,19 +121,7 @@ export default function Terms() {
 									event shall we be liable for any damages arising out of or in
 									connection with the use or inability to use our services.
 								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									4.2. You acknowledge and agree that our web-app and its
-									contents are provided for your personal, non-commercial use
-									only. You may not copy, reproduce, distribute, transmit,
-									display, perform, modify, or create derivative works of any
-									portion of our web-app without our prior written consent.
-								</p>
-								<p className="text-xs  md:text-lg text-[#FFFFFF80] leading-[160%]">
-									4.3. You may not use any automated system or software to
-									extract data from our web app for commercial purposes (screen
-									scraping), nor may you attempt to interfere with the proper
-									working of our web-app.
-								</p>
+								
 							</div>
 							<div className="text-white  font-Inter text-justify">
 								<h1 className="font-semibold md:text-[30px] text-xl mb-5">
@@ -170,14 +137,16 @@ export default function Terms() {
 							</div>
 						</div>
 						<div className="text-xs  md:text-lg text-white  font-Inter text-justify my-11">
-							<p>If you have any questions or concerns about our Refund and Return
-								Policy, please contact our support team at {" "}
+							<p>
+								If you have any questions or concerns about our Refund and
+								Return Policy, please contact our support team at{" "}
 								<span className="font-semibold">
 									<Link href="mailto:support@neatskills.tech">
 										support@neatskills.tech
 									</Link>
 								</span>
-								. We are always here to help.</p>
+								. We are always here to help.
+							</p>
 						</div>
 					</div>
 				</div>

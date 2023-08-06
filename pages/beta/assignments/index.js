@@ -117,7 +117,7 @@ function Assignments() {
             if ((e.submittedby == user.uid) && e.checked) {
               check.push(ele)
             }
-            else if (e.submittedby == user.uid){
+            else if (e.submittedby == user.uid) {
               submit.push(ele)
             }
           })
@@ -246,13 +246,11 @@ function Assignments() {
                   <div className="max-h-screen  overflow-scroll scrollbar-hide">
                     {moduleData &&
                       moduleData.map((ele, i) => {
-                        if (ele.course == value) {
+                        if (ele.course === value) {
                           return (
                             <div
                               key={i}
-                              className={
-                                module === i ? Activestyle : Inactivestyle
-                              } // Note: Use === for comparison
+                              className={module === i ? Activestyle : Inactivestyle}
                               onClick={() => {
                                 setModuleName(ele.module);
                                 setModule(i);
@@ -262,7 +260,9 @@ function Assignments() {
                             </div>
                           );
                         }
+                        return null;
                       })}
+
                   </div>
                   {moduleData &&
                     moduleData.every((ele) => ele.course !== value) && (
@@ -279,8 +279,8 @@ function Assignments() {
                     <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-gray-500">
                       Files
                     </div>
-                    <div className="flex ml-12 mt-5 mr-16 gap-4">
-                      <div className=" flex">
+                    <div className="flex  items-center justify-end mr-16 gap-4">
+                      <div className=" flex items-center">
                         {" "}
                         <div>
                           <span
@@ -295,12 +295,11 @@ function Assignments() {
                         </div>
                         <div className="mr-2 cursor-pointer">
                           <div className="bg-[#494c53] rounded-sm ml-2 w-6 h-6 flex items-center justify-center">
-                            {/* {checked && activeInactive(checked).checked} */}
                             {course && course.length}
                           </div>
                         </div>
                       </div>
-                      <div className="flex">
+                      <div className="flex items-center">
                         <div onClick={() => handleToggleElement("check")}>
                           <span
                             className={`border-b-2 ${activeElement === "check"
@@ -351,7 +350,7 @@ function Assignments() {
                         assignment.course !== value
                     ) && (
                       <div className="-mt-8">
-                        <Nodata title="Homework" value="No Homework" />
+                        <Nodata title="Assignment" value="No Assignment" />
                       </div>
                     )}
                   {uniqCourse.length == 0 && (

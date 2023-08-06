@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { BsPatchCheckFill } from "react-icons/bs";
 
@@ -10,9 +10,17 @@ const PaymentProceed = ({ price }) => {
   // tab selector 
   const [activeTab, setActiveTab] = useState("card");
   const [loading, setLoading] = useState();
+  const [value, setValue] = useState("Monthly");
 
-
-
+  useEffect(() => {
+    if (price < 500) {
+      setValue("Monthly");
+    } else if (price >= 500 && price < 1500) {
+      setValue("Quaterly");
+    } else {
+      setValue("Yearly");
+    }
+  }, [price]);
 //api call for payment 
   const handleReq = (e) => {
     e.preventDefault();
@@ -38,7 +46,7 @@ const PaymentProceed = ({ price }) => {
 
   return (
     <>
-      <div className={`flex container w-[1068px] h-[500px] bg-[#373A41] rounded-[33px] mb-16 ${loading == true ? "blur-sm" : null}`}>
+      <div className={`flex md:w-[50%]  md:py-5 container md:bg-[] bg-[#373A41] rounded-[33px] mb-16   ${loading == true ? "blur-sm" : null}`}>
 
         <div className="hidden left m-12">
 
@@ -118,7 +126,7 @@ const PaymentProceed = ({ price }) => {
               <button className="bg-[#A145CD] py-2 flex px-12 text-center items-center rounded-lg">
                 Verify
                 <svg
-                  class="w-3.5 h-3.5 ml-2"
+                  className="w-3.5 h-3.5 ml-2"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -126,9 +134,9 @@ const PaymentProceed = ({ price }) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M1 5h12m0 0L9 1m4 4L9 9"
                   />
                 </svg>
@@ -205,30 +213,30 @@ const PaymentProceed = ({ price }) => {
           </div>
         </div>
 
-        <div className="right flex md:w-[331px] pt-[26px] pb-[18px] px-[26px] flex-col items-start gap-[5px] border border-white rounded-[11px] ml-2 md:ml-0 mr-2 md:mr-8 my-8" style={{margin:"auto"}}>
+        <div className="right flex pt-[26px] pb-[18px] px-[26px] flex-col items-start gap-[5px] border border-white rounded-[33px] ml-2  mr-2  my-2 md:m-0 m-auto justify-between md:mx-5  md:w-full" >
           <h2>Order Summary</h2>
-          <h1 className="text-xl mt-2 mb-4">
+          <h1 className="text-xl mt-2 mb-4 md:flex justify-between w-full">
             Subscription Plan{" "}
-            <span className="text-[#A145CD] font-bold">Quarterly</span>
+            <span className="text-[#A145CD] font-bold">{value}</span>
           </h1>
 
           <h2 className="font-bold">Order details</h2>
-          <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
+          <div className="flex text-sm justify-between w-full flex-row ">
             <p>Price</p>
             <p>Rs {price}</p>
           </div>
-          <div className="flex text-sm gap-[3rem] flex-row md:gap-[6rem]">
+          <div className="flex text-sm  flex-row justify-between w-full">
             <h2>Discount</h2>
             <h2 className="text-red-500">-Rs 0</h2>
           </div>
-          <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
+          <div className="flex text-sm  flex-row justify-between w-full">
             <h2>GST</h2>
             <h2 className="text-green-400">+Rs 0</h2>
           </div>
 
-          <hr class="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
+          <hr className="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
-          <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
+          <div className="flex text-sm flex-row  justify-between w-full">
             <h2>Subtotal</h2>
             <h2>Rs {price}</h2>
           </div>

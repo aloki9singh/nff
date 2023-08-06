@@ -380,7 +380,7 @@ function Videos() {
                       <h2>Course Content</h2>
                     </div>
 
-                    <div class="h-fit self-start w-full  pb-10 scrollbar-hide overflow-y-scroll max-h-[360px]">
+                    <div className="h-fit self-start w-full  pb-10 scrollbar-hide overflow-y-scroll max-h-[360px]">
                       {modules?.map((module, ind) => {
                         return (
                           <Accordion key={ind} title={module.name}>

@@ -44,7 +44,7 @@ const Assignmentupload = () => {
   const [SideBarState, sendSideBarState] = useState(false);
   const { id, courseid } = router.query;
   const [course, setCourse] = useState();
-  const { user, auth } = useAuthContext();
+  const { user } = useAuthContext();
   const [link, setLink] = useState("");
   const [progressData, setProgress] = useState();
   const [url, setUrl] = useState();
@@ -53,12 +53,16 @@ const Assignmentupload = () => {
   const [deadline, setDeadline] = useState(false)
   const [dataFetched, setDataFetched] = useState(false)
 
+  // Function to handle the file Upload component
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
     setUrl(null);
   };
+
+  // Submit handler whicch checks for URL given, file uploaded, Course Info exists/
   const onSubmitHandler = async (e) => {
+
     e.preventDefault();
 
     if (link || url) {
@@ -72,7 +76,7 @@ const Assignmentupload = () => {
       const courseRef = doc(db, "courses", courseid);
       const courseInfo = await getDoc(courseRef);
       const data = {
-        submittedby: auth.currentUser.uid,
+        submittedby: user.uid,
         file: url ? url : link,
         date: new Date(),
       };
@@ -107,6 +111,7 @@ const Assignmentupload = () => {
 
 
 
+  // Upload FIle Callback ran after 
   const uploadFile = useCallback(async () => {
     if (!file) {
       alert("Please select a file before uploading.");
@@ -363,7 +368,7 @@ const Assignmentupload = () => {
                           </p>
                         )}
                       </label>
-                    </div>
+                    </div> 
                   </div>
                   <div className="space-y-4  ">
                     <div className="mt-3">or attach URL of work</div>
@@ -384,10 +389,10 @@ const Assignmentupload = () => {
                       </button>
                     </div>
                   </div>
-                  <div class="flex justify-center">
+                  <div className="flex justify-center">
                     <button
                       type="submit"
-                      class={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${(submitted || deadline) ? "#505057" : "#E1348B"
+                      className={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${(submitted || deadline) ? "#505057" : "#E1348B"
                         }] rounded-lg focus:shadow-outline`}
                       disabled={submitted || deadline}
                     >

@@ -36,6 +36,7 @@ const Chat = () => {
   const [SideBarState, sendSideBarState] = useState(false);
   const router = useRouter();
   const [showChat, setShowChat] = useState(false);
+  // const user = auth.currentUser;
   const { user, loading, userProfile } = useAuthContext();
 
   const { userSubsribed } = CourseAccess(user.uid);

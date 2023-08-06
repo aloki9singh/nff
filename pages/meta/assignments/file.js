@@ -106,7 +106,7 @@ function Homework() {
 
           <div className="flex-grow md:rounded-tl-[40px] w-full">
             <div className="flex justify-between md:bg-[#2E3036] bg-[#141518] md:pt-0 pt-2 top-0 md:border-b-[1px]  border-b-[2px] border-[#717378] md:rounded-tl-[40px]">
-              <MentorTopbar heading="Homework" toggleSideBar={toggleSideBar} />
+              <MentorTopbar heading="Assignment" toggleSideBar={toggleSideBar} />
             </div>
             <div className="w-[90%] mx-auto mt-8 border rounded-[10px] my-4">
               <div className="text-2xl font-semibold text-white p-10">
