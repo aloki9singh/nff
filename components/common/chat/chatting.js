@@ -124,7 +124,7 @@ const ImageMessage = ({ img, userIcon, isSender = false }) => {
 
 const AudioMessage = ({ audio, userIcon, timestamp, isSender = false }) => {
   return (
-    <div className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
+    <div  className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
       <div>
         <Avatar
           alt="Profile-Picture"
@@ -315,6 +315,7 @@ const Chat = ({
               if (message.type === "audio")
                 return (
                   <AudioMessage
+                    key={i}
                     userIcon={message.sender?.photoURL}
                     audio={message.content}
                     isSender={message.senderId === user?.uid}
@@ -324,6 +325,7 @@ const Chat = ({
               if (message.type === "image") {
                 return (
                   <ImageMessage
+                    key={i}
                     userIcon={message.sender?.photoURL}
                     img={message.content}
                     isSender={message.senderId === user?.uid}
