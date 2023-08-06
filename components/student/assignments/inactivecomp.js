@@ -36,7 +36,7 @@ const InActiveComp = () => {
             </Link>
           </div>
         </div>
-        <div className="w-[100%] flex-wrap md:grid md:grid-cols-3 rounded-[30px] md:space-y-0 space-y-5  gap-3 pt-5">
+        <div className="w-[100%] flex-wrap sm:grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 rounded-[30px] md:space-y-0 space-y-5 sm:space-y-0  gap-3 pt-5">
           {myCourse &&
             myCourse.slice(0, 6).map((e) => (
               <div
