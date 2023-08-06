@@ -111,7 +111,7 @@ function StudyMaterialMain() {
             <div className=" flex justify-center bg-[#373A41] rounded-[30px] max-h-full w-full md:py-7 p-5 overflow-hidden">
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-scroll">
                 {modules?.map((module, index) => (
-                  <div className="flex justify-center my-2">
+                  <div className="flex justify-center my-2" key={index}>
                     <StudyMaterialCard
                       key={index}
                       module={module}

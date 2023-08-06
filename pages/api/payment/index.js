@@ -77,6 +77,6 @@ async function handler(req, res) {
       res.status(500).json({ msg: "Something went wrong!" });
     }
   }
-}
+
 
 export default handler;
