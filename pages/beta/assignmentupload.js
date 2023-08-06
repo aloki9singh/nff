@@ -44,7 +44,7 @@ const Assignmentupload = () => {
   const [SideBarState, sendSideBarState] = useState(false);
   const { id, courseid } = router.query;
   const [course, setCourse] = useState();
-  const { user, auth } = useAuthContext();
+  const { user } = useAuthContext();
   const [link, setLink] = useState("");
   const [progressData, setProgress] = useState();
   const [url, setUrl] = useState();
