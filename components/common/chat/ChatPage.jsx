@@ -26,7 +26,6 @@ import MentorTopbar from "../navbar/mentortopbar";
 import Layout from "../Layout/Layout";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 
-
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
   const [chats, setChats] = useState([]);
@@ -39,11 +38,9 @@ const Chat = () => {
   const router = useRouter();
   const [showChat, setShowChat] = useState(false);
 
-
-  
   // const user = auth.currentUser;
   const { user, loading, userProfile } = useAuthContext();
-  
+
   const { userSubsribed } = CourseAccess(user.uid);
 
   const isMentor = useMemo(() => {
@@ -178,16 +175,14 @@ const Chat = () => {
             : null
         }`}
       >
-
-
-         {!userSubsribed && (
-        <ToastMessage
-        heading={"OOPS!"}
-          message={
-            "You have not joined any courses yet. Please join a course to access the study material."
-          }
-        />
-      )}
+        {!userSubsribed && (
+          <ToastMessage
+            heading={"OOPS!"}
+            message={
+              "You have not joined any courses yet. Please join a course to access the study material."
+            }
+          />
+        )}
         {userProfile.role != "mentor"
           ? chats.length === 0 && userSubsribed && <NoJoinedCoursesModal />
           : null}
@@ -209,9 +204,7 @@ const Chat = () => {
         {!isMobileScreen && (
           <div className={`md:block  hidden w-[281px] bg-[#141518] z-10`}>
             {isMentor ? (
-              <MentorSidebar
-                toggleSideBar={toggleSideBar}
-              />
+              <MentorSidebar toggleSideBar={toggleSideBar} />
             ) : (
               <CourseoverviewSidebar
                 className={"max-h-screen"}
@@ -230,9 +223,7 @@ const Chat = () => {
               <MentorTopbar heading="Chats" toggleSideBar={toggleSideBar} />
             </div>
           )}
-          <div
-            className="md:p-4 items-stretch justify-between  h-[calc(100vh-80px)] flex flex-row gap-4 bg-[#2f3036] "
-          >
+          <div className="md:p-4 items-stretch justify-between  h-[calc(100vh-80px)] flex flex-row gap-4 bg-[#2f3036] ">
             <ChatSidebar
               currReciever={currReciever}
               setCurrReciever={setCurrReciever}
