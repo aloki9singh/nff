@@ -31,7 +31,7 @@ function StudyMaterial() {
 
   return (
     <Layout pageTitle="Study Material">
-    <div className="flex w-full">
+    <div className="flex w-full h-full">
       <div className="h-full w-full text-base bg-[#2E3036] ">
         <div className="flex w-full">
           {/* First Sidebar - Visible on Mobile */}

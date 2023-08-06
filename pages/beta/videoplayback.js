@@ -2,7 +2,7 @@ import Image from "next/image";
 import laptop from "@/public/pagesgraphics/student/videoplayback/Group 11.svg";
 
 import { AiOutlineLock } from "react-icons/ai";
-
+import { Fragment } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -137,7 +137,14 @@ function Videos() {
 
   // find a particular course using title from firestore
   useEffect(() => {
+    // client.js:1 Error fetching course data: TypeError: Cannot read properties of undefined (reading 'indexOf')
+    // to be resolved
     const fetchCourseData = async () => {
+
+      if(!title){
+        return;
+      }
+
       try {
         const courseRef = collection(db, "courses");
         const q = query(courseRef, where("title", "==", title));
@@ -145,15 +152,16 @@ function Videos() {
         if (courseDocs.empty) {
           setCourse(null);
         } else {
-          var courseData;
-          courseDocs.forEach((doc) => {
-            courseData = doc.data();
-          });
+          const  courseData = courseDocs.docs[0].data();
+          // courseDocs.forEach((doc) => {
+          //   courseData = doc.data();
+          // });
+          
           // console.log(courseData);
           // const courseData = courseDocs.docs[0]._document.data.value.mapValue.fields;
-          setModules(courseData.modules);
+          setModules(courseData?.modules);
           setCourse(courseData);
-          setVideoUrl(courseData.modules[0].video[0]);
+          setVideoUrl(courseData?.modules?.[0].video?.[0]);
           const userRef = doc(db, "allusers", courseData.mentorid); // searching if user exists or not
           const docSnap = await getDoc(userRef).then((docsnap) => {
             if (docsnap.exists()) {
@@ -168,6 +176,7 @@ function Videos() {
       } catch (error) {
         console.error("Error fetching course data:", error);
         // setCourse(null);
+
       }
     };
 
@@ -235,6 +244,7 @@ function Videos() {
       joinedAt: new Date(),
     };
 
+    if(courseData.mentorid)
     await updateDoc(doc(db, "allusers", course.mentorid), {
       joinedStudents: arrayUnion(d),
     });
@@ -292,8 +302,8 @@ function Videos() {
 
             <div className="w-full  min-h-screen  md:rounded-l-3xl bg-[#2D2E35]">
               <Dashboardnav heading="My Course" toggleSideBar={toggleSideBar} />
-              <div className="flex  bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
-                <div className="flex ">
+              <div className="flex items-center bg-[#373A41] rounded-2xl p-4 mx-4 md:mx-8 justify-between  my-6">
+                <div className="flex items-center ">
                   <Image
                     src={laptop}
                     className=" w-14 h-14"
@@ -307,7 +317,7 @@ function Videos() {
                   </div>
                 </div>
                 <button
-                  className="px-6 py-1 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
+                  className="px-6 py-3 bg-primary text-white my-1 mr-3 rounded-full hover:scale-105 duration-100 transition-transform hover:shadow-md   disabled:opacity-50 disabled:hover:scale-100"
                   //TO REVERT
                   onClick={() => {
                     userSubsribed ? joinCourseChat() : setShowModal(true);
@@ -387,7 +397,7 @@ function Videos() {
                             <div className="flex flex-col gap-2 ">
                               {module.video.map((video, i) => {
                                 return (
-                                  <>
+                                  <Fragment key={i}>
                                     <div className="flex relative">
                                       <button
                                         onClick={() => {
@@ -419,7 +429,7 @@ function Videos() {
                                         <AiOutlineLock className="text-xl ml-5 unblur" />
                                       </p>
                                     </div>
-                                  </>
+                                  </Fragment>
                                 );
                               })}
 
