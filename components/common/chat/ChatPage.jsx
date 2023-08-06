@@ -20,7 +20,6 @@ import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import Dashboardnav from "@/components/common/navbar/dashboardnav";
 import { useMediaQuery } from "react-responsive";
-import NoJoinedCoursesModal from "@/components/common/chat/NoJoinedCoursesModal";
 import MentorSidebar from "../sidebar/mentor";
 import MentorTopbar from "../navbar/mentortopbar";
 import Layout from "../Layout/Layout";
@@ -37,7 +36,6 @@ const Chat = () => {
   const [SideBarState, sendSideBarState] = useState(false);
   const router = useRouter();
   const [showChat, setShowChat] = useState(false);
-
   // const user = auth.currentUser;
   const { user, loading, userProfile } = useAuthContext();
 
@@ -183,9 +181,9 @@ const Chat = () => {
             }
           />
         )}
-        {userProfile.role != "mentor"
+        {/* {userProfile.role != "mentor"
           ? chats.length === 0 && userSubsribed && <NoJoinedCoursesModal />
-          : null}
+          : null} */}
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${
