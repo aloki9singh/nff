@@ -41,9 +41,7 @@ function StudyMaterialMain() {
     );
   }
   return (
-
-    <div className="mt-5 mx-8 w-full">
-
+    <div className="flex flex-col mx-4 lg:mx-8 w-full h-full max-w-6xl">
       {!selectedModule && (
         <>
           {!isMentor && (
@@ -108,21 +106,24 @@ function StudyMaterialMain() {
               }}
             />
           )}
-          <div className="md:mx-auto mt-6 text-white grow flex items-center">
-          <div className="flex bg-[#373A41] rounded-[30px] h-full justify-center">
-            <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 m-8">
-              {modules?.map((module, index) => (
-                <StudyMaterialCard
-                  key={index}
-                  module={module}
-                  onClick={() => {
-                    handleCardClick(module);
-                  }}
-                />
-              ))}
+
+          <div className="mx-auto text-white flex w-full max-h-full pt-10 overflow-hidden">
+            <div className=" flex justify-center bg-[#373A41] rounded-[30px] max-h-full w-full md:py-7 p-5 overflow-hidden">
+              <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-scroll">
+                {modules?.map((module, index) => (
+                  <div className="flex justify-center my-2">
+                    <StudyMaterialCard
+                      key={index}
+                      module={module}
+                      onClick={() => {
+                        handleCardClick(module);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
         </>
       )}
 

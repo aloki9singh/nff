@@ -125,7 +125,7 @@ const Studentdashboard = () => {
                   {active ? <ActiveComp percent={0} /> : <InActiveComp />}
                 </div>
               </div>
-              <div className=" md:w-1/3  mt-5 space-y-5  flex flex-col gap-4 pb-3 lg:pb-0">
+              <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 pb-3 lg:pb-0">
                 <div>
                   <Calendar />
                 </div>
