@@ -18,15 +18,11 @@ import Layout from "@/components/common/Layout/Layout";
 
 export default function Home({ coursesData }) {
   const [nav, setNav] = useState(false);
-  const handleClickOutside = () => {
-    setNav(false);
-  };
-  const ref = useHoverOutside(handleClickOutside);
 
   return (
     <Layout pageTitle="Home Page">
       <Navbar nav={nav} setNav={setNav} />
-      <div ref={ref}>
+      <div>
         <HomePage />
         <Courses coursesData={coursesData} />
         <Why />
