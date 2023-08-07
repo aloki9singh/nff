@@ -40,13 +40,13 @@ function MetrialInfo({ }) {
 
 
   return (
-    <div className=" max-w-6xl  h-full pb-6  bg-[#2D2E35] text-white grow flex items-center justify-center overflow-hidden ">
+    <div className=" max-w-5xl  h-full pb-6  bg-[#2D2E35] text-white grow flex items-center justify-center overflow-hidden ">
       <div className="w-full min-h-[30rem] flex md:bg-[#373A41] rounded-[30px] h-full  ">
-        <div className="w-full  flex flex-col">
-          <div className="w-full flex items-center justify-between">
-            <div className="flex items-center">
+        <div className="w-full flex flex-col">
+          <div className="w-full flex  flex-wrap shrink-0 items-center justify-between  ">
+            <div className="flex text-[12px] sm:text-base items-center space-x-4 md:space-x-8 px-2 sm:px-5 py-5 md:px-10 ">
               <div
-                className="m-8 ml-12 cursor-pointer hover:underline "
+                className=" cursor-pointer hover:underline "
                 onClick={() => setSelectedModule(null)}
               >
                 All Modules
@@ -55,7 +55,7 @@ function MetrialInfo({ }) {
               <ArrowIcon className="w-6 h-6 text-white" />
 
               <div
-                className="m-8 ml-12 cursor-pointer hover:underline"
+                className=" cursor-pointer hover:underline"
                 onClick={() => setSelectedCard(null)}
               >
                 {module.name}
@@ -63,7 +63,7 @@ function MetrialInfo({ }) {
               <ArrowIcon className="w-6 h-6  text-white" />
               <div className="ml-2">
                 {selectedCard && (
-                  <span className="ml-2 cursor-pointer hover:underline text-[#DA2E8B]">
+                  <span className=" cursor-pointer hover:underline text-[#DA2E8B]">
                     {selectedCard}
                   </span>
                 )}
@@ -76,10 +76,9 @@ function MetrialInfo({ }) {
             )}
           </div>
           <div className=" border-2 border-[#5F6065] w-full "></div>
-          <div>
             {selectedCard === null ? (
-              <div className="flex justify-center md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">
-                <div className="flex justify-between items-center ">
+              <div className=" grid grid-cols-2 gap-5 lg:grid-cols-3 p-4 md:p-5 lg:p-10">
+                <div className="flex justify-center items-center">
                   <div
                     onClick={() => setSelectedCard("Pdf")}
                     className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500 "
@@ -112,7 +111,7 @@ function MetrialInfo({ }) {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-center items-center">
                   <div
                     onClick={() => setSelectedCard("Shared Link")}
                     className=" m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500 "
@@ -146,7 +145,7 @@ function MetrialInfo({ }) {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-center items-center">
                   <div
                     onClick={() => setSelectedCard("Video")}
                     className="m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500 "
@@ -229,7 +228,6 @@ function MetrialInfo({ }) {
                 )}
               </div>
             )}
-          </div>
         </div>
       </div>
     </div>
