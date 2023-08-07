@@ -16,11 +16,11 @@ function ShareLink() {
   return (
     <div>
 
-      <div className='flex justify-center md:ml-10  flex-wrap md:grid md:gap-x-20 md:gap-y-5 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5'>
+      <div className='grid grid-cols-2 gap-5 lg:grid-cols-3 p-4 md:p-5 lg:p-10'>
 
         {
           module.link.map((link, i) => (
-            <Link target='_blank' href={link.link} key={i} className='flex justify-between items-center'>
+            <Link target='_blank' href={link.link} key={i} className='flex justify-center items-center'>
               <div className='m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] h-32 w-48 flex flex-col '>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
