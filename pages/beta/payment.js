@@ -78,7 +78,6 @@ const Paynow = () => {
 
           {currentStep == 1 && <PaymentProceed price={price} />}
 
-          ad
         </div>
         {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
 
