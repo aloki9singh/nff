@@ -111,11 +111,11 @@ const Aboutus = () => {
 		},
 		{
 			title: "Access of Everything",
-			desc: "We ensure unparalleled quality across all educational platforms. Neatskills.tech, neatlabs, and neatworld undergo rigorous verification to empower learners with top-notch resources and tools.",
+			desc: "We ensure unparalleled quality across all educational platforms. neatskills.tech, neatlabs, and neatworld undergo rigorous verification to empower learners with top-notch resources and tools.",
 		},
 		{
-			title: "23/7 Help and Support",
-			desc: "At Neatskills.tech, we are dedicated to empowering learners with personalized guidance, a vibrant community, and 24/7 assistance. We create a resilient learning environment, fostering growth, innovation, and inclusivity. Welcome to the Neatskills.tech family, where learning becomes an inspiring adventure.",
+			title: "24/7 Help and Support",
+			desc: "At neatskills.tech, we are dedicated to empowering learners with personalized guidance, a vibrant community, and 24/7 assistance. We create a resilient learning environment, fostering growth, innovation, and inclusivity. Welcome to the Neatskills.tech family, where learning becomes an inspiring adventure.",
 		},
 	];
 

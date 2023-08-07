@@ -250,7 +250,7 @@ export default function Navbar({ nav, setNav }) {
 
             <div className="text-white ">
               <ul className="uppercase text-center ">
-                <Link href="/">
+                <Link href="/alpha/aboutus">
                   <div
                     onClick={() => setNav(false)}
                     className="py-4 text-sm hover:scale-110 "
