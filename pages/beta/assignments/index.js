@@ -141,6 +141,7 @@ function Assignments() {
     };
 
     getCourseId();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMediumScreen, user?.uid]);
   //   const moduleDataMemo = useMemo(() => moduleData, [moduleData]);
   //   const courseMemo = useMemo(() => course, [course]);
