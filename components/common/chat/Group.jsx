@@ -157,27 +157,29 @@ const GroupDetails = ({
         </p>
       </div>
 
-      <div
-        className="flex flex-col items-center justify-center p-4 gap-2"
-        style={{ borderBottom: "1px solid grey" }}
-      >
-        <p className="text-xs">Media Link and Docs</p>
+      {images?.length !== 0 && (
         <div
-          className="flex gap-4 p-2 overflow-x-auto no-scrollbar "
-          style={{ backgroundColor: "#505357" }}
+          className="flex flex-col items-center justify-center p-4 gap-2"
+          style={{ borderBottom: "1px solid grey" }}
         >
-          {images.map(({ content }, index) => (
-            <Image
-              src={content}
-              alt=""
-              height={100}
-              width={100}
-              className="w-20 h-28 object-cover"
-              key={index}
-            />
-          ))}
+          <p className="text-xs">Media Link and Docs</p>
+          <div
+            className="flex gap-4 p-2 overflow-x-auto no-scrollbar "
+            style={{ backgroundColor: "#505357" }}
+          >
+            {images.map(({ content }, index) => (
+              <Image
+                src={content}
+                alt=""
+                height={100}
+                width={100}
+                className="w-20 h-28 object-cover"
+                key={index}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div
         className="flex flex-col  p-4"
@@ -207,7 +209,9 @@ const GroupDetails = ({
                   alt="profile-avatar"
                 />
                 <div className="flex flex-col items-start ml-[10px]">
-                  <p className="">{removeDomainFromEmail(member.displayName)}</p>
+                  <p className="">
+                    {removeDomainFromEmail(member.displayName)}
+                  </p>
                   <p className="text-xs opacity-50">
                     {member.uid === user?.uid ? "You" : "Online"}
                   </p>

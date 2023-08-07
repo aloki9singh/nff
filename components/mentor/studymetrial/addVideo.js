@@ -234,7 +234,7 @@ function DropZone({ setUrl, setSize, accept }) {
           </p>
         </div>
       </div>
-      <aside className=" max-w-[580px] mx-auto mt-1 " >
+      <aside className=" max-w-[580px] mx-auto mt-1 text-xs " >
         {/* <h4>Accepted files</h4> */}
         <ul>{acceptedFileItems}</ul>
         {loading && <div className="text-white">Uploading...</div>}

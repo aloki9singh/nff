@@ -106,6 +106,7 @@ async function handler(req, res) {
     console.log(error);
     res.setHeader('Location', baseUrl + '/beta/paymentFailed');
     res.status(302).end();
+
     // res.status(302).redirect(baseUrl+'/beta/payment');
   }
 }

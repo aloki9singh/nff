@@ -9,7 +9,7 @@ const AssignmentCard = ({ id, name, date, url, courseid, checked, active, no, su
   const time = new Date(date.seconds * 1000 + date.nanoseconds / 1000000);
   return (
     <>
-      <div className={`rounded-xl bg-[#505057] shadow p-4 md:w-48 h-${active == "check" ? "fit" : "[184px]"} m-4 cursor-pointer`} onClick={() => {if (!checked)
+      <div className={`rounded-xl bg-[#505057] shadow p-4 md:w-60 h-${active == "check" ? "fit" : "[184px]"} m-4 cursor-pointer`} onClick={() => {if (!checked)
       {router.push({ pathname: "/beta/assignmentupload", query: { id: id, courseid: courseid } })
       }
       else{
@@ -35,10 +35,10 @@ const AssignmentCard = ({ id, name, date, url, courseid, checked, active, no, su
               submit ? "Submitted" : "Pending"}</span>
           </div>
         </div>
-        <h5 className="text-base font-medium mt-4">{`Assignment - ${no}`}</h5>
-        <div className="flex-col items-between justify-between">
-          <div className="text-white text-[10px] my-2">{`${name}`}</div>
-          <div className="text-[10px]">{`${time.toLocaleString()}`}</div>
+        <div className="flex-col">
+          <h5 className="text-base font-medium mt-4">{`${name.charAt(0).toUpperCase() + name.slice(1,23)}`}</h5>
+          {/* Display the formatted local date and time at the bottom */}
+          <div className="text-[12px] mt-2">{`${time.toLocaleString()}`}</div>
         </div>
         {(checked && active == "check") ? <button className="bg-[#E1348B] rounded-[10px] mt-4 font-semibold text-sm text-white py-2 px-4 m-2" onClick={() =>
           router.push({

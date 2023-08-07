@@ -6,6 +6,7 @@ import {
 import React, { useMemo } from "react";
 import MetrialInfo from "@/components/mentor/studymetrial/metrialinfo";
 import Select from "react-select";
+import Nodata from "@/components/common/nodata/nodata";
 
 function StudyMaterialMain() {
   const {
@@ -30,10 +31,17 @@ function StudyMaterialMain() {
     };
   }, [courseID, joinedCourses]);
 
-  console.log("selectedCourseName", selectedCourse);
+  console.log("selectedCourseName", selectedCourse.value === undefined);
 
+  if (selectedCourse.value === undefined) {
+    return (
+      <div className=" flex items-center justify-center w-full h-screen mb-5">
+        <Nodata title="Course" value="No Course available" />
+      </div>
+    );
+  }
   return (
-    <div className="mt-5 mx-8 w-full" >
+    <div className="flex flex-col mx-4 lg:mx-8 w-full h-full max-w-6xl">
       {!selectedModule && (
         <>
           {!isMentor && (
@@ -98,19 +106,28 @@ function StudyMaterialMain() {
               }}
             />
           )}
-          <div className="mx-auto mt-6 text-white grow flex items-center  ">
-            <div className=" flex md:bg-[#373A41] rounded-[30px] h-full  ">
-              <div className="flex justify-center items-stretch   flex-wrap md:grid md:gap-x-20 md:gap-y-10 lg:grid-cols-3 md:grid-cols-3 gap-y-5 m-5">
+
+          <div className="mx-auto text-white flex w-full max-h-full pt-10 overflow-hidden">
+            <div className=" flex justify-center bg-[#373A41] rounded-[30px] max-h-full w-full md:py-7 p-5 overflow-hidden">
+              {modules?.length && <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-scroll scrollbar-hide">
                 {modules?.map((module, index) => (
-                  <StudyMaterialCard
-                    key={index}
-                    module={module}
-                    onClick={() => {
-                      handleCardClick(module);
-                    }}
-                  />
+                  <div className="flex justify-center my-2" key={index}>
+                    <StudyMaterialCard
+                      key={index}
+                      module={module}
+                      onClick={() => {
+                        handleCardClick(module);
+                      }}
+                    />
+                  </div>
                 ))}
-              </div>
+              </div>}
+              {
+                !modules?.length ?
+                  <div className="">
+                    <Nodata value="Nothing to show here" />
+                  </div> : ""
+              }
             </div>
           </div>
         </>

@@ -62,7 +62,7 @@ function StudyMaterial() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
-  const { userSubsribed } = CourseAccess(user.uid);
+  const { userSubsribed } = CourseAccess(user?.uid);
 
   return (
     <>
@@ -103,7 +103,7 @@ function StudyMaterial() {
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
-        <div className="w-full h-screen flex flex-col bg-[#2D2E35] space-y-4">
+        <div className="w-full h-screen flex flex-col bg-[#2D2E35] ">
           <Dashboardnav
             heading="Study Material"
             toggleSideBar={toggleSideBar}
@@ -124,7 +124,7 @@ function StudyMaterial() {
             </select>
           </div> */}
 
-          <div className="bg-[#2D2E35] text-white grow flex  ">
+          <div className="bg-[#2D2E35] text-white flex py-7 overflow-hidden max-h-full justify-center">
             <StudyMaterialMain />
           </div>
         </div>

@@ -27,7 +27,7 @@ const CourseCard = ({
 					className="md:w-[80px] md:h-[80px] w-[65px] h-[65px]  object-contain"
 				/>
 				<div className="text-[10px] pt-3 md:pt-0 md:text-sm text-[#E1348B] ">
-					<span className="mr-3">{`${sessions ? sessions : ""} Lessons`}</span>
+					<span className="mr-3 max-[1215px]:block max-[780px]:inline">{`${sessions ? sessions : ""} Lessons`}</span>
 					<span>{level}</span>
 				</div>
 			</div>
