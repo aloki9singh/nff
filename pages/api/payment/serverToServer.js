@@ -100,7 +100,7 @@ async function handler(req, res) {
 
   } catch (error) {
     console.log(error);
-    // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
+    res.status(302).redirect(baseUrl + '/beta/paymentFailed')
     // res.status(302).redirect(baseUrl+'/beta/payment');
   }
 }
