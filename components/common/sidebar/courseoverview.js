@@ -69,36 +69,38 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
             </div>
             <div className="flex flex-col h-full justify-around ">
               <ul>
-                <li className="md:space-y-[16px]">
-                  <Link
-                    href="/beta/profile"
-                    className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
-                  >
-                    <label className="inline-flex items-center space-x-3">
-                      <input
-                        id="default-checkbox"
-                        type="checkbox"
-                        className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                          router.pathname === "/beta/profile"
-                            ? "shadow-white"
-                            : ""
-                        }`}
-                        style={{
-                          boxShadow:
+                <li className="">
+                  {user && (
+                    <Link
+                      href="/beta/profile"
+                      className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
+                    >
+                      <label className="inline-flex items-center space-x-3">
+                        <input
+                          id="default-checkbox"
+                          type="checkbox"
+                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
                             router.pathname === "/beta/profile"
-                              ? "0 0 5px #A145CD"
-                              : "none",
-                        }}
-                      />{" "}
-                      <span
-                        className={`ml-3 cursor-pointer  text-[${
-                          router.pathname == "/beta/profile" ? "#E1348B" : ""
-                        }]`}
-                      >
-                        Profile
-                      </span>
-                    </label>
-                  </Link>
+                              ? "shadow-white"
+                              : ""
+                          }`}
+                          style={{
+                            boxShadow:
+                              router.pathname === "/beta/profile"
+                                ? "0 0 5px #A145CD"
+                                : "none",
+                          }}
+                        />{" "}
+                        <span
+                          className={`ml-3 cursor-pointer  text-[${
+                            router.pathname == "/beta/profile" ? "#E1348B" : ""
+                          }]`}
+                        >
+                          Profile
+                        </span>
+                      </label>
+                    </Link>
+                  )}
                   <Link
                     href="/beta/dashboard"
                     className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
@@ -164,15 +166,19 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                   {user ? (
                     " "
                   ) : (
-                    <Link
-                      href="https://discord.gg/q7ARXUQcbx"
-                      target="_blank"
+                    <div
+                      onClick={() => {
+                        const url = "https://discord.gg/q7ARXUQcbx";
+                        window.open(url, "_blank");
+                      }}
                       className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                     >
                       <label className="inline-flex items-center space-x-3">
                         <input
                           id="default-checkbox"
                           type="checkbox"
+                          checked={false}
+                          readOnly
                           className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
                             router.pathname === "#" ? "shadow-white" : ""
                           }`}
@@ -183,15 +189,9 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                                 : "none",
                           }}
                         />{" "}
-                        <span
-                          className={`ml-3 cursor-pointer  text-[${
-                            router.pathname == "#" ? "#E1348B" : ""
-                          }]`}
-                        >
-                          Community
-                        </span>
+                        <span className={`ml-3 cursor-pointer`}>Community</span>
                       </label>
-                    </Link>
+                    </div>
                   )}
 
                   {user ? (
