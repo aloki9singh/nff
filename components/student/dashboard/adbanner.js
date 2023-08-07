@@ -104,7 +104,7 @@ export default function Advertisement() {
                 <span className="whitespace-normal ">
                   Get unlimited access to all materials just from
                 </span>
-                <span className="font-medium font-inter">{` ₹400/mo `}</span>
+                <span className="font-medium font-inter">{` ₹299/mo `}</span>
               </div>
             </div>
           </div>
@@ -113,8 +113,9 @@ export default function Advertisement() {
           {/* {timer.map((item) => (
             <div className="mb-2" key={item.id}></div>
           ))} */}
-          <div className="border rounded-md bg-[#DBDBDB] lg:flex items-center text-black text-2xl" >
-            <button className="w-7 h-7 text-lg flex justify-center items-center ">
+          <div className="border rounded-md bg-[#DBDBDB] lg:flex items-center text-black text-2xl h-10" >
+            <button className="p-2" onClick={(e) => window.location.href = "/beta/payment"}>
+
               <AiOutlineArrowRight />
             </button>
           </div>

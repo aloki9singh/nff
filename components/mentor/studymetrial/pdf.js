@@ -8,64 +8,29 @@ import { useStudyMaterialContext } from '@/lib/context/StudyMaterialContext';
 import Button from '@/components/common/button/primary-button';
 
 function PdfList({ pdfs }) {
-  const router = useRouter();
-  const isMediumScreen = useMediaQuery({ minWidth: 768 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
-  const [showAddPdf, setShowAddPdf] = useState(false);
-
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
-
-
-  useEffect(() => {
-    if (isMediumScreen) {
-      sendSideBarState(false);
-    }
-    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     user.emailVerified = true;
-    //     const value = await callUserById(user.uid);
-    //     setVerified(value.user.verified);
-    //   }
-    // });
-
-    // return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen]);
-
-  const toggleShowAddPdf = () => {
-    setShowAddPdf(!showAddPdf);
-  };
-
   return (
     <div>
-      {showAddPdf ? (
-        <AddPdf closeForm={() => {
-          setShowAddPdf(false)
-        }} />
-      ) : (
-        <div>
-          <div className=' w-full  flex  flex-row-reverse '>
-
+      {pdfs?.length === 0 && (
+          <div className="flex w-full justify-center items-center flex-col gap-y-5 m-5">
+            <div className="text-2xl text-center font-medium">No Pdfs</div>
           </div>
-          <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
-            <div className=' ml-3 flex items-center justify-between self-stretch'>
-              <p>Module 1</p>
-            </div>
-
-            <div className=' w-full flex flex-col items-center gap-5  '>
-              {
-                pdfs?.map((pdf, i) => (
-                  <PdfListItem key={i} pdf={pdf} />
-                ))
-              }
-            </div>
+        )}
+      <div>
+        <div className=' w-full  flex  flex-row-reverse '>
+        </div>
+        <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
+          {/* <div className=' ml-3 flex items-center justify-between self-stretch'>
+            <p>Module 1</p>
+          </div> */}
+          <div className=' w-full flex flex-col items-center gap-5  '>
+            {
+              pdfs?.map((pdf, i) => (
+                <PdfListItem key={i} pdf={pdf} />
+              ))
+            }
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -122,7 +87,7 @@ const PdfListItem = ({ pdf }) => {
       <div className=' flex flex-row  md:mr-20 gap-3'>
         {/* Size Text */}
         <div className='text-sm text-white'>{
-          (pdf.size/1024).toFixed(2) + ' KB' ?? ''
+          (pdf.size / 1024).toFixed(2) + ' KB' ?? ''
         }</div>
 
         {/* Download SVG Icon */}
