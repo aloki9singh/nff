@@ -38,10 +38,10 @@ function Assignments() {
   const [uniqCourse, setUnique] = useState([]);
   const [value, setValue] = useState();
   const [module, setModule] = useState(0);
-  const [submitted, setSubmit] = useState()
-  const [checked, setChecked] = useState()
+  const [submitted, setSubmit] = useState();
+  const [checked, setChecked] = useState();
   let [searchstate, setsearchstate] = useState("");
-  const [dataFetched, setDataFetched] = useState(false)
+  const [dataFetched, setDataFetched] = useState(false);
   const [activeElement, setActiveElement] = useState("total");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
@@ -49,10 +49,9 @@ function Assignments() {
   const { user, userProfile, joinedCourses } = useAuthContext();
 
   useEffect(() => {
-
-    setModuleName(moduleData && moduleData[0]?.module)
-    setValue(moduleData && moduleData[0]?.course)
-  }, [moduleData, dataFetched])
+    setModuleName(moduleData && moduleData[0]?.module);
+    setValue(moduleData && moduleData[0]?.course);
+  }, [moduleData, dataFetched]);
 
   if (!user || !userProfile) {
     router.push("/");
@@ -105,7 +104,8 @@ function Assignments() {
                 course: e.course,
                 module: e.module,
               };
-              const isUnique = uniq.findIndex((item) => item == e.course) !== -1;
+              const isUnique =
+                uniq.findIndex((item) => item == e.course) !== -1;
               if (!isUnique) {
                 uniq.push(e.course);
               }
@@ -123,34 +123,32 @@ function Assignments() {
         arr.map((ele) => {
           if (ele.files) {
             ele.files.map((e) => {
-              if ((e.submittedby == user.uid) && e.checked) {
-                check.push(ele)
+              if (e.submittedby == user.uid && e.checked) {
+                check.push(ele);
+              } else if (e.submittedby == user.uid) {
+                submit.push(ele);
               }
-              else if (e.submittedby == user.uid) {
-                submit.push(ele)
-              }
-            })
+            });
           }
-        })
-        setSubmit(submit)
-        setChecked(check)
+        });
+        setSubmit(submit);
+        setChecked(check);
         setUnique(uniq);
         setModuleData(moduleInfo);
         setCourse(arr);
-        setDataFetched(true)
+        setDataFetched(true);
       }
     };
 
     getCourseId();
-
-//   }, [isMediumScreen, user?.uid]);
-//   const moduleDataMemo = useMemo(() => moduleData, [moduleData]);
-//   const courseMemo = useMemo(() => course, [course]);
-//   useEffect(() => {
-//     setModuleName(moduleDataMemo && moduleDataMemo[0]?.module);
-//     setValue(moduleDataMemo && moduleDataMemo[0]?.course);
-//   }, [moduleDataMemo]);
-// >>>>>>> main
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMediumScreen, user?.uid]);
+  //   const moduleDataMemo = useMemo(() => moduleData, [moduleData]);
+  //   const courseMemo = useMemo(() => course, [course]);
+  //   useEffect(() => {
+  //     setModuleName(moduleDataMemo && moduleDataMemo[0]?.module);
+  //     setValue(moduleDataMemo && moduleDataMemo[0]?.course);
+  //   }, [moduleDataMemo]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -161,7 +159,6 @@ function Assignments() {
   let Activestyle =
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
-
 
   const { userSubsribed } = CourseAccess(user?.uid);
   return (
@@ -190,8 +187,9 @@ function Assignments() {
           {/* Mobile Sidebar */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -258,7 +256,9 @@ function Assignments() {
                           return (
                             <ul
                               key={i}
-                              className={module === i ? Activestyle : Inactivestyle}
+                              className={
+                                module === i ? Activestyle : Inactivestyle
+                              }
                               onClick={() => {
                                 setModuleName(ele.module);
                                 setModule(i);
@@ -270,7 +270,6 @@ function Assignments() {
                         }
                         return null;
                       })}
-
                   </div>
                   {moduleData &&
                     moduleData.every((ele) => ele.course !== value) && (
@@ -292,10 +291,11 @@ function Assignments() {
                         {" "}
                         <div>
                           <span
-                            className={`border-b-2 ${activeElement === "total"
-                              ? "border-[#E1348B]"
-                              : "border-transparent"
-                              }`}
+                            className={`border-b-2 ${
+                              activeElement === "total"
+                                ? "border-[#E1348B]"
+                                : "border-transparent"
+                            }`}
                             onClick={() => handleToggleElement("total")}
                           >
                             Total
@@ -310,10 +310,11 @@ function Assignments() {
                       <div className="flex items-center">
                         <div onClick={() => handleToggleElement("check")}>
                           <span
-                            className={`border-b-2 ${activeElement === "check"
-                              ? "border-[#E1348B]"
-                              : "border-transparent"
-                              }`}
+                            className={`border-b-2 ${
+                              activeElement === "check"
+                                ? "border-[#E1348B]"
+                                : "border-transparent"
+                            }`}
                           >
                             Checked
                           </span>
@@ -327,28 +328,37 @@ function Assignments() {
                     </div>
                   </div>
                   <div className="filecontainer  grid md:grid-cols-3 grid-cols-1">
-                    {course && moduleName && course.map((assignment, i) => {
-                      if (assignment.module === moduleName && assignment.course === value) {
-                        const isActiveCheck = activeElement === "check" && checked.includes(assignment);
-                        const isActiveTotal = activeElement === "total";
+                    {course &&
+                      moduleName &&
+                      course.map((assignment, i) => {
+                        if (
+                          assignment.module === moduleName &&
+                          assignment.course === value
+                        ) {
+                          const isActiveCheck =
+                            activeElement === "check" &&
+                            checked.includes(assignment);
+                          const isActiveTotal = activeElement === "total";
 
-                        return isActiveCheck || isActiveTotal ? (
-                          <AssignmentCard
-                            key={i}
-                            id={assignment.id}
-                            no={i + 1}
-                            name={assignment.title}
-                            date={assignment.date}
-                            url={assignment.url}
-                            courseid={assignment.courseid}
-                            checked={checked.includes(assignment)}
-                            active={activeElement}
-                            submit={submitted && submitted.includes(assignment)}
-                          />
-                        ) : null;
-                      }
-                      return null;
-                    })}
+                          return isActiveCheck || isActiveTotal ? (
+                            <AssignmentCard
+                              key={i}
+                              id={assignment.id}
+                              no={i + 1}
+                              name={assignment.title}
+                              date={assignment.date}
+                              url={assignment.url}
+                              courseid={assignment.courseid}
+                              checked={checked.includes(assignment)}
+                              active={activeElement}
+                              submit={
+                                submitted && submitted.includes(assignment)
+                              }
+                            />
+                          ) : null;
+                        }
+                        return null;
+                      })}
                   </div>
                   {course &&
                     moduleName &&
