@@ -94,7 +94,7 @@ function Homework() {
     };
     getData();
     return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen, dataFetched, user]);
+  }, [isMediumScreen, dataFetched, user?.uid]);
 
   // if (!verified) {
   //   return null;

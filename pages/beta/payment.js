@@ -24,8 +24,8 @@ const Paynow = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
 
   //hooks for navbar toggle
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(true);
+  const [SideBarState, sendSideBarState] = useState(true);
 
   useEffect(() => {
 
@@ -81,6 +81,7 @@ const Paynow = () => {
           ad
         </div>
         {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
+
 
       </div>
     </Layout>
