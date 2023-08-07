@@ -37,10 +37,9 @@ const Paynow = () => {
       const payloadData = JSON.parse(atob(val));
       setCurrentStep(payloadData.page)
     }
-  }, [router.query]);
+  }, [router.query, isMediumScreen]);
 
-
-  //stores the page number to the localhost (till now its a jugaad)
+  
   const updatePage = (page) => {
     setCurrentStep(page);
   };
@@ -78,7 +77,6 @@ const Paynow = () => {
 
           {currentStep == 1 && <PaymentProceed price={price} />}
 
-          ad
         </div>
         {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
 

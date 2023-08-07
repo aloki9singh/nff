@@ -1,13 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const PaymentCompleted = () => {
   const router = useRouter();
   const [payData, setPayData] = useState();
-
-
 
   const [items, setItems] = useState([
     { name: 'Amount', price: 0 },
