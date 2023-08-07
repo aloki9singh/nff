@@ -81,7 +81,7 @@ const Calendar = () => {
   }, [currentMonth, currentDate,date]);
   // console.log(schedules);
   return (
-    <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5 ">
+    <div className="bg-darkslategray rounded-2xl bg-[#373A41] p-5 md:px-2 ">
       <div className="grid grid-cols text-xl md:space-y-2 w-full">
         <div className="text-sm">
           <MonthSelector
