@@ -27,11 +27,10 @@ const Studentdashboard = () => {
   const [verified, setVerified] = useState(false);
   const [leaderboarddata, setLeaderboardData] = useState([]);
   const { user, userProfile } = useAuthContext();
-  // console.log(userProfile)
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(true);
+  const [SideBarState, sendSideBarState] = useState(true);
   const [workpercentage, setworkpercentage] = useState(0);
   const [lastTip, setLastTip] = useState(null);
 

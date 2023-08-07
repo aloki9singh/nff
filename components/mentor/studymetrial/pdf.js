@@ -8,66 +8,41 @@ import { useStudyMaterialContext } from '@/lib/context/StudyMaterialContext';
 import Button from '@/components/common/button/primary-button';
 
 function PdfList({ pdfs }) {
-  const router = useRouter();
-  const isMediumScreen = useMediaQuery({ minWidth: 768 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [SideBarState, sendSideBarState] = useState(false);
-  const [showAddPdf, setShowAddPdf] = useState(false);
-
-  function toggleSideBar() {
-    setShowSideBar(!showSideBar);
-    sendSideBarState(showSideBar);
-  }
-
-
-  useEffect(() => {
-    if (isMediumScreen) {
-      sendSideBarState(false);
-    }
-    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     user.emailVerified = true;
-    //     const value = await callUserById(user.uid);
-    //     setVerified(value.user.verified);
-    //   }
-    // });
-
-    // return () => unsubscribe(); // Cleanup the listener
-  }, [isMediumScreen]);
-
-  const toggleShowAddPdf = () => {
-    setShowAddPdf(!showAddPdf);
-  };
-
   return (
     <div>
-      {showAddPdf ? (
-        <AddPdf closeForm={() => {
-          setShowAddPdf(false)
-        }} />
-      ) : (
-        <div>
-          <div className=' w-full  flex  flex-row-reverse '>
-
+      {pdfs?.length === 0 && (
+          <div className="flex w-full justify-center items-center flex-col gap-y-5 m-5">
+            <div className="text-2xl text-center font-medium">No Pdfs</div>
           </div>
-          <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
-            <div className=' ml-3 flex items-center justify-between self-stretch'>
-              <p>Module 1</p>
-            </div>
-
-            <div className=' w-full flex flex-col items-center gap-5  '>
-              {
-                pdfs?.map((pdf, i) => (
-                  <PdfListItem key={i} pdf={pdf} />
-                ))
-              }
-            </div>
+        )}
+      <div>
+        <div className=' w-full  flex  flex-row-reverse '>
+        </div>
+        <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
+          {/* <div className=' ml-3 flex items-center justify-between self-stretch'>
+            <p>Module 1</p>
+          </div> */}
+          <div className=' w-full flex flex-col items-center gap-5  '>
+            {
+              pdfs?.map((pdf, i) => (
+                <PdfListItem key={i} pdf={pdf} />
+              ))
+            }
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
+}
+function downloadPdf(url) {
+  const link = document.createElement('a');
+
+  link.setAttribute('target', '_blank');
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'file.pdf');
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 }
 
 
@@ -111,15 +86,20 @@ const PdfListItem = ({ pdf }) => {
 
       <div className=' flex flex-row  md:mr-20 gap-3'>
         {/* Size Text */}
-        <div className='text-sm text-white'>{pdf.size}</div>
+        <div className='text-sm text-white'>{
+          (pdf.size / 1024).toFixed(2) + ' KB' ?? ''
+        }</div>
 
         {/* Download SVG Icon */}
         <svg
+          onClick={() => {
+            downloadPdf(pdf.url)
+          }}
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'
           id='download'
           stroke='white'
-          className='w-5 h-5'>
+          className='w-5 h-5 cursor-pointer '>
           <path d='M21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Zm-9.71,1.71a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l4-4a1,1,0,0,0-1.42-1.42L13,12.59V3a1,1,0,0,0-2,0v9.59l-2.29-2.3a1,1,0,1,0-1.42,1.42Z'></path>
         </svg>
       </div>
