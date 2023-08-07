@@ -33,29 +33,29 @@ export default function Footer({background}) {
    const PopularCoursesLink = [
       {
          title: "Ux Fundamentals",
-         link: "/",
+         link: "/beta/courseoverview",
       },
       {
          title: "Python Coading",
-         link: "/",
+         link: "/beta/courseoverview",
       },
       {
          title: "Maths",
-         link: "/",
+         link: "/beta/courseoverview",
       },
       {
          title: "Introduction to C++",
-         link: "/",
+         link: "/beta/courseoverview",
       },
    ];
    const ExploreLinks = [
       {
          title: "Courses",
-         link: "/",
+         link: "/beta/courseoverview",
       },
       {
          title: "Community",
-         link: "/",
+         link: "https://discord.gg/q7ARXUQcbx",
       },
    ];
    const LearningLinks = [

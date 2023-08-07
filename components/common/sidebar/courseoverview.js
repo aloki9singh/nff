@@ -69,7 +69,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
             </div>
             <div className="flex flex-col h-full justify-around ">
               <ul>
-                <li className="md:space-y-[16px]">
+                <li className="">
                   {user && (
                     <Link
                       href="/beta/profile"
