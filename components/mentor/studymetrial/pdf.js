@@ -15,10 +15,10 @@ function PdfList({ pdfs }) {
             <div className="text-2xl text-center font-medium">No Pdfs</div>
           </div>
         )}
-      <div>
+      <div className='w-full flex flex-col items-center sm:px-5 lg:px-10'>
         <div className=' w-full  flex  flex-row-reverse '>
         </div>
-        <div className='flex justify-center items-center md:items-start  md:ml-10   flex-col  gap-y-5 m-5'>
+        <div className='flex justify-center items-center md:items-start  flex-col  gap-y-5 m-5 w-full'>
           {/* <div className=' ml-3 flex items-center justify-between self-stretch'>
             <p>Module 1</p>
           </div> */}
@@ -48,8 +48,8 @@ function downloadPdf(url) {
 
 const PdfListItem = ({ pdf }) => {
   return (
-    <div className=' w-full flex flex-row md:justify-between items-center  mt-4 ml-5'>
-      <div className=' flex flex-row gap-2'>
+    <div className=' w-full grid grid-cols-3 md:justify-between items-center p-2'>
+      <div className=' flex flex-row gap-2 '>
         {/* File SVG Icon */}
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -72,11 +72,11 @@ const PdfListItem = ({ pdf }) => {
         </svg>
 
         {/* Title */}
-        <div className='text-xl font-bold'>{pdf.name}</div>
+        <div className='text-base sm:text-xl font-bold '>{pdf.name}</div>
       </div>
 
       {/* Date Text */}
-      <div className='text-sm text-white'>{pdf.createdAt?.toDate().
+      <div className='text-[12px] text-white flex justify-center'>{pdf.createdAt?.toDate().
         toLocaleDateString('en-IN', {
           year: 'numeric',
           month: 'numeric',
@@ -84,7 +84,7 @@ const PdfListItem = ({ pdf }) => {
         }) ?? ''
       }</div>
 
-      <div className=' flex flex-row  md:mr-20 gap-3'>
+      <div className=' flex flex-row  gap-3 justify-end'>
         {/* Size Text */}
         <div className='text-sm text-white'>{
           (pdf.size / 1024).toFixed(2) + ' KB' ?? ''
