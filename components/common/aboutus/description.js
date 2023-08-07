@@ -9,7 +9,7 @@ const Description = ({className}) => {
             style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)" }}
           >
             <p className="text-sm md:text-xl lg:text-2xl lg:px-11  ">
-              <a href="https://neatskills.tech" className="font-semibold">Neatskills.tech</a> is developed and managed by Provoke Developers
+              <a href="https://neatskills.tech" className="font-semibold">neatskills.tech</a> is developed and managed by Provoke Developers
               Private Limited. At the core of this, we value quality and want to
               provide everyone with the affordable way to access any skill and
               explore themselves in their own way with their own lifelong

@@ -21,6 +21,7 @@ async function sha256(input) {
 
 
 async function handler(req, res) {
+
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const merchantId = process.env.NEXT_MERCHANT_ID;
   const saltKey = process.env.NEXT_SALT_KEY;
@@ -35,8 +36,8 @@ async function handler(req, res) {
     "amount": body.price,
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
-    "callbackUrl": "https://webhook.site/callback-url",
-    "mobileNumber": "9999999999",
+    "callbackUrl": "",
+    "mobileNumber": "9335929565",
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }
@@ -65,7 +66,7 @@ async function handler(req, res) {
               };
         
               
-              fetch("https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay", options)
+              fetch("https://api.phonepe.com/apis/hermes/pg/v1/pay", options)
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
@@ -74,7 +75,7 @@ async function handler(req, res) {
 
     } catch (error) {
       // console.log(error);
-      res.status(500).json({ msg: "Something went wrong!" });
+      res.status(500).json({ msg: "Something went wrong!"+error });
     }
   }
 

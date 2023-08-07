@@ -16,7 +16,9 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
   // console.log(userProfile)
   return (
     <>
-      <aside className={`md:bg-[#141518]  bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between overflow-auto no-scrollbar ${className} `}>
+      <aside
+        className={`md:bg-[#141518]  bg-[#25262C] p-5 rounded-l-[40px] md:rounded-l-[0px]  flex flex-col justify-between overflow-auto no-scrollbar ${className} `}
+      >
         <div>
           <div>
             <div>
@@ -40,7 +42,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
               <div className="md:hidden block p-2 text-white">
                 <div>
                   {user && userProfile && user.photoURL ? (
-                    <Link href={"/meta/profile"}>
+                    <Link href={"/beta/profile"}>
                       <Image
                         src={user.photoURL}
                         alt="proImg"
@@ -53,7 +55,11 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                     <BsPersonCircle className="text-white text-4xl"></BsPersonCircle>
                   )}
                 </div>
-                <p className="pt-2">{user ? user.displayName : "Anonymous"}</p>
+                <Link href={"/beta/profile"}>
+                  <p className="pt-2 cursor-pointer">
+                    {user ? user.displayName : "Anonymous"}
+                  </p>
+                </Link>
                 {userProfile && (
                   <p className="text-gray-500 text-[12px] mt-[-4px]">
                     Roll no-{userProfile.rollNo || "N/A"}
@@ -64,6 +70,37 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
             <div className="flex flex-col h-full justify-around ">
               <ul>
                 <li className="md:space-y-[16px]">
+                  {user && (
+                    <Link
+                      href="/beta/profile"
+                      className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
+                    >
+                      <label className="inline-flex items-center space-x-3">
+                        <input
+                          id="default-checkbox"
+                          type="checkbox"
+                          className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
+                            router.pathname === "/beta/profile"
+                              ? "shadow-white"
+                              : ""
+                          }`}
+                          style={{
+                            boxShadow:
+                              router.pathname === "/beta/profile"
+                                ? "0 0 5px #A145CD"
+                                : "none",
+                          }}
+                        />{" "}
+                        <span
+                          className={`ml-3 cursor-pointer  text-[${
+                            router.pathname == "/beta/profile" ? "#E1348B" : ""
+                          }]`}
+                        >
+                          Profile
+                        </span>
+                      </label>
+                    </Link>
+                  )}
                   <Link
                     href="/beta/dashboard"
                     className="flex items-center p-2 text-base font-normal  text-white rounded-lg  hover:bg-pin"
@@ -85,7 +122,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                         }}
                       />{" "}
                       <span
-                        className={`ml-3 text-[${
+                        className={`ml-3 cursor-pointer  text-[${
                           router.pathname == "/beta/dashboard" ? "#E1348B" : ""
                         }]`}
                       >
@@ -93,6 +130,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                       </span>
                     </label>
                   </Link>
+
                   <hr className="h-px  md:my-4 bg-gray-500 border-0 w-[90%] m-auto "></hr>
                   <Link
                     href="/beta/courseoverview"
@@ -115,7 +153,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                         }}
                       />{" "}
                       <span
-                        className={`ml-3 text-[${
+                        className={`ml-3 cursor-pointer  text-[${
                           router.pathname == "/beta/courseoverview"
                             ? "#E1348B"
                             : ""
@@ -128,14 +166,19 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                   {user ? (
                     " "
                   ) : (
-                    <Link
-                      href="#"
+                    <div
+                      onClick={() => {
+                        const url = "https://discord.gg/q7ARXUQcbx";
+                        window.open(url, "_blank");
+                      }}
                       className="flex items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-pin"
                     >
                       <label className="inline-flex items-center space-x-3">
                         <input
                           id="default-checkbox"
                           type="checkbox"
+                          checked={false}
+                          readOnly
                           className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
                             router.pathname === "#" ? "shadow-white" : ""
                           }`}
@@ -146,15 +189,9 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                                 : "none",
                           }}
                         />{" "}
-                        <span
-                          className={`ml-3 text-[${
-                            router.pathname == "#" ? "#E1348B" : ""
-                          }]`}
-                        >
-                          Community
-                        </span>
+                        <span className={`ml-3 cursor-pointer`}>Community</span>
                       </label>
-                    </Link>
+                    </div>
                   )}
 
                   {user ? (
@@ -180,7 +217,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
+                            className={`ml-3 cursor-pointer  text-[${
                               router.pathname == "/beta/checkclass"
                                 ? "#E1348B"
                                 : ""
@@ -212,7 +249,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
+                            className={`ml-3 cursor-pointer  text-[${
                               router.pathname == "/beta/studymaterial"
                                 ? "#E1348B"
                                 : ""
@@ -243,7 +280,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
+                            className={`ml-3 cursor-pointer  text-[${
                               router.pathname == "/beta/assignments"
                                 ? "#E1348B"
                                 : ""
@@ -275,7 +312,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                             }}
                           />{" "}
                           <span
-                            className={`ml-3 text-[${
+                            className={`ml-3 cursor-pointer  text-[${
                               router.pathname == "/beta/chats" ? "#E1348B" : ""
                             }]`}
                           >
@@ -284,37 +321,6 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                         </label>
                       </Link>
 
-                      <Link
-                        href="/beta/profile"
-                        className="flex items-center p-2 text-base font-normal text-white rounded-lg   hover:bg-pin"
-                      >
-                        <label className="inline-flex items-center space-x-3">
-                          <input
-                            id="default-checkbox"
-                            type="checkbox"
-                            className={`rounded form-checkbox h-3 w-3 text-gray-600 ${
-                              router.pathname === "/beta/profile"
-                                ? "shadow-white"
-                                : ""
-                            }`}
-                            style={{
-                              boxShadow:
-                                router.pathname === "/beta/profile"
-                                  ? "0 0 5px #A145CD"
-                                  : "none",
-                            }}
-                          />{" "}
-                          <span
-                            className={`ml-3 text-[${
-                              router.pathname == "/beta/profile"
-                                ? "#E1348B"
-                                : ""
-                            }]`}
-                          >
-                            Profile
-                          </span>
-                        </label>
-                      </Link>
                       <button
                         onClick={() => {
                           logout(router);
@@ -328,7 +334,7 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                             className="rounded form-checkbox h-3 w-3 text-gray-600"
                           />{" "}
                           <span
-                            className={`ml-3 flex text-[${
+                            className={`ml-3 cursor-pointer  flex text-[${
                               router.pathname == "/beta/logout" ? "#E1348B" : ""
                             }]`}
                           >
@@ -349,7 +355,11 @@ const CourseoverviewSidebar = ({ toggleSideBar, className }) => {
                               </div>
                             </h1>
                             {/* <p>150 members</p> */}
-                            <Link className="inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline " href="https://discord.gg/q7ARXUQcbx" target="_blank">
+                            <Link
+                              className="inline-flex items-center md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[#E1348B] rounded-lg focus:shadow-outline "
+                              href="https://discord.gg/q7ARXUQcbx"
+                              target="_blank"
+                            >
                               <span>Join</span>
                               <AiOutlineArrowRight />
                             </Link>

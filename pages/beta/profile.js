@@ -1,3 +1,5 @@
+      //check question mark here in line 58
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -55,7 +57,8 @@ function StudentProfile() {
   //effect for fetching enrolled courses
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
-      const userRef = doc(db, "allusers", user.uid);
+      //check question mark here
+      const userRef = doc(db, "allusers", user?.uid);
       const collectionRef = collection(userRef, "joinedCourses");
       const querySnapshot = await getDocs(collectionRef);
 
@@ -124,7 +127,7 @@ function StudentProfile() {
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
                         {user.displayName}
-                        <p className="text-xs ml-2">
+                        <p className="text-xs pl-[2px]">
                           Roll no-{userProfile.rollNo || " N/A"}
                         </p>
                       </div>

@@ -2,7 +2,7 @@
 // In mobile screen dropdown is missing of modules.
 // file icon missing
 //yet to write logic to change course bougth or not ??
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 // import MobileNav from '../components/CalenderParts/MobileNav';
 import AssignmentCard from "@/components/student/assignments/foldercard";
 import { useRouter } from "next/router";
@@ -38,14 +38,21 @@ function Assignments() {
   const [uniqCourse, setUnique] = useState([]);
   const [value, setValue] = useState();
   const [module, setModule] = useState(0);
-  const [submitted, setSubmit] = useState()
-  const [checked, setChecked] = useState()
+  const [submitted, setSubmit] = useState();
+  const [checked, setChecked] = useState();
   let [searchstate, setsearchstate] = useState("");
+  const [dataFetched, setDataFetched] = useState(false);
   const [activeElement, setActiveElement] = useState("total");
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
   const { user, userProfile, joinedCourses } = useAuthContext();
+
+  useEffect(() => {
+    setModuleName(moduleData && moduleData[0]?.module);
+    setValue(moduleData && moduleData[0]?.course);
+  }, [moduleData, dataFetched]);
+
   if (!user || !userProfile) {
     router.push("/");
   }
@@ -60,102 +67,100 @@ function Assignments() {
     }
 
     const getCourseId = async () => {
-      const userRef = doc(db, "allusers", user.uid);
-      const collectionRef = collection(userRef, "joinedCourses");
-      const querySnapshot = await getDocs(collectionRef);
-      const data = querySnapshot.docs.map((doc) => doc.data());
-      const id = [];
-      var arr = [];
-      const moduleInfo = [];
-      const uniq = [];
-      const check = [];
-      const submit = [];
-      data.map((ele) => {
-        id.push(ele.id);
-        uniq.push(ele.title);
-      });
-
-      for (var i = 0; i < id.length; i++) {
-        const q = query(collection(db, "courses"), where("id", "==", id[i]));
-        const courseInfo = await getDocs(q);
-        const promises = courseInfo.docs.map(async (doc) => {
-          const docRef = doc.ref;
-          const collectionRef = collection(docRef, "assignment");
-          const querySnapshot = await getDocs(collectionRef);
-          return querySnapshot.docs.map((doc) => doc.data());
+      if (!dataFetched) {
+        const userRef = doc(db, "allusers", user?.uid);
+        const collectionRef = collection(userRef, "joinedCourses");
+        const querySnapshot = await getDocs(collectionRef);
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        const id = [];
+        var arr = [];
+        const moduleInfo = [];
+        const uniq = [];
+        const check = [];
+        const submit = [];
+        data.map((ele) => {
+          id.push(ele.id);
+          uniq.push(ele.title);
         });
-        const assignmentDataArrays = await Promise.all(promises);
-        assignmentDataArrays.forEach((assignmentDataArray) =>
-          arr.push(...assignmentDataArray)
-        );
-      }
-      if (arr) {
-        for (let i = 0; i < arr.length; i++) {
-          arr.map((e) => {
-            const data = {
-              course: e.course,
-              module: e.module,
-            };
-            const isUnique = uniq.findIndex((item) => item == e.course) !== -1;
-            if (!isUnique) {
-              uniq.push(e.course);
-            }
-            const isDuplicate =
-              moduleInfo.findIndex(
-                (item) =>
-                  item.course === data.course && item.module === data.module
-              ) !== -1;
-            if (!isDuplicate) {
-              moduleInfo.push(data);
-            }
+
+        for (var i = 0; i < id.length; i++) {
+          const q = query(collection(db, "courses"), where("id", "==", id[i]));
+          const courseInfo = await getDocs(q);
+          const promises = courseInfo.docs.map(async (doc) => {
+            const docRef = doc.ref;
+            const collectionRef = collection(docRef, "assignment");
+            const querySnapshot = await getDocs(collectionRef);
+            return querySnapshot.docs.map((doc) => doc.data());
           });
+          const assignmentDataArrays = await Promise.all(promises);
+          assignmentDataArrays.forEach((assignmentDataArray) =>
+            arr.push(...assignmentDataArray)
+          );
         }
+        if (arr) {
+          for (let i = 0; i < arr.length; i++) {
+            arr.map((e) => {
+              const data = {
+                course: e.course,
+                module: e.module,
+              };
+              const isUnique =
+                uniq.findIndex((item) => item == e.course) !== -1;
+              if (!isUnique) {
+                uniq.push(e.course);
+              }
+              const isDuplicate =
+                moduleInfo.findIndex(
+                  (item) =>
+                    item.course === data.course && item.module === data.module
+                ) !== -1;
+              if (!isDuplicate) {
+                moduleInfo.push(data);
+              }
+            });
+          }
+        }
+        arr.map((ele) => {
+          if (ele.files) {
+            ele.files.map((e) => {
+              if (e.submittedby == user.uid && e.checked) {
+                check.push(ele);
+              } else if (e.submittedby == user.uid) {
+                submit.push(ele);
+              }
+            });
+          }
+        });
+        setSubmit(submit);
+        setChecked(check);
+        setUnique(uniq);
+        setModuleData(moduleInfo);
+        setCourse(arr);
+        setDataFetched(true);
       }
-      arr.map((ele) => {
-        if (ele.files) {
-          ele.files.map((e) => {
-            if ((e.submittedby == user.uid) && e.checked) {
-              check.push(ele)
-            }
-            else if (e.submittedby == user.uid) {
-              submit.push(ele)
-            }
-          })
-        }
-      })
-      setSubmit(submit)
-      setChecked(check)
-      setUnique(uniq);
-      setModuleData(moduleInfo);
-      setCourse(arr);
     };
 
     getCourseId();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMediumScreen, user?.uid]);
-  useEffect(() => {
-
-    setModuleName(moduleData && moduleData[0]?.module)
-    setValue(moduleData && moduleData[0]?.course)
-  }, [moduleData])
+  //   const moduleDataMemo = useMemo(() => moduleData, [moduleData]);
+  //   const courseMemo = useMemo(() => course, [course]);
+  //   useEffect(() => {
+  //     setModuleName(moduleDataMemo && moduleDataMemo[0]?.module);
+  //     setValue(moduleDataMemo && moduleDataMemo[0]?.course);
+  //   }, [moduleDataMemo]);
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
 
-  // We would get a courseID from the backend and then use that to fetch the assignments for a particular module
-
-  //  need from backend
   let currentCourseId = 1;
   let Activestyle =
     "text-sm font-light py-2 pl-8 pr-12 bg-[#505057] border-r-2 border-[#E1348B]";
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
-  if (!user || !userProfile) {
-    return null;
-  }
-
-  const { userSubsribed } = CourseAccess(user.uid);
+  const { userSubsribed } = CourseAccess(user?.uid);
   return (
     <Layout pageTitle="Assignments">
       {/* {!userSubsribed && (
@@ -182,8 +187,9 @@ function Assignments() {
           {/* Mobile Sidebar */}
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${
+                SideBarState ? "block" : "hidden"
+              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -248,21 +254,22 @@ function Assignments() {
                       moduleData.map((ele, i) => {
                         if (ele.course === value) {
                           return (
-                            <div
+                            <ul
                               key={i}
-                              className={module === i ? Activestyle : Inactivestyle}
+                              className={
+                                module === i ? Activestyle : Inactivestyle
+                              }
                               onClick={() => {
                                 setModuleName(ele.module);
                                 setModule(i);
                               }}
                             >
-                              {`${i + 1}. ${ele.module}`}
-                            </div>
+                              <li>{ele.module}</li>
+                            </ul>
                           );
                         }
                         return null;
                       })}
-
                   </div>
                   {moduleData &&
                     moduleData.every((ele) => ele.course !== value) && (
@@ -279,15 +286,16 @@ function Assignments() {
                     <div className="title font-medium text-xl pt-8 pb-2 pl-8 border-gray-500">
                       Files
                     </div>
-                    <div className="flex  items-center justify-end mr-16 gap-4">
+                    <div className="flex pt-3 pl-8 mr-16 gap-4">
                       <div className=" flex items-center">
                         {" "}
                         <div>
                           <span
-                            className={`border-b-2 ${activeElement === "total"
-                              ? "border-[#E1348B]"
-                              : "border-transparent"
-                              }`}
+                            className={`border-b-2 ${
+                              activeElement === "total"
+                                ? "border-[#E1348B]"
+                                : "border-transparent"
+                            }`}
                             onClick={() => handleToggleElement("total")}
                           >
                             Total
@@ -302,10 +310,11 @@ function Assignments() {
                       <div className="flex items-center">
                         <div onClick={() => handleToggleElement("check")}>
                           <span
-                            className={`border-b-2 ${activeElement === "check"
-                              ? "border-[#E1348B]"
-                              : "border-transparent"
-                              }`}
+                            className={`border-b-2 ${
+                              activeElement === "check"
+                                ? "border-[#E1348B]"
+                                : "border-transparent"
+                            }`}
                           >
                             Checked
                           </span>
@@ -318,29 +327,38 @@ function Assignments() {
                       </div>
                     </div>
                   </div>
-                  <div className="filecontainer py-4 md:px-6 grid md:grid-cols-3 grid-cols-1">
-                    {course && moduleName && course.map((assignment, i) => {
-                      if (assignment.module === moduleName && assignment.course === value) {
-                        const isActiveCheck = activeElement === "check" && checked.includes(assignment);
-                        const isActiveTotal = activeElement === "total";
+                  <div className="filecontainer  grid md:grid-cols-3 grid-cols-1">
+                    {course &&
+                      moduleName &&
+                      course.map((assignment, i) => {
+                        if (
+                          assignment.module === moduleName &&
+                          assignment.course === value
+                        ) {
+                          const isActiveCheck =
+                            activeElement === "check" &&
+                            checked.includes(assignment);
+                          const isActiveTotal = activeElement === "total";
 
-                        return isActiveCheck || isActiveTotal ? (
-                          <AssignmentCard
-                            key={i}
-                            id={assignment.id}
-                            no={i + 1}
-                            name={assignment.title}
-                            date={assignment.date}
-                            url={assignment.url}
-                            courseid={assignment.courseid}
-                            checked={checked.includes(assignment)}
-                            active={activeElement}
-                            submit={submitted && submitted.includes(assignment)}
-                          />
-                        ) : null;
-                      }
-                      return null;
-                    })}
+                          return isActiveCheck || isActiveTotal ? (
+                            <AssignmentCard
+                              key={i}
+                              id={assignment.id}
+                              no={i + 1}
+                              name={assignment.title}
+                              date={assignment.date}
+                              url={assignment.url}
+                              courseid={assignment.courseid}
+                              checked={checked.includes(assignment)}
+                              active={activeElement}
+                              submit={
+                                submitted && submitted.includes(assignment)
+                              }
+                            />
+                          ) : null;
+                        }
+                        return null;
+                      })}
                   </div>
                   {course &&
                     moduleName &&
@@ -349,12 +367,12 @@ function Assignments() {
                         assignment.module !== moduleName ||
                         assignment.course !== value
                     ) && (
-                      <div className="-mt-8">
+                      <div className="">
                         <Nodata title="Assignment" value="No Assignment" />
                       </div>
                     )}
                   {uniqCourse.length == 0 && (
-                    <div className="-mt-8">
+                    <div className="">
                       <Nodata title="Course" value="No Course available" />
                     </div>
                   )}

@@ -112,7 +112,8 @@ function StudyMaterialMain() {
 
           <div className="mx-auto text-white flex w-full max-h-full pt-10 overflow-hidden">
             <div className=" flex justify-center bg-[#373A41] rounded-[30px] max-h-full w-full md:py-7 p-5 overflow-hidden">
-              <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-auto">
+
+              {modules?.length && <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-scroll scrollbar-hide">
                 {modules?.map((module, index) => (
                   <div className="flex justify-center my-2" key={index}>
                     <StudyMaterialCard
@@ -124,7 +125,13 @@ function StudyMaterialMain() {
                     />
                   </div>
                 ))}
-              </div>
+              </div>}
+              {
+                !modules?.length ?
+                  <div className="">
+                    <Nodata value="Nothing to show here" />
+                  </div> : ""
+              }
             </div>
           </div>
         </>
