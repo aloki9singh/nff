@@ -97,12 +97,15 @@ async function handler(req, res) {
     }
     else {
       console.log("body", body);
-      res.status(302).redirect(baseUrl + '/beta/paymentFailed')
+      // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
+      res.setHeader('Location', baseUrl + '/beta/paymentFailed');
+      res.status(302).end();
     }
 
   } catch (error) {
     console.log(error);
-    // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
+    res.setHeader('Location', baseUrl + '/beta/paymentFailed');
+    res.status(302).end();
     // res.status(302).redirect(baseUrl+'/beta/payment');
   }
 }

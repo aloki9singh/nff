@@ -114,7 +114,7 @@ export default function Advertisement() {
             <div className="mb-2" key={item.id}></div>
           ))} */}
           <div className="border rounded-md bg-[#DBDBDB] lg:flex items-center text-black text-2xl h-10" >
-            <button className="p-2">
+            <button className="p-2" onClick={(e) => window.location.href = "/beta/payment"}>
               <AiOutlineArrowRight />
             </button>
           </div>
