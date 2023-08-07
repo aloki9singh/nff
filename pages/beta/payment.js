@@ -37,7 +37,7 @@ const Paynow = () => {
       const payloadData = JSON.parse(atob(val));
       setCurrentStep(payloadData.page)
     }
-  }, [router.query]);
+  }, [router.query, isMediumScreen]);
 
 
   //stores the page number to the localhost (till now its a jugaad)
