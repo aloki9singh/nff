@@ -46,7 +46,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
           {/* <RxHamburgerMenu className="text-white text-3xl block md:hidden" /> */}
         </div>
         <div className="flex items-center justify-between">
-          <div
+          {/* <div
             className="flex items-center gap-x-2 md:mr-1 sm:mr-5 sm:py-2 rounded-lg  max-[956px]:hidden"
             style={{ border: "1px solid #728095" }}
           >
@@ -56,7 +56,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
               placeholder="Search"
               className="focus:outline-none focus:border-none border-none bg-inherit text-white"
             />
-          </div>
+          </div> */}
 
           {user && (
             <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
