@@ -224,7 +224,7 @@ export default function Navbar({ nav, setNav }) {
       <div
         className={
           nav
-            ? " fixed left-0 top-0 w-full h-screen bg-black/70 z-50  ease-in duration-700 "
+            ? " fixed right-0 top-0 w-full h-screen bg-black/70 z-50  ease-in duration-700 "
             : " fixed    "
         }
       >
