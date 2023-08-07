@@ -91,7 +91,9 @@ async function handler(req, res) {
         page:2,
       }));
 
-      res.status(302).redirect(baseUrl + '/beta/payment?val='+payload);
+      // res.status(302).redirect(baseUrl + '/beta/payment?val='+payload);
+      res.setHeader('Location', baseUrl + '/beta/payment?val=' + payload);
+      res.status(302).end();
     }
     else {
       console.log("body", body);
@@ -100,7 +102,7 @@ async function handler(req, res) {
 
   } catch (error) {
     console.log(error);
-    // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
+    res.status(302).redirect(baseUrl + '/beta/paymentFailed')
     // res.status(302).redirect(baseUrl+'/beta/payment');
   }
 }

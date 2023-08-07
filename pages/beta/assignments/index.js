@@ -2,7 +2,7 @@
 // In mobile screen dropdown is missing of modules.
 // file icon missing
 //yet to write logic to change course bougth or not ??
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 // import MobileNav from '../components/CalenderParts/MobileNav';
 import AssignmentCard from "@/components/student/assignments/foldercard";
 import { useRouter } from "next/router";
@@ -142,12 +142,15 @@ function Assignments() {
     };
 
     getCourseId();
-  }, [isMediumScreen, user?.uid, dataFetched]);
 
-  // useEffect(() => {
-  //   setModuleName(moduleData && moduleData[0]?.module)
-  //   setValue(moduleData && moduleData[0]?.course)
-  // }, [moduleData])
+//   }, [isMediumScreen, user?.uid]);
+//   const moduleDataMemo = useMemo(() => moduleData, [moduleData]);
+//   const courseMemo = useMemo(() => course, [course]);
+//   useEffect(() => {
+//     setModuleName(moduleDataMemo && moduleDataMemo[0]?.module);
+//     setValue(moduleDataMemo && moduleDataMemo[0]?.course);
+//   }, [moduleDataMemo]);
+// >>>>>>> main
 
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
