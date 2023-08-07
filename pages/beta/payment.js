@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import StepProgress from "@/components/student/payment/stepprogress";
 import PaymentCompleted from "@/components/student/payment/paymentdone";
-import PaymentProceed from '@/components/student/payment/PaymentProceed';
+import PaymentProceed from "@/components/student/payment/PaymentProceed";
 import DashboardNav from "@/components/common/navbar/dashboardnav";
 import Payment from '@/components/student/payment/paymen';
 import Layout from '@/components/common/Layout/Layout';
@@ -9,6 +9,7 @@ import Layout from '@/components/common/Layout/Layout';
 import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from 'next/router';
+
 
 const Paynow = () => {
   const router = useRouter();
@@ -25,7 +26,6 @@ const Paynow = () => {
   //hooks for navbar toggle
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-
 
   useEffect(() => {
 
@@ -45,13 +45,10 @@ const Paynow = () => {
     setCurrentStep(page);
   };
 
-
-
   //update the value of price hook according to passed into props
   const updatePrice = (price) => {
     setPrice(price);
-  }
-
+  };
 
   //for toggling navbar
   function toggleSideBar() {
@@ -75,17 +72,19 @@ const Paynow = () => {
 
         <div className={`flex flex-col items-center  text-white font-Inter ${currentStep == 0 ? "bg-[#0D0E14]" : "bg-[#2D2E35] "}`}>
 
+
           <StepProgress currentStep={currentStep} />
           {currentStep == 2 && <PaymentCompleted />}
 
           {currentStep == 1 && <PaymentProceed price={price} />}
+
           ad
         </div>
         {currentStep == 0 && <Payment updatePage={updatePage} updatePrice={updatePrice} />}
 
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Paynow
+export default Paynow;
