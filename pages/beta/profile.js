@@ -124,7 +124,7 @@ function StudentProfile() {
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
                         {user.displayName}
-                        <p className="text-xs ml-2">
+                        <p className="text-xs pl-[2px]">
                           Roll no-{userProfile.rollNo || " N/A"}
                         </p>
                       </div>
@@ -309,24 +309,21 @@ function StudentProfile() {
                   </div>
                   <div className="flex justify-between flex-col md:flex-row w-[93%] md:w-[100%] mx-auto">
                     <div className="bg-[#373A41] h-[264px]  rounded-[20px] pb-9 pt-3 px-4 space-y-2 md:w-[55%] mt-5 flex flex-col">
-                      <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full">
+                      <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full text-2xl">
                         Subscription
                       </div>
                       <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2 px-2">
-                        {subscribed.length ? (
-                          subscribed.map((e, i) => (
-                            <div
-                              key={i}
-                              className="flex mb-6 px-2 justify-between border-l-[4px] border-pink"
-                            >
-                              <div className="flex">
-                                <h1 className="text-base">UI/UX Designer</h1>
-                              </div>
-                              <div className="px-2 py-1 tx-white text-xs bg-[#E1348B] rounded-[10px]">
-                                Active
-                              </div>
-                            </div>
-                          ))
+                        {userSubsribed ? (
+                        <div className="h-full flex align-middle items-center text-center">
+                        <div className="flex mb-6 px-2 justify-between w-full">
+                          <div className="px-2 py-1 rounded-full w-full">
+                            <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full hover:shadow-md transition-shadow">
+                              Monthly Subscription is Activated
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
                         ) : (
                           <div className="text-gray-500 flex justify-center items-center h-[140px]">
                             Not subscribed yet

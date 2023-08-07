@@ -5,6 +5,7 @@ import Avatar from "./avatar";
 import { auth, db } from "../../../config/firebaseconfig";
 import { doc, getDoc } from "firebase/firestore";
 import { getUserProfile } from "@/lib/context/AuthContext";
+import { removeDomainFromEmail } from "@/lib/exportablefunctions";
 
 const messageDetails = {
   lastMessage: "Sir have you checked my assignment?",
@@ -79,7 +80,9 @@ const SideBarCard = ({
       />
 
       <div className="flex flex-col flex-1 items-start overflow-hidden">
-        <h1 className=" truncate w-[90%] ">{chat.name}</h1>
+        <h1 className=" truncate w-[90%] ">{
+          removeDomainFromEmail(chat.name)
+        }</h1>
         <p className="text-sm text-white/50 w-4/5 truncate">{chat.lastMessage}</p>
       </div>
       <div className="flex flex-col justify-end items-center">

@@ -22,7 +22,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../../config/firebaseconfig";
-import { uploadToFirebase } from "@/lib/exportablefunctions";
+import { removeDomainFromEmail, uploadToFirebase } from "@/lib/exportablefunctions";
 import AudioRecorder, { AudioPlayer } from "./AudioRecorder";
 
 function formatTimePassed(messageTimestamp) {
@@ -124,7 +124,7 @@ const ImageMessage = ({ img, userIcon, isSender = false }) => {
 
 const AudioMessage = ({ audio, userIcon, timestamp, isSender = false }) => {
   return (
-    <div className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
+    <div  className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
       <div>
         <Avatar
           alt="Profile-Picture"
@@ -281,7 +281,9 @@ const Chat = ({
             <div onClick={() => {
               displayReciever();
             }} className="flex flex-col items-start cursor-pointer">
-              <h1>{currReciever?.name}</h1>
+              <h1>{
+                removeDomainFromEmail(currReciever?.name)
+              }</h1>
               {!currReciever.isGroup && <p
                 className="text-[12px]"
                 style={{ color: "rgba(255, 255, 255, 0.45)" }}
@@ -313,6 +315,7 @@ const Chat = ({
               if (message.type === "audio")
                 return (
                   <AudioMessage
+                    key={i}
                     userIcon={message.sender?.photoURL}
                     audio={message.content}
                     isSender={message.senderId === user?.uid}
@@ -322,6 +325,7 @@ const Chat = ({
               if (message.type === "image") {
                 return (
                   <ImageMessage
+                    key={i}
                     userIcon={message.sender?.photoURL}
                     img={message.content}
                     isSender={message.senderId === user?.uid}

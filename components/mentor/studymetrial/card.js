@@ -34,9 +34,9 @@ const StudyMaterialCard = ({ module, onClick }) => {
       {/* {filteredMaterial.map(study => (
         <Link  href='studyMaterial'> */}
         {/* on hover shadow should be on right and bottom sides */}
-      <div className='rounded-2xl border-2 cursor-pointer hover:-translate-y-1 transition-all duration-150 hover:shadow-md hover:shadow-gray-500   w-[280px] border-white bg-[#37393D]  max-w-sm md:gap-6' onClick={onClick}>
-        <div className='flex gap-2 items-center '>
-          <div className='m-2 p-3 border rounded-2xl bg-gradient-to-r from-[#673CAF] to-[#DA2E8B] w-36 flex flex-col items-center justify-between '>
+      <div className='rounded-2xl border-2 cursor-pointer  hover:scale-[105%] hover:z-10 transition-all duration-150 w-[280px] md:w-auto  lg:w-[280px] border-white bg-[#37393D] h-[150px]  max-w-sm md:gap-6' onClick={onClick}>
+        <div className='flex gap-2 md:gap-0 lg:gap-2 items-center '>
+          <div className='m-2 p-3 border rounded-2xl bg-gradient-to-r h-[130px] from-[#673CAF] to-[#DA2E8B] w-36 md:w-32 lg:lg:w-36 flex flex-col items-center justify-between '>
             <Image
               src='/pagesgraphics/student/coursedescription/laptop.svg'
               width={60}
@@ -47,7 +47,7 @@ const StudyMaterialCard = ({ module, onClick }) => {
               {module?.name}
             </h1>
           </div>
-          <div className='text-sm text-white pr-2 space-y-6'>
+          <div className='text-sm text-white pr-2 md:pr-0 lg:pr-2 space-y-6'>
             <p className='mr-2 text-xs flex items-center gap-1'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
