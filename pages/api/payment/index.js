@@ -1,4 +1,3 @@
-
 function encodeToBase64(str) {
   return btoa(str);
 }
@@ -12,9 +11,11 @@ const generateTransactionId = () => {
 async function sha256(input) {
   const encoder = new TextEncoder();
   const data = encoder.encode(input);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+  const hashHex = hashArray
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
   return hashHex;
 }
 
@@ -23,7 +24,6 @@ async function handler(req, res) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const merchantId = process.env.NEXT_MERCHANT_ID;
   const saltKey = process.env.NEXT_SALT_KEY;
-  const payUri = process.env.NEXT_PROD_PAY_URL;
   const transactionId = generateTransactionId();
 
     const body = JSON.parse(req.body);
@@ -77,5 +77,6 @@ async function handler(req, res) {
       res.status(500).json({ msg: "Something went wrong!" });
     }
   }
-  
-  export default handler;
+
+
+export default handler;
