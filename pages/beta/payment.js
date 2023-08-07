@@ -39,8 +39,7 @@ const Paynow = () => {
     }
   }, [router.query, isMediumScreen]);
 
-
-  //stores the page number to the localhost (till now its a jugaad)
+  
   const updatePage = (page) => {
     setCurrentStep(page);
   };
