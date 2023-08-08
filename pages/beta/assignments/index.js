@@ -161,13 +161,14 @@ function Assignments() {
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
   const { userSubsribed } = CourseAccess(user?.uid);
+  console.log(userSubsribed)
   return (
     <Layout pageTitle="Assignments">
       {!userSubsribed && (
         <ToastMessage
-        heading={"OOPS!"}
+          heading={"OOPS!"}
           message={
-            "You have not joined any courses yet. Please join a course to access the study material."
+            "Subscribe to access Assignment."
           }
         />
       )}
@@ -181,7 +182,7 @@ function Assignments() {
 
         )} */}
 
-      <div className={``}>
+      <div className={`${!userSubsribed ? "blur-lg" : null}`}>
         {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
           {/* Mobile Sidebar */}
