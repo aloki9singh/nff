@@ -63,7 +63,7 @@ const RecievedMessage = ({ message }) => {
         />
       </div>
       <div
-        className="p-2 py-3 max-w-[80%] md:max-w-sm rounded-[10px] flex flex-col"
+        className="p-2 py-3 max-w-[60%] rounded-[10px] flex flex-col"
         style={{ backgroundColor: " #717378" }}
       >
         <p className=" break-words " >
@@ -81,7 +81,7 @@ const SendMessage = ({ message }) => {
   return (
     <div className="flex  justify-end gap-2">
       <div
-        className="p-2 py-3 max-w-[80%] md:max-w-sm rounded-[10px]  flex flex-col"
+        className="p-2 py-3 max-w-[60%] rounded-[10px]  flex flex-col"
         style={{ backgroundColor: "#505057" }}
       >
         <p className=" break-words " >
@@ -124,7 +124,7 @@ const ImageMessage = ({ img, userIcon, isSender = false }) => {
 
 const AudioMessage = ({ audio, userIcon, timestamp, isSender = false }) => {
   return (
-    <div  className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
+    <div className={`flex gap-2 ${isSender ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
       <div>
         <Avatar
           alt="Profile-Picture"
@@ -172,7 +172,7 @@ const Chat = ({
   const lastDiv = React.useRef();
 
   useEffect(() => {
-    lastDiv.current?.scrollIntoView({ behavior: "smooth" });
+    lastDiv.current?.scrollIntoView();
   }, [messages]);
 
   const submitHandler = async (e) => {
@@ -204,12 +204,6 @@ const Chat = ({
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const dummyReciever = {
-    name: name,
-    username: username,
-    number: number,
   };
 
   const displayReciever = () => {
@@ -257,7 +251,7 @@ const Chat = ({
 
   return (
     <div
-      className={`${showChat ? 'flex' : 'hidden md:flex'} flex flex-1 flex-col justify-between w-full relative overflow-hidden `}
+      className={`${showChat ? 'flex' : 'hidden 2xl:flex '} flex-1 flex-col justify-between w-full relative overflow-hidden `}
       style={{ color: "white" }}
     >
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto md:p-4 md:rounded-xl">

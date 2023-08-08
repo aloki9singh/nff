@@ -228,6 +228,7 @@ const Chat = () => {
               chats={chats}
               setChats={setChats}
               setShowChat={setShowChat}
+              setShowUser={setShowUser}
             />
 
             <Chatpart

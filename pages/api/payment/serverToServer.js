@@ -1,13 +1,13 @@
-// //Yet to work on Update Plan Logic, this will fail on Update Plan!!!!
-
 //Yet to work on Update Plan Logic, this will fail on Update Plan!!!!
 
 import { doc, getDoc, updateDoc, setDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '@/config/firebaseconfig';
 
+
 function encodeToBase64(str) {
   return btoa(str);
 }
+
 
 async function handler(req, res) {
 
@@ -16,33 +16,43 @@ async function handler(req, res) {
   const { param1 } = req.query;
   const body = req.body;
 
+
   try {
+
 
     const amount = body.amount;
     const prividerRefId = body.providerReferenceId;
     const transactionId = body.transactionId;
     const result = body.code;
 
+    const discountPercentage  = process.env.NEXT_PUBLIC_DISCOUNT_PERCENTAGE;
+
+    // MRP = Discounted Price / (1 - (Discount Percentage / 100))
+
+    const price = amount / (1 - (discountPercentage / 100));
+
     const currentDate = new Date();
     const futureDate = new Date();
     let plan;
 
+
     if (result == "PAYMENT_SUCCESS") {
 
       console.log("callback");
-      if (amount == 29900) {
+      if (price < 500) {
 
         futureDate.setDate(currentDate.getDate() + 1 * 30);
         plan = 1;
       }
 
-      else if (amount == 89900) {
+
+      else if (price >= 500 && price < 1500) {
         futureDate.setDate(currentDate.getDate() + 6 * 30);
         plan = 6;
 
       }
 
-      else if (amount == 359900) {
+      else{
         futureDate.setDate(currentDate.getDate() + 12 * 30);
         plan = 12;
       }
@@ -55,6 +65,7 @@ async function handler(req, res) {
         courseAccess: true,
       };
 
+
       // searching if user exists or not
       const userRef = doc(db, "allusers", param1);
       const docSnap = await getDoc(userRef);
@@ -62,7 +73,9 @@ async function handler(req, res) {
         // exist condition update the doc
         await updateDoc(userRef, validityData);
 
+
       }
+
 
       await setDoc(doc(db, "allusers", param1, "PlanInfo", transactionId), {
         id: param1,
@@ -74,13 +87,15 @@ async function handler(req, res) {
         paymentAt: new Date(),
       });
 
+
       const payload = encodeToBase64(JSON.stringify({
-        amount: amount,
+        amount: price,
         providerRefId: prividerRefId,
         transactionId: transactionId,
         paymentResult: result,
+        discount:(price - amount),
         plan: plan,
-        page:2,
+        page: 2,
       }));
 
       // res.status(302).redirect(baseUrl + '/beta/payment?val='+payload);
@@ -89,18 +104,26 @@ async function handler(req, res) {
     }
     else {
       console.log("body", body);
+
+      res.status(500).json({ msg: "Something went wrong in body!"+body });
+      // const payload = encodeToBase64(JSON.stringify(body));
       // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
-      res.setHeader('Location', baseUrl + '/beta/paymentFailed');
-      res.status(302).end();
+      // res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
+      // res.status(302).end();
     }
 
   } catch (error) {
-    console.log(error);
-    res.setHeader('Location', baseUrl + '/beta/paymentFailed');
-    res.status(302).end();
+
+    // const payload = encodeToBase64(JSON.stringify(error));
+    // res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
+    // res.status(302).end();
+
+
+    res.status(500).json({ msg: "Something went wrong!" +error });
 
     // res.status(302).redirect(baseUrl+'/beta/payment');
   }
 }
+
 
 export default handler;

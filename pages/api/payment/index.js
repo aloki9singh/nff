@@ -30,16 +30,16 @@ async function handler(req, res) {
   
 
     const body = JSON.parse(req.body);
-    
+
     const paymentData =
     {
     "merchantId": merchantId,
     "merchantTransactionId": transactionId,
     "merchantUserId": transactionId+"1",
-    "amount": body.price,
+    "amount": 100,
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
-    "callbackUrl": "",
+    "callbackUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "mobileNumber": body.phoneNumber,
     "paymentInstrument": {
       "type": "PAY_PAGE"
