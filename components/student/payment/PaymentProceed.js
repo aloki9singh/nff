@@ -13,8 +13,8 @@ const PaymentProceed = ({ price }) => {
   const [loading, setLoading] = useState();
   const [value, setValue] = useState("Monthly");
 
-  const discoutPercentage = 10;
-  const discountedPrice  = Math.ceil(price - ((10 * price)/100));
+  const discoutPercentage = process.env.NEXT_PUBLIC_DISCOUNT_PERCENTAGE;
+  const discountedPrice  = Math.ceil(price - ((discoutPercentage * price)/100));
 
 
   useEffect(() => {
@@ -53,7 +53,6 @@ const PaymentProceed = ({ price }) => {
         window.location.href = response.data.instrumentResponse.redirectInfo.url;
       })
       .catch(err => console.error(err));
-  
   }
 
  
@@ -172,6 +171,7 @@ const PaymentProceed = ({ price }) => {
                 id="number"
                 type="tel"
                 value={userNumber}
+                maxLength={10}
                 onChange={handleInputChange}
               />
             </div>
