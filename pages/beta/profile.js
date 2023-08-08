@@ -43,6 +43,7 @@ function StudentProfile() {
   // import usedata and course access from contexts
   const { user, userProfile } = useAuthContext();
   const { userSubsribed } = CourseAccess(user?.uid);
+  
 
   useEffect(() => {
     if (isMediumScreen) {
