@@ -1,7 +1,8 @@
-const withPWA = require('next-pwa')({
-  dest: 'public'
-})
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ['lh3.googleusercontent.com', 'firebasestorage.googleapis.com']
+  }
+}
 
-module.exports = withPWA({
-  // next.js config
-})
+module.exports = nextConfig
