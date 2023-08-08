@@ -52,23 +52,6 @@ async function handler(req, res) {
     const shaVerify = shaData+"###1";
 
 
-  const encodedData = encodeToBase64(JSON.stringify(paymentData));
-  const shaFormula = encodedData + "/pg/v1/pay" + saltKey;
-  const shaData = await sha256(shaFormula);
-  const shaVerify = shaData + "###1";
-
-  try {
-    const options = {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-        "X-VERIFY": shaVerify,
-      },
-      body: JSON.stringify({
-        request: encodedData,
-      }),
-    };
 
 
     try {
