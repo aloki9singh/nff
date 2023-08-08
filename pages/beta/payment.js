@@ -24,8 +24,8 @@ const Paynow = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
 
   //hooks for navbar toggle
-  const [showSideBar, setShowSideBar] = useState(true);
-  const [SideBarState, sendSideBarState] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
   useEffect(() => {
 
