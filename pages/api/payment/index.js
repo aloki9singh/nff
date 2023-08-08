@@ -27,8 +27,10 @@ async function handler(req, res) {
   const saltKey = process.env.NEXT_SALT_KEY;
   const transactionId = generateTransactionId();
   const payUri = process.env.NEXT_PROD_PAY_URL;
-  
 
+  //sdfms
+
+  
     const body = JSON.parse(req.body);
 
     const paymentData =
@@ -36,7 +38,7 @@ async function handler(req, res) {
     "merchantId": merchantId,
     "merchantTransactionId": transactionId,
     "merchantUserId": transactionId+"1",
-    "amount": 100,
+    "amount": body.price,
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "POST",
     "callbackUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
