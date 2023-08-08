@@ -10,11 +10,15 @@ import { Popover, Transition } from "@headlessui/react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebaseconfig";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function Navbar({ nav, setNav }) {
 	const handleNav = () => {
 		setNav(!nav);
 	};
+	const removeNav = () => {
+		setNav(false);
+	}
 	//   change navbar color when scrolling
 	const [color, setColor] = useState(false);
 	const { user, userProfile } = useAuthContext();
@@ -29,6 +33,11 @@ export default function Navbar({ nav, setNav }) {
 	// console.log(user, userProfile);
 	useEffect(() => {
 		window.addEventListener("scroll", changeColor);
+		window.addEventListener('resize',removeNav)
+		return ( () => {
+			window.removeEventListener('scroll',changeColor);
+			window.removeEventListener('resize', removeNav)
+		})
 	}, []);
 
 	return (
@@ -36,7 +45,7 @@ export default function Navbar({ nav, setNav }) {
 			<div
 				className={` w-full px-4 md:px-8 lg:px-16 py-4 ${
 					color ? "bg-[#131313] shadow-xl" : "bg-transparent"
-				} fixed z-[100] transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
+				} fixed z-10 transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
 			>
 				<div className="w-full max-w-[1440px] flex justify-between items-center font-ral ">
 					<Link
@@ -215,7 +224,7 @@ export default function Navbar({ nav, setNav }) {
 							onClick={handleNav}
 							className=" cursor-pointer flex items-center"
 						>
-							<ImMenu size={25} className="text-white/80" />
+							<RxHamburgerMenu className="text-white text-3xl block md:hidden mr-2" />
 						</div>
 					</div>
 				</div>
@@ -229,21 +238,22 @@ export default function Navbar({ nav, setNav }) {
 				}
 			>
 				{/* // Side Drawer Menu */}
+        <div onClick={handleNav} className="w-full h-full "></div>
 				<div
 					className={
 						nav
-							? "fixed left-0 top-0  w-[60%] sm:w-[60%] md:w-[50%] h-full  bg-bs backdrop-blur-md p-4 ease-in duration-500 z-10"
-							: "fixed left-[-100%] top-0 w-[75%] sm:w-[60%] md:w-[45%] h-screen  p-5 ease-in duration-1000"
+							? "fixed right-0 top-0  w-[60%] sm:w-[60%] md:w-[50%] h-full bg-bs backdrop-blur-md p-4 ease-in duration-200 z-10"
+							: "fixed right-0 translate-x-full top-0 w-[75%] sm:w-[60%] md:w-[45%] h-screen  p-5 ease-in duration-300 "
 					}
 				>
 					<div className="">
-						<div className=" cursor-pointer flex w-full items-center justify-between top-0 mt-0 pt-5 overflow-clip">
+						<div className=" cursor-pointer flex w-full items-center justify-between top-0  overflow-clip">
 							<div className="w-full">
 								<div
 									onClick={() => setNav(false)}
 									className="rounded-full shadow-lg  p-3 cursor-pointer float-right"
 								>
-									<AiOutlineClose className="text-yellow-50" />
+									<AiOutlineClose className="text-[30px] text-yellow-50" />
 								</div>
 							</div>
 						</div>
@@ -333,7 +343,7 @@ export default function Navbar({ nav, setNav }) {
 						</div>
 					</div>
 				</div>
-				<div onClick={handleNav} className="w-full h-full "></div>
+				
 			</div>
 		</>
 	);
