@@ -3,7 +3,7 @@ import React from "react";
 
 const Nodata = ({ title, value,onClick }) => {
   return (
-    <div className="flex justify-center align-middle items-center w-full m-5">
+    <div className="flex justify-center align-middle items-center w-full my-5">
       <div className="flex bg-[#37383F] mx-5 py-7 px-2 rounded-[30px] w-[80%] text-white space-y-6 justify-center items-center  ">
         <div className="space-y-5 ">
           <h1 className="text-center text-2xl"> {title}</h1>
