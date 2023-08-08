@@ -27,8 +27,10 @@ async function handler(req, res) {
   const saltKey = process.env.NEXT_SALT_KEY;
   const transactionId = generateTransactionId();
   const payUri = process.env.NEXT_PROD_PAY_URL;
+  
 
     const body = JSON.parse(req.body);
+    
     const paymentData =
     {
     "merchantId": merchantId,
@@ -38,7 +40,7 @@ async function handler(req, res) {
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
     "callbackUrl": "",
-    "mobileNumber": "8969917408",
+    "mobileNumber": body.phoneNumber,
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }

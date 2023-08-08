@@ -18,6 +18,9 @@ export default function Advertisement() {
 
   let interval = useRef();
 
+
+  const discoutPercentage = process.env.NEXT_PUBLIC_DISCOUNT_PERCENTAGE;
+
   const startTimer = () => {
     const countdownDate = new Date("April 30, 2023 00:00:00").getTime();
 
@@ -97,7 +100,7 @@ export default function Advertisement() {
           <div className=" flex flex-row items-center justify-start  text-left text-[36px] font-inter">
             <div className="flex flex-col items-start justify-start md:space-y-2">
               <div className="inline-block xl:text-3xl py-3 lg:text-2xl whitespace-nowrap text-xl shrink-0">
-                <b>{`10% `}</b>
+                <b>{`${discoutPercentage}% `}</b>
                 <b className="font-raleway ">off on Annual Subscription</b>
               </div>
               <div className=" md:text-base text-sm shrink-0 font-raleway">
