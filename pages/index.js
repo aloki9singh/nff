@@ -13,7 +13,6 @@ import Footer from "@/components/common/footer/footer";
 import HomepageActivities from "@/components/common/homepage/activities/HomepageActivities";
 import SignUp from "@/components/common/homepage/HomeSignupComp/HomeSignupComp";
 import { useState } from "react";
-import useHoverOutside from "@/components/common/homepage/useHoverOutside/useHoverOutside";
 import Layout from "@/components/common/Layout/Layout";
 
 export default function Home({ coursesData }) {
