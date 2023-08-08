@@ -4,6 +4,7 @@ import { BsPatchCheckFill } from "react-icons/bs";
 
 import { useAuthContext } from "@/lib/context/AuthContext";
 
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 const PaymentProceed = ({ price }) => {
   
   const { user, userProfile } = useAuthContext();
@@ -279,5 +280,5 @@ const PaymentProceed = ({ price }) => {
   );
 };
 
-export default PaymentProceed;
+export default withStudentAuthorization(PaymentProceed);
 

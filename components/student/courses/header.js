@@ -21,7 +21,7 @@ export default function CourseHeader() {
           need, on your own terms.
         </p>
         <button className="bg-[#a145cd] rounded-2xl font-semibold text-sm text-white py-4 px-4">
-          Get Started for Free
+          Get Started 
         </button>
         <div className="item-center">
           <Image
