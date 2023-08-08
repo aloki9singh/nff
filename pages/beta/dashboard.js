@@ -113,7 +113,7 @@ const Studentdashboard = () => {
             <div className="flex flex-col lg:flex-row gap-2 m-3 md:mt-0 min-h-screen text-white">
               <div className="md:space-y-5 w-full  ">
                 <Advertisement />
-           
+
                 {/* //welcomebar */}
                 <Progress
                   percentage={`${workpercentage} %`}
@@ -124,7 +124,7 @@ const Studentdashboard = () => {
                   {active ? <ActiveComp percent={0} /> : <InActiveComp />}
                 </div>
               </div>
-              <div className="md:px-2  mt-5 space-y-5  flex flex-col gap-4 pb-3 lg:pb-0">
+              <div className="md:px-2  mt-5 space-y-5 md:w-1/3 flex flex-col gap-4 pb-3 lg:pb-0">
                 <div>
                   <Calendar />
                 </div>
@@ -148,7 +148,6 @@ const Studentdashboard = () => {
             </div>
           </div>
         </div>
-        <div className=" ">{/* <MobileNav></MobileNav> */}</div>
       </div>
     </Layout>
   );

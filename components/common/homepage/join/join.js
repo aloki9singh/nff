@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Join() {
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-bs">
-			<div className="w-full py-4 px-4 text-white relative space-y-20 max-w-[1440px]">
+			<div className="w-full py-4 px-4 text-white relative space-y-20 flex flex-col items-center">
 				<div className=" bg-bs absolute top-0 left-0 w-full h-full -z-20 " />
 				<Image
 					width={400}
@@ -24,7 +24,7 @@ export default function Join() {
 					className="absolute bottom-24 scale-110 -rotate-[15deg] -translate-x-[40%]
         left-0 w-1/2 z-10 lg:w-1/5"
 				/>
-				<div className="w-full md:px-16 grid md:grid-cols-2 space-y-8">
+				<div className="w-full md:px-16 grid md:grid-cols-2 max-w-[1440px] space-y-8">
 					<div className="flex flex-col justify-center space-y-6 md:hidden  z-10">
 						<h1 className="md:text-4xl text-2xl font-medium md:text-start text-center uppercase">
 							Join our Neat Skills Community

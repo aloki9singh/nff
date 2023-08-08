@@ -66,7 +66,7 @@ async function handler(req, res) {
               };
         
               
-              fetch(payUri, options)
+              fetch("https://api.phonepe.com/apis/hermes/pg/v1/pay", options)
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
