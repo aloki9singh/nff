@@ -7,7 +7,8 @@ const withPWA = require("next-pwa")({
     buildExcludes: [/middleware-manifest.json$/],
 });
 
-const nextConfig = withPWA({
-    // next config
-});
-module.exports = nextConfig;
+module.exports = withPWA({
+  images: {
+    domains: ['lh3.googleusercontent.com', 'firebasestorage.googleapis.com']
+  }
+})

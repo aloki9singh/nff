@@ -4,7 +4,7 @@ function encodeToBase64(str) {
 
 const generateTransactionId = () => {
   const timestamp = Date.now();
-  const randomNum = Math.floor(Math.random() * 1000000); // You can adjust the range as needed
+  const randomNum = Math.floor(Math.random() * 9999999); // You can adjust the range as needed
   return `TXN${timestamp}${randomNum}`;
 };
 
@@ -25,8 +25,8 @@ async function handler(req, res) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const merchantId = process.env.NEXT_MERCHANT_ID;
   const saltKey = process.env.NEXT_SALT_KEY;
-<<<<<<< Updated upstream
   const transactionId = generateTransactionId();
+  const payUri = process.env.NEXT_PROD_PAY_URL;
 
     const body = JSON.parse(req.body);
     const paymentData =
@@ -38,56 +38,10 @@ async function handler(req, res) {
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
     "callbackUrl": "",
-    "mobileNumber": "9335929565",
+    "mobileNumber": "8969917408",
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }
-=======
-  const keyindex = process.env.NEXT_KEY_INDEX;
-
-  const body = JSON.parse(req.body);
-  const paymentData = {
-    merchantId: "PROVOKEONLINE",
-    merchantTransactionId: "1603",
-    merchantUserId: "PROVOKEONLINE",
-    amount: body.price,
-    redirectUrl: baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
-    redirectMode: "GET",
-    callbackUrl: baseUrl + "/api/payment/serverToServer",
-    mobileNumber: "9999999999",
-    paymentInstrument: {
-      type: "PAY_PAGE",
-    },
-  };
-
-  const encodedData = encodeToBase64(JSON.stringify(paymentData));
-  const shaFormula = encodedData + "/pg/v1/pay" + saltKey;
-  const shaData = await sha256(shaFormula);
-  const shaVerify = shaData + keyindex;
-
-  try {
-    const options = {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-        "X-VERIFY": shaVerify,
-      },
-      body: JSON.stringify({
-        request: encodedData,
-      }),
-    };
-
-    fetch("https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay", options)
-      .then((response) => response.json())
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch((err) => console.error(err));
-  } catch (error) {
-    // console.log(error);
-    res.status(500).json({ msg: "Something went wrong!" });
->>>>>>> Stashed changes
   }
 
 
@@ -113,7 +67,7 @@ async function handler(req, res) {
               };
         
               
-              fetch("https://api.phonepe.com/apis/hermes/pg/v1/pay", options)
+              fetch(payUri, options)
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
@@ -127,4 +81,4 @@ async function handler(req, res) {
   }
 
 
-export default handler;
+export default handler;
