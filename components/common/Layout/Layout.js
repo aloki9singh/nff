@@ -15,4 +15,8 @@ const Layout = ({ children, pageTitle }) => {
   );
 };
 
+export const metadata = {
+  mainfest : '/manifest.webmainfest' 
+};
+
 export default Layout;
