@@ -9,7 +9,7 @@ const AssignmentCard = ({ id, name, date, url, courseid, checked, active, no, su
   const time = new Date(date.seconds * 1000 + date.nanoseconds / 1000000);
   return (
     <>
-      <div className={`rounded-xl bg-[#505057] shadow p-4 md:w-60 h-${active == "check" ? "fit" : "[184px]"} m-4 cursor-pointer`} onClick={() => {if (!checked)
+      <div className={`rounded-xl bg-[#505057] shadow p-4 md:w-48 h-${active == "check" ? "fit" : "[184px]"} m-4 cursor-pointer`} onClick={() => {if (!checked)
       {router.push({ pathname: "/beta/assignmentupload", query: { id: id, courseid: courseid } })
       }
       else{
