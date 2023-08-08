@@ -105,21 +105,15 @@ async function handler(req, res) {
     else {
       console.log("body", body);
 
-      res.status(500).json({ msg: "Something went wrong in body!"+body });
-      // const payload = encodeToBase64(JSON.stringify(body));
-      // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
-      // res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
-      // res.status(302).end();
+      res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
+      res.status(302).end();
     }
 
   } catch (error) {
 
     // const payload = encodeToBase64(JSON.stringify(error));
-    // res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
-    // res.status(302).end();
-
-
-    res.status(500).json({ msg: "Something went wrong!" +error });
+    res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
+    res.status(302).end();
 
     // res.status(302).redirect(baseUrl+'/beta/payment');
   }
