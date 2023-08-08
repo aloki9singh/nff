@@ -163,14 +163,14 @@ function Assignments() {
   const { userSubsribed } = CourseAccess(user?.uid);
   return (
     <Layout pageTitle="Assignments">
-      {/* {!userSubsribed && (
+      {!userSubsribed && (
         <ToastMessage
         heading={"OOPS!"}
           message={
             "You have not joined any courses yet. Please join a course to access the study material."
           }
         />
-      )} */}
+      )}
       {/* {!courseBuyed ? <NoJoinedCoursesModal /> : null} */}
       {/* {userSubsribed && (
       <ToastMessage

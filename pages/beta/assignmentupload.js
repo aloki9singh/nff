@@ -48,11 +48,10 @@ const Assignmentupload = () => {
   const [link, setLink] = useState("");
   const [progressData, setProgress] = useState();
   const [url, setUrl] = useState();
-  const [key, setkey] = useState();
+  const [key, setkey] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [deadline, setDeadline] = useState(false)
   const [dataFetched, setDataFetched] = useState(false)
-
   // Function to handle the file Upload component
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -96,7 +95,7 @@ const Assignmentupload = () => {
           alert("Error Occured");
         }
         router.push("/beta/assignments")
-        setkey(key + 1);
+        setkey((prevkey)=> prevkey+1)
         setFile("");
         setUrl("");
         setProgress();
@@ -214,6 +213,7 @@ const Assignmentupload = () => {
     setFile(null);
     setUrl(null);
     setProgress(0);
+    setkey((prevkey)=> prevkey+1)
   };
 
   const time =
