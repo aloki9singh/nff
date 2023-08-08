@@ -28,7 +28,8 @@ const firebaseConfig = {
   measurementId: "G-QWYMTLSSEK",
 }; 
 
-
+// const app = initializeApp(firebaseConfig, 'baseApp');
+//  const app = initializeApp(firebaseConfig, 'neatskills-1c31c');
 
 // 3rd config
 
@@ -71,7 +72,7 @@ const firebaseConfig = {
 
 
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app =  initializeApp(firebaseConfig,'neatskills-1c31c') 
 
 
 export const db = getFirestore(app);

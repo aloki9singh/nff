@@ -38,6 +38,8 @@ export default function Navbar({ nav, setNav }) {
 			window.removeEventListener('scroll',changeColor);
 			window.removeEventListener('resize', removeNav)
 		})
+
+     // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
