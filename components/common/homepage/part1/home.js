@@ -2,8 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 import styles from "@/styles/componentsstyling/homepage/home.module.css";
-
-import mainDesign1 from "@/public/componentsgraphics/common/homepage/home/Group174.svg";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -68,7 +66,7 @@ export default function HomePage() {
             <Image
               alt="img"
               className="lg:mr-[6%]"
-              src={mainDesign1}
+              src="/componentsgraphics/common/homepage/home/Group174.png"
               width={700}
               height={1000}
             ></Image>
@@ -77,7 +75,7 @@ export default function HomePage() {
             <Image
               alt="img"
               className="lg:mr-[6%]"
-              src={mainDesign1}
+              src="/componentsgraphics/common/homepage/home/Group174.png"
               width={240}
               height={225}
             ></Image>
