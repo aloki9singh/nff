@@ -36,7 +36,7 @@ async function handler(req, res) {
     "merchantId": merchantId,
     "merchantTransactionId": transactionId,
     "merchantUserId": transactionId+"1",
-    "amount": body.price,
+    "amount": 100,
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
     "callbackUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
