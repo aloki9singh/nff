@@ -7,7 +7,7 @@ const Layout = ({ children, pageTitle }) => {
     <div>
       <Head>
         <title>{pageTitle}</title>
-        <link rel="icon" href="/NS-icon.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>{children}</main>
