@@ -44,7 +44,7 @@ function StudyMaterialMain() {
     );
   }
   return (
-    <div className="flex flex-col mx-4 lg:mx-8 w-full h-full max-w-6xl">
+    <div className="flex flex-col mx-4 lg:mx-8 w-full h-screen max-w-6xl">
       {!selectedModule && (
         <>
           {!isMentor && (
@@ -110,7 +110,7 @@ function StudyMaterialMain() {
             />
           )}
 
-          <div className="mx-auto text-white flex w-full max-h-full pt-10 overflow-hidden">
+          <div className="mx-auto text-white flex w-full max-h-screen pt-10 overflow-hidden">
             <div className=" flex justify-center bg-[#373A41] rounded-[30px] max-h-full w-full md:py-7 p-5 overflow-hidden">
 
               {modules?.length && <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-scroll scrollbar-hide">
