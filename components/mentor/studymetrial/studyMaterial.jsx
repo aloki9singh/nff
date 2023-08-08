@@ -7,6 +7,7 @@ import React, { useMemo } from "react";
 import MetrialInfo from "@/components/mentor/studymetrial/metrialinfo";
 import Select from "react-select";
 import Nodata from "@/components/common/nodata/nodata";
+import { Router, useRouter } from "next/router";
 
 function StudyMaterialMain() {
   const {
@@ -18,7 +19,7 @@ function StudyMaterialMain() {
     courseID,
     isMentor,
   } = useStudyMaterialContext();
-
+ const router=useRouter()
   const handleCardClick = (module) => {
     setSelectedModule(module);
   };
@@ -38,8 +39,8 @@ function StudyMaterialMain() {
     (!isMentor && selectedCourse.value === undefined)
   ) {
     return (
-      <div className=" flex items-center justify-center w-full h-screen mb-5">
-        <Nodata title="Course" value="No Course available" />
+      <div className=" flex items-center justify-center w-full h-screen md:mt-0 mt-[-70px] z-1000">
+        <Nodata title="Course" value="No Course available" onClick={()=>router.push("/beta/courseoverview")}/>
       </div>
     );
   }
