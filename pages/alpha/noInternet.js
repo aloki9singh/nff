@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import { useMediaQuery } from 'react-responsive';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
 
 const NoInternetPage = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -20,23 +21,32 @@ const NoInternetPage = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', overflow: 'hidden' }}>
+    <div
+      className={`flex flex-col h-screen ${
+        isMobileScreen ? 'overflow-hidden' : ''
+      }`}>
+      <Dashboardnav heading='No internet' toggleSideBar={toggleSideBar} />
       {isMobileScreen && (
-        <Dashboardnav heading='About Us' toggleSideBar={toggleSideBar} />
+        <div
+          className={`fixed right-0 ${
+            sideBarState ? 'block' : 'hidden'
+          } w-[281px] h-screen bg-[#25262C]  md:rounded-l-[40px] z-10`}>
+          <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+        </div>
       )}
 
-      <div className='bg-[#1E1E1E]  md:px-10 flex md:justify-center md:items-center h-screen'>
-        <div className='bg-gradient-to-br from-[#A145CD] to-[#E1348B] w-full md:w-[90%] h-[90%] max-h-[90vh] flex flex-col justify-center items-center rounded-lg p-10'>
+      <div className='flex flex-1 md:px-10 justify-center items-center'>
+        <div className='bg-gradient-to-br md:mt-4 md:mb-5 from-[#A145CD] to-[#E1348B] w-full md:w-[90%] h-[100%] md:h-[95%] max-h-[100vh] flex flex-col justify-center items-center rounded-lg p-1'>
           <div className='flex items-center justify-center mb-5'>
             <Image
               src='/pagesgraphics/common/errors/nointernet.svg'
-              alt='nointernet'
-              height={500}
-              width={500}
+              alt='no internet'
+              height={400}
+              width={400}
             />
           </div>
 
-          <div className='text-white text-2xl  mt-5 mb-5  text-center'>
+          <div className='text-white text-2xl mt-5 mb-5 text-center'>
             No Internet connection
           </div>
 
