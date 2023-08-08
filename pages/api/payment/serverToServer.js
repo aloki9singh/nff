@@ -113,7 +113,6 @@ async function handler(req, res) {
     }
 
   } catch (error) {
-    console.log(error);
 
     // const payload = encodeToBase64(JSON.stringify(error));
     // res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
