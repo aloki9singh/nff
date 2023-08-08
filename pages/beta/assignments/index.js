@@ -240,7 +240,7 @@ function Assignments() {
                             className="text-sm cursor-pointer "
                             value={ele}
                           >
-                            {ele}
+                            {ele.length > 12 ? ele.slice(0,13)+"...":ele }
                           </option>
                         );
                       })}
