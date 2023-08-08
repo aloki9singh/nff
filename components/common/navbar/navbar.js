@@ -16,9 +16,7 @@ export default function Navbar({ nav, setNav }) {
 	const handleNav = () => {
 		setNav(!nav);
 	};
-	const removeNav = () => {
-		setNav(false);
-	}
+
 	//   change navbar color when scrolling
 	const [color, setColor] = useState(false);
 	const { user, userProfile } = useAuthContext();
@@ -32,12 +30,16 @@ export default function Navbar({ nav, setNav }) {
 	};
 	// console.log(user, userProfile);
 	useEffect(() => {
+		const removeNav = () => {
+			setNav(false);
+		};
 		window.addEventListener("scroll", changeColor);
-		window.addEventListener('resize',removeNav)
-		return ( () => {
-			window.removeEventListener('scroll',changeColor);
+		window.addEventListener('resize', removeNav)
+		return (() => {
+			window.removeEventListener('scroll', changeColor);
 			window.removeEventListener('resize', removeNav)
 		})
+
 
      // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -45,9 +47,8 @@ export default function Navbar({ nav, setNav }) {
 	return (
 		<>
 			<div
-				className={` w-full px-4 md:px-8 lg:px-16 py-4 ${
-					color ? "bg-[#131313] shadow-xl" : "bg-transparent"
-				} fixed z-10 transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
+				className={` w-full px-4 md:px-8 lg:px-16 py-4 ${color ? "bg-[#131313] shadow-xl" : "bg-transparent"
+					} fixed z-10 transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
 			>
 				<div className="w-full max-w-[1440px] flex justify-between items-center font-ral ">
 					<Link
@@ -240,7 +241,7 @@ export default function Navbar({ nav, setNav }) {
 				}
 			>
 				{/* // Side Drawer Menu */}
-        <div onClick={handleNav} className="w-full h-full "></div>
+				<div onClick={handleNav} className="w-full h-full "></div>
 				<div
 					className={
 						nav
@@ -345,7 +346,7 @@ export default function Navbar({ nav, setNav }) {
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</>
 	);

@@ -18,7 +18,7 @@ const PaymentCompleted = () => {
       const payloadData = JSON.parse(atob(val));
       setPayData(payloadData);
       setItems([{ name: 'Amount', price: payloadData?.amount / 100 },
-      { name: 'Discount', price: payloadData?.discount || 0 },
+      { name: 'Discount', price: payloadData?.discount/100 || 0 },
       { name: 'GST', price: payloadData?.gst || 0 }])
     }
     else {
@@ -133,18 +133,18 @@ const PaymentCompleted = () => {
             </div>
             <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
               <h2>Discount</h2>
-              <h2>Rs 0</h2>
+              <h2>Rs {payData?.discount/100}</h2>
             </div>
-            <div className="flex text-sm gap-[4rem] flex-row md:gap-[10rem]">
+            {/* <div className="flex text-sm gap-[4rem] flex-row md:gap-[10rem]">
               <h2>GST</h2>
               <h2>Rs 0</h2>
-            </div>
+            </div> */}
 
             <hr className="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
             <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
               <h2>Subtotal</h2>
-              <h2>Rs {payData?.amount / 100}</h2>
+              <h2>Rs {(payData?.amount / 100) - payData?.discount/100}</h2>
             </div>
 
             <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={() => {
