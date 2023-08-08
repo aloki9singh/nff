@@ -1,2 +1,1453 @@
-
-{"version":3,"file":"sw.js","sources":["C:/Users/ravir/AppData/Local/Temp/57abb965411dce0995bd751253433cfc/sw.js"],"sourcesContent":["import {registerRoute as workbox_routing_registerRoute} from 'U:/nff/node_modules/workbox-routing/registerRoute.mjs';\nimport {NetworkFirst as workbox_strategies_NetworkFirst} from 'U:/nff/node_modules/workbox-strategies/NetworkFirst.mjs';\nimport {NetworkOnly as workbox_strategies_NetworkOnly} from 'U:/nff/node_modules/workbox-strategies/NetworkOnly.mjs';\nimport {clientsClaim as workbox_core_clientsClaim} from 'U:/nff/node_modules/workbox-core/clientsClaim.mjs';/**\n * Welcome to your Workbox-powered service worker!\n *\n * You'll need to register this file in your web app.\n * See https://goo.gl/nhQhGp\n *\n * The rest of the code is auto-generated. Please don't update this file\n * directly; instead, make changes to your Workbox build configuration\n * and re-run your build process.\n * See https://goo.gl/2aRDsh\n */\n\n\nimportScripts(\n  \n);\n\n\n\n\n\n\n\nself.skipWaiting();\n\nworkbox_core_clientsClaim();\n\n\n\nworkbox_routing_registerRoute(\"/\", new workbox_strategies_NetworkFirst({ \"cacheName\":\"start-url\", plugins: [{ cacheWillUpdate: async ({ request, response, event, state }) => { if (response && response.type === 'opaqueredirect') { return new Response(response.body, { status: 200, statusText: 'OK', headers: response.headers }) } return response } }] }), 'GET');\nworkbox_routing_registerRoute(/.*/i, new workbox_strategies_NetworkOnly({ \"cacheName\":\"dev\", plugins: [] }), 'GET');\n\n\n\n\n"],"names":["importScripts","self","skipWaiting","workbox_core_clientsClaim","workbox_routing_registerRoute","workbox_strategies_NetworkFirst","plugins","cacheWillUpdate","request","response","event","state","type","Response","body","status","statusText","headers","workbox_strategies_NetworkOnly"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAgBAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAa,EAEZ,CAAA;EAQDC,CAAI,CAAA,CAAA,CAAA,CAACC,CAAW,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAE,CAAA;AAElBC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAyB,EAAE,CAAA;AAI3BC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAA6B,CAAC,CAAA,CAAA,CAAG,CAAE,CAAA,CAAA,CAAA,CAAA,CAAIC,oBAA+B,CAAC,CAAA;EAAE,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAW,EAAC,CAAW,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA;EAAEC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAO,EAAE,CAAC,CAAA;GAAEC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAe,EAAE,CAAO,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA;QAAEC,CAAO,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA;QAAEC,CAAQ,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA;QAAEC,CAAK,CAAA,CAAA,CAAA,CAAA,CAAA;AAAEC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA;AAAM,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAC,CAAK,CAAA,CAAA,CAAA,CAAA,CAAA;EAAE,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAIF,QAAQ,CAAIA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAQ,CAACG,CAAI,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAK,gBAAgB,CAAE,CAAA,CAAA;AAAE,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,OAAO,CAAIC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAQ,CAACJ,CAAQ,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAACK,IAAI,CAAE,CAAA,CAAA;EAAEC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAM,EAAE,CAAG,CAAA,CAAA,CAAA;EAAEC,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAU,EAAE,CAAI,CAAA,CAAA,CAAA,CAAA;YAAEC,CAAO,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAER,CAAQ,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAACQ,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA;AAAQ,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAC,CAAC,CAAA;EAAC,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA;EAAE,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAOR,QAAQ,CAAA;EAAC,CAAA,CAAA,CAAA,CAAA,CAAA;KAAG,CAAA;AAAE,CAAA,CAAA,CAAC,CAAC,CAAA,CAAE,CAAK,CAAA,CAAA,CAAA,CAAA,CAAC,CAAA;AACxWL,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAA6B,CAAC,CAAA,CAAA,CAAA,CAAA,CAAK,CAAE,CAAA,CAAA,CAAA,CAAA,CAAIc,mBAA8B,CAAC,CAAA;EAAE,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAA,CAAW,EAAC,CAAK,CAAA,CAAA,CAAA,CAAA,CAAA;EAAEZ,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAAA,CAAO,EAAE,CAAA,CAAA;EAAG,CAAC,CAAC,CAAE,CAAA,CAAA,CAAA,CAAA,CAAA,CAAK,CAAC,CAAA;;"}
+if (!self.define) {
+  let e,
+    s = {};
+  const a = (a, c) => (
+    (a = new URL(a + ".js", c).href),
+    s[a] ||
+      new Promise((s) => {
+        if ("document" in self) {
+          const e = document.createElement("script");
+          (e.src = a), (e.onload = s), document.head.appendChild(e);
+        } else (e = a), importScripts(a), s();
+      }).then(() => {
+        let e = s[a];
+        if (!e) throw new Error(`Module ${a} didn’t register its module`);
+        return e;
+      })
+  );
+  self.define = (c, i) => {
+    const n =
+      e ||
+      ("document" in self ? document.currentScript.src : "") ||
+      location.href;
+    if (s[n]) return;
+    let r = {};
+    const t = (e) => a(e, n),
+      o = { module: { uri: n }, exports: r, require: t };
+    s[n] = Promise.all(c.map((e) => o[e] || t(e))).then((e) => (i(...e), r));
+  };
+}
+define(["./workbox-7c2a5a06"], function (e) {
+  "use strict";
+  importScripts(),
+    self.skipWaiting(),
+    e.clientsClaim(),
+    e.precacheAndRoute(
+      [
+        {
+          url: "/_next/static/LFnEWzXfaqya9Jff4cNKs/_buildManifest.js",
+          revision: "a3b7e90ee0d9fe863a400b85ab1232e6",
+        },
+        {
+          url: "/_next/static/LFnEWzXfaqya9Jff4cNKs/_ssgManifest.js",
+          revision: "b6652df95db52feb4daf4eca35380933",
+        },
+        {
+          url: "/_next/static/chunks/0c428ae2-63ff68a6d2d01757.js",
+          revision: "63ff68a6d2d01757",
+        },
+        {
+          url: "/_next/static/chunks/1281-ccb260dca0b04a09.js",
+          revision: "ccb260dca0b04a09",
+        },
+        {
+          url: "/_next/static/chunks/1313-060d15c22473344d.js",
+          revision: "060d15c22473344d",
+        },
+        {
+          url: "/_next/static/chunks/1398-644fd9b3b219e9eb.js",
+          revision: "644fd9b3b219e9eb",
+        },
+        {
+          url: "/_next/static/chunks/1529-0e7d5ecfc82c0d85.js",
+          revision: "0e7d5ecfc82c0d85",
+        },
+        {
+          url: "/_next/static/chunks/1664-b7c61323e77b2637.js",
+          revision: "b7c61323e77b2637",
+        },
+        {
+          url: "/_next/static/chunks/1852-be9305faf556ce6b.js",
+          revision: "be9305faf556ce6b",
+        },
+        {
+          url: "/_next/static/chunks/1974.40137af91d1a44e6.js",
+          revision: "40137af91d1a44e6",
+        },
+        {
+          url: "/_next/static/chunks/1a48c3c1-3b58b6561e5944aa.js",
+          revision: "3b58b6561e5944aa",
+        },
+        {
+          url: "/_next/static/chunks/1bfc9850-cd4be8ae72de650a.js",
+          revision: "cd4be8ae72de650a",
+        },
+        {
+          url: "/_next/static/chunks/252f366e-b4443be8258efd66.js",
+          revision: "b4443be8258efd66",
+        },
+        {
+          url: "/_next/static/chunks/2704-912a4a4572c662cc.js",
+          revision: "912a4a4572c662cc",
+        },
+        {
+          url: "/_next/static/chunks/2896-b3b8f4247ea6bae0.js",
+          revision: "b3b8f4247ea6bae0",
+        },
+        {
+          url: "/_next/static/chunks/2916-9015b2dc5d9dc6ab.js",
+          revision: "9015b2dc5d9dc6ab",
+        },
+        {
+          url: "/_next/static/chunks/2938-47c0d2f101c0d8f2.js",
+          revision: "47c0d2f101c0d8f2",
+        },
+        {
+          url: "/_next/static/chunks/301-3476ec7857fb9442.js",
+          revision: "3476ec7857fb9442",
+        },
+        {
+          url: "/_next/static/chunks/3342-b61bae74b498a79d.js",
+          revision: "b61bae74b498a79d",
+        },
+        {
+          url: "/_next/static/chunks/3365-32cebc1feab3661c.js",
+          revision: "32cebc1feab3661c",
+        },
+        {
+          url: "/_next/static/chunks/3372-cd0006f0dc5af423.js",
+          revision: "cd0006f0dc5af423",
+        },
+        {
+          url: "/_next/static/chunks/3541-438a878e0c19e71a.js",
+          revision: "438a878e0c19e71a",
+        },
+        {
+          url: "/_next/static/chunks/4223-aa4d46616029cc06.js",
+          revision: "aa4d46616029cc06",
+        },
+        {
+          url: "/_next/static/chunks/5675-4d0700efb27ae587.js",
+          revision: "4d0700efb27ae587",
+        },
+        {
+          url: "/_next/static/chunks/5806-1b7ffbc238861a99.js",
+          revision: "1b7ffbc238861a99",
+        },
+        {
+          url: "/_next/static/chunks/5880ce42.0f8a7524b6db5342.js",
+          revision: "0f8a7524b6db5342",
+        },
+        {
+          url: "/_next/static/chunks/6154-6dd821e59fa447d9.js",
+          revision: "6dd821e59fa447d9",
+        },
+        {
+          url: "/_next/static/chunks/6172-5c68bf98f6b57ef0.js",
+          revision: "5c68bf98f6b57ef0",
+        },
+        {
+          url: "/_next/static/chunks/6310-d8e04bea11d0e012.js",
+          revision: "d8e04bea11d0e012",
+        },
+        {
+          url: "/_next/static/chunks/6538-250407d0c3e19825.js",
+          revision: "250407d0c3e19825",
+        },
+        {
+          url: "/_next/static/chunks/6829-8597a27109bb19e0.js",
+          revision: "8597a27109bb19e0",
+        },
+        {
+          url: "/_next/static/chunks/6864-6434202ede4a9edb.js",
+          revision: "6434202ede4a9edb",
+        },
+        {
+          url: "/_next/static/chunks/6891-9ac601a5f9e5f72f.js",
+          revision: "9ac601a5f9e5f72f",
+        },
+        {
+          url: "/_next/static/chunks/6893-0c8a453f15e02be6.js",
+          revision: "0c8a453f15e02be6",
+        },
+        {
+          url: "/_next/static/chunks/7222-3cc2d6b94d7b36a0.js",
+          revision: "3cc2d6b94d7b36a0",
+        },
+        {
+          url: "/_next/static/chunks/7409-a0458036645afd04.js",
+          revision: "a0458036645afd04",
+        },
+        {
+          url: "/_next/static/chunks/742-0bfa5b632406c2a0.js",
+          revision: "0bfa5b632406c2a0",
+        },
+        {
+          url: "/_next/static/chunks/78e521c3-e430efdd76ea5ee9.js",
+          revision: "e430efdd76ea5ee9",
+        },
+        {
+          url: "/_next/static/chunks/814c6784-1e26d47d40efdaf4.js",
+          revision: "1e26d47d40efdaf4",
+        },
+        {
+          url: "/_next/static/chunks/8160-430591bf4f5d1c3f.js",
+          revision: "430591bf4f5d1c3f",
+        },
+        {
+          url: "/_next/static/chunks/8224-cbce6cb45f6172fa.js",
+          revision: "cbce6cb45f6172fa",
+        },
+        {
+          url: "/_next/static/chunks/9107-4bfd0500a4169294.js",
+          revision: "4bfd0500a4169294",
+        },
+        {
+          url: "/_next/static/chunks/925e0f50.d3b4ed83ec64275f.js",
+          revision: "d3b4ed83ec64275f",
+        },
+        {
+          url: "/_next/static/chunks/95b64a6e-1daaa8ca9f076ac6.js",
+          revision: "1daaa8ca9f076ac6",
+        },
+        {
+          url: "/_next/static/chunks/9935-6df1c02453727540.js",
+          revision: "6df1c02453727540",
+        },
+        {
+          url: "/_next/static/chunks/9b380ffa-4261cbe7bb2c26c0.js",
+          revision: "4261cbe7bb2c26c0",
+        },
+        {
+          url: "/_next/static/chunks/c31f1870-1be59d1ced4fd35c.js",
+          revision: "1be59d1ced4fd35c",
+        },
+        {
+          url: "/_next/static/chunks/d0c16330-6d0d4e08e84563bf.js",
+          revision: "6d0d4e08e84563bf",
+        },
+        {
+          url: "/_next/static/chunks/d64684d8-c9fe38f0dbbc0a1b.js",
+          revision: "c9fe38f0dbbc0a1b",
+        },
+        {
+          url: "/_next/static/chunks/d7eeaac4-9310969b7822780d.js",
+          revision: "9310969b7822780d",
+        },
+        {
+          url: "/_next/static/chunks/ee8b1517-1e9cf2562e0eb1e4.js",
+          revision: "1e9cf2562e0eb1e4",
+        },
+        {
+          url: "/_next/static/chunks/framework-3671d8951bf44e4e.js",
+          revision: "3671d8951bf44e4e",
+        },
+        {
+          url: "/_next/static/chunks/main-9b54760dbf1836c0.js",
+          revision: "9b54760dbf1836c0",
+        },
+        {
+          url: "/_next/static/chunks/pages/_app-5b7aa4864006bd1f.js",
+          revision: "5b7aa4864006bd1f",
+        },
+        {
+          url: "/_next/static/chunks/pages/_error-bd1da5a6907513b5.js",
+          revision: "bd1da5a6907513b5",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/404-1506235a26e751ad.js",
+          revision: "1506235a26e751ad",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/aboutus-78666e9558b46155.js",
+          revision: "78666e9558b46155",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/contactus-2950c854ebbb3f61.js",
+          revision: "2950c854ebbb3f61",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/helpandsupport-c72678908604b109.js",
+          revision: "c72678908604b109",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/noInternet-de9ba0ac708fa8e0.js",
+          revision: "de9ba0ac708fa8e0",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/privacypolicy-48df76708fa555e0.js",
+          revision: "48df76708fa555e0",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/refundpolicy-347e5156c9408706.js",
+          revision: "347e5156c9408706",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/termsandconditions-36cd815ed55b9e60.js",
+          revision: "36cd815ed55b9e60",
+        },
+        {
+          url: "/_next/static/chunks/pages/alpha/underwork-e82494d680559f8d.js",
+          revision: "e82494d680559f8d",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/assignments-3a9a1d066906c2f2.js",
+          revision: "3a9a1d066906c2f2",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/assignments/feedback-f0f3de08d6b44274.js",
+          revision: "f0f3de08d6b44274",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/assignmentupload-87d996d9ceece377.js",
+          revision: "87d996d9ceece377",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/chats-8b738494c9ab0ab2.js",
+          revision: "8b738494c9ab0ab2",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/checkclass-3adfc51b3382b8d9.js",
+          revision: "3adfc51b3382b8d9",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/coursedetail-a06fe36b2418a20c.js",
+          revision: "a06fe36b2418a20c",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/courseoverview-14c95783fd822c21.js",
+          revision: "14c95783fd822c21",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/dashboard-87703c0b403d8287.js",
+          revision: "87703c0b403d8287",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/login-39abbd48cfc602b5.js",
+          revision: "39abbd48cfc602b5",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/pay-9ce9b39a90622e98.js",
+          revision: "9ce9b39a90622e98",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/payment-2653deb4ab74db24.js",
+          revision: "2653deb4ab74db24",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/paymentFailed-d99a512e066ab592.js",
+          revision: "d99a512e066ab592",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/profile-87252c36818d78e6.js",
+          revision: "87252c36818d78e6",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/profilecongrats-5d85294750ef929e.js",
+          revision: "5d85294750ef929e",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/profilecontinue-e9329567245c896d.js",
+          revision: "e9329567245c896d",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/profiledetails-e410205e8fc0087e.js",
+          revision: "e410205e8fc0087e",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/setting-8b1f9c3ece6bcb1e.js",
+          revision: "8b1f9c3ece6bcb1e",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/signup-69ada5f3426f7e9c.js",
+          revision: "69ada5f3426f7e9c",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/studymaterial-b3fca9377f2d75d9.js",
+          revision: "b3fca9377f2d75d9",
+        },
+        {
+          url: "/_next/static/chunks/pages/beta/videoplayback-b5613967d1d82a1e.js",
+          revision: "b5613967d1d82a1e",
+        },
+        {
+          url: "/_next/static/chunks/pages/index-0a79656cd04de288.js",
+          revision: "0a79656cd04de288",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/addassignment-578901b171b1d641.js",
+          revision: "578901b171b1d641",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/assignments-63ad538f9bb27067.js",
+          revision: "63ad538f9bb27067",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/assignments/%5Buid%5D-7450da779a194a1f.js",
+          revision: "7450da779a194a1f",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/assignments/feedback-4b59565a823cb02d.js",
+          revision: "4b59565a823cb02d",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/assignments/file-1ddaf23e4b2f9cfe.js",
+          revision: "1ddaf23e4b2f9cfe",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/chats-90b495ac62985f5b.js",
+          revision: "90b495ac62985f5b",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/congratsAddAssigment-c3b5d89fd2bcd92a.js",
+          revision: "c3b5d89fd2bcd92a",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/contactus-4757b2a4a2e28d00.js",
+          revision: "4757b2a4a2e28d00",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/courses-83af9aad51d7896f.js",
+          revision: "83af9aad51d7896f",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/dashboard-686b831b62efbfee.js",
+          revision: "686b831b62efbfee",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/mentorprofile-29eb96501c217e89.js",
+          revision: "29eb96501c217e89",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/metrialInfo-fe2efb5d625d069a.js",
+          revision: "fe2efb5d625d069a",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/modifyCourses-4f0be9fe421095c9.js",
+          revision: "4f0be9fe421095c9",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/profile-b9354c7c4751f821.js",
+          revision: "b9354c7c4751f821",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/register-9ba694ae798a159c.js",
+          revision: "9ba694ae798a159c",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/schedule-9a05d4278a5a7381.js",
+          revision: "9a05d4278a5a7381",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/setting-511005da3970fe1f.js",
+          revision: "511005da3970fe1f",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/signup-11724db909d807ef.js",
+          revision: "11724db909d807ef",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/signupsuccess-5206ed4576ee8148.js",
+          revision: "5206ed4576ee8148",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/student-f59765bf542626d6.js",
+          revision: "f59765bf542626d6",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/studentprofile-53eec862aa287621.js",
+          revision: "53eec862aa287621",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/studymaterial-69fbbf3c66effe8e.js",
+          revision: "69fbbf3c66effe8e",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/uploadvideo-92379097517010ba.js",
+          revision: "92379097517010ba",
+        },
+        {
+          url: "/_next/static/chunks/pages/meta/verify-778ddbc3119fc611.js",
+          revision: "778ddbc3119fc611",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/CongratsAddTeam-e17f86e55d888278.js",
+          revision: "e17f86e55d888278",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/addcategory-852390682fb9a992.js",
+          revision: "852390682fb9a992",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/addcourse-77f9761e370327f5.js",
+          revision: "77f9761e370327f5",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/addcourse/congrats-e8ed318ff8772de8.js",
+          revision: "e8ed318ff8772de8",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/addmentor-cf2ba6494115f722.js",
+          revision: "cf2ba6494115f722",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/addteam-647c1b267cdf270e.js",
+          revision: "647c1b267cdf270e",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/dashboard-7286c38c43ce135d.js",
+          revision: "7286c38c43ce135d",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/login-337368fd1b8d2ff2.js",
+          revision: "337368fd1b8d2ff2",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/mentordetails-19e1fd72921c7924.js",
+          revision: "19e1fd72921c7924",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/mentorprofile-26fe4f7cd3d03ba7.js",
+          revision: "26fe4f7cd3d03ba7",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/mentors-e08a6f49a97e90b2.js",
+          revision: "e08a6f49a97e90b2",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/modifyCourses-49ae61199c1a31d4.js",
+          revision: "49ae61199c1a31d4",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/otpverification-5ea0289bc637bc55.js",
+          revision: "5ea0289bc637bc55",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/profile-46ef6bb2a7b86df4.js",
+          revision: "46ef6bb2a7b86df4",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/signupsuccesscheck if needed-77978db9ca808fa6.js",
+          revision: "77978db9ca808fa6",
+        },
+        {
+          url: "/_next/static/chunks/pages/reta/viewteam-be8151a26ae6d540.js",
+          revision: "be8151a26ae6d540",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/dashboard-6e192f2a1a49165a.js",
+          revision: "6e192f2a1a49165a",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/login-ca9f8da1adb636fe.js",
+          revision: "ca9f8da1adb636fe",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/profile-58a35804ecf1668e.js",
+          revision: "58a35804ecf1668e",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/register-5977265b668d0084.js",
+          revision: "5977265b668d0084",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/signup-ce16a6e99018643b.js",
+          revision: "ce16a6e99018643b",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/students-d3f5f74af546d928.js",
+          revision: "d3f5f74af546d928",
+        },
+        {
+          url: "/_next/static/chunks/pages/seta/studentsdetails-3840b862ba08378f.js",
+          revision: "3840b862ba08378f",
+        },
+        {
+          url: "/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js",
+          revision: "79330112775102f91e1010318bae2bd3",
+        },
+        {
+          url: "/_next/static/chunks/webpack-4e486982e88a6842.js",
+          revision: "4e486982e88a6842",
+        },
+        {
+          url: "/_next/static/css/526e13cc41eaf86c.css",
+          revision: "526e13cc41eaf86c",
+        },
+        {
+          url: "/_next/static/css/5d3d34789a2240ec.css",
+          revision: "5d3d34789a2240ec",
+        },
+        {
+          url: "/_next/static/css/66018f438da02edc.css",
+          revision: "66018f438da02edc",
+        },
+        {
+          url: "/_next/static/css/6cd46c6d6ab69681.css",
+          revision: "6cd46c6d6ab69681",
+        },
+        {
+          url: "/_next/static/css/ae4ed9c503fd1e33.css",
+          revision: "ae4ed9c503fd1e33",
+        },
+        {
+          url: "/_next/static/css/c96c32edc8811842.css",
+          revision: "c96c32edc8811842",
+        },
+        {
+          url: "/_next/static/css/d0320de32467736e.css",
+          revision: "d0320de32467736e",
+        },
+        {
+          url: "/_next/static/media/Adminlogingraphic.9079dabc.svg",
+          revision: "fdb58e7d189a1e5c7e01a7c5029aae1f",
+        },
+        {
+          url: "/_next/static/media/Bullet.b8d7e9fd.svg",
+          revision: "17ff40be65287050f791e2ea2e565bc1",
+        },
+        {
+          url: "/_next/static/media/Group 11.2b058ac7.svg",
+          revision: "e5a933a635b63d0b87477daed520925a",
+        },
+        {
+          url: "/_next/static/media/Group 2.35543307.svg",
+          revision: "8dba70f35e36d143bda20090ffa8476d",
+        },
+        {
+          url: "/_next/static/media/Img2.a014069e.svg",
+          revision: "4a517feda9e7097b0e8977429279743a",
+        },
+        {
+          url: "/_next/static/media/Studygirl.012b09db.svg",
+          revision: "21b527383dd71313fe6cfb7fb68cdb7f",
+        },
+        {
+          url: "/_next/static/media/_Google.41e9180f.svg",
+          revision: "75b5c50ac0f2ebc5d1ee07580d3e6e1a",
+        },
+        {
+          url: "/_next/static/media/booksicon.7b91cebe.svg",
+          revision: "8e1b64be42c42be9f5600c78b2a8feb7",
+        },
+        {
+          url: "/_next/static/media/brownfilledcircle.245aa240.svg",
+          revision: "1e698961d39e1779daf9ebc6bc9bc531",
+        },
+        {
+          url: "/_next/static/media/chartbaricon.4130cda8.svg",
+          revision: "ecf03132783866a0b01e77f2f700171c",
+        },
+        {
+          url: "/_next/static/media/desktopicon.2b058ac7.svg",
+          revision: "e5a933a635b63d0b87477daed520925a",
+        },
+        {
+          url: "/_next/static/media/laptopicon.3d2885b5.svg",
+          revision: "abb54ff67f0eb3d26cbad605d8b15b8a",
+        },
+        {
+          url: "/_next/static/media/manstandingwithlaptop.579e2b72.svg",
+          revision: "7e66e061e7580717cc7372129e8eee91",
+        },
+        {
+          url: "/_next/static/media/neatskillslogosample.76c7da20.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/_next/static/media/pfpsample.83f4196f.svg",
+          revision: "24a6dcb6b8ea2e87743d1d21cf8ae065",
+        },
+        {
+          url: "/_next/static/media/profile.83f4196f.svg",
+          revision: "24a6dcb6b8ea2e87743d1d21cf8ae065",
+        },
+        {
+          url: "/_next/static/media/purplefilledcircle.792beda2.svg",
+          revision: "4d46819cb3db75fb6dba0b811923a12e",
+        },
+        {
+          url: "/_next/static/media/searchicon.f9fb5196.svg",
+          revision: "7330a662e8677b673393ea2116c7c897",
+        },
+        {
+          url: "/_next/static/media/semicircle.22849fe5.svg",
+          revision: "b0a6769f01b0a28ddd063b9d72c715ac",
+        },
+        {
+          url: "/componentsgraphics/common/Anonymousimage/anonymous.png",
+          revision: "f1d48004df790405a099436396e60e4a",
+        },
+        {
+          url: "/componentsgraphics/common/aboutpage/about.png",
+          revision: "bbc0082fae233cf227b7e721f4a294ed",
+        },
+        {
+          url: "/componentsgraphics/common/aboutpage/abouttalking.svg",
+          revision: "b31e42060f6476e7cf826f9f736c414b",
+        },
+        {
+          url: "/componentsgraphics/common/aboutpage/team1.svg",
+          revision: "ed92375524bf9331d17e491b9bb32c47",
+        },
+        {
+          url: "/componentsgraphics/common/aboutpage/team2.svg",
+          revision: "5f509d7429d402dd665242ae90740d07",
+        },
+        {
+          url: "/componentsgraphics/common/aboutpage/team3.svg",
+          revision: "f5f1c6b529847ce735097b601c167822",
+        },
+        {
+          url: "/componentsgraphics/common/aboutpage/teamImage.png",
+          revision: "0ef1a8785d2fd1f7765a7c8353cfa4d3",
+        },
+        {
+          url: "/componentsgraphics/common/calendar/datelist/caretcircleleft.svg",
+          revision: "2eddc70735b26f16e514e1c89d6b160d",
+        },
+        {
+          url: "/componentsgraphics/common/calendar/datelist/caretcircleright.svg",
+          revision: "bfa877c2cea3f544962b61970df27ce1",
+        },
+        {
+          url: "/componentsgraphics/common/calendar/sidebody/Videoplayericon.svg",
+          revision: "7a1241807ea8b1fc73bf64b21980c4b8",
+        },
+        {
+          url: "/componentsgraphics/common/chatting/chattingarea/Img2.svg",
+          revision: "4a517feda9e7097b0e8977429279743a",
+        },
+        {
+          url: "/componentsgraphics/common/chatting/chattingarea/profile.svg",
+          revision: "24a6dcb6b8ea2e87743d1d21cf8ae065",
+        },
+        {
+          url: "/componentsgraphics/common/chatting/sidebar/navbar/profile.svg",
+          revision: "24a6dcb6b8ea2e87743d1d21cf8ae065",
+        },
+        {
+          url: "/componentsgraphics/common/chatting/user/profile.svg",
+          revision: "24a6dcb6b8ea2e87743d1d21cf8ae065",
+        },
+        {
+          url: "/componentsgraphics/common/helpandsupportpage/EnvelopeSimple.svg",
+          revision: "383ab29f5a8adea76423a14eeef05c8c",
+        },
+        {
+          url: "/componentsgraphics/common/helpandsupportpage/HandPointing.svg",
+          revision: "160833b9e2bfab22e8a85a7819eade58",
+        },
+        {
+          url: "/componentsgraphics/common/helpandsupportpage/Megaphone.svg",
+          revision: "d9f5e28358de088386580c77389154e4",
+        },
+        {
+          url: "/componentsgraphics/common/helpandsupportpage/Student.svg",
+          revision: "1b4de831989f7c3ff18c9c9996f3ac85",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/Book.svg",
+          revision: "b5069a082aa043ba371311c69bfd2934",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/Question.svg",
+          revision: "db5f1c7744c78808fcf49bbf430c0535",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/activities.png",
+          revision: "9bdbda7f055b46dfc67bfdf7a2846003",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/activities.svg",
+          revision: "6fb613419d42a63fb776e52e8a14073a",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/live.png",
+          revision: "b95059d8a5b127371cc91142979db40f",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/meet.png",
+          revision: "e9f61cf0a9bdd089c5609348160ccc05",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/activities/video.png",
+          revision: "37989358329edad5870d715999431585",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/explorecourses/Certificate.svg",
+          revision: "d676b2124f266347478889ce37423158",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/explorecourses/ProgrammingIcon.png",
+          revision: "f70ba2b169a9d9875aced30d1e5c3563",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/explorecourses/arrow.png",
+          revision: "16ad94083cf50f2eb9436dfdb429b5af",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/footer/neatskillslogosample.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/home/Group174.svg",
+          revision: "5d6c47e75167a039f4ffdc4a646879c4",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/home/Vector-12.svg",
+          revision: "73e6d91d0734b43dcb98d85290c476ac",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/homecard/FolderNotch.svg",
+          revision: "59b461f73e3df6cfd80817624189952f",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/join/Bullet.svg",
+          revision: "17ff40be65287050f791e2ea2e565bc1",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/join/Studygirl.svg",
+          revision: "21b527383dd71313fe6cfb7fb68cdb7f",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/join/curve1.png",
+          revision: "4d9c9a91db80dd8174021e42ab8a294b",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/join/curve2.png",
+          revision: "5c2266c359c3beae39c49fc30dbd92ac",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/signup/3.png",
+          revision: "27420dd4962dab57d0797e9fdfd5d094",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/signup/5.svg",
+          revision: "591176596ccaf79ca6f055b391479c7c",
+        },
+        {
+          url: "/componentsgraphics/common/homepage/why/why.svg",
+          revision: "34e6886892c17b5525c7c3b7ba6aae32",
+        },
+        {
+          url: "/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg",
+          revision: "81d9ebde300255be73f0d6a41bbf7722",
+        },
+        {
+          url: "/componentsgraphics/common/navbar/schooltopbar/Male.svg",
+          revision: "81d9ebde300255be73f0d6a41bbf7722",
+        },
+        {
+          url: "/componentsgraphics/common/nodata/nodata.svg",
+          revision: "247e49de08bd255aff5223e2af07e4c0",
+        },
+        {
+          url: "/componentsgraphics/common/settings/profile/Female.svg",
+          revision: "23e62ae9316cd032ab0c7417c8218af6",
+        },
+        {
+          url: "/componentsgraphics/common/sidebar/courseoverviewsidebar/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/sidebar/liveclasssidebar/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/sidebar/mentorsidebar/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/sidebar/schoolsidebar/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/sidebar/sidebar/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/common/underprogress/brownfilledcircle.svg",
+          revision: "1e698961d39e1779daf9ebc6bc9bc531",
+        },
+        {
+          url: "/componentsgraphics/common/underprogress/dottedpattern.svg",
+          revision: "71eef74c3dd37c2fe30462289ed55588",
+        },
+        {
+          url: "/componentsgraphics/common/underprogress/manstandingwithlaptop.svg",
+          revision: "7e66e061e7580717cc7372129e8eee91",
+        },
+        {
+          url: "/componentsgraphics/common/underprogress/purplefilledcircle.svg",
+          revision: "4d46819cb3db75fb6dba0b811923a12e",
+        },
+        {
+          url: "/componentsgraphics/common/underprogress/semicircle.svg",
+          revision: "b0a6769f01b0a28ddd063b9d72c715ac",
+        },
+        {
+          url: "/componentsgraphics/mentor/FolderNotch.svg",
+          revision: "eed71732c9fdbbff3e3219c4a5a45252",
+        },
+        {
+          url: "/componentsgraphics/mentor/fileupload.svg",
+          revision: "10a7493b5059e592e938cd08fba69f0d",
+        },
+        {
+          url: "/componentsgraphics/mentor/mentorcard/mentorpfpsample.svg",
+          revision: "23e62ae9316cd032ab0c7417c8218af6",
+        },
+        {
+          url: "/componentsgraphics/mentor/monthselector/caretcircleleft.svg",
+          revision: "2eddc70735b26f16e514e1c89d6b160d",
+        },
+        {
+          url: "/componentsgraphics/mentor/monthselector/caretcircleright.svg",
+          revision: "bfa877c2cea3f544962b61970df27ce1",
+        },
+        {
+          url: "/componentsgraphics/mentor/schedule/mentorsidebar/neatskillslogosample.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/mentor/schedule/studentsidebar/neatskillslogosample.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/mentor/signup/neatskillslogosample.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/mentor/signup/teachingsample.svg",
+          revision: "7ed7cacb6917965a97ea5b6ae3f3cbc8",
+        },
+        {
+          url: "/componentsgraphics/mentor/tick.svg",
+          revision: "727b831e57fa3b85c092490826ea6e2d",
+        },
+        {
+          url: "/componentsgraphics/schools/back.svg",
+          revision: "52a93efb8d7920f51a334dcc3f4ab402",
+        },
+        {
+          url: "/componentsgraphics/schools/login/Group 2.svg",
+          revision: "8dba70f35e36d143bda20090ffa8476d",
+        },
+        {
+          url: "/componentsgraphics/schools/login/neatskillslogosample.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/student/courses/card/MagnifyingGlass.svg",
+          revision: "05443842b46a784a513b0cdcfa328f1c",
+        },
+        {
+          url: "/componentsgraphics/student/courses/card/laptopicon.svg",
+          revision: "2d2933326953ff0d58ad18dcbd9e81cb",
+        },
+        {
+          url: "/componentsgraphics/student/courses/header/booksicon.svg",
+          revision: "8e1b64be42c42be9f5600c78b2a8feb7",
+        },
+        {
+          url: "/componentsgraphics/student/courses/header/desktopicon.svg",
+          revision: "e5a933a635b63d0b87477daed520925a",
+        },
+        {
+          url: "/componentsgraphics/student/courses/header/laptopicon.svg",
+          revision: "abb54ff67f0eb3d26cbad605d8b15b8a",
+        },
+        {
+          url: "/componentsgraphics/student/courses/header/pfpsample.svg",
+          revision: "24a6dcb6b8ea2e87743d1d21cf8ae065",
+        },
+        {
+          url: "/componentsgraphics/student/courses/header/searchicon.svg",
+          revision: "7330a662e8677b673393ea2116c7c897",
+        },
+        {
+          url: "/componentsgraphics/student/courses/list/chartbaricon.svg",
+          revision: "ecf03132783866a0b01e77f2f700171c",
+        },
+        {
+          url: "/componentsgraphics/student/courses/navbar/neatskillslogosample.svg",
+          revision: "cc1a18bc172093f3b852c75dfbb07b90",
+        },
+        {
+          url: "/componentsgraphics/student/dashboard/dashboardcard/laptop.svg",
+          revision: "2d2933326953ff0d58ad18dcbd9e81cb",
+        },
+        {
+          url: "/componentsgraphics/student/dashboard/inactivecomp/Programmer coding on laptop.svg",
+          revision: "916e999573b87d5f51d705d33c5e8a48",
+        },
+        {
+          url: "/componentsgraphics/student/paymentgateway/completion/Standing.svg",
+          revision: "852fb6a787efe67dfd182672a5288257",
+        },
+        {
+          url: "/componentsgraphics/student/paymentgateway/completion/maestro.svg",
+          revision: "4b89e7166cbecf6c264050364c074a32",
+        },
+        {
+          url: "/componentsgraphics/student/paymentgateway/plan/Tick.png",
+          revision: "917d3fdf0cb50670a0d1f08fc0fc6627",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/laptop.svg",
+          revision: "2d2933326953ff0d58ad18dcbd9e81cb",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/studentlogin/logincomp/Group 2.svg",
+          revision: "8dba70f35e36d143bda20090ffa8476d",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/studentlogin/logincomp/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/studentlogin/logincomp/_Google.svg",
+          revision: "75b5c50ac0f2ebc5d1ee07580d3e6e1a",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/studentlogin/signincomp/Group 2.svg",
+          revision: "8dba70f35e36d143bda20090ffa8476d",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/studentlogin/signincomp/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/componentsgraphics/student/studymaterial/studentlogin/signincomp/_Google.svg",
+          revision: "75b5c50ac0f2ebc5d1ee07580d3e6e1a",
+        },
+        { url: "/favicon.ico", revision: "7712b8c36441b2d213c4ecc3196e054b" },
+        {
+          url: "/icon-192x192.png",
+          revision: "3264a44724f121150e5e606cbd28e15b",
+        },
+        {
+          url: "/icon-256x256.png",
+          revision: "908c26b283c4970ca2d8d232d57f2699",
+        },
+        {
+          url: "/icon-384x384.png",
+          revision: "eb39ef217488b79cfa12c1e9ef01a19c",
+        },
+        {
+          url: "/icon-512x512.png",
+          revision: "b718e1bc7c7ced9beb3bc71497d8d964",
+        },
+        { url: "/manifest.json", revision: "d84aa065593e3b45fdb713d043ebfd1d" },
+        { url: "/next.svg", revision: "8e061864f388b47f33a1c3780831193e" },
+        {
+          url: "/pagesgraphics/admin/AddTeam/Frame.svg",
+          revision: "bfb3a9286e16339246c2fbaf96dd138d",
+        },
+        {
+          url: "/pagesgraphics/admin/AddTeam/Neatskills.svg",
+          revision: "8ce5a28bd2e0f10e2b018bf72aae0041",
+        },
+        {
+          url: "/pagesgraphics/admin/AddTeam/amico.svg",
+          revision: "d35bc6b1531d8d0d9e815cf279e84df3",
+        },
+        {
+          url: "/pagesgraphics/admin/login/Adminlogingraphic.svg",
+          revision: "fdb58e7d189a1e5c7e01a7c5029aae1f",
+        },
+        {
+          url: "/pagesgraphics/admin/login/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/pagesgraphics/admin/login/_Google.svg",
+          revision: "75b5c50ac0f2ebc5d1ee07580d3e6e1a",
+        },
+        {
+          url: "/pagesgraphics/admin/login/otpverification.svg",
+          revision: "340dd5581c108275aaa442bbc6990c20",
+        },
+        {
+          url: "/pagesgraphics/admin/login/signupsuccess.svg",
+          revision: "744119e59464ffda3c9ad1432f1f6aec",
+        },
+        {
+          url: "/pagesgraphics/admin/welcome/FolderSimplePlus.svg",
+          revision: "f25f79f5e64729b32a02d1099b1e76ff",
+        },
+        {
+          url: "/pagesgraphics/admin/welcome/UserList.svg",
+          revision: "108b6ffd5b7045e21f40f897d165be7f",
+        },
+        {
+          url: "/pagesgraphics/admin/welcome/UsersThree.svg",
+          revision: "6aeecd2c3fcca0ef87d4fb1614c2ebb2",
+        },
+        {
+          url: "/pagesgraphics/admin/welcome/studentsandmentors.svg",
+          revision: "0312418eaf6af32249a7355f6bea9160",
+        },
+        {
+          url: "/pagesgraphics/common/contactus/MapPin.svg",
+          revision: "dd3c5592994c1e9baec3bf735522b602",
+        },
+        {
+          url: "/pagesgraphics/common/contactus/call.svg",
+          revision: "7efde3a195af6ecdb52485295347099e",
+        },
+        {
+          url: "/pagesgraphics/common/contactus/mail.svg",
+          revision: "13afb1c5e9fa08effbcede32d7ab08e0",
+        },
+        {
+          url: "/pagesgraphics/common/createcategory/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/pagesgraphics/common/createcourse/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/pagesgraphics/common/errors/404.svg",
+          revision: "bb8066fa516ba20cc12368823c4d09dc",
+        },
+        {
+          url: "/pagesgraphics/common/errors/nointernet.svg",
+          revision: "dc9c5dd5d347515406ce79e8ce0eec93",
+        },
+        {
+          url: "/pagesgraphics/mentor/Frame.svg",
+          revision: "bfb3a9286e16339246c2fbaf96dd138d",
+        },
+        {
+          url: "/pagesgraphics/mentor/congratulations/Blur effect.svg",
+          revision: "cdfebd1c49f51e5f2860520043c258e4",
+        },
+        {
+          url: "/pagesgraphics/mentor/congratulations/transparent sparkle.svg",
+          revision: "977a327ac4de699c75a37019a94b385f",
+        },
+        {
+          url: "/pagesgraphics/mentor/profile/ProfileGirlimg.svg",
+          revision: "6e2b86a12bf6701dd135deeb2fd8946e",
+        },
+        {
+          url: "/pagesgraphics/mentor/profile/ProgrammingIcon.svg",
+          revision: "916e999573b87d5f51d705d33c5e8a48",
+        },
+        {
+          url: "/pagesgraphics/mentor/profile/degree_icon.svg",
+          revision: "2e2f68b38e6cbf826b3389c5ed0bd5a9",
+        },
+        {
+          url: "/pagesgraphics/mentor/profile/globe_icon.svg",
+          revision: "e869905e7e799ff3061e05623dda356d",
+        },
+        {
+          url: "/pagesgraphics/mentor/profile/location_icon.svg",
+          revision: "4abcc512600234288b20156000697333",
+        },
+        {
+          url: "/pagesgraphics/mentor/signupsuccess/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/pagesgraphics/mentor/signupsuccess/signupsuccess.svg",
+          revision: "744119e59464ffda3c9ad1432f1f6aec",
+        },
+        {
+          url: "/pagesgraphics/mentor/uploadvideo/Neatskills.svg",
+          revision: "48c34355f23aad965490605d62fef6ec",
+        },
+        {
+          url: "/pagesgraphics/mentor/verification/Group 1997.svg",
+          revision: "5e1e2038a4fef3785cddd9f6f1372a12",
+        },
+        {
+          url: "/pagesgraphics/mentor/verification/freepik--paper-planes--inject-41.svg",
+          revision: "93e11639047cad515c45ab5e2fd64d26",
+        },
+        {
+          url: "/pagesgraphics/mentor/verification/freepik--speech-bubble--inject-41.svg",
+          revision: "cb517e9f370dd0de7deefe11f7f79f6f",
+        },
+        {
+          url: "/pagesgraphics/school/profile/ProfileGirlimg.svg",
+          revision: "6e2b86a12bf6701dd135deeb2fd8946e",
+        },
+        {
+          url: "/pagesgraphics/student/assignmentupload/folderpink.svg",
+          revision: "126279cfed7924131d8afe51c58671ac",
+        },
+        {
+          url: "/pagesgraphics/student/assignmentupload/folderpinkarrow.svg",
+          revision: "a2e931bf864cd706fd2ccd64b4d573fa",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/ChartBar.svg",
+          revision: "ecf03132783866a0b01e77f2f700171c",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Ellipse_1.svg",
+          revision: "4d80549df4b2a46dbfae3c85e0b8cd22",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Globe.svg",
+          revision: "ebb80ca649e5c45a078d7ebccbf2fb83",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Group_30.svg",
+          revision: "49c217d720ae14570c79c07b3dbb1e97",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Lap.svg",
+          revision: "529348788f0b1f14c48978f3487c22f7",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Male.svg",
+          revision: "ee2454dc55667b7edd0d096740abcd6d",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Programmer coding on laptop.svg",
+          revision: "916e999573b87d5f51d705d33c5e8a48",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/Smiley.svg",
+          revision: "c838a1c7009bbde06dae52463c8d996a",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/clock.svg",
+          revision: "82a435d6a270d7596750fe6dbf8b2beb",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/laptop.svg",
+          revision: "2d2933326953ff0d58ad18dcbd9e81cb",
+        },
+        {
+          url: "/pagesgraphics/student/coursedescription/tick.svg",
+          revision: "2794a5cbe7036e734e1e57950e496c79",
+        },
+        {
+          url: "/pagesgraphics/student/details/ProfileGirlimg.svg",
+          revision: "6e2b86a12bf6701dd135deeb2fd8946e",
+        },
+        {
+          url: "/pagesgraphics/student/details/Programmercodingonlaptop.svg",
+          revision: "916e999573b87d5f51d705d33c5e8a48",
+        },
+        {
+          url: "/pagesgraphics/student/payment/GroupPayment.svg",
+          revision: "020fa890fa2af597e7fd4a8638079ca9",
+        },
+        {
+          url: "/pagesgraphics/student/payment/bhim.png",
+          revision: "a0e03bef6890cbe375f7f029d0bdcf92",
+        },
+        {
+          url: "/pagesgraphics/student/payment/card.png",
+          revision: "8fb194874f1f82d4f050c9706b09d77d",
+        },
+        {
+          url: "/pagesgraphics/student/payment/upi.png",
+          revision: "6c98a9beaf0528a3a3849b3841bc40e9",
+        },
+        {
+          url: "/pagesgraphics/student/profilecontinue/Neatskills.svg",
+          revision: "d82d4efbcc3eb01202b2dd37e04aed4d",
+        },
+        {
+          url: "/pagesgraphics/student/profilecontinue/businessexplaintowomen.svg",
+          revision: "7a8870fba81f9634adbddcce2ec95eb5",
+        },
+        {
+          url: "/pagesgraphics/student/videoplayback/Group 11.svg",
+          revision: "e5a933a635b63d0b87477daed520925a",
+        },
+        { url: "/vercel.svg", revision: "61c6b19abff40ea7acd577be818f3976" },
+      ],
+      { ignoreURLParametersMatching: [] }
+    ),
+    e.cleanupOutdatedCaches(),
+    e.registerRoute(
+      "/",
+      new e.NetworkFirst({
+        cacheName: "start-url",
+        plugins: [
+          {
+            cacheWillUpdate: async ({
+              request: e,
+              response: s,
+              event: a,
+              state: c,
+            }) =>
+              s && "opaqueredirect" === s.type
+                ? new Response(s.body, {
+                    status: 200,
+                    statusText: "OK",
+                    headers: s.headers,
+                  })
+                : s,
+          },
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /^https:\/\/fonts\.(?:gstatic)\.com\/.*/i,
+      new e.CacheFirst({
+        cacheName: "google-fonts-webfonts",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 4, maxAgeSeconds: 31536e3 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /^https:\/\/fonts\.(?:googleapis)\.com\/.*/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "google-fonts-stylesheets",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 4, maxAgeSeconds: 604800 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:eot|otf|ttc|ttf|woff|woff2|font.css)$/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "static-font-assets",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 4, maxAgeSeconds: 604800 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "static-image-assets",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 64, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\/_next\/image\?url=.+$/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "next-image",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 64, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:mp3|wav|ogg)$/i,
+      new e.CacheFirst({
+        cacheName: "static-audio-assets",
+        plugins: [
+          new e.RangeRequestsPlugin(),
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:mp4)$/i,
+      new e.CacheFirst({
+        cacheName: "static-video-assets",
+        plugins: [
+          new e.RangeRequestsPlugin(),
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:js)$/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "static-js-assets",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:css|less)$/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "static-style-assets",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\/_next\/data\/.+\/.+\.json$/i,
+      new e.StaleWhileRevalidate({
+        cacheName: "next-data",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      /\.(?:json|xml|csv)$/i,
+      new e.NetworkFirst({
+        cacheName: "static-data-assets",
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      ({ url: e }) => {
+        if (!(self.origin === e.origin)) return !1;
+        const s = e.pathname;
+        return !s.startsWith("/api/auth/") && !!s.startsWith("/api/");
+      },
+      new e.NetworkFirst({
+        cacheName: "apis",
+        networkTimeoutSeconds: 10,
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 16, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      ({ url: e }) => {
+        if (!(self.origin === e.origin)) return !1;
+        return !e.pathname.startsWith("/api/");
+      },
+      new e.NetworkFirst({
+        cacheName: "others",
+        networkTimeoutSeconds: 10,
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400 }),
+        ],
+      }),
+      "GET"
+    ),
+    e.registerRoute(
+      ({ url: e }) => !(self.origin === e.origin),
+      new e.NetworkFirst({
+        cacheName: "cross-origin",
+        networkTimeoutSeconds: 10,
+        plugins: [
+          new e.ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 3600 }),
+        ],
+      }),
+      "GET"
+    );
+});

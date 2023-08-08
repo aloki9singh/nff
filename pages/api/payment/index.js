@@ -30,6 +30,7 @@ async function handler(req, res) {
   
 
     const body = JSON.parse(req.body);
+    
     const paymentData =
     {
     "merchantId": merchantId,
