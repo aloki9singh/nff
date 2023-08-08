@@ -23,7 +23,7 @@
     "crypto-js": "^4.1.1",
     "date-fns": "^2.30.0",
     "datepicker": "^0.0.0",
-    "firebase": "^8.6.8",
+    "firebase": "^9.18.0",
     "firebase-admin": "^11.6.0",
     "firebase-functions": "^4.3.0",
     "formik": "^2.2.9",

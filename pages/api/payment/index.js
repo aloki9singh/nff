@@ -4,7 +4,7 @@ function encodeToBase64(str) {
 
 const generateTransactionId = () => {
   const timestamp = Date.now();
-  const randomNum = Math.floor(Math.random() * 1000000); // You can adjust the range as needed
+  const randomNum = Math.floor(Math.random() * 9999999); // You can adjust the range as needed
   return `TXN${timestamp}${randomNum}`;
 };
 
@@ -26,8 +26,11 @@ async function handler(req, res) {
   const merchantId = process.env.NEXT_MERCHANT_ID;
   const saltKey = process.env.NEXT_SALT_KEY;
   const transactionId = generateTransactionId();
+  const payUri = process.env.NEXT_PROD_PAY_URL;
+  
 
     const body = JSON.parse(req.body);
+    
     const paymentData =
     {
     "merchantId": merchantId,
@@ -37,7 +40,7 @@ async function handler(req, res) {
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "redirectMode": "GET",
     "callbackUrl": "",
-    "mobileNumber": "9335929565",
+    "mobileNumber": body.phoneNumber,
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }
@@ -66,7 +69,7 @@ async function handler(req, res) {
               };
         
               
-              fetch("https://api.phonepe.com/apis/hermes/pg/v1/pay", options)
+              fetch(payUri, options)
                 .then(response => response.json())
                 .then(response => {
                     res.status(200).json(response)
@@ -80,4 +83,4 @@ async function handler(req, res) {
   }
 
 
-export default handler;
+export default handler;
