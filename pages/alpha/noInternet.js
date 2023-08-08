@@ -22,8 +22,8 @@ const NoInternetPage = () => {
 
   return (
     <div
-      className={`flex flex-col h-screen ${
-        isMobileScreen ? 'overflow-hidden' : ''
+      className={`flex flex-col ${
+        isMobileScreen ? 'h-screen overflow-hidden' : 'min-h-screen'
       }`}>
       <Dashboardnav heading='No internet' toggleSideBar={toggleSideBar} />
       {isMobileScreen && (
@@ -36,7 +36,12 @@ const NoInternetPage = () => {
       )}
 
       <div className='flex flex-1 md:px-10 justify-center items-center'>
-        <div className='bg-gradient-to-br md:mt-4 md:mb-5 from-[#A145CD] to-[#E1348B] w-full md:w-[90%] h-[100%] md:h-[95%] max-h-[100vh] flex flex-col justify-center items-center rounded-lg p-1'>
+        <div
+          className={`bg-gradient-to-br p-5 ${
+            isMobileScreen ? 'md:mt-4 md:mb-5' : 'my-4'
+          } from-[#A145CD] to-[#E1348B] w-full md:w-[90%] ${
+            isMobileScreen ? 'h-[95%]' : 'h-[100%] max-h-[100vh]'
+          } flex flex-col justify-center items-center rounded-lg p-1`}>
           <div className='flex items-center justify-center mb-5'>
             <Image
               src='/pagesgraphics/common/errors/nointernet.svg'
@@ -47,7 +52,7 @@ const NoInternetPage = () => {
           </div>
 
           <div className='text-white text-2xl mt-5 mb-5 text-center'>
-            No Internet connection
+            Page Not found
           </div>
 
           <div className='flex flex-col md:flex-row justify-center gap-3'>
