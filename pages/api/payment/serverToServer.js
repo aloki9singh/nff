@@ -15,8 +15,8 @@ async function handler(req, res) {
 
   const { param1 } = req.query;
   const body = req.body;
-  
-  
+
+
   try {
 
 
@@ -24,29 +24,33 @@ async function handler(req, res) {
     const prividerRefId = body.providerReferenceId;
     const transactionId = body.transactionId;
     const result = body.code;
-    
+
+    // MRP = Discounted Price / (1 - (Discount Percentage / 100))
+
+    const price = amount / (1 - (10 / 100));
+
     const currentDate = new Date();
     const futureDate = new Date();
     let plan;
-    
-    
+
+
     if (result == "PAYMENT_SUCCESS") {
-      
+
       console.log("callback");
-      if (amount == 29900) {
+      if (price < 500) {
 
         futureDate.setDate(currentDate.getDate() + 1 * 30);
         plan = 1;
       }
 
 
-      else if (amount == 89900) {
+      else if (price >= 500 && price < 1500) {
         futureDate.setDate(currentDate.getDate() + 6 * 30);
         plan = 6;
 
       }
 
-      else if (amount == 359900) {
+      else{
         futureDate.setDate(currentDate.getDate() + 12 * 30);
         plan = 12;
       }
@@ -83,12 +87,13 @@ async function handler(req, res) {
 
 
       const payload = encodeToBase64(JSON.stringify({
-        amount: amount,
+        amount: price,
         providerRefId: prividerRefId,
         transactionId: transactionId,
         paymentResult: result,
+        discount:(price - amount),
         plan: plan,
-        page:2,
+        page: 2,
       }));
 
       // res.status(302).redirect(baseUrl + '/beta/payment?val='+payload);
@@ -97,14 +102,17 @@ async function handler(req, res) {
     }
     else {
       console.log("body", body);
+      const payload = encodeToBase64(JSON.stringify(body));
       // res.status(302).redirect(baseUrl + '/beta/paymentFailed')
-      res.setHeader('Location', baseUrl + '/beta/paymentFailed');
+      res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
       res.status(302).end();
     }
 
   } catch (error) {
     console.log(error);
-    res.setHeader('Location', baseUrl + '/beta/paymentFailed');
+
+    const payload = encodeToBase64(JSON.stringify(error));
+    res.setHeader('Location', baseUrl + '/beta/paymentFailed?val=' + payload);
     res.status(302).end();
 
     // res.status(302).redirect(baseUrl+'/beta/payment');

@@ -18,7 +18,7 @@ const Payment = ({ updatePage, updatePrice }) => {
   const [showToast, setShowToast] = useState(false);
 
   // for trial button 
-  let isTrialValid = true;
+  let isTrialValid = false;
 
   //checking trial validity
   if (user) {
