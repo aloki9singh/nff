@@ -28,9 +28,7 @@ async function handler(req, res) {
   const transactionId = generateTransactionId();
   const payUri = process.env.NEXT_PROD_PAY_URL;
 
-  //sdfms
-
-  
+//body here
     const body = JSON.parse(req.body);
 
     const paymentData =
@@ -83,6 +81,5 @@ async function handler(req, res) {
       res.status(500).json({ msg: "Something went wrong!"+error });
     }
   }
-
-
+  
 export default handler;
