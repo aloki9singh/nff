@@ -25,6 +25,7 @@ async function handler(req, res) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const merchantId = process.env.NEXT_MERCHANT_ID;
   const saltKey = process.env.NEXT_SALT_KEY;
+<<<<<<< Updated upstream
   const transactionId = generateTransactionId();
 
     const body = JSON.parse(req.body);
@@ -41,6 +42,52 @@ async function handler(req, res) {
     "paymentInstrument": {
       "type": "PAY_PAGE"
     }
+=======
+  const keyindex = process.env.NEXT_KEY_INDEX;
+
+  const body = JSON.parse(req.body);
+  const paymentData = {
+    merchantId: "PROVOKEONLINE",
+    merchantTransactionId: "1603",
+    merchantUserId: "PROVOKEONLINE",
+    amount: body.price,
+    redirectUrl: baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
+    redirectMode: "GET",
+    callbackUrl: baseUrl + "/api/payment/serverToServer",
+    mobileNumber: "9999999999",
+    paymentInstrument: {
+      type: "PAY_PAGE",
+    },
+  };
+
+  const encodedData = encodeToBase64(JSON.stringify(paymentData));
+  const shaFormula = encodedData + "/pg/v1/pay" + saltKey;
+  const shaData = await sha256(shaFormula);
+  const shaVerify = shaData + keyindex;
+
+  try {
+    const options = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        "X-VERIFY": shaVerify,
+      },
+      body: JSON.stringify({
+        request: encodedData,
+      }),
+    };
+
+    fetch("https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay", options)
+      .then((response) => response.json())
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch((err) => console.error(err));
+  } catch (error) {
+    // console.log(error);
+    res.status(500).json({ msg: "Something went wrong!" });
+>>>>>>> Stashed changes
   }
 
 
