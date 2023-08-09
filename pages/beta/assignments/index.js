@@ -183,6 +183,7 @@ function Assignments() {
         )} */}
 
       <div className={`${!userSubsribed ? "blur-lg" : null}`}>
+
         {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
           {/* Mobile Sidebar */}
@@ -374,7 +375,7 @@ function Assignments() {
                     )}
                   {uniqCourse.length == 0 && (
                     <div className="">
-                      <Nodata title="Course" value="No Course available" />
+                      <Nodata title="Course" value="No Course available" onClick={()=>router.push("/beta/courseoverview")} />
                     </div>
                   )}
                 </div>

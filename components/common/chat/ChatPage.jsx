@@ -176,8 +176,15 @@ const Chat = () => {
         {!userSubsribed && (
           <ToastMessage
             heading={"OOPS!"}
+            message={"You have not  subscribed yet."}
+          />
+        )}
+        {userSubsribed && chats.length == 0 && (
+          <ToastMessage
+            showButton={false}
+            heading={"OOPS!"}
             message={
-              "You have not joined any courses yet. Please join a course to access the study material."
+              "You have not joined any courses yet. Please join a course to access the Chat Page."
             }
           />
         )}
