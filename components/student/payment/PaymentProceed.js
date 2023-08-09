@@ -4,13 +4,19 @@ import { BsPatchCheckFill } from "react-icons/bs";
 
 import { useAuthContext } from "@/lib/context/AuthContext";
 
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 const PaymentProceed = ({ price }) => {
   
   const { user, userProfile } = useAuthContext();
+  const [userNumber, setUserNumber] = useState('');
   // tab selector 
   const [activeTab, setActiveTab] = useState("card");
   const [loading, setLoading] = useState();
   const [value, setValue] = useState("Monthly");
+
+  const discoutPercentage = process.env.NEXT_PUBLIC_DISCOUNT_PERCENTAGE;
+  const discountedPrice  = Math.ceil(price - ((discoutPercentage * price)/100));
+
 
   useEffect(() => {
     if (price < 500) {
@@ -21,13 +27,23 @@ const PaymentProceed = ({ price }) => {
       setValue("Yearly");
     }
   }, [price]);
+
+
+  //funciton to srtore phone number 
+
+  const handleInputChange = (event) => {
+    setUserNumber(event.target.value);
+  };
+
+
 //api call for payment 
   const handleReq = (e) => {
     e.preventDefault();
     setLoading(true);
     const requestBody = {
-      price: price * 100,
+      price: discountedPrice * 100,
       useruid:user.uid,
+      phoneNumber:userNumber,
     };
 
     fetch('/api/payment', { method: 'POST', body: JSON.stringify(requestBody) },)
@@ -38,7 +54,6 @@ const PaymentProceed = ({ price }) => {
         window.location.href = response.data.instrumentResponse.redirectInfo.url;
       })
       .catch(err => console.error(err));
-  
   }
 
  
@@ -46,11 +61,11 @@ const PaymentProceed = ({ price }) => {
 
   return (
     <>
-      <div className={`flex md:w-[50%]  md:py-5 container md:bg-[] bg-[#373A41] rounded-[33px] mb-16   ${loading == true ? "blur-sm" : null}`}>
+      <div className={`block md:flex md:w-[70%]  md:py-5 container md:bg-[] bg-[#373A41] rounded-[33px] mb-16   ${loading == true ? "blur-sm" : null}`}>
 
-        <div className="hidden left m-12">
+        <div className="left m-12">
 
-          <h1 className="py-2">Payment Method</h1>
+          <h1 className="py-2">Payment Details</h1>
 
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-gray-200 dark:border-gray-700 dark:text-gray-400 py-4">
             <li className="mr-2" role="presentation">
@@ -63,17 +78,17 @@ const PaymentProceed = ({ price }) => {
                   className={`${activeTab == "card" ? "text-[#E1348B]" : "text-white"
                     }`}
                 />
-                <p className="mx-4">Debit/Credit</p>
-                <Image
+                <p className="mx-4">Mobile Number</p>
+                {/* <Image
                   src="/pagesgraphics/student/payment/card.png"
                   width={57}
                   height={30}
                   alt="Picture of the Course"
-                />
+                /> */}
               </button>
             </li>
-            <li className="mr-2" role="presentation">
-              <button
+            {/* <li className="mr-2" role="presentation"> */}
+              {/* <button
                 className={`flex border border-[#717378]  items-center py-[1.418px] px-[45px] rounded-lg ${activeTab == "upi" ? "border-[#E1348B]" : null
                   }`}
                 onClick={() => setActiveTab("upi")}
@@ -89,11 +104,11 @@ const PaymentProceed = ({ price }) => {
                   height={20}
                   alt="Picture of the author"
                 />
-              </button>
-            </li>
+              </button> */}
+            {/* </li> */}
           </ul>
 
-          <div className={`upi ${activeTab == "card" ? "hidden" : null}`}>
+          {/* <div className={`upi ${activeTab == "card" ? "hidden" : null}`}>
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-bold mb-2"
@@ -142,24 +157,27 @@ const PaymentProceed = ({ price }) => {
                 </svg>
               </button>
             </div>
-          </div>
+          </div> */}
 
           <div className={`upi ${activeTab == "upi" ? "hidden" : null}`}>
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-bold mb-2"
-                for="Card Holder Name"
+                for="number"
               >
-                Card Holder Name
+                Number
               </label>
               <input
-                className="shadow appearance-none border rounded w-[451px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="Card Holder Name"
-                type="text"
+                className="shadow appearance-none border rounded w-full md:w-[360px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="number"
+                type="tel"
+                value={userNumber}
+                maxLength={10}
+                onChange={handleInputChange}
               />
             </div>
 
-            <div className="mb-4 relative">
+            {/* <div className="mb-4 relative">
               <label
                 className="block text-white text-sm font-bold mb-2"
                 for="Card Holder Name"
@@ -179,10 +197,10 @@ const PaymentProceed = ({ price }) => {
                 height={30}
                 alt="Picture of the author"
               />
-            </div>
+            </div> */}
 
-            <div className="mb-4 flex">
-              <div className="">
+            {/* <div className="mb-4 flex"> */}
+              {/* <div className="">
                 <label
                   className="block text-white text-sm font-bold mb-2"
                   for="Card Holder Name"
@@ -194,9 +212,9 @@ const PaymentProceed = ({ price }) => {
                   id="Card Holder Name"
                   type="text"
                 />
-              </div>
+              </div> */}
 
-              <div className="px-12">
+              {/* <div className="px-12">
                 <label
                   className="block text-white text-sm font-bold mb-2"
                   for="Card Holder Name"
@@ -208,8 +226,8 @@ const PaymentProceed = ({ price }) => {
                   id="Card Holder Name"
                   type="text"
                 />
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </div>
         </div>
 
@@ -227,22 +245,30 @@ const PaymentProceed = ({ price }) => {
           </div>
           <div className="flex text-sm  flex-row justify-between w-full">
             <h2>Discount</h2>
-            <h2 className="text-red-500">-Rs 0</h2>
+            <h2 className="text-red-500">-Rs {price - discountedPrice}</h2>
           </div>
-          <div className="flex text-sm  flex-row justify-between w-full">
+          {/* <div className="flex text-sm  flex-row justify-between w-full">
             <h2>GST</h2>
             <h2 className="text-green-400">+Rs 0</h2>
-          </div>
+          </div> */}
 
           <hr className="h-px my-8 bg-gray-200 w-full dark:bg-gray-700"></hr>
 
           <div className="flex text-sm flex-row  justify-between w-full">
             <h2>Subtotal</h2>
-            <h2>Rs {price}</h2>
+            <h2>Rs  {discountedPrice}</h2>
           </div>
 
           <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={(e) => {
-            handleReq(e);
+           
+           if(userNumber == ''){
+
+            alert('Please Enter a Phone Number');
+           }
+           else{
+
+             handleReq(e);
+            }
           }}
           disabled={loading == true}
           >
@@ -254,4 +280,5 @@ const PaymentProceed = ({ price }) => {
   );
 };
 
-export default PaymentProceed;
+export default withStudentAuthorization(PaymentProceed);
+

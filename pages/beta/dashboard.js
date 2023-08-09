@@ -29,8 +29,8 @@ const Studentdashboard = () => {
   const { user, userProfile } = useAuthContext();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
-  const [showSideBar, setShowSideBar] = useState(true);
-  const [SideBarState, sendSideBarState] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
   const [workpercentage, setworkpercentage] = useState(0);
   const [lastTip, setLastTip] = useState(null);
 
