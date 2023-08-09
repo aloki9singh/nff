@@ -5,7 +5,7 @@ import CourseSec from './section2';
 import chartIcon from '@/public/componentsgraphics/student/courses/list/chartbaricon.svg';
 import FilterNav from './filernav';
 
-function CourseList({courses}) {
+function CourseList({courses,id}) {
   const [filterUsed, setFilterUsed] = useState()
   const [courseAfterFilter, setCoursesAfterFilter] = useState()
   const openFilter = () => {
@@ -25,7 +25,7 @@ function CourseList({courses}) {
           </button> */}
         </div>
         <div className={styles.courseCardsSec}>
-          <CourseSec courses={courses} FilterUsed={filterUsed} coursesAfterFilter={courseAfterFilter} />
+          <CourseSec courses={courses} FilterUsed={filterUsed} coursesAfterFilter={courseAfterFilter} id={id} />
         </div>
         <div id="filterNav" className={styles.FNavMain} >
           <FilterNav courses={courses} setFilterUsed={setFilterUsed} setCoursesAfterFilter={setCoursesAfterFilter} />
