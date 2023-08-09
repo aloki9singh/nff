@@ -62,7 +62,7 @@ function StudentProfile() {
     }
 
     fetchPlan();
-  }, [isMediumScreen]);
+  }, [isMediumScreen,user.uid]);
 
   //Change this student data to show on chart, passed as prop
   const chartData = [0, 0, 0, 0, 0, 0, 0];
