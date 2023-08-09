@@ -161,13 +161,14 @@ function Assignments() {
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
   const { userSubsribed } = CourseAccess(user?.uid);
+  console.log(userSubsribed)
   return (
     <Layout pageTitle="Assignments">
       {!userSubsribed && (
         <ToastMessage
           heading={"OOPS!"}
           message={
-            "You have not joined any courses yet. Please join a course to access the study material."
+            "Subscribe to access Assignment."
           }
         />
       )}
@@ -181,12 +182,16 @@ function Assignments() {
 
         )} */}
 
+<<<<<<< HEAD
       <div
         className={`  bg-[#2D2E35]
       
       ${!userSubsribed ? "blur-lg" : null}
       `}
       >
+=======
+      <div className={`${!userSubsribed ? "blur-lg" : null}`}>
+>>>>>>> 30a250ede49b2f06a34698f7becd6aedc45edb86
         {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
           {/* Mobile Sidebar */}
@@ -244,7 +249,7 @@ function Assignments() {
                             className="text-sm cursor-pointer "
                             value={ele}
                           >
-                            {ele}
+                            {ele.length > 12 ? ele.slice(0,13)+"...":ele }
                           </option>
                         );
                       })}
