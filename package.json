@@ -40,6 +40,7 @@
     "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-error-boundary": "^4.0.10",
     "react-firebase-hooks": "^3.0.5",
     "react-hook-form": "^7.45.0",
     "react-icons": "^4.7.1",
@@ -63,6 +64,7 @@
     "swiper": "^9.1.0",
     "video.js": "^8.0.4",
     "wavesurfer.js": "^6.6.4",
+    "workbox-webpack-plugin": "^7.0.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {

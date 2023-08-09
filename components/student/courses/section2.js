@@ -3,7 +3,7 @@ import styles from "@/styles/componentsstyling/cards/coursecards.module.css";
 import CourseCard from "./CourseCard2";
 // import CourseCard from "./CourseCard2";
 
-function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
+function CourseSec({ courses, FilterUsed, coursesAfterFilter,id }) {
 
   const [show, setShow] = useState(3)
   const cardInfo = FilterUsed ? coursesAfterFilter : courses;
@@ -29,7 +29,7 @@ function CourseSec({ courses, FilterUsed, coursesAfterFilter }) {
           </button> */}
         </div>
         <div className="overflow-scrollbar scrollbar-hide">
-          <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mx-2 ">
+          <div className=" grid md:grid-cols-3 grid-cols-1 gap-5 mx-2 " id={id}>
             {cardInfo &&
               cardInfo
                 

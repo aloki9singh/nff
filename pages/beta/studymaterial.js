@@ -13,7 +13,6 @@ import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
 import CourseAccess from "@/lib/context/AccessCourseContext";
 import StudyMaterialMain from "@/components/mentor/studymetrial/studyMaterial";
 
-
 function StudyMaterial() {
   const router = useRouter();
   //material array
@@ -27,7 +26,7 @@ function StudyMaterial() {
   const { joinedCourses } = useAuthContext();
   const { user, userProfile } = useAuthContext();
 
-  //fetching data of study materials 
+  //fetching data of study materials
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, "studyMaterial"));
@@ -41,12 +40,11 @@ function StudyMaterial() {
     fetchData();
   }, []);
 
-
   //Dropdown items
   const menuItems = [...new Set(material.map((Val) => Val.title))];
   menuItems[0] = "All courses";
 
-  // for filtering 
+  // for filtering
   const filteredMaterial = selectedOption
     ? material.filter((item) => item.title === selectedOption)
     : material;
@@ -69,9 +67,7 @@ function StudyMaterial() {
       {!userSubsribed && (
         <ToastMessage
           heading={"OOPS!"}
-          message={
-            "Subscribe to access  study material."
-          }
+          message={"Subscribe to access  study material."}
         />
       )}
 
@@ -83,15 +79,21 @@ function StudyMaterial() {
         />
       )} */}
 
-{/* 
+      {/* 
 
     please remove blur-sm when the content is there to show Case */}
 
-      <div className={`flex h-screen bg-[#2D2E35]  ${!userSubsribed ? "blur-lg" : null}`}>
+      <div
+        className={`flex  bg-[#2D2E35]
+      
+      ${!userSubsribed ? "blur-lg" : null}
+      `}
+      >
         {isMobileScreen && (
           <div
-            className={`fixed right-0 ${SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+            className={`fixed right-0 ${
+              SideBarState ? "block" : "hidden"
+            } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
@@ -103,7 +105,7 @@ function StudyMaterial() {
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
         )}
-        <div className="w-full h-screen flex flex-col bg-[#2D2E35] ">
+        <div className="w-full  flex flex-col bg-[#2D2E35] ">
           <Dashboardnav
             heading="Study Material"
             toggleSideBar={toggleSideBar}

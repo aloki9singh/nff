@@ -45,6 +45,7 @@ function StudentProfile() {
   // import usedata and course access from contexts
   const { user, userProfile } = useAuthContext();
   const { userSubsribed } = CourseAccess(user?.uid);
+  
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -135,7 +136,8 @@ function StudentProfile() {
                       alt="proImg"
                       height={150}
                       width={150}
-                      className="rounded-full w-[190px h-[120px] object-cover mt-[-85px]"
+
+                      className="rounded-full w-[190px] h-[120px] object-cover mt-[85px]"
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">

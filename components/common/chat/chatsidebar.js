@@ -20,6 +20,7 @@ const SideBarCard = ({
   chat,
   setChats,
   setShowChat,
+  setShowUser
 }) => {
   const time = chat.lastMessageTimestamp?.toDate().toLocaleTimeString([], {
     hour: "2-digit",
@@ -69,6 +70,7 @@ const SideBarCard = ({
       onClick={(e) => {
         setCurrReciever(chat);
         setShowChat(true);
+        setShowUser(false);
       }}
     >
       <Avatar
@@ -104,6 +106,7 @@ const Sidebar = ({
   chats,
   setChats,
   setShowChat,
+  setShowUser
 }) => {
   const [activeLink, setActiveLink] = useState("all");
   const [searchUser, setSearchUser] = useState("");
@@ -214,6 +217,7 @@ const Sidebar = ({
               setCurrReciever={setCurrReciever}
               setChats={setChats}
               setShowChat={setShowChat}
+              setShowUser={setShowUser}
             />
           ))}
         </div>

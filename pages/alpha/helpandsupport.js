@@ -136,7 +136,7 @@ const Helpandsupport = () => {
                       className={" max-w-[300px]"}
                       icon={
                         <p className="font-Inter text-2xl sm:text-4xl md:text-[32px] leading-none">
-                          (FAQ)
+                          (FAQ)    
                         </p>
                       }
                       text={"Frequently Asked Questions"}
