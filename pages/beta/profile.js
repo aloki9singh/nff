@@ -333,7 +333,7 @@ function StudentProfile() {
                           <div className="h-full flex align-middle items-center text-center">
                             <div className="flex mb-6 px-2 justify-between w-full">
                               <div className="px-2 py-1 rounded-full w-full">
-                                <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full hover:shadow-md transition-shadow">
+                                <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full transition-shadow">
                                   {(planDetails?.plan == 1) ? "Monthly" : (planDetails?.plan == 6) ? "Quaterly" : "Annual"} Subscription is Activated
                                 </span>
                               </div>
