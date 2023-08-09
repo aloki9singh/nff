@@ -31,7 +31,7 @@ const MonthSelector = ({
           }
           return (
             <>
-              <option key={index} value={val}>
+              <option key={index} value={val} className="text-white">
                 {val}
               </option>
             </>

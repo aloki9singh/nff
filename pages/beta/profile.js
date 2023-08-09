@@ -1,4 +1,4 @@
-      //check question mark here in line 58
+//check question mark here in line 58
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -34,6 +34,8 @@ function StudentProfile() {
   const [subscribed, setSubscribed] = useState([]);
   const [switchcomp, setswitchcomp] = useState("enrolled");
 
+  const [planDetails, setPlanDetails] = useState();
+
   //for toggling
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -49,7 +51,19 @@ function StudentProfile() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-  }, [isMediumScreen]);
+
+    const fetchPlan = async () => {
+      const userRef = doc(db, 'allusers', user.uid);
+      const collectionRef = collection(userRef, 'PlanInfo');
+      const querySnapshot = await getDocs(collectionRef);
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      console.log("data", data);
+      setPlanDetails(data[data.length - 1]);
+
+    }
+
+    fetchPlan();
+  }, [isMediumScreen,user.uid]);
 
   //Change this student data to show on chart, passed as prop
   const chartData = [0, 0, 0, 0, 0, 0, 0];
@@ -84,9 +98,8 @@ function StudentProfile() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -123,7 +136,8 @@ function StudentProfile() {
                       alt="proImg"
                       height={150}
                       width={150}
-                      className="rounded-full md:w-[120px] md:h-[120px] w-[100px] h-[100px] object-cover mt-[-85px]"
+
+                      className="rounded-full w-[190px] h-[120px] object-cover mt-[85px]"
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
@@ -147,7 +161,7 @@ function StudentProfile() {
 
             {/* /// */}
 
-            {!userSubsribed ? (
+            {/* {!userSubsribed ? (
               <>
                 <Nodata
                   title={"Subscription"}
@@ -157,7 +171,7 @@ function StudentProfile() {
                   }}
                 />
               </>
-            ) : (
+            )  */}
               <div className="lg:grid lg:grid-cols-11   m-5  md:mt-0 text-white justify-between">
                 <div className="lg:col-span-5 lg:pr-4">
                   <div className="flex justify-center align-center">
@@ -318,25 +332,29 @@ function StudentProfile() {
                       </div>
                       <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2 px-2">
                         {userSubsribed ? (
-                        <div className="h-full flex align-middle items-center text-center">
-                        <div className="flex mb-6 px-2 justify-between w-full">
-                          <div className="px-2 py-1 rounded-full w-full">
-                            <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full hover:shadow-md transition-shadow">
-                              Monthly Subscription is Activated
-                            </span>
+                          <div className="h-full flex align-middle items-center text-center">
+                            <div className="flex mb-6 px-2 justify-between w-full">
+                              <div className="px-2 py-1 rounded-full w-full">
+                                <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full transition-shadow">
+                                  {(planDetails?.plan == 1) ? "Monthly" : (planDetails?.plan == 6) ? "Quaterly" : "Annual"} Subscription is Activated
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      
+
                         ) : (
-                          <div className="text-gray-500 flex justify-center items-center h-[140px]">
-                            Not subscribed yet
+                          <div className="text-gray-500 flex justify-center items-center text-center w-full h-[140px]">
+                             <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full transition-shadow">
+                              
+                             Subscription is over or you have not subscribed yet
+                             </span>
                           </div>
                         )}
                       </div>
                     </div>
                     <div className="bg-[#373A41] h-[264px]  rounded-[20px] py-3 px-4  md:w-[40%] mt-5 flex flex-col">
                       <div className="text-center h-[10%] pt-2 pb-4 px-4 flex justify-center w-full">
+                        
                         Rank
                       </div>
                       <div className="w-full h-[90%] sd:mt-4 ">
@@ -347,7 +365,6 @@ function StudentProfile() {
                   </div>
                 </div>
               </div>
-            )}
           </div>
         </div>
       </div>
@@ -355,3 +372,5 @@ function StudentProfile() {
   );
 }
 export default withStudentAuthorization(StudentProfile);
+
+// Subscription is over or you hav'nt subscribed yet
