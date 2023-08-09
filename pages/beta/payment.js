@@ -58,7 +58,7 @@ const Paynow = () => {
 
   return (
     <Layout pageTitle="Payment">
-      <div className='h-screen'>
+      <div className='h-screen overflow-x-clip'>
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${SideBarState ? "block" : "hidden"

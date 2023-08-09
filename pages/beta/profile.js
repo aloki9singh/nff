@@ -1,4 +1,4 @@
-      //check question mark here in line 58
+//check question mark here in line 58
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -34,6 +34,8 @@ function StudentProfile() {
   const [subscribed, setSubscribed] = useState([]);
   const [switchcomp, setswitchcomp] = useState("enrolled");
 
+  const [planDetails, setPlanDetails] = useState();
+
   //for toggling
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
@@ -48,6 +50,18 @@ function StudentProfile() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
+
+    const fetchPlan = async () => {
+      const userRef = doc(db, 'allusers', user.uid);
+      const collectionRef = collection(userRef, 'PlanInfo');
+      const querySnapshot = await getDocs(collectionRef);
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      console.log("data", data);
+      setPlanDetails(data[data.length - 1]);
+
+    }
+
+    fetchPlan();
   }, [isMediumScreen]);
 
   //Change this student data to show on chart, passed as prop
@@ -83,9 +97,8 @@ function StudentProfile() {
         <div className="flex">
           {isMobileScreen && (
             <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
+              className={`fixed right-0 ${SideBarState ? "block" : "hidden"
+                } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
             </div>
@@ -122,7 +135,7 @@ function StudentProfile() {
                       alt="proImg"
                       height={150}
                       width={150}
-                      className="rounded-full w-[120px] h-[120px] object-cover mt-[-85px]"
+                      className="rounded-full w-[190px h-[120px] object-cover mt-[-85px]"
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
@@ -317,16 +330,16 @@ function StudentProfile() {
                       </div>
                       <div className="mt-2 h-[160px] overflow-y-scroll scrollbar-hide py-2 px-2">
                         {userSubsribed ? (
-                        <div className="h-full flex align-middle items-center text-center">
-                        <div className="flex mb-6 px-2 justify-between w-full">
-                          <div className="px-2 py-1 rounded-full w-full">
-                            <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full hover:shadow-md transition-shadow">
-                              Monthly Subscription is Activated
-                            </span>
+                          <div className="h-full flex align-middle items-center text-center">
+                            <div className="flex mb-6 px-2 justify-between w-full">
+                              <div className="px-2 py-1 rounded-full w-full">
+                                <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full hover:shadow-md transition-shadow">
+                                  {(planDetails?.plan == 1) ? "Monthly" : (planDetails?.plan == 6) ? "Quaterly" : "Annual"} Subscription is Activated
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      
+
                         ) : (
                           <div className="text-gray-500 flex justify-center items-center h-[140px]">
                             Not subscribed yet
