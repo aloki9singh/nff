@@ -182,16 +182,8 @@ function Assignments() {
 
         )} */}
 
-<<<<<<< HEAD
-      <div
-        className={`  bg-[#2D2E35]
-      
-      ${!userSubsribed ? "blur-lg" : null}
-      `}
-      >
-=======
       <div className={`${!userSubsribed ? "blur-lg" : null}`}>
->>>>>>> 30a250ede49b2f06a34698f7becd6aedc45edb86
+
         {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
           {/* Mobile Sidebar */}
