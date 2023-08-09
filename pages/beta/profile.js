@@ -159,7 +159,7 @@ function StudentProfile() {
 
             {/* /// */}
 
-            {!userSubsribed ? (
+            {/* {!userSubsribed ? (
               <>
                 <Nodata
                   title={"Subscription"}
@@ -169,7 +169,7 @@ function StudentProfile() {
                   }}
                 />
               </>
-            ) : (
+            )  */}
               <div className="lg:grid lg:grid-cols-11   m-5  md:mt-0 text-white justify-between">
                 <div className="lg:col-span-5 lg:pr-4">
                   <div className="flex justify-center align-center">
@@ -341,14 +341,18 @@ function StudentProfile() {
                           </div>
 
                         ) : (
-                          <div className="text-gray-500 flex justify-center items-center h-[140px]">
-                            Not subscribed yet
+                          <div className="text-gray-500 flex justify-center items-center text-center w-full h-[140px]">
+                             <span className="font-bold text-lg tracking-wide text-[#E1348B] bg-gradient-to-r from-pink-500 to-purple-600 p-2 rounded-full transition-shadow">
+                              
+                             Subscription is over or you have not subscribed yet
+                             </span>
                           </div>
                         )}
                       </div>
                     </div>
                     <div className="bg-[#373A41] h-[264px]  rounded-[20px] py-3 px-4  md:w-[40%] mt-5 flex flex-col">
                       <div className="text-center h-[10%] pt-2 pb-4 px-4 flex justify-center w-full">
+                        
                         Rank
                       </div>
                       <div className="w-full h-[90%] sd:mt-4 ">
@@ -359,7 +363,6 @@ function StudentProfile() {
                   </div>
                 </div>
               </div>
-            )}
           </div>
         </div>
       </div>
@@ -367,3 +370,5 @@ function StudentProfile() {
   );
 }
 export default withStudentAuthorization(StudentProfile);
+
+// Subscription is over or you hav'nt subscribed yet
