@@ -27,8 +27,8 @@ async function handler(req, res) {
   const saltKey = process.env.NEXT_SALT_KEY;
   const transactionId = generateTransactionId();
   const payUri = process.env.NEXT_PROD_PAY_URL;
-  
 
+//body here
     const body = JSON.parse(req.body);
 
     const paymentData =
@@ -38,7 +38,7 @@ async function handler(req, res) {
     "merchantUserId": transactionId+"1",
     "amount": body.price,
     "redirectUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
-    "redirectMode": "GET",
+    "redirectMode": "POST",
     "callbackUrl": baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
     "mobileNumber": body.phoneNumber,
     "paymentInstrument": {
@@ -81,6 +81,5 @@ async function handler(req, res) {
       res.status(500).json({ msg: "Something went wrong!"+error });
     }
   }
-
-
+  
 export default handler;

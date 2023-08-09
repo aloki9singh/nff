@@ -24,8 +24,8 @@ const Paynow = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
 
   //hooks for navbar toggle
-  const [showSideBar, setShowSideBar] = useState(true);
-  const [SideBarState, sendSideBarState] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [SideBarState, sendSideBarState] = useState(false);
 
   useEffect(() => {
 
@@ -58,7 +58,7 @@ const Paynow = () => {
 
   return (
     <Layout pageTitle="Payment">
-      <div className='h-screen'>
+      <div className='h-screen overflow-x-clip'>
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${SideBarState ? "block" : "hidden"
