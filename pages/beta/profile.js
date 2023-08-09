@@ -63,7 +63,7 @@ function StudentProfile() {
     }
 
     fetchPlan();
-  }, [isMediumScreen,user.uid]);
+  }, [isMediumScreen,user?.uid]);
 
   //Change this student data to show on chart, passed as prop
   const chartData = [0, 0, 0, 0, 0, 0, 0];
@@ -94,7 +94,7 @@ function StudentProfile() {
 
   return (
     <Layout pageTitle=" Profile">
-      <div className="md:h-screen h-full  text-base bg-[#15161B]">
+      <div className="md:h-screen h-full text-base bg-[#15161B]">
         <div className="flex">
           {isMobileScreen && (
             <div
@@ -124,7 +124,7 @@ function StudentProfile() {
 
               <div className="   h-[120px] w-full bg-gradient-to-r from-[#A145CD] to-[#E1348B] "></div>
 
-              <div className="w-full h-full   md:text-base text-sm  ">
+              <div className="w-[90%] h-full   md:text-base text-sm  ">
                 <div className=" md:mx-10 mx-5">
                   <div className="flex">
                     {" "}
@@ -137,10 +137,10 @@ function StudentProfile() {
                       height={150}
                       width={150}
 
-                      className="rounded-full w-[190px] h-[120px] object-cover mt-[85px]"
+                      className="rounded-full w-[100px] object-cover h-[100px]  mt-[-75px]"
                     />
                     <div className="w-[100%] flex justify-between">
-                      <div className="text-xl md:text-2xl ml-4 mt-[-55px]">
+                      <div className="text-xl md:text-2xl ml-4 mt-[-60px] md:mt-[-55px]">
                         {user.displayName}
                         <p className="text-xs pl-[2px]">
                           Roll no-{userProfile.rollNo || " N/A"}
@@ -175,7 +175,7 @@ function StudentProfile() {
               <div className="lg:grid lg:grid-cols-11   m-5  md:mt-0 text-white justify-between">
                 <div className="lg:col-span-5 lg:pr-4">
                   <div className="flex justify-center align-center">
-                    <div className="bg-[#373A41]   w-full mx-5   rounded-[20px] pb-5 pt-3 px-4 space-y-2 md:px-6 mt-5 flex flex-col">
+                    <div className="bg-[#373A41]   w-full md:mx-5   rounded-[20px] pb-5 pt-3 px-4 space-y-2 md:px-6 mt-5 flex flex-col">
                       <div className="text-center pt-2 pb-2 px-4 font-semibold flex justify-between w-full cursor-pointer">
                         <p onClick={() => setswitchcomp("enrolled")}>
                           Enrolled courses
@@ -233,7 +233,7 @@ function StudentProfile() {
                     </div>
                   </div>
 
-                  <div className="flex justify-center w-[93%] mx-auto align-center">
+                  <div className="flex justify-center md:w-[93%] w-[100%] mx-auto align-center">
                     <div className="bg-[#373A41] rounded-[20px] w-full pb-9 pt-3 px-4 space-y-2 md:px-3  mt-5 flex flex-col">
                       <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full">
                         Certificates
@@ -267,8 +267,8 @@ function StudentProfile() {
 
                 <div className="lg:col-span-6">
                   <div className="flex justify-center align-center">
-                    <div className="bg-[#373A41] md:h-[296px]  rounded-[20px] py-3 px-4 md:w-[100%] md:flex  w-[94%] md:mx-0  mt-5 flex flex-col md:flex-row">
-                      <div className=" md:w-2/3  flex flex-col justify-between text-center py-4 ">
+                  <div className="bg-[#373A41] md:h-[296px]  rounded-[20px] py-3 px-4 md:w-[94%] md:flex md:mx-0 w-[100%] mt-5 flex flex-col md:flex-row">
+                      <div className=" md:w-2/3 w-full flex flex-col justify-between text-center py-4 ">
                         <h1 className="font-semibold text-sm">
                           Activity Hours
                         </h1>
@@ -325,7 +325,7 @@ function StudentProfile() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex justify-between flex-col md:flex-row w-[93%] md:w-[100%] mx-auto">
+                  <div className="flex justify-between flex-col md:flex-row md:w-[93%] mx-auto">
                     <div className="bg-[#373A41] h-[264px]  rounded-[20px] pb-9 pt-3 px-4 space-y-2 md:w-[55%] mt-5 flex flex-col">
                       <div className="text-center pt-2 pb-4 px-4 flex justify-center w-full text-2xl">
                         Subscription
