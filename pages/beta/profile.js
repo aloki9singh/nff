@@ -137,7 +137,9 @@ function StudentProfile() {
                       height={150}
                       width={150}
 
+
                       className="rounded-full w-[100px] object-cover h-[100px]  mt-[-75px]"
+
                     />
                     <div className="w-[100%] flex justify-between">
                       <div className="text-xl md:text-2xl ml-4 mt-[-60px] md:mt-[-55px]">
@@ -372,5 +374,3 @@ function StudentProfile() {
   );
 }
 export default withStudentAuthorization(StudentProfile);
-
-// Subscription is over or you hav'nt subscribed yet
