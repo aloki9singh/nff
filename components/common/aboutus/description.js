@@ -21,7 +21,7 @@ const Description = ({className}) => {
             alt="random image"
             width={900}
             height={600}
-            className="w-9/12 pt-3 -translate-y-[40%]  sm:-translate-y-1/3 object-cover shadow-md rounded-lg max-w-[900px]"
+            className="w-9/12 md:pt-3 -translate-y-[40%]  sm:-translate-y-1/3 object-cover shadow-md rounded-lg max-w-[900px]"
           />
         </div>
   )
