@@ -55,7 +55,7 @@ const PaymentCompleted = () => {
       <h2 class="text-[2rem] pt-6 text-white">Payment Receipt</h2>
 
       <div
-        class="bg-[#25282E] text-white text-center m-auto w-[50%] items-center justify-center my-8"
+        class="bg-[#25282E] w-full text-white text-center m-auto md:w-[50%] items-center justify-center my-8"
       >
         <h2 class="text-[2rem] pt-6">Payment Success</h2>
         <h2 class="text-[2rem] py-6">INR ${items[1].price}</h2>
@@ -67,7 +67,7 @@ const PaymentCompleted = () => {
         ${items
         .map(
           (item , i )=> `
-              <div class="flex text-white py-2">
+              <div class="flex text-white py-2 overflow-x-clip">
               <h2>${item.name}</h2>
               <h2 class="px-8">${(i == 1 || i ==2 ) ? "Rs "+Number(item.price)?.toFixed(2) : item.price}</h2>
               </div>
@@ -78,7 +78,7 @@ const PaymentCompleted = () => {
 
           <div class="flex text-white py-2">
             <h2>Total</h2>
-            <h2 class="px-8">Rs${Number(items[1].price + items[2].price)?.toFixed(2)}</h2>
+            <h2 class="px-8">Rs${Number(items[1].price - items[2].price)?.toFixed(2)}</h2>
           </div>
         </div>
         <hr class="w-[60%] m-auto pt-8" />
