@@ -6,6 +6,7 @@ import { AuthContextProvider } from "@/lib/context/AuthContext";
 
 import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
 import Error from "@/components/common/error/error";
+import { Toaster } from "react-hot-toast";
 
 function FallbackRenderer({ error, resetErrorBoundary }) {
   return (
@@ -32,6 +33,7 @@ function MyApp({ Component, pageProps }) {
       <ContextProvider>
         <AuthContextProvider>
           <Component {...pageProps} />
+          <Toaster />
         </AuthContextProvider>
       </ContextProvider>
     </ErrorBoundary>

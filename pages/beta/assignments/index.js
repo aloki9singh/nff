@@ -161,7 +161,6 @@ function Assignments() {
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
   const { userSubsribed } = CourseAccess(user?.uid);
-  console.log(userSubsribed)
   return (
     <Layout pageTitle="Assignments">
       {!userSubsribed && (
@@ -182,27 +181,27 @@ function Assignments() {
 
         )} */}
 
-      <div className={`${!userSubsribed ? "blur-lg" : null}`}>
+      <div className={`${!userSubsribed ? "blur-lg" : null} h-screen`}>
 
         {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
           {/* Mobile Sidebar */}
           {isMobileScreen && (
-            <div
-              className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
-              } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
-            >
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+          <div
+            className={`fixed right-0 ${
+              SideBarState ? "block" : "hidden"
+            } w-[281px] h-[100%] bg-[#25262C]  rounded-l-[40px] z-10`}
+          >
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
 
-          {/* Second Sidebar - Visible on Desktop */}
-          {!isMobileScreen && (
-            <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
-              <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
-            </div>
-          )}
+        {/* Second Sidebar - Visible on Desktop */}
+        {!isMobileScreen && (
+          <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
+            <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
+          </div>
+        )}
 
           {/* Main page */}
           <div className="flex-grow bg-[#2E3036]  md:rounded-l-[40px]">
@@ -241,7 +240,7 @@ function Assignments() {
                             className="text-sm cursor-pointer "
                             value={ele}
                           >
-                            {ele.length > 12 ? ele.slice(0,13)+"...":ele }
+                            {ele.length > 12 ? ele.slice(0, 13) + "..." : ele}
                           </option>
                         );
                       })}
@@ -293,11 +292,10 @@ function Assignments() {
                         {" "}
                         <div>
                           <span
-                            className={`border-b-2 ${
-                              activeElement === "total"
+                            className={`border-b-2 ${activeElement === "total"
                                 ? "border-[#E1348B]"
                                 : "border-transparent"
-                            }`}
+                              }`}
                             onClick={() => handleToggleElement("total")}
                           >
                             Total
@@ -312,11 +310,10 @@ function Assignments() {
                       <div className="flex items-center">
                         <div onClick={() => handleToggleElement("check")}>
                           <span
-                            className={`border-b-2 ${
-                              activeElement === "check"
+                            className={`border-b-2 ${activeElement === "check"
                                 ? "border-[#E1348B]"
                                 : "border-transparent"
-                            }`}
+                              }`}
                           >
                             Checked
                           </span>
@@ -375,7 +372,7 @@ function Assignments() {
                     )}
                   {uniqCourse.length == 0 && (
                     <div className="">
-                      <Nodata title="Course" value="No Course available" onClick={()=>router.push("/beta/courseoverview")} />
+                      <Nodata title="Course" value="No Course available" onClick={() => router.push("/beta/courseoverview")} />
                     </div>
                   )}
                 </div>

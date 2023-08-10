@@ -19,6 +19,7 @@ function MentorProfile() {
   const router = useRouter();
   const [profile, setProfile] = useState();
   const [edit, setEdit] = useState(false);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const getData = async () => {
@@ -41,8 +42,7 @@ function MentorProfile() {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const { user } = useAuthContext();
-
+ 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 

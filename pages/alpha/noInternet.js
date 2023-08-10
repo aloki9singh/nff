@@ -3,9 +3,11 @@ import Image from 'next/image';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import { useMediaQuery } from 'react-responsive';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import { useRouter } from 'next/router';
 
 const NoInternetPage = () => {
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
+  const router = useRouter()
   const [showSideBar, setShowSideBar] = useState(false);
   const [sideBarState, setSideBarState] = useState(false);
 
@@ -59,7 +61,9 @@ const NoInternetPage = () => {
               Refresh
             </div> */}
 
-            <div className='w-full px-10 py-5 md:w-auto h-10 flex items-center justify-center bg-[#A145CD] rounded-lg text-white'>
+            <div className='w-full cursor-pointer px-10 py-5 md:w-auto h-10 flex items-center justify-center bg-[#A145CD] rounded-lg text-white' onClick={()=>{
+              router.push("/")
+            }}>
               Back to Home
             </div>
           </div>

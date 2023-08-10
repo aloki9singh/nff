@@ -40,7 +40,9 @@ export default function Studentdetails() {
         .then((data) => setStudent(data))
         .catch((error) => console.error(error));
     }
-  }, [studentId]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchStudentDetails = async (studentId) => {
     try {
