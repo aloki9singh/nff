@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from "react";
-import ChatSidebar from "./chatsidebar";
-import Chatpart from "./chatting";
-import User from "./user";
+import React, { useState, useEffect, useMemo } from 'react';
+import ChatSidebar from './chatsidebar';
+import Chatpart from './chatting';
+import User from './user';
 import {
   collection,
   query,
@@ -9,21 +9,21 @@ import {
   orderBy,
   onSnapshot,
   where,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
-import ToastMessage from "@/components/common/ToastMessage/ToastMessage";
+import ToastMessage from '@/components/common/ToastMessage/ToastMessage';
 
-import { auth, db } from "../../../config/firebaseconfig";
-import GroupDetails from "./Group";
-import { useRouter } from "next/router";
-import { getUserProfile, useAuthContext } from "@/lib/context/AuthContext";
-import CourseoverviewSidebar from "@/components/common/sidebar/courseoverview";
-import Dashboardnav from "@/components/common/navbar/dashboardnav";
-import { useMediaQuery } from "react-responsive";
-import MentorSidebar from "../sidebar/mentor";
-import MentorTopbar from "../navbar/mentortopbar";
-import Layout from "../Layout/Layout";
-import CourseAccess from "@/lib/context/AccessCourseContext";
+import { auth, db } from '../../../config/firebaseconfig';
+import GroupDetails from './Group';
+import { useRouter } from 'next/router';
+import { getUserProfile, useAuthContext } from '@/lib/context/AuthContext';
+import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import Dashboardnav from '@/components/common/navbar/dashboardnav';
+import { useMediaQuery } from 'react-responsive';
+import MentorSidebar from '../sidebar/mentor';
+import MentorTopbar from '../navbar/mentortopbar';
+import Layout from '../Layout/Layout';
+import CourseAccess from '@/lib/context/AccessCourseContext';
 
 const Chat = () => {
   const [currReciever, setCurrReciever] = useState(null);
@@ -42,7 +42,7 @@ const Chat = () => {
   const { userSubsribed } = CourseAccess(user.uid);
 
   const isMentor = useMemo(() => {
-    if (userProfile.role == "mentor") {
+    if (userProfile.role == 'mentor') {
       return true;
     } else {
       return false;
@@ -52,16 +52,16 @@ const Chat = () => {
   useEffect(() => {
     if (!user) {
       if (!loading) {
-        router.push("/beta/login");
+        router.push('/beta/login');
         return;
       }
       return;
     }
 
     const q = query(
-      collection(db, "chatGroups"),
-      where("members", "array-contains", user.uid),
-      orderBy("lastMessageTimestamp", "desc")
+      collection(db, 'chatGroups'),
+      where('members', 'array-contains', user.uid),
+      orderBy('lastMessageTimestamp', 'desc')
     );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let arr = [];
@@ -137,9 +137,9 @@ const Chat = () => {
     if (!currReciever) return;
 
     const q = query(
-      collection(db, "chatGroups", currReciever.groupId, "messages"),
+      collection(db, 'chatGroups', currReciever.groupId, 'messages'),
       limit(25),
-      orderBy("timestamp", "asc")
+      orderBy('timestamp', 'asc')
     );
     const unsub = onSnapshot(q, (querySnapshot) => {
       const messages = [];
@@ -155,7 +155,7 @@ const Chat = () => {
   }, [currReciever]);
 
   if (!user || !userProfile) {
-    router.push("/");
+    router.push('/');
   }
 
   if (!user || !userProfile) {
@@ -166,35 +166,37 @@ const Chat = () => {
     <Layout pageTitle="Chats">
       <div
         className={`flex overflow-hidden items-stretch max-h-screen  ${
-          userProfile.role != "mentor"
+          userProfile.role != 'mentor'
             ? chats.length == 0
-              ? "blur-lg"
+              ? 'blur-lg'
               : null
             : null
         }`}
       >
-        {!userSubsribed && (
+        {!userSubsribed && userProfile.role == 'student' && (
           <ToastMessage
-            heading={"OOPS!"}
-            message={"You have not  subscribed yet."}
+            heading={'OOPS!'}
+            message={'You have not  subscribed yet.'}
           />
         )}
-        {userSubsribed && chats.length == 0 && (
-          <ToastMessage
-            showButton={false}
-            heading={"OOPS!"}
-            message={
-              "You have not joined any courses yet. Please join a course to access the Chat Page."
-            }
-          />
-        )}
+        {userSubsribed &&
+          chats.length == 0 &&
+          userProfile.role == 'student' && (
+            <ToastMessage
+              showButton={false}
+              heading={'OOPS!'}
+              message={
+                'You have not joined any courses yet. Please join a course to access the Chat Page.'
+              }
+            />
+          )}
         {/* {userProfile.role != "mentor"
           ? chats.length === 0 && userSubsribed && <NoJoinedCoursesModal />
           : null} */}
         {isMobileScreen && (
           <div
             className={`fixed right-0 ${
-              SideBarState ? "block" : "hidden"
+              SideBarState ? 'block' : 'hidden'
             } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
           >
             {isMentor ? (
@@ -212,7 +214,7 @@ const Chat = () => {
               <MentorSidebar toggleSideBar={toggleSideBar} />
             ) : (
               <CourseoverviewSidebar
-                className={"max-h-screen"}
+                className={'max-h-screen'}
                 toggleSideBar={toggleSideBar}
               />
             )}
@@ -255,7 +257,7 @@ const Chat = () => {
                   setCurrReciever={setCurrReciever}
                   setShowChat={setShowChat}
                   images={messages.filter(
-                    (message) => message.type === "image"
+                    (message) => message.type === 'image'
                   )}
                 />
               ) : (
@@ -264,7 +266,7 @@ const Chat = () => {
                   currReciever={currReciever}
                   setShowUser={setShowUser}
                   images={messages.filter(
-                    (message) => message.type === "image"
+                    (message) => message.type === 'image'
                   )}
                 />
               ))}
