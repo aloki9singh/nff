@@ -5,15 +5,15 @@ import { useRouter } from "next/router";
 export default function Custom404() {
   const router = useRouter()
   return (
-    <div className='bg-[#1E1E1E] h-screen md:p-5 xl:p-10'>
+    <div className='bg-[#1E1E1E] h-screen '>
       <div className='h-full w-full bg-gradient-to-br from-[#A145CD] to-[#E1348B] flex justify-center flex-col rounded-lg'>
         <div className='flex items-center justify-center mb-5'>
           <Image
             src='/pagesgraphics/common/errors/nointernet.svg'
             alt='404'
-            height={500}
-            width={500}
-            className="px-5"
+            height={100}
+            width={100}
+            className="px-5 md:w-[30%] w-[60%]"
           />
         </div>
 
