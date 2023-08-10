@@ -1,0 +1,5 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "tech.provokedev.neatskills",
+                 "sha256_cert_fingerprints": ["41:1F:23:BB:BB:61:9D:D2:44:D3:3A:08:38:44:D0:21:E5:96:11:7C:A5:20:0F:94:CE:C0:F1:2D:C3:14:43:70"] }
+  }]

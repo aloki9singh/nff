@@ -3,8 +3,10 @@ import Image from 'next/image';
 import Dashboardnav from '@/components/common/navbar/dashboardnav';
 import { useMediaQuery } from 'react-responsive';
 import CourseoverviewSidebar from '@/components/common/sidebar/courseoverview';
+import { useRouter } from 'next/router';
 
 const ErrorPage = () => {
+  const router = useRouter()
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
@@ -51,11 +53,11 @@ const ErrorPage = () => {
           </div>
 
           <div className='flex flex-col md:flex-row justify-center gap-3'>
-            <div className='w-full  px-5 md:w-auto h-10 flex items-center justify-center bg-transparent border-2 rounded-lg text-white mb-3 md:mb-0'>
+            <div className='w-full cursor-pointer  px-5 md:w-auto h-10 flex items-center justify-center bg-transparent border-2 rounded-lg text-white mb-3 md:mb-0' onClick={()=> {router.reload()}}>
               Refresh
             </div>
 
-            <div className='w-full px-10 py-5 md:w-auto h-10 flex items-center justify-center bg-[#A145CD] rounded-lg text-white'>
+            <div className='w-full px-10 cursor-pointer py-5 md:w-auto h-10 flex items-center justify-center bg-[#A145CD] rounded-lg text-white' onClick={()=>{router.push("/")}}>
               Back to Home
             </div>
           </div>

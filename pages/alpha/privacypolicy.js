@@ -20,6 +20,7 @@ export default function Privacy() {
       sendSideBarState(false);
     }
   }, [isMediumScreen]);
+  
   function toggleSideBar() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
