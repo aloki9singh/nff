@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ExploreCourses() {
   return (
@@ -32,7 +32,7 @@ export default function ExploreCourses() {
           </p>
 
           <div className="mt-16 md:mt-12 w-full flex justify-center md:justify-start">
-            <Link href={"/beta/courseoverview"}>
+            <Link href={'/beta/courseoverview'}>
               <button
                 className="bg-transparent text-white font-ral border-2 border-white 
                   w-[173px] h-[52px]
