@@ -394,7 +394,7 @@ const Assignmentupload = () => {
                       type="submit"
                       className={`md:mt-10 mt-5 h-10 px-5 text-indigo-100 transition-colors duration-150 bg-[${(submitted || deadline) ? "#505057" : "#E1348B"
                         }] rounded-lg focus:shadow-outline`}
-                      disabled={submitted || deadline}
+                      disabled={submitted || deadline || progressData!=100}
                     >
                       {submitted ? " Submitted" : ""}
                       {(!submitted && deadline) ? "Deadline Over" : ""}

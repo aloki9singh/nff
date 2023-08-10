@@ -36,12 +36,12 @@ export default function Terms() {
           </div>
         )}
 
-        {/* Second Sidebar - Visible on Desktop */}
+        {/* Second Sidebar - Visible on Desktop
         {!isMobileScreen && (
           <div className={`md:block  hidden w-[221px] bg-[#141518] z-10`}>
             <CourseoverviewSidebar toggleSideBar={toggleSideBar} />
           </div>
-        )}
+        )} */}
         <div className="w-full h-full min-h-screen flex flex-col bg-[#2D2E35] space-y-4 pb-10">
           <Dashboardnav
             heading="Terms and conditions"
