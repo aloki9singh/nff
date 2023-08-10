@@ -79,7 +79,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
         <div className="w-full h-full flex flex-col  ">
           <div className="  text-white grow flex p-4 items-center justify-center">
             <div className="w-[100%] flex rounded-[30px] h-fit">
-              <div className="flex-[2_2_0%]  px-9 space-y-10  bg-[#222222] rounded-[30px] ml-[-15px] mr-[-13px] md:ml-[20px] md:mr-[20px]  ">
+              <div className="flex-[2_2_0%]  px-9 space-y-10  bg-[#222222] md:rounded-[30px] ml-[-15px] mr-[-13px] md:ml-[20px] md:mr-[20px]  ">
                 <div className=" flex justify-between text-xl mt-10 mb-[-20px] ">
                   <div>
                     <button
@@ -345,7 +345,7 @@ const MentorStep3 = ({ setRegStepCount, regStepCount }) => {
                       />
                       <div className="text-center">
                         <button
-                          className="md:hidden  text-white text-center text-sm rounded-lg px-2 py-1 bg-[#A145CD]"
+                          className="md:hidden my-2  text-white text-center text-sm rounded-lg px-2 py-1 bg-[#A145CD]"
                           onClick={() => {
                             if (skill.trim() !== "") {
                               setskillsArr([...skillsArr, skill.trim()]);
