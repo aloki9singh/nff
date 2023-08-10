@@ -1,15 +1,19 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useAuthContext } from "@/lib/context/AuthContext";
+
 
 const PaymentCompleted = () => {
   const router = useRouter();
   const [payData, setPayData] = useState();
 
+
+  const { user, userProfile } = useAuthContext();
+
   const [items, setItems] = useState([
     { name: 'Amount', price: 0 },
     { name: 'Discount', price: 0 },
-    { name: 'GST', price: 0 },
   ]);
 
   useEffect(() => {
@@ -17,9 +21,12 @@ const PaymentCompleted = () => {
     if (val) {
       const payloadData = JSON.parse(atob(val));
       setPayData(payloadData);
-      setItems([{ name: 'Amount', price: payloadData?.amount / 100 },
-      { name: 'Discount', price: payloadData?.discount/100 || 0 },
-      { name: 'GST', price: payloadData?.gst || 0 }])
+      setItems([{ name: "Transaction Id", price: payloadData?.transactionId },
+      { name: 'Amount', price: payloadData?.amount / 100 },
+      { name: 'Discount', price: payloadData?.discount / 100 || 0 },
+      { name: "Payment Time", price: payloadData?.paymentAt },
+      {name: "Sender name", price:user?.displayName}
+      ])
     }
     else {
       router.push("/beta/paymentFailed");
@@ -28,63 +35,56 @@ const PaymentCompleted = () => {
   }, [router.query]);
 
 
-  const totalAmount = items.reduce((total, item) => total + item.price, 0);
-
 
 
   const generatePDF = () => {
     const receiptContent = `
-      <!DOCTYPE html>
-      <html>
+    <!DOCTYPE html>
+    <html lang="en">
       <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Receipt</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-          }
-          .receipt {
-            width: 250px;
-            margin: 0 auto;
-            padding: 10px;
-          }
-          .title {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 10px;
-          }
-          .item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-          }
-          .itemName {
-            flex: 1;
-          }
-          .itemPrice {
-            flex-basis: 50px;
-          }
-          .total {
-            font-weight: bold;
-            margin-top: 10px;
-          }
-        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
       </head>
-      <body>
-        <div class="receipt">
-          <div class="title">Receipt</div>
-          ${items
+
+
+      <body class="bg-[#2D2E35] items-center">
+    <div class="flex flex-col justify-center text-center items-center m-auto">
+      <img src="/componentsgraphics/common/navbar/navbar/neatskillslogosample.svg" alt="" />
+      <h2 class="text-[2rem] pt-6 text-white">Payment Receipt</h2>
+
+      <div
+        class="bg-[#25282E] w-full text-white text-center m-auto md:w-[50%] items-center justify-center my-8"
+      >
+        <h2 class="text-[2rem] pt-6">Payment Success</h2>
+        <h2 class="text-[2rem] py-6">INR ${items[1].price}</h2>
+
+        <hr class="w-[60%] m-auto pt-8" />
+
+        <div class="w-[50%] m-auto">
+        
+        ${items
         .map(
-          item => `
-                <div class="item">
-                  <div class="itemName">${item.name}</div>
-                  <div class="itemPrice">Rs${Number(item.price)?.toFixed(2)}</div>
-                </div>
+          (item , i )=> `
+              <div class="flex text-white py-2 overflow-x-clip">
+              <h2>${item.name}</h2>
+              <h2 class="px-8">${(i == 1 || i ==2 ) ? "Rs "+Number(item.price)?.toFixed(2) : item.price}</h2>
+              </div>
               `
-        )
-        .join('')}
-          <div class="total">Total: Rs${Number(totalAmount)?.toFixed(2)}</div>
+        ).join('')}
+
+          <hr class="w-full pt-8 m-auto" />
+
+          <div class="flex text-white py-2">
+            <h2>Total</h2>
+            <h2 class="px-8">Rs${Number(items[1].price - items[2].price)?.toFixed(2)}</h2>
+          </div>
         </div>
-      </body>
+        <hr class="w-[60%] m-auto pt-8" />
+      </div>
+    </div>
+  </body>
       </html>
     `;
     const printWindow = window.open('', '_blank');
@@ -133,7 +133,7 @@ const PaymentCompleted = () => {
             </div>
             <div className="flex text-sm gap-[4rem] flex-row md:gap-[8rem]">
               <h2>Discount</h2>
-              <h2>Rs {payData?.discount/100}</h2>
+              <h2>Rs {payData?.discount / 100}</h2>
             </div>
             {/* <div className="flex text-sm gap-[4rem] flex-row md:gap-[10rem]">
               <h2>GST</h2>
@@ -144,7 +144,7 @@ const PaymentCompleted = () => {
 
             <div className="flex text-sm flex-row gap-[4rem] md:gap-[8rem]">
               <h2>Subtotal</h2>
-              <h2>Rs {(payData?.amount / 100) - payData?.discount/100}</h2>
+              <h2>Rs {(payData?.amount / 100) - payData?.discount / 100}</h2>
             </div>
 
             <button className="w-full rounded-[11px] bg-[#A145CD] py-[5px] px-[10px] mt-4 " onClick={() => {

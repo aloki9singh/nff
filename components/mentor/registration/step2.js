@@ -176,10 +176,10 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
   return (
     <>
       <div className="flex h-screen  md:mt-12 ml-[15px]">
-        <div className=" w-full h-full flex flex-col  ">
+        <div className="w-[100%] h-full flex flex-col  ">
           <div className="  text-white grow flex items-center justify-center ">
             <div
-              className="w-[90%] m-auto flex  rounded-[30px] h-fit"
+              className=" m-auto flex  rounded-[30px] h-fit"
               ref={ref2}
             >
               {/* {/* //start of model 2 which i put at this another place */}
@@ -348,7 +348,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
 
               {/* //End of model 2 which i put at this another place */}
               {/* main div Top section */}
-              <div className="flex-[2_2_0%] px-[12rem] space-y-10  bg-[#222222] rounded-[30px] ml-[-18px] ">
+              <div className="flex-[2_2_0%] w-screen px-8 space-y-10  bg-[#222222] md:rounded-[30px] ml-[-18px] ">
                 <div className=" flex justify-between text-xl mt-10 mb-[-20px]  ">
                   <div>
                     <button
@@ -388,7 +388,7 @@ const MentorStep2 = ({ setRegStepCount, regStepCount }) => {
                 </div>
                 <hr className="mt-6 border-b-1 border-blueGray-300 mb-5" />
                 {/* main div main section starts  with educationa and eperience */}
-                <h1 className="text-2xl m focus:border-transparent focus:outline-noney-4    font-Inter text-[#E1348B]">
+                <h1 className="text-2xl focus:border-transparent focus:outline-noney-4    font-Inter text-[#E1348B]">
                   Education & Experience
                 </h1>
 

@@ -1,22 +1,22 @@
-import { useEffect, useMemo, useState } from "react";
-import CourseCard from "./CourseCard";
-import Link from "next/link";
+import { useEffect, useMemo, useState } from 'react';
+import CourseCard from './CourseCard';
+import Link from 'next/link';
 // import CourseCard from "./CourseCard";g
 
 // import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 export default function Courses({ coursesData }) {
-  const [activeClass, setActiveClass] = useState("All Category");
+  const [activeClass, setActiveClass] = useState('All Category');
 
   // coursesData = dummyCourses;
   const categories = useMemo(
     () => [
-      "All Category",
-      "Coding",
-      "Design",
-      "Arts",
-      "Web Development",
-      "Machine Learning",
+      'All Category',
+      'Coding',
+      'Design',
+      'Arts',
+      'Web Development',
+      'Machine Learning',
     ],
     []
   );
@@ -27,17 +27,17 @@ export default function Courses({ coursesData }) {
   // const CoursesCollectionref = collection(db, 'CoursesCollection');
 
   // useEffect(() => {
-    // const CoursesCollectionref = collection(db, 'CoursesCollection');
-    // const getData = async () => {
-    //   getDocs(CoursesCollectionref).then((response) => {
-    //     setCourses(
-    //       response.docs.map((item) => {
-    //         return item.data();
-    //       })
-    //     );
-    //   });
-    // };
-    // getData()
+  // const CoursesCollectionref = collection(db, 'CoursesCollection');
+  // const getData = async () => {
+  //   getDocs(CoursesCollectionref).then((response) => {
+  //     setCourses(
+  //       response.docs.map((item) => {
+  //         return item.data();
+  //       })
+  //     );
+  //   });
+  // };
+  // getData()
   //   categories.forEach((category) => {
   //     const element = document.getElementById(category);
   //     element.classList.remove("text-[#DA2C84]");
@@ -58,7 +58,7 @@ export default function Courses({ coursesData }) {
 
   const clickHandler = (cat) => {
     setActiveClass(cat);
-    if (cat == "All Category") setC(Arr);
+    if (cat == 'All Category') setC(Arr);
     else {
       var newArray = courses.filter((el) => el.category[0] == cat);
       setC(newArray);
@@ -81,7 +81,10 @@ export default function Courses({ coursesData }) {
           </div>
         </div>
 
-        <Link href={'/beta/courseoverview'} className="hidden md:flex border-2 text-base md:text-lg w-64 h-16 justify-center items-center font-semibold">
+        <Link
+          href={'/beta/courseoverview'}
+          className="hidden md:flex border-2 text-base md:text-lg w-64 h-16 justify-center items-center font-semibold"
+        >
           Explore Courses
         </Link>
       </div>
@@ -112,7 +115,7 @@ export default function Courses({ coursesData }) {
             ))}
           </div> */}
           <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 ">
-            {coursesData?.slice(0,3).map((course, i) => (
+            {coursesData?.slice(0, 3).map((course, i) => (
               <div key={i}>
                 <CourseCard
                   key={course.id}
@@ -127,7 +130,7 @@ export default function Courses({ coursesData }) {
             ))}
           </div>
           <div className="grid  grid-flow-col overflow-scroll scrollbar-hide gap-10 pt-10">
-            {coursesData.slice(3,6).map((course, i) => (
+            {coursesData.slice(3, 6).map((course, i) => (
               <div key={i}>
                 <CourseCard
                   key={course.id}
@@ -141,9 +144,12 @@ export default function Courses({ coursesData }) {
               </div>
             ))}
           </div>
-          <button className=" flex  text-white md:hidden border-2 text-base md:text-lg w-44 h-[52px] justify-center items-center font-semibold self-center mt-20">
+          <Link
+            className="flex text-white md:hidden border-2 text-base md:text-lg w-44 h-[52px] justify-center items-center font-semibold self-center mt-20"
+            href={'/beta/courseoverview'}
+          >
             Explore Courses
-          </button>
+          </Link>
         </div>
       </div>
     </div>
