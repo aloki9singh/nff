@@ -96,6 +96,7 @@ async function handler(req, res) {
         discount:(price - amount),
         plan: plan,
         page: 2,
+        paymentAt: new Date(),
       }));
 
       // res.status(302).redirect(baseUrl + '/beta/payment?val='+payload);
