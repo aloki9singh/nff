@@ -1,16 +1,16 @@
-import { Fragment, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { AiOutlineClose } from 'react-icons/ai';
-import { ImMenu } from 'react-icons/im';
-import Image from 'next/dist/client/image';
-import { useAuthContext } from '@/lib/context/AuthContext';
-import Avatar from '../chat/avatar';
-import { BsPersonCircle } from 'react-icons/bs';
-import { Popover, Transition } from '@headlessui/react';
-import { IoMdNotificationsOutline } from 'react-icons/io';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/config/firebaseconfig';
-import { RxHamburgerMenu } from 'react-icons/rx';
+import { Fragment, useEffect, useState } from "react";
+import Link from "next/link";
+import { AiOutlineClose } from "react-icons/ai";
+import { ImMenu } from "react-icons/im";
+import Image from "next/dist/client/image";
+import { useAuthContext } from "@/lib/context/AuthContext";
+import Avatar from "../chat/avatar";
+import { BsPersonCircle } from "react-icons/bs";
+import { Popover, Transition } from "@headlessui/react";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { signOut } from "firebase/auth";
+import { auth } from "@/config/firebaseconfig";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function Navbar({ nav, setNav }) {
   const handleNav = () => {
@@ -33,11 +33,11 @@ export default function Navbar({ nav, setNav }) {
     const removeNav = () => {
       setNav(false);
     };
-    window.addEventListener('scroll', changeColor);
-    window.addEventListener('resize', removeNav);
+    window.addEventListener("scroll", changeColor);
+    window.addEventListener("resize", removeNav);
     return () => {
-      window.removeEventListener('scroll', changeColor);
-      window.removeEventListener('resize', removeNav);
+      window.removeEventListener("scroll", changeColor);
+      window.removeEventListener("resize", removeNav);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +47,7 @@ export default function Navbar({ nav, setNav }) {
     <>
       <div
         className={` w-full px-4 md:px-8 lg:px-16 py-4 ${
-          color ? 'bg-[#131313] shadow-xl' : 'bg-transparent'
+          color ? "bg-[#131313] shadow-xl" : "bg-transparent"
         } fixed z-10 transition-all duration-300 h-[49px] md:h-[105px] flex justify-center items-center`}
       >
         <div className="w-full max-w-[1440px] flex justify-between items-center font-ral ">
@@ -78,7 +78,7 @@ export default function Navbar({ nav, setNav }) {
             </ul>
           </div>
           <div className="hidden md:flex items-center">
-            {userProfile?.role == 'student' && user ? (
+            {userProfile?.role == "student" && user ? (
               <div className="text-white max-[768px]:hidden flex items-center mt-2 z-10 ">
                 <IoMdNotificationsOutline className="text-3xl mr-2" />
                 <div className="] h-12 w-12 flex justify-center items-center">
@@ -113,12 +113,12 @@ export default function Navbar({ nav, setNav }) {
                           <div className="bg-[#373A41] text-white rounded-tl-2xl rounded-b-2xl divide-y border border-[#505057] relative">
                             <Link href="/beta/profile">
                               <p className="p-2">
-                                {userProfile.role == 'student' && user ? (
+                                {userProfile.role == "student" && user ? (
                                   <div className="flex gap-2 items-center">
                                     <Image
                                       src={
                                         user.photoURL ||
-                                        '/componentsgraphics/common/Anonymousimage/anonymous.png'
+                                        "/componentsgraphics/common/Anonymousimage/anonymous.png"
                                       }
                                       height="35"
                                       width="35"
@@ -130,7 +130,7 @@ export default function Navbar({ nav, setNav }) {
                                         {user.displayName}
                                       </p>
                                       <p className="text-[10px] -mt-2">
-                                        Class {userProfile?.class || 'N/A'}
+                                        Class {userProfile?.class || "N/A"}
                                       </p>
                                     </div>
                                   </div>
@@ -181,7 +181,7 @@ export default function Navbar({ nav, setNav }) {
               </div>
             ) : (
               <>
-                <Link href={'/beta/signup'}>
+                <Link href={"/beta/signup"}>
                   <button
                     type="button"
                     //Ye pehle tha by someone
@@ -197,7 +197,7 @@ export default function Navbar({ nav, setNav }) {
                     Sign up
                   </button>
                 </Link>
-                <Link href={'/beta/login'}>
+                <Link href={"/beta/login"}>
                   <button
                     type="button"
                     // className="inline-block justify-start items-start px-[20px] ml-6 mr-3 py-2.5 bg-pin text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -214,7 +214,7 @@ export default function Navbar({ nav, setNav }) {
             )}
           </div>
           <div className="flex items-center gap-4 md:hidden">
-            <Link href={'/beta/signup'}>
+            <Link href={"/beta/signup"}>
               <button
                 type="button"
                 className="bg-pink text-white text-[10px]  w-[72px] h-[27px] rounded-10 border border-white
@@ -236,8 +236,8 @@ export default function Navbar({ nav, setNav }) {
       <div
         className={
           nav
-            ? ' fixed right-0 top-0 w-full h-screen bg-black/70 z-50  ease-in duration-700 '
-            : ' fixed  '
+            ? " fixed right-0 top-0 w-full h-screen bg-black/70 z-50  ease-in duration-700 "
+            : " fixed  "
         }
       >
         {/* // Side Drawer Menu */}
@@ -245,8 +245,8 @@ export default function Navbar({ nav, setNav }) {
         <div
           className={
             nav
-              ? 'fixed right-0 top-0  w-[60%] sm:w-[60%] md:w-[50%] h-full bg-bs backdrop-blur-md p-4 ease-in duration-200 z-10'
-              : 'fixed right-0 translate-x-full top-0 w-[75%] sm:w-[60%] md:w-[45%] h-screen  p-5 ease-in duration-300 '
+              ? "fixed right-0 top-0  w-[60%] sm:w-[60%] md:w-[50%] h-full bg-bs backdrop-blur-md p-4 ease-in duration-200 z-10"
+              : "fixed right-0 translate-x-full top-0 w-[75%] sm:w-[60%] md:w-[45%] h-screen  p-5 ease-in duration-300 "
           }
         >
           <div className="">
@@ -288,7 +288,7 @@ export default function Navbar({ nav, setNav }) {
                   </div>
                 </Link>
 
-                {userProfile?.role == 'student' && user ? (
+                {userProfile?.role == "student" && user ? (
                   <Link href="/beta/profile">
                     <div
                       onClick={() => setNav(false)}
@@ -330,18 +330,18 @@ export default function Navbar({ nav, setNav }) {
               </ul>
 
               <div className="">
-                <Link href={'/beta/signup'}>
+                <Link href={"/beta/signup"}>
                   <button
                     onClick={() => {
-                      userProfile?.role == 'mentor' && user
+                      userProfile?.role == "student" && user
                         ? signOut(auth)
-                        : '';
+                        : "";
                     }}
                     className="uppercase tracking-widest text-white text-xs px2 py-4 w-full bg-pin border-2 rounded-xl "
                   >
-                    {userProfile?.role == 'mentor' && user
-                      ? 'Logout'
-                      : 'Get Started'}
+                    {userProfile?.role == "student" && user
+                      ? "Logout"
+                      : "Get Started"}
                   </button>
                 </Link>
               </div>

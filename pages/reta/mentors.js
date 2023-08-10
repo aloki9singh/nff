@@ -147,6 +147,23 @@ function AdminStudent() {
     return isActive ? "Active" : "Inactive";
   };
 
+  // async function checkUserJoinedCourse(courseId, userId) {
+  //   const courseRef = doc(db, "allusers", userId, "joinedCourses", courseId);
+  //   const courseDoc = await getDoc(courseRef);
+  //   return courseDoc.exists();
+  // }
+
+  // useEffect(() => {
+  //   const checkJoined = async () => {
+  //     const isJoined = await checkUserJoinedCourse(course.id, user.uid);
+  //     setIsJoined(isJoined);
+  //   };
+  //   if (course?.id) {
+  //     checkJoined();
+  //   }
+  // }, [course?.id, user?.uid]);
+
+
   return (
     <Layout pageTitle="Mentors">
       <div className="h-full text-base bg-[#2E3036]  ">

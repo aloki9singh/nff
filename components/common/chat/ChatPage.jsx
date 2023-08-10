@@ -179,7 +179,7 @@ const Chat = () => {
             message={'You have not  subscribed yet.'}
           />
         )}
-        {userSubsribed &&
+        {userSubsribed  &&
           chats.length == 0 &&
           userProfile.role == 'student' && (
             <ToastMessage
