@@ -69,7 +69,7 @@ const Paynow = () => {
         )}
         <DashboardNav heading={"Payment"} toggleSideBar={toggleSideBar} />
 
-        <div className={`flex flex-col items-center  text-white font-Inter ${currentStep == 0 ? "bg-[#0D0E14]" : "bg-[#2D2E35] "}`}>
+        <div className={`flex flex-col ${currentStep == 1 ? "h-screen" : null} items-center  text-white font-Inter ${currentStep == 0 ? "bg-[#0D0E14]" : "bg-[#2D2E35] "}`}>
 
 
           <StepProgress currentStep={currentStep} />
