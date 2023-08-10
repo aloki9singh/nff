@@ -7,6 +7,7 @@ import React, { useMemo } from "react";
 import MetrialInfo from "@/components/mentor/studymetrial/metrialinfo";
 import Select from "react-select";
 import Nodata from "@/components/common/nodata/nodata";
+import { Router, useRouter } from "next/router";
 
 function StudyMaterialMain() {
   const {
@@ -18,7 +19,7 @@ function StudyMaterialMain() {
     courseID,
     isMentor,
   } = useStudyMaterialContext();
-
+ const router=useRouter()
   const handleCardClick = (module) => {
     setSelectedModule(module);
   };
@@ -38,13 +39,13 @@ function StudyMaterialMain() {
     (!isMentor && selectedCourse.value === undefined)
   ) {
     return (
-      <div className=" flex items-center justify-center w-full h-screen mb-5">
-        <Nodata title="Course" value="No Course available" />
+      <div className=" flex items-center justify-center w-full h-screen md:mt-0 mt-[-70px] z-1000">
+        <Nodata title="Course" value="No Course available" onClick={()=>router.push("/beta/courseoverview")}/>
       </div>
     );
   }
   return (
-    <div className="flex flex-col mx-4 lg:mx-8 w-full h-full max-w-6xl">
+    <div className="flex flex-col mx-4 lg:mx-8 w-full h-screen max-w-6xl">
       {!selectedModule && (
         <>
           {!isMentor && (
@@ -110,7 +111,7 @@ function StudyMaterialMain() {
             />
           )}
 
-          <div className="mx-auto text-white flex w-full max-h-full pt-10 overflow-hidden">
+          <div className="mx-auto text-white flex w-full max-h-screen pt-10 overflow-hidden">
             <div className=" flex justify-center bg-[#373A41] rounded-[30px] max-h-full w-full md:py-7 p-5 overflow-hidden">
 
               {modules?.length && <div className="grid sm:grid-cols-2 xl:grid-cols-3 w-full gap-3 md:gap-5 lg:gap-10  overflow-scroll scrollbar-hide">

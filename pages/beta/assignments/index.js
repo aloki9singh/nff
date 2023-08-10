@@ -161,16 +161,17 @@ function Assignments() {
   let Inactivestyle = "text-sm font-light py-2 pl-8 pr-12";
 
   const { userSubsribed } = CourseAccess(user?.uid);
+  console.log(userSubsribed)
   return (
     <Layout pageTitle="Assignments">
-      {/* {!userSubsribed && (
+      {!userSubsribed && (
         <ToastMessage
-        heading={"OOPS!"}
+          heading={"OOPS!"}
           message={
-            "You have not joined any courses yet. Please join a course to access the study material."
+            "Subscribe to access Assignment."
           }
         />
-      )} */}
+      )}
       {/* {!courseBuyed ? <NoJoinedCoursesModal /> : null} */}
       {/* {userSubsribed && (
       <ToastMessage
@@ -181,7 +182,8 @@ function Assignments() {
 
         )} */}
 
-      <div className={``}>
+      <div className={`${!userSubsribed ? "blur-lg" : null}`}>
+
         {/* Switching Between mobileSidebar / normal sidebar based on width */}
         <div className="flex">
           {/* Mobile Sidebar */}
@@ -239,7 +241,7 @@ function Assignments() {
                             className="text-sm cursor-pointer "
                             value={ele}
                           >
-                            {ele}
+                            {ele.length > 12 ? ele.slice(0,13)+"...":ele }
                           </option>
                         );
                       })}
@@ -327,7 +329,7 @@ function Assignments() {
                       </div>
                     </div>
                   </div>
-                  <div className="filecontainer  grid md:grid-cols-3 grid-cols-1">
+                  <div className="filecontainer grid md:grid-cols-3 grid-cols-1 gap-2 m-2 max-h-screen overflow-scroll scrollbar-hide">
                     {course &&
                       moduleName &&
                       course.map((assignment, i) => {
@@ -373,7 +375,7 @@ function Assignments() {
                     )}
                   {uniqCourse.length == 0 && (
                     <div className="">
-                      <Nodata title="Course" value="No Course available" />
+                      <Nodata title="Course" value="No Course available" onClick={()=>router.push("/beta/courseoverview")} />
                     </div>
                   )}
                 </div>
