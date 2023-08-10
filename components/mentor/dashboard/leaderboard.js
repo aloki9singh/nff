@@ -30,7 +30,7 @@ export default function LeaderBoardMentor({ data }) {
                   colSpan="3"
                   height={"200px"}
                 >
-                  No tasks created yet
+                  No statistics found.
                 </td>
               </tr>
             ) : (
