@@ -1,4 +1,5 @@
 export default function Todo({ todo, toggleComplete, deleteTodo }) {
+  console.log(todo);
   return (
     <>
       <li className="flex justify-between capitalize hover:bg-[#A145CD] mx-5">
