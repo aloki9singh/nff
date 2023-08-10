@@ -1,5 +1,5 @@
 [{
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target" : { "namespace": "android_app", "package_name": "tech.provokedev.neatskills",
-                 "sha256_cert_fingerprints": ["41:1F:23:BB:BB:61:9D:D2:44:D3:3A:08:38:44:D0:21:E5:96:11:7C:A5:20:0F:94:CE:C0:F1:2D:C3:14:43:70"] }
-  }]
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "tech.provoke.neatskills",
+               "sha256_cert_fingerprints": ["2A:5D:9E:14:F9:C1:89:1F:2E:E4:77:C1:E0:F9:CE:72:10:26:4F:85:EA:E1:17:B5:AE:A1:E3:EA:70:1C:6D:65"] }
+}]
