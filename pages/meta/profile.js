@@ -1,34 +1,34 @@
 // needed to be work on top-courses, stats, edit profile
 
-import { useState } from "react";
+import { useState } from 'react';
 // import MentorSidebar from "../components/Schedule/MentorSidebar2";
 
-import CourseCard from "@/components/student/courses/CourseCard2";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { callUserById, GetAllUsers } from "@/lib/exportablefunctions";
-import { auth, db } from "@/config/firebaseconfig";
-import { onAuthStateChanged } from "firebase/auth";
+import CourseCard from '@/components/student/courses/CourseCard2';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { callUserById, GetAllUsers } from '@/lib/exportablefunctions';
+import { auth, db } from '@/config/firebaseconfig';
+import { onAuthStateChanged } from 'firebase/auth';
 
-import withAuth from "@/lib/context/mentorcontext";
+import withAuth from '@/lib/context/mentorcontext';
 // import MobileNav from "../components/CalenderParts/MobileNav";
-import MentorSidebar from "@/components/common/sidebar/mentor";
-import MentorTopbar from "@/components/common/navbar/mentortopbar";
-import Image from "next/image";
-import MentorChart from "@/components/mentor/other/chart";
+import MentorSidebar from '@/components/common/sidebar/mentor';
+import MentorTopbar from '@/components/common/navbar/mentortopbar';
+import Image from 'next/image';
+import MentorChart from '@/components/mentor/other/chart';
 
-import { FiEdit2 } from "react-icons/fi";
-import { useMediaQuery } from "react-responsive";
-import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
-import Link from "next/link";
-import { collection, getDocs, query } from "firebase/firestore";
-import Layout from "@/components/common/Layout/Layout";
+import { FiEdit2 } from 'react-icons/fi';
+import { useMediaQuery } from 'react-responsive';
+import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
+import Link from 'next/link';
+import { collection, getDocs, query } from 'firebase/firestore';
+import Layout from '@/components/common/Layout/Layout';
 
 function MentorProfile() {
   const router = useRouter();
   // const { data } = useSelector((state) => state.authManagerMentor);
   const chartData = new Array(12).fill(0);
-  const [uid, setUid] = useState("");
+  const [uid, setUid] = useState('');
   const [userData, setUserData] = useState({});
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
@@ -39,7 +39,7 @@ function MentorProfile() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(db, "courses"));
+      const q = query(collection(db, 'courses'));
       const myCourseSnapshot = await getDocs(q);
       const myCourseData = myCourseSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -82,7 +82,7 @@ function MentorProfile() {
           {isMobileScreen && (
             <div
               className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
+                SideBarState ? 'block' : 'hidden'
               } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
@@ -107,12 +107,12 @@ function MentorProfile() {
               <div className="w-[90%] h-full   md:text-base text-sm  ">
                 <div className="  mx-5">
                   <div className="flex">
-                    {" "}
+                    {' '}
                     <Image
                       src={
                         userData.photoURL
                           ? userData.photoURL
-                          : "/componentsgraphics/common/Anonymousimage/anonymous.png"
+                          : '/componentsgraphics/common/Anonymousimage/anonymous.png'
                       }
                       alt="proImg"
                       height={100}
@@ -123,19 +123,19 @@ function MentorProfile() {
                       <div className="text-xl md:text-2xl ml-4 mt-[-35px]">
                         {userData &&
                         userData.displayName &&
-                        userData.displayName.includes("gmail")
+                        userData.displayName.includes('gmail')
                           ? userData.displayName.slice(0, 5)
                           : userData.displayName}
                       </div>
                       <div
                         onClick={() =>
                           router.push({
-                            pathname: "/meta/mentorprofile",
+                            pathname: '/meta/mentorprofile',
                             query: { uid: userData.uid },
                           })
                         }
                       >
-                        <div className="flex text-xs md:text-sm mt-[-25px]">
+                        <div className="flex text-xs md:text-sm mt-[-25px] cursor-pointer">
                           <div className="md:hidden">Edit profile</div>
                           <div className="md:block hidden">Edit profile</div>
                           <FiEdit2 className="ml-1 mt-[2px]" />
@@ -210,7 +210,7 @@ function MentorProfile() {
                               <Image
                                 width={110}
                                 height={110}
-                                alt={"img"}
+                                alt={'img'}
                                 src={e.banner}
                                 className="w-12 h-12 md:w-10"
                               />
@@ -235,7 +235,7 @@ function MentorProfile() {
                           <div className="text-right">
                             <Link
                               href={{
-                                pathname: "/beta/coursedetail",
+                                pathname: '/beta/coursedetail',
                                 query: { title: e.title },
                               }}
                             >
@@ -256,21 +256,21 @@ function MentorProfile() {
                       Educator highlights
                     </div>
                     <div className="text-center text-lg pt-2 pb-4 font-extralight">
-                      Worked at{" "}
+                      Worked at{' '}
                       {userData.details &&
                         userData.details?.experience[0]?.companyname}
                     </div>
                     <div className="flex gap-2 text-sm font-medium line-clamp-1 text-ellipsis ">
-                      {" "}
+                      {' '}
                       <span>
                         <Image
-                          src={"/pagesgraphics/mentor/profile/degree_icon.svg"}
+                          src={'/pagesgraphics/mentor/profile/degree_icon.svg'}
                           width={100}
                           height={100}
                           alt="img"
                           className="w-5"
-                        />{" "}
-                      </span>{" "}
+                        />{' '}
+                      </span>{' '}
                       <div className="flex md:flex-col">
                         <div>Studied at </div>
                         <span className="text-[#E1348B] text-sm font-black line-clamp-1 text-ellipsis">
@@ -294,18 +294,18 @@ function MentorProfile() {
                     </p>
 
                     <div className="flex gap-2 text-[0.9rem] font-medium">
-                      {" "}
+                      {' '}
                       <span>
                         <Image
                           src={
-                            "/pagesgraphics/mentor/profile/location_icon.svg"
+                            '/pagesgraphics/mentor/profile/location_icon.svg'
                           }
                           width={100}
                           height={100}
                           alt="img"
                           className="w-4"
-                        />{" "}
-                      </span>{" "}
+                        />{' '}
+                      </span>{' '}
                       <div className="flex md:flex-col">
                         <div> Lives in </div>
                         <span className="text-[#E1348B] font-black line-clamp-1 text-ellipsis md:flex-col">
@@ -315,23 +315,23 @@ function MentorProfile() {
                     </div>
                     <p className="ml-7  font-extralight text-[0.9rem] opacity-75 line-clamp-2 text-ellipsis">
                       {userData.details &&
-                        userData.details?.experience[0]?.jobtitle}{" "}
-                      since{" "}
+                        userData.details?.experience[0]?.jobtitle}{' '}
+                      since{' '}
                       {userData.details &&
                         userData.details?.experience[0]?.startdate}
                     </p>
 
                     <div className="flex gap-2 line-clamp-1 text-ellipsis">
-                      {" "}
+                      {' '}
                       <Image
-                        src={"/pagesgraphics/mentor/profile/globe_icon.svg"}
+                        src={'/pagesgraphics/mentor/profile/globe_icon.svg'}
                         width={100}
                         height={100}
                         alt="img"
                         className="w-5 h-5"
-                      />{" "}
+                      />{' '}
                       <span className="text-[0.9rem] font-medium flex md:flex-col">
-                        {" "}
+                        {' '}
                         <div>Knows </div>
                         <span className="text-[#E1348B] font-black  pl-2 line-clamp-2 text-ellipsis">
                           {userData.details &&
