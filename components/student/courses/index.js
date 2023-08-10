@@ -46,6 +46,7 @@ export default function CoursesMain({ coursesData }) {
           )}
       <div className="bg-[#2e3036] rounded-l-[50px] max-[768px]:rounded-none w-screen">
         <Dashboardnav heading="Courses" toggleSideBar={toggleSideBar}  />
+        
         <CourseHeader href={"#courses"} />
         <CourseList courses={courses} id={"courses"} />
         {/* <BottomNav /> */}

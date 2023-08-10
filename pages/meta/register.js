@@ -55,4 +55,5 @@ const MentorRegForm = () => {
   );
 };
 
-export default withAuth(MentorRegForm, "/meta/signup");
+export default (MentorRegForm);
+// export default withAuth(MentorRegForm, "/meta/signup");
