@@ -50,9 +50,9 @@ const Contact = () => {
         )}
 
 
-        <div className="w-full h-full flex flex-col ">
+        <div className="w-full h-full flex flex-col bg-[#2D2E35] ">
           <Dashboardnav heading="Contact Us" toggleSideBar={toggleSideBar} />
-          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center px-6 sm:px-[34px]">
+          <div className="md:rounded-bl-[40px] bg-[#2D2E35] text-white grow flex items-center justify-center px-6 sm:px-[34px] sm:mt-4">
             <div className="md:w-full w-full flex md:flex-row flex-col bg-[#373A41] rounded-[30px] h-fit max-w-5xl p-5 sm:p-8 md:p-0">
               {/* LEFT */}
               <div className="md:bg-[#141518] rounded-[30px] shrink-0">
