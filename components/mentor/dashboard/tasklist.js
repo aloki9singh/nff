@@ -102,7 +102,7 @@ export default function TaskList({ userId }) {
                       type="text"
                       className="bg-transparent border-2 w-[200px] text-white"
                     />
-                    <button>
+                    <button type="submit">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -137,12 +137,15 @@ export default function TaskList({ userId }) {
           todos
             ?.slice(0, 5)
             .map((todo, index) => (
+              <>
+              {console.log(todo)}
               <Todo
-                key={index}
-                todo={todo}
-                toggleComplete={() => toggleComplete(index)}
-                deleteTodo={deleteTodo}
+              key={index}
+              todo={todo}
+              toggleComplete={() => toggleComplete(todo)}
+              deleteTodo={deleteTodo}
               />
+              </>
             ))
         )}
       </ul>
