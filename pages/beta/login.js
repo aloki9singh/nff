@@ -4,7 +4,7 @@ import Layout from "@/components/common/Layout/Layout";
 function Login() {
   return (
     <Layout pageTitle="Login">
-      <LoginComp />
+      <LoginComp/>
     </Layout>
   );
 }
