@@ -31,20 +31,16 @@ async function handler(req, res) {
 
   const paymentData = {
     merchantId: merchantId,
-    merchantTransactionId: transactionId,
     merchantUserId: "PRVOKEONLIN",
-    amount: body.price,
-    redirectUrl: baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
-    redirectMode: "POST",
-    callbackUrl: baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
-    mobileNumber: body.phoneNumber,
-    paymentInstrument: {
-      type: "PAY_PAGE",
-    },
-  };
-
+    originalTransactionId: body.transactionId,
+    merchantTransactionId: transactionId,
+    amount: 1000,
+    callbackUrl: baseUrl + `/api/refund/serverToServer?param1=${body.useruid}`,
+}
+  
+  // callbackUrl: baseUrl + `/api/payment/serverToServer?param1=${body.useruid}`,
   const encodedData = encodeToBase64(JSON.stringify(paymentData));
-  const shaFormula = encodedData + "/pg/v1/pay" + saltKey;
+  const shaFormula = encodedData + "/pg/v1/refund" + saltKey;
   const shaData = await sha256(shaFormula);
   const shaVerify = shaData + "###1";
 
@@ -61,7 +57,7 @@ async function handler(req, res) {
       }),
     };
 
-    fetch(payUri, options)
+    fetch("https://api.phonepe.com/apis/hermes/pg/v1/refund", options)
       .then((response) => response.json())
       .then((response) => {
         res.status(200).json(response);

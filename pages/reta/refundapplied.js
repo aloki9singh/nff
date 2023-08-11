@@ -1,23 +1,176 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AdminSidebar from "@/components/common/sidebar/admin";
 import AdminTopbar from "@/components/common/navbar/admintopbar";
 import { useRouter } from "next/router";
-
+import { Dialog, Transition } from "@headlessui/react";
 import { db } from "@/config/firebaseconfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc, getDoc, setDoc, doc } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import { detailadd, removeDomainFromEmail } from "@/lib/exportablefunctions";
 import { query, where } from "firebase/firestore";
 import withAdminAuthorization from "@/lib/HOC/withAdminAuthorization";
 import Layout from "@/components/common/Layout/Layout";
 
+function RefundList({ userId, showButton = false, updateParentState }) {
+  let [isOpen, setIsOpen] = useState(true);
+  const [planData, setPlanData] = useState([]);
+  const router = useRouter();
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userRef = doc(db, "allusers", userId);
+      const collectionRef = collection(userRef, "PlanInfo");
+      const querySnapshot = await getDocs(collectionRef);
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      console.log("data", data);
+      setPlanData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  function closeModal() {
+    if (showButton) {
+      setIsOpen(false);
+      updateParentState(false);
+    } else {
+      setIsOpen(false);
+      updateParentState(false);
+    }
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const refundAPI = (e, index) => {
+    e.preventDefault();
+    console.log(index)
+    const requestBody = {
+      price:  planData[index].amount,
+      transactionId:planData[index].transactionId,
+      useruid:planData[index].id,
+    };
+
+    const updateCourseAccess = async(payload)=>{
+
+      const validityData = {
+        courseAccess: false,
+      };
+
+
+      // searching if user exists or not
+      const userRef = doc(db, "allusers", planData[index].id);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        // exist condition update the doc
+        await updateDoc(userRef, validityData);
+      }
+
+
+      await setDoc(doc(db, "allusers", planData[index].id, "refund", payload.data.merchantTransactionId), payload);
+
+    }
+
+    fetch('/api/refund', { method: 'POST', body: JSON.stringify(requestBody) },)
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        // setLoading(false);
+        updateCourseAccess(response);
+        const payload = btoa(JSON.stringify(response));
+        window.location.href = baseUrl + `/reta/refundresponse?param=${payload}`
+      })
+      .catch(err => console.error(err));
+  }
+
+  return (
+    <>
+      <div className="fixed inset-0 flex items-center justify-center">
+        <button
+          type="button"
+          onClick={openModal}
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        >
+          Open dialog
+        </button>
+      </div>
+
+      {console.log("jsidjf", planData)}
+
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full block max-w-md transform overflow-hidden rounded-2xl bg-[#373A41] p-6 text-left align-middle shadow-sm border-gray-400 shadow-gray-600 transition-all">
+                  {planData.map((plan, index) => {
+                    return (
+                      <div className="flex">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-lg font-medium leading-6 text-white"
+                        >
+                          {plan.transactionId}
+                        </Dialog.Title>
+                        <div className="mt-2 gap-4 px-8">
+                          <p className="text-sm text-white/70">{plan.amount}</p>
+                        </div>
+
+                        <div className=" flex items-center px-4 gap-4">
+                          <button
+                            type="button"
+                            className="inline-flex rounded-md border border-transparent text-primary px-4  text-sm font-semibold  hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
+                            onClick={(e) => {
+                              refundAPI(e, index);
+                            }}
+                          >
+                            Refund
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
+  );
+}
+
 function Refund() {
   const [count, setCount] = useState(1);
   const [initialcount, setinitialCount] = useState(0);
   const [gap, setGap] = useState(10);
   const [hide, setHide] = useState(true);
+  const [popup, setPopUp] = useState(false);
 
   const [filterStudent, setFilterStudent] = useState();
 
@@ -34,7 +187,7 @@ function Refund() {
   const [SideBarState, sendSideBarState] = useState(false);
   const [activeTab, setActiveTab] = useState("student");
   const [student, setStudent] = useState([]);
-
+  const [userId, setUserId] = useState();
   const [numberOfPages, setNumberOfPages] = useState();
   const [isActive, setIsActive] = useState(null);
 
@@ -42,6 +195,10 @@ function Refund() {
     setShowSideBar(!showSideBar);
     sendSideBarState(showSideBar);
   }
+
+  const updateParentState = (newValue) => {
+    setPopUp(!popup);
+  };
 
   useEffect(() => {
     if (isMediumScreen) {
@@ -122,8 +279,16 @@ function Refund() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleRefund = (uid) => {
+    setUserId(uid);
+    setPopUp(true);
+  };
+
   return (
     <Layout pageTitle="Mentors">
+      {popup ? (
+        <RefundList userId={userId} updateParentState={updateParentState} />
+      ) : null}
       <div className="h-full text-base bg-[#2E3036]  ">
         <div className="flex">
           {/* First Sidebar - Visible on Mobile */}
@@ -228,18 +393,15 @@ function Refund() {
                           <th className="md:block hidden">Student Name</th>
                           <th className="md:hidden block"> Name</th>
                           <th className="md:block hidden">Email</th>
-                          <th className="">Transaction Id</th>
-                          <th className="hidden md:table-cell"></th>
-                          <th className="">Status</th>
-                          <th className="md:pl-10"></th>
+                          <th className="pl-28">Status</th>
                         </>
                       )}
                     </tr>
                   </thead>
                   <tbody className="flex w-[95%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6">
                     {activeTab === "student" &&
-                      student &&
-                      student.slice(initialcount, gap).map((e, i) => (
+                      filterStudent &&
+                      filterStudent.slice(initialcount, gap).map((e, i) => (
                         <tr
                           className="flex items-center w-full font-medium text-xs justify-between "
                           key={e.id + `${i}`}
@@ -260,51 +422,12 @@ function Refund() {
                           <td className="w-[16.6%] ">
                             {removeDomainFromEmail(e.displayName)}
                           </td>
-                          <td className="w-[16.6%] md:block hidden">
-                            {" "}
-                            {e.uid.slice(0, 5)}
-                          </td>
-                          <td className="w-[16.6%] text-center ">{e?.class}</td>
-                          <td className="w-[16.6%] text-center md:block hidden">
-                            {e?.courses || "No Group"}
-                          </td>
-                          <td className="w-[16.6%] text-center cursor-pointer">
-                            {!e.active ? (
-                              <p
-                                className="text-red-500 "
-                                onClick={async () => {
-                                  const value = await detailadd(e.uid, {
-                                    active: true,
-                                  });
-                                  // console.log(value);
-                                }}
-                              >
-                                InActive
-                              </p>
-                            ) : (
-                              <p
-                                className="text-green-500  "
-                                onClick={async () => {
-                                  const value = await detailadd(e.uid, {
-                                    active: false,
-                                  });
-                                  // console.log(value);
-                                }}
-                              >
-                                Active
-                              </p>
-                            )}
-                          </td>
+                          <td className="w-[16.6%] text-center ">{e?.email}</td>
                           <td
-                            className="w-[16.6%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
-                            onClick={() =>
-                              router.push({
-                                pathname: "/reta/profile",
-                                query: { uid: e.uid },
-                              })
-                            }
+                            className="w-[16%] text-right text-[#E1348B] pr-[3%] cursor-pointer"
+                            onClick={() => handleRefund(e?.uid)}
                           >
-                            View Profile
+                            Refund
                           </td>
                         </tr>
                       ))}
@@ -382,4 +505,4 @@ function Refund() {
   );
 }
 
-export default (Refund);
+export default Refund;
