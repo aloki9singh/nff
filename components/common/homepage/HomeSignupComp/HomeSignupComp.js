@@ -26,14 +26,14 @@ export default function SignUp() {
           <div>
             <Link href={"/beta/signup"}>
               <button
-                className="flex items-center w-16 h-[17px] 
+                className="flex items-center w-28 h-[30px] 
                sm:h-10 sm:w-28
                md:h-12 md:w-40
                lg:h-16 lg:w-[235px] 
-               sm:bg-black
+              bg-black
                border border-white justify-center space-x-1 sm:space-x-2 md:space-x-4"
               >
-                <p className="text-[6px] sm:text-xs md:text-base lg:text-2xl">
+                <p className="text-[12px] sm:text-xs md:text-base lg:text-2xl">
                   Sign Up
                 </p>
                 <Image
