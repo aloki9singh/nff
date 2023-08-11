@@ -30,6 +30,7 @@ function AdminStudent() {
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
+  
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);

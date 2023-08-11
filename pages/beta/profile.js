@@ -269,7 +269,7 @@ function StudentProfile() {
                     <div className=" md:w-2/3 w-full flex flex-col justify-between text-center py-4 ">
                       <h1 className="font-semibold text-sm">Activity Hours</h1>
                       <div className="mt-2">
-                        <StudentProfileChart data={chartData} />
+                        <StudentProfileChart />
                       </div>
                     </div>
                     <div className="  h-[100%] flex flex-col justify-between text-center py-4 px-2">
