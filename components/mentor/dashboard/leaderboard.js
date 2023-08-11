@@ -1,13 +1,7 @@
 import React from "react";
 
 export default function LeaderBoardMentor({ data }) {
-  // const data = [
-  //   { name: "John", group: "A", lastTest: "2022-05-15" },
-  //   { name: "Sarah", group: "B", lastTest: "2023-01-10" },
-  //   { name: "David", group: "A", lastTest: "2023-06-20" },
-  //   { name: "Emily", group: "C", lastTest: "2023-03-05" },
-  //   { name: "Michael", group: "B", lastTest: "2023-07-01" },
-  // ];
+
 
   return (
     <div className="flex flex-col items-center min-h-[94%] mx-auto h-full bg-[#373A41] text-white rounded-2xl mb-8 w-full">
@@ -30,7 +24,7 @@ export default function LeaderBoardMentor({ data }) {
                   colSpan="3"
                   height={"200px"}
                 >
-                  No tasks created yet
+                  No statistics found.
                 </td>
               </tr>
             ) : (

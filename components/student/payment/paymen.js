@@ -108,7 +108,6 @@ const Payment = ({ updatePage, updatePrice }) => {
               trial={isTrialValid}
 
               updatePrice={updatePrice}
-
               updatePage={(e) => updatePage(e)}
             />
           </div>

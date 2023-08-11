@@ -147,7 +147,7 @@ export default function Dashboardnav({ heading, toggleSideBar }) {
                               <p>Terms & Conditions</p>
                             </Link>
                           </div>
-                          <div className="text-[13px] p-2">
+                          <div className="text-[13px] p-2 cursor-pointer">
                             <p onClick={() => signOut(auth)}>Logout</p>
                           </div>
                         </div>

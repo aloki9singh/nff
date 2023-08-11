@@ -41,6 +41,7 @@ function SignUp() {
   }, []);
 
   const handleSignup = async (e) => {
+    
     e.preventDefault();
 
     if (!email) {

@@ -113,7 +113,7 @@ const MentorFinal = ({ setRegStepCount, regStepCount }) => {
           </div>
         </div>
       )}
-      <div className="text-white md:m-10 rounded-[25px] p-10 bg-[#222222]  ">
+      <div className="text-white md:m-10 md:rounded-[25px] p-10 bg-[#222222]  ">
         <div className="">
           <div className=" flex justify-between text-xl md:mx-20 ">
             <div>

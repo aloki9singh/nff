@@ -1,15 +1,17 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import MentorSidebar from "@/components/common/sidebar/mentor";
-import MentorTopbar from "@/components/common/navbar/mentortopbar";
-import { useRouter } from "next/router";
-import { useAuthContext } from "@/lib/context/AuthContext";
-import { useMediaQuery } from "react-responsive";
-import withMentorAuthorization from "@/lib/HOC/withMentorAuthorization.js";
-import { collection, getDocs, doc } from "firebase/firestore";
-import { db } from "@/config/firebaseconfig";
-import Layout from "@/components/common/Layout/Layout";
+// when deleting student from the list, page need to get reloaded manually to update the list
+
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import MentorSidebar from '@/components/common/sidebar/mentor';
+import MentorTopbar from '@/components/common/navbar/mentortopbar';
+import { useRouter } from 'next/router';
+import { useAuthContext } from '@/lib/context/AuthContext';
+import { useMediaQuery } from 'react-responsive';
+import withMentorAuthorization from '@/lib/HOC/withMentorAuthorization.js';
+import { collection, getDocs, doc } from 'firebase/firestore';
+import { db } from '@/config/firebaseconfig';
+import Layout from '@/components/common/Layout/Layout';
 
 function MentorStudent() {
   const { user, userProfile } = useAuthContext();
@@ -18,26 +20,26 @@ function MentorStudent() {
   const [initialcount, setinitialCount] = useState(0);
   const [gap, setGap] = useState(10);
   const [hide, setHide] = useState(true);
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const [filterData, setFilterData] = useState([]);
-  const [searchstate, setsearchstate] = useState("");
+  const [searchstate, setsearchstate] = useState('');
   const [dataFetched, setDataFetched] = useState([]);
   const router = useRouter();
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
   const [SideBarState, sendSideBarState] = useState(false);
-  const [selectCourseData, setSelectCourseData] = useState("");
+  const [selectCourseData, setSelectCourseData] = useState('');
   const [forfilterData, setForfilterData] = useState([]);
   const [numberOfPages, setNumberOfPages] = useState();
   // setId(router.query.id);
 
   const fetchStudentData = useCallback(() => {
-    fetch("/api/signup")
+    fetch('/api/signup')
       .then((response) => response.json())
       .then((data) => {
         // console.log(data, "data");
-        const students = data.users.filter((ele) => ele.role === "student");
+        const students = data.users.filter((ele) => ele.role === 'student');
         setFilterData(students);
         setStudentData(students);
         setForfilterData(students);
@@ -46,7 +48,7 @@ function MentorStudent() {
 
   const getStudendDataByCourse = async (val) => {
     // console.log(val);
-    const courseRef = collection(db, "courses");
+    const courseRef = collection(db, 'courses');
     const querySnapshot = await getDocs(courseRef);
     const data = querySnapshot.docs.map((doc) => doc.data());
     const course = data.find((ele) => ele.id === val);
@@ -64,7 +66,7 @@ function MentorStudent() {
         // console.log(studentData);
       });
     } else {
-      setStudentData([{ title: "NO DATA FOUND" }]);
+      setStudentData([{ title: 'NO DATA FOUND' }]);
     }
   };
 
@@ -79,7 +81,7 @@ function MentorStudent() {
   const getData = async () => {
     // if (!dataFetched) {
 
-    const courseCollection = collection(db, "courses");
+    const courseCollection = collection(db, 'courses');
     const courseInfo = await getDocs(courseCollection);
     const courseData = courseInfo.docs.map((doc) => doc.data());
     // setAssignCourse(courseData.filter((ele) => ele?.mentorid === user.uid));
@@ -100,8 +102,8 @@ function MentorStudent() {
     getData();
   }, [fetchStudentData]);
 
-  const activeTabClass = "w-10 h-10 bg-[#A145CD] rounded-xl";
-  const tabClass = "w-10 h-10 rounded-xl";
+  const activeTabClass = 'w-10 h-10 bg-[#A145CD] rounded-xl';
+  const tabClass = 'w-10 h-10 rounded-xl';
 
   const toggleSideBar = () => {
     setShowSideBar(!showSideBar);
@@ -115,17 +117,18 @@ function MentorStudent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(`/api/signup/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     })
       .then((response) => response.json())
       .then((data) => alert(data.msg));
+    setId('');
   };
 
   const handleClick = (e) => {
     const totalPage = Math.ceil(studentData?.length / 10) + 1;
 
-    switch (e.currentTarget.getAttribute("name")) {
-      case "fwd":
+    switch (e.currentTarget.getAttribute('name')) {
+      case 'fwd':
         if (count < totalPage) {
           setCount(count + 1);
           setinitialCount(initialcount + 10);
@@ -133,7 +136,7 @@ function MentorStudent() {
         }
         break;
 
-      case "back":
+      case 'back':
         if (count > 1) {
           setCount(count - 1);
           setinitialCount(initialcount - 10);
@@ -142,7 +145,7 @@ function MentorStudent() {
         break;
 
       default:
-        const pageNumber = parseInt(e.currentTarget.getAttribute("name"));
+        const pageNumber = parseInt(e.currentTarget.getAttribute('name'));
         if (pageNumber >= 1 && pageNumber <= totalPage) {
           setCount(pageNumber);
           setinitialCount((pageNumber - 1) * 10);
@@ -165,7 +168,7 @@ function MentorStudent() {
           {isMobileScreen && (
             <div
               className={`fixed right-0 ${
-                SideBarState ? "block" : "hidden"
+                SideBarState ? 'block' : 'hidden'
               } w-[281px] h-screen bg-[#25262C]  rounded-l-[40px] z-10`}
             >
               <MentorSidebar toggleSideBar={toggleSideBar} />
@@ -305,7 +308,9 @@ function MentorStudent() {
                   </thead>
                   <tbody className="flex w-[90%] h-[550px] flex-col mt-2 items-center mx-auto space-y-6">
                     {studentData.length < 1 ? (
-                      <div className="text items-center pt-10">No Data Found</div>
+                      <div className="text items-center pt-10">
+                        No Data Found
+                      </div>
                     ) : (
                       studentData.slice(initialcount, gap).map((e, i) => (
                         <tr
@@ -317,7 +322,7 @@ function MentorStudent() {
                               src={
                                 e.photoURL
                                   ? e.photoURL
-                                  : "/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg"
+                                  : '/componentsgraphics/common/navbar/schoolprofiletopbar/Male.svg'
                               }
                               alt="img"
                               height={25}
@@ -364,7 +369,7 @@ function MentorStudent() {
                             className="w-[16.6%] text-right text-[#E1348B] pr-[3%]"
                             onClick={() =>
                               router.push({
-                                pathname: "/meta/studentprofile",
+                                pathname: '/meta/studentprofile',
                                 query: { uid: e.uid },
                               })
                             }
@@ -402,7 +407,7 @@ function MentorStudent() {
                 </button>
                 {Array.from({ length: numberOfPages }, (_, index) => (
                   <button
-                  key={index}
+                    key={index}
                     className={`${
                       count == index + 1 ? activeTabClass : tabClass
                     } px-4 overflow-sc
