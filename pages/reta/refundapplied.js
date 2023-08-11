@@ -31,7 +31,7 @@ function RefundList({ userId, showButton = false, updateParentState }) {
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   function closeModal() {
     if (showButton) {
@@ -130,7 +130,7 @@ function RefundList({ userId, showButton = false, updateParentState }) {
                 <Dialog.Panel className="w-full block max-w-md transform overflow-hidden rounded-2xl bg-[#373A41] p-6 text-left align-middle shadow-sm border-gray-400 shadow-gray-600 transition-all">
                   {planData.map((plan, index) => {
                     return (
-                      <div className="flex">
+                      <div className="flex" key={index}>
                         <Dialog.Title
                           as="h3"
                           className="text-lg font-medium leading-6 text-white"
