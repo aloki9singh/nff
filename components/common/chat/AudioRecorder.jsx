@@ -14,10 +14,10 @@ import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { MdDelete, MdSend } from "react-icons/md";
 import { FaStop } from "react-icons/fa";
 
-const ReactMic = dynamic(
-  () => import("react-mic").then((mod) => mod.ReactMic),
-  { ssr: false }
-);
+// const ReactMic = dynamic(
+//   () => import("react-mic").then((mod) => mod.ReactMic),
+//   { ssr: false }
+// );
 
 const formatTime = (time) => {
   const minutes = Math.floor(time / 60);
@@ -213,15 +213,15 @@ const AudioRecorder = ({ groupId, setShowRecorder }) => {
           </>
         ) : (
           <>
-            <div className="w-32 h-8">
-              <ReactMic
+            {/* <div className="w-32 h-8"> */}
+              {/* <ReactMic
                 record={isRecording}
                 onStop={stopRecording}
                 strokeColor="pink"
                 backgroundColor="#505057"
                 className="w-full h-full"
-              />
-            </div>
+              /> */}
+            {/* </div> */}
             {!isRecording && (
               <button
                 onClick={startRecording}
