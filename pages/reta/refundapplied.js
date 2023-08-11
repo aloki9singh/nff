@@ -53,46 +53,31 @@ function Refund() {
           return ele.displayName.includes(searchstate);
         })
     );
-
   }, [searchstate, isMediumScreen, filterStudent]);
 
-
-//   useEffect(() => {
-//     async function getData() {
-//       const userRef = collection(db, "allusers");
-//       const q1 = query(userRef, where("role", "==", "student"));
-//       const studentDoc = await getDocs(q1);
-//       const studentList = studentDoc.docs.map((doc) => doc.data());
-//       const filteredStudents = studentList.filter(student => student.refundApplied === true);
-//       setFilterStudent(filteredStudents);
-//       setStudent(studentList);
-//     }
-//     getData();
-//   }, []);
-useEffect(() => {
+  useEffect(() => {
     async function getData() {
       const userRef = collection(db, "allusers");
-      const q1 = query(userRef, where("role", "==", "student"));
+      const q1 = query(
+        userRef,
+        where("role", "==", "student"),
+        where("refundApplied", "==", true)
+      );
       const studentDoc = await getDocs(q1);
       const studentList = studentDoc.docs.map((doc) => doc.data());
-      const filteredStudents = studentList.filter(student => student.refundApplied === true);
-      
-      // Only update state if the filtered list has changed
-      if (!isEqual(filterStudent, filteredStudents)) {
-        setFilterStudent(filteredStudents);
-        setStudent(studentList);
-      }
+      setFilterStudent(studentList);
+      setStudent(studentList);
     }
     getData();
   }, []);
-  
 
+  console.log(student, filterStudent);
 
   function handleClick(e) {
     let totalPage;
     if (activeTab === "student") {
       totalPage = Math.ceil(student?.length / 10) + 1;
-    } 
+    }
     switch (e.currentTarget.getAttribute("name")) {
       case "fwd":
         if (count < totalPage) {
@@ -137,9 +122,6 @@ useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
-
   return (
     <Layout pageTitle="Mentors">
       <div className="h-full text-base bg-[#2E3036]  ">
@@ -172,7 +154,6 @@ useEffect(() => {
                 className={`ml-8 md:ml-10 mt-7 font-semibold text-xl md:text-4xl text-white ${
                   activeTab === "student" ? "cursor-pointer underline" : ""
                 }`}
-              
               >
                 Student : {student?.length}
               </div>
