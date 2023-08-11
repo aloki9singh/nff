@@ -34,7 +34,7 @@ async function handler(req, res) {
     merchantUserId: "PRVOKEONLIN",
     originalTransactionId: body.transactionId,
     merchantTransactionId: transactionId,
-    amount: 1000,
+    amount: body.price,
     callbackUrl: baseUrl + `/api/refund/serverToServer?param1=${body.useruid}`,
 }
   
