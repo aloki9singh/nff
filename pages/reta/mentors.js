@@ -1,3 +1,5 @@
+
+//infinte loop too be checked
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,6 +30,7 @@ function AdminStudent() {
   let searchfun = (e) => {
     setsearchstate(e.target.value);
   };
+  
   const isMediumScreen = useMediaQuery({ minWidth: 768 });
   const isMobileScreen = useMediaQuery({ maxWidth: 767 });
   const [showSideBar, setShowSideBar] = useState(false);
@@ -47,19 +50,15 @@ function AdminStudent() {
     if (isMediumScreen) {
       sendSideBarState(false);
     }
-    setStudent(
-      filterStudent &&
-        filterStudent.filter((ele) => {
-          return ele.displayName.includes(searchstate);
-        })
+    const filteredStudents = student.filter((s) =>
+      s.displayName.includes(searchstate)
     );
-    setMentor(
-      filterMentor &&
-        filterMentor.filter((ele) => {
-          return ele.displayName.includes(searchstate);
-        })
+    const filteredMentors = mentor.filter((m) =>
+      m.displayName.includes(searchstate)
     );
-  }, [searchstate, isMediumScreen, filterMentor, filterStudent]);
+    setFilterStudent(filteredStudents);
+    setFilterMentor(filteredMentors);
+  }, [searchstate, isMediumScreen, student, mentor]);
 
   const handleTabClick = (tab) => {
     setsearchstate("");
@@ -72,9 +71,12 @@ function AdminStudent() {
       const q1 = query(userRef, where("role", "==", "student"));
       const q2 = query(userRef, where("role", "==", "mentor"));
 
-      const studentDoc = await getDocs(q1);
-      const mentorDoc = await getDocs(q2);
-
+      // const studentDoc = await getDocs(q1);
+      // const mentorDoc = await getDocs(q2);
+      const [studentDoc, mentorDoc] = await Promise.all([
+        getDocs(q1),
+        getDocs(q2),
+      ]);
       const studentList = studentDoc.docs.map((doc) => doc.data());
       const mentorList = mentorDoc.docs.map((doc) => doc.data());
 
