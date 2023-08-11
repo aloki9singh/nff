@@ -11,6 +11,7 @@ import Congratulations from "@/components/mentor/registration/congrats";
 import withAuth from "@/lib/context/mentorcontext"
 import { useRouter } from "next/router";
 import Layout from "@/components/common/Layout/Layout";
+import withStudentAuthorization from "@/lib/HOC/withStudentAuthorization";
 
 const MentorRegForm = () => {
   const [regStepCount, setRegStepCount] = useState(1);
@@ -55,5 +56,5 @@ const MentorRegForm = () => {
   );
 };
 
-export default withMentorAuthorization(MentorRegForm);
+export default withStudentAuthorization(MentorRegForm);
 // export default withAuth(MentorRegForm, "/meta/signup");
