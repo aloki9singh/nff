@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { AiOutlineClose } from "react-icons/ai";
 import { ImMenu } from "react-icons/im";
-import Image from "next/dist/client/image";
+import Image from "next/image";
 import { useAuthContext } from "@/lib/context/AuthContext";
 import Avatar from "../chat/avatar";
 import { BsPersonCircle } from "react-icons/bs";

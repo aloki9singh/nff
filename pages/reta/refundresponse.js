@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from "next/router";
 
 
-const refundresponse = () => {
+const Refundresponse = () => {
     const router = useRouter();
     const [payload, setPayload] = useState();
     
@@ -59,4 +59,4 @@ const refundresponse = () => {
   )
 }
 
-export default refundresponse
+export default Refundresponse

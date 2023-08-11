@@ -137,7 +137,7 @@ if (range <= 1 && maxActivityValue > 0) {
       .catch((error) => {
         console.error("Error fetching user activity data:", error);
       });
-  }, [user?.uid]);
+  }, [user]);
 
   return (
     <>
