@@ -382,4 +382,4 @@ function Refund() {
   );
 }
 
-export default withAdminAuthorization(Refund);
+export default (Refund);
